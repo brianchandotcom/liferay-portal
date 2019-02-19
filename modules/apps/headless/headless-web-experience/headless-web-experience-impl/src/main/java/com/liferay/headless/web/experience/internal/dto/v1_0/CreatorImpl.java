@@ -37,148 +37,164 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CreatorImpl implements Creator {
 
 	public String getAdditionalName() {
-			return additionalName;
+		return additionalName;
+	}
+
+	public String getFamilyName() {
+		return familyName;
+	}
+
+	public String getGivenName() {
+		return givenName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getProfileURL() {
+		return profileURL;
 	}
 
 	public void setAdditionalName(String additionalName) {
-			this.additionalName = additionalName;
+		this.additionalName = additionalName;
 	}
 
 	@JsonIgnore
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
-			try {
-				additionalName = additionalNameUnsafeSupplier.get();
+	public void setAdditionalName(
+		UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
+
+		try {
+			additionalName = additionalNameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setFamilyName(String familyName) {
+		this.familyName = familyName;
 	}
+
+	@JsonIgnore
+	public void setFamilyName(
+		UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
+
+		try {
+			familyName = familyNameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setGivenName(String givenName) {
+		this.givenName = givenName;
+	}
+
+	@JsonIgnore
+	public void setGivenName(
+		UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
+
+		try {
+			givenName = givenNameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	@JsonIgnore
+	public void setImage(
+		UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
+
+		try {
+			image = imageUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setProfileURL(String profileURL) {
+		this.profileURL = profileURL;
+	}
+
+	@JsonIgnore
+	public void setProfileURL(
+		UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
+
+		try {
+			profileURL = profileURLUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String additionalName;
-	public String getFamilyName() {
-			return familyName;
-	}
-
-	public void setFamilyName(String familyName) {
-			this.familyName = familyName;
-	}
-
-	@JsonIgnore
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
-			try {
-				familyName = familyNameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String familyName;
-	public String getGivenName() {
-			return givenName;
-	}
-
-	public void setGivenName(String givenName) {
-			this.givenName = givenName;
-	}
-
-	@JsonIgnore
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
-			try {
-				givenName = givenNameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String givenName;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getImage() {
-			return image;
-	}
-
-	public void setImage(String image) {
-			this.image = image;
-	}
-
-	@JsonIgnore
-	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
-			try {
-				image = imageUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String image;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(String name) {
-			this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-			try {
-				name = nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public String getProfileURL() {
-			return profileURL;
-	}
-
-	public void setProfileURL(String profileURL) {
-			this.profileURL = profileURL;
-	}
-
-	@JsonIgnore
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
-			try {
-				profileURL = profileURLUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

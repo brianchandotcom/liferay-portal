@@ -37,64 +37,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EmailImpl implements Email {
 
 	public String getEmail() {
-			return email;
+		return email;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public void setEmail(String email) {
-			this.email = email;
+		this.email = email;
 	}
 
 	@JsonIgnore
-	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
-			try {
-				email = emailUnsafeSupplier.get();
+	public void setEmail(
+		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+
+		try {
+			email = emailUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setId(Long id) {
+		this.id = id;
 	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String email;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getType() {
-			return type;
-	}
-
-	public void setType(String type) {
-			this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
-			try {
-				type = typeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

@@ -46,57 +46,77 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource {
+public abstract class BaseBlogPostingResourceImpl
+	implements BlogPostingResource {
 
 	@DELETE
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public boolean deleteBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception {
-			return false;
+	public boolean deleteBlogPosting(
+			@PathParam("blog-posting-id") Long blogPostingId)
+		throws Exception {
 
+		return false;
 	}
+
 	@GET
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public BlogPosting getBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception {
-			return new BlogPostingImpl();
+	public BlogPosting getBlogPosting(
+			@PathParam("blog-posting-id") Long blogPostingId)
+		throws Exception {
 
+		return new BlogPostingImpl();
 	}
-	@Consumes("application/json")
-	@PUT
-	@Path("/blog-postings/{blog-posting-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public BlogPosting putBlogPosting( @PathParam("blog-posting-id") Long blogPostingId , BlogPosting blogPosting ) throws Exception {
-			return new BlogPostingImpl();
 
-	}
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception {
-			return new BlogPostingImpl();
+	public BlogPosting postContentSpaceBlogPosting(
+			@PathParam("content-space-id") Long contentSpaceId,
+			BlogPosting blogPosting)
+		throws Exception {
 
+		return new BlogPostingImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	@Consumes("application/json")
+	@PUT
+	@Path("/blog-postings/{blog-posting-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public BlogPosting putBlogPosting(
+			@PathParam("blog-posting-id") Long blogPostingId,
+			BlogPosting blogPosting)
+		throws Exception {
+
+		return new BlogPostingImpl();
+	}
+
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

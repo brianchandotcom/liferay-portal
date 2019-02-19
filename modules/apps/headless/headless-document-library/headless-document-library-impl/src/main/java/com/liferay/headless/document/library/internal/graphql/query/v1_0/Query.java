@@ -44,131 +44,169 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment getComment( @GraphQLName("comment-id") Long commentId ) throws Exception {
-return _getCommentResource().getComment( commentId );
+	public Comment getComment(@GraphQLName("comment-id") Long commentId)
+		throws Exception {
+
+		return _getCommentResource().getComment(commentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getCommentCommentsPage( @GraphQLName("comment-id") Long commentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCommentResource().getCommentCommentsPage(
+	public Collection<Comment> getCommentCommentsPage(
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					commentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getCommentResource().getCommentCommentsPage(
+			commentId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getDocumentCommentsPage( @GraphQLName("document-id") Long documentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCommentResource().getDocumentCommentsPage(
+	public Collection<Document> getContentSpaceDocumentsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					documentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getDocumentResource().getContentSpaceDocumentsPage(
+				contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getContentSpaceDocumentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getDocumentResource().getContentSpaceDocumentsPage(
+	public Collection<Folder> getContentSpaceFoldersPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					contentSpaceId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getFolderResource().getContentSpaceFoldersPage(
+			contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document getDocument( @GraphQLName("document-id") Long documentId ) throws Exception {
-return _getDocumentResource().getDocument( documentId );
+	public Document getDocument(@GraphQLName("document-id") Long documentId)
+		throws Exception {
+
+		return _getDocumentResource().getDocument(documentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Document> getFolderDocumentsPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getDocumentResource().getFolderDocumentsPage(
+	public Collection<Comment> getDocumentCommentsPage(
+			@GraphQLName("document-id") Long documentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					folderId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getCommentResource().getDocumentCommentsPage(
+			documentId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getContentSpaceFoldersPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getFolderResource().getContentSpaceFoldersPage(
+	public Folder getFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
 
-					contentSpaceId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getFolderResource().getFolder(folderId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder getFolder( @GraphQLName("folder-id") Long folderId ) throws Exception {
-return _getFolderResource().getFolder( folderId );
+	public Collection<Document> getFolderDocumentsPage(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getDocumentResource().getFolderDocumentsPage(
+			folderId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Folder> getFolderFoldersPage( @GraphQLName("folder-id") Long folderId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getFolderResource().getFolderFoldersPage(
+	public Collection<Folder> getFolderFoldersPage(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					folderId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getFolderResource().getFolderFoldersPage(
+			folderId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	private static CommentResource _getCommentResource() {
-			return _commentResourceServiceTracker.getService();
+		return _commentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
 	private static DocumentResource _getDocumentResource() {
-			return _documentResourceServiceTracker.getService();
+		return _documentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<DocumentResource, DocumentResource> _documentResourceServiceTracker;
 	private static FolderResource _getFolderResource() {
-			return _folderResourceServiceTracker.getService();
+		return _folderResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<FolderResource, FolderResource> _folderResourceServiceTracker;
+	private static final ServiceTracker<CommentResource, CommentResource>
+		_commentResourceServiceTracker;
+
+	private static final ServiceTracker<DocumentResource, DocumentResource>
+		_documentResourceServiceTracker;
+
+	private static final ServiceTracker<FolderResource, FolderResource>
+		_folderResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CommentResource.class, null);
+		ServiceTracker<CommentResource, CommentResource>
+			commentResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					CommentResource.class, null);
 
-			commentResourceServiceTracker.open();
+		commentResourceServiceTracker.open();
 
-			_commentResourceServiceTracker = commentResourceServiceTracker;
-			ServiceTracker<DocumentResource, DocumentResource> documentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), DocumentResource.class, null);
+		_commentResourceServiceTracker =
+			commentResourceServiceTracker;
 
-			documentResourceServiceTracker.open();
+		ServiceTracker<DocumentResource, DocumentResource>
+			documentResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					DocumentResource.class, null);
 
-			_documentResourceServiceTracker = documentResourceServiceTracker;
-			ServiceTracker<FolderResource, FolderResource> folderResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), FolderResource.class, null);
+		documentResourceServiceTracker.open();
 
-			folderResourceServiceTracker.open();
+		_documentResourceServiceTracker =
+			documentResourceServiceTracker;
 
-			_folderResourceServiceTracker = folderResourceServiceTracker;
+		ServiceTracker<FolderResource, FolderResource>
+			folderResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					FolderResource.class, null);
+
+		folderResourceServiceTracker.open();
+
+		_folderResourceServiceTracker =
+			folderResourceServiceTracker;
 	}
 
 }

@@ -46,76 +46,99 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseCategoryResourceImpl implements CategoryResource {
+public abstract class BaseCategoryResourceImpl
+	implements CategoryResource {
 
 	@DELETE
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public boolean deleteCategory( @PathParam("category-id") Long categoryId ) throws Exception {
-			return false;
+	public boolean deleteCategory(@PathParam("category-id") Long categoryId)
+		throws Exception {
 
+		return false;
 	}
+
 	@GET
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Category getCategory( @PathParam("category-id") Long categoryId ) throws Exception {
-			return new CategoryImpl();
+	public Category getCategory(@PathParam("category-id") Long categoryId)
+		throws Exception {
 
+		return new CategoryImpl();
 	}
+
+	@GET
+	@Path("/categories/{category-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Page<Category> getCategoryCategoriesPage(
+			@PathParam("category-id") Long categoryId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Path("/vocabularies/{vocabulary-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Page<Category> getVocabularyCategoriesPage(
+			@PathParam("vocabulary-id") Long vocabularyId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@Consumes("application/json")
+	@POST
+	@Path("/categories/{category-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Category postCategoryCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
+
+		return new CategoryImpl();
+	}
+
+	@Consumes("application/json")
+	@POST
+	@Path("/vocabularies/{vocabulary-id}/categories")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Category postVocabularyCategory(
+			@PathParam("vocabulary-id") Long vocabularyId, Category category)
+		throws Exception {
+
+		return new CategoryImpl();
+	}
+
 	@Consumes("application/json")
 	@PUT
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Category putCategory( @PathParam("category-id") Long categoryId , Category category ) throws Exception {
-			return new CategoryImpl();
+	public Category putCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
 
-	}
-	@GET
-	@Path("/categories/{category-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Category> getCategoryCategoriesPage( @PathParam("category-id") Long categoryId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/categories/{category-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Category postCategoryCategory( @PathParam("category-id") Long categoryId , Category category ) throws Exception {
-			return new CategoryImpl();
-
-	}
-	@GET
-	@Path("/vocabularies/{vocabulary-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Category> getVocabularyCategoriesPage( @PathParam("vocabulary-id") Long vocabularyId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/vocabularies/{vocabulary-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Category postVocabularyCategory( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception {
-			return new CategoryImpl();
-
+		return new CategoryImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

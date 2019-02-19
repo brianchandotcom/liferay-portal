@@ -27,15 +27,19 @@ public interface Location {
 
 	public String getAddressCountry();
 
+	public String getAddressRegion();
+
+	public Long getId();
+
 	public void setAddressCountry(String addressCountry);
 
-	public void setAddressCountry(UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier);
-	public String getAddressRegion();
+	public void setAddressCountry(
+		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier);
 
 	public void setAddressRegion(String addressRegion);
 
-	public void setAddressRegion(UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier);
-	public Long getId();
+	public void setAddressRegion(
+		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier);
 
 	public void setId(Long id);
 

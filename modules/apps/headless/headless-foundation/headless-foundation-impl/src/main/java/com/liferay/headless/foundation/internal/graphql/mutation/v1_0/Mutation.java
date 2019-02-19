@@ -41,123 +41,194 @@ import org.osgi.util.tracker.ServiceTracker;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteCategory( @GraphQLName("category-id") Long categoryId ) throws Exception {
-return _getCategoryResource().deleteCategory( categoryId );
+	public boolean deleteCategory(@GraphQLName("category-id") Long categoryId)
+		throws Exception {
+
+		return _getCategoryResource().deleteCategory(categoryId);
 	}
 
 	@GraphQLInvokeDetached
-	public Category putCategory( @GraphQLName("category-id") Long categoryId , @GraphQLName("Category") Category category ) throws Exception {
-return _getCategoryResource().putCategory( categoryId , category );
-	}
+	public boolean deleteKeyword(@GraphQLName("keyword-id") Long keywordId)
+		throws Exception {
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Category postCategoryCategory( @GraphQLName("category-id") Long categoryId , @GraphQLName("Category") Category category ) throws Exception {
-return _getCategoryResource().postCategoryCategory( categoryId , category );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Category postVocabularyCategory( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Category") Category category ) throws Exception {
-return _getCategoryResource().postVocabularyCategory( vocabularyId , category );
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Keyword postContentSpaceKeyword( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
-return _getKeywordResource().postContentSpaceKeyword( contentSpaceId , keyword );
+		return _getKeywordResource().deleteKeyword(keywordId);
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteKeyword( @GraphQLName("keyword-id") Long keywordId ) throws Exception {
-return _getKeywordResource().deleteKeyword( keywordId );
+	public boolean deleteUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId)
+		throws Exception {
+
+		return _getUserAccountResource().deleteUserAccount(userAccountId);
 	}
 
 	@GraphQLInvokeDetached
-	public Keyword putKeyword( @GraphQLName("keyword-id") Long keywordId , @GraphQLName("Keyword") Keyword keyword ) throws Exception {
-return _getKeywordResource().putKeyword( keywordId , keyword );
+	public boolean deleteVocabulary(
+			@GraphQLName("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return _getVocabularyResource().deleteVocabulary(vocabularyId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount postUserAccount( @GraphQLName("UserAccount") UserAccount userAccount ) throws Exception {
-return _getUserAccountResource().postUserAccount( userAccount );
-	}
+	public Category postCategoryCategory(
+			@GraphQLName("category-id") Long categoryId,
+			@GraphQLName("Category") Category category)
+		throws Exception {
 
-	@GraphQLInvokeDetached
-	public boolean deleteUserAccount( @GraphQLName("user-account-id") Long userAccountId ) throws Exception {
-return _getUserAccountResource().deleteUserAccount( userAccountId );
-	}
-
-	@GraphQLInvokeDetached
-	public UserAccount putUserAccount( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("UserAccount") UserAccount userAccount ) throws Exception {
-return _getUserAccountResource().putUserAccount( userAccountId , userAccount );
+		return _getCategoryResource().postCategoryCategory(categoryId, category);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Vocabulary postContentSpaceVocabulary( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
-return _getVocabularyResource().postContentSpaceVocabulary( contentSpaceId , vocabulary );
+	public Keyword postContentSpaceKeyword(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Keyword") Keyword keyword)
+		throws Exception {
+
+		return _getKeywordResource().postContentSpaceKeyword(contentSpaceId, keyword);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Vocabulary postContentSpaceVocabulary(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Vocabulary") Vocabulary vocabulary)
+		throws Exception {
+
+		return _getVocabularyResource().postContentSpaceVocabulary(contentSpaceId, vocabulary);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public UserAccount postUserAccount(
+			@GraphQLName("UserAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _getUserAccountResource().postUserAccount(userAccount);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Category postVocabularyCategory(
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("Category") Category category)
+		throws Exception {
+
+		return _getCategoryResource().postVocabularyCategory(vocabularyId, category);
 	}
 
 	@GraphQLInvokeDetached
-	public boolean deleteVocabulary( @GraphQLName("vocabulary-id") Long vocabularyId ) throws Exception {
-return _getVocabularyResource().deleteVocabulary( vocabularyId );
+	public Category putCategory(
+			@GraphQLName("category-id") Long categoryId,
+			@GraphQLName("Category") Category category)
+		throws Exception {
+
+		return _getCategoryResource().putCategory(categoryId, category);
 	}
 
 	@GraphQLInvokeDetached
-	public Vocabulary putVocabulary( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("Vocabulary") Vocabulary vocabulary ) throws Exception {
-return _getVocabularyResource().putVocabulary( vocabularyId , vocabulary );
+	public Keyword putKeyword(
+			@GraphQLName("keyword-id") Long keywordId,
+			@GraphQLName("Keyword") Keyword keyword)
+		throws Exception {
+
+		return _getKeywordResource().putKeyword(keywordId, keyword);
+	}
+
+	@GraphQLInvokeDetached
+	public UserAccount putUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("UserAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _getUserAccountResource().putUserAccount(userAccountId, userAccount);
+	}
+
+	@GraphQLInvokeDetached
+	public Vocabulary putVocabulary(
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("Vocabulary") Vocabulary vocabulary)
+		throws Exception {
+
+		return _getVocabularyResource().putVocabulary(vocabularyId, vocabulary);
 	}
 
 	private static CategoryResource _getCategoryResource() {
-			return _categoryResourceServiceTracker.getService();
+		return _categoryResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CategoryResource, CategoryResource> _categoryResourceServiceTracker;
 	private static KeywordResource _getKeywordResource() {
-			return _keywordResourceServiceTracker.getService();
+		return _keywordResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<KeywordResource, KeywordResource> _keywordResourceServiceTracker;
 	private static UserAccountResource _getUserAccountResource() {
-			return _userAccountResourceServiceTracker.getService();
+		return _userAccountResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<UserAccountResource, UserAccountResource> _userAccountResourceServiceTracker;
 	private static VocabularyResource _getVocabularyResource() {
-			return _vocabularyResourceServiceTracker.getService();
+		return _vocabularyResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<VocabularyResource, VocabularyResource> _vocabularyResourceServiceTracker;
+	private static final ServiceTracker<CategoryResource, CategoryResource>
+		_categoryResourceServiceTracker;
+
+	private static final ServiceTracker<KeywordResource, KeywordResource>
+		_keywordResourceServiceTracker;
+
+	private static final ServiceTracker<UserAccountResource, UserAccountResource>
+		_userAccountResourceServiceTracker;
+
+	private static final ServiceTracker<VocabularyResource, VocabularyResource>
+		_vocabularyResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
-			ServiceTracker<CategoryResource, CategoryResource> categoryResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CategoryResource.class, null);
+		ServiceTracker<CategoryResource, CategoryResource>
+			categoryResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					CategoryResource.class, null);
 
-			categoryResourceServiceTracker.open();
+		categoryResourceServiceTracker.open();
 
-			_categoryResourceServiceTracker = categoryResourceServiceTracker;
-			ServiceTracker<KeywordResource, KeywordResource> keywordResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), KeywordResource.class, null);
+		_categoryResourceServiceTracker =
+			categoryResourceServiceTracker;
 
-			keywordResourceServiceTracker.open();
+		ServiceTracker<KeywordResource, KeywordResource>
+			keywordResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					KeywordResource.class, null);
 
-			_keywordResourceServiceTracker = keywordResourceServiceTracker;
-			ServiceTracker<UserAccountResource, UserAccountResource> userAccountResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), UserAccountResource.class, null);
+		keywordResourceServiceTracker.open();
 
-			userAccountResourceServiceTracker.open();
+		_keywordResourceServiceTracker =
+			keywordResourceServiceTracker;
 
-			_userAccountResourceServiceTracker = userAccountResourceServiceTracker;
-			ServiceTracker<VocabularyResource, VocabularyResource> vocabularyResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), VocabularyResource.class, null);
+		ServiceTracker<UserAccountResource, UserAccountResource>
+			userAccountResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					UserAccountResource.class, null);
 
-			vocabularyResourceServiceTracker.open();
+		userAccountResourceServiceTracker.open();
 
-			_vocabularyResourceServiceTracker = vocabularyResourceServiceTracker;
+		_userAccountResourceServiceTracker =
+			userAccountResourceServiceTracker;
+
+		ServiceTracker<VocabularyResource, VocabularyResource>
+			vocabularyResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					VocabularyResource.class, null);
+
+		vocabularyResourceServiceTracker.open();
+
+		_vocabularyResourceServiceTracker =
+			vocabularyResourceServiceTracker;
 	}
 
 }

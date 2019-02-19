@@ -46,47 +46,63 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingImageResource {
+public abstract class BaseBlogPostingImageResourceImpl
+	implements BlogPostingImageResource {
+
+	@DELETE
+	@Path("/blog-posting-images/{image-object-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public boolean deleteImageObject(
+			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
+
+		return false;
+	}
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
+	@GET
+	@Path("/blog-posting-images/{image-object-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public BlogPostingImage getImageObject(
+			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
+
+		return new BlogPostingImageImpl();
+	}
+
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public BlogPostingImage postContentSpaceBlogPostingImage( @PathParam("content-space-id") Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
-			return new BlogPostingImageImpl();
+	public BlogPostingImage postContentSpaceBlogPostingImage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			MultipartBody multipartBody)
+		throws Exception {
 
-	}
-	@DELETE
-	@Path("/blog-posting-images/{image-object-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception {
-			return false;
-
-	}
-	@GET
-	@Path("/blog-posting-images/{image-object-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public BlogPostingImage getImageObject( @PathParam("image-object-id") Long imageObjectId ) throws Exception {
-			return new BlogPostingImageImpl();
-
+		return new BlogPostingImageImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -55,7 +55,8 @@ public abstract class BaseFolderResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-document-library/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-document-library/v1.0");
 	}
 
 	@After
@@ -64,122 +65,148 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceFoldersPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostContentSpaceFolder() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteFolder() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetContentSpaceFoldersPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testGetFolder() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testPutFolder() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetFolderFoldersPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testPostContentSpaceFolder() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testPostFolderFolder() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceFoldersPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/folders",
-				contentSpaceId 
-			);
-
+	@Test
+	public void testPutFolder() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokePostContentSpaceFolder( Long contentSpaceId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				folder
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/folders",
-				contentSpaceId 
-			);
+	protected Response invokeDeleteFolder(Long folderId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/folders/{folder-id}",
+			folderId
+		);
 	}
-	protected Response invokeDeleteFolder( Long folderId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/folders/{folder-id}",
-				folderId
-			);
+	protected Response invokeGetContentSpaceFoldersPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/folders",
+			contentSpaceId 
+		);
 	}
-	protected Response invokeGetFolder( Long folderId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/folders/{folder-id}",
-				folderId
-			);
+	protected Response invokeGetFolder(Long folderId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/folders/{folder-id}",
+			folderId
+		);
 	}
-	protected Response invokePutFolder( Long folderId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				folder
-			).when(
-			).put(
-				_resourceURL + "/folders/{folder-id}",
-				folderId 
-			);
+	protected Response invokeGetFolderFoldersPage(
+			Long folderId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/folders/{folder-id}/folders",
+			folderId 
+		);
 	}
-	protected Response invokeGetFolderFoldersPage( Long folderId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/folders/{folder-id}/folders",
-				folderId 
-			);
+	protected Response invokePostContentSpaceFolder(
+			Long contentSpaceId, Folder folder)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			folder
+		).when(
+		).post(
+			_resourceURL + "/content-spaces/{content-space-id}/folders",
+			contentSpaceId 
+		);
 	}
-	protected Response invokePostFolderFolder( Long folderId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				folder
-			).when(
-			).post(
-				_resourceURL + "/folders/{folder-id}/folders",
-				folderId 
-			);
+	protected Response invokePostFolderFolder(Long folderId, Folder folder)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			folder
+		).when(
+		).post(
+			_resourceURL + "/folders/{folder-id}/folders",
+			folderId 
+		);
+	}
+
+	protected Response invokePutFolder(Long folderId, Folder folder)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			folder
+		).when(
+		).put(
+			_resourceURL + "/folders/{folder-id}",
+			folderId 
+		);
 	}
 
 	protected Folder randomFolder() {
 		Folder folder = new FolderImpl();
 
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-hasDocuments = RandomTestUtil.randomBoolean();
-hasFolders = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-repositoryId = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		hasDocuments = RandomTestUtil.randomBoolean();
+		hasFolders = RandomTestUtil.randomBoolean();
+		id = RandomTestUtil.randomLong();
+		name = RandomTestUtil.randomString();
+		repositoryId = RandomTestUtil.randomLong();
+
 		return folder;
 	}
 
@@ -201,7 +228,7 @@ repositoryId = RandomTestUtil.randomLong();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

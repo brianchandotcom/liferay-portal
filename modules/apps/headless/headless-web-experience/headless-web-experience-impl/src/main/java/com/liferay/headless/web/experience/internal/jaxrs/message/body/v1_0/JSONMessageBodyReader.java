@@ -82,39 +82,39 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-			if (clazz.equals(AggregateRating.class)) {
-				return true;
-	}
-			if (clazz.equals(Categories.class)) {
-				return true;
-	}
-			if (clazz.equals(Comment.class)) {
-				return true;
-	}
-			if (clazz.equals(ContentStructure.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(Fields.class)) {
-				return true;
-	}
-			if (clazz.equals(Options.class)) {
-				return true;
-	}
-			if (clazz.equals(RenderedContentsByTemplate.class)) {
-				return true;
-	}
-			if (clazz.equals(StructuredContent.class)) {
-				return true;
-	}
-			if (clazz.equals(StructuredContentImage.class)) {
-				return true;
-	}
-			if (clazz.equals(Values.class)) {
-				return true;
-	}
+		if (clazz.equals(AggregateRating.class)) {
+			return true;
+		}
+		if (clazz.equals(Categories.class)) {
+			return true;
+		}
+		if (clazz.equals(Comment.class)) {
+			return true;
+		}
+		if (clazz.equals(ContentStructure.class)) {
+			return true;
+		}
+		if (clazz.equals(Creator.class)) {
+			return true;
+		}
+		if (clazz.equals(Fields.class)) {
+			return true;
+		}
+		if (clazz.equals(Options.class)) {
+			return true;
+		}
+		if (clazz.equals(RenderedContentsByTemplate.class)) {
+			return true;
+		}
+		if (clazz.equals(StructuredContent.class)) {
+			return true;
+		}
+		if (clazz.equals(StructuredContentImage.class)) {
+			return true;
+		}
+		if (clazz.equals(Values.class)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -132,29 +132,45 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Web.Experience", Version.unknownVersion()) {
+				new SimpleModule(
+				"Liferay.Headless.Web.Experience", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(AggregateRating.class, AggregateRatingImpl.class);
-										addMapping(Categories.class, CategoriesImpl.class);
-										addMapping(Comment.class, CommentImpl.class);
-										addMapping(ContentStructure.class, ContentStructureImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Fields.class, FieldsImpl.class);
-										addMapping(Options.class, OptionsImpl.class);
-										addMapping(RenderedContentsByTemplate.class, RenderedContentsByTemplateImpl.class);
-										addMapping(StructuredContent.class, StructuredContentImpl.class);
-										addMapping(StructuredContentImage.class, StructuredContentImageImpl.class);
-										addMapping(Values.class, ValuesImpl.class);
-	}
-							});
-	}
-				});
+									addMapping(
+										AggregateRating.class,
+										AggregateRatingImpl.class);
+									addMapping(
+										Categories.class, CategoriesImpl.class);
+									addMapping(
+										Comment.class, CommentImpl.class);
+									addMapping(
+										ContentStructure.class,
+										ContentStructureImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
+									addMapping(Fields.class, FieldsImpl.class);
+									addMapping(
+										Options.class, OptionsImpl.class);
+									addMapping(
+										RenderedContentsByTemplate.class,
+										RenderedContentsByTemplateImpl.class);
+									addMapping(
+										StructuredContent.class,
+										StructuredContentImpl.class);
+									addMapping(
+										StructuredContentImage.class,
+										StructuredContentImageImpl.class);
+									addMapping(Values.class, ValuesImpl.class);
+								}
+								});
+					}
+					});
 
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

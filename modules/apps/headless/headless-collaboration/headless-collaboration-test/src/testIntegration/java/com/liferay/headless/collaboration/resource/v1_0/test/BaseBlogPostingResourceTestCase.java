@@ -55,7 +55,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-collaboration/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-collaboration/v1.0");
 	}
 
 	@After
@@ -65,96 +66,118 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testDeleteBlogPosting() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetBlogPosting() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testPutBlogPosting() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetContentSpaceBlogPostingsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostContentSpaceBlogPosting() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeDeleteBlogPosting( Long blogPostingId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/blog-postings/{blog-posting-id}",
-				blogPostingId
-			);
-
+	@Test
+	public void testPutBlogPosting() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokeGetBlogPosting( Long blogPostingId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/blog-postings/{blog-posting-id}",
-				blogPostingId
-			);
+	protected Response invokeDeleteBlogPosting(Long blogPostingId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/blog-postings/{blog-posting-id}",
+			blogPostingId
+		);
 	}
-	protected Response invokePutBlogPosting( Long blogPostingId , BlogPosting blogPosting ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				blogPosting
-			).when(
-			).put(
-				_resourceURL + "/blog-postings/{blog-posting-id}",
-				blogPostingId 
-			);
+	protected Response invokeGetBlogPosting(Long blogPostingId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/blog-postings/{blog-posting-id}",
+			blogPostingId
+		);
 	}
-	protected Response invokeGetContentSpaceBlogPostingsPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
-				contentSpaceId 
-			);
+	protected Response invokeGetContentSpaceBlogPostingsPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
+			contentSpaceId 
+		);
 	}
-	protected Response invokePostContentSpaceBlogPosting( Long contentSpaceId , BlogPosting blogPosting ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				blogPosting
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
-				contentSpaceId 
-			);
+	protected Response invokePostContentSpaceBlogPosting(
+			Long contentSpaceId, BlogPosting blogPosting)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			blogPosting
+		).when(
+		).post(
+			_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
+			contentSpaceId 
+		);
+	}
+
+	protected Response invokePutBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			blogPosting
+		).when(
+		).put(
+			_resourceURL + "/blog-postings/{blog-posting-id}",
+			blogPostingId 
+		);
 	}
 
 	protected BlogPosting randomBlogPosting() {
 		BlogPosting blogPosting = new BlogPostingImpl();
 
-alternativeHeadline = RandomTestUtil.randomString();
-articleBody = RandomTestUtil.randomString();
-caption = RandomTestUtil.randomString();
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-datePublished = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-friendlyUrlPath = RandomTestUtil.randomString();
-headline = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-imageId = RandomTestUtil.randomLong();
+		alternativeHeadline = RandomTestUtil.randomString();
+		articleBody = RandomTestUtil.randomString();
+		caption = RandomTestUtil.randomString();
+		contentSpace = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		datePublished = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		encodingFormat = RandomTestUtil.randomString();
+		friendlyUrlPath = RandomTestUtil.randomString();
+		headline = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		imageId = RandomTestUtil.randomLong();
+
 		return blogPosting;
 	}
 
@@ -176,7 +199,7 @@ imageId = RandomTestUtil.randomLong();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

@@ -56,7 +56,8 @@ public abstract class BaseDocumentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-document-library/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-document-library/v1.0");
 	}
 
 	@After
@@ -65,103 +66,126 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceDocumentsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostContentSpaceDocument() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetContentSpaceDocumentsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testGetDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetFolderDocumentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testPostContentSpaceDocument() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testPostFolderDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceDocumentsPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteDocument(Long documentId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/documents",
-				contentSpaceId 
-			);
-
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/documents/{document-id}",
+			documentId
+		);
 	}
-	protected Response invokePostContentSpaceDocument( Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/documents",
-				contentSpaceId , multipartBody
-			);
+	protected Response invokeGetContentSpaceDocumentsPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/documents",
+			contentSpaceId 
+		);
 	}
-	protected Response invokeDeleteDocument( Long documentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/documents/{document-id}",
-				documentId
-			);
+	protected Response invokeGetDocument(Long documentId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/documents/{document-id}",
+			documentId
+		);
 	}
-	protected Response invokeGetDocument( Long documentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/documents/{document-id}",
-				documentId
-			);
+	protected Response invokeGetFolderDocumentsPage(
+			Long folderId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/folders/{folder-id}/documents",
+			folderId 
+		);
 	}
-	protected Response invokeGetFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/folders/{folder-id}/documents",
-				folderId 
-			);
+	protected Response invokePostContentSpaceDocument(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).post(
+			_resourceURL + "/content-spaces/{content-space-id}/documents",
+			contentSpaceId, multipartBody
+		);
 	}
-	protected Response invokePostFolderDocument( Long folderId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/folders/{folder-id}/documents",
-				folderId , multipartBody
-			);
+	protected Response invokePostFolderDocument(
+			Long folderId, MultipartBody multipartBody)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).post(
+			_resourceURL + "/folders/{folder-id}/documents",
+			folderId, multipartBody
+		);
 	}
 
 	protected Document randomDocument() {
 		Document document = new DocumentImpl();
 
-contentUrl = RandomTestUtil.randomString();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-folderId = RandomTestUtil.randomLong();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();
+		contentUrl = RandomTestUtil.randomString();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		encodingFormat = RandomTestUtil.randomString();
+		fileExtension = RandomTestUtil.randomString();
+		folderId = RandomTestUtil.randomLong();
+		id = RandomTestUtil.randomLong();
+		title = RandomTestUtil.randomString();
+
 		return document;
 	}
 
@@ -183,7 +207,7 @@ title = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

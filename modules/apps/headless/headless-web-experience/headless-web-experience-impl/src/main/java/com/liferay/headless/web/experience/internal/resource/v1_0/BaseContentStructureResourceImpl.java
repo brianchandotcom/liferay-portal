@@ -44,28 +44,38 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseContentStructureResourceImpl implements ContentStructureResource {
+public abstract class BaseContentStructureResourceImpl
+	implements ContentStructureResource {
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<ContentStructure> getContentSpaceContentStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<ContentStructure> getContentSpaceContentStructuresPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@GET
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public ContentStructure getContentStructure( @PathParam("content-structure-id") Long contentStructureId ) throws Exception {
-			return new ContentStructureImpl();
+	public ContentStructure getContentStructure(
+			@PathParam("content-structure-id") Long contentStructureId)
+		throws Exception {
 
+		return new ContentStructureImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

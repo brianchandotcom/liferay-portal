@@ -29,98 +29,134 @@ public interface BlogPosting {
 
 	public AggregateRating getAggregateRating();
 
+	public String getAlternativeHeadline();
+
+	public String getArticleBody();
+
+	public String getCaption();
+
+	public Categories[] getCategories();
+
+	public Comment[] getComment();
+
+	public Long getContentSpace();
+
+	public Creator getCreator();
+
+	public Date getDateCreated();
+
+	public Date getDateModified();
+
+	public Date getDatePublished();
+
+	public String getDescription();
+
+	public String getEncodingFormat();
+
+	public String getFriendlyUrlPath();
+
+	public String getHeadline();
+
+	public Long getId();
+
+	public Image getImage();
+
+	public Long getImageId();
+
+	public String[] getKeywords();
+
 	public void setAggregateRating(AggregateRating aggregateRating);
 
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier);
-	public String getAlternativeHeadline();
+	public void setAggregateRating(
+		UnsafeSupplier<AggregateRating, Throwable>
+			aggregateRatingUnsafeSupplier);
 
 	public void setAlternativeHeadline(String alternativeHeadline);
 
-	public void setAlternativeHeadline(UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier);
-	public String getArticleBody();
+	public void setAlternativeHeadline(
+		UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier);
 
 	public void setArticleBody(String articleBody);
 
-	public void setArticleBody(UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier);
-	public String getCaption();
+	public void setArticleBody(
+		UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier);
 
 	public void setCaption(String caption);
 
-	public void setCaption(UnsafeSupplier<String, Throwable> captionUnsafeSupplier);
-	public Categories[] getCategories();
+	public void setCaption(
+		UnsafeSupplier<String, Throwable> captionUnsafeSupplier);
 
 	public void setCategories(Categories[] categories);
 
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
-	public Comment[] getComment();
+	public void setCategories(
+		UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
 
 	public void setComment(Comment[] comment);
 
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier);
-	public Long getContentSpace();
+	public void setComment(
+		UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier);
 
 	public void setContentSpace(Long contentSpace);
 
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
-	public Creator getCreator();
+	public void setContentSpace(
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
 
 	public void setCreator(Creator creator);
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
-	public Date getDateCreated();
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
 
 	public void setDateCreated(Date dateCreated);
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-	public Date getDateModified();
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
 
 	public void setDateModified(Date dateModified);
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
-	public Date getDatePublished();
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 
 	public void setDatePublished(Date datePublished);
 
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier);
-	public String getDescription();
+	public void setDatePublished(
+		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier);
 
 	public void setDescription(String description);
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
-	public String getEncodingFormat();
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
 
 	public void setEncodingFormat(String encodingFormat);
 
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
-	public String getFriendlyUrlPath();
+	public void setEncodingFormat(
+		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
 
 	public void setFriendlyUrlPath(String friendlyUrlPath);
 
-	public void setFriendlyUrlPath(UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier);
-	public String getHeadline();
+	public void setFriendlyUrlPath(
+		UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier);
 
 	public void setHeadline(String headline);
 
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier);
-	public Long getId();
+	public void setHeadline(
+		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier);
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public Image getImage();
 
 	public void setImage(Image image);
 
 	public void setImage(UnsafeSupplier<Image, Throwable> imageUnsafeSupplier);
-	public Long getImageId();
 
 	public void setImageId(Long imageId);
 
-	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier);
-	public String[] getKeywords();
+	public void setImageId(
+		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier);
 
 	public void setKeywords(String[] keywords);
 
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier);
+	public void setKeywords(
+		UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier);
 
 }

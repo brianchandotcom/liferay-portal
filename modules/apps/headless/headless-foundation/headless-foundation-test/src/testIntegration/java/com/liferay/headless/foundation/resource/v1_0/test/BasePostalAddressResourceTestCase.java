@@ -55,7 +55,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -64,47 +65,53 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentPostalAddressesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testGetAddress() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentPostalAddressesPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/addresses",
-				genericParentId 
-			);
-
+	@Test
+	public void testGetGenericParentPostalAddressesPage() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokeGetAddress( Long addressId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/addresses/{address-id}",
-				addressId
-			);
+	protected Response invokeGetAddress(Long addressId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/addresses/{address-id}",
+			addressId
+		);
+	}
+
+	protected Response invokeGetGenericParentPostalAddressesPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/addresses",
+			genericParentId 
+		);
 	}
 
 	protected PostalAddress randomPostalAddress() {
 		PostalAddress postalAddress = new PostalAddressImpl();
 
-addressCountry = RandomTestUtil.randomString();
-addressLocality = RandomTestUtil.randomString();
-addressRegion = RandomTestUtil.randomString();
-addressType = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-postalCode = RandomTestUtil.randomString();
-streetAddressLine1 = RandomTestUtil.randomString();
-streetAddressLine2 = RandomTestUtil.randomString();
-streetAddressLine3 = RandomTestUtil.randomString();
+		addressCountry = RandomTestUtil.randomString();
+		addressLocality = RandomTestUtil.randomString();
+		addressRegion = RandomTestUtil.randomString();
+		addressType = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		postalCode = RandomTestUtil.randomString();
+		streetAddressLine1 = RandomTestUtil.randomString();
+		streetAddressLine2 = RandomTestUtil.randomString();
+		streetAddressLine3 = RandomTestUtil.randomString();
+
 		return postalAddress;
 	}
 
@@ -126,7 +133,7 @@ streetAddressLine3 = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

@@ -55,7 +55,8 @@ public abstract class BaseCategoryResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -65,121 +66,148 @@ public abstract class BaseCategoryResourceTestCase {
 
 	@Test
 	public void testDeleteCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testPutCategory() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetCategoryCategoriesPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testPostCategoryCategory() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetVocabularyCategoriesPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testPostCategoryCategory() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testPostVocabularyCategory() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeDeleteCategory( Long categoryId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/categories/{category-id}",
-				categoryId
-			);
-
+	@Test
+	public void testPutCategory() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokeGetCategory( Long categoryId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/categories/{category-id}",
-				categoryId
-			);
+	protected Response invokeDeleteCategory(Long categoryId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/categories/{category-id}",
+			categoryId
+		);
 	}
-	protected Response invokePutCategory( Long categoryId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				category
-			).when(
-			).put(
-				_resourceURL + "/categories/{category-id}",
-				categoryId 
-			);
+	protected Response invokeGetCategory(Long categoryId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/categories/{category-id}",
+			categoryId
+		);
 	}
-	protected Response invokeGetCategoryCategoriesPage( Long categoryId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/categories/{category-id}/categories",
-				categoryId 
-			);
+	protected Response invokeGetCategoryCategoriesPage(
+			Long categoryId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/categories/{category-id}/categories",
+			categoryId 
+		);
 	}
-	protected Response invokePostCategoryCategory( Long categoryId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				category
-			).when(
-			).post(
-				_resourceURL + "/categories/{category-id}/categories",
-				categoryId 
-			);
+	protected Response invokeGetVocabularyCategoriesPage(
+			Long vocabularyId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/vocabularies/{vocabulary-id}/categories",
+			vocabularyId 
+		);
 	}
-	protected Response invokeGetVocabularyCategoriesPage( Long vocabularyId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/vocabularies/{vocabulary-id}/categories",
-				vocabularyId 
-			);
+	protected Response invokePostCategoryCategory(
+			Long categoryId, Category category)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			category
+		).when(
+		).post(
+			_resourceURL + "/categories/{category-id}/categories",
+			categoryId 
+		);
 	}
-	protected Response invokePostVocabularyCategory( Long vocabularyId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				category
-			).when(
-			).post(
-				_resourceURL + "/vocabularies/{vocabulary-id}/categories",
-				vocabularyId 
-			);
+	protected Response invokePostVocabularyCategory(
+			Long vocabularyId, Category category)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			category
+		).when(
+		).post(
+			_resourceURL + "/vocabularies/{vocabulary-id}/categories",
+			vocabularyId 
+		);
+	}
+
+	protected Response invokePutCategory(Long categoryId, Category category)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			category
+		).when(
+		).put(
+			_resourceURL + "/categories/{category-id}",
+			categoryId 
+		);
 	}
 
 	protected Category randomCategory() {
 		Category category = new CategoryImpl();
 
-creatorId = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-hasCategories = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-parentVocabularyId = RandomTestUtil.randomLong();
+		creatorId = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		hasCategories = RandomTestUtil.randomBoolean();
+		id = RandomTestUtil.randomLong();
+		name = RandomTestUtil.randomString();
+		parentVocabularyId = RandomTestUtil.randomLong();
+
 		return category;
 	}
 
@@ -201,7 +229,7 @@ parentVocabularyId = RandomTestUtil.randomLong();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

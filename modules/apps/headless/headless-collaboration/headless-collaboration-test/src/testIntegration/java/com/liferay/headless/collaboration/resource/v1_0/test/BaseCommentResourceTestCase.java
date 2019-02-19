@@ -55,7 +55,8 @@ public abstract class BaseCommentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-collaboration/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-collaboration/v1.0");
 	}
 
 	@After
@@ -65,56 +66,67 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testGetBlogPostingCommentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetComment() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetCommentCommentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetBlogPostingCommentsPage( Long blogPostingId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetBlogPostingCommentsPage(
+			Long blogPostingId, Pagination pagination)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/blog-postings/{blog-posting-id}/comments",
-				blogPostingId 
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/blog-postings/{blog-posting-id}/comments",
+			blogPostingId 
+		);
 	}
-	protected Response invokeGetComment( Long commentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/comments/{comment-id}",
-				commentId
-			);
+	protected Response invokeGetComment(Long commentId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/comments/{comment-id}",
+			commentId
+		);
 	}
-	protected Response invokeGetCommentCommentsPage( Long commentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/comments/{comment-id}/comments",
-				commentId 
-			);
+	protected Response invokeGetCommentCommentsPage(
+			Long commentId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/comments/{comment-id}/comments",
+			commentId 
+		);
 	}
 
 	protected Comment randomComment() {
 		Comment comment = new CommentImpl();
 
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-hasComments = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-text = RandomTestUtil.randomString();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		hasComments = RandomTestUtil.randomBoolean();
+		id = RandomTestUtil.randomLong();
+		text = RandomTestUtil.randomString();
+
 		return comment;
 	}
 
@@ -136,7 +148,7 @@ text = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

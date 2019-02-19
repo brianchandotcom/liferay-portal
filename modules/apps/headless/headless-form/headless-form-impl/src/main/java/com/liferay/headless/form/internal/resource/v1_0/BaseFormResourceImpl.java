@@ -44,57 +44,70 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFormResourceImpl implements FormResource {
+public abstract class BaseFormResourceImpl
+	implements FormResource {
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/form")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Form> getContentSpaceFormsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Form> getContentSpaceFormsPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@GET
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Form getForm( @PathParam("form-id") Long formId ) throws Exception {
-			return new FormImpl();
-
+	public Form getForm(@PathParam("form-id") Long formId) throws Exception {
+		return new FormImpl();
 	}
+
+	@GET
+	@Path("/forms/{form-id}/fetch-latest-draft")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Form getFormFetchLatestDraft(@PathParam("form-id") Long formId)
+		throws Exception {
+
+		return new FormImpl();
+	}
+
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/evaluate-context")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	@Override
-	public Form postFormEvaluateContext( @PathParam("form-id") Long formId , Form form ) throws Exception {
-			return new FormImpl();
+	public Form postFormEvaluateContext(
+			@PathParam("form-id") Long formId, Form form)
+		throws Exception {
 
+		return new FormImpl();
 	}
-	@GET
-	@Path("/forms/{form-id}/fetch-latest-draft")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Form getFormFetchLatestDraft( @PathParam("form-id") Long formId ) throws Exception {
-			return new FormImpl();
 
-	}
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	@Override
-	public Form postFormUploadFile( @PathParam("form-id") Long formId , Form form ) throws Exception {
-			return new FormImpl();
+	public Form postFormUploadFile(@PathParam("form-id") Long formId, Form form)
+		throws Exception {
 
+		return new FormImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

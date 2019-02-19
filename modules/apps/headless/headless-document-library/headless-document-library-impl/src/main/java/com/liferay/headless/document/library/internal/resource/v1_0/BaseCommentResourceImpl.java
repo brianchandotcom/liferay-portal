@@ -42,37 +42,49 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseCommentResourceImpl implements CommentResource {
+public abstract class BaseCommentResourceImpl
+	implements CommentResource {
 
 	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Comment getComment( @PathParam("comment-id") Long commentId ) throws Exception {
-			return new CommentImpl();
+	public Comment getComment(@PathParam("comment-id") Long commentId)
+		throws Exception {
 
+		return new CommentImpl();
 	}
+
 	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Comment> getCommentCommentsPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Comment> getCommentCommentsPage(
+			@PathParam("comment-id") Long commentId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@GET
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Comment> getDocumentCommentsPage( @PathParam("document-id") Long documentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Comment> getDocumentCommentsPage(
+			@PathParam("document-id") Long documentId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -46,66 +46,87 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseDocumentResourceImpl implements DocumentResource {
+public abstract class BaseDocumentResourceImpl
+	implements DocumentResource {
 
-	@GET
-	@Path("/content-spaces/{content-space-id}/documents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Document> getContentSpaceDocumentsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/content-spaces/{content-space-id}/documents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Document postContentSpaceDocument( @PathParam("content-space-id") Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
-			return new DocumentImpl();
-
-	}
 	@DELETE
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public boolean deleteDocument( @PathParam("document-id") Long documentId ) throws Exception {
-			return false;
+	public boolean deleteDocument(@PathParam("document-id") Long documentId)
+		throws Exception {
 
+		return false;
 	}
+
+	@GET
+	@Path("/content-spaces/{content-space-id}/documents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Page<Document> getContentSpaceDocumentsPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	@GET
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Document getDocument( @PathParam("document-id") Long documentId ) throws Exception {
-			return new DocumentImpl();
+	public Document getDocument(@PathParam("document-id") Long documentId)
+		throws Exception {
 
+		return new DocumentImpl();
 	}
+
 	@GET
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Document> getFolderDocumentsPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Document> getFolderDocumentsPage(
+			@PathParam("folder-id") Long folderId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
+	@Consumes("multipart/form-data")
+	@POST
+	@Path("/content-spaces/{content-space-id}/documents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Document postContentSpaceDocument(
+			@PathParam("content-space-id") Long contentSpaceId,
+			MultipartBody multipartBody)
+		throws Exception {
+
+		return new DocumentImpl();
+	}
+
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Document postFolderDocument( @PathParam("folder-id") Long folderId , MultipartBody multipartBody ) throws Exception {
-			return new DocumentImpl();
+	public Document postFolderDocument(
+			@PathParam("folder-id") Long folderId, MultipartBody multipartBody)
+		throws Exception {
 
+		return new DocumentImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

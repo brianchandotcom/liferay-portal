@@ -27,35 +27,45 @@ public interface Values {
 
 	public String getDataType();
 
+	public String getFilterAndSortIdentifier();
+
+	public Long getId();
+
+	public String getInputControl();
+
+	public String getLabel();
+
+	public String getName();
+
+	public Object getValue();
+
 	public void setDataType(String dataType);
 
-	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier);
-	public String getFilterAndSortIdentifier();
+	public void setDataType(
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier);
 
 	public void setFilterAndSortIdentifier(String filterAndSortIdentifier);
 
-	public void setFilterAndSortIdentifier(UnsafeSupplier<String, Throwable> filterAndSortIdentifierUnsafeSupplier);
-	public Long getId();
+	public void setFilterAndSortIdentifier(
+		UnsafeSupplier<String, Throwable>
+			filterAndSortIdentifierUnsafeSupplier);
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getInputControl();
 
 	public void setInputControl(String inputControl);
 
-	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier);
-	public String getLabel();
+	public void setInputControl(
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier);
 
 	public void setLabel(String label);
 
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
-	public String getName();
 
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public Object getValue();
 
 	public void setValue(Object value);
 

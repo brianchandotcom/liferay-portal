@@ -42,28 +42,36 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
+public abstract class BaseWebUrlResourceImpl
+	implements WebUrlResource {
 
 	@GET
 	@Path("/web-urls")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<WebUrl> getGenericParentWebUrlsPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<WebUrl> getGenericParentWebUrlsPage(
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@GET
 	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public WebUrl getWebUrl( @PathParam("web-url-id") Long webUrlId ) throws Exception {
-			return new WebUrlImpl();
+	public WebUrl getWebUrl(@PathParam("web-url-id") Long webUrlId)
+		throws Exception {
 
+		return new WebUrlImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

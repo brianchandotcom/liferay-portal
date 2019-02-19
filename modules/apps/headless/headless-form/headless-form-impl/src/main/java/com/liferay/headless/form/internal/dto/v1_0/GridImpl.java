@@ -39,64 +39,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GridImpl implements Grid {
 
 	public Columns[] getColumns() {
-			return columns;
+		return columns;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Rows[] getRows() {
+		return rows;
 	}
 
 	public void setColumns(Columns[] columns) {
-			this.columns = columns;
+		this.columns = columns;
 	}
 
 	@JsonIgnore
-	public void setColumns(UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
-			try {
-				columns = columnsUnsafeSupplier.get();
+	public void setColumns(
+		UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
+
+		try {
+			columns = columnsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setId(Long id) {
+		this.id = id;
 	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setRows(Rows[] rows) {
+		this.rows = rows;
+	}
+
+	@JsonIgnore
+	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
+		try {
+			rows = rowsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Columns[] columns;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public Rows[] getRows() {
-			return rows;
-	}
-
-	public void setRows(Rows[] rows) {
-			this.rows = rows;
-	}
-
-	@JsonIgnore
-	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
-			try {
-				rows = rowsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

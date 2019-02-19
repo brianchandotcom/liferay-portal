@@ -46,118 +46,162 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Form> getContentSpaceFormsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getFormResource().getContentSpaceFormsPage(
+	public Collection<Form> getContentSpaceFormsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					contentSpaceId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getFormResource().getContentSpaceFormsPage(
+			contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getForm( @GraphQLName("form-id") Long formId ) throws Exception {
-return _getFormResource().getForm( formId );
+	public Collection<FormStructure> getContentSpaceFormStructuresPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage =
+			_getFormStructureResource().getContentSpaceFormStructuresPage(
+				contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Form getFormFetchLatestDraft( @GraphQLName("form-id") Long formId ) throws Exception {
-return _getFormResource().getFormFetchLatestDraft( formId );
+	public Form getForm(@GraphQLName("form-id") Long formId) throws Exception {
+		return _getFormResource().getForm(formId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormDocument getFormDocument( @GraphQLName("form-document-id") Long formDocumentId ) throws Exception {
-return _getFormDocumentResource().getFormDocument( formDocumentId );
+	public FormDocument getFormDocument(
+			@GraphQLName("form-document-id") Long formDocumentId)
+		throws Exception {
+
+		return _getFormDocumentResource().getFormDocument(formDocumentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormRecord getFormRecord( @GraphQLName("form-record-id") Long formRecordId ) throws Exception {
-return _getFormRecordResource().getFormRecord( formRecordId );
+	public Form getFormFetchLatestDraft(@GraphQLName("form-id") Long formId)
+		throws Exception {
+
+		return _getFormResource().getFormFetchLatestDraft(formId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<FormRecord> getFormFormRecordsPage( @GraphQLName("form-id") Long formId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getFormRecordResource().getFormFormRecordsPage(
+	public Collection<FormRecord> getFormFormRecordsPage(
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					formId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getFormRecordResource().getFormFormRecordsPage(
+			formId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<FormStructure> getContentSpaceFormStructuresPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getFormStructureResource().getContentSpaceFormStructuresPage(
+	public FormRecord getFormRecord(
+			@GraphQLName("form-record-id") Long formRecordId)
+		throws Exception {
 
-					contentSpaceId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getFormRecordResource().getFormRecord(formRecordId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public FormStructure getFormStructure( @GraphQLName("form-structure-id") Long formStructureId ) throws Exception {
-return _getFormStructureResource().getFormStructure( formStructureId );
+	public FormStructure getFormStructure(
+			@GraphQLName("form-structure-id") Long formStructureId)
+		throws Exception {
+
+		return _getFormStructureResource().getFormStructure(formStructureId);
+	}
+
+	private static FormDocumentResource _getFormDocumentResource() {
+		return _formDocumentResourceServiceTracker.getService();
+	}
+
+	private static FormRecordResource _getFormRecordResource() {
+		return _formRecordResourceServiceTracker.getService();
 	}
 
 	private static FormResource _getFormResource() {
-			return _formResourceServiceTracker.getService();
+		return _formResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<FormResource, FormResource> _formResourceServiceTracker;
-	private static FormDocumentResource _getFormDocumentResource() {
-			return _formDocumentResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<FormDocumentResource, FormDocumentResource> _formDocumentResourceServiceTracker;
-	private static FormRecordResource _getFormRecordResource() {
-			return _formRecordResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<FormRecordResource, FormRecordResource> _formRecordResourceServiceTracker;
 	private static FormStructureResource _getFormStructureResource() {
-			return _formStructureResourceServiceTracker.getService();
+		return _formStructureResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<FormStructureResource, FormStructureResource> _formStructureResourceServiceTracker;
+	private static final ServiceTracker<FormDocumentResource, FormDocumentResource>
+		_formDocumentResourceServiceTracker;
+
+	private static final ServiceTracker<FormRecordResource, FormRecordResource>
+		_formRecordResourceServiceTracker;
+
+	private static final ServiceTracker<FormResource, FormResource>
+		_formResourceServiceTracker;
+
+	private static final ServiceTracker<FormStructureResource, FormStructureResource>
+		_formStructureResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<FormResource, FormResource> formResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), FormResource.class, null);
+		ServiceTracker<FormResource, FormResource>
+			formResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					FormResource.class, null);
 
-			formResourceServiceTracker.open();
+		formResourceServiceTracker.open();
 
-			_formResourceServiceTracker = formResourceServiceTracker;
-			ServiceTracker<FormDocumentResource, FormDocumentResource> formDocumentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), FormDocumentResource.class, null);
+		_formResourceServiceTracker =
+			formResourceServiceTracker;
 
-			formDocumentResourceServiceTracker.open();
+		ServiceTracker<FormDocumentResource, FormDocumentResource>
+			formDocumentResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					FormDocumentResource.class, null);
 
-			_formDocumentResourceServiceTracker = formDocumentResourceServiceTracker;
-			ServiceTracker<FormRecordResource, FormRecordResource> formRecordResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), FormRecordResource.class, null);
+		formDocumentResourceServiceTracker.open();
 
-			formRecordResourceServiceTracker.open();
+		_formDocumentResourceServiceTracker =
+			formDocumentResourceServiceTracker;
 
-			_formRecordResourceServiceTracker = formRecordResourceServiceTracker;
-			ServiceTracker<FormStructureResource, FormStructureResource> formStructureResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), FormStructureResource.class, null);
+		ServiceTracker<FormRecordResource, FormRecordResource>
+			formRecordResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					FormRecordResource.class, null);
 
-			formStructureResourceServiceTracker.open();
+		formRecordResourceServiceTracker.open();
 
-			_formStructureResourceServiceTracker = formStructureResourceServiceTracker;
+		_formRecordResourceServiceTracker =
+			formRecordResourceServiceTracker;
+
+		ServiceTracker<FormStructureResource, FormStructureResource>
+			formStructureResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					FormStructureResource.class, null);
+
+		formStructureResourceServiceTracker.open();
+
+		_formStructureResourceServiceTracker =
+			formStructureResourceServiceTracker;
 	}
 
 }

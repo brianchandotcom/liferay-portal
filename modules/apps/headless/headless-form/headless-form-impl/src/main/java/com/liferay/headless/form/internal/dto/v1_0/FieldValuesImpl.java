@@ -38,106 +38,116 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FieldValuesImpl implements FieldValues {
 
 	public FormDocument getDocument() {
-			return document;
+		return document;
+	}
+
+	public Long getDocumentId() {
+		return documentId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getValue() {
+		return value;
 	}
 
 	public void setDocument(FormDocument document) {
-			this.document = document;
+		this.document = document;
 	}
 
 	@JsonIgnore
-	public void setDocument(UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
-			try {
-				document = documentUnsafeSupplier.get();
+	public void setDocument(
+		UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
+
+		try {
+			document = documentUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setDocumentId(Long documentId) {
+		this.documentId = documentId;
 	}
+
+	@JsonIgnore
+	public void setDocumentId(
+		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
+
+		try {
+			documentId = documentIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected FormDocument document;
-	public Long getDocumentId() {
-			return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-			this.documentId = documentId;
-	}
-
-	@JsonIgnore
-	public void setDocumentId(UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
-			try {
-				documentId = documentIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long documentId;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(String name) {
-			this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-			try {
-				name = nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public String getValue() {
-			return value;
-	}
-
-	public void setValue(String value) {
-			this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
-			try {
-				value = valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

@@ -60,400 +60,536 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Category getCategory( @GraphQLName("category-id") Long categoryId ) throws Exception {
-return _getCategoryResource().getCategory( categoryId );
+	public PostalAddress getAddress(@GraphQLName("address-id") Long addressId)
+		throws Exception {
+
+		return _getPostalAddressResource().getAddress(addressId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Category> getCategoryCategoriesPage( @GraphQLName("category-id") Long categoryId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCategoryResource().getCategoryCategoriesPage(
+	public Category getCategory(@GraphQLName("category-id") Long categoryId)
+		throws Exception {
 
-					categoryId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getCategoryResource().getCategory(categoryId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Category> getVocabularyCategoriesPage( @GraphQLName("vocabulary-id") Long vocabularyId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCategoryResource().getVocabularyCategoriesPage(
+	public Collection<Category> getCategoryCategoriesPage(
+			@GraphQLName("category-id") Long categoryId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					vocabularyId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getCategoryResource().getCategoryCategoriesPage(
+			categoryId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Email> getGenericParentEmailsPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getEmailResource().getGenericParentEmailsPage(
+	public Collection<Keyword> getContentSpaceKeywordsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
 
-					genericParentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getKeywordResource().getContentSpaceKeywordsPage(
+			contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Email getEmail( @GraphQLName("email-id") Long emailId ) throws Exception {
-return _getEmailResource().getEmail( emailId );
+	public Collection<Vocabulary> getContentSpaceVocabulariesPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		Page paginationPage =
+			_getVocabularyResource().getContentSpaceVocabulariesPage(
+				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Keyword> getContentSpaceKeywordsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
-				Page paginationPage = _getKeywordResource().getContentSpaceKeywordsPage(
+	public Email getEmail(@GraphQLName("email-id") Long emailId)
+		throws Exception {
 
-					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
-				);
-
-				return paginationPage.getItems();
-
+		return _getEmailResource().getEmail(emailId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Keyword getKeyword( @GraphQLName("keyword-id") Long keywordId ) throws Exception {
-return _getKeywordResource().getKeyword( keywordId );
+	public Collection<Email> getGenericParentEmailsPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getEmailResource().getGenericParentEmailsPage(
+			genericParentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getMyUserAccountOrganizationsPage( @GraphQLName("my-user-account-id") Long myUserAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getOrganizationResource().getMyUserAccountOrganizationsPage(
+	public Collection<Phone> getGenericParentPhonesPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					myUserAccountId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getPhoneResource().getGenericParentPhonesPage(
+			genericParentId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getOrganizationsPage( @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getOrganizationResource().getOrganizationsPage(
+	public Collection<PostalAddress> getGenericParentPostalAddressesPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getPostalAddressResource().getGenericParentPostalAddressesPage(
+				genericParentId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Organization getOrganization( @GraphQLName("organization-id") Long organizationId ) throws Exception {
-return _getOrganizationResource().getOrganization( organizationId );
+	public Collection<WebUrl> getGenericParentWebUrlsPage(
+			@GraphQLName("generic-parent-id") Object genericParentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getWebUrlResource().getGenericParentWebUrlsPage(
+			genericParentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getOrganizationOrganizationsPage( @GraphQLName("organization-id") Long organizationId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getOrganizationResource().getOrganizationOrganizationsPage(
+	public Keyword getKeyword(@GraphQLName("keyword-id") Long keywordId)
+		throws Exception {
 
-					organizationId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getKeywordResource().getKeyword(keywordId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getUserAccountOrganizationsPage( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getOrganizationResource().getUserAccountOrganizationsPage(
+	public UserAccount getMyUserAccount(
+			@GraphQLName("my-user-account-id") Long myUserAccountId)
+		throws Exception {
 
-					userAccountId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getUserAccountResource().getMyUserAccount(myUserAccountId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Phone> getGenericParentPhonesPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getPhoneResource().getGenericParentPhonesPage(
+	public Collection<Organization> getMyUserAccountOrganizationsPage(
+			@GraphQLName("my-user-account-id") Long myUserAccountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					genericParentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getOrganizationResource().getMyUserAccountOrganizationsPage(
+				myUserAccountId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Phone getPhone( @GraphQLName("phone-id") Long phoneId ) throws Exception {
-return _getPhoneResource().getPhone( phoneId );
+	public Collection<Role> getMyUserAccountRolesPage(
+			@GraphQLName("my-user-account-id") Long myUserAccountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getRoleResource().getMyUserAccountRolesPage(
+			myUserAccountId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<PostalAddress> getGenericParentPostalAddressesPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getPostalAddressResource().getGenericParentPostalAddressesPage(
+	public Organization getOrganization(
+			@GraphQLName("organization-id") Long organizationId)
+		throws Exception {
 
-					genericParentId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getOrganizationResource().getOrganization(organizationId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public PostalAddress getAddress( @GraphQLName("address-id") Long addressId ) throws Exception {
-return _getPostalAddressResource().getAddress( addressId );
+	public Collection<Organization> getOrganizationOrganizationsPage(
+			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage =
+			_getOrganizationResource().getOrganizationOrganizationsPage(
+				organizationId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getMyUserAccountRolesPage( @GraphQLName("my-user-account-id") Long myUserAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getRoleResource().getMyUserAccountRolesPage(
+	public Collection<Organization> getOrganizationsPage(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					myUserAccountId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getOrganizationResource().getOrganizationsPage(
+			Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getRolesPage( @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getRoleResource().getRolesPage(
+	public Collection<UserAccount> getOrganizationUserAccountsPage(
+			@GraphQLName("organization-id") Long organizationId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getUserAccountResource().getOrganizationUserAccountsPage(
+				organizationId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Role getRole( @GraphQLName("role-id") Long roleId ) throws Exception {
-return _getRoleResource().getRole( roleId );
+	public Phone getPhone(@GraphQLName("phone-id") Long phoneId)
+		throws Exception {
+
+		return _getPhoneResource().getPhone(phoneId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Role> getUserAccountRolesPage( @GraphQLName("user-account-id") Long userAccountId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getRoleResource().getUserAccountRolesPage(
-
-					userAccountId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+	public Role getRole(@GraphQLName("role-id") Long roleId) throws Exception {
+		return _getRoleResource().getRole(roleId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount getMyUserAccount( @GraphQLName("my-user-account-id") Long myUserAccountId ) throws Exception {
-return _getUserAccountResource().getMyUserAccount( myUserAccountId );
+	public Collection<Role> getRolesPage(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getRoleResource().getRolesPage(
+			Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<UserAccount> getOrganizationUserAccountsPage( @GraphQLName("organization-id") Long organizationId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getUserAccountResource().getOrganizationUserAccountsPage(
+	public UserAccount getUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId)
+		throws Exception {
 
-					organizationId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getUserAccountResource().getUserAccount(userAccountId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<UserAccount> getUserAccountsPage( @GraphQLName("fullnamequery") String fullnamequery , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getUserAccountResource().getUserAccountsPage(
+	public Collection<Organization> getUserAccountOrganizationsPage(
+			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					fullnamequery , Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getOrganizationResource().getUserAccountOrganizationsPage(
+				userAccountId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public UserAccount getUserAccount( @GraphQLName("user-account-id") Long userAccountId ) throws Exception {
-return _getUserAccountResource().getUserAccount( userAccountId );
+	public Collection<Role> getUserAccountRolesPage(
+			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getRoleResource().getUserAccountRolesPage(
+			userAccountId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<UserAccount> getWebSiteUserAccountsPage( @GraphQLName("web-site-id") Long webSiteId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getUserAccountResource().getWebSiteUserAccountsPage(
+	public Collection<UserAccount> getUserAccountsPage(
+			@GraphQLName("fullnamequery") String fullnamequery,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					webSiteId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getUserAccountResource().getUserAccountsPage(
+			fullnamequery, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Vocabulary> getContentSpaceVocabulariesPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
-				Page paginationPage = _getVocabularyResource().getContentSpaceVocabulariesPage(
+	public Vocabulary getVocabulary(
+			@GraphQLName("vocabulary-id") Long vocabularyId)
+		throws Exception {
 
-					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
-				);
-
-				return paginationPage.getItems();
-
+		return _getVocabularyResource().getVocabulary(vocabularyId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Vocabulary getVocabulary( @GraphQLName("vocabulary-id") Long vocabularyId ) throws Exception {
-return _getVocabularyResource().getVocabulary( vocabularyId );
+	public Collection<Category> getVocabularyCategoriesPage(
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage =
+			_getCategoryResource().getVocabularyCategoriesPage(
+				vocabularyId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WebUrl> getGenericParentWebUrlsPage( @GraphQLName("generic-parent-id") Object genericParentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getWebUrlResource().getGenericParentWebUrlsPage(
+	public Collection<UserAccount> getWebSiteUserAccountsPage(
+			@GraphQLName("web-site-id") Long webSiteId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					genericParentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getUserAccountResource().getWebSiteUserAccountsPage(
+				webSiteId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WebUrl getWebUrl( @GraphQLName("web-url-id") Long webUrlId ) throws Exception {
-return _getWebUrlResource().getWebUrl( webUrlId );
+	public WebUrl getWebUrl(@GraphQLName("web-url-id") Long webUrlId)
+		throws Exception {
+
+		return _getWebUrlResource().getWebUrl(webUrlId);
 	}
 
 	private static CategoryResource _getCategoryResource() {
-			return _categoryResourceServiceTracker.getService();
+		return _categoryResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CategoryResource, CategoryResource> _categoryResourceServiceTracker;
 	private static EmailResource _getEmailResource() {
-			return _emailResourceServiceTracker.getService();
+		return _emailResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<EmailResource, EmailResource> _emailResourceServiceTracker;
 	private static KeywordResource _getKeywordResource() {
-			return _keywordResourceServiceTracker.getService();
+		return _keywordResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<KeywordResource, KeywordResource> _keywordResourceServiceTracker;
 	private static OrganizationResource _getOrganizationResource() {
-			return _organizationResourceServiceTracker.getService();
+		return _organizationResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<OrganizationResource, OrganizationResource> _organizationResourceServiceTracker;
 	private static PhoneResource _getPhoneResource() {
-			return _phoneResourceServiceTracker.getService();
+		return _phoneResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<PhoneResource, PhoneResource> _phoneResourceServiceTracker;
 	private static PostalAddressResource _getPostalAddressResource() {
-			return _postalAddressResourceServiceTracker.getService();
+		return _postalAddressResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<PostalAddressResource, PostalAddressResource> _postalAddressResourceServiceTracker;
 	private static RoleResource _getRoleResource() {
-			return _roleResourceServiceTracker.getService();
+		return _roleResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<RoleResource, RoleResource> _roleResourceServiceTracker;
 	private static UserAccountResource _getUserAccountResource() {
-			return _userAccountResourceServiceTracker.getService();
+		return _userAccountResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<UserAccountResource, UserAccountResource> _userAccountResourceServiceTracker;
 	private static VocabularyResource _getVocabularyResource() {
-			return _vocabularyResourceServiceTracker.getService();
+		return _vocabularyResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<VocabularyResource, VocabularyResource> _vocabularyResourceServiceTracker;
 	private static WebUrlResource _getWebUrlResource() {
-			return _webUrlResourceServiceTracker.getService();
+		return _webUrlResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<WebUrlResource, WebUrlResource> _webUrlResourceServiceTracker;
+	private static final ServiceTracker<CategoryResource, CategoryResource>
+		_categoryResourceServiceTracker;
+
+	private static final ServiceTracker<EmailResource, EmailResource>
+		_emailResourceServiceTracker;
+
+	private static final ServiceTracker<KeywordResource, KeywordResource>
+		_keywordResourceServiceTracker;
+
+	private static final ServiceTracker<OrganizationResource, OrganizationResource>
+		_organizationResourceServiceTracker;
+
+	private static final ServiceTracker<PhoneResource, PhoneResource>
+		_phoneResourceServiceTracker;
+
+	private static final ServiceTracker<PostalAddressResource, PostalAddressResource>
+		_postalAddressResourceServiceTracker;
+
+	private static final ServiceTracker<RoleResource, RoleResource>
+		_roleResourceServiceTracker;
+
+	private static final ServiceTracker<UserAccountResource, UserAccountResource>
+		_userAccountResourceServiceTracker;
+
+	private static final ServiceTracker<VocabularyResource, VocabularyResource>
+		_vocabularyResourceServiceTracker;
+
+	private static final ServiceTracker<WebUrlResource, WebUrlResource>
+		_webUrlResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<CategoryResource, CategoryResource> categoryResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CategoryResource.class, null);
+		ServiceTracker<CategoryResource, CategoryResource>
+			categoryResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					CategoryResource.class, null);
 
-			categoryResourceServiceTracker.open();
+		categoryResourceServiceTracker.open();
 
-			_categoryResourceServiceTracker = categoryResourceServiceTracker;
-			ServiceTracker<EmailResource, EmailResource> emailResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), EmailResource.class, null);
+		_categoryResourceServiceTracker =
+			categoryResourceServiceTracker;
 
-			emailResourceServiceTracker.open();
+		ServiceTracker<EmailResource, EmailResource>
+			emailResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					EmailResource.class, null);
 
-			_emailResourceServiceTracker = emailResourceServiceTracker;
-			ServiceTracker<KeywordResource, KeywordResource> keywordResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), KeywordResource.class, null);
+		emailResourceServiceTracker.open();
 
-			keywordResourceServiceTracker.open();
+		_emailResourceServiceTracker =
+			emailResourceServiceTracker;
 
-			_keywordResourceServiceTracker = keywordResourceServiceTracker;
-			ServiceTracker<OrganizationResource, OrganizationResource> organizationResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), OrganizationResource.class, null);
+		ServiceTracker<KeywordResource, KeywordResource>
+			keywordResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					KeywordResource.class, null);
 
-			organizationResourceServiceTracker.open();
+		keywordResourceServiceTracker.open();
 
-			_organizationResourceServiceTracker = organizationResourceServiceTracker;
-			ServiceTracker<PhoneResource, PhoneResource> phoneResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), PhoneResource.class, null);
+		_keywordResourceServiceTracker =
+			keywordResourceServiceTracker;
 
-			phoneResourceServiceTracker.open();
+		ServiceTracker<OrganizationResource, OrganizationResource>
+			organizationResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					OrganizationResource.class, null);
 
-			_phoneResourceServiceTracker = phoneResourceServiceTracker;
-			ServiceTracker<PostalAddressResource, PostalAddressResource> postalAddressResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), PostalAddressResource.class, null);
+		organizationResourceServiceTracker.open();
 
-			postalAddressResourceServiceTracker.open();
+		_organizationResourceServiceTracker =
+			organizationResourceServiceTracker;
 
-			_postalAddressResourceServiceTracker = postalAddressResourceServiceTracker;
-			ServiceTracker<RoleResource, RoleResource> roleResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), RoleResource.class, null);
+		ServiceTracker<PhoneResource, PhoneResource>
+			phoneResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					PhoneResource.class, null);
 
-			roleResourceServiceTracker.open();
+		phoneResourceServiceTracker.open();
 
-			_roleResourceServiceTracker = roleResourceServiceTracker;
-			ServiceTracker<UserAccountResource, UserAccountResource> userAccountResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), UserAccountResource.class, null);
+		_phoneResourceServiceTracker =
+			phoneResourceServiceTracker;
 
-			userAccountResourceServiceTracker.open();
+		ServiceTracker<PostalAddressResource, PostalAddressResource>
+			postalAddressResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					PostalAddressResource.class, null);
 
-			_userAccountResourceServiceTracker = userAccountResourceServiceTracker;
-			ServiceTracker<VocabularyResource, VocabularyResource> vocabularyResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), VocabularyResource.class, null);
+		postalAddressResourceServiceTracker.open();
 
-			vocabularyResourceServiceTracker.open();
+		_postalAddressResourceServiceTracker =
+			postalAddressResourceServiceTracker;
 
-			_vocabularyResourceServiceTracker = vocabularyResourceServiceTracker;
-			ServiceTracker<WebUrlResource, WebUrlResource> webUrlResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), WebUrlResource.class, null);
+		ServiceTracker<RoleResource, RoleResource>
+			roleResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					RoleResource.class, null);
 
-			webUrlResourceServiceTracker.open();
+		roleResourceServiceTracker.open();
 
-			_webUrlResourceServiceTracker = webUrlResourceServiceTracker;
+		_roleResourceServiceTracker =
+			roleResourceServiceTracker;
+
+		ServiceTracker<UserAccountResource, UserAccountResource>
+			userAccountResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					UserAccountResource.class, null);
+
+		userAccountResourceServiceTracker.open();
+
+		_userAccountResourceServiceTracker =
+			userAccountResourceServiceTracker;
+
+		ServiceTracker<VocabularyResource, VocabularyResource>
+			vocabularyResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					VocabularyResource.class, null);
+
+		vocabularyResourceServiceTracker.open();
+
+		_vocabularyResourceServiceTracker =
+			vocabularyResourceServiceTracker;
+
+		ServiceTracker<WebUrlResource, WebUrlResource>
+			webUrlResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					WebUrlResource.class, null);
+
+		webUrlResourceServiceTracker.open();
+
+		_webUrlResourceServiceTracker =
+			webUrlResourceServiceTracker;
 	}
 
 }

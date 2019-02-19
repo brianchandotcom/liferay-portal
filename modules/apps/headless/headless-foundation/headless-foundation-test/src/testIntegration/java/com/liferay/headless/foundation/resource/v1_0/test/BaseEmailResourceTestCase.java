@@ -55,7 +55,8 @@ public abstract class BaseEmailResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -64,41 +65,47 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentEmailsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testGetEmail() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentEmailsPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/emails",
-				genericParentId 
-			);
-
+	@Test
+	public void testGetGenericParentEmailsPage() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokeGetEmail( Long emailId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/emails/{email-id}",
-				emailId
-			);
+	protected Response invokeGetEmail(Long emailId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/emails/{email-id}",
+			emailId
+		);
+	}
+
+	protected Response invokeGetGenericParentEmailsPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/emails",
+			genericParentId 
+		);
 	}
 
 	protected Email randomEmail() {
 		Email email = new EmailImpl();
 
-email = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-type = RandomTestUtil.randomString();
+		email = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		type = RandomTestUtil.randomString();
+
 		return email;
 	}
 
@@ -120,7 +127,7 @@ type = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

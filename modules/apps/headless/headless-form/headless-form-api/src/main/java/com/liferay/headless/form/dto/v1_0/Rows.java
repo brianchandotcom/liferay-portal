@@ -27,15 +27,17 @@ public interface Rows {
 
 	public Long getId();
 
+	public String getLabel();
+
+	public String getValue();
+
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getLabel();
 
 	public void setLabel(String label);
 
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
-	public String getValue();
 
 	public void setValue(String value);
 

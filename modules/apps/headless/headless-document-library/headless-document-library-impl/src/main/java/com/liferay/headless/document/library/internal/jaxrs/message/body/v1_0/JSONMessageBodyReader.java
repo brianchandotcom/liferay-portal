@@ -74,27 +74,27 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-			if (clazz.equals(AdaptedImages.class)) {
-				return true;
-	}
-			if (clazz.equals(AggregateRating.class)) {
-				return true;
-	}
-			if (clazz.equals(Categories.class)) {
-				return true;
-	}
-			if (clazz.equals(Comment.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(Document.class)) {
-				return true;
-	}
-			if (clazz.equals(Folder.class)) {
-				return true;
-	}
+		if (clazz.equals(AdaptedImages.class)) {
+			return true;
+		}
+		if (clazz.equals(AggregateRating.class)) {
+			return true;
+		}
+		if (clazz.equals(Categories.class)) {
+			return true;
+		}
+		if (clazz.equals(Comment.class)) {
+			return true;
+		}
+		if (clazz.equals(Creator.class)) {
+			return true;
+		}
+		if (clazz.equals(Document.class)) {
+			return true;
+		}
+		if (clazz.equals(Folder.class)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -112,25 +112,35 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Document.Library", Version.unknownVersion()) {
+				new SimpleModule(
+				"Liferay.Headless.Document.Library", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(AdaptedImages.class, AdaptedImagesImpl.class);
-										addMapping(AggregateRating.class, AggregateRatingImpl.class);
-										addMapping(Categories.class, CategoriesImpl.class);
-										addMapping(Comment.class, CommentImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Document.class, DocumentImpl.class);
-										addMapping(Folder.class, FolderImpl.class);
-	}
-							});
-	}
-				});
+									addMapping(
+										AdaptedImages.class,
+										AdaptedImagesImpl.class);
+									addMapping(
+										AggregateRating.class,
+										AggregateRatingImpl.class);
+									addMapping(
+										Categories.class, CategoriesImpl.class);
+									addMapping(
+										Comment.class, CommentImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
+									addMapping(
+										Document.class, DocumentImpl.class);
+									addMapping(Folder.class, FolderImpl.class);
+								}
+								});
+					}
+					});
 
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

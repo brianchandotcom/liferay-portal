@@ -42,28 +42,36 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BasePostalAddressResourceImpl implements PostalAddressResource {
+public abstract class BasePostalAddressResourceImpl
+	implements PostalAddressResource {
+
+	@GET
+	@Path("/addresses/{address-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public PostalAddress getAddress(@PathParam("address-id") Long addressId)
+		throws Exception {
+
+		return new PostalAddressImpl();
+	}
 
 	@GET
 	@Path("/addresses")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<PostalAddress> getGenericParentPostalAddressesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<PostalAddress> getGenericParentPostalAddressesPage(
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-	}
-	@GET
-	@Path("/addresses/{address-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public PostalAddress getAddress( @PathParam("address-id") Long addressId ) throws Exception {
-			return new PostalAddressImpl();
-
+		return Page.of(Collections.emptyList());
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

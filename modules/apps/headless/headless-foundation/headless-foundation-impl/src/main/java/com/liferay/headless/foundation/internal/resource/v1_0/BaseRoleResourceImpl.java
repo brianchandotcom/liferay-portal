@@ -42,46 +42,58 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseRoleResourceImpl implements RoleResource {
+public abstract class BaseRoleResourceImpl
+	implements RoleResource {
 
 	@GET
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Role> getMyUserAccountRolesPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Role> getMyUserAccountRolesPage(
+			@PathParam("my-user-account-id") Long myUserAccountId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
-	@GET
-	@Path("/roles")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Role> getRolesPage( @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
 
-	}
 	@GET
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Role getRole( @PathParam("role-id") Long roleId ) throws Exception {
-			return new RoleImpl();
-
+	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
+		return new RoleImpl();
 	}
+
+	@GET
+	@Path("/roles")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Page<Role> getRolesPage(@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	@GET
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Role> getUserAccountRolesPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Role> getUserAccountRolesPage(
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

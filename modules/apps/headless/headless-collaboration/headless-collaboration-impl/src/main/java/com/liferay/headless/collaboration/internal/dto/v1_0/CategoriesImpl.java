@@ -37,43 +37,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CategoriesImpl implements Categories {
 
 	public Long getCategoryId() {
-			return categoryId;
+		return categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
 	}
 
 	public void setCategoryId(Long categoryId) {
-			this.categoryId = categoryId;
+		this.categoryId = categoryId;
 	}
 
 	@JsonIgnore
-	public void setCategoryId(UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
-			try {
-				categoryId = categoryIdUnsafeSupplier.get();
+	public void setCategoryId(
+		UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
+
+		try {
+			categoryId = categoryIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
+
+	@JsonIgnore
+	public void setCategoryName(
+		UnsafeSupplier<String, Throwable> categoryNameUnsafeSupplier) {
+
+		try {
+			categoryName = categoryNameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long categoryId;
-	public String getCategoryName() {
-			return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-			this.categoryName = categoryName;
-	}
-
-	@JsonIgnore
-	public void setCategoryName(UnsafeSupplier<String, Throwable> categoryNameUnsafeSupplier) {
-			try {
-				categoryName = categoryNameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

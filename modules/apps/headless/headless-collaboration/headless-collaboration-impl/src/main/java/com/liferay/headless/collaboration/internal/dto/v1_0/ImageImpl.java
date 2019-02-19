@@ -37,64 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ImageImpl implements Image {
 
 	public String getContentUrl() {
-			return contentUrl;
+		return contentUrl;
+	}
+
+	public Long getImageId() {
+		return imageId;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public void setContentUrl(String contentUrl) {
-			this.contentUrl = contentUrl;
+		this.contentUrl = contentUrl;
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
-			try {
-				contentUrl = contentUrlUnsafeSupplier.get();
+	public void setContentUrl(
+		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+
+		try {
+			contentUrl = contentUrlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setImageId(Long imageId) {
+		this.imageId = imageId;
 	}
+
+	@JsonIgnore
+	public void setImageId(
+		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
+
+		try {
+			imageId = imageIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String contentUrl;
-	public Long getImageId() {
-			return imageId;
-	}
-
-	public void setImageId(Long imageId) {
-			this.imageId = imageId;
-	}
-
-	@JsonIgnore
-	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
-			try {
-				imageId = imageIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long imageId;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(String name) {
-			this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-			try {
-				name = nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

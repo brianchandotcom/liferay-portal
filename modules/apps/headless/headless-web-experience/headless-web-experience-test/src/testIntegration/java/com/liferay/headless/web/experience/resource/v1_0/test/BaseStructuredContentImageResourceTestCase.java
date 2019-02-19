@@ -54,7 +54,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-web-experience/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-web-experience/v1.0");
 	}
 
 	@After
@@ -63,59 +64,76 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetStructuredContentStructuredContentImagesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteStructuredContentContentDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetStructuredContentContentDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetStructuredContentStructuredContentImagesPage( Long structuredContentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	@Test
+	public void testGetStructuredContentStructuredContentImagesPage()
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images",
-				structuredContentId
-			);
-
+		Assert.assertTrue(true);
 	}
-	protected Response invokeDeleteStructuredContentContentDocument( Long structuredContentId , Long contentDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
-				structuredContentId , contentDocumentId
-			);
+	protected Response invokeDeleteStructuredContentContentDocument(
+			Long structuredContentId, Long contentDocumentId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+			structuredContentId, contentDocumentId
+		);
 	}
-	protected Response invokeGetStructuredContentContentDocument( Long structuredContentId , Long contentDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
-				structuredContentId , contentDocumentId
-			);
+	protected Response invokeGetStructuredContentContentDocument(
+			Long structuredContentId, Long contentDocumentId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+			structuredContentId, contentDocumentId
+		);
+	}
+
+	protected Response invokeGetStructuredContentStructuredContentImagesPage(
+			Long structuredContentId)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images",
+			structuredContentId
+		);
 	}
 
 	protected StructuredContentImage randomStructuredContentImage() {
-		StructuredContentImage structuredContentImage = new StructuredContentImageImpl();
+		StructuredContentImage structuredContentImage =
+			new StructuredContentImageImpl();
 
-contentUrl = RandomTestUtil.randomString();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();
+		contentUrl = RandomTestUtil.randomString();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		encodingFormat = RandomTestUtil.randomString();
+		fileExtension = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		title = RandomTestUtil.randomString();
+
 		return structuredContentImage;
 	}
 
@@ -137,7 +155,7 @@ title = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

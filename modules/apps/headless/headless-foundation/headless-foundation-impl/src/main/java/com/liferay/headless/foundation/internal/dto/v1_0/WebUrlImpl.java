@@ -37,64 +37,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WebUrlImpl implements WebUrl {
 
 	public Long getId() {
-			return id;
+		return id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getUrlType() {
+		return urlType;
 	}
 
 	public void setId(Long id) {
-			this.id = id;
+		this.id = id;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
+
+	@JsonIgnore
+	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+		try {
+			url = urlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setUrlType(String urlType) {
+		this.urlType = urlType;
+	}
+
+	@JsonIgnore
+	public void setUrlType(
+		UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
+
+		try {
+			urlType = urlTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getUrl() {
-			return url;
-	}
-
-	public void setUrl(String url) {
-			this.url = url;
-	}
-
-	@JsonIgnore
-	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
-			try {
-				url = urlUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String url;
-	public String getUrlType() {
-			return urlType;
-	}
-
-	public void setUrlType(String urlType) {
-			this.urlType = urlType;
-	}
-
-	@JsonIgnore
-	public void setUrlType(UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
-			try {
-				urlType = urlTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

@@ -74,27 +74,27 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-			if (clazz.equals(AggregateRating.class)) {
-				return true;
-	}
-			if (clazz.equals(BlogPosting.class)) {
-				return true;
-	}
-			if (clazz.equals(BlogPostingImage.class)) {
-				return true;
-	}
-			if (clazz.equals(Categories.class)) {
-				return true;
-	}
-			if (clazz.equals(Comment.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(Image.class)) {
-				return true;
-	}
+		if (clazz.equals(AggregateRating.class)) {
+			return true;
+		}
+		if (clazz.equals(BlogPosting.class)) {
+			return true;
+		}
+		if (clazz.equals(BlogPostingImage.class)) {
+			return true;
+		}
+		if (clazz.equals(Categories.class)) {
+			return true;
+		}
+		if (clazz.equals(Comment.class)) {
+			return true;
+		}
+		if (clazz.equals(Creator.class)) {
+			return true;
+		}
+		if (clazz.equals(Image.class)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -112,25 +112,36 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Collaboration", Version.unknownVersion()) {
+				new SimpleModule(
+				"Liferay.Headless.Collaboration", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(AggregateRating.class, AggregateRatingImpl.class);
-										addMapping(BlogPosting.class, BlogPostingImpl.class);
-										addMapping(BlogPostingImage.class, BlogPostingImageImpl.class);
-										addMapping(Categories.class, CategoriesImpl.class);
-										addMapping(Comment.class, CommentImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Image.class, ImageImpl.class);
-	}
-							});
-	}
-				});
+									addMapping(
+										AggregateRating.class,
+										AggregateRatingImpl.class);
+									addMapping(
+										BlogPosting.class,
+										BlogPostingImpl.class);
+									addMapping(
+										BlogPostingImage.class,
+										BlogPostingImageImpl.class);
+									addMapping(
+										Categories.class, CategoriesImpl.class);
+									addMapping(
+										Comment.class, CommentImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
+									addMapping(Image.class, ImageImpl.class);
+								}
+								});
+					}
+					});
 
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

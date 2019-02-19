@@ -27,15 +27,19 @@ public interface Validation {
 
 	public String getErrorMessage();
 
+	public String getExpression();
+
+	public Long getId();
+
 	public void setErrorMessage(String errorMessage);
 
-	public void setErrorMessage(UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier);
-	public String getExpression();
+	public void setErrorMessage(
+		UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier);
 
 	public void setExpression(String expression);
 
-	public void setExpression(UnsafeSupplier<String, Throwable> expressionUnsafeSupplier);
-	public Long getId();
+	public void setExpression(
+		UnsafeSupplier<String, Throwable> expressionUnsafeSupplier);
 
 	public void setId(Long id);
 

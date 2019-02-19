@@ -56,7 +56,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-collaboration/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-collaboration/v1.0");
 	}
 
 	@After
@@ -65,71 +66,88 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostContentSpaceBlogPostingImage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteImageObject() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testGetImageObject() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceBlogPostingImagesPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
-				contentSpaceId 
-			);
-
+	@Test
+	public void testPostContentSpaceBlogPostingImage() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokePostContentSpaceBlogPostingImage( Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
-				contentSpaceId , multipartBody
-			);
+	protected Response invokeDeleteImageObject(Long imageObjectId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/blog-posting-images/{image-object-id}",
+			imageObjectId
+		);
 	}
-	protected Response invokeDeleteImageObject( Long imageObjectId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/blog-posting-images/{image-object-id}",
-				imageObjectId
-			);
+	protected Response invokeGetContentSpaceBlogPostingImagesPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
+			contentSpaceId 
+		);
 	}
-	protected Response invokeGetImageObject( Long imageObjectId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/blog-posting-images/{image-object-id}",
-				imageObjectId
-			);
+	protected Response invokeGetImageObject(Long imageObjectId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/blog-posting-images/{image-object-id}",
+			imageObjectId
+		);
+	}
+
+	protected Response invokePostContentSpaceBlogPostingImage(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).post(
+			_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
+			contentSpaceId, multipartBody
+		);
 	}
 
 	protected BlogPostingImage randomBlogPostingImage() {
 		BlogPostingImage blogPostingImage = new BlogPostingImageImpl();
 
-contentUrl = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();
+		contentUrl = RandomTestUtil.randomString();
+		encodingFormat = RandomTestUtil.randomString();
+		fileExtension = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		title = RandomTestUtil.randomString();
+
 		return blogPostingImage;
 	}
 
@@ -151,7 +169,7 @@ title = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

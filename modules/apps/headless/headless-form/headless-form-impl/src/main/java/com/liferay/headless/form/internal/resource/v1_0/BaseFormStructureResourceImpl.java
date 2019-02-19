@@ -42,28 +42,37 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFormStructureResourceImpl implements FormStructureResource {
+public abstract class BaseFormStructureResourceImpl
+	implements FormStructureResource {
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<FormStructure> getContentSpaceFormStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<FormStructure> getContentSpaceFormStructuresPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@GET
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public FormStructure getFormStructure( @PathParam("form-structure-id") Long formStructureId ) throws Exception {
-			return new FormStructureImpl();
+	public FormStructure getFormStructure(
+			@PathParam("form-structure-id") Long formStructureId)
+		throws Exception {
 
+		return new FormStructureImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

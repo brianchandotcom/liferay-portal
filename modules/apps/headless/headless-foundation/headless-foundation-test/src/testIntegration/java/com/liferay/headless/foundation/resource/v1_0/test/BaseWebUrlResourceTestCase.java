@@ -55,7 +55,8 @@ public abstract class BaseWebUrlResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -65,40 +66,46 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testGetGenericParentWebUrlsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetWebUrl() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentWebUrlsPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetGenericParentWebUrlsPage(
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/web-urls",
-				genericParentId 
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/web-urls",
+			genericParentId 
+		);
 	}
-	protected Response invokeGetWebUrl( Long webUrlId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/web-urls/{web-url-id}",
-				webUrlId
-			);
+	protected Response invokeGetWebUrl(Long webUrlId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/web-urls/{web-url-id}",
+			webUrlId
+		);
 	}
 
 	protected WebUrl randomWebUrl() {
 		WebUrl webUrl = new WebUrlImpl();
 
-id = RandomTestUtil.randomLong();
-url = RandomTestUtil.randomString();
-urlType = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		url = RandomTestUtil.randomString();
+		urlType = RandomTestUtil.randomString();
+
 		return webUrl;
 	}
 
@@ -120,7 +127,7 @@ urlType = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

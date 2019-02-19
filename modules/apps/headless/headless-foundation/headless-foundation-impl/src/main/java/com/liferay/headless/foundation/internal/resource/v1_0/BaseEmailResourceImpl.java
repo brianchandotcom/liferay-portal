@@ -42,28 +42,36 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseEmailResourceImpl implements EmailResource {
+public abstract class BaseEmailResourceImpl
+	implements EmailResource {
+
+	@GET
+	@Path("/emails/{email-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Email getEmail(@PathParam("email-id") Long emailId)
+		throws Exception {
+
+		return new EmailImpl();
+	}
 
 	@GET
 	@Path("/emails")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Email> getGenericParentEmailsPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Email> getGenericParentEmailsPage(
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-	}
-	@GET
-	@Path("/emails/{email-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Email getEmail( @PathParam("email-id") Long emailId ) throws Exception {
-			return new EmailImpl();
-
+		return Page.of(Collections.emptyList());
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

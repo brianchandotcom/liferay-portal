@@ -88,48 +88,48 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-			if (clazz.equals(Columns.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(FieldValues.class)) {
-				return true;
-	}
-			if (clazz.equals(Fields.class)) {
-				return true;
-	}
-			if (clazz.equals(Form.class)) {
-				return true;
-	}
-			if (clazz.equals(FormDocument.class)) {
-				return true;
-	}
-			if (clazz.equals(FormPages.class)) {
-				return true;
-	}
-			if (clazz.equals(FormRecord.class)) {
-				return true;
-	}
-			if (clazz.equals(FormStructure.class)) {
-				return true;
-	}
-			if (clazz.equals(Grid.class)) {
-				return true;
-	}
-			if (clazz.equals(Options.class)) {
-				return true;
-	}
-			if (clazz.equals(Rows.class)) {
-				return true;
-	}
-			if (clazz.equals(SuccessPage.class)) {
-				return true;
-	}
-			if (clazz.equals(Validation.class)) {
-				return true;
-	}
+		if (clazz.equals(Columns.class)) {
+			return true;
+		}
+		if (clazz.equals(Creator.class)) {
+			return true;
+		}
+		if (clazz.equals(FieldValues.class)) {
+			return true;
+		}
+		if (clazz.equals(Fields.class)) {
+			return true;
+		}
+		if (clazz.equals(Form.class)) {
+			return true;
+		}
+		if (clazz.equals(FormDocument.class)) {
+			return true;
+		}
+		if (clazz.equals(FormPages.class)) {
+			return true;
+		}
+		if (clazz.equals(FormRecord.class)) {
+			return true;
+		}
+		if (clazz.equals(FormStructure.class)) {
+			return true;
+		}
+		if (clazz.equals(Grid.class)) {
+			return true;
+		}
+		if (clazz.equals(Options.class)) {
+			return true;
+		}
+		if (clazz.equals(Rows.class)) {
+			return true;
+		}
+		if (clazz.equals(SuccessPage.class)) {
+			return true;
+		}
+		if (clazz.equals(Validation.class)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -147,32 +147,48 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Form", Version.unknownVersion()) {
+				new SimpleModule(
+				"Liferay.Headless.Form", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(Columns.class, ColumnsImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(FieldValues.class, FieldValuesImpl.class);
-										addMapping(Fields.class, FieldsImpl.class);
-										addMapping(Form.class, FormImpl.class);
-										addMapping(FormDocument.class, FormDocumentImpl.class);
-										addMapping(FormPages.class, FormPagesImpl.class);
-										addMapping(FormRecord.class, FormRecordImpl.class);
-										addMapping(FormStructure.class, FormStructureImpl.class);
-										addMapping(Grid.class, GridImpl.class);
-										addMapping(Options.class, OptionsImpl.class);
-										addMapping(Rows.class, RowsImpl.class);
-										addMapping(SuccessPage.class, SuccessPageImpl.class);
-										addMapping(Validation.class, ValidationImpl.class);
-	}
-							});
-	}
-				});
+									addMapping(
+										Columns.class, ColumnsImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
+									addMapping(
+										FieldValues.class,
+										FieldValuesImpl.class);
+									addMapping(Fields.class, FieldsImpl.class);
+									addMapping(Form.class, FormImpl.class);
+									addMapping(
+										FormDocument.class,
+										FormDocumentImpl.class);
+									addMapping(
+										FormPages.class, FormPagesImpl.class);
+									addMapping(
+										FormRecord.class, FormRecordImpl.class);
+									addMapping(
+										FormStructure.class,
+										FormStructureImpl.class);
+									addMapping(Grid.class, GridImpl.class);
+									addMapping(
+										Options.class, OptionsImpl.class);
+									addMapping(Rows.class, RowsImpl.class);
+									addMapping(
+										SuccessPage.class,
+										SuccessPageImpl.class);
+									addMapping(
+										Validation.class, ValidationImpl.class);
+								}
+								});
+					}
+					});
 
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

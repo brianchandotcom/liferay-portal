@@ -29,45 +29,60 @@ public interface ContentStructure {
 
 	public String[] getAvailableLanguages();
 
+	public Long getContentSpace();
+
+	public Creator getCreator();
+
+	public Date getDateCreated();
+
+	public Date getDateModified();
+
+	public String getDescription();
+
+	public Fields[] getFields();
+
+	public Long getId();
+
+	public String getName();
+
 	public void setAvailableLanguages(String[] availableLanguages);
 
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier);
-	public Long getContentSpace();
+	public void setAvailableLanguages(
+		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier);
 
 	public void setContentSpace(Long contentSpace);
 
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
-	public Creator getCreator();
+	public void setContentSpace(
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
 
 	public void setCreator(Creator creator);
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
-	public Date getDateCreated();
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
 
 	public void setDateCreated(Date dateCreated);
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-	public Date getDateModified();
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
 
 	public void setDateModified(Date dateModified);
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
-	public String getDescription();
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 
 	public void setDescription(String description);
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
-	public Fields[] getFields();
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
 
 	public void setFields(Fields[] fields);
 
-	public void setFields(UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier);
-	public Long getId();
+	public void setFields(
+		UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier);
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getName();
 
 	public void setName(String name);
 

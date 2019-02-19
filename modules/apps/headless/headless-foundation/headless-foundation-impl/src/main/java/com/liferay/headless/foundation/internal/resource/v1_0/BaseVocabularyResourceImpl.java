@@ -48,57 +48,78 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
+public abstract class BaseVocabularyResourceImpl
+	implements VocabularyResource {
+
+	@DELETE
+	@Path("/vocabularies/{vocabulary-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public boolean deleteVocabulary(
+			@PathParam("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return false;
+	}
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Vocabulary> getContentSpaceVocabulariesPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Vocabulary> getContentSpaceVocabulariesPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
+	@GET
+	@Path("/vocabularies/{vocabulary-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Vocabulary getVocabulary(
+			@PathParam("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return new VocabularyImpl();
+	}
+
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Vocabulary postContentSpaceVocabulary( @PathParam("content-space-id") Long contentSpaceId , Vocabulary vocabulary ) throws Exception {
-			return new VocabularyImpl();
+	public Vocabulary postContentSpaceVocabulary(
+			@PathParam("content-space-id") Long contentSpaceId,
+			Vocabulary vocabulary)
+		throws Exception {
 
+		return new VocabularyImpl();
 	}
-	@DELETE
-	@Path("/vocabularies/{vocabulary-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteVocabulary( @PathParam("vocabulary-id") Long vocabularyId ) throws Exception {
-			return false;
 
-	}
-	@GET
-	@Path("/vocabularies/{vocabulary-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Vocabulary getVocabulary( @PathParam("vocabulary-id") Long vocabularyId ) throws Exception {
-			return new VocabularyImpl();
-
-	}
 	@Consumes("application/json")
 	@PUT
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Vocabulary putVocabulary( @PathParam("vocabulary-id") Long vocabularyId , Vocabulary vocabulary ) throws Exception {
-			return new VocabularyImpl();
+	public Vocabulary putVocabulary(
+			@PathParam("vocabulary-id") Long vocabularyId,
+			Vocabulary vocabulary)
+		throws Exception {
 
+		return new VocabularyImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

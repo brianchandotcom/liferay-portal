@@ -94,57 +94,57 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-			if (clazz.equals(Category.class)) {
-				return true;
-	}
-			if (clazz.equals(ContactInformation.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(Email.class)) {
-				return true;
-	}
-			if (clazz.equals(HoursAvailable.class)) {
-				return true;
-	}
-			if (clazz.equals(Keyword.class)) {
-				return true;
-	}
-			if (clazz.equals(Location.class)) {
-				return true;
-	}
-			if (clazz.equals(Organization.class)) {
-				return true;
-	}
-			if (clazz.equals(ParentCategory.class)) {
-				return true;
-	}
-			if (clazz.equals(ParentVocabulary.class)) {
-				return true;
-	}
-			if (clazz.equals(Phone.class)) {
-				return true;
-	}
-			if (clazz.equals(PostalAddress.class)) {
-				return true;
-	}
-			if (clazz.equals(Role.class)) {
-				return true;
-	}
-			if (clazz.equals(Services.class)) {
-				return true;
-	}
-			if (clazz.equals(UserAccount.class)) {
-				return true;
-	}
-			if (clazz.equals(Vocabulary.class)) {
-				return true;
-	}
-			if (clazz.equals(WebUrl.class)) {
-				return true;
-	}
+		if (clazz.equals(Category.class)) {
+			return true;
+		}
+		if (clazz.equals(ContactInformation.class)) {
+			return true;
+		}
+		if (clazz.equals(Creator.class)) {
+			return true;
+		}
+		if (clazz.equals(Email.class)) {
+			return true;
+		}
+		if (clazz.equals(HoursAvailable.class)) {
+			return true;
+		}
+		if (clazz.equals(Keyword.class)) {
+			return true;
+		}
+		if (clazz.equals(Location.class)) {
+			return true;
+		}
+		if (clazz.equals(Organization.class)) {
+			return true;
+		}
+		if (clazz.equals(ParentCategory.class)) {
+			return true;
+		}
+		if (clazz.equals(ParentVocabulary.class)) {
+			return true;
+		}
+		if (clazz.equals(Phone.class)) {
+			return true;
+		}
+		if (clazz.equals(PostalAddress.class)) {
+			return true;
+		}
+		if (clazz.equals(Role.class)) {
+			return true;
+		}
+		if (clazz.equals(Services.class)) {
+			return true;
+		}
+		if (clazz.equals(UserAccount.class)) {
+			return true;
+		}
+		if (clazz.equals(Vocabulary.class)) {
+			return true;
+		}
+		if (clazz.equals(WebUrl.class)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -162,35 +162,57 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Foundation", Version.unknownVersion()) {
+				new SimpleModule(
+				"Liferay.Headless.Foundation", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(Category.class, CategoryImpl.class);
-										addMapping(ContactInformation.class, ContactInformationImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Email.class, EmailImpl.class);
-										addMapping(HoursAvailable.class, HoursAvailableImpl.class);
-										addMapping(Keyword.class, KeywordImpl.class);
-										addMapping(Location.class, LocationImpl.class);
-										addMapping(Organization.class, OrganizationImpl.class);
-										addMapping(ParentCategory.class, ParentCategoryImpl.class);
-										addMapping(ParentVocabulary.class, ParentVocabularyImpl.class);
-										addMapping(Phone.class, PhoneImpl.class);
-										addMapping(PostalAddress.class, PostalAddressImpl.class);
-										addMapping(Role.class, RoleImpl.class);
-										addMapping(Services.class, ServicesImpl.class);
-										addMapping(UserAccount.class, UserAccountImpl.class);
-										addMapping(Vocabulary.class, VocabularyImpl.class);
-										addMapping(WebUrl.class, WebUrlImpl.class);
-	}
-							});
-	}
-				});
+									addMapping(
+										Category.class, CategoryImpl.class);
+									addMapping(
+										ContactInformation.class,
+										ContactInformationImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
+									addMapping(Email.class, EmailImpl.class);
+									addMapping(
+										HoursAvailable.class,
+										HoursAvailableImpl.class);
+									addMapping(
+										Keyword.class, KeywordImpl.class);
+									addMapping(
+										Location.class, LocationImpl.class);
+									addMapping(
+										Organization.class,
+										OrganizationImpl.class);
+									addMapping(
+										ParentCategory.class,
+										ParentCategoryImpl.class);
+									addMapping(
+										ParentVocabulary.class,
+										ParentVocabularyImpl.class);
+									addMapping(Phone.class, PhoneImpl.class);
+									addMapping(
+										PostalAddress.class,
+										PostalAddressImpl.class);
+									addMapping(Role.class, RoleImpl.class);
+									addMapping(
+										Services.class, ServicesImpl.class);
+									addMapping(
+										UserAccount.class,
+										UserAccountImpl.class);
+									addMapping(
+										Vocabulary.class, VocabularyImpl.class);
+									addMapping(WebUrl.class, WebUrlImpl.class);
+								}
+								});
+					}
+					});
 
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

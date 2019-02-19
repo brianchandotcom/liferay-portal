@@ -65,43 +65,51 @@ public abstract class BaseFormStructureResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceFormStructuresPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetFormStructure() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceFormStructuresPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceFormStructuresPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/form-structures",
-				contentSpaceId 
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/form-structures",
+			contentSpaceId 
+		);
 	}
-	protected Response invokeGetFormStructure( Long formStructureId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/form-structures/{form-structure-id}",
-				formStructureId
-			);
+	protected Response invokeGetFormStructure(Long formStructureId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/form-structures/{form-structure-id}",
+			formStructureId
+		);
 	}
 
 	protected FormStructure randomFormStructure() {
 		FormStructure formStructure = new FormStructureImpl();
 
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
+		contentSpace = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		name = RandomTestUtil.randomString();
+
 		return formStructure;
 	}
 
@@ -123,7 +131,7 @@ name = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

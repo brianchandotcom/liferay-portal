@@ -42,28 +42,36 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BasePhoneResourceImpl implements PhoneResource {
+public abstract class BasePhoneResourceImpl
+	implements PhoneResource {
 
 	@GET
 	@Path("/phones")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Phone> getGenericParentPhonesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Phone> getGenericParentPhonesPage(
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
 	@GET
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Phone getPhone( @PathParam("phone-id") Long phoneId ) throws Exception {
-			return new PhoneImpl();
+	public Phone getPhone(@PathParam("phone-id") Long phoneId)
+		throws Exception {
 
+		return new PhoneImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

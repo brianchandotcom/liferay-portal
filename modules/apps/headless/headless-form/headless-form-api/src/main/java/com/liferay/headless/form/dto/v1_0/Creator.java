@@ -27,38 +27,48 @@ public interface Creator {
 
 	public String getAdditionalName();
 
+	public String getFamilyName();
+
+	public String getGivenName();
+
+	public Long getId();
+
+	public String getImage();
+
+	public String getName();
+
+	public String getProfileURL();
+
 	public void setAdditionalName(String additionalName);
 
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier);
-	public String getFamilyName();
+	public void setAdditionalName(
+		UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier);
 
 	public void setFamilyName(String familyName);
 
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier);
-	public String getGivenName();
+	public void setFamilyName(
+		UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier);
 
 	public void setGivenName(String givenName);
 
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier);
-	public Long getId();
+	public void setGivenName(
+		UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier);
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getImage();
 
 	public void setImage(String image);
 
 	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier);
-	public String getName();
 
 	public void setName(String name);
 
 	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
-	public String getProfileURL();
 
 	public void setProfileURL(String profileURL);
 
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier);
+	public void setProfileURL(
+		UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier);
 
 }

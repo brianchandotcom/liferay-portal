@@ -57,7 +57,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-web-experience/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-web-experience/v1.0");
 	}
 
 	@After
@@ -66,121 +67,158 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceContentStructureStructuredContentsPage() throws Exception {
-			Assert.assertTrue(true);
+	public void testDeleteStructuredContent() throws Exception {
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetContentSpaceContentStructureStructuredContentsPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testGetContentSpaceStructuredContentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testPostContentSpaceStructuredContent() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testDeleteStructuredContent() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPatchStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testPostContentSpaceStructuredContent() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testPutStructuredContent() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceContentStructureStructuredContentsPage( Long contentSpaceId , Long contentStructureId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteStructuredContent(Long structuredContentId)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-structures/{content-structure-id}/structured-contents",
-				contentSpaceId , contentStructureId , filter  , sorts
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/structured-contents/{structured-content-id}",
+			structuredContentId
+		);
 	}
-	protected Response invokeGetContentSpaceStructuredContentsPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
-				contentSpaceId , filter  , sorts
-			);
+	protected Response invokeGetContentSpaceContentStructureStructuredContentsPage(
+			Long contentSpaceId,
+			Long contentStructureId,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-structures/{content-structure-id}/structured-contents",
+			contentSpaceId, contentStructureId, filter , sorts
+		);
 	}
-	protected Response invokePostContentSpaceStructuredContent( Long contentSpaceId , StructuredContent structuredContent ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				structuredContent
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
-				contentSpaceId 
-			);
+	protected Response invokeGetContentSpaceStructuredContentsPage(
+			Long contentSpaceId,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
+			contentSpaceId, filter , sorts
+		);
 	}
-	protected Response invokeDeleteStructuredContent( Long structuredContentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId
-			);
+	protected Response invokeGetStructuredContent(Long structuredContentId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/structured-contents/{structured-content-id}",
+			structuredContentId
+		);
 	}
-	protected Response invokeGetStructuredContent( Long structuredContentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId
-			);
+	protected Response invokePatchStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).patch(
+			_resourceURL + "/structured-contents/{structured-content-id}",
+			structuredContentId, structuredContent
+		);
 	}
-	protected Response invokePatchStructuredContent( Long structuredContentId , StructuredContent structuredContent ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).patch(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId , structuredContent
-			);
+	protected Response invokePostContentSpaceStructuredContent(
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			structuredContent
+		).when(
+		).post(
+			_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
+			contentSpaceId 
+		);
 	}
-	protected Response invokePutStructuredContent( Long structuredContentId , StructuredContent structuredContent ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				structuredContent
-			).when(
-			).put(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId 
-			);
+	protected Response invokePutStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			structuredContent
+		).when(
+		).put(
+			_resourceURL + "/structured-contents/{structured-content-id}",
+			structuredContentId 
+		);
 	}
 
 	protected StructuredContent randomStructuredContent() {
 		StructuredContent structuredContent = new StructuredContentImpl();
 
-contentSpace = RandomTestUtil.randomLong();
-contentStructureId = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-datePublished = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-lastReviewed = RandomTestUtil.nextDate();
-title = RandomTestUtil.randomString();
+		contentSpace = RandomTestUtil.randomLong();
+		contentStructureId = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		datePublished = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		lastReviewed = RandomTestUtil.nextDate();
+		title = RandomTestUtil.randomString();
+
 		return structuredContent;
 	}
 
@@ -202,7 +240,7 @@ title = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

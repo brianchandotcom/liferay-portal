@@ -29,45 +29,59 @@ public interface FormRecord {
 
 	public Creator getCreator();
 
+	public Date getDateCreated();
+
+	public Date getDateModified();
+
+	public Date getDatePublished();
+
+	public Boolean getDraft();
+
+	public FieldValues[] getFieldValues();
+
+	public Form getForm();
+
+	public Long getFormId();
+
+	public Long getId();
+
 	public void setCreator(Creator creator);
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
-	public Date getDateCreated();
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
 
 	public void setDateCreated(Date dateCreated);
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
-	public Date getDateModified();
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
 
 	public void setDateModified(Date dateModified);
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
-	public Date getDatePublished();
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
 
 	public void setDatePublished(Date datePublished);
 
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier);
-	public Boolean getDraft();
+	public void setDatePublished(
+		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier);
 
 	public void setDraft(Boolean draft);
 
-	public void setDraft(UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier);
-	public FieldValues[] getFieldValues();
+	public void setDraft(
+		UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier);
 
 	public void setFieldValues(FieldValues[] fieldValues);
 
-	public void setFieldValues(UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier);
-	public Form getForm();
+	public void setFieldValues(
+		UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier);
 
 	public void setForm(Form form);
 
 	public void setForm(UnsafeSupplier<Form, Throwable> formUnsafeSupplier);
-	public Long getFormId();
 
 	public void setFormId(Long formId);
 
 	public void setFormId(UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier);
-	public Long getId();
 
 	public void setId(Long id);
 

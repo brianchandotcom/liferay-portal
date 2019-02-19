@@ -37,148 +37,166 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ValuesImpl implements Values {
 
 	public String getDataType() {
-			return dataType;
+		return dataType;
+	}
+
+	public String getFilterAndSortIdentifier() {
+		return filterAndSortIdentifier;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getInputControl() {
+		return inputControl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Object getValue() {
+		return value;
 	}
 
 	public void setDataType(String dataType) {
-			this.dataType = dataType;
+		this.dataType = dataType;
 	}
 
 	@JsonIgnore
-	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
-			try {
-				dataType = dataTypeUnsafeSupplier.get();
+	public void setDataType(
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
+
+		try {
+			dataType = dataTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setFilterAndSortIdentifier(String filterAndSortIdentifier) {
+		this.filterAndSortIdentifier = filterAndSortIdentifier;
 	}
+
+	@JsonIgnore
+	public void setFilterAndSortIdentifier(
+		UnsafeSupplier<String, Throwable>
+			 filterAndSortIdentifierUnsafeSupplier) {
+
+		try {
+			filterAndSortIdentifier =
+				filterAndSortIdentifierUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setInputControl(String inputControl) {
+		this.inputControl = inputControl;
+	}
+
+	@JsonIgnore
+	public void setInputControl(
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
+
+		try {
+			inputControl = inputControlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String dataType;
-	public String getFilterAndSortIdentifier() {
-			return filterAndSortIdentifier;
-	}
-
-	public void setFilterAndSortIdentifier(String filterAndSortIdentifier) {
-			this.filterAndSortIdentifier = filterAndSortIdentifier;
-	}
-
-	@JsonIgnore
-	public void setFilterAndSortIdentifier(UnsafeSupplier<String, Throwable> filterAndSortIdentifierUnsafeSupplier) {
-			try {
-				filterAndSortIdentifier = filterAndSortIdentifierUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String filterAndSortIdentifier;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getInputControl() {
-			return inputControl;
-	}
-
-	public void setInputControl(String inputControl) {
-			this.inputControl = inputControl;
-	}
-
-	@JsonIgnore
-	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
-			try {
-				inputControl = inputControlUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String inputControl;
-	public String getLabel() {
-			return label;
-	}
-
-	public void setLabel(String label) {
-			this.label = label;
-	}
-
-	@JsonIgnore
-	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
-			try {
-				label = labelUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String label;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(String name) {
-			this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-			try {
-				name = nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Object getValue() {
-			return value;
-	}
-
-	public void setValue(Object value) {
-			this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(UnsafeSupplier<Object, Throwable> valueUnsafeSupplier) {
-			try {
-				value = valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

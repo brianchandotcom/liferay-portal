@@ -55,7 +55,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-workflow/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-workflow/v1.0");
 	}
 
 	@After
@@ -65,123 +66,155 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 	@Test
 	public void testGetRoleWorkflowTasksPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testGetWorkflowTasksPage() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetWorkflowTask() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetWorkflowTasksPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testPostWorkflowTaskAssignToMe() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostWorkflowTaskAssignToUser() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostWorkflowTaskChangeTransition() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testPostWorkflowTaskUpdateDueDate() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetRoleWorkflowTasksPage( Long roleId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetRoleWorkflowTasksPage(
+			Long roleId, Pagination pagination)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/roles/{role-id}/workflow-tasks",
-				roleId 
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/roles/{role-id}/workflow-tasks",
+			roleId 
+		);
 	}
-	protected Response invokeGetWorkflowTasksPage( Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-tasks",
-				pagination
-			);
+	protected Response invokeGetWorkflowTask(Long workflowTaskId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/workflow-tasks/{workflow-task-id}",
+			workflowTaskId
+		);
 	}
-	protected Response invokeGetWorkflowTask( Long workflowTaskId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}",
-				workflowTaskId
-			);
+	protected Response invokeGetWorkflowTasksPage(Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/workflow-tasks",
+			pagination
+		);
 	}
-	protected Response invokePostWorkflowTaskAssignToMe( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-me",
-				workflowTaskId 
-			);
+	protected Response invokePostWorkflowTaskAssignToMe(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			workflowTask
+		).when(
+		).post(
+			_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-me",
+			workflowTaskId 
+		);
 	}
-	protected Response invokePostWorkflowTaskAssignToUser( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-user",
-				workflowTaskId 
-			);
+	protected Response invokePostWorkflowTaskAssignToUser(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			workflowTask
+		).when(
+		).post(
+			_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-user",
+			workflowTaskId 
+		);
 	}
-	protected Response invokePostWorkflowTaskChangeTransition( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/change-transition",
-				workflowTaskId 
-			);
+	protected Response invokePostWorkflowTaskChangeTransition(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			workflowTask
+		).when(
+		).post(
+			_resourceURL + "/workflow-tasks/{workflow-task-id}/change-transition",
+			workflowTaskId 
+		);
 	}
-	protected Response invokePostWorkflowTaskUpdateDueDate( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/update-due-date",
-				workflowTaskId 
-			);
+	protected Response invokePostWorkflowTaskUpdateDueDate(
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			workflowTask
+		).when(
+		).post(
+			_resourceURL + "/workflow-tasks/{workflow-task-id}/update-due-date",
+			workflowTaskId 
+		);
 	}
 
 	protected WorkflowTask randomWorkflowTask() {
 		WorkflowTask workflowTask = new WorkflowTaskImpl();
 
-completed = RandomTestUtil.randomBoolean();
-dateCompleted = RandomTestUtil.nextDate();
-dateCreated = RandomTestUtil.nextDate();
-definitionName = RandomTestUtil.randomString();
-description = RandomTestUtil.randomString();
-dueDate = RandomTestUtil.nextDate();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
+		completed = RandomTestUtil.randomBoolean();
+		dateCompleted = RandomTestUtil.nextDate();
+		dateCreated = RandomTestUtil.nextDate();
+		definitionName = RandomTestUtil.randomString();
+		description = RandomTestUtil.randomString();
+		dueDate = RandomTestUtil.nextDate();
+		id = RandomTestUtil.randomLong();
+		name = RandomTestUtil.randomString();
+
 		return workflowTask;
 	}
 
@@ -203,7 +236,7 @@ name = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

@@ -42,28 +42,37 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseWorkflowLogResourceImpl implements WorkflowLogResource {
+public abstract class BaseWorkflowLogResourceImpl
+	implements WorkflowLogResource {
 
 	@GET
 	@Path("/workflow-logs/{workflow-log-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public WorkflowLog getWorkflowLog( @PathParam("workflow-log-id") Long workflowLogId ) throws Exception {
-			return new WorkflowLogImpl();
+	public WorkflowLog getWorkflowLog(
+			@PathParam("workflow-log-id") Long workflowLogId)
+		throws Exception {
 
+		return new WorkflowLogImpl();
 	}
+
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage( @PathParam("workflow-task-id") Long workflowTaskId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

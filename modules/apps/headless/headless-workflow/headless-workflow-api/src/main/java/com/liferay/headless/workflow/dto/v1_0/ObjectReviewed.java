@@ -27,18 +27,22 @@ public interface ObjectReviewed {
 
 	public Long getId();
 
+	public String getIdentifier();
+
+	public String getResourceType();
+
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getIdentifier();
 
 	public void setIdentifier(String identifier);
 
-	public void setIdentifier(UnsafeSupplier<String, Throwable> identifierUnsafeSupplier);
-	public String getResourceType();
+	public void setIdentifier(
+		UnsafeSupplier<String, Throwable> identifierUnsafeSupplier);
 
 	public void setResourceType(String resourceType);
 
-	public void setResourceType(UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier);
+	public void setResourceType(
+		UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier);
 
 }

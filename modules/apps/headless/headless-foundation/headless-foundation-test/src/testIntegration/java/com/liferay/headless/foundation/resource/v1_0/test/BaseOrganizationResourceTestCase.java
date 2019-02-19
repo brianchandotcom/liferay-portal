@@ -55,7 +55,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -65,84 +66,106 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGetMyUserAccountOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testGetOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetOrganization() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetOrganizationsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testGetUserAccountOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetMyUserAccountOrganizationsPage( Long myUserAccountId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetMyUserAccountOrganizationsPage(
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/my-user-accounts/{my-user-account-id}/organizations",
-				myUserAccountId 
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/my-user-accounts/{my-user-account-id}/organizations",
+			myUserAccountId 
+		);
 	}
-	protected Response invokeGetOrganizationsPage( Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/organizations",
-				pagination
-			);
+	protected Response invokeGetOrganization(Long organizationId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/organizations/{organization-id}",
+			organizationId
+		);
 	}
-	protected Response invokeGetOrganization( Long organizationId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/organizations/{organization-id}",
-				organizationId
-			);
+	protected Response invokeGetOrganizationOrganizationsPage(
+			Long organizationId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/organizations/{organization-id}/organizations",
+			organizationId 
+		);
 	}
-	protected Response invokeGetOrganizationOrganizationsPage( Long organizationId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/organizations/{organization-id}/organizations",
-				organizationId 
-			);
+	protected Response invokeGetOrganizationsPage(Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/organizations",
+			pagination
+		);
 	}
-	protected Response invokeGetUserAccountOrganizationsPage( Long userAccountId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/user-accounts/{user-account-id}/organizations",
-				userAccountId 
-			);
+	protected Response invokeGetUserAccountOrganizationsPage(
+			Long userAccountId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/user-accounts/{user-account-id}/organizations",
+			userAccountId 
+		);
 	}
 
 	protected Organization randomOrganization() {
 		Organization organization = new OrganizationImpl();
 
-comment = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-logo = RandomTestUtil.randomString();
-name = RandomTestUtil.randomString();
-parentOrganizationId = RandomTestUtil.randomLong();
+		comment = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		logo = RandomTestUtil.randomString();
+		name = RandomTestUtil.randomString();
+		parentOrganizationId = RandomTestUtil.randomLong();
+
 		return organization;
 	}
 
@@ -164,7 +187,7 @@ parentOrganizationId = RandomTestUtil.randomLong();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

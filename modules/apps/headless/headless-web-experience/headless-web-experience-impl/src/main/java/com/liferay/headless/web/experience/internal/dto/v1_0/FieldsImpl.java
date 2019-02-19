@@ -38,235 +38,265 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FieldsImpl implements Fields {
 
 	public String getDataType() {
-			return dataType;
+		return dataType;
+	}
+
+	public String getInputControl() {
+		return inputControl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public Boolean getLocalizable() {
+		return localizable;
+	}
+
+	public Boolean getMultiple() {
+		return multiple;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Options[] getOptions() {
+		return options;
+	}
+
+	public String getPredefinedValue() {
+		return predefinedValue;
+	}
+
+	public Boolean getRepeatable() {
+		return repeatable;
+	}
+
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public Boolean getShowLabel() {
+		return showLabel;
 	}
 
 	public void setDataType(String dataType) {
-			this.dataType = dataType;
+		this.dataType = dataType;
 	}
 
 	@JsonIgnore
-	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
-			try {
-				dataType = dataTypeUnsafeSupplier.get();
+	public void setDataType(
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
+
+		try {
+			dataType = dataTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setInputControl(String inputControl) {
+		this.inputControl = inputControl;
 	}
+
+	@JsonIgnore
+	public void setInputControl(
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
+
+		try {
+			inputControl = inputControlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setLocalizable(Boolean localizable) {
+		this.localizable = localizable;
+	}
+
+	@JsonIgnore
+	public void setLocalizable(
+		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
+
+		try {
+			localizable = localizableUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setMultiple(Boolean multiple) {
+		this.multiple = multiple;
+	}
+
+	@JsonIgnore
+	public void setMultiple(
+		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
+
+		try {
+			multiple = multipleUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setOptions(Options[] options) {
+		this.options = options;
+	}
+
+	@JsonIgnore
+	public void setOptions(
+		UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier) {
+
+		try {
+			options = optionsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setPredefinedValue(String predefinedValue) {
+		this.predefinedValue = predefinedValue;
+	}
+
+	@JsonIgnore
+	public void setPredefinedValue(
+		UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
+
+		try {
+			predefinedValue = predefinedValueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setRepeatable(Boolean repeatable) {
+		this.repeatable = repeatable;
+	}
+
+	@JsonIgnore
+	public void setRepeatable(
+		UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
+
+		try {
+			repeatable = repeatableUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	@JsonIgnore
+	public void setRequired(
+		UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
+
+		try {
+			required = requiredUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setShowLabel(Boolean showLabel) {
+		this.showLabel = showLabel;
+	}
+
+	@JsonIgnore
+	public void setShowLabel(
+		UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
+
+		try {
+			showLabel = showLabelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String dataType;
-	public String getLabel() {
-			return label;
-	}
-
-	public void setLabel(String label) {
-			this.label = label;
-	}
-
-	@JsonIgnore
-	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
-			try {
-				label = labelUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected String label;
-	public Boolean getLocalizable() {
-			return localizable;
-	}
-
-	public void setLocalizable(Boolean localizable) {
-			this.localizable = localizable;
-	}
-
-	@JsonIgnore
-	public void setLocalizable(UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
-			try {
-				localizable = localizableUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean localizable;
-	public Boolean getMultiple() {
-			return multiple;
-	}
-
-	public void setMultiple(Boolean multiple) {
-			this.multiple = multiple;
-	}
-
-	@JsonIgnore
-	public void setMultiple(UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
-			try {
-				multiple = multipleUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean multiple;
-	public String getInputControl() {
-			return inputControl;
-	}
-
-	public void setInputControl(String inputControl) {
-			this.inputControl = inputControl;
-	}
-
-	@JsonIgnore
-	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
-			try {
-				inputControl = inputControlUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String inputControl;
-	public String getPredefinedValue() {
-			return predefinedValue;
-	}
-
-	public void setPredefinedValue(String predefinedValue) {
-			this.predefinedValue = predefinedValue;
-	}
-
-	@JsonIgnore
-	public void setPredefinedValue(UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
-			try {
-				predefinedValue = predefinedValueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
-	protected String predefinedValue;
-	public String getName() {
-			return name;
-	}
+	protected String label;
 
-	public void setName(String name) {
-			this.name = name;
-	}
+	@GraphQLField
+	@JsonProperty
+	protected Boolean localizable;
 
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
-			try {
-				name = nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
+	@GraphQLField
+	@JsonProperty
+	protected Boolean multiple;
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Boolean getRepeatable() {
-			return repeatable;
-	}
-
-	public void setRepeatable(Boolean repeatable) {
-			this.repeatable = repeatable;
-	}
-
-	@JsonIgnore
-	public void setRepeatable(UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
-			try {
-				repeatable = repeatableUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean repeatable;
-	public Boolean getRequired() {
-			return required;
-	}
-
-	public void setRequired(Boolean required) {
-			this.required = required;
-	}
-
-	@JsonIgnore
-	public void setRequired(UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
-			try {
-				required = requiredUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean required;
-	public Boolean getShowLabel() {
-			return showLabel;
-	}
-
-	public void setShowLabel(Boolean showLabel) {
-			this.showLabel = showLabel;
-	}
-
-	@JsonIgnore
-	public void setShowLabel(UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
-			try {
-				showLabel = showLabelUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Boolean showLabel;
-	public Options[] getOptions() {
-			return options;
-	}
-
-	public void setOptions(Options[] options) {
-			this.options = options;
-	}
-
-	@JsonIgnore
-	public void setOptions(UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier) {
-			try {
-				options = optionsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Options[] options;
+
+	@GraphQLField
+	@JsonProperty
+	protected String predefinedValue;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean repeatable;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean required;
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean showLabel;
 
 }

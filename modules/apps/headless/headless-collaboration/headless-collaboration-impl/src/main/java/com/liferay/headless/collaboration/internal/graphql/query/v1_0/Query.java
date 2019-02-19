@@ -44,107 +44,144 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPosting getBlogPosting( @GraphQLName("blog-posting-id") Long blogPostingId ) throws Exception {
-return _getBlogPostingResource().getBlogPosting( blogPostingId );
+	public BlogPosting getBlogPosting(
+			@GraphQLName("blog-posting-id") Long blogPostingId)
+		throws Exception {
+
+		return _getBlogPostingResource().getBlogPosting(blogPostingId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPosting> getContentSpaceBlogPostingsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getBlogPostingResource().getContentSpaceBlogPostingsPage(
+	public Collection<Comment> getBlogPostingCommentsPage(
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					contentSpaceId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getCommentResource().getBlogPostingCommentsPage(
+			blogPostingId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPostingImage> getContentSpaceBlogPostingImagesPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getBlogPostingImageResource().getContentSpaceBlogPostingImagesPage(
+	public Comment getComment(@GraphQLName("comment-id") Long commentId)
+		throws Exception {
 
-					contentSpaceId , Pagination.of(pageSize, page)
-				);
-
-				return paginationPage.getItems();
-
+		return _getCommentResource().getComment(commentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPostingImage getImageObject( @GraphQLName("image-object-id") Long imageObjectId ) throws Exception {
-return _getBlogPostingImageResource().getImageObject( imageObjectId );
+	public Collection<Comment> getCommentCommentsPage(
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage = _getCommentResource().getCommentCommentsPage(
+			commentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getBlogPostingCommentsPage( @GraphQLName("blog-posting-id") Long blogPostingId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCommentResource().getBlogPostingCommentsPage(
+	public Collection<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					blogPostingId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getBlogPostingImageResource().getContentSpaceBlogPostingImagesPage(
+				contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment getComment( @GraphQLName("comment-id") Long commentId ) throws Exception {
-return _getCommentResource().getComment( commentId );
+	public Collection<BlogPosting> getContentSpaceBlogPostingsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage =
+			_getBlogPostingResource().getContentSpaceBlogPostingsPage(
+				contentSpaceId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getCommentCommentsPage( @GraphQLName("comment-id") Long commentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCommentResource().getCommentCommentsPage(
+	public BlogPostingImage getImageObject(
+			@GraphQLName("image-object-id") Long imageObjectId)
+		throws Exception {
 
-					commentId , Pagination.of(pageSize, page)
-				);
+		return _getBlogPostingImageResource().getImageObject(imageObjectId);
+	}
 
-				return paginationPage.getItems();
-
+	private static BlogPostingImageResource _getBlogPostingImageResource() {
+		return _blogPostingImageResourceServiceTracker.getService();
 	}
 
 	private static BlogPostingResource _getBlogPostingResource() {
-			return _blogPostingResourceServiceTracker.getService();
+		return _blogPostingResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<BlogPostingResource, BlogPostingResource> _blogPostingResourceServiceTracker;
-	private static BlogPostingImageResource _getBlogPostingImageResource() {
-			return _blogPostingImageResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<BlogPostingImageResource, BlogPostingImageResource> _blogPostingImageResourceServiceTracker;
 	private static CommentResource _getCommentResource() {
-			return _commentResourceServiceTracker.getService();
+		return _commentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
+	private static final ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
+		_blogPostingImageResourceServiceTracker;
+
+	private static final ServiceTracker<BlogPostingResource, BlogPostingResource>
+		_blogPostingResourceServiceTracker;
+
+	private static final ServiceTracker<CommentResource, CommentResource>
+		_commentResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<BlogPostingResource, BlogPostingResource> blogPostingResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), BlogPostingResource.class, null);
+		ServiceTracker<BlogPostingResource, BlogPostingResource>
+			blogPostingResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					BlogPostingResource.class, null);
 
-			blogPostingResourceServiceTracker.open();
+		blogPostingResourceServiceTracker.open();
 
-			_blogPostingResourceServiceTracker = blogPostingResourceServiceTracker;
-			ServiceTracker<BlogPostingImageResource, BlogPostingImageResource> blogPostingImageResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), BlogPostingImageResource.class, null);
+		_blogPostingResourceServiceTracker =
+			blogPostingResourceServiceTracker;
 
-			blogPostingImageResourceServiceTracker.open();
+		ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
+			blogPostingImageResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					BlogPostingImageResource.class, null);
 
-			_blogPostingImageResourceServiceTracker = blogPostingImageResourceServiceTracker;
-			ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CommentResource.class, null);
+		blogPostingImageResourceServiceTracker.open();
 
-			commentResourceServiceTracker.open();
+		_blogPostingImageResourceServiceTracker =
+			blogPostingImageResourceServiceTracker;
 
-			_commentResourceServiceTracker = commentResourceServiceTracker;
+		ServiceTracker<CommentResource, CommentResource>
+			commentResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					CommentResource.class, null);
+
+		commentResourceServiceTracker.open();
+
+		_commentResourceServiceTracker =
+			commentResourceServiceTracker;
 	}
 
 }

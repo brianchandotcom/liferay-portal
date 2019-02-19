@@ -57,7 +57,8 @@ public abstract class BaseContentStructureResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-web-experience/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-web-experience/v1.0");
 	}
 
 	@After
@@ -67,43 +68,52 @@ public abstract class BaseContentStructureResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceContentStructuresPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetContentStructure() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceContentStructuresPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceContentStructuresPage(
+			Long contentSpaceId,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/content-structures",
-				contentSpaceId , filter  , sorts
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/content-structures",
+			contentSpaceId, filter , sorts
+		);
 	}
-	protected Response invokeGetContentStructure( Long contentStructureId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-structures/{content-structure-id}",
-				contentStructureId
-			);
+	protected Response invokeGetContentStructure(Long contentStructureId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-structures/{content-structure-id}",
+			contentStructureId
+		);
 	}
 
 	protected ContentStructure randomContentStructure() {
 		ContentStructure contentStructure = new ContentStructureImpl();
 
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
+		contentSpace = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		description = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		name = RandomTestUtil.randomString();
+
 		return contentStructure;
 	}
 
@@ -125,7 +135,7 @@ name = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

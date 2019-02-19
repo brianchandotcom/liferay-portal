@@ -64,42 +64,49 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 	@Test
 	public void testDeleteFormDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetFormDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeDeleteFormDocument( Long formDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteFormDocument(Long formDocumentId)
+		throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/form-documents/{form-document-id}",
-				formDocumentId
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/form-documents/{form-document-id}",
+			formDocumentId
+		);
 	}
-	protected Response invokeGetFormDocument( Long formDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/form-documents/{form-document-id}",
-				formDocumentId
-			);
+	protected Response invokeGetFormDocument(Long formDocumentId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/form-documents/{form-document-id}",
+			formDocumentId
+		);
 	}
 
 	protected FormDocument randomFormDocument() {
 		FormDocument formDocument = new FormDocumentImpl();
 
-contentUrl = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();
+		contentUrl = RandomTestUtil.randomString();
+		encodingFormat = RandomTestUtil.randomString();
+		fileExtension = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		title = RandomTestUtil.randomString();
+
 		return formDocument;
 	}
 
@@ -121,7 +128,7 @@ title = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

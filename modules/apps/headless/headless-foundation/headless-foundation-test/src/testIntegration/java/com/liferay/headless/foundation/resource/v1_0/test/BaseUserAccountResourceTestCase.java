@@ -55,7 +55,8 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -64,138 +65,173 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGetMyUserAccount() throws Exception {
-			Assert.assertTrue(true);
+	public void testDeleteUserAccount() throws Exception {
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testGetMyUserAccount() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testGetOrganizationUserAccountsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testGetUserAccountsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostUserAccount() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testDeleteUserAccount() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetUserAccount() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
-	public void testPutUserAccount() throws Exception {
-			Assert.assertTrue(true);
+	public void testGetUserAccountsPage() throws Exception {
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetWebSiteUserAccountsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetMyUserAccount( Long myUserAccountId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
-
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/my-user-accounts/{my-user-account-id}",
-				myUserAccountId
-			);
-
+	@Test
+	public void testPostUserAccount() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokeGetOrganizationUserAccountsPage( Long organizationId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/organizations/{organization-id}/user-accounts",
-				organizationId 
-			);
-
+	@Test
+	public void testPutUserAccount() throws Exception {
+		Assert.assertTrue(true);
 	}
-	protected Response invokeGetUserAccountsPage( String fullnamequery , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/user-accounts",
-				fullnamequery 
-			);
+	protected Response invokeDeleteUserAccount(Long userAccountId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).delete(
+			_resourceURL + "/user-accounts/{user-account-id}",
+			userAccountId
+		);
 	}
-	protected Response invokePostUserAccount( UserAccount userAccount ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/user-accounts",
-				userAccount
-			);
+	protected Response invokeGetMyUserAccount(Long myUserAccountId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/my-user-accounts/{my-user-account-id}",
+			myUserAccountId
+		);
 	}
-	protected Response invokeDeleteUserAccount( Long userAccountId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/user-accounts/{user-account-id}",
-				userAccountId
-			);
+	protected Response invokeGetOrganizationUserAccountsPage(
+			Long organizationId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/organizations/{organization-id}/user-accounts",
+			organizationId 
+		);
 	}
-	protected Response invokeGetUserAccount( Long userAccountId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/user-accounts/{user-account-id}",
-				userAccountId
-			);
+	protected Response invokeGetUserAccount(Long userAccountId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/user-accounts/{user-account-id}",
+			userAccountId
+		);
 	}
-	protected Response invokePutUserAccount( Long userAccountId , UserAccount userAccount ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				userAccount
-			).when(
-			).put(
-				_resourceURL + "/user-accounts/{user-account-id}",
-				userAccountId 
-			);
+	protected Response invokeGetUserAccountsPage(
+			String fullnamequery, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/user-accounts",
+			fullnamequery 
+		);
 	}
-	protected Response invokeGetWebSiteUserAccountsPage( Long webSiteId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/web-sites/{web-site-id}/user-accounts",
-				webSiteId 
-			);
+	protected Response invokeGetWebSiteUserAccountsPage(
+			Long webSiteId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/web-sites/{web-site-id}/user-accounts",
+			webSiteId 
+		);
+	}
+
+	protected Response invokePostUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).post(
+			_resourceURL + "/user-accounts",
+			userAccount
+		);
+	}
+
+	protected Response invokePutUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception {
+
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			userAccount
+		).when(
+		).put(
+			_resourceURL + "/user-accounts/{user-account-id}",
+			userAccountId 
+		);
 	}
 
 	protected UserAccount randomUserAccount() {
 		UserAccount userAccount = new UserAccountImpl();
 
-additionalName = RandomTestUtil.randomString();
-alternateName = RandomTestUtil.randomString();
-birthDate = RandomTestUtil.nextDate();
-dashboardURL = RandomTestUtil.randomString();
-email = RandomTestUtil.randomString();
-familyName = RandomTestUtil.randomString();
-givenName = RandomTestUtil.randomString();
-honorificPrefix = RandomTestUtil.randomString();
-honorificSuffix = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-image = RandomTestUtil.randomString();
-jobTitle = RandomTestUtil.randomString();
-name = RandomTestUtil.randomString();
-profileURL = RandomTestUtil.randomString();
+		additionalName = RandomTestUtil.randomString();
+		alternateName = RandomTestUtil.randomString();
+		birthDate = RandomTestUtil.nextDate();
+		dashboardURL = RandomTestUtil.randomString();
+		email = RandomTestUtil.randomString();
+		familyName = RandomTestUtil.randomString();
+		givenName = RandomTestUtil.randomString();
+		honorificPrefix = RandomTestUtil.randomString();
+		honorificSuffix = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		image = RandomTestUtil.randomString();
+		jobTitle = RandomTestUtil.randomString();
+		name = RandomTestUtil.randomString();
+		profileURL = RandomTestUtil.randomString();
+
 		return userAccount;
 	}
 
@@ -217,7 +253,7 @@ profileURL = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

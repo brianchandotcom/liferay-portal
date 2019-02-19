@@ -37,64 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SuccessPageImpl implements SuccessPage {
 
 	public String getDescription() {
-			return description;
+		return description;
+	}
+
+	public String getHeadline() {
+		return headline;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public void setDescription(String description) {
-			this.description = description;
+		this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
-			try {
-				description = descriptionUnsafeSupplier.get();
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
+
+	@JsonIgnore
+	public void setHeadline(
+		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+
+		try {
+			headline = headlineUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String description;
-	public String getHeadline() {
-			return headline;
-	}
-
-	public void setHeadline(String headline) {
-			this.headline = headline;
-	}
-
-	@JsonIgnore
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
-			try {
-				headline = headlineUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String headline;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
-			try {
-				id = idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

@@ -66,15 +66,15 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-			if (clazz.equals(ObjectReviewed.class)) {
-				return true;
-	}
-			if (clazz.equals(WorkflowLog.class)) {
-				return true;
-	}
-			if (clazz.equals(WorkflowTask.class)) {
-				return true;
-	}
+		if (clazz.equals(ObjectReviewed.class)) {
+			return true;
+		}
+		if (clazz.equals(WorkflowLog.class)) {
+			return true;
+		}
+		if (clazz.equals(WorkflowTask.class)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -92,21 +92,29 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			registerModule(
-				new SimpleModule("Liferay.Headless.Workflow", Version.unknownVersion()) {
+				new SimpleModule(
+				"Liferay.Headless.Workflow", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(ObjectReviewed.class, ObjectReviewedImpl.class);
-										addMapping(WorkflowLog.class, WorkflowLogImpl.class);
-										addMapping(WorkflowTask.class, WorkflowTaskImpl.class);
-	}
-							});
-	}
-				});
+									addMapping(
+										ObjectReviewed.class,
+										ObjectReviewedImpl.class);
+									addMapping(
+										WorkflowLog.class,
+										WorkflowLogImpl.class);
+									addMapping(
+										WorkflowTask.class,
+										WorkflowTaskImpl.class);
+								}
+								});
+					}
+					});
 
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

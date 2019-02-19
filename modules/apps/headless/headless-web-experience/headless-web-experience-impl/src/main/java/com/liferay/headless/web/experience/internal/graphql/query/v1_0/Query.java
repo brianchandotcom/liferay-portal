@@ -48,148 +48,207 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment getComment( @GraphQLName("comment-id") Long commentId ) throws Exception {
-return _getCommentResource().getComment( commentId );
+	public Comment getComment(@GraphQLName("comment-id") Long commentId)
+		throws Exception {
+
+		return _getCommentResource().getComment(commentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getCommentCommentsPage( @GraphQLName("comment-id") Long commentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCommentResource().getCommentCommentsPage(
+	public Collection<Comment> getCommentCommentsPage(
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-					commentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage = _getCommentResource().getCommentCommentsPage(
+			commentId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getStructuredContentCommentsPage( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
-				Page paginationPage = _getCommentResource().getStructuredContentCommentsPage(
+	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
 
-					structuredContentId , Pagination.of(pageSize, page)
-				);
+		Page paginationPage =
+			_getContentStructureResource().getContentSpaceContentStructuresPage(
+				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentStructure> getContentSpaceContentStructuresPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
-				Page paginationPage = _getContentStructureResource().getContentSpaceContentStructuresPage(
+	public Collection<StructuredContent> getContentSpaceContentStructureStructuredContentsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("content-structure-id") Long contentStructureId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
 
-					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
-				);
+		Page paginationPage =
+			_getStructuredContentResource().getContentSpaceContentStructureStructuredContentsPage(
+				contentSpaceId,
+				contentStructureId,
+				filter, Pagination.of(pageSize, page), sorts);
 
-				return paginationPage.getItems();
-
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public ContentStructure getContentStructure( @GraphQLName("content-structure-id") Long contentStructureId ) throws Exception {
-return _getContentStructureResource().getContentStructure( contentStructureId );
+	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		Page paginationPage =
+			_getStructuredContentResource().getContentSpaceStructuredContentsPage(
+				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent> getContentSpaceContentStructureStructuredContentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("content-structure-id") Long contentStructureId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
-				Page paginationPage = _getStructuredContentResource().getContentSpaceContentStructureStructuredContentsPage(
+	public ContentStructure getContentStructure(
+			@GraphQLName("content-structure-id") Long contentStructureId)
+		throws Exception {
 
-					contentSpaceId , contentStructureId , filter , Pagination.of(pageSize, page) , sorts
-				);
-
-				return paginationPage.getItems();
-
+		return _getContentStructureResource().getContentStructure(contentStructureId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent> getContentSpaceStructuredContentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
-				Page paginationPage = _getStructuredContentResource().getContentSpaceStructuredContentsPage(
+	public StructuredContent getStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
 
-					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
-				);
-
-				return paginationPage.getItems();
-
+		return _getStructuredContentResource().getStructuredContent(structuredContentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public StructuredContent getStructuredContent( @GraphQLName("structured-content-id") Long structuredContentId ) throws Exception {
-return _getStructuredContentResource().getStructuredContent( structuredContentId );
+	public Collection<Comment> getStructuredContentCommentsPage(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		Page paginationPage =
+			_getCommentResource().getStructuredContentCommentsPage(
+				structuredContentId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContentImage> getStructuredContentStructuredContentImagesPage( @GraphQLName("structured-content-id") Long structuredContentId ) throws Exception {
-				Page paginationPage = _getStructuredContentImageResource().getStructuredContentStructuredContentImagesPage(
+	public StructuredContentImage getStructuredContentContentDocument(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("content-document-id") Long contentDocumentId)
+		throws Exception {
 
-					structuredContentId
-				);
-
-				return paginationPage.getItems();
-
+		return _getStructuredContentImageResource().getStructuredContentContentDocument(structuredContentId, contentDocumentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public StructuredContentImage getStructuredContentContentDocument( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("content-document-id") Long contentDocumentId ) throws Exception {
-return _getStructuredContentImageResource().getStructuredContentContentDocument( structuredContentId , contentDocumentId );
+	public Collection<StructuredContentImage> getStructuredContentStructuredContentImagesPage(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		Page paginationPage =
+			_getStructuredContentImageResource().getStructuredContentStructuredContentImagesPage(
+				structuredContentId);
+
+		return paginationPage.getItems();
 	}
 
 	private static CommentResource _getCommentResource() {
-			return _commentResourceServiceTracker.getService();
+		return _commentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
 	private static ContentStructureResource _getContentStructureResource() {
-			return _contentStructureResourceServiceTracker.getService();
+		return _contentStructureResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<ContentStructureResource, ContentStructureResource> _contentStructureResourceServiceTracker;
-	private static StructuredContentResource _getStructuredContentResource() {
-			return _structuredContentResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<StructuredContentResource, StructuredContentResource> _structuredContentResourceServiceTracker;
 	private static StructuredContentImageResource _getStructuredContentImageResource() {
-			return _structuredContentImageResourceServiceTracker.getService();
+		return _structuredContentImageResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<StructuredContentImageResource, StructuredContentImageResource> _structuredContentImageResourceServiceTracker;
+	private static StructuredContentResource _getStructuredContentResource() {
+		return _structuredContentResourceServiceTracker.getService();
+	}
+
+	private static final ServiceTracker<CommentResource, CommentResource>
+		_commentResourceServiceTracker;
+
+	private static final ServiceTracker<ContentStructureResource, ContentStructureResource>
+		_contentStructureResourceServiceTracker;
+
+	private static final ServiceTracker<StructuredContentImageResource, StructuredContentImageResource>
+		_structuredContentImageResourceServiceTracker;
+
+	private static final ServiceTracker<StructuredContentResource, StructuredContentResource>
+		_structuredContentResourceServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CommentResource.class, null);
+		ServiceTracker<CommentResource, CommentResource>
+			commentResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					CommentResource.class, null);
 
-			commentResourceServiceTracker.open();
+		commentResourceServiceTracker.open();
 
-			_commentResourceServiceTracker = commentResourceServiceTracker;
-			ServiceTracker<ContentStructureResource, ContentStructureResource> contentStructureResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), ContentStructureResource.class, null);
+		_commentResourceServiceTracker =
+			commentResourceServiceTracker;
 
-			contentStructureResourceServiceTracker.open();
+		ServiceTracker<ContentStructureResource, ContentStructureResource>
+			contentStructureResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					ContentStructureResource.class, null);
 
-			_contentStructureResourceServiceTracker = contentStructureResourceServiceTracker;
-			ServiceTracker<StructuredContentResource, StructuredContentResource> structuredContentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), StructuredContentResource.class, null);
+		contentStructureResourceServiceTracker.open();
 
-			structuredContentResourceServiceTracker.open();
+		_contentStructureResourceServiceTracker =
+			contentStructureResourceServiceTracker;
 
-			_structuredContentResourceServiceTracker = structuredContentResourceServiceTracker;
-			ServiceTracker<StructuredContentImageResource, StructuredContentImageResource> structuredContentImageResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), StructuredContentImageResource.class, null);
+		ServiceTracker<StructuredContentResource, StructuredContentResource>
+			structuredContentResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					StructuredContentResource.class, null);
 
-			structuredContentImageResourceServiceTracker.open();
+		structuredContentResourceServiceTracker.open();
 
-			_structuredContentImageResourceServiceTracker = structuredContentImageResourceServiceTracker;
+		_structuredContentResourceServiceTracker =
+			structuredContentResourceServiceTracker;
+
+		ServiceTracker<StructuredContentImageResource, StructuredContentImageResource>
+			structuredContentImageResourceServiceTracker =
+				new ServiceTracker<>(
+					bundle.getBundleContext(),
+					StructuredContentImageResource.class, null);
+
+		structuredContentImageResourceServiceTracker.open();
+
+		_structuredContentImageResourceServiceTracker =
+			structuredContentImageResourceServiceTracker;
 	}
 
 }

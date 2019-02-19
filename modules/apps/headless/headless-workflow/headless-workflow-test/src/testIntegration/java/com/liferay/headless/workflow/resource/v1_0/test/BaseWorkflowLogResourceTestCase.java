@@ -55,7 +55,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-workflow/v1.0");
+		_resourceURL =
+			new URL("http://localhost:8080/o/headless-workflow/v1.0");
 	}
 
 	@After
@@ -65,47 +66,55 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 	@Test
 	public void testGetWorkflowLog() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetWorkflowLog( Long workflowLogId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWorkflowLog(Long workflowLogId)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-logs/{workflow-log-id}",
-				workflowLogId
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/workflow-logs/{workflow-log-id}",
+			workflowLogId
+		);
 	}
-	protected Response invokeGetWorkflowTaskWorkflowLogsPage( Long workflowTaskId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/workflow-logs",
-				workflowTaskId 
-			);
+	protected Response invokeGetWorkflowTaskWorkflowLogsPage(
+			Long workflowTaskId, Pagination pagination)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/workflow-tasks/{workflow-task-id}/workflow-logs",
+			workflowTaskId 
+		);
 	}
 
 	protected WorkflowLog randomWorkflowLog() {
 		WorkflowLog workflowLog = new WorkflowLogImpl();
 
-auditPerson = RandomTestUtil.randomString();
-commentLog = RandomTestUtil.randomString();
-dateCreated = RandomTestUtil.nextDate();
-id = RandomTestUtil.randomLong();
-person = RandomTestUtil.randomString();
-previousPerson = RandomTestUtil.randomString();
-previousState = RandomTestUtil.randomString();
-state = RandomTestUtil.randomString();
-taskId = RandomTestUtil.randomLong();
-type = RandomTestUtil.randomString();
+		auditPerson = RandomTestUtil.randomString();
+		commentLog = RandomTestUtil.randomString();
+		dateCreated = RandomTestUtil.nextDate();
+		id = RandomTestUtil.randomLong();
+		person = RandomTestUtil.randomString();
+		previousPerson = RandomTestUtil.randomString();
+		previousState = RandomTestUtil.randomString();
+		state = RandomTestUtil.randomString();
+		taskId = RandomTestUtil.randomLong();
+		type = RandomTestUtil.randomString();
+
 		return workflowLog;
 	}
 
@@ -127,7 +136,7 @@ type = RandomTestUtil.randomString();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

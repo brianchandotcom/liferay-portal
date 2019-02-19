@@ -37,43 +37,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OptionsImpl implements Options {
 
 	public String getLabel() {
-			return label;
+		return label;
+	}
+
+	public String getValue() {
+		return value;
 	}
 
 	public void setLabel(String label) {
-			this.label = label;
+		this.label = label;
 	}
 
 	@JsonIgnore
-	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
-			try {
-				label = labelUnsafeSupplier.get();
+	public void setLabel(
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setValue(String value) {
+		this.value = value;
 	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String label;
-	public String getValue() {
-			return value;
-	}
-
-	public void setValue(String value) {
-			this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
-			try {
-				value = valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

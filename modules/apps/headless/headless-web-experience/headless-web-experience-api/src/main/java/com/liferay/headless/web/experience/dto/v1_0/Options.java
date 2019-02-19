@@ -27,10 +27,11 @@ public interface Options {
 
 	public String getLabel();
 
+	public String getValue();
+
 	public void setLabel(String label);
 
 	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
-	public String getValue();
 
 	public void setValue(String value);
 

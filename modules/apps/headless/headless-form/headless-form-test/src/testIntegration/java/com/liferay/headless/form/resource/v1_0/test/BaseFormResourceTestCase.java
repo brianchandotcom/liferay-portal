@@ -65,92 +65,110 @@ public abstract class BaseFormResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceFormsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetForm() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
-	@Test
-	public void testPostFormEvaluateContext() throws Exception {
-			Assert.assertTrue(true);
-	}
+
 	@Test
 	public void testGetFormFetchLatestDraft() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
+	@Test
+	public void testPostFormEvaluateContext() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Test
 	public void testPostFormUploadFile() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceFormsPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceFormsPage(
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/form",
-				contentSpaceId 
-			);
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/content-spaces/{content-space-id}/form",
+			contentSpaceId 
+		);
 	}
-	protected Response invokeGetForm( Long formId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/forms/{form-id}",
-				formId
-			);
+	protected Response invokeGetForm(Long formId) throws Exception {
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
 
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/forms/{form-id}",
+			formId
+		);
 	}
-	protected Response invokePostFormEvaluateContext( Long formId , Form form ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				form
-			).when(
-			).post(
-				_resourceURL + "/forms/{form-id}/evaluate-context",
-				formId 
-			);
+	protected Response invokeGetFormFetchLatestDraft(Long formId)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.when(
+		).get(
+			_resourceURL + "/forms/{form-id}/fetch-latest-draft",
+			formId
+		);
 	}
-	protected Response invokeGetFormFetchLatestDraft( Long formId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/forms/{form-id}/fetch-latest-draft",
-				formId
-			);
+	protected Response invokePostFormEvaluateContext(Long formId, Form form)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			form
+		).when(
+		).post(
+			_resourceURL + "/forms/{form-id}/evaluate-context",
+			formId 
+		);
 	}
-	protected Response invokePostFormUploadFile( Long formId , Form form ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
 
-			return requestSpecification.body(
-				form
-			).when(
-			).post(
-				_resourceURL + "/forms/{form-id}/upload-file",
-				formId 
-			);
+	protected Response invokePostFormUploadFile(Long formId, Form form)
+		throws Exception {
 
+		RequestSpecification requestSpecification =
+			_createRequestSpecification();
+
+		return requestSpecification.body(
+			form
+		).when(
+		).post(
+			_resourceURL + "/forms/{form-id}/upload-file",
+			formId 
+		);
 	}
 
 	protected Form randomForm() {
 		Form form = new FormImpl();
 
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-datePublished = RandomTestUtil.nextDate();
-defaultLanguage = RandomTestUtil.randomString();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-structureId = RandomTestUtil.randomLong();
+		contentSpace = RandomTestUtil.randomLong();
+		dateCreated = RandomTestUtil.nextDate();
+		dateModified = RandomTestUtil.nextDate();
+		datePublished = RandomTestUtil.nextDate();
+		defaultLanguage = RandomTestUtil.randomString();
+		description = RandomTestUtil.randomString();
+		id = RandomTestUtil.randomLong();
+		name = RandomTestUtil.randomString();
+		structureId = RandomTestUtil.randomLong();
+
 		return form;
 	}
 
@@ -172,7 +190,7 @@ structureId = RandomTestUtil.randomLong();
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 

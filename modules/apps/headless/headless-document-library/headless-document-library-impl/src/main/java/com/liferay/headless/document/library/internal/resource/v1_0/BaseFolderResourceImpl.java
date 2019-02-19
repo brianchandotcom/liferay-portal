@@ -46,76 +46,99 @@ import javax.ws.rs.core.Context;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFolderResourceImpl implements FolderResource {
+public abstract class BaseFolderResourceImpl
+	implements FolderResource {
+
+	@DELETE
+	@Path("/folders/{folder-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public boolean deleteFolder(@PathParam("folder-id") Long folderId)
+		throws Exception {
+
+		return false;
+	}
 
 	@GET
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Page<Folder> getContentSpaceFoldersPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Folder> getContentSpaceFoldersPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
+		return Page.of(Collections.emptyList());
 	}
+
+	@GET
+	@Path("/folders/{folder-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Folder getFolder(@PathParam("folder-id") Long folderId)
+		throws Exception {
+
+		return new FolderImpl();
+	}
+
+	@GET
+	@Path("/folders/{folder-id}/folders")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public Page<Folder> getFolderFoldersPage(
+			@PathParam("folder-id") Long folderId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Folder postContentSpaceFolder( @PathParam("content-space-id") Long contentSpaceId , Folder folder ) throws Exception {
-			return new FolderImpl();
+	public Folder postContentSpaceFolder(
+			@PathParam("content-space-id") Long contentSpaceId, Folder folder)
+		throws Exception {
 
+		return new FolderImpl();
 	}
-	@DELETE
-	@Path("/folders/{folder-id}")
+
+	@Consumes("application/json")
+	@POST
+	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public boolean deleteFolder( @PathParam("folder-id") Long folderId ) throws Exception {
-			return false;
+	public Folder postFolderFolder(
+			@PathParam("folder-id") Long folderId, Folder folder)
+		throws Exception {
 
+		return new FolderImpl();
 	}
-	@GET
-	@Path("/folders/{folder-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Folder getFolder( @PathParam("folder-id") Long folderId ) throws Exception {
-			return new FolderImpl();
 
-	}
 	@Consumes("application/json")
 	@PUT
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	@Override
-	public Folder putFolder( @PathParam("folder-id") Long folderId , Folder folder ) throws Exception {
-			return new FolderImpl();
+	public Folder putFolder(
+			@PathParam("folder-id") Long folderId, Folder folder)
+		throws Exception {
 
-	}
-	@GET
-	@Path("/folders/{folder-id}/folders")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Page<Folder> getFolderFoldersPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
-
-	}
-	@Consumes("application/json")
-	@POST
-	@Path("/folders/{folder-id}/folders")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	@Override
-	public Folder postFolderFolder( @PathParam("folder-id") Long folderId , Folder folder ) throws Exception {
-			return new FolderImpl();
-
+		return new FolderImpl();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

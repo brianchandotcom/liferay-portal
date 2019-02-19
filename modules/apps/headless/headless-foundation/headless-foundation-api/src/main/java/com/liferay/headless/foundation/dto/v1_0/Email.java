@@ -27,15 +27,17 @@ public interface Email {
 
 	public String getEmail();
 
+	public Long getId();
+
+	public String getType();
+
 	public void setEmail(String email);
 
 	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier);
-	public Long getId();
 
 	public void setId(Long id);
 
 	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getType();
 
 	public void setType(String type);
 

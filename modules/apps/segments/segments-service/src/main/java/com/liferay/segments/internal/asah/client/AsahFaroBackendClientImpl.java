@@ -22,7 +22,6 @@ import com.liferay.segments.internal.asah.client.data.binding.IndividualJSONObje
 import com.liferay.segments.internal.asah.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.internal.asah.client.model.Individual;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.Rels;
 import com.liferay.segments.internal.asah.client.model.Results;
 import com.liferay.segments.internal.asah.client.util.FilterBuilder;
 import com.liferay.segments.internal.asah.client.util.FilterConstants;
@@ -75,13 +74,11 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			"dataSourceIndividualPKs/" + _dataSourceId,
 			FilterConstants.COMPARISON_OPERATOR_NOT_EQUALS);
 
-		filterBuilder.addFilter(
-			"individualSegmentIds", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			individualSegmentId);
-
 		try {
 			String response = _jsonWebServiceClient.doGet(
-				Rels.INDIVIDUALS,
+				StringUtil.replace(
+					_PATH_INDIVIDUAL_SEGMENTS_INDIVIDUALS, "{id}",
+					individualSegmentId),
 				_getParameters(
 					filterBuilder,
 					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, cur, delta,
@@ -111,7 +108,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 		try {
 			String response = _jsonWebServiceClient.doGet(
-				Rels.INDIVIDUAL_SEGMENTS,
+				_PATH_INDIVIDUAL_SEGMENTS,
 				_getParameters(
 					filterBuilder,
 					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL_SEGMENT, cur,
@@ -169,6 +166,12 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 		return uriVariables;
 	}
+
+	private static final String _PATH_INDIVIDUAL_SEGMENTS =
+		"api/1.0/individual-segments";
+
+	private static final String _PATH_INDIVIDUAL_SEGMENTS_INDIVIDUALS =
+		_PATH_INDIVIDUAL_SEGMENTS + "/{id}/individuals";
 
 	private static final IndividualJSONObjectMapper
 		_individualJSONObjectMapper = new IndividualJSONObjectMapper();

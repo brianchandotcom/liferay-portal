@@ -1023,7 +1023,7 @@ public class PropsValues {
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE));
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public static boolean DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE =

@@ -86,27 +86,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception {
 
-		Document document = multipartBody.getJSONObjectValue(
-			"Document", DocumentImpl.class);
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		String binaryFileName = binaryFile.getFileName();
-
-		String title = Optional.ofNullable(
-			document.getTitle()
-		).orElse(
-			binaryFileName
-		);
-
-		FileEntry fileEntry = _dlAppService.addFileEntry(
-			contentSpaceId, 0L, binaryFileName, binaryFile.getContentType(),
-			title, document.getDescription(), null, binaryFile.getInputStream(),
-			binaryFile.getSize(), _getServiceContext(contentSpaceId, document));
-
-		return _toDocument(
-			fileEntry, fileEntry.getFileVersion(),
-			_userService.getUserById(fileEntry.getUserId()));
+		return _addDocument(multipartBody, contentSpaceId, 0L, contentSpaceId);
 	}
 
 	@Override
@@ -116,6 +96,16 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		Folder folder = _dlAppService.getFolder(folderId);
 
+		return _addDocument(
+			multipartBody, folder.getRepositoryId(), folderId,
+			folder.getGroupId());
+	}
+
+	private Document _addDocument(
+			MultipartBody multipartBody, Long repositoryId, long folderId,
+			Long groupId)
+		throws Exception {
+
 		Document document = multipartBody.getJSONObjectValue(
 			"Document", DocumentImpl.class);
 
@@ -130,10 +120,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
-			folder.getRepositoryId(), folderId, binaryFileName,
-			binaryFile.getContentType(), title, document.getDescription(), null,
-			binaryFile.getInputStream(), binaryFile.getSize(),
-			_getServiceContext(folder.getGroupId(), document));
+			repositoryId, folderId, binaryFileName, binaryFile.getContentType(),
+			title, document.getDescription(), null, binaryFile.getInputStream(),
+			binaryFile.getSize(), _getServiceContext(groupId, document));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),

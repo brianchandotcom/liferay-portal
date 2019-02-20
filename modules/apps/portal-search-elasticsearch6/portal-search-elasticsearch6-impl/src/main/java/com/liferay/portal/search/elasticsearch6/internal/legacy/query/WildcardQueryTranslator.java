@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.search.WildcardQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface MatchQueryTranslator {
+public interface WildcardQueryTranslator {
 
-	public QueryBuilder translate(MatchQuery matchQuery);
+	public QueryBuilder translate(WildcardQuery wildcardQuery);
 
 }

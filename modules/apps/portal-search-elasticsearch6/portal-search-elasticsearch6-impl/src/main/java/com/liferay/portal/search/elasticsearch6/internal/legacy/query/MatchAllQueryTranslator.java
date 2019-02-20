@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.FuzzyQuery;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface FuzzyQueryTranslator {
+public interface MatchAllQueryTranslator {
 
-	public QueryBuilder translate(FuzzyQuery fuzzyQuery);
+	public QueryBuilder translate(MatchAllQuery matchAllQuery);
 
 }

@@ -12,32 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.generic.StringQuery;
 
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MatchAllQueryTranslator.class)
-public class MatchAllQueryTranslatorImpl implements MatchAllQueryTranslator {
+@Component(immediate = true, service = StringQueryTranslator.class)
+public class StringQueryTranslatorImpl implements StringQueryTranslator {
 
 	@Override
-	public QueryBuilder translate(MatchAllQuery matchAllQuery) {
-		MatchAllQueryBuilder matchAllQueryBuilder =
-			QueryBuilders.matchAllQuery();
+	public QueryBuilder translate(StringQuery stringQuery) {
+		QueryStringQueryBuilder queryStringQueryBuilder =
+			QueryBuilders.queryStringQuery(stringQuery.getQuery());
 
-		if (!matchAllQuery.isDefaultBoost()) {
-			matchAllQueryBuilder.boost(matchAllQuery.getBoost());
+		if (!stringQuery.isDefaultBoost()) {
+			queryStringQueryBuilder.boost(stringQuery.getBoost());
 		}
 
-		return matchAllQueryBuilder;
+		return queryStringQueryBuilder;
 	}
 
 }

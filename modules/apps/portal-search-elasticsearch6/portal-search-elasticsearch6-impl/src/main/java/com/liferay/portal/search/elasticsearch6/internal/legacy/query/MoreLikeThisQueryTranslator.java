@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface NestedQueryTranslator {
+public interface MoreLikeThisQueryTranslator {
 
-	public QueryBuilder translate(
-		NestedQuery nestedQuery, QueryVisitor<QueryBuilder> queryVisitor);
+	public QueryBuilder translate(MoreLikeThisQuery moreLikeThisQuery);
 
 }

@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.DisMaxQuery;
-import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface DisMaxQueryTranslator {
+public interface MultiMatchQueryTranslator {
 
-	public QueryBuilder translate(
-		DisMaxQuery disMaxQuery, QueryVisitor<QueryBuilder> queryVisitor);
+	public QueryBuilder translate(MultiMatchQuery multiMatchQuery);
 
 }

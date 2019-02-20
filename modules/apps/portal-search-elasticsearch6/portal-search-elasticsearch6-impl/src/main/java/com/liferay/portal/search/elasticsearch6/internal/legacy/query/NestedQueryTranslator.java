@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.generic.NestedQuery;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface MatchAllQueryTranslator {
+public interface NestedQueryTranslator {
 
-	public QueryBuilder translate(MatchAllQuery matchAllQuery);
+	public QueryBuilder translate(
+		NestedQuery nestedQuery, QueryVisitor<QueryBuilder> queryVisitor);
 
 }

@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface MultiMatchQueryTranslator {
+public interface TermRangeQueryTranslator {
 
-	public QueryBuilder translate(MultiMatchQuery multiMatchQuery);
+	public QueryBuilder translate(TermRangeQuery termRangeQuery);
 
 }

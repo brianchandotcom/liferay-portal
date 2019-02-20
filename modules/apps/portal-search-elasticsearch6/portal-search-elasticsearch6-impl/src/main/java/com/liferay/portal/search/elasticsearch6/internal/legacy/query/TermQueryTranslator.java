@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.search.TermQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface StringQueryTranslator {
+public interface TermQueryTranslator {
 
-	public QueryBuilder translate(StringQuery stringQuery);
+	public QueryBuilder translate(TermQuery termQuery);
 
 }

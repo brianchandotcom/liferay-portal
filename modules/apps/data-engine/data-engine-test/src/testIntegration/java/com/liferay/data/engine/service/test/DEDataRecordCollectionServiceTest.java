@@ -26,6 +26,8 @@ import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionListRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionListResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsRequest;
@@ -33,6 +35,7 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -52,11 +55,13 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -2723,6 +2728,322 @@ public class DEDataRecordCollectionServiceTest {
 			_deDataRecordCollectionService);
 	}
 
+	@Test
+	public void testListDataRecordCollectionPaginatedMiddleInsideRange()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), 1, 5);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 4,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionPaginatedMiddleOutOfRange()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), 4, 10);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 1,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionPaginatedOutOfRange()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), 6, 10);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 0,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionPaginatedReturnLast()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), 4, 5);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 1,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionPaginatedStartingAtMinusOne()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), -2, 5);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 5,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionPaginatedStartingAtMinusTwo()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), -1, 5);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 5,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionPaginatedStartingAtZero()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), 0, 5);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 5,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithInvalidGroupId()
+		throws Exception {
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(-1, null, null);
+
+		Assert.assertTrue(deDataRecordCollections.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithNonexistentGroup()
+		throws Exception {
+
+		int total = 3;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(1, null, null);
+
+		Assert.assertTrue(deDataRecordCollections.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithNoRecords() throws Exception {
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), null, null);
+
+		Assert.assertTrue(deDataRecordCollections.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithoutSpecifyingFinalIndex()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
+				DEDataRecordCollectionRequestBuilder.listBuilder(
+			).inGroup(
+				_group.getGroupId()
+			).startingAt(
+				3
+			).build();
+
+		DEDataRecordCollectionListResponse deDataRecordCollectionListResponse =
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionListRequest);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			deDataRecordCollectionListResponse.getDEDataRecordCollections();
+
+		Assert.assertTrue(deDataRecordCollections.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithoutSpecifyingGroup()
+		throws Exception {
+
+		int total = 3;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
+				DEDataRecordCollectionRequestBuilder.listBuilder(
+			).endingAt(
+				GetterUtil.getInteger(null, QueryUtil.ALL_POS)
+			).startingAt(
+				GetterUtil.getInteger(null, QueryUtil.ALL_POS)
+			).build();
+
+		DEDataRecordCollectionListResponse deDataRecordCollectionListResponse =
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionListRequest);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			deDataRecordCollectionListResponse.getDEDataRecordCollections();
+
+		Assert.assertTrue(deDataRecordCollections.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithoutSpecifyingPagination()
+		throws Exception {
+
+		int total = 3;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
+				DEDataRecordCollectionRequestBuilder.listBuilder(
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataRecordCollectionListResponse deDataRecordCollectionListResponse =
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionListRequest);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			deDataRecordCollectionListResponse.getDEDataRecordCollections();
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 3,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithoutSpecifyingStartIndex()
+		throws Exception {
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
+				DEDataRecordCollectionRequestBuilder.listBuilder(
+			).inGroup(
+				_group.getGroupId()
+			).endingAt(
+				3
+			).build();
+
+		DEDataRecordCollectionListResponse deDataRecordCollectionListResponse =
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionListRequest);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			deDataRecordCollectionListResponse.getDEDataRecordCollections();
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 3,
+			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordCollectionWithRecords() throws Exception {
+		int total = 3;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			listDEDataRecordCollections(_group.getGroupId(), null, null);
+
+		Assert.assertEquals(
+			deDataRecordCollections.toString(), 3,
+			deDataRecordCollections.size());
+	}
+
 	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
 	public void testRevokeAddDataRecordCollectionPermission() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -3520,6 +3841,27 @@ public class DEDataRecordCollectionServiceTest {
 
 		deDataRecord = DEDataEngineTestUtil.updateDEDataRecord(
 			_siteMember, _group, deDataRecord, _deDataRecordCollectionService);
+	}
+
+	protected List<DEDataRecordCollection> listDEDataRecordCollections(
+			long groupId, Integer start, Integer end)
+		throws Exception {
+
+		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
+				DEDataRecordCollectionRequestBuilder.listBuilder(
+			).endingAt(
+				GetterUtil.getInteger(end, QueryUtil.ALL_POS)
+			).inGroup(
+				groupId
+			).startingAt(
+				GetterUtil.getInteger(start, QueryUtil.ALL_POS)
+			).build();
+
+		DEDataRecordCollectionListResponse deDataRecordCollectionListResponse =
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionListRequest);
+
+		return deDataRecordCollectionListResponse.getDEDataRecordCollections();
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

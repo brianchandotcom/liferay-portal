@@ -25,7 +25,6 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
@@ -52,11 +51,7 @@ import org.junit.runners.model.Statement;
  */
 public class JUnitBridgeObserver {
 
-	public void aroundTest(@Observes final EventContext<Test> eventContext)
-		throws Throwable {
-
-		Test test = eventContext.getEvent();
-
+	public void aroundTest(@Observes Test test) throws Throwable {
 		Statement statement = new InvokeMethod(null, test.getTestInstance()) {
 
 			@Override
@@ -69,8 +64,6 @@ public class JUnitBridgeObserver {
 				Thread currentThread = Thread.currentThread();
 
 				ClassLoader classLoader = currentThread.getContextClassLoader();
-
-				Test test = eventContext.getEvent();
 
 				Class<?> clazz = test.getClass();
 
@@ -89,8 +82,6 @@ public class JUnitBridgeObserver {
 				}
 
 				_testResultInstanceProducer.set(result);
-
-				eventContext.proceed();
 			}
 
 		};

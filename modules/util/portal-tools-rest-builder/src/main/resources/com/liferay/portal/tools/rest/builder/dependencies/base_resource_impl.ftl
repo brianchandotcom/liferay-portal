@@ -49,9 +49,9 @@ import javax.ws.rs.core.Context;
 @Path("/${openAPIYAML.info.version}")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
-	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		<#compress>
-			<#list javaTool.getMethodAnnotations(javaMethodSignature) as methodAnnotation>
+			<#list freeMarkerTool.getMethodAnnotations(javaMethodSignature) as methodAnnotation>
 				${methodAnnotation}
 			</#list>
 
@@ -59,7 +59,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			<@compress single_line=true>
 				public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
 					<#list javaMethodSignature.javaParameters as javaParameter>
-						${javaTool.getParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
+						${freeMarkerTool.getParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
 
 						<#if javaParameter_has_next>
 							,

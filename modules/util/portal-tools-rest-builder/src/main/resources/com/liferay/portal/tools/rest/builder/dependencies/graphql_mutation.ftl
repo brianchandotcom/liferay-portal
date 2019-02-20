@@ -36,19 +36,19 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
-	<#assign javaMethodSignatures = javaTool.getGraphQLJavaMethodSignatures(openAPIYAML, false) />
+	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(openAPIYAML, false) />
 
 	<#list javaMethodSignatures?keys as schemaName>
 		<#list javaMethodSignatures[schemaName] as javaMethodSignature>
 			<#compress>
-				<#list javaTool.getGraphQLMethodAnnotations(javaMethodSignature) as methodAnnotation>
+				<#list freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature) as methodAnnotation>
 					${methodAnnotation}
 				</#list>
 
 				<@compress single_line=true>
 					public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
 						<#list javaMethodSignature.javaParameters as javaParameter>
-							${javaTool.getGraphQLParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
+							${freeMarkerTool.getGraphQLParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
 
 							<#if javaParameter_has_next>
 								,

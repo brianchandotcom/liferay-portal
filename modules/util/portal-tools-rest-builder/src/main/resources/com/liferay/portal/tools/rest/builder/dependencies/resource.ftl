@@ -28,7 +28,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ${schemaName}Resource {
 
-	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		<@compress single_line=true>
 			public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
 				<#list javaMethodSignature.javaParameters as javaParameter>

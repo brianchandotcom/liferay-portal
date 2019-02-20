@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
-	<#assign javaMethodSignatures = javaTool.getGraphQLJavaMethodSignatures(openAPIYAML, true) />
+	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(openAPIYAML, true) />
 
 	<#list javaMethodSignatures?keys as schemaName>
 		<#list javaMethodSignatures[schemaName] as javaMethodSignature>
@@ -47,14 +47,14 @@ public class Query {
 			</#if>
 
 			<#compress>
-				<#list javaTool.getGraphQLMethodAnnotations(javaMethodSignature) as methodAnnotation>
+				<#list freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature) as methodAnnotation>
 					${methodAnnotation}
 				</#list>
 
 				<@compress single_line=true>
 					public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
 						<#list javaMethodSignature.javaParameters as javaParameter>
-							${javaTool.getGraphQLParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
+							${freeMarkerTool.getGraphQLParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
 
 							<#if javaParameter_has_next>
 								,

@@ -62,14 +62,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		@Test
 		public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 			Assert.assertTrue(true);
 		}
 	</#list>
 
-	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		<@compress single_line=true>
 			protected Response invoke${javaMethodSignature.methodName?cap_first}(
 				<#list javaMethodSignature.javaParameters as javaParameter>
@@ -96,17 +96,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 			</@compress>
 		</#assign>
 
-		<#if javaTool.hasHTTPMethod(javaMethodSignature, "post", "put") && parametersContent?ends_with(", ${schemaName?uncap_first}")>
+		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && parametersContent?ends_with(", ${schemaName?uncap_first}")>
 			return requestSpecification.body(
 				${schemaName?uncap_first}
 			).when(
-			).${javaTool.getHTTPMethod(javaMethodSignature.operation)}(
+			).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
 				_resourceURL + "${javaMethodSignature.path}",
 				${stringUtil.replaceLast(parametersContent, ", ${schemaName?uncap_first}", "")}
 			);
 		<#else>
 			return requestSpecification.when(
-			).${javaTool.getHTTPMethod(javaMethodSignature.operation)}(
+			).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
 				_resourceURL + "${javaMethodSignature.path}",
 				${stringUtil.replaceLast(parametersContent, ", pagination", "")}
 			);
@@ -119,7 +119,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		return new ${schemaName}Impl() {
 			{
 				<#compress>
-					<#list javaTool.getJavaParameters(schema) as javaParameter>
+					<#list freeMarkerTool.getJavaParameters(schema) as javaParameter>
 						<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
 
 						<#if randomDataTypes?seq_contains(javaParameter.parameterType)>

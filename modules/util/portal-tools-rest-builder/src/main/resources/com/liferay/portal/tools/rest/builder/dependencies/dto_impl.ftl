@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName}Impl implements ${schemaName} {
 
-	<#list javaTool.getJavaParameters(schema) as javaParameter>
+	<#list freeMarkerTool.getJavaParameters(schema) as javaParameter>
 		public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
 			return ${javaParameter.parameterName};
 		}

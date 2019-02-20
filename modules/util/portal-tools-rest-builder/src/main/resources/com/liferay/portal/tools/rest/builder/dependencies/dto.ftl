@@ -19,7 +19,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ${schemaName} {
 
-	<#list javaTool.getJavaParameters(schema) as javaParameter>
+	<#list freeMarkerTool.getJavaParameters(schema) as javaParameter>
 		public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}();
 
 		public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName});

@@ -48,9 +48,9 @@ import java.util.stream.Stream;
 /**
  * @author Peter Shin
  */
-public class JavaTool {
+public class FreeMarkerTool {
 
-	public static JavaTool getInstance() {
+	public static FreeMarkerTool getInstance() {
 		return _instance;
 	}
 
@@ -373,7 +373,7 @@ public class JavaTool {
 		return false;
 	}
 
-	private JavaTool() {
+	private FreeMarkerTool() {
 	}
 
 	private Schema _getComponentSchema(
@@ -825,6 +825,6 @@ public class JavaTool {
 		}
 	}
 
-	private static JavaTool _instance = new JavaTool();
+	private static FreeMarkerTool _instance = new FreeMarkerTool();
 
 }

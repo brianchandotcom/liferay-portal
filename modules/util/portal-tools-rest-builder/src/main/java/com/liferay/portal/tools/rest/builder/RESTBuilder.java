@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.JavaTool;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
@@ -87,9 +87,9 @@ public class RESTBuilder {
 
 		context.put("configYAML", _configYAML);
 
-		JavaTool javaTool = JavaTool.getInstance();
+		FreeMarkerTool freeMarkerTool = FreeMarkerTool.getInstance();
 
-		context.put("javaTool", javaTool);
+		context.put("freeMarkerTool", freeMarkerTool);
 
 		context.put("stringUtil", StringUtil_IW.getInstance());
 		context.put("validator", Validator_IW.getInstance());
@@ -136,7 +136,8 @@ public class RESTBuilder {
 				String schemaName = entry.getKey();
 
 				List<JavaMethodSignature> javaMethodSignatures =
-					javaTool.getJavaMethodSignatures(openAPIYAML, schemaName);
+					freeMarkerTool.getJavaMethodSignatures(
+						openAPIYAML, schemaName);
 
 				if (javaMethodSignatures.isEmpty()) {
 					continue;

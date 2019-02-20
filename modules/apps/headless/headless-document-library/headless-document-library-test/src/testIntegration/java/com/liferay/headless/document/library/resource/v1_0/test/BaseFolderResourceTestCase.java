@@ -94,12 +94,6 @@ public abstract class BaseFolderResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected static String toJSON(Folder folder)
-		throws JsonProcessingException {
-
-		return _outputObjectMapper.writeValueAsString(folder);
-	}
-
 	protected Folder invokePostContentSpaceFolder(
 		Long contentSpaceId, Folder folder)
 		throws Exception {
@@ -413,39 +407,13 @@ public abstract class BaseFolderResourceTestCase {
 			return	HttpUtil.URLtoString(options);
 	}
 
-	private abstract class IgnoreFieldsMixin {
-
-		@JsonIgnore
-		public Date dateCreated;
-
-		@JsonIgnore
-		public abstract Date getDateCreated();
-
-		@JsonIgnore
-		public Date dateModified;
-
-		@JsonIgnore
-		public abstract Date getDateModified();
-
-		@JsonIgnore
-		public Long id;
-
-		@JsonIgnore
-		public abstract Long getId();
-
-	}
-
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(Include.NON_NULL);
 		}
 	};
 
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
-		{
-			addMixIn(FolderImpl.class, IgnoreFieldsMixin.class);
-		}
-	};
+	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

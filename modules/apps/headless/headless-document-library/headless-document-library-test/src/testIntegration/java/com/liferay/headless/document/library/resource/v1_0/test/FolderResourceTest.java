@@ -53,7 +53,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 		Folder folder = invokeGetFolder(inputFolder.getId());
 
-		Assert.assertEquals(toJSON(inputFolder), toJSON(folder));
+		Assert.assertEquals(inputFolder.getName(), folder.getName());
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Folder folder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), inputFolder);
 
-		Assert.assertEquals(toJSON(inputFolder), toJSON(folder));
+		Assert.assertEquals(inputFolder.getName(), folder.getName());
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Folder subfolder = invokePostFolderFolder(
 			parentFolder.getId(), inputSubfolder);
 
-		Assert.assertEquals(toJSON(inputSubfolder), toJSON(subfolder));
+		Assert.assertEquals(inputSubfolder.getName(), subfolder.getName());
 	}
 
 	@Test
@@ -89,11 +89,12 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Folder updatedFolder = invokePutFolder(
 			folder.getId(), inputUpdateFolder);
 
-		Assert.assertEquals(toJSON(inputUpdateFolder), toJSON(updatedFolder));
+		Assert.assertEquals(
+			inputUpdateFolder.getName(), updatedFolder.getName());
 
 		Folder getFolder = invokeGetFolder(updatedFolder.getId());
 
-		Assert.assertEquals(toJSON(inputUpdateFolder), toJSON(getFolder));
+		Assert.assertEquals(inputUpdateFolder.getName(), getFolder.getName());
 	}
 
 	@Override

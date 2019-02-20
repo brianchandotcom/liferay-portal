@@ -7691,25 +7691,25 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<for list="${test.case.available.property.names}" param="test.case.available.property.name">
+			<sequential>
+				<if>
+					<isset property="test.case.available.property.values[@{test.case.available.property.name}]" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							test.case.available.property.values[@{test.case.available.property.name}]=${test.case.available.property.values[@{test.case.available.property.name}]}
+						</echo>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
 		<if>
 			<isset property="test.case.required.property.names" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.case.required.property.names=${test.case.required.property.names}
 				</echo>
-
-				<for list="${test.case.required.property.names}" param="test.case.required.property.name">
-					<sequential>
-						<if>
-							<isset property="test.case.available.property.values[@{test.case.required.property.name}]" />
-							<then>
-								<echo append="true" file="${test.ext.properties.file}">
-									test.case.available.property.values[@{test.case.required.property.name}]=${test.case.available.property.values[@{test.case.required.property.name}]}
-								</echo>
-							</then>
-						</if>
-					</sequential>
-				</for>
 			</then>
 		</if>
 

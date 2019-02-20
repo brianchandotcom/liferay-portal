@@ -114,7 +114,7 @@ public class SourceUtil {
 			return 0;
 		}
 
-		int x = 0;
+		int x = -1;
 
 		for (int i = 1; i < lineNumber; i++) {
 			x = content.indexOf(CharPool.NEW_LINE, x + 1);

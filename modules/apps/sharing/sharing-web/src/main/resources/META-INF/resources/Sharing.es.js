@@ -54,13 +54,15 @@ class Sharing extends PortletBase {
 		e.preventDefault();
 
 		if (e.data) {
-			e.target.filteredItems = e.data.map((element, index) => ({
-				data: element,
-				index,
-				matches: [],
-				score: 0,
-				value: element
-			}));
+			e.target.filteredItems = e.data.map(
+				(element, index) => ({
+					data: element,
+					index,
+					matches: [],
+					score: 0,
+					value: element
+				})
+			);
 		}
 		else {
 			e.target.filteredItems = [];

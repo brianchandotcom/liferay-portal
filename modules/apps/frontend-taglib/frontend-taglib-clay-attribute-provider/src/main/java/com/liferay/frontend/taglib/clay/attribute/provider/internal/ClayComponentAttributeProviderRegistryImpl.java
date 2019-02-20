@@ -23,8 +23,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-
 import com.liferay.portal.kernel.util.ListUtil;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -103,7 +103,8 @@ public class ClayComponentAttributeProviderRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClayComponentAttributeProviderRegistryImpl.class);
 
-	private ServiceTrackerMap<String, List<ServiceWrapper<ClayComponentAttributeProvider>>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap
+		<String, List<ServiceWrapper<ClayComponentAttributeProvider>>>
+			_serviceTrackerMap;
 
 }

@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public interface ClayComponentAttributeProvider {
 
-	public Map<String, Object> getAttributes(
-		Map<String, Object> context);
+	public Map<String, Object> getAttributes(Map<String, Object> context);
 
 }

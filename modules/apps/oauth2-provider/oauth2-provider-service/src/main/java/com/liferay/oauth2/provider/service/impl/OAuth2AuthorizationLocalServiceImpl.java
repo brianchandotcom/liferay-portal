@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -25,9 +26,15 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2Authorization",
+	service = AopService.class
+)
 public class OAuth2AuthorizationLocalServiceImpl
 	extends OAuth2AuthorizationLocalServiceBaseImpl {
 
@@ -75,8 +82,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 				oAuth2AuthorizationId);
 
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-			oAuth2ScopeGrantLocalService.deleteOAuth2ScopeGrant(
-				oAuth2ScopeGrant);
+			oAuth2ScopeGrantPersistence.remove(oAuth2ScopeGrant);
 		}
 
 		return oAuth2AuthorizationPersistence.remove(oAuth2AuthorizationId);
@@ -173,8 +179,8 @@ public class OAuth2AuthorizationLocalServiceImpl
 	public Collection<OAuth2ScopeGrant> getOAuth2ScopeGrants(
 		long oAuth2AuthorizationId) {
 
-		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrants(
-			oAuth2AuthorizationId);
+		return oAuth2ScopeGrantPersistence.
+			getOAuth2AuthorizationOAuth2ScopeGrants(oAuth2AuthorizationId);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")

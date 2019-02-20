@@ -25,15 +25,18 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Carlos Sierra Andrés
  */
+@Component(service = OAuth2ScopeGrantFinder.class)
 public class OAuth2ScopeGrantFinderImpl
 	extends OAuth2ScopeGrantFinderBaseImpl implements OAuth2ScopeGrantFinder {
 
@@ -90,7 +93,7 @@ public class OAuth2ScopeGrantFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

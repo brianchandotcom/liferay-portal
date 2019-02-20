@@ -18,15 +18,16 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
+import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationScopeAliasesLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collection;
 import java.util.Date;
@@ -36,10 +37,16 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases",
+	service = AopService.class
+)
 public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 	extends OAuth2ApplicationScopeAliasesLocalServiceBaseImpl {
 
@@ -80,12 +87,12 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		throws PortalException {
 
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
 				oAuth2ApplicationScopeAliasesId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-			oAuth2ScopeGrantLocalService.deleteOAuth2ScopeGrant(
+			_oAuth2ScopeGrantLocalService.deleteOAuth2ScopeGrant(
 				oAuth2ScopeGrant.getOAuth2ScopeGrantId());
 		}
 
@@ -167,7 +174,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {
 			Bundle bundle = liferayOAuth2Scope.getBundle();
 
-			oAuth2ScopeGrantLocalService.createOAuth2ScopeGrant(
+			_oAuth2ScopeGrantLocalService.createOAuth2ScopeGrant(
 				companyId, oAuth2ApplicationScopeAliasesId,
 				liferayOAuth2Scope.getApplicationName(),
 				bundle.getSymbolicName(), liferayOAuth2Scope.getScope());
@@ -189,7 +196,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		}
 
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
 				oAuth2ApplicationScopeAliases.
 					getOAuth2ApplicationScopeAliasesId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -227,7 +234,10 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		return true;
 	}
 
-	@ServiceReference(type = ScopeLocator.class)
+	@Reference
+	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
+
+	@Reference
 	private ScopeLocator _scopeLocator;
 
 }

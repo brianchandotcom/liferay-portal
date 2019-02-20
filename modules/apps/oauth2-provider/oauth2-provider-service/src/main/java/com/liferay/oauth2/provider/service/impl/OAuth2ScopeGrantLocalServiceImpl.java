@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.service.base.OAuth2ScopeGrantLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -29,10 +30,15 @@ import java.util.List;
 import java.util.Objects;
 
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2ScopeGrant",
+	service = AopService.class
+)
 public class OAuth2ScopeGrantLocalServiceImpl
 	extends OAuth2ScopeGrantLocalServiceBaseImpl {
 
@@ -122,7 +128,7 @@ public class OAuth2ScopeGrantLocalServiceImpl
 		}
 
 		OAuth2Authorization oAuth2Authorization =
-			oAuth2AuthorizationLocalService.getOAuth2Authorization(
+			oAuth2AuthorizationPersistence.findByPrimaryKey(
 				oAuth2AuthorizationId);
 
 		List<OAuth2ScopeGrant> oAuth2ScopeGrants =

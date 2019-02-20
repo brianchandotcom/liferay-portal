@@ -35,8 +35,11 @@ import com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURISchemeE
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationLocalServiceBaseImpl;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,13 +56,11 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.awt.image.RenderedImage;
 
@@ -77,11 +78,30 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.oauth2.provider.model.OAuth2Application",
+	service = AopService.class
+)
 public class OAuth2ApplicationLocalServiceImpl
 	extends OAuth2ApplicationLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		String ianaRegisteredSchemes = PropsUtil.get(
+			"iana.registered.uri.schemes");
+
+		if (!Validator.isBlank(ianaRegisteredSchemes)) {
+			_ianaRegisteredUriSchemes = new HashSet<>(
+				Arrays.asList(StringUtil.split(ianaRegisteredSchemes)));
+		}
+	}
 
 	@Override
 	public OAuth2Application addOAuth2Application(
@@ -146,7 +166,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		if (ListUtil.isNotEmpty(scopeAliasesList)) {
 			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-				oAuth2ApplicationScopeAliasesLocalService.
+				_oAuth2ApplicationScopeAliasesLocalService.
 					addOAuth2ApplicationScopeAliases(
 						companyId, userId, userName, oAuth2ApplicationId,
 						scopeAliasesList);
@@ -165,34 +185,21 @@ public class OAuth2ApplicationLocalServiceImpl
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		String ianaRegisteredSchemes = PropsUtil.get(
-			"iana.registered.uri.schemes");
-
-		if (!Validator.isBlank(ianaRegisteredSchemes)) {
-			_ianaRegisteredUriSchemes = new HashSet<>(
-				Arrays.asList(StringUtil.split(ianaRegisteredSchemes)));
-		}
-	}
-
-	@Override
 	public OAuth2Application deleteOAuth2Application(long oAuth2ApplicationId)
 		throws PortalException {
 
 		List<OAuth2Authorization> oAuth2Authorizations =
-			oAuth2AuthorizationLocalService.getOAuth2Authorizations(
+			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 				oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
 		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
-			oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+			_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
 				oAuth2Authorization.getOAuth2AuthorizationId());
 		}
 
 		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses =
-			oAuth2ApplicationScopeAliasesLocalService.
+			_oAuth2ApplicationScopeAliasesLocalService.
 				getOAuth2ApplicationScopeAliaseses(
 					oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null);
@@ -200,7 +207,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
 				oAuth2ApplicationScopeAliaseses) {
 
-			oAuth2ApplicationScopeAliasesLocalService.
+			_oAuth2ApplicationScopeAliasesLocalService.
 				deleteOAuth2ApplicationScopeAliases(
 					oAuth2ApplicationScopeAliases.
 						getOAuth2ApplicationScopeAliasesId());
@@ -392,7 +399,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			oAuth2ApplicationScopeAliasesLocalService.
+			_oAuth2ApplicationScopeAliasesLocalService.
 				fetchOAuth2ApplicationScopeAliases(
 					oAuth2ApplicationId, scopeAliasesList);
 
@@ -401,13 +408,13 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2ApplicationScopeAliases.setUserName(userName);
 
 			oAuth2ApplicationScopeAliases =
-				oAuth2ApplicationScopeAliasesLocalService.
+				_oAuth2ApplicationScopeAliasesLocalService.
 					updateOAuth2ApplicationScopeAliases(
 						oAuth2ApplicationScopeAliases);
 		}
 		else {
 			oAuth2ApplicationScopeAliases =
-				oAuth2ApplicationScopeAliasesLocalService.
+				_oAuth2ApplicationScopeAliasesLocalService.
 					addOAuth2ApplicationScopeAliases(
 						oAuth2Application.getCompanyId(), userId, userName,
 						oAuth2ApplicationId, scopeAliasesList);
@@ -544,7 +551,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 				String path = uri.getPath();
 
-				String normalizedPath = HttpUtil.normalizePath(path);
+				String normalizedPath = _http.normalizePath(path);
 
 				if (!Objects.equals(path, normalizedPath)) {
 					throw new OAuth2ApplicationRedirectURIPathException(
@@ -614,19 +621,27 @@ public class OAuth2ApplicationLocalServiceImpl
 			"z39.50r", "z39.50s"
 		});
 
-	@ServiceReference(
-		filterString = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)",
-		type = Indexer.class
+	@Reference
+	private Http _http;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
 	)
 	private Indexer<DLFileEntry> _indexer;
 
-	@ServiceReference(
-		filterString = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)",
-		type = RepositoryFactory.class
+	@Reference
+	private OAuth2ApplicationScopeAliasesLocalService
+		_oAuth2ApplicationScopeAliasesLocalService;
+
+	@Reference
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
+
+	@Reference(
+		target = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
 	)
 	private RepositoryFactory _repositoryFactory;
 
-	@ServiceReference(filterString = "(current.store=true)", type = Store.class)
+	@Reference(target = "(current.store=true)")
 	private Store _store;
 
 }

@@ -18,13 +18,13 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -33,9 +33,13 @@ import java.io.InputStream;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(service = AopService.class)
 @JSONWebService(mode = JSONWebServiceMode.IGNORE)
 public class OAuth2ApplicationServiceImpl
 	extends OAuth2ApplicationServiceBaseImpl {
@@ -197,11 +201,10 @@ public class OAuth2ApplicationServiceImpl
 			scopeAliasesList);
 	}
 
-	private static volatile ModelResourcePermission<OAuth2Application>
-		_oAuth2ApplicationModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				OAuth2ApplicationServiceImpl.class,
-				"_oAuth2ApplicationModelResourcePermission",
-				OAuth2Application.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.oauth2.provider.model.OAuth2Application)"
+	)
+	private ModelResourcePermission<OAuth2Application>
+		_oAuth2ApplicationModelResourcePermission;
 
 }

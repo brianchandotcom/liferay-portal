@@ -38,7 +38,6 @@ public class ExtensionImpl implements Extension {
 
 	public static ExtensionImpl of(Object target) {
 		return new ExtensionImpl(
-			target,
 			_injections(target, _getFieldInjectionPoints(target.getClass())),
 			_observers(target, _getObserverMethods(target.getClass())));
 	}
@@ -56,10 +55,6 @@ public class ExtensionImpl implements Extension {
 	@Override
 	public List<ObserverMethod> getObservers() {
 		return Collections.unmodifiableList(_observers);
-	}
-
-	public Object getTarget() {
-		return _target;
 	}
 
 	private static List<Field> _getFieldInjectionPoints(Class<?> clazz) {
@@ -155,16 +150,13 @@ public class ExtensionImpl implements Extension {
 	}
 
 	private ExtensionImpl(
-		Object target, List<InjectionPoint> injectionPoints,
-		List<ObserverMethod> observers) {
+		List<InjectionPoint> injectionPoints, List<ObserverMethod> observers) {
 
-		_target = target;
 		_injectionPoints = injectionPoints;
 		_observers = observers;
 	}
 
 	private final List<InjectionPoint> _injectionPoints;
 	private final List<ObserverMethod> _observers;
-	private final Object _target;
 
 }

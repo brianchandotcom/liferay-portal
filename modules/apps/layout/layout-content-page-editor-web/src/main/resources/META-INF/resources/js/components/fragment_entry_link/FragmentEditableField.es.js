@@ -21,6 +21,28 @@ import templates from './FragmentEditableField.soy';
  */
 const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
+const FLOATING_TOOLBAR_EDIT_PANEL_ID = 'edit';
+
+const FLOATING_TOOLBAR_MAP_PANEL_ID = 'map';
+
+/**
+ * List of available panels
+ * @review
+ * @type {object[]}
+ */
+const FLOATING_TOOLBAR_PANELS = [
+	{
+		icon: 'pencil',
+		panelId: FLOATING_TOOLBAR_EDIT_PANEL_ID,
+		title: Liferay.Language.get('edit')
+	},
+	{
+		icon: 'plug',
+		panelId: FLOATING_TOOLBAR_MAP_PANEL_ID,
+		title: Liferay.Language.get('map')
+	}
+];
+
 /**
  * Delay to save changes of an editable field
  * @review

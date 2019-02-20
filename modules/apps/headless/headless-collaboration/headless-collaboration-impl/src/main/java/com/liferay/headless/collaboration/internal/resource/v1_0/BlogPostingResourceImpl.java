@@ -17,7 +17,9 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -161,6 +164,13 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		return serviceContext;
 	}
 
+	private String[] _getAssetTagNames(BlogsEntry blogsEntry) {
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		return ListUtil.toArray(assetTags, AssetTag.NAME_ACCESSOR);
+	}
+
 	private Categories[] _getCategories(BlogsEntry blogsEntry) {
 		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(
@@ -178,6 +188,12 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		).toArray(
 			Categories[]::new
 		);
+	}
+
+	private Long[] _getCategoryIds(BlogsEntry blogsEntry) {
+		return ArrayUtil.toArray(
+			_assetCategoryLocalService.getCategoryIds(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
 	private Image _getImage(BlogsEntry blogsEntry) throws Exception {
@@ -231,6 +247,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				articleBody = blogsEntry.getContent();
 				caption = blogsEntry.getCoverImageCaption();
 				categories = _getCategories(blogsEntry);
+				categoryIds = _getCategoryIds(blogsEntry);
 				contentSpace = blogsEntry.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
@@ -243,12 +260,17 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				headline = blogsEntry.getTitle();
 				id = blogsEntry.getEntryId();
 				image = _getImage(blogsEntry);
+				imageId = blogsEntry.getCoverImageFileEntryId();
+				keywords = _getAssetTagNames(blogsEntry);
 			}
 		};
 	}
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

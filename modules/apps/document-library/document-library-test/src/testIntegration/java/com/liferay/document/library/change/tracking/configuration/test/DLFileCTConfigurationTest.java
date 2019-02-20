@@ -19,7 +19,7 @@ import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -202,7 +203,7 @@ public class DLFileCTConfigurationTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		return DLFileEntryLocalServiceUtil.addFileEntry(
+		return _dlFileEntryLocalService.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
@@ -240,6 +241,10 @@ public class DLFileCTConfigurationTest {
 	}
 
 	private CTConfiguration<?, ?> _ctConfiguration;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
 	private DLFileEntry _fileEntry;
 	private DLFileVersion _fileVersion;
 

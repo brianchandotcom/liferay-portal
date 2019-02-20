@@ -32,9 +32,7 @@ public class SampleNavigationBarAttributeProvider
 	implements ClayComponentAttributeProvider {
 
 	@Override
-	public Map<String, Object> getAttributes(
-		Map<String, Object> context) {
-
+	public Map<String, Object> getAttributes(Map<String, Object> context) {
 		context.put("inverted", false);
 
 		return context;

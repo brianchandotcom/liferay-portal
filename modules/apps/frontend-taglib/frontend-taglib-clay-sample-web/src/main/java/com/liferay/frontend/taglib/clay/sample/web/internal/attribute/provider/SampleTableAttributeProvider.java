@@ -17,8 +17,8 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.attribute.provider;
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
-
 import com.liferay.portal.kernel.util.GetterUtil;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,14 +41,13 @@ public class SampleTableAttributeProvider
 	implements ClayComponentAttributeProvider {
 
 	@Override
-	public Map<String, Object> getAttributes(
-		Map<String, Object> context) {
-
+	public Map<String, Object> getAttributes(Map<String, Object> context) {
 		context.put("items", _getItems());
 		context.put("schema", _getSchema().toMap());
 		context.put("selectable", true);
 
-		String currentTableClasses = GetterUtil.getString(context.get("tableClasses"));
+		String currentTableClasses = GetterUtil.getString(
+			context.get("tableClasses"));
 
 		currentTableClasses += " service-ranking-2";
 

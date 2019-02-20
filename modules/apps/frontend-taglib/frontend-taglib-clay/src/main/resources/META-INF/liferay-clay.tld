@@ -16,13 +16,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>autoClose</name>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2094,13 +2094,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>autoClose</name>
+			<name>attributeProviderKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

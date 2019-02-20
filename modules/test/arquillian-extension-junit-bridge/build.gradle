@@ -7,7 +7,6 @@ dependencies {
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-api", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-spi", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.core", name: "arquillian-core-api", version: "1.1.10.Final", transitive: false
-	compile group: "org.jboss.arquillian.core", name: "arquillian-core-impl-base", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.core", name: "arquillian-core-spi", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.test", name: "arquillian-test-api", version: "1.1.10.Final", transitive: false
 	compile group: "org.jboss.arquillian.test", name: "arquillian-test-spi", version: "1.1.10.Final", transitive: false

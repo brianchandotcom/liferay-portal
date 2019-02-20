@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend Taglib Clay Attribute Provider API
-Bundle-SymbolicName: com.liferay.frontend.taglib.clay.attribute.provider.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.frontend.taglib.clay.attribute.provider

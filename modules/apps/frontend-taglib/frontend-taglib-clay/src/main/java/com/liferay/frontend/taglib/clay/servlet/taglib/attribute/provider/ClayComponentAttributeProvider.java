@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.attribute.provider;
+package com.liferay.frontend.taglib.clay.servlet.taglib.attribute.provider;
 
 import java.util.Map;
 

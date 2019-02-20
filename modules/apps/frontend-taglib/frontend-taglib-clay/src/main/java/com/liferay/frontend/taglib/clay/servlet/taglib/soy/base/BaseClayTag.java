@@ -15,7 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.attribute.provider.ClayComponentAttributeProvider;
 import com.liferay.frontend.taglib.clay.internal.ClayComponentAttributeProvidersProvider;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;

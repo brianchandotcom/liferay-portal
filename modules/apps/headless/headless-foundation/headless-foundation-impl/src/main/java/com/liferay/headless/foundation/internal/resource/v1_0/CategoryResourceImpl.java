@@ -22,6 +22,7 @@ import com.liferay.headless.foundation.dto.v1_0.Category;
 import com.liferay.headless.foundation.dto.v1_0.ParentCategory;
 import com.liferay.headless.foundation.internal.dto.v1_0.CategoryImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.ParentCategoryImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ParentVocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
@@ -247,7 +248,20 @@ public class CategoryResourceImpl
 						assetCategory.getParentCategory());
 				}
 
-				parentVocabularyId = assetCategory.getVocabularyId();
+				parentVocabulary = new ParentVocabularyImpl() {
+					{
+						id = assetCategory.getVocabularyId();
+
+						setName(
+							() -> {
+								AssetVocabulary assetVocabulary =
+									_assetVocabularyService.getVocabulary(
+										assetCategory.getVocabularyId());
+
+								return assetVocabulary.getName();
+							});
+					}
+				};
 			}
 		};
 	}

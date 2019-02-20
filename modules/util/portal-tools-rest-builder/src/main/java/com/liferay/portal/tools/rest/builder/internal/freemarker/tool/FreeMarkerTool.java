@@ -20,6 +20,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaP
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
@@ -37,8 +38,12 @@ public class FreeMarkerTool {
 		return _instance;
 	}
 
-	public List<JavaParameter> getDTOJavaParameters(Schema schema) {
-		return DTOOpenAPIParser.getJavaParameters(schema);
+	public List<JavaParameter> getDTOJavaParameters(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
+		boolean fullyQualifiedNames) {
+
+		return DTOOpenAPIParser.getJavaParameters(
+			configYAML, openAPIYAML, schema, fullyQualifiedNames);
 	}
 
 	public String getGraphQLArguments(List<JavaParameter> javaParameters) {
@@ -46,9 +51,11 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
-		OpenAPIYAML openAPIYAML, String type) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String type,
+		boolean fullyQualifiedNames) {
 
-		return GraphQLOpenAPIParser.getJavaMethodSignatures(openAPIYAML, type);
+		return GraphQLOpenAPIParser.getJavaMethodSignatures(
+			configYAML, openAPIYAML, type, fullyQualifiedNames);
 	}
 
 	public String getGraphQLMethodAnnotations(
@@ -78,10 +85,11 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getResourceJavaMethodSignatures(
-		OpenAPIYAML openAPIYAML, String schemaName) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
+		boolean fullyQualifiedNames) {
 
 		return ResourceOpenAPIParser.getJavaMethodSignatures(
-			openAPIYAML, schemaName);
+			configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
 	}
 
 	public String getResourceMethodAnnotations(

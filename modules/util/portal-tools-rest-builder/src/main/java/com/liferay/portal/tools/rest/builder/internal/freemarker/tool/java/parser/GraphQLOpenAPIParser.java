@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
@@ -37,7 +38,8 @@ import java.util.TreeSet;
 public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		OpenAPIYAML openAPIYAML, String type) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String type,
+		boolean fullyQualifiedNames) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
@@ -50,7 +52,12 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 				_getJavaMethodSignatures(openAPIYAML, schemaName, type));
 		}
 
-		return javaMethodSignatures;
+		if (!fullyQualifiedNames) {
+			return javaMethodSignatures;
+		}
+
+		return toFullyQualifiedJavaMethodSignatures(
+			configYAML, javaMethodSignatures, openAPIYAML);
 	}
 
 	public static String getMethodAnnotations(

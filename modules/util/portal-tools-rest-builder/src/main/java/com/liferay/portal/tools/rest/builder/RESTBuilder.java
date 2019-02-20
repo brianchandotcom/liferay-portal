@@ -23,6 +23,7 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.vulcan.yaml.YAMLUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.vulcan.yaml.config.Application;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
-import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
@@ -40,13 +40,8 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -107,9 +102,7 @@ public class RESTBuilder {
 
 			Info info = openAPIYAML.getInfo();
 
-			String version = info.getVersion();
-
-			if (Validator.isNull(version)) {
+			if (Validator.isNull(info.getVersion())) {
 				continue;
 			}
 
@@ -117,13 +110,14 @@ public class RESTBuilder {
 
 			Map<String, Schema> schemas = components.getSchemas();
 
-			Map<String, Schema> allSchemas = _getAllSchemas(schemas);
+			Map<String, Schema> allSchemas = OpenAPIUtil.getAllSchemas(
+				openAPIYAML);
 
 			context.put("allSchemas", allSchemas);
 
 			context.put("openAPIYAML", openAPIYAML);
 
-			String versionDirName = _getVersionDirName(version);
+			String versionDirName = OpenAPIUtil.getVersionDirName(openAPIYAML);
 
 			context.put("versionDirName", versionDirName);
 
@@ -137,7 +131,7 @@ public class RESTBuilder {
 
 				List<JavaMethodSignature> javaMethodSignatures =
 					freeMarkerTool.getResourceJavaMethodSignatures(
-						openAPIYAML, schemaName);
+						_configYAML, openAPIYAML, schemaName, false);
 
 				if (javaMethodSignatures.isEmpty()) {
 					continue;
@@ -573,60 +567,6 @@ public class RESTBuilder {
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "resource_test", context));
 	}
-
-	private Map<String, Schema> _getAllSchemas(Map<String, Schema> schemas) {
-		Map<String, Schema> allSchemas = new TreeMap<>();
-
-		Queue<Map<String, Schema>> queue = new LinkedList<>();
-
-		queue.add(schemas);
-
-		Map<String, Schema> map = null;
-
-		while ((map = queue.poll()) != null) {
-			for (Map.Entry<String, Schema> entry : map.entrySet()) {
-				Schema schema = entry.getValue();
-
-				Map<String, Schema> propertySchemas = null;
-
-				Items items = schema.getItems();
-
-				if (items != null) {
-					propertySchemas = items.getPropertySchemas();
-				}
-				else {
-					propertySchemas = schema.getPropertySchemas();
-				}
-
-				if (propertySchemas == null) {
-					continue;
-				}
-
-				String schemaName = StringUtil.upperCaseFirstLetter(
-					entry.getKey());
-
-				allSchemas.put(schemaName, schema);
-
-				queue.add(propertySchemas);
-			}
-		}
-
-		return allSchemas;
-	}
-
-	private String _getVersionDirName(String version) {
-		Matcher matcher = _nondigitPattern.matcher(version);
-
-		String versionDirName = matcher.replaceAll("_");
-
-		matcher = _leadingUnderscorePattern.matcher(versionDirName);
-
-		return "v" + matcher.replaceFirst("");
-	}
-
-	private static final Pattern _leadingUnderscorePattern = Pattern.compile(
-		"^_+");
-	private static final Pattern _nondigitPattern = Pattern.compile("\\D");
 
 	private final File _configDir;
 	private final ConfigYAML _configYAML;

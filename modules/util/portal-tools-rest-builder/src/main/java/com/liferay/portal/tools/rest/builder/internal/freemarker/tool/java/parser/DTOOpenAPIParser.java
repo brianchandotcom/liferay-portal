@@ -16,7 +16,9 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
+import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
@@ -29,7 +31,10 @@ import java.util.Map;
  */
 public class DTOOpenAPIParser extends BaseOpenAPIParser {
 
-	public static List<JavaParameter> getJavaParameters(Schema schema) {
+	public static List<JavaParameter> getJavaParameters(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
+		boolean fullyQualifiedNames) {
+
 		Map<String, Schema> propertySchemas = null;
 
 		Items items = schema.getItems();
@@ -61,7 +66,12 @@ public class DTOOpenAPIParser extends BaseOpenAPIParser {
 				new JavaParameter(null, parameterName, parameterType));
 		}
 
-		return javaParameters;
+		if (!fullyQualifiedNames) {
+			return javaParameters;
+		}
+
+		return toFullyQualifiedJavaParameters(
+			configYAML, javaParameters, openAPIYAML);
 	}
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
@@ -43,7 +44,8 @@ import java.util.TreeSet;
 public class ResourceOpenAPIParser extends BaseOpenAPIParser {
 
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		OpenAPIYAML openAPIYAML, String schemaName) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
+		boolean fullyQualifiedNames) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -79,7 +81,12 @@ public class ResourceOpenAPIParser extends BaseOpenAPIParser {
 				});
 		}
 
-		return javaMethodSignatures;
+		if (!fullyQualifiedNames) {
+			return javaMethodSignatures;
+		}
+
+		return toFullyQualifiedJavaMethodSignatures(
+			configYAML, javaMethodSignatures, openAPIYAML);
 	}
 
 	public static String getMethodAnnotations(

@@ -14,11 +14,15 @@
 
 package com.liferay.change.tracking.change.lists.configuration.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +55,12 @@ public class ChangeListsConfigurationDisplayContext {
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking/configurations/" +
 					_themeDisplay.getCompanyId());
+
+		PortletURL overviewPortletURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.RENDER_PHASE);
+
+		soyContext.put("urlOverview", overviewPortletURL.toString());
 
 		return soyContext;
 	}

@@ -95,6 +95,8 @@ class ChangeListsConfiguration extends PortletBase {
 							type: 'success'
 						}
 					);
+
+					Liferay.Util.navigate(this.urlOverview);
 				}
 			}
 		);
@@ -204,6 +206,17 @@ ChangeListsConfiguration.STATE = {
 	 */
 
 	urlChangeTrackingConfiguration: Config.string().required(),
+
+	/**
+	 * Property that contains the url for the 'Overview' screen
+	 * @default undefined
+	 * @instance
+	 * @memberOf ChangeListsConfiguration
+	 * @review
+	 * @type {!string}
+	 */
+
+	urlOverview: Config.string().required(),
 
 	/**
 	 * Path of the available icons.

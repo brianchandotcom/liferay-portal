@@ -33,6 +33,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -63,6 +64,16 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 	@RequiresScope("everything.read")
 	@Override
 	public BlogPosting getBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception {
+			return new BlogPostingImpl();
+
+	}
+	@Consumes("application/json")
+	@PATCH
+	@Path("/blog-postings/{blog-posting-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	@Override
+	public BlogPosting patchBlogPosting( @PathParam("blog-posting-id") Long blogPostingId , BlogPosting blogPosting ) throws Exception {
 			return new BlogPostingImpl();
 
 	}

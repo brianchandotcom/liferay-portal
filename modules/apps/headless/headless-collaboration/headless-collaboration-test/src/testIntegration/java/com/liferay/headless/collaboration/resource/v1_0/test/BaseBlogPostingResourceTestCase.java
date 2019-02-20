@@ -81,6 +81,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
+	public void testPatchBlogPosting() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testPutBlogPosting() throws Exception {
 			Assert.assertTrue(true);
 	}
@@ -110,6 +114,16 @@ public abstract class BaseBlogPostingResourceTestCase {
 			).get(
 				_resourceURL + "/blog-postings/{blog-posting-id}",
 				blogPostingId
+			);
+
+	}
+	protected Response invokePatchBlogPosting( Long blogPostingId , BlogPosting blogPosting ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).patch(
+				_resourceURL + "/blog-postings/{blog-posting-id}",
+				blogPostingId , blogPosting
 			);
 
 	}

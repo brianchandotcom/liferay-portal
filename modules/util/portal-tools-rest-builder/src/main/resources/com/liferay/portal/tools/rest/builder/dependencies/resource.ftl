@@ -28,20 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ${schemaName}Resource {
 
-	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
-		<@compress single_line=true>
-			public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
-				<#list javaMethodSignature.javaParameters as javaParameter>
-					${javaParameter.parameterType} ${javaParameter.parameterName}
-
-					<#if javaParameter_has_next>
-						,
-					</#if>
-				</#list>
-			) throws Exception;
-		</@compress>
-
-		${"\n"}<#lt>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+				${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)})
+			throws Exception;
 	</#list>
 
 	public void setContextCompany(Company contextCompany);

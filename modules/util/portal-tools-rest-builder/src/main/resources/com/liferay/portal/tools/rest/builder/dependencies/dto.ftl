@@ -19,12 +19,15 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ${schemaName} {
 
-	<#list freeMarkerTool.getJavaParameters(schema) as javaParameter>
+	<#list freeMarkerTool.getDTOJavaParameters(schema) as javaParameter>
 		public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}();
 
-		public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName});
+		public void set${javaParameter.parameterName?cap_first}(
+			${javaParameter.parameterType} ${javaParameter.parameterName});
 
-		public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier);
+		public void set${javaParameter.parameterName?cap_first}(
+			UnsafeSupplier<${javaParameter.parameterType}, Throwable>
+				${javaParameter.parameterName}UnsafeSupplier);
 	</#list>
 
 }

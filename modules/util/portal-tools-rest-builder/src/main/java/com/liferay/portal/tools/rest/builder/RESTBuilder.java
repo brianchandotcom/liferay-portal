@@ -136,7 +136,7 @@ public class RESTBuilder {
 				String schemaName = entry.getKey();
 
 				List<JavaMethodSignature> javaMethodSignatures =
-					freeMarkerTool.getJavaMethodSignatures(
+					freeMarkerTool.getResourceJavaMethodSignatures(
 						openAPIYAML, schemaName);
 
 				if (javaMethodSignatures.isEmpty()) {

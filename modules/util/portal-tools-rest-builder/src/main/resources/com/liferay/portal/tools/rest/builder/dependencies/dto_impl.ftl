@@ -29,19 +29,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName}Impl implements ${schemaName} {
 
-	<#list freeMarkerTool.getJavaParameters(schema) as javaParameter>
+	<#list freeMarkerTool.getDTOJavaParameters(schema) as javaParameter>
 		public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
 			return ${javaParameter.parameterName};
 		}
 
-		public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
+		public void set${javaParameter.parameterName?cap_first}(
+			${javaParameter.parameterType} ${javaParameter.parameterName}) {
+
 			this.${javaParameter.parameterName} = ${javaParameter.parameterName};
 		}
 
 		@JsonIgnore
-		public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
+		public void set${javaParameter.parameterName?cap_first}(
+			UnsafeSupplier<${javaParameter.parameterType}, Throwable>
+				${javaParameter.parameterName}UnsafeSupplier) {
+
 			try {
-				${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
+				${javaParameter.parameterName} =
+					${javaParameter.parameterName}UnsafeSupplier.get();
 			}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

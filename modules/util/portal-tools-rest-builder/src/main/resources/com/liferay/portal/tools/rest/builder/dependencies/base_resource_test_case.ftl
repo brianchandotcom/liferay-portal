@@ -54,7 +54,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}");
+		_resourceURL = new URL(
+			"http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}");
 	}
 
 	@After
@@ -62,73 +63,52 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		@Test
 		public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 			Assert.assertTrue(true);
 		}
 	</#list>
 
-	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
-		<@compress single_line=true>
-			protected Response invoke${javaMethodSignature.methodName?cap_first}(
-				<#list javaMethodSignature.javaParameters as javaParameter>
-					${javaParameter.parameterType} ${javaParameter.parameterName}
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+		protected Response invoke${javaMethodSignature.methodName?cap_first}(
+				${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)})
+			throws Exception {
 
-					<#if javaParameter_has_next>
-						,
-					</#if>
-				</#list>
-			) throws Exception {
-		</@compress>
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
-		RequestSpecification requestSpecification = _createRequestSpecification();
+			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters) />
 
-		<#assign parametersContent>
-			<@compress single_line=true>
-				<#list javaMethodSignature.javaParameters as javaParameter>
-					${javaParameter.parameterName}
-
-					<#if javaParameter_has_next>
-						,
-					</#if>
-				</#list>
-			</@compress>
-		</#assign>
-
-		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && parametersContent?ends_with(", ${schemaName?uncap_first}")>
-			return requestSpecification.body(
-				${schemaName?uncap_first}
-			).when(
-			).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
-				_resourceURL + "${javaMethodSignature.path}",
-				${stringUtil.replaceLast(parametersContent, ", ${schemaName?uncap_first}", "")}
-			);
-		<#else>
-			return requestSpecification.when(
-			).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
-				_resourceURL + "${javaMethodSignature.path}",
-				${stringUtil.replaceLast(parametersContent, ", pagination", "")}
-			);
-		</#if>
-
+			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && arguments?ends_with(", ${schemaName?uncap_first}")>
+				return requestSpecification.body(
+					${schemaName?uncap_first}
+				).when(
+				).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
+					_resourceURL + "${javaMethodSignature.path}",
+					${stringUtil.replaceLast(arguments, ", ${schemaName?uncap_first}", "")}
+				);
+			<#else>
+				return requestSpecification.when(
+				).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
+					_resourceURL + "${javaMethodSignature.path}",
+					${stringUtil.replaceLast(arguments, ", pagination", "")}
+				);
+			</#if>
 		}
 	</#list>
 
 	protected ${schemaName} random${schemaName}() {
 		return new ${schemaName}Impl() {
 			{
-				<#compress>
-					<#list freeMarkerTool.getJavaParameters(schema) as javaParameter>
-						<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
+				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
 
-						<#if randomDataTypes?seq_contains(javaParameter.parameterType)>
-							${javaParameter.parameterName} = RandomTestUtil.random${javaParameter.parameterType}();
-						<#elseif stringUtil.equals(javaParameter.parameterType, "Date")>
-							${javaParameter.parameterName} = RandomTestUtil.nextDate();
-						</#if>
-					</#list>
-				</#compress>
+				<#list freeMarkerTool.getDTOJavaParameters(schema) as javaParameter>
+					<#if randomDataTypes?seq_contains(javaParameter.parameterType)>
+						${javaParameter.parameterName} = RandomTestUtil.random${javaParameter.parameterType}();
+					<#elseif stringUtil.equals(javaParameter.parameterType, "Date")>
+						${javaParameter.parameterName} = RandomTestUtil.nextDate();
+					</#if>
+				</#list>
 			}
 		};
 	}
@@ -137,7 +117,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	protected class ${schemaName}Impl implements ${schemaName} {
 
-		<#list javaTool.getJavaParameters(schema) as javaParameter>
+		<#list freeMarkerTool.getDTOJavaParameters(schema) as javaParameter>
 			public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
 				return ${javaParameter.parameterName};
 			}
@@ -147,7 +127,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			@JsonIgnore
-			public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
+			public void set${javaParameter.parameterName?cap_first}(
+				UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
+
 				try {
 					${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
 				}

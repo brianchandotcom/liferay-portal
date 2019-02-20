@@ -49,34 +49,20 @@ import javax.ws.rs.core.Context;
 @Path("/${openAPIYAML.info.version}")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
-	<#list freeMarkerTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
-		<#compress>
-			<#list freeMarkerTool.getMethodAnnotations(javaMethodSignature) as methodAnnotation>
-				${methodAnnotation}
-			</#list>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+		@Override
+		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+				${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, true)})
+			throws Exception {
 
-			@Override
-			<@compress single_line=true>
-				public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
-					<#list javaMethodSignature.javaParameters as javaParameter>
-						${freeMarkerTool.getParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
-
-						<#if javaParameter_has_next>
-							,
-						</#if>
-					</#list>
-				) throws Exception {
-			</@compress>
-		</#compress>
-
-		<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
-			return false;
-		<#elseif javaMethodSignature.returnType?contains("Page<")>
-			return Page.of(Collections.emptyList());
-		<#else>
-			return new ${javaMethodSignature.returnType}Impl();
-		</#if>
-
+			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
+				return false;
+			<#elseif javaMethodSignature.returnType?contains("Page<")>
+				return Page.of(Collections.emptyList());
+			<#else>
+				return new ${javaMethodSignature.returnType}Impl();
+			</#if>
 		}
 	</#list>
 

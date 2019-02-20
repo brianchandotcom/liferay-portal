@@ -84,21 +84,23 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select name, MAX(version) as version from KaleoDefinition " +
-					"group by name");
+				"select companyId, name, MAX(version) as version from " +
+					"KaleoDefinition group by companyId, name");
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"delete from KaleoDefinition where name = ? and version " +
-						"< ?");
+					"delete from KaleoDefinition where companyId = ? and " +
+						"name = ? and version < ?");
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
 				String name = rs.getString("name");
 				int version = rs.getInt("version");
 
-				ps2.setString(1, name);
-				ps2.setInt(2, version);
+				ps2.setLong(1, companyId);
+				ps2.setString(2, name);
+				ps2.setInt(3, version);
 
 				ps2.addBatch();
 			}

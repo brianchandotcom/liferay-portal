@@ -130,9 +130,6 @@ public class JavaParser {
 			ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
 				content, startPosition, endPosition, className);
 
-			parsedJavaTerm = _processSurroundingLineBreaks(
-				parsedJavaTerm, javaTerm);
-
 			parsedJavaClass.addParsedJavaTerm(parsedJavaTerm);
 
 			return parsedJavaClass;
@@ -831,21 +828,6 @@ public class JavaParser {
 		}
 
 		return parsedJavaClass;
-	}
-
-	private static ParsedJavaTerm _processSurroundingLineBreaks(
-		ParsedJavaTerm parsedJavaTerm, JavaTerm javaTerm) {
-
-		if (javaTerm instanceof JavaMethodDefinition) {
-			String javaTermContent = parsedJavaTerm.getContent();
-
-			if (javaTermContent.endsWith(";")) {
-				parsedJavaTerm.setRequireFollowingEmptyLine(true);
-				parsedJavaTerm.setRequirePrecedingEmptyLine(true);
-			}
-		}
-
-		return parsedJavaTerm;
 	}
 
 	private static String _trimLine(

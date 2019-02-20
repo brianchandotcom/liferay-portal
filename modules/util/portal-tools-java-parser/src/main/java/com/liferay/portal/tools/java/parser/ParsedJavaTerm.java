@@ -16,6 +16,7 @@ package com.liferay.portal.tools.java.parser;
 
 import antlr.CommonHiddenStreamToken;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -71,7 +72,13 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	}
 
 	public boolean requireFollowingEmptyLine() {
-		return _requireFollowingEmptyLine;
+		if (_className.equals(JavaMethodDefinition.class.getName()) &&
+			_content.endsWith(StringPool.SEMICOLON)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean requireNoFollowingEmptyLine() {
@@ -83,21 +90,20 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	}
 
 	public boolean requirePrecedingEmptyLine() {
-		if (!_requirePrecedingEmptyLine) {
-			return _requirePrecedingEmptyLine;
-		}
-
-		if (_precedingCommentToken == null) {
-			return true;
-		}
-
-		if (StringUtil.startsWith(
+		if ((_precedingCommentToken != null) &&
+			StringUtil.startsWith(
 				StringUtil.trim(_precedingCommentToken.getText()), "*")) {
 
 			return false;
 		}
 
-		return true;
+		if (_className.equals(JavaMethodDefinition.class.getName()) &&
+			_content.endsWith(StringPool.SEMICOLON)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public void setContainsCommentToken(boolean containsCommentToken) {

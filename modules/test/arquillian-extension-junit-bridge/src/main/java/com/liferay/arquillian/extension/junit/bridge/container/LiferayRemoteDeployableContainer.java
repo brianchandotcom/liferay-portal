@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -24,7 +25,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -58,11 +58,9 @@ public class LiferayRemoteDeployableContainer {
 	}
 
 	public void deploy() throws Exception {
-		long bundleId = _installBundle(_archive);
+		_bundleId = _installBundle(_archive);
 
-		_frameworkMBean.startBundle(bundleId);
-
-		_deployedBundleIds.put(_archive.getName(), bundleId);
+		_frameworkMBean.startBundle(_bundleId);
 	}
 
 	public void start() throws Exception {
@@ -84,14 +82,8 @@ public class LiferayRemoteDeployableContainer {
 			false);
 	}
 
-	public void undeploy() throws Exception {
-		long bundleId = _deployedBundleIds.remove(_archive.getName());
-
-		if (bundleId == 0) {
-			return;
-		}
-
-		_frameworkMBean.uninstallBundle(bundleId);
+	public void undeploy() throws IOException {
+		_frameworkMBean.uninstallBundle(_bundleId);
 	}
 
 	private long _installBundle(Archive<?> archive) throws Exception {
@@ -136,7 +128,7 @@ public class LiferayRemoteDeployableContainer {
 	}
 
 	private final Archive<?> _archive;
-	private final Map<String, Long> _deployedBundleIds = new HashMap<>();
+	private long _bundleId;
 	private FrameworkMBean _frameworkMBean;
 	private final InstanceProducer<MBeanServerConnection>
 		_mBeanServerConnectionInstanceProducer;

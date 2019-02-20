@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -253,9 +252,7 @@ public class WabProcessorTest {
 			Document document = SAXReaderUtil.read(
 				beansXMLFile.openInputStream());
 
-			Element documentEl = document.getRootElement();
-
-			Node beanDiscoveryMode = documentEl.selectSingleNode(
+			Node beanDiscoveryMode = document.selectSingleNode(
 				"/beans/@bean-discovery-mode");
 
 			String value = beanDiscoveryMode.getStringValue();
@@ -341,9 +338,7 @@ public class WabProcessorTest {
 			Document document = SAXReaderUtil.read(
 				beansXMLFile.openInputStream());
 
-			Element documentEl = document.getRootElement();
-
-			Node beanDiscoveryMode = documentEl.selectSingleNode(
+			Node beanDiscoveryMode = document.selectSingleNode(
 				"/beans/@bean-discovery-mode");
 
 			String value = beanDiscoveryMode.getStringValue();
@@ -463,9 +458,7 @@ public class WabProcessorTest {
 			Document document = SAXReaderUtil.read(
 				beansXMLFile.openInputStream());
 
-			Element documentEl = document.getRootElement();
-
-			Node beanDiscoveryMode = documentEl.selectSingleNode(
+			Node beanDiscoveryMode = document.selectSingleNode(
 				"/beans/@bean-discovery-mode");
 
 			String value = beanDiscoveryMode.getStringValue();

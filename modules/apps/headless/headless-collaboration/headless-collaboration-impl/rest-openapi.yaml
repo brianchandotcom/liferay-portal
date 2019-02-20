@@ -255,7 +255,42 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
+    post:
+      parameters:
+        - in: path
+          name: blog-posting-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Comment"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+          description: ""
+      tags: ["Comment"]
   "/comments/{comment-id}":
+    delete:
+      parameters:
+        - in: path
+          name: comment-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        204:
+          content:
+            application/json: {}
+          description: ""
+      tags: ["Comment"]
     get:
       parameters:
         - in: path
@@ -264,6 +299,27 @@ paths:
           schema:
             format: int64
             type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+          description: ""
+      tags: ["Comment"]
+    put:
+      parameters:
+        - in: path
+          name: comment-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Comment"
       responses:
         200:
           content:
@@ -297,6 +353,27 @@ paths:
                 items:
                   $ref: "#/components/schemas/Comment"
                 type: array
+          description: ""
+      tags: ["Comment"]
+    post:
+      parameters:
+        - in: path
+          name: comment-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Comment"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
           description: ""
       tags: ["Comment"]
   "/content-spaces/{content-space-id}/blog-postings":

@@ -14,11 +14,16 @@
 
 package com.liferay.sharing.web.internal.display.context.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -31,8 +36,11 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.model.SharingEntry;
+
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -121,7 +129,16 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		sb.append("sharing('");
 		sb.append(sharingURL.toString());
 		sb.append("', '");
-		sb.append(_language.get(request, "share"));
+
+		String title = _getTitle(classNameId, classPK, request.getLocale());
+
+		if (Validator.isNotNull(title)) {
+			sb.append(_language.get(request, "share-x", title));
+		}
+		else {
+			sb.append(_language.get(request, "share"));
+		}
+
 		sb.append("');");
 
 		return sb.toString();
@@ -135,6 +152,38 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 		return _portal.getLiferayPortletResponse(portletResponse);
 	}
+
+	private String _getTitle(long classNameId, long classPK, Locale locale) {
+		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassNameId(classNameId);
+
+			if (assetRendererFactory != null) {
+				return null;
+			}
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
+
+			if (assetRenderer == null) {
+				return null;
+			}
+
+			return assetRenderer.getTitle(locale);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Cannot find asset renderer for classPK: " + classPK, pe);
+			}
+
+			return null;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharingJavaScriptFactoryImpl.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

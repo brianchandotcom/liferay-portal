@@ -25,7 +25,6 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
-import org.jboss.shrinkwrap.api.Archive;
 
 /**
  * @author Matthew Tambara
@@ -33,22 +32,19 @@ import org.jboss.shrinkwrap.api.Archive;
 public class ContainerEventController {
 
 	public void execute(@Observes AfterClass afterClass) throws Exception {
-		_lifeRemoteDeployableContainer.undeploy(_archive);
+		_lifeRemoteDeployableContainer.undeploy();
 	}
 
 	public void execute(@Observes BeforeClass beforeClass) throws Exception {
 		_lifeRemoteDeployableContainer = new LiferayRemoteDeployableContainer(
-			_mBeanServerConnectionInstanceProducer);
+			_mBeanServerConnectionInstanceProducer,
+			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass()));
 
 		_lifeRemoteDeployableContainer.start();
 
-		_archive = BndDeploymentDescriptionUtil.create(
-			beforeClass.getTestClass());
-
-		_lifeRemoteDeployableContainer.deploy(_archive);
+		_lifeRemoteDeployableContainer.deploy();
 	}
 
-	private Archive<?> _archive;
 	private LiferayRemoteDeployableContainer _lifeRemoteDeployableContainer;
 
 	@ApplicationScoped

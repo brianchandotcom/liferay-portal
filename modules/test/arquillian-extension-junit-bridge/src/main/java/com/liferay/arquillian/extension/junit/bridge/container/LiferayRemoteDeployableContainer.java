@@ -49,18 +49,20 @@ public class LiferayRemoteDeployableContainer {
 
 	public LiferayRemoteDeployableContainer(
 		InstanceProducer<MBeanServerConnection>
-			mBeanServerConnectionInstanceProducer) {
+			mBeanServerConnectionInstanceProducer,
+		Archive<?> archive) {
 
 		_mBeanServerConnectionInstanceProducer =
 			mBeanServerConnectionInstanceProducer;
+		_archive = archive;
 	}
 
-	public void deploy(Archive<?> archive) throws Exception {
-		long bundleId = _installBundle(archive);
+	public void deploy() throws Exception {
+		long bundleId = _installBundle(_archive);
 
 		_frameworkMBean.startBundle(bundleId);
 
-		_deployedBundleIds.put(archive.getName(), bundleId);
+		_deployedBundleIds.put(_archive.getName(), bundleId);
 	}
 
 	public void start() throws Exception {
@@ -82,8 +84,8 @@ public class LiferayRemoteDeployableContainer {
 			false);
 	}
 
-	public void undeploy(Archive<?> archive) throws Exception {
-		long bundleId = _deployedBundleIds.remove(archive.getName());
+	public void undeploy() throws Exception {
+		long bundleId = _deployedBundleIds.remove(_archive.getName());
 
 		if (bundleId == 0) {
 			return;
@@ -133,6 +135,7 @@ public class LiferayRemoteDeployableContainer {
 		}
 	}
 
+	private final Archive<?> _archive;
 	private final Map<String, Long> _deployedBundleIds = new HashMap<>();
 	private FrameworkMBean _frameworkMBean;
 	private final InstanceProducer<MBeanServerConnection>

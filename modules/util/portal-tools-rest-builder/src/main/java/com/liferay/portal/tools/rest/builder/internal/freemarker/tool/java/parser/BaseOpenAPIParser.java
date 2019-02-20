@@ -333,6 +333,10 @@ public class BaseOpenAPIParser {
 			}
 		}
 
+		if (Objects.equals(getHTTPMethod(operation), "get")) {
+			return "String";
+		}
+
 		return "boolean";
 	}
 

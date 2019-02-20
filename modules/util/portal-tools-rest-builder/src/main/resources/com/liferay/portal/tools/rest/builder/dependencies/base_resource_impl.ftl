@@ -11,6 +11,7 @@ import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Reso
 
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -58,6 +59,8 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "String")>
+				return StringPool.BLANK;
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());
 			<#else>

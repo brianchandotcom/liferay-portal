@@ -41,7 +41,7 @@ public class SampleTableAttributeProvider
 	implements ClayComponentAttributeProvider {
 
 	@Override
-	public Map<String, Object> getAttributes(Map<String, Object> context) {
+	public void getAttributes(Map<String, Object> context) {
 		context.put("items", _getItems());
 		context.put("schema", _getSchema().toMap());
 		context.put("selectable", true);
@@ -52,8 +52,6 @@ public class SampleTableAttributeProvider
 		currentTableClasses += " service-ranking-2";
 
 		context.put("tableClasses", currentTableClasses);
-
-		return context;
 	}
 
 	private Map<String, Object> _getItem(

@@ -35,10 +35,8 @@ public class SampleTableStyleAttributeProvider
 	implements ClayComponentAttributeProvider {
 
 	@Override
-	public Map<String, Object> getAttributes(Map<String, Object> context) {
+	public void getAttributes(Map<String, Object> context) {
 		context.put("tableClasses", "sample-table");
-
-		return context;
 	}
 
 }

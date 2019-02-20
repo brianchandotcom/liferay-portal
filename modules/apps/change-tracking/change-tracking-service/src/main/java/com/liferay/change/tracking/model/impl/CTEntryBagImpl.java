@@ -16,8 +16,8 @@ package com.liferay.change.tracking.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.change.tracking.model.CTEntryBag;
-import com.liferay.change.tracking.service.CTEntryBagLocalServiceUtil;
+import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -25,27 +25,14 @@ import java.util.List;
  * @author Daniel Kocsis
  */
 @ProviderType
-public class CTEntryImpl extends CTEntryBaseImpl {
+public class CTEntryBagImpl extends CTEntryBagBaseImpl {
 
-	public CTEntryImpl() {
+	public CTEntryBagImpl() {
 	}
 
-	@Override
-	public List<CTEntryBag> getCTEntryBags() {
-		return CTEntryBagLocalServiceUtil.getCTEntryCTEntryBags(getCtEntryId());
-	}
-
-	@Override
-	public boolean hasCTEntryBag() {
-		int ctEntryCTEntryBagsCount =
-			CTEntryBagLocalServiceUtil.getCTEntryCTEntryBagsCount(
-				getCtEntryId());
-
-		if (ctEntryCTEntryBagsCount == 0) {
-			return false;
-		}
-
-		return true;
+	public List<CTEntry> getRelatedCTEntries() {
+		return CTEntryLocalServiceUtil.getCTEntryBagCTEntries(
+			getCtEntryBagId());
 	}
 
 }

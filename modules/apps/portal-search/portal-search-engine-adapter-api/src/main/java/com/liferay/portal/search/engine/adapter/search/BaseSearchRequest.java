@@ -16,11 +16,11 @@ package com.liferay.portal.search.engine.adapter.search;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.util.ArrayList;
@@ -73,6 +73,10 @@ public abstract class BaseSearchRequest {
 
 	public Query getQuery() {
 		return _query;
+	}
+
+	public com.liferay.portal.kernel.search.Query getQuery71() {
+		return _legacyQuery;
 	}
 
 	public Query getRescoreQuery() {
@@ -139,6 +143,10 @@ public abstract class BaseSearchRequest {
 		_postFilter = postFilter;
 	}
 
+	public void setQuery(com.liferay.portal.kernel.search.Query legacyQuery) {
+		_legacyQuery = legacyQuery;
+	}
+
 	public void setQuery(Query query) {
 		_query = query;
 	}
@@ -170,6 +178,7 @@ public abstract class BaseSearchRequest {
 	private final Map<String, Facet> _facets = new LinkedHashMap<>();
 	private boolean _includeResponseString;
 	private String[] _indexNames;
+	private com.liferay.portal.kernel.search.Query _legacyQuery;
 	private float _minimumScore;
 	private final Map<String, PipelineAggregation> _pipelineAggregationsMap =
 		new LinkedHashMap<>();

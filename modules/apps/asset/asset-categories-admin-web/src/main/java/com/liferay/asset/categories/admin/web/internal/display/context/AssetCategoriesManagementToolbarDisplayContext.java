@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Objects;
@@ -78,6 +82,8 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("navigation", "all");
+		clearResultsURL.setParameter("categoryId", "0");
 
 		return clearResultsURL.toString();
 	}
@@ -134,6 +140,32 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	@Override
 	public String getDefaultEventHandler() {
 		return "assetCategoriesManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		if (!_isNavigationCategory()) {
+			return null;
+		}
+
+		AssetCategory category = _assetCategoriesDisplayContext.getCategory();
+
+		if (category == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return new LabelItemList() {
+			{
+				add(
+					labelItem -> {
+						labelItem.setLabel(
+							category.getTitle(themeDisplay.getLocale()));
+					});
+			}
+		};
 	}
 
 	@Override

@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.PathUtil;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
@@ -371,6 +373,59 @@ public class BaseOpenAPIParser {
 		return sb.toString();
 	}
 
+	protected static List<JavaMethodSignature>
+		toFullyQualifiedJavaMethodSignatures(
+			ConfigYAML configYAML,
+			List<JavaMethodSignature> javaMethodSignatures,
+			OpenAPIYAML openAPIYAML) {
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+		List<JavaMethodSignature> newJavaMethodSignatures = new ArrayList<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			List<JavaParameter> javaParameters = toFullyQualifiedJavaParameters(
+				configYAML, javaMethodSignature.getJavaParameters(),
+				openAPIYAML);
+			String returnType = _toFullyQualifiedType(
+				configYAML, openAPIYAML, schemas.keySet(),
+				javaMethodSignature.getReturnType());
+
+			JavaMethodSignature newJavaMethodSignature =
+				new JavaMethodSignature(
+					javaMethodSignature.getPath(),
+					javaMethodSignature.getPathItem(),
+					javaMethodSignature.getOperation(),
+					javaMethodSignature.getSchemaName(), javaParameters,
+					javaMethodSignature.getMethodName(), returnType);
+
+			newJavaMethodSignatures.add(newJavaMethodSignature);
+		}
+
+		return newJavaMethodSignatures;
+	}
+
+	protected static List<JavaParameter> toFullyQualifiedJavaParameters(
+		ConfigYAML configYAML, List<JavaParameter> javaParameters,
+		OpenAPIYAML openAPIYAML) {
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+		List<JavaParameter> newJavaParameters = new ArrayList<>();
+
+		for (JavaParameter javaParameter : javaParameters) {
+			String parameterType = _toFullyQualifiedType(
+				configYAML, openAPIYAML, schemas.keySet(),
+				javaParameter.getParameterType());
+
+			JavaParameter newJavaParameter = new JavaParameter(
+				javaParameter.getOperation(), javaParameter.getParameterName(),
+				parameterType);
+
+			newJavaParameters.add(newJavaParameter);
+		}
+
+		return newJavaParameters;
+	}
+
 	protected static void visitOperations(
 		PathItem pathItem, Consumer<Operation> consumer) {
 
@@ -489,5 +544,97 @@ public class BaseOpenAPIParser {
 
 		return false;
 	}
+
+	private static String _toFullyQualifiedClassName(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Set<String> schemaNames,
+		String simpleClassName) {
+
+		String apiPackagePath = configYAML.getApiPackagePath();
+		String versionDirName = OpenAPIUtil.getVersionDirName(openAPIYAML);
+
+		for (String schemaName : schemaNames) {
+			if (Objects.equals(simpleClassName, schemaName)) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(apiPackagePath);
+				sb.append(".dto.");
+				sb.append(versionDirName);
+				sb.append(".");
+				sb.append(schemaName);
+
+				return sb.toString();
+			}
+
+			if (Objects.equals(simpleClassName, schemaName + "Impl")) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(apiPackagePath);
+				sb.append(".dto.");
+				sb.append(versionDirName);
+				sb.append(".");
+				sb.append(schemaName);
+				sb.append("Impl");
+
+				return sb.toString();
+			}
+		}
+
+		for (String portalClassName : _CLASS_NAMES) {
+			if (portalClassName.endsWith("." + simpleClassName)) {
+				return portalClassName;
+			}
+		}
+
+		for (String packageName : new String[] {"java.lang", "java.util"}) {
+			try {
+				Class.forName(packageName + "." + simpleClassName);
+			}
+			catch (ClassNotFoundException cnfe) {
+				continue;
+			}
+
+			return packageName + "." + simpleClassName;
+		}
+
+		return simpleClassName;
+	}
+
+	private static String _toFullyQualifiedType(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Set<String> schemaNames,
+		String type) {
+
+		if (type.endsWith("[]")) {
+			String className = _toFullyQualifiedClassName(
+				configYAML, openAPIYAML, schemaNames,
+				type.substring(0, type.length() - 2));
+
+			return className + "[]";
+		}
+		else if (type.endsWith(">")) {
+			String dataClassName = _toFullyQualifiedClassName(
+				configYAML, openAPIYAML, schemaNames,
+				type.substring(0, type.indexOf("<")));
+			String genericClassName = _toFullyQualifiedClassName(
+				configYAML, openAPIYAML, schemaNames,
+				type.substring(type.indexOf("<") + 1, type.indexOf(">")));
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(dataClassName);
+			sb.append("<");
+			sb.append(genericClassName);
+			sb.append(">");
+
+			return sb.toString();
+		}
+
+		return _toFullyQualifiedClassName(
+			configYAML, openAPIYAML, schemaNames, type);
+	}
+
+	private static final String[] _CLASS_NAMES = {
+		"com.liferay.portal.vulcan.pagination.Page",
+		"com.liferay.portal.vulcan.pagination.Pagination"
+	};
 
 }

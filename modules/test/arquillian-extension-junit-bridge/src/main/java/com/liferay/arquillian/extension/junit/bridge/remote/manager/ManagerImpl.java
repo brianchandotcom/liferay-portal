@@ -88,6 +88,10 @@ public class ManagerImpl implements Manager {
 			}
 		}
 
+		if ((nonManagedObserver == null) && observers.isEmpty()) {
+			return;
+		}
+
 		boolean activatedApplicationContext = false;
 
 		try {

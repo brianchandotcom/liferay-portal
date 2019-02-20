@@ -107,7 +107,7 @@
 								pagesContainerInput.value = '';
 
 								if (selectedItem) {
-									if (selectedItem.type === "asset-display-page") {
+									if (selectedItem.type === 'asset-display-page') {
 										assetDisplayPageIdInput.value = selectedItem.id;
 									}
 									else {

@@ -42,11 +42,11 @@ definition {
 		else {
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-			var key_cardText = "${userScreenName}";
+			Pause(locator1 = "5000");
 
-			AssertTextEquals(locator1 = "Card#SPECIFIC_TEXT", value1 = "${userScreenName}");
-
-			Check(locator1 = "Card#SPECIFIC_CHECKBOX");
+			LexiconCard.checkCardCheckbox(
+				card = "${userScreenName}"
+			);
 
 			Pause(locator1 = "5000");
 
@@ -56,7 +56,9 @@ definition {
 
 			Alert.viewSuccessMessage();
 
-			AssertElementPresent(locator1 = "Card#SPECIFIC_LARGE_TEXT");
+			LexiconCard.viewCardPresent(
+				card = "${userScreenName}"
+			);
 		}
 
 		SelectFrameTop();
@@ -153,9 +155,8 @@ definition {
 		Navigator.gotoNavItem(navItem = "${membershipType}s");
 
 		if ("${membershipType}" == "User") {
-			Check(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
-				key_rowEntry = "${userFirstName} ${userLastName}"
+			LexiconCard.checkCardCheckbox(
+				card = "${userFirstName} ${userLastName}"
 			);
 		}
 		else if ("${membershipType}" == "User Group") {

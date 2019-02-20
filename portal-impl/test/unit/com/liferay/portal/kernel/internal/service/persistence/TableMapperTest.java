@@ -1659,7 +1659,7 @@ public class TableMapperTest {
 				});
 
 		try {
-			testTableMapperFactory();
+			testTableMapperFactory1();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

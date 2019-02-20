@@ -1,5 +1,4 @@
 import {Config} from 'metal-state';
-import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/metal/js/util/fetch.es';
 import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
 import Notifications from '../../util/Notifications.es';
@@ -10,6 +9,7 @@ class PublishButton extends Component {
 		published: Config.bool().value(false),
 		resolvePublishURL: Config.func().required(),
 		spritemap: Config.string().required(),
+		submitForm: Config.func().required(),
 		url: Config.string()
 	};
 
@@ -62,40 +62,13 @@ class PublishButton extends Component {
 	}
 
 	_savePublished(published) {
-		const {namespace, resolvePublishURL} = this.props;
+		const {namespace, submitForm, url} = this.props;
 
-		return resolvePublishURL().then(
-			({formInstanceId, publishURL}) => {
-				const payload = {
-					[`${namespace}formInstanceId`]: formInstanceId,
-					[`${namespace}published`]: published
-				};
+		event.preventDefault();
 
-				return makeFetch(
-					{
-						body: convertToSearchParams(payload),
-						url: this.props.url
-					}
-				).then(
-					() => {
-						this.props.published = published;
+		document.querySelector(`#${namespace}editForm`).setAttribute('action', url);
 
-						if (published) {
-							this._showPublishAlert(publishURL);
-						}
-						else {
-							this._showUnpublishAlert();
-						}
-
-						return publishURL;
-					}
-				);
-			}
-		).catch(
-			() => {
-				Notifications.showError(Liferay.Language.get('your-request-failed-to-complete'));
-			}
-		);
+		submitForm();
 	}
 
 	_showPublishAlert(publishURL) {

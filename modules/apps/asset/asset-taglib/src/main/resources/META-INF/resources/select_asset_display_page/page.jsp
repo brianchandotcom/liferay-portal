@@ -85,11 +85,11 @@
 </liferay-frontend:fieldset>
 
 <aui:script use="liferay-item-selector-dialog">
-	var assetDisplayPageIdInput = document.querySelector('#<portlet:namespace />assetDisplayPageIdInput');
-	var chooseDisplayPageButton = document.querySelector('#<portlet:namespace />chooseDisplayPage');
-	var displayPageItemRemove = document.querySelector('#<portlet:namespace />displayPageItemRemove');
-	var displayPageNameInput = document.querySelector('#<portlet:namespace />displayPageNameInput');
-	var pagesContainerInput = document.querySelector('#<portlet:namespace />pagesContainerInput');
+	var assetDisplayPageIdInput = document.getElementById('<portlet:namespace />assetDisplayPageIdInput');
+	var chooseDisplayPageButton = document.getElementById('<portlet:namespace />chooseDisplayPage');
+	var displayPageItemRemove = document.getElementById('<portlet:namespace />displayPageItemRemove');
+	var displayPageNameInput = document.getElementById('<portlet:namespace />displayPageNameInput');
+	var pagesContainerInput = document.getElementById('<portlet:namespace />pagesContainerInput');
 
 	if (assetDisplayPageIdInput && chooseDisplayPageButton && displayPageItemRemove && displayPageNameInput && pagesContainerInput) {
 		chooseDisplayPageButton.addEventListener(
@@ -144,8 +144,8 @@
 		);
 	}
 
-	var displayPageContainer = document.querySelector('#<portlet:namespace />displayPageContainer');
-	var eventsContainer = document.querySelector('#<portlet:namespace />eventsContainer');
+	var displayPageContainer = document.getElementById('<portlet:namespace />displayPageContainer');
+	var eventsContainer = document.getElementById('<portlet:namespace />eventsContainer');
 
 	if (displayPageContainer && eventsContainer) {
 		eventsContainer.addEventListener(

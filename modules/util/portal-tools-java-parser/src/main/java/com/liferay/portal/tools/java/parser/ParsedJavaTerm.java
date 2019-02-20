@@ -82,11 +82,11 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	}
 
 	public boolean requireNoFollowingEmptyLine() {
-		return _requireNoFollowingEmptyLine;
+		return false;
 	}
 
 	public boolean requireNoPrecedingEmptyLine() {
-		return _requireNoPrecedingEmptyLine;
+		return false;
 	}
 
 	public boolean requirePrecedingEmptyLine() {
@@ -126,30 +126,6 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		_previousParsedJavaTerm = previousParsedJavaTerm;
 	}
 
-	public void setRequireFollowingEmptyLine(
-		boolean requireFollowingEmptyLine) {
-
-		_requireFollowingEmptyLine = requireFollowingEmptyLine;
-	}
-
-	public void setRequireNoFollowingEmptyLine(
-		boolean requireNoFollowingEmptyLine) {
-
-		_requireNoFollowingEmptyLine = requireNoFollowingEmptyLine;
-	}
-
-	public void setRequireNoPrecedingEmptyLine(
-		boolean requireNoPrecedingEmptyLine) {
-
-		_requireNoPrecedingEmptyLine = requireNoPrecedingEmptyLine;
-	}
-
-	public void setRequirePrecedingEmptyLine(
-		boolean requirePrecedingEmptyLine) {
-
-		_requirePrecedingEmptyLine = requirePrecedingEmptyLine;
-	}
-
 	private final String _className;
 	private boolean _containsCommentToken;
 	private final String _content;
@@ -157,10 +133,6 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	private ParsedJavaTerm _nextParsedJavaTerm;
 	private CommonHiddenStreamToken _precedingCommentToken;
 	private ParsedJavaTerm _previousParsedJavaTerm;
-	private boolean _requireFollowingEmptyLine;
-	private boolean _requireNoFollowingEmptyLine;
-	private boolean _requireNoPrecedingEmptyLine;
-	private boolean _requirePrecedingEmptyLine;
 	private final Position _startPosition;
 
 }

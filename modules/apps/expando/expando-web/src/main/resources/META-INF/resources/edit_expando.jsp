@@ -83,27 +83,45 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 	<liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
 
 	<liferay-frontend:edit-form-body>
+		<h2 class="sheet-title">
+			<%
+			String typeLabel = LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type));
+			%>
+
+			<%= LanguageUtil.format(request, column != null ? "edit-x-field" : "new-custom-field", new Object[] {typeLabel}, false) %>
+		</h2>
+
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<c:choose>
 					<c:when test="<%= column != null %>">
-						<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
+						<aui:field-wrapper>
+							<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
 
-						<aui:input helpMessage="custom-field-key-help" name="key" type="resource" value="<%= column.getName() %>" />
+							<aui:input label="field-name" name="key" type="resource" value="<%= column.getName() %>" />
+
+							<div class="form-text">
+								<liferay-ui:message key="custom-field-key-help" />
+							</div>
+						</aui:field-wrapper>
 					</c:when>
 					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="custom-field-key-help" label="key" name="name" />
+						<aui:field-wrapper>
+							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="field-name" name="name" />
+
+							<div class="form-text">
+								<liferay-ui:message key="custom-field-key-help" />
+							</div>
+						</aui:field-wrapper>
 					</c:otherwise>
 				</c:choose>
 
 				<c:choose>
 					<c:when test="<%= column != null %>">
 						<aui:input name="type" type="hidden" value="<%= type %>" />
-
-						<aui:input name="type" type="resource" value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>" />
 					</c:when>
 					<c:otherwise>
-						<aui:select helpMessage="custom-field-type-help" name="type">
+						<aui:select helpMessage="custom-field-type-help" label="field-type" name="type">
 							<optgroup label="<liferay-ui:message key="presets" />">
 								<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
 								<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
@@ -215,7 +233,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 							}
 							%>
 
-							<aui:field-wrapper label="default-value">
+							<aui:field-wrapper label="starting-value">
 								<liferay-ui:input-localized
 									cssClass="lfr-input-text-container"
 									name="defaultValue"
@@ -224,7 +242,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 							</aui:field-wrapper>
 						</c:when>
 						<c:otherwise>
-							<aui:input cssClass="lfr-input-text-container" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />
+							<aui:input cssClass="lfr-input-text-container" label="starting-value" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:if>
@@ -281,9 +299,21 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 					</aui:field-wrapper>
 
 					<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
-						<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
+						<aui:field-wrapper>
+							<aui:input cssClass="lfr-input-text short-input-text" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
 
-						<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
+							<div class="form-text">
+								<liferay-ui:message key="custom-field-height-help" />
+							</div>
+						</aui:field-wrapper>
+
+						<aui:field-wrapper>
+							<aui:input cssClass="lfr-input-text short-input-text" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
+
+							<div class="form-text">
+								<liferay-ui:message key="custom-field-width-help" />
+							</div>
+						</aui:field-wrapper>
 					</c:if>
 
 					<c:if test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.NUMBER_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">

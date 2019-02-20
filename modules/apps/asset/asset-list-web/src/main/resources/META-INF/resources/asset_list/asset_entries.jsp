@@ -188,7 +188,7 @@
 				delegateHandler.removeListener();
 
 				Liferay.detach('destroyPortlet', onDestroyPortlet);
-			}
+			};
 
 			Liferay.on('destroyPortlet', onDestroyPortlet);
 		}

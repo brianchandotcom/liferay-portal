@@ -407,7 +407,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 			if (subtypeFieldsFilterEnabledInput) {
 				Array.prototype.forEach.call(
 					assetSubtypefieldsPopupButtons,
-					function (assetSubtypefieldsPopupButton){
+					function(assetSubtypefieldsPopupButton) {
 						Util.toggleDisabled(assetSubtypefieldsPopupButton, !subtypeFieldsFilterEnabledInput.checked);
 					}
 				);
@@ -504,7 +504,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 							classNameIds: Util.listSelect(Util.getFormElement(form, 'currentClassNameIds'))
 						}
 					}
-				)
+				);
 			}
 		);
 	}

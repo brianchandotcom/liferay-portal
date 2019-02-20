@@ -16,7 +16,12 @@
 	{@param? queryLogicIndexes: string}
 
 	<div id="{$id}">
-		<input name="{$namespace}queryLogicIndexes" value="{$queryLogicIndexes}" type="hidden">
+		<input
+			name="{$namespace}queryLogicIndexes"
+			type="hidden"
+			value="{$queryLogicIndexes}"
+		>
+
 		<ul class="timeline">
 			<li class="timeline-item">
 				<div class="flex-container panel-body">
@@ -57,7 +62,11 @@
 
 	<div class="addbutton-timeline-item">
 		<div class="add-condition timeline-increment-icon">
-			<button data-onclick="addRule_" class="btn btn-monospaced btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" type="button">
+			<button
+				class="btn btn-monospaced btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition"
+				data-onclick="addRule_"
+				type="button"
+			>
 				<svg class="icon-monospaced lexicon-icon">
 					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
 				</svg>
@@ -101,7 +110,13 @@
 				</div>
 
 				<div class="form-group">
-					<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
+					<select
+						class="form-control asset-query-name"
+						data-item-index="{$index}"
+						data-onchange="changeSelector_"
+						id="{$namespace + 'queryName' + $index}"
+						name="{$namespace + 'queryName' + $index}"
+					>
 						<option class="" {if $rule.type == 'assetCategories'}selected="selected"{/if} value="assetCategories">{msg desc=""}categories{/msg}</option>
 						<option class="" {if $rule.type == 'assetTags'}selected="selected"{/if} value="assetTags">{msg desc=""}tags{/msg}</option>
 					</select>
@@ -149,8 +164,13 @@
 	{@param ruleId: int}
 
 	<div class="container-trash">
-		<button class="btn btn-monospaced btn-link btn-xs condition-card-delete" data-rule-id="{$ruleId}" data-onclick="deleteRule_" type="button">
-			<svg class="lexicon-icon icon-monospaced">
+		<button
+			class="btn btn-link btn-monospaced btn-xs condition-card-delete"
+			data-onclick="deleteRule_"
+			data-rule-id="{$ruleId}"
+			type="button"
+		>
+			<svg class="icon-monospaced lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#trash"></use>
 			</svg>
 		</button>

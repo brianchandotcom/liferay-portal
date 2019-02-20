@@ -40,10 +40,6 @@ components:
             type: integer
           type: array
           writeOnly: true
-        comment:
-          items:
-            $ref: "#/components/schemas/Comment"
-          type: array
         contentSpace:
           format: int64
           type: integer
@@ -64,6 +60,8 @@ components:
           type: string
         friendlyUrlPath:
           type: string
+        hasComments:
+          type: boolean
         headline:
           type: string
         id:

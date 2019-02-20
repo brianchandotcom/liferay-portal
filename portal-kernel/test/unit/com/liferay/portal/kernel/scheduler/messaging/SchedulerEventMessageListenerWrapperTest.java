@@ -161,7 +161,8 @@ public class SchedulerEventMessageListenerWrapperTest {
 		throws Exception {
 
 		PropsTestUtil.setProps(
-			PropsKeys.SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT, "1000");
+			PropsKeys.SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT,
+			String.valueOf(Integer.MAX_VALUE));
 
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper =
@@ -187,6 +188,8 @@ public class SchedulerEventMessageListenerWrapperTest {
 			"SchedulerEventMessageListenerWrapperTest_startThread_Thread2");
 
 		thread2.start();
+
+		while (thread2.getState() != Thread.State.TIMED_WAITING);
 
 		thread2.interrupt();
 

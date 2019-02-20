@@ -28,13 +28,17 @@ public class TestClassGroupFactory {
 		if (job instanceof PortalTestClassJob) {
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-			if (batchName.contains("functional-")) {
+			if (batchName.contains("functional-") ||
+				batchName.contains("subrepository-functional-")) {
+
 				return new FunctionalBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 
 			if (batchName.startsWith("integration-") ||
 				batchName.startsWith("junit-test-") ||
+				batchName.startsWith("subrepository-integration-") ||
+				batchName.startsWith("subrepository-unit-") ||
 				batchName.startsWith("unit-")) {
 
 				return new JUnitBatchTestClassGroup(

@@ -49,16 +49,16 @@ import javax.ws.rs.core.Context;
 @Path("/${openAPIYAML.info.version}")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
-	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
+	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		<#compress>
-			<#list javaTool.getMethodAnnotations(javaSignature) as methodAnnotation>
+			<#list javaTool.getMethodAnnotations(javaMethodSignature) as methodAnnotation>
 				${methodAnnotation}
 			</#list>
 
 			@Override
 			<@compress single_line=true>
-				public ${javaSignature.returnType} ${javaSignature.methodName}(
-					<#list javaSignature.javaParameters as javaParameter>
+				public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+					<#list javaMethodSignature.javaParameters as javaParameter>
 						${javaTool.getParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
 
 						<#if javaParameter_has_next>
@@ -69,12 +69,12 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			</@compress>
 		</#compress>
 
-		<#if stringUtil.equals(javaSignature.returnType, "boolean")>
+		<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 			return false;
-		<#elseif javaSignature.returnType?contains("Page<")>
+		<#elseif javaMethodSignature.returnType?contains("Page<")>
 			return Page.of(Collections.emptyList());
 		<#else>
-			return new ${javaSignature.returnType}Impl();
+			return new ${javaMethodSignature.returnType}Impl();
 		</#if>
 
 		}

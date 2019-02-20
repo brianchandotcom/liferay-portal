@@ -36,18 +36,18 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
-	<#assign javaSignatures = javaTool.getGraphQLJavaSignatures(openAPIYAML, false) />
+	<#assign javaMethodSignatures = javaTool.getGraphQLJavaMethodSignatures(openAPIYAML, false) />
 
-	<#list javaSignatures?keys as schemaName>
-		<#list javaSignatures[schemaName] as javaSignature>
+	<#list javaMethodSignatures?keys as schemaName>
+		<#list javaMethodSignatures[schemaName] as javaMethodSignature>
 			<#compress>
-				<#list javaTool.getGraphQLMethodAnnotations(javaSignature) as methodAnnotation>
+				<#list javaTool.getGraphQLMethodAnnotations(javaMethodSignature) as methodAnnotation>
 					${methodAnnotation}
 				</#list>
 
 				<@compress single_line=true>
-					public ${javaSignature.returnType} ${javaSignature.methodName}(
-						<#list javaSignature.javaParameters as javaParameter>
+					public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+						<#list javaMethodSignature.javaParameters as javaParameter>
 							${javaTool.getGraphQLParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
 
 							<#if javaParameter_has_next>
@@ -58,14 +58,14 @@ public class Mutation {
 				</@compress>
 			</#compress>
 
-			<#if stringUtil.equals(javaSignature.returnType, "Response")>
+			<#if stringUtil.equals(javaMethodSignature.returnType, "Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
 				return responseBuilder.build();
 			<#else>
 				<@compress single_line=true>
-					return _get${schemaName}Resource().${javaSignature.methodName}(
-						<#list javaSignature.javaParameters as javaParameter>
+					return _get${schemaName}Resource().${javaMethodSignature.methodName}(
+						<#list javaMethodSignature.javaParameters as javaParameter>
 							${javaParameter.parameterName}
 
 							<#if javaParameter_has_next>
@@ -81,7 +81,7 @@ public class Mutation {
 		</#list>
 	</#list>
 
-	<#list javaSignatures?keys as schemaName>
+	<#list javaMethodSignatures?keys as schemaName>
 		private static ${schemaName}Resource _get${schemaName}Resource() {
 			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
 		}
@@ -90,11 +90,11 @@ public class Mutation {
 	</#list>
 
 	static {
-		<#if javaSignatures?size != 0>
+		<#if javaMethodSignatures?size != 0>
 			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 		</#if>
 
-		<#list javaSignatures?keys as schemaName>
+		<#list javaMethodSignatures?keys as schemaName>
 			ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =
 				new ServiceTracker<>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
 

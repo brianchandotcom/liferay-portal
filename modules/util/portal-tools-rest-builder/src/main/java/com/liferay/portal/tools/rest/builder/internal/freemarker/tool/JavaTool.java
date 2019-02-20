@@ -17,8 +17,8 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaSignature;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.PathUtil;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
@@ -54,22 +54,24 @@ public class JavaTool {
 		return _instance;
 	}
 
-	public Map<String, List<JavaSignature>> getGraphQLJavaSignatures(
-		OpenAPIYAML openAPIYAML, boolean graphQLQuery) {
+	public Map<String, List<JavaMethodSignature>>
+		getGraphQLJavaMethodSignatures(
+			OpenAPIYAML openAPIYAML, boolean graphQLQuery) {
 
-		Map<String, List<JavaSignature>> javaSignaturesMap = new TreeMap<>();
+		Map<String, List<JavaMethodSignature>> javaMethodSignaturesMap =
+			new TreeMap<>();
 
 		Components components = openAPIYAML.getComponents();
 
 		Map<String, Schema> schemas = components.getSchemas();
 
 		for (String schemaName : schemas.keySet()) {
-			List<JavaSignature> javaSignatures = new ArrayList<>();
+			List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
-			for (JavaSignature javaSignature :
-					getJavaSignatures(openAPIYAML, schemaName)) {
+			for (JavaMethodSignature javaMethodSignature :
+					getJavaMethodSignatures(openAPIYAML, schemaName)) {
 
-				Operation operation = javaSignature.getOperation();
+				Operation operation = javaMethodSignature.getOperation();
 
 				String httpMethod = getHTTPMethod(operation);
 
@@ -85,7 +87,7 @@ public class JavaTool {
 				List<JavaParameter> javaParameters = new ArrayList<>();
 
 				for (JavaParameter javaParameter :
-						javaSignature.getJavaParameters()) {
+						javaMethodSignature.getJavaParameters()) {
 
 					String parameterType = javaParameter.getParameterType();
 
@@ -104,35 +106,36 @@ public class JavaTool {
 					}
 				}
 
-				String returnType = javaSignature.getReturnType();
+				String returnType = javaMethodSignature.getReturnType();
 
 				if (returnType.startsWith("Page<")) {
 					returnType = "Collection<".concat(returnType.substring(5));
 				}
 
-				javaSignatures.add(
-					new JavaSignature(
-						javaSignature.getPath(), javaSignature.getPathItem(),
-						javaSignature.getOperation(), javaParameters,
-						javaSignature.getMethodName(), returnType));
+				javaMethodSignatures.add(
+					new JavaMethodSignature(
+						javaMethodSignature.getPath(),
+						javaMethodSignature.getPathItem(),
+						javaMethodSignature.getOperation(), javaParameters,
+						javaMethodSignature.getMethodName(), returnType));
 			}
 
-			if (!javaSignatures.isEmpty()) {
-				javaSignaturesMap.put(schemaName, javaSignatures);
+			if (!javaMethodSignatures.isEmpty()) {
+				javaMethodSignaturesMap.put(schemaName, javaMethodSignatures);
 			}
 		}
 
-		return javaSignaturesMap;
+		return javaMethodSignaturesMap;
 	}
 
 	public Set<String> getGraphQLMethodAnnotations(
-		JavaSignature javaSignature) {
+		JavaMethodSignature javaMethodSignature) {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
 		methodAnnotations.add("@GraphQLInvokeDetached");
 
-		String httpMethod = getHTTPMethod(javaSignature.getOperation());
+		String httpMethod = getHTTPMethod(javaMethodSignature.getOperation());
 
 		if (Objects.equals(httpMethod, "get") ||
 			Objects.equals(httpMethod, "post")) {
@@ -219,7 +222,7 @@ public class JavaTool {
 		return javaParameters;
 	}
 
-	public List<JavaSignature> getJavaSignatures(
+	public List<JavaMethodSignature> getJavaMethodSignatures(
 		OpenAPIYAML openAPIYAML, String schemaName) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
@@ -228,7 +231,7 @@ public class JavaTool {
 			return Collections.emptyList();
 		}
 
-		List<JavaSignature> javaSignatures = new ArrayList<>();
+		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			String path = entry.getKey();
@@ -245,23 +248,26 @@ public class JavaTool {
 						String methodName = _getMethodName(
 							operation, path, returnType, schemaName);
 
-						JavaSignature javaSignature = new JavaSignature(
-							path, pathItem, operation,
-							_getJavaParameters(operation), methodName,
-							returnType);
+						JavaMethodSignature javaMethodSignature =
+							new JavaMethodSignature(
+								path, pathItem, operation,
+								_getJavaParameters(operation), methodName,
+								returnType);
 
-						javaSignatures.add(javaSignature);
+						javaMethodSignatures.add(javaMethodSignature);
 					}
 				});
 		}
 
-		return javaSignatures;
+		return javaMethodSignatures;
 	}
 
-	public Set<String> getMethodAnnotations(JavaSignature javaSignature) {
-		String path = javaSignature.getPath();
-		PathItem pathItem = javaSignature.getPathItem();
-		Operation operation = javaSignature.getOperation();
+	public Set<String> getMethodAnnotations(
+		JavaMethodSignature javaMethodSignature) {
+
+		String path = javaMethodSignature.getPath();
+		PathItem pathItem = javaMethodSignature.getPathItem();
+		Operation operation = javaMethodSignature.getOperation();
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
@@ -354,9 +360,9 @@ public class JavaTool {
 	}
 
 	public boolean hasHTTPMethod(
-		JavaSignature javaSignature, String... httpMethods) {
+		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 
-		Operation operation = javaSignature.getOperation();
+		Operation operation = javaMethodSignature.getOperation();
 
 		for (String httpMethod : httpMethods) {
 			if (Objects.equals(httpMethod, getHTTPMethod(operation))) {

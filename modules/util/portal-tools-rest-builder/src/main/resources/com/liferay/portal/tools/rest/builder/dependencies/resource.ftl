@@ -28,10 +28,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ${schemaName}Resource {
 
-	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
+	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		<@compress single_line=true>
-			public ${javaSignature.returnType} ${javaSignature.methodName}(
-				<#list javaSignature.javaParameters as javaParameter>
+			public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+				<#list javaMethodSignature.javaParameters as javaParameter>
 					${javaParameter.parameterType} ${javaParameter.parameterName}
 
 					<#if javaParameter_has_next>

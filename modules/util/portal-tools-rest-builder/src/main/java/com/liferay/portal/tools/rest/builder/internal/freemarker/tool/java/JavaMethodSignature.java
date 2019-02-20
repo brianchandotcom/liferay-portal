@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * @author Peter Shin
  */
-public class JavaSignature {
+public class JavaMethodSignature {
 
-	public JavaSignature(
+	public JavaMethodSignature(
 		String path, PathItem pathItem, Operation operation,
 		List<JavaParameter> javaParameters, String methodName,
 		String returnType) {

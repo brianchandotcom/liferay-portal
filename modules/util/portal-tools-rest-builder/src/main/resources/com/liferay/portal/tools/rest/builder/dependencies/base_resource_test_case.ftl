@@ -62,17 +62,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
+	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		@Test
-		public void test${javaSignature.methodName?cap_first}() throws Exception {
+		public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 			Assert.assertTrue(true);
 		}
 	</#list>
 
-	<#list javaTool.getJavaSignatures(openAPIYAML, schemaName) as javaSignature>
+	<#list javaTool.getJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
 		<@compress single_line=true>
-			protected Response invoke${javaSignature.methodName?cap_first}(
-				<#list javaSignature.javaParameters as javaParameter>
+			protected Response invoke${javaMethodSignature.methodName?cap_first}(
+				<#list javaMethodSignature.javaParameters as javaParameter>
 					${javaParameter.parameterType} ${javaParameter.parameterName}
 
 					<#if javaParameter_has_next>
@@ -86,7 +86,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#assign parametersContent>
 			<@compress single_line=true>
-				<#list javaSignature.javaParameters as javaParameter>
+				<#list javaMethodSignature.javaParameters as javaParameter>
 					${javaParameter.parameterName}
 
 					<#if javaParameter_has_next>
@@ -96,18 +96,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 			</@compress>
 		</#assign>
 
-		<#if javaTool.hasHTTPMethod(javaSignature, "post", "put") && parametersContent?ends_with(", ${schemaName?uncap_first}")>
+		<#if javaTool.hasHTTPMethod(javaMethodSignature, "post", "put") && parametersContent?ends_with(", ${schemaName?uncap_first}")>
 			return requestSpecification.body(
 				${schemaName?uncap_first}
 			).when(
-			).${javaTool.getHTTPMethod(javaSignature.operation)}(
-				_resourceURL + "${javaSignature.path}",
+			).${javaTool.getHTTPMethod(javaMethodSignature.operation)}(
+				_resourceURL + "${javaMethodSignature.path}",
 				${stringUtil.replaceLast(parametersContent, ", ${schemaName?uncap_first}", "")}
 			);
 		<#else>
 			return requestSpecification.when(
-			).${javaTool.getHTTPMethod(javaSignature.operation)}(
-				_resourceURL + "${javaSignature.path}",
+			).${javaTool.getHTTPMethod(javaMethodSignature.operation)}(
+				_resourceURL + "${javaMethodSignature.path}",
 				${stringUtil.replaceLast(parametersContent, ", pagination", "")}
 			);
 		</#if>

@@ -38,22 +38,22 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
-	<#assign javaSignatures = javaTool.getGraphQLJavaSignatures(openAPIYAML, true) />
+	<#assign javaMethodSignatures = javaTool.getGraphQLJavaMethodSignatures(openAPIYAML, true) />
 
-	<#list javaSignatures?keys as schemaName>
-		<#list javaSignatures[schemaName] as javaSignature>
-			<#if !stringUtil.startsWith(javaSignature.methodName, "get")>
+	<#list javaMethodSignatures?keys as schemaName>
+		<#list javaMethodSignatures[schemaName] as javaMethodSignature>
+			<#if !stringUtil.startsWith(javaMethodSignature.methodName, "get")>
 				<#continue>
 			</#if>
 
 			<#compress>
-				<#list javaTool.getGraphQLMethodAnnotations(javaSignature) as methodAnnotation>
+				<#list javaTool.getGraphQLMethodAnnotations(javaMethodSignature) as methodAnnotation>
 					${methodAnnotation}
 				</#list>
 
 				<@compress single_line=true>
-					public ${javaSignature.returnType} ${javaSignature.methodName}(
-						<#list javaSignature.javaParameters as javaParameter>
+					public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+						<#list javaMethodSignature.javaParameters as javaParameter>
 							${javaTool.getGraphQLParameterAnnotation(javaParameter)} ${javaParameter.parameterType} ${javaParameter.parameterName}
 
 							<#if javaParameter_has_next>
@@ -64,19 +64,19 @@ public class Query {
 				</@compress>
 			</#compress>
 
-			<#if stringUtil.equals(javaSignature.returnType, "Response")>
+			<#if stringUtil.equals(javaMethodSignature.returnType, "Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
 				return responseBuilder.build();
-			<#elseif javaSignature.returnType?contains("Collection<")>
+			<#elseif javaMethodSignature.returnType?contains("Collection<")>
 				${schemaName}Resource ${schemaName?uncap_first}Resource = _get${schemaName}Resource();
 
 				${schemaName?uncap_first}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = ${schemaName?uncap_first}Resource.${javaSignature.methodName}(
+				Page paginationPage = ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
 					<#assign parametersContent>
 						<@compress single_line=true>
-							<#list javaSignature.javaParameters as javaParameter>
+							<#list javaMethodSignature.javaParameters as javaParameter>
 								${javaParameter.parameterName}
 
 								<#if javaParameter_has_next>
@@ -96,8 +96,8 @@ public class Query {
 
 					${schemaName?uncap_first}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-					return ${schemaName?uncap_first}Resource.${javaSignature.methodName}(
-						<#list javaSignature.javaParameters as javaParameter>
+					return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+						<#list javaMethodSignature.javaParameters as javaParameter>
 							${javaParameter.parameterName}
 
 							<#if javaParameter_has_next>
@@ -113,7 +113,7 @@ public class Query {
 		</#list>
 	</#list>
 
-	<#list javaSignatures?keys as schemaName>
+	<#list javaMethodSignatures?keys as schemaName>
 		private static ${schemaName}Resource _get${schemaName}Resource() {
 			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
 		}
@@ -124,7 +124,7 @@ public class Query {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-		<#list javaSignatures?keys as schemaName>
+		<#list javaMethodSignatures?keys as schemaName>
 			ServiceTracker<${schemaName}Resource, ${schemaName}Resource> ${schemaName?uncap_first}ResourceServiceTracker =
 				new ServiceTracker<>(bundle.getBundleContext(), ${schemaName}Resource.class, null);
 

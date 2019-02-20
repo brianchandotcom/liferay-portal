@@ -30,7 +30,11 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -56,12 +60,47 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 				return Page.of(Collections.emptyList());
 	}
 	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/blog-postings/{blog-posting-id}/comments")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Comment postBlogPostingComment(
+	@PathParam("blog-posting-id") Long blogPostingId,Comment comment)
+			throws Exception {
+
+				return new CommentImpl();
+	}
+	@Override
+	@DELETE
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteComment(
+	@PathParam("comment-id") Long commentId)
+			throws Exception {
+
+				return false;
+	}
+	@Override
 	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Comment getComment(
 	@PathParam("comment-id") Long commentId)
+			throws Exception {
+
+				return new CommentImpl();
+	}
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Comment putComment(
+	@PathParam("comment-id") Long commentId,Comment comment)
 			throws Exception {
 
 				return new CommentImpl();
@@ -76,6 +115,18 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
+	}
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/comments/{comment-id}/comments")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Comment postCommentComment(
+	@PathParam("comment-id") Long commentId,Comment comment)
+			throws Exception {
+
+				return new CommentImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

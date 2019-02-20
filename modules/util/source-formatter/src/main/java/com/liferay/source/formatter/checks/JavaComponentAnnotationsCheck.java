@@ -387,7 +387,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private static final Pattern _annotationParameterPropertyPattern =
-		Pattern.compile("\t(\\w+) = \\{");
+		Pattern.compile("\\s(\\w+) = \\{");
 	private static final Pattern _attributePattern = Pattern.compile(
 		"\\W(\\w+)\\s*=");
 

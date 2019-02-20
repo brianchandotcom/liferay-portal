@@ -81,7 +81,11 @@ definition {
 	macro inputTextArea {
 		Click(locator1 = "TextArea#ANY", key_text = "${fieldId}");
 
-		Type(locator1 = "TextArea#ANY", value1 = "${text}", key_text = "${fieldId}");
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = "${text}",
+			key_text = "${fieldId}"
+		);
 	}
 
 	macro inputTitle {

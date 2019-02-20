@@ -40,7 +40,11 @@ definition {
 
 			ProductMenu.gotoSite(site = "Fjord Theme Site");
 
-			AssertClick(locator1 = "Home#PAGE", value1 = "Home", key_pageName = "Home");
+			AssertClick(
+				locator1 = "Home#PAGE",
+				value1 = "Home",
+				key_pageName = "Home"
+			);
 
 			AssertTextEquals(
 				locator1 = "Header#H2_TITLE",

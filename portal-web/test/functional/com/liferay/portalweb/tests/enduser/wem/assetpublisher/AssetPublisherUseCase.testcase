@@ -811,7 +811,11 @@ definition {
 
 		WebContent.addCP(webContentTitle = "Netz Inhalt1 Titel");
 
-		Type(locator1 = "TextInput#DDM", value1 = "3", key_fieldName = "Integer");
+		Type(
+			locator1 = "TextInput#DDM",
+			value1 = "3",
+			key_fieldName = "Integer"
+		);
 
 		PortletEntry.publish();
 
@@ -851,7 +855,11 @@ definition {
 
 		WebContent.addCP(webContentTitle = "Netz Inhalt2 Titel");
 
-		Type(locator1 = "TextInput#DDM", value1 = "8", key_fieldName = "Integer");
+		Type(
+			locator1 = "TextInput#DDM",
+			value1 = "8",
+			key_fieldName = "Integer"
+		);
 
 		PortletEntry.publish();
 
@@ -891,7 +899,11 @@ definition {
 
 		WebContent.addCP(webContentTitle = "Netz Inhalt3 Titel");
 
-		Type(locator1 = "TextInput#DDM", value1 = "5", key_fieldName = "Integer");
+		Type(
+			locator1 = "TextInput#DDM",
+			value1 = "5",
+			key_fieldName = "Integer"
+		);
 
 		PortletEntry.publish();
 

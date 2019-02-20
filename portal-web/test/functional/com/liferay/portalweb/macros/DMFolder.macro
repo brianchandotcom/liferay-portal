@@ -239,7 +239,11 @@ definition {
 				value1 = "${workflowDefinition}"
 			);
 
-			AssertClickNoError(locator1 = "Button#ANY", value1 = "Save", key_text = "Save");
+			AssertClickNoError(
+				locator1 = "Button#ANY",
+				value1 = "Save",
+				key_text = "Save"
+			);
 
 			AssertConfirm(
 				value1 = "You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?"

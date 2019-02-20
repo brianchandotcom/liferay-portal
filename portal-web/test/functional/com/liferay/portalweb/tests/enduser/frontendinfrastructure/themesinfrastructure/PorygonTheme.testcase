@@ -40,7 +40,11 @@ definition {
 
 			ProductMenu.gotoSite(site = "Porygon Theme Site");
 
-			AssertClick(locator1 = "Home#PAGE", value1 = "HOME", key_pageName = "home");
+			AssertClick(
+				locator1 = "Home#PAGE",
+				value1 = "HOME",
+				key_pageName = "home"
+			);
 
 			AssertTextEquals(
 				locator1 = "Header#H2_TITLE",

@@ -631,7 +631,11 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "TextArea#ANY", key_text = "fileExtensions");
 
-		Type(locator1 = "TextArea#ANY", value1 = ".doc", key_text = "fileExtensions");
+		Type(
+			locator1 = "TextArea#ANY",
+			value1 = ".doc",
+			key_text = "fileExtensions"
+		);
 
 		SystemSettings.saveConfiguration();
 

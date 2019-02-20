@@ -15,20 +15,15 @@
 package com.liferay.frontend.taglib.clay.internal;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
-import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProviderRegistry;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -38,73 +33,57 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rodolfo Roza Miranda
  */
-@Component(
-	immediate = true, service = ClayComponentAttributeProviderRegistry.class
-)
-public class ClayComponentAttributeProvidersProvider
-	implements ClayComponentAttributeProviderRegistry {
+@Component(immediate = true, service = {})
+public class ClayComponentAttributeProvidersProvider {
 
-	@Override
-	public List<ClayComponentAttributeProvider> get(String key) {
-		List<ServiceWrapper<ClayComponentAttributeProvider>> serviceWrappers =
-			ListUtil.copy(_serviceTrackerMap.getService(key));
+	public static List<ClayComponentAttributeProvider>
+		getClayComponentAttributeProviders(String key) {
 
-		if (serviceWrappers == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No ClayComponentAttributeProvider registered with key " +
-						key);
-			}
+		if (_clayComponentAttributeProvidersProvider == null) {
+			_log.error(
+				"Unable to get ClayComponentAttributeProvidersProvider when " +
+					"retrieving list for key " + key);
 
-			return null;
+			return Collections.emptyList();
 		}
 
-		serviceWrappers.sort(Comparator.comparingInt(this::_getServiceRanking));
+		ServiceTrackerMap<String, List<ClayComponentAttributeProvider>>
+			clayComponentAttributeProviders =
+				_clayComponentAttributeProvidersProvider.
+					_clayComponentAttributeProviders;
 
-		return _extractServices(serviceWrappers);
+		return clayComponentAttributeProviders.getService(key);
+	}
+
+	public ClayComponentAttributeProvidersProvider() {
+		_clayComponentAttributeProvidersProvider = this;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ClayComponentAttributeProvider.class,
-			"clay.component.attribute.provider.key",
-			ServiceTrackerCustomizerFactory.serviceWrapper(bundleContext));
+		_clayComponentAttributeProviders =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ClayComponentAttributeProvider.class,
+				"(clay.component.attribute.provider.key=*)",
+				new PropertyServiceReferenceMapper<>(
+					"clay.component.attribute.provider.key"),
+				new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
+		_clayComponentAttributeProviders.close();
 
-	private List<ClayComponentAttributeProvider> _extractServices(
-		List<ServiceWrapper<ClayComponentAttributeProvider>> serviceWrappers) {
-
-		ArrayList<ClayComponentAttributeProvider> services = new ArrayList<>();
-
-		for (ServiceWrapper<ClayComponentAttributeProvider> wrapper :
-				serviceWrappers) {
-
-			services.add(wrapper.getService());
-		}
-
-		return services;
-	}
-
-	private int _getServiceRanking(
-		ServiceWrapper<ClayComponentAttributeProvider> service) {
-
-		Map<String, Object> properties = service.getProperties();
-
-		return GetterUtil.getInteger(
-			properties.get("service.ranking"), Integer.MIN_VALUE);
+		_clayComponentAttributeProviders = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClayComponentAttributeProvidersProvider.class);
 
-	private ServiceTrackerMap
-		<String, List<ServiceWrapper<ClayComponentAttributeProvider>>>
-			_serviceTrackerMap;
+	private static ClayComponentAttributeProvidersProvider
+		_clayComponentAttributeProvidersProvider;
+
+	private ServiceTrackerMap<String, List<ClayComponentAttributeProvider>>
+		_clayComponentAttributeProviders;
 
 }

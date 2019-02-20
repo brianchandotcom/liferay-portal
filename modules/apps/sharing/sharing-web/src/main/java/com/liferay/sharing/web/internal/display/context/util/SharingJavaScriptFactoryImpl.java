@@ -130,10 +130,10 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		sb.append(sharingURL.toString());
 		sb.append("', '");
 
-		String title = _getTitle(classNameId, classPK, request.getLocale());
+		String title = _getTitle(className, classPK, request.getLocale());
 
 		if (Validator.isNotNull(title)) {
-			sb.append(_language.get(request, "share-x", title));
+			sb.append(_language.format(request, "share-x", title));
 		}
 		else {
 			sb.append(_language.get(request, "share"));
@@ -153,13 +153,13 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		return _portal.getLiferayPortletResponse(portletResponse);
 	}
 
-	private String _getTitle(long classNameId, long classPK, Locale locale) {
+	private String _getTitle(String className, long classPK, Locale locale) {
 		try {
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(classNameId);
+					getAssetRendererFactoryByClassName(className);
 
-			if (assetRendererFactory != null) {
+			if (assetRendererFactory == null) {
 				return null;
 			}
 

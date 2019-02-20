@@ -83,7 +83,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 </liferay-frontend:edit-form>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	var targetTagNameSelect = document.querySelector('#<portlet:namespace />targetTagName');
+	var targetTagNameSelect = document.getElementById('<portlet:namespace />targetTagName');
 
 	if (targetTagNameSelect) {
 		window['<portlet:namespace />onAddTag'] = function(item) {
@@ -113,7 +113,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	}
 
 	var form = document.<portlet:namespace />fm;
-	var mergeTagNamesInput = document.querySelector('#<portlet:namespace />mergeTagNames');
+	var mergeTagNamesInput = document.getElementById('<portlet:namespace />mergeTagNames');
 
 	if (form && mergeTagNamesInput && targetTagNameSelect) {
 		form.addEventListener(

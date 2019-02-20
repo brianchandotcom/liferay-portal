@@ -59,9 +59,18 @@ public class AssetTagsManagementToolbarDisplayContext
 		return new DropdownItemList() {
 			{
 				if (_assetTagsDisplayContext.isShowTagsActions()) {
+					PortletURL mergeTagsURL =
+						liferayPortletResponse.createRenderURL();
+
+					mergeTagsURL.setParameter("mvcPath", "/merge_tag.jsp");
+					mergeTagsURL.setParameter(
+						"mergeTagIds", "[$MERGE_TAGS_IDS$]");
+
 					add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "mergeTags");
+							dropdownItem.putData(
+								"mergeTagsURL", mergeTagsURL.toString());
 							dropdownItem.setIcon("merge");
 							dropdownItem.setLabel(
 								LanguageUtil.get(request, "merge"));
@@ -107,6 +116,11 @@ public class AssetTagsManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "assetTagsManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

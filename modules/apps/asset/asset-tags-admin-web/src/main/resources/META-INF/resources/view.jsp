@@ -16,8 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContext = new AssetTagsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetTagsDisplayContext);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new AssetTagsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetTagsDisplayContext) %>"
+	displayContext="<%= assetTagsManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="deleteTag" var="deleteTagURL">
@@ -89,46 +93,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	var form = document.querySelector('#<portlet:namespace />fm');
-
-	var mergeTags = function() {
-		<portlet:renderURL var="mergeURL">
-			<portlet:param name="mvcPath" value="/merge_tag.jsp" />
-			<portlet:param name="mergeTagIds" value="[$MERGE_TAGS_IDS$]" />
-		</portlet:renderURL>
-
-		let mergeURL = '<%= mergeURL %>';
-
-		location.href = mergeURL.replace(
-			escape('[$MERGE_TAGS_IDS$]'),
-			Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-		);
-	}
-
-	var deleteTags = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(form);
-		}
-	}
-
-	var ACTIONS = {
-		'deleteTags': deleteTags,
-		'mergeTags': mergeTags
-	};
-
-	Liferay.componentReady('assetTagsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				['actionItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= assetTagsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>

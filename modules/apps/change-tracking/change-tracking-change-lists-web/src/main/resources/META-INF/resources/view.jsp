@@ -17,6 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String title = LanguageUtil.get(request, "select-change-list");
+
+portletDisplay.setTitle(title);
+renderResponse.setTitle(title);
+
 SearchContainer<CTCollection> ctCollectionSearchContainer = changeListsDisplayContext.getSearchContainer();
 %>
 

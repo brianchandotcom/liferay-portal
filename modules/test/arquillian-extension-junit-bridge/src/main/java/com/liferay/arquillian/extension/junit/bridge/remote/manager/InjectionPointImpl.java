@@ -29,8 +29,9 @@ import org.jboss.arquillian.core.spi.InvocationException;
  */
 public class InjectionPointImpl implements InjectionPoint {
 
-	public static InjectionPointImpl of(Object target, Field field) {
-		return new InjectionPointImpl(target, field);
+	public InjectionPointImpl(Object target, Field field) {
+		_target = target;
+		_field = field;
 	}
 
 	@Override
@@ -64,11 +65,6 @@ public class InjectionPointImpl implements InjectionPoint {
 		catch (Exception e) {
 			throw new InvocationException(e.getCause());
 		}
-	}
-
-	private InjectionPointImpl(Object target, Field field) {
-		_target = target;
-		_field = field;
 	}
 
 	private final Field _field;

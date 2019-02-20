@@ -27,8 +27,9 @@ import org.jboss.arquillian.core.spi.ObserverMethod;
  */
 public class ObserverImpl implements ObserverMethod {
 
-	public static ObserverImpl of(Object extension, Method method) {
-		return new ObserverImpl(extension, method);
+	public ObserverImpl(Object target, Method method) {
+		_target = target;
+		_method = method;
 	}
 
 	@Override
@@ -83,11 +84,6 @@ public class ObserverImpl implements ObserverMethod {
 
 			throw new InvocationException(e);
 		}
-	}
-
-	private ObserverImpl(Object target, Method method) {
-		_target = target;
-		_method = method;
 	}
 
 	private boolean _containsNull(Object[] arguments) {

@@ -99,7 +99,7 @@ public class ExtensionImpl implements Extension {
 		List<InjectionPoint> result = new ArrayList<>();
 
 		for (Field field : injectionPoints) {
-			result.add(InjectionPointImpl.of(extension, field));
+			result.add(new InjectionPointImpl(extension, field));
 		}
 
 		return result;
@@ -143,7 +143,7 @@ public class ExtensionImpl implements Extension {
 		List<ObserverMethod> result = new ArrayList<>();
 
 		for (Method method : observerMethods) {
-			result.add(ObserverImpl.of(extension, method));
+			result.add(new ObserverImpl(extension, method));
 		}
 
 		return result;

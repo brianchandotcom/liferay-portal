@@ -47,14 +47,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return aggregateRating;
 	}
 
-	public void setAggregateRating(AggregateRating aggregateRating) {
+	public void setAggregateRating(
+			AggregateRating aggregateRating) {
+
 			this.aggregateRating = aggregateRating;
 	}
 
 	@JsonIgnore
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+	public void setAggregateRating(
+			UnsafeSupplier<AggregateRating, Throwable>
+				aggregateRatingUnsafeSupplier) {
+
 			try {
-				aggregateRating = aggregateRatingUnsafeSupplier.get();
+				aggregateRating =
+					aggregateRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -68,14 +74,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return alternativeHeadline;
 	}
 
-	public void setAlternativeHeadline(String alternativeHeadline) {
+	public void setAlternativeHeadline(
+			String alternativeHeadline) {
+
 			this.alternativeHeadline = alternativeHeadline;
 	}
 
 	@JsonIgnore
-	public void setAlternativeHeadline(UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
+	public void setAlternativeHeadline(
+			UnsafeSupplier<String, Throwable>
+				alternativeHeadlineUnsafeSupplier) {
+
 			try {
-				alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
+				alternativeHeadline =
+					alternativeHeadlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -89,14 +101,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return articleBody;
 	}
 
-	public void setArticleBody(String articleBody) {
+	public void setArticleBody(
+			String articleBody) {
+
 			this.articleBody = articleBody;
 	}
 
 	@JsonIgnore
-	public void setArticleBody(UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
+	public void setArticleBody(
+			UnsafeSupplier<String, Throwable>
+				articleBodyUnsafeSupplier) {
+
 			try {
-				articleBody = articleBodyUnsafeSupplier.get();
+				articleBody =
+					articleBodyUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -110,14 +128,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return caption;
 	}
 
-	public void setCaption(String caption) {
+	public void setCaption(
+			String caption) {
+
 			this.caption = caption;
 	}
 
 	@JsonIgnore
-	public void setCaption(UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
+	public void setCaption(
+			UnsafeSupplier<String, Throwable>
+				captionUnsafeSupplier) {
+
 			try {
-				caption = captionUnsafeSupplier.get();
+				caption =
+					captionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -131,14 +155,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return categories;
 	}
 
-	public void setCategories(Categories[] categories) {
+	public void setCategories(
+			Categories[] categories) {
+
 			this.categories = categories;
 	}
 
 	@JsonIgnore
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+	public void setCategories(
+			UnsafeSupplier<Categories[], Throwable>
+				categoriesUnsafeSupplier) {
+
 			try {
-				categories = categoriesUnsafeSupplier.get();
+				categories =
+					categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -152,14 +182,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return categoryIds;
 	}
 
-	public void setCategoryIds(Long[] categoryIds) {
+	public void setCategoryIds(
+			Long[] categoryIds) {
+
 			this.categoryIds = categoryIds;
 	}
 
 	@JsonIgnore
-	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+	public void setCategoryIds(
+			UnsafeSupplier<Long[], Throwable>
+				categoryIdsUnsafeSupplier) {
+
 			try {
-				categoryIds = categoryIdsUnsafeSupplier.get();
+				categoryIds =
+					categoryIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -173,14 +209,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return comment;
 	}
 
-	public void setComment(Comment[] comment) {
+	public void setComment(
+			Comment[] comment) {
+
 			this.comment = comment;
 	}
 
 	@JsonIgnore
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+	public void setComment(
+			UnsafeSupplier<Comment[], Throwable>
+				commentUnsafeSupplier) {
+
 			try {
-				comment = commentUnsafeSupplier.get();
+				comment =
+					commentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -194,14 +236,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return contentSpace;
 	}
 
-	public void setContentSpace(Long contentSpace) {
+	public void setContentSpace(
+			Long contentSpace) {
+
 			this.contentSpace = contentSpace;
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+			UnsafeSupplier<Long, Throwable>
+				contentSpaceUnsafeSupplier) {
+
 			try {
-				contentSpace = contentSpaceUnsafeSupplier.get();
+				contentSpace =
+					contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -215,14 +263,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -236,14 +290,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -257,14 +317,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -278,14 +344,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return datePublished;
 	}
 
-	public void setDatePublished(Date datePublished) {
+	public void setDatePublished(
+			Date datePublished) {
+
 			this.datePublished = datePublished;
 	}
 
 	@JsonIgnore
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+	public void setDatePublished(
+			UnsafeSupplier<Date, Throwable>
+				datePublishedUnsafeSupplier) {
+
 			try {
-				datePublished = datePublishedUnsafeSupplier.get();
+				datePublished =
+					datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -299,14 +371,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -320,14 +398,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return encodingFormat;
 	}
 
-	public void setEncodingFormat(String encodingFormat) {
+	public void setEncodingFormat(
+			String encodingFormat) {
+
 			this.encodingFormat = encodingFormat;
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+			UnsafeSupplier<String, Throwable>
+				encodingFormatUnsafeSupplier) {
+
 			try {
-				encodingFormat = encodingFormatUnsafeSupplier.get();
+				encodingFormat =
+					encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -341,14 +425,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return friendlyUrlPath;
 	}
 
-	public void setFriendlyUrlPath(String friendlyUrlPath) {
+	public void setFriendlyUrlPath(
+			String friendlyUrlPath) {
+
 			this.friendlyUrlPath = friendlyUrlPath;
 	}
 
 	@JsonIgnore
-	public void setFriendlyUrlPath(UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
+	public void setFriendlyUrlPath(
+			UnsafeSupplier<String, Throwable>
+				friendlyUrlPathUnsafeSupplier) {
+
 			try {
-				friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+				friendlyUrlPath =
+					friendlyUrlPathUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -362,14 +452,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return headline;
 	}
 
-	public void setHeadline(String headline) {
+	public void setHeadline(
+			String headline) {
+
 			this.headline = headline;
 	}
 
 	@JsonIgnore
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+	public void setHeadline(
+			UnsafeSupplier<String, Throwable>
+				headlineUnsafeSupplier) {
+
 			try {
-				headline = headlineUnsafeSupplier.get();
+				headline =
+					headlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -383,14 +479,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -404,14 +506,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(
+			Image image) {
+
 			this.image = image;
 	}
 
 	@JsonIgnore
-	public void setImage(UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
+	public void setImage(
+			UnsafeSupplier<Image, Throwable>
+				imageUnsafeSupplier) {
+
 			try {
-				image = imageUnsafeSupplier.get();
+				image =
+					imageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -425,14 +533,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return imageId;
 	}
 
-	public void setImageId(Long imageId) {
+	public void setImageId(
+			Long imageId) {
+
 			this.imageId = imageId;
 	}
 
 	@JsonIgnore
-	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
+	public void setImageId(
+			UnsafeSupplier<Long, Throwable>
+				imageIdUnsafeSupplier) {
+
 			try {
-				imageId = imageIdUnsafeSupplier.get();
+				imageId =
+					imageIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -446,14 +560,20 @@ public class BlogPostingImpl implements BlogPosting {
 			return keywords;
 	}
 
-	public void setKeywords(String[] keywords) {
+	public void setKeywords(
+			String[] keywords) {
+
 			this.keywords = keywords;
 	}
 
 	@JsonIgnore
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywords(
+			UnsafeSupplier<String[], Throwable>
+				keywordsUnsafeSupplier) {
+
 			try {
-				keywords = keywordsUnsafeSupplier.get();
+				keywords =
+					keywordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

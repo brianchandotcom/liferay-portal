@@ -60,7 +60,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-workflow/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-workflow/v1.0");
 	}
 
 	@After
@@ -77,40 +78,46 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetWorkflowLog( Long workflowLogId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWorkflowLog(
+				Long workflowLogId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-logs/{workflow-log-id}",
-				workflowLogId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/workflow-logs/{workflow-log-id}",
+					workflowLogId
+				);
 	}
-	protected Response invokeGetWorkflowTaskWorkflowLogsPage( Long workflowTaskId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWorkflowTaskWorkflowLogsPage(
+				Long workflowTaskId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/workflow-logs",
-				workflowTaskId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/workflow-tasks/{workflow-task-id}/workflow-logs",
+					workflowTaskId
+				);
 	}
 
 	protected WorkflowLog randomWorkflowLog() {
 		return new WorkflowLogImpl() {
 			{
-auditPerson = RandomTestUtil.randomString();
-commentLog = RandomTestUtil.randomString();
-dateCreated = RandomTestUtil.nextDate();
-id = RandomTestUtil.randomLong();
-person = RandomTestUtil.randomString();
-previousPerson = RandomTestUtil.randomString();
-previousState = RandomTestUtil.randomString();
-state = RandomTestUtil.randomString();
-taskId = RandomTestUtil.randomLong();
-type = RandomTestUtil.randomString();			}
+
+						auditPerson = RandomTestUtil.randomString();
+						commentLog = RandomTestUtil.randomString();
+						dateCreated = RandomTestUtil.nextDate();
+						id = RandomTestUtil.randomLong();
+						person = RandomTestUtil.randomString();
+						previousPerson = RandomTestUtil.randomString();
+						previousState = RandomTestUtil.randomString();
+						state = RandomTestUtil.randomString();
+						taskId = RandomTestUtil.randomLong();
+						type = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -127,7 +134,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAuditPerson(UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
+	public void setAuditPerson(
+				UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
+
 				try {
 					auditPerson = auditPersonUnsafeSupplier.get();
 	}
@@ -147,7 +156,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCommentLog(UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
+	public void setCommentLog(
+				UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
+
 				try {
 					commentLog = commentLogUnsafeSupplier.get();
 	}
@@ -167,7 +178,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -187,7 +200,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -207,7 +222,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setPerson(UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
+	public void setPerson(
+				UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
+
 				try {
 					person = personUnsafeSupplier.get();
 	}
@@ -227,7 +244,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setPreviousPerson(UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
+	public void setPreviousPerson(
+				UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
+
 				try {
 					previousPerson = previousPersonUnsafeSupplier.get();
 	}
@@ -247,7 +266,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setPreviousState(UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
+	public void setPreviousState(
+				UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
+
 				try {
 					previousState = previousStateUnsafeSupplier.get();
 	}
@@ -267,7 +288,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setState(UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
+	public void setState(
+				UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
+
 				try {
 					state = stateUnsafeSupplier.get();
 	}
@@ -287,7 +310,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTask(UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
+	public void setTask(
+				UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
+
 				try {
 					task = taskUnsafeSupplier.get();
 	}
@@ -307,7 +332,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTaskId(UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
+	public void setTaskId(
+				UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
+
 				try {
 					taskId = taskIdUnsafeSupplier.get();
 	}
@@ -327,7 +354,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+	public void setType(
+				UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+
 				try {
 					type = typeUnsafeSupplier.get();
 	}

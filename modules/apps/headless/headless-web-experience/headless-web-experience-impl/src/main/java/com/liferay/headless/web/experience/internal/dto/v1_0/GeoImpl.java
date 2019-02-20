@@ -40,14 +40,20 @@ public class GeoImpl implements Geo {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class GeoImpl implements Geo {
 			return latitude;
 	}
 
-	public void setLatitude(Number latitude) {
+	public void setLatitude(
+			Number latitude) {
+
 			this.latitude = latitude;
 	}
 
 	@JsonIgnore
-	public void setLatitude(UnsafeSupplier<Number, Throwable> latitudeUnsafeSupplier) {
+	public void setLatitude(
+			UnsafeSupplier<Number, Throwable>
+				latitudeUnsafeSupplier) {
+
 			try {
-				latitude = latitudeUnsafeSupplier.get();
+				latitude =
+					latitudeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class GeoImpl implements Geo {
 			return longitude;
 	}
 
-	public void setLongitude(Number longitude) {
+	public void setLongitude(
+			Number longitude) {
+
 			this.longitude = longitude;
 	}
 
 	@JsonIgnore
-	public void setLongitude(UnsafeSupplier<Number, Throwable> longitudeUnsafeSupplier) {
+	public void setLongitude(
+			UnsafeSupplier<Number, Throwable>
+				longitudeUnsafeSupplier) {
+
 			try {
-				longitude = longitudeUnsafeSupplier.get();
+				longitude =
+					longitudeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

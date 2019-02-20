@@ -43,14 +43,20 @@ public class CommentImpl implements Comment {
 			return comments;
 	}
 
-	public void setComments(Comment[] comments) {
+	public void setComments(
+			Comment[] comments) {
+
 			this.comments = comments;
 	}
 
 	@JsonIgnore
-	public void setComments(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
+	public void setComments(
+			UnsafeSupplier<Comment[], Throwable>
+				commentsUnsafeSupplier) {
+
 			try {
-				comments = commentsUnsafeSupplier.get();
+				comments =
+					commentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -64,14 +70,20 @@ public class CommentImpl implements Comment {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -85,14 +97,20 @@ public class CommentImpl implements Comment {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -106,14 +124,20 @@ public class CommentImpl implements Comment {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,14 +151,20 @@ public class CommentImpl implements Comment {
 			return hasComments;
 	}
 
-	public void setHasComments(Boolean hasComments) {
+	public void setHasComments(
+			Boolean hasComments) {
+
 			this.hasComments = hasComments;
 	}
 
 	@JsonIgnore
-	public void setHasComments(UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+	public void setHasComments(
+			UnsafeSupplier<Boolean, Throwable>
+				hasCommentsUnsafeSupplier) {
+
 			try {
-				hasComments = hasCommentsUnsafeSupplier.get();
+				hasComments =
+					hasCommentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -148,14 +178,20 @@ public class CommentImpl implements Comment {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -169,14 +205,20 @@ public class CommentImpl implements Comment {
 			return text;
 	}
 
-	public void setText(String text) {
+	public void setText(
+			String text) {
+
 			this.text = text;
 	}
 
 	@JsonIgnore
-	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+	public void setText(
+			UnsafeSupplier<String, Throwable>
+				textUnsafeSupplier) {
+
 			try {
-				text = textUnsafeSupplier.get();
+				text =
+					textUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

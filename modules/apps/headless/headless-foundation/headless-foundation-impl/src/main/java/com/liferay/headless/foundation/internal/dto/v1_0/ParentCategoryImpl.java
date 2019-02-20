@@ -40,14 +40,20 @@ public class ParentCategoryImpl implements ParentCategory {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class ParentCategoryImpl implements ParentCategory {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -44,23 +44,27 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseFormStructureResourceImpl implements FormStructureResource {
 
+	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<FormStructure> getContentSpaceFormStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<FormStructure> getContentSpaceFormStructuresPage(
+	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public FormStructure getFormStructure( @PathParam("form-structure-id") Long formStructureId ) throws Exception {
-			return new FormStructureImpl();
+	public FormStructure getFormStructure(
+	@PathParam("form-structure-id") Long formStructureId)
+			throws Exception {
 
+				return new FormStructureImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

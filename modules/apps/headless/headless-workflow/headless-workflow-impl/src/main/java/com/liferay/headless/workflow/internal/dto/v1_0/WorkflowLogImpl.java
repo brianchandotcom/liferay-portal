@@ -43,14 +43,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return auditPerson;
 	}
 
-	public void setAuditPerson(String auditPerson) {
+	public void setAuditPerson(
+			String auditPerson) {
+
 			this.auditPerson = auditPerson;
 	}
 
 	@JsonIgnore
-	public void setAuditPerson(UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
+	public void setAuditPerson(
+			UnsafeSupplier<String, Throwable>
+				auditPersonUnsafeSupplier) {
+
 			try {
-				auditPerson = auditPersonUnsafeSupplier.get();
+				auditPerson =
+					auditPersonUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -64,14 +70,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return commentLog;
 	}
 
-	public void setCommentLog(String commentLog) {
+	public void setCommentLog(
+			String commentLog) {
+
 			this.commentLog = commentLog;
 	}
 
 	@JsonIgnore
-	public void setCommentLog(UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
+	public void setCommentLog(
+			UnsafeSupplier<String, Throwable>
+				commentLogUnsafeSupplier) {
+
 			try {
-				commentLog = commentLogUnsafeSupplier.get();
+				commentLog =
+					commentLogUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -85,14 +97,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -106,14 +124,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,14 +151,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return person;
 	}
 
-	public void setPerson(String person) {
+	public void setPerson(
+			String person) {
+
 			this.person = person;
 	}
 
 	@JsonIgnore
-	public void setPerson(UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
+	public void setPerson(
+			UnsafeSupplier<String, Throwable>
+				personUnsafeSupplier) {
+
 			try {
-				person = personUnsafeSupplier.get();
+				person =
+					personUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -148,14 +178,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return previousPerson;
 	}
 
-	public void setPreviousPerson(String previousPerson) {
+	public void setPreviousPerson(
+			String previousPerson) {
+
 			this.previousPerson = previousPerson;
 	}
 
 	@JsonIgnore
-	public void setPreviousPerson(UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
+	public void setPreviousPerson(
+			UnsafeSupplier<String, Throwable>
+				previousPersonUnsafeSupplier) {
+
 			try {
-				previousPerson = previousPersonUnsafeSupplier.get();
+				previousPerson =
+					previousPersonUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -169,14 +205,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return previousState;
 	}
 
-	public void setPreviousState(String previousState) {
+	public void setPreviousState(
+			String previousState) {
+
 			this.previousState = previousState;
 	}
 
 	@JsonIgnore
-	public void setPreviousState(UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
+	public void setPreviousState(
+			UnsafeSupplier<String, Throwable>
+				previousStateUnsafeSupplier) {
+
 			try {
-				previousState = previousStateUnsafeSupplier.get();
+				previousState =
+					previousStateUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -190,14 +232,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return state;
 	}
 
-	public void setState(String state) {
+	public void setState(
+			String state) {
+
 			this.state = state;
 	}
 
 	@JsonIgnore
-	public void setState(UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
+	public void setState(
+			UnsafeSupplier<String, Throwable>
+				stateUnsafeSupplier) {
+
 			try {
-				state = stateUnsafeSupplier.get();
+				state =
+					stateUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -211,14 +259,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return task;
 	}
 
-	public void setTask(WorkflowTask task) {
+	public void setTask(
+			WorkflowTask task) {
+
 			this.task = task;
 	}
 
 	@JsonIgnore
-	public void setTask(UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
+	public void setTask(
+			UnsafeSupplier<WorkflowTask, Throwable>
+				taskUnsafeSupplier) {
+
 			try {
-				task = taskUnsafeSupplier.get();
+				task =
+					taskUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -232,14 +286,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return taskId;
 	}
 
-	public void setTaskId(Long taskId) {
+	public void setTaskId(
+			Long taskId) {
+
 			this.taskId = taskId;
 	}
 
 	@JsonIgnore
-	public void setTaskId(UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
+	public void setTaskId(
+			UnsafeSupplier<Long, Throwable>
+				taskIdUnsafeSupplier) {
+
 			try {
-				taskId = taskIdUnsafeSupplier.get();
+				taskId =
+					taskIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -253,14 +313,20 @@ public class WorkflowLogImpl implements WorkflowLog {
 			return type;
 	}
 
-	public void setType(String type) {
+	public void setType(
+			String type) {
+
 			this.type = type;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+	public void setType(
+			UnsafeSupplier<String, Throwable>
+				typeUnsafeSupplier) {
+
 			try {
-				type = typeUnsafeSupplier.get();
+				type =
+					typeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

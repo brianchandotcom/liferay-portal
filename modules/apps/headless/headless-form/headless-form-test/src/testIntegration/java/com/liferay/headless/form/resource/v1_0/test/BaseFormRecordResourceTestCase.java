@@ -62,7 +62,8 @@ public abstract class BaseFormRecordResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-form/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-form/v1.0");
 	}
 
 	@After
@@ -87,60 +88,70 @@ public abstract class BaseFormRecordResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetFormRecord( Long formRecordId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFormRecord(
+				Long formRecordId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/form-records/{form-record-id}",
-				formRecordId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/form-records/{form-record-id}",
+					formRecordId
+				);
 	}
-	protected Response invokePutFormRecord( Long formRecordId , FormRecord formRecord ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutFormRecord(
+				Long formRecordId,FormRecord formRecord)
+			throws Exception {
 
-			return requestSpecification.body(
-				formRecord
-			).when(
-			).put(
-				_resourceURL + "/form-records/{form-record-id}",
-				formRecordId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					formRecord
+				).when(
+				).put(
+					_resourceURL + "/form-records/{form-record-id}",
+					formRecordId
+				);
 	}
-	protected Response invokeGetFormFormRecordsPage( Long formId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFormFormRecordsPage(
+				Long formId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/forms/{form-id}/form-records",
-				formId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/forms/{form-id}/form-records",
+					formId
+				);
 	}
-	protected Response invokePostFormFormRecord( Long formId , FormRecord formRecord ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostFormFormRecord(
+				Long formId,FormRecord formRecord)
+			throws Exception {
 
-			return requestSpecification.body(
-				formRecord
-			).when(
-			).post(
-				_resourceURL + "/forms/{form-id}/form-records",
-				formId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					formRecord
+				).when(
+				).post(
+					_resourceURL + "/forms/{form-id}/form-records",
+					formId
+				);
 	}
 
 	protected FormRecord randomFormRecord() {
 		return new FormRecordImpl() {
 			{
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-datePublished = RandomTestUtil.nextDate();
-draft = RandomTestUtil.randomBoolean();
-formId = RandomTestUtil.randomLong();
-id = RandomTestUtil.randomLong();			}
+
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						datePublished = RandomTestUtil.nextDate();
+						draft = RandomTestUtil.randomBoolean();
+						formId = RandomTestUtil.randomLong();
+						id = RandomTestUtil.randomLong();
+	}
 		};
 	}
 
@@ -157,7 +168,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -177,7 +190,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -197,7 +212,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -217,7 +234,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+	public void setDatePublished(
+				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+
 				try {
 					datePublished = datePublishedUnsafeSupplier.get();
 	}
@@ -237,7 +256,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDraft(UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier) {
+	public void setDraft(
+				UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier) {
+
 				try {
 					draft = draftUnsafeSupplier.get();
 	}
@@ -257,7 +278,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setFieldValues(UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier) {
+	public void setFieldValues(
+				UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier) {
+
 				try {
 					fieldValues = fieldValuesUnsafeSupplier.get();
 	}
@@ -277,7 +300,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setForm(UnsafeSupplier<Form, Throwable> formUnsafeSupplier) {
+	public void setForm(
+				UnsafeSupplier<Form, Throwable> formUnsafeSupplier) {
+
 				try {
 					form = formUnsafeSupplier.get();
 	}
@@ -297,7 +322,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setFormId(UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier) {
+	public void setFormId(
+				UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier) {
+
 				try {
 					formId = formIdUnsafeSupplier.get();
 	}
@@ -317,7 +344,9 @@ id = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}

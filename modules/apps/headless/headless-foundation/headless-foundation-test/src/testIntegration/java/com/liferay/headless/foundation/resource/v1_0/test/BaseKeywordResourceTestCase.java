@@ -62,7 +62,8 @@ public abstract class BaseKeywordResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -91,69 +92,81 @@ public abstract class BaseKeywordResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceKeywordsPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceKeywordsPage(
+				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/keywords",
-				contentSpaceId , filter  , sorts
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/keywords",
+					contentSpaceId,filter,sorts
+				);
 	}
-	protected Response invokePostContentSpaceKeyword( Long contentSpaceId , Keyword keyword ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostContentSpaceKeyword(
+				Long contentSpaceId,Keyword keyword)
+			throws Exception {
 
-			return requestSpecification.body(
-				keyword
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/keywords",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					keyword
+				).when(
+				).post(
+					_resourceURL + "/content-spaces/{content-space-id}/keywords",
+					contentSpaceId
+				);
 	}
-	protected Response invokeDeleteKeyword( Long keywordId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteKeyword(
+				Long keywordId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/keywords/{keyword-id}",
-				keywordId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/keywords/{keyword-id}",
+					keywordId
+				);
 	}
-	protected Response invokeGetKeyword( Long keywordId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetKeyword(
+				Long keywordId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/keywords/{keyword-id}",
-				keywordId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/keywords/{keyword-id}",
+					keywordId
+				);
 	}
-	protected Response invokePutKeyword( Long keywordId , Keyword keyword ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutKeyword(
+				Long keywordId,Keyword keyword)
+			throws Exception {
 
-			return requestSpecification.body(
-				keyword
-			).when(
-			).put(
-				_resourceURL + "/keywords/{keyword-id}",
-				keywordId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					keyword
+				).when(
+				).put(
+					_resourceURL + "/keywords/{keyword-id}",
+					keywordId
+				);
 	}
 
 	protected Keyword randomKeyword() {
 		return new KeywordImpl() {
 			{
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();			}
+
+						contentSpace = RandomTestUtil.randomLong();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -170,7 +183,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
 				try {
 					contentSpace = contentSpaceUnsafeSupplier.get();
 	}
@@ -190,7 +205,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -210,7 +227,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -230,7 +249,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -250,7 +271,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -270,7 +293,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setKeywordUsageCount(UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
+	public void setKeywordUsageCount(
+				UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
+
 				try {
 					keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
 	}
@@ -290,7 +315,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}

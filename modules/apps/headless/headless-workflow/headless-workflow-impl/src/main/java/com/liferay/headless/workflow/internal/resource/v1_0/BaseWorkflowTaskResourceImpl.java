@@ -46,72 +46,86 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResource {
 
+	@Override
 	@GET
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<WorkflowTask> getRoleWorkflowTasksPage( @PathParam("role-id") Long roleId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<WorkflowTask> getRoleWorkflowTasksPage(
+	@PathParam("role-id") Long roleId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<WorkflowTask> getWorkflowTasksPage( @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<WorkflowTask> getWorkflowTasksPage(
+	@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public WorkflowTask getWorkflowTask( @PathParam("workflow-task-id") Long workflowTaskId ) throws Exception {
-			return new WorkflowTaskImpl();
+	public WorkflowTask getWorkflowTask(
+	@PathParam("workflow-task-id") Long workflowTaskId)
+			throws Exception {
 
+				return new WorkflowTaskImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-me")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	@Override
-	public WorkflowTask postWorkflowTaskAssignToMe( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-			return new WorkflowTaskImpl();
+	public WorkflowTask postWorkflowTaskAssignToMe(
+	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
+				return new WorkflowTaskImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-user")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	@Override
-	public WorkflowTask postWorkflowTaskAssignToUser( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-			return new WorkflowTaskImpl();
+	public WorkflowTask postWorkflowTaskAssignToUser(
+	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
+				return new WorkflowTaskImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/change-transition")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	@Override
-	public WorkflowTask postWorkflowTaskChangeTransition( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-			return new WorkflowTaskImpl();
+	public WorkflowTask postWorkflowTaskChangeTransition(
+	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
+				return new WorkflowTaskImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/workflow-tasks/{workflow-task-id}/update-due-date")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	@Override
-	public WorkflowTask postWorkflowTaskUpdateDueDate( @PathParam("workflow-task-id") Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-			return new WorkflowTaskImpl();
+	public WorkflowTask postWorkflowTaskUpdateDueDate(
+	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
+				return new WorkflowTaskImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

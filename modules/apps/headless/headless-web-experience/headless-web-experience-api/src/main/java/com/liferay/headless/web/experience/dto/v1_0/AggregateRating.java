@@ -27,23 +27,35 @@ public interface AggregateRating {
 
 	public Number getBestRating();
 
-	public void setBestRating(Number bestRating);
+	public void setBestRating(
+			Number bestRating);
 
-	public void setBestRating(UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier);
+	public void setBestRating(
+			UnsafeSupplier<Number, Throwable>
+				bestRatingUnsafeSupplier);
 	public Number getRatingCount();
 
-	public void setRatingCount(Number ratingCount);
+	public void setRatingCount(
+			Number ratingCount);
 
-	public void setRatingCount(UnsafeSupplier<Number, Throwable> ratingCountUnsafeSupplier);
+	public void setRatingCount(
+			UnsafeSupplier<Number, Throwable>
+				ratingCountUnsafeSupplier);
 	public Number getRatingValue();
 
-	public void setRatingValue(Number ratingValue);
+	public void setRatingValue(
+			Number ratingValue);
 
-	public void setRatingValue(UnsafeSupplier<Number, Throwable> ratingValueUnsafeSupplier);
+	public void setRatingValue(
+			UnsafeSupplier<Number, Throwable>
+				ratingValueUnsafeSupplier);
 	public Number getWorstRating();
 
-	public void setWorstRating(Number worstRating);
+	public void setWorstRating(
+			Number worstRating);
 
-	public void setWorstRating(UnsafeSupplier<Number, Throwable> worstRatingUnsafeSupplier);
+	public void setWorstRating(
+			UnsafeSupplier<Number, Throwable>
+				worstRatingUnsafeSupplier);
 
 }

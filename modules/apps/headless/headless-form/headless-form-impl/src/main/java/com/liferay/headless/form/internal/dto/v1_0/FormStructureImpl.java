@@ -45,14 +45,20 @@ public class FormStructureImpl implements FormStructure {
 			return availableLanguages;
 	}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
+	public void setAvailableLanguages(
+			String[] availableLanguages) {
+
 			this.availableLanguages = availableLanguages;
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
+
 			try {
-				availableLanguages = availableLanguagesUnsafeSupplier.get();
+				availableLanguages =
+					availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -66,14 +72,20 @@ public class FormStructureImpl implements FormStructure {
 			return contentSpace;
 	}
 
-	public void setContentSpace(Long contentSpace) {
+	public void setContentSpace(
+			Long contentSpace) {
+
 			this.contentSpace = contentSpace;
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+			UnsafeSupplier<Long, Throwable>
+				contentSpaceUnsafeSupplier) {
+
 			try {
-				contentSpace = contentSpaceUnsafeSupplier.get();
+				contentSpace =
+					contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -87,14 +99,20 @@ public class FormStructureImpl implements FormStructure {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -108,14 +126,20 @@ public class FormStructureImpl implements FormStructure {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -129,14 +153,20 @@ public class FormStructureImpl implements FormStructure {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -150,14 +180,20 @@ public class FormStructureImpl implements FormStructure {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -171,14 +207,20 @@ public class FormStructureImpl implements FormStructure {
 			return formPages;
 	}
 
-	public void setFormPages(FormPages[] formPages) {
+	public void setFormPages(
+			FormPages[] formPages) {
+
 			this.formPages = formPages;
 	}
 
 	@JsonIgnore
-	public void setFormPages(UnsafeSupplier<FormPages[], Throwable> formPagesUnsafeSupplier) {
+	public void setFormPages(
+			UnsafeSupplier<FormPages[], Throwable>
+				formPagesUnsafeSupplier) {
+
 			try {
-				formPages = formPagesUnsafeSupplier.get();
+				formPages =
+					formPagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -192,14 +234,20 @@ public class FormStructureImpl implements FormStructure {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -213,14 +261,20 @@ public class FormStructureImpl implements FormStructure {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -234,14 +288,20 @@ public class FormStructureImpl implements FormStructure {
 			return successPage;
 	}
 
-	public void setSuccessPage(SuccessPage successPage) {
+	public void setSuccessPage(
+			SuccessPage successPage) {
+
 			this.successPage = successPage;
 	}
 
 	@JsonIgnore
-	public void setSuccessPage(UnsafeSupplier<SuccessPage, Throwable> successPageUnsafeSupplier) {
+	public void setSuccessPage(
+			UnsafeSupplier<SuccessPage, Throwable>
+				successPageUnsafeSupplier) {
+
 			try {
-				successPage = successPageUnsafeSupplier.get();
+				successPage =
+					successPageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

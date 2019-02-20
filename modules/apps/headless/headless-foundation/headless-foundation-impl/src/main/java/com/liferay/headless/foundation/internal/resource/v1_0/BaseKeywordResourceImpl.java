@@ -50,52 +50,62 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
+	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Keyword> getContentSpaceKeywordsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Keyword> getContentSpaceKeywordsPage(
+	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Keyword postContentSpaceKeyword( @PathParam("content-space-id") Long contentSpaceId , Keyword keyword ) throws Exception {
-			return new KeywordImpl();
+	public Keyword postContentSpaceKeyword(
+	@PathParam("content-space-id") Long contentSpaceId,Keyword keyword)
+			throws Exception {
 
+				return new KeywordImpl();
 	}
+	@Override
 	@DELETE
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteKeyword( @PathParam("keyword-id") Long keywordId ) throws Exception {
-			return false;
+	public boolean deleteKeyword(
+	@PathParam("keyword-id") Long keywordId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Keyword getKeyword( @PathParam("keyword-id") Long keywordId ) throws Exception {
-			return new KeywordImpl();
+	public Keyword getKeyword(
+	@PathParam("keyword-id") Long keywordId)
+			throws Exception {
 
+				return new KeywordImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Keyword putKeyword( @PathParam("keyword-id") Long keywordId , Keyword keyword ) throws Exception {
-			return new KeywordImpl();
+	public Keyword putKeyword(
+	@PathParam("keyword-id") Long keywordId,Keyword keyword)
+			throws Exception {
 
+				return new KeywordImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

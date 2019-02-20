@@ -42,14 +42,20 @@ public class GridImpl implements Grid {
 			return columns;
 	}
 
-	public void setColumns(Columns[] columns) {
+	public void setColumns(
+			Columns[] columns) {
+
 			this.columns = columns;
 	}
 
 	@JsonIgnore
-	public void setColumns(UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
+	public void setColumns(
+			UnsafeSupplier<Columns[], Throwable>
+				columnsUnsafeSupplier) {
+
 			try {
-				columns = columnsUnsafeSupplier.get();
+				columns =
+					columnsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -63,14 +69,20 @@ public class GridImpl implements Grid {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -84,14 +96,20 @@ public class GridImpl implements Grid {
 			return rows;
 	}
 
-	public void setRows(Rows[] rows) {
+	public void setRows(
+			Rows[] rows) {
+
 			this.rows = rows;
 	}
 
 	@JsonIgnore
-	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
+	public void setRows(
+			UnsafeSupplier<Rows[], Throwable>
+				rowsUnsafeSupplier) {
+
 			try {
-				rows = rowsUnsafeSupplier.get();
+				rows =
+					rowsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

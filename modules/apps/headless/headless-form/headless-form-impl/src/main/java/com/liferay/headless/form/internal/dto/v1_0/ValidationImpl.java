@@ -40,14 +40,20 @@ public class ValidationImpl implements Validation {
 			return errorMessage;
 	}
 
-	public void setErrorMessage(String errorMessage) {
+	public void setErrorMessage(
+			String errorMessage) {
+
 			this.errorMessage = errorMessage;
 	}
 
 	@JsonIgnore
-	public void setErrorMessage(UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier) {
+	public void setErrorMessage(
+			UnsafeSupplier<String, Throwable>
+				errorMessageUnsafeSupplier) {
+
 			try {
-				errorMessage = errorMessageUnsafeSupplier.get();
+				errorMessage =
+					errorMessageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class ValidationImpl implements Validation {
 			return expression;
 	}
 
-	public void setExpression(String expression) {
+	public void setExpression(
+			String expression) {
+
 			this.expression = expression;
 	}
 
 	@JsonIgnore
-	public void setExpression(UnsafeSupplier<String, Throwable> expressionUnsafeSupplier) {
+	public void setExpression(
+			UnsafeSupplier<String, Throwable>
+				expressionUnsafeSupplier) {
+
 			try {
-				expression = expressionUnsafeSupplier.get();
+				expression =
+					expressionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class ValidationImpl implements Validation {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

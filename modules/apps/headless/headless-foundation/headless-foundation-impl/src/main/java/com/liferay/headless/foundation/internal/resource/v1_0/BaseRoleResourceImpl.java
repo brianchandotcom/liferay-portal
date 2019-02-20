@@ -44,41 +44,49 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
+	@Override
 	@GET
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Role> getMyUserAccountRolesPage( @PathParam("my-user-account-id") Long myUserAccountId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Role> getMyUserAccountRolesPage(
+	@PathParam("my-user-account-id") Long myUserAccountId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Role> getRolesPage( @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Role> getRolesPage(
+	@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Role getRole( @PathParam("role-id") Long roleId ) throws Exception {
-			return new RoleImpl();
+	public Role getRole(
+	@PathParam("role-id") Long roleId)
+			throws Exception {
 
+				return new RoleImpl();
 	}
+	@Override
 	@GET
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Role> getUserAccountRolesPage( @PathParam("user-account-id") Long userAccountId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Role> getUserAccountRolesPage(
+	@PathParam("user-account-id") Long userAccountId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

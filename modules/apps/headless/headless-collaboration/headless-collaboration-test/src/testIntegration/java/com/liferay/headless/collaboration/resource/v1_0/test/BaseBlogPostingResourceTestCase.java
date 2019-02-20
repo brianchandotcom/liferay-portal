@@ -64,7 +64,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-collaboration/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-collaboration/v1.0");
 	}
 
 	@After
@@ -93,77 +94,89 @@ public abstract class BaseBlogPostingResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeDeleteBlogPosting( Long blogPostingId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteBlogPosting(
+				Long blogPostingId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/blog-postings/{blog-posting-id}",
-				blogPostingId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/blog-postings/{blog-posting-id}",
+					blogPostingId
+				);
 	}
-	protected Response invokeGetBlogPosting( Long blogPostingId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetBlogPosting(
+				Long blogPostingId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/blog-postings/{blog-posting-id}",
-				blogPostingId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/blog-postings/{blog-posting-id}",
+					blogPostingId
+				);
 	}
-	protected Response invokePutBlogPosting( Long blogPostingId , BlogPosting blogPosting ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutBlogPosting(
+				Long blogPostingId,BlogPosting blogPosting)
+			throws Exception {
 
-			return requestSpecification.body(
-				blogPosting
-			).when(
-			).put(
-				_resourceURL + "/blog-postings/{blog-posting-id}",
-				blogPostingId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					blogPosting
+				).when(
+				).put(
+					_resourceURL + "/blog-postings/{blog-posting-id}",
+					blogPostingId
+				);
 	}
-	protected Response invokeGetContentSpaceBlogPostingsPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceBlogPostingsPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
+					contentSpaceId
+				);
 	}
-	protected Response invokePostContentSpaceBlogPosting( Long contentSpaceId , BlogPosting blogPosting ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostContentSpaceBlogPosting(
+				Long contentSpaceId,BlogPosting blogPosting)
+			throws Exception {
 
-			return requestSpecification.body(
-				blogPosting
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					blogPosting
+				).when(
+				).post(
+					_resourceURL + "/content-spaces/{content-space-id}/blog-postings",
+					contentSpaceId
+				);
 	}
 
 	protected BlogPosting randomBlogPosting() {
 		return new BlogPostingImpl() {
 			{
-alternativeHeadline = RandomTestUtil.randomString();
-articleBody = RandomTestUtil.randomString();
-caption = RandomTestUtil.randomString();
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-datePublished = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-friendlyUrlPath = RandomTestUtil.randomString();
-headline = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-imageId = RandomTestUtil.randomLong();			}
+
+						alternativeHeadline = RandomTestUtil.randomString();
+						articleBody = RandomTestUtil.randomString();
+						caption = RandomTestUtil.randomString();
+						contentSpace = RandomTestUtil.randomLong();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						datePublished = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						encodingFormat = RandomTestUtil.randomString();
+						friendlyUrlPath = RandomTestUtil.randomString();
+						headline = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						imageId = RandomTestUtil.randomLong();
+	}
 		};
 	}
 
@@ -180,7 +193,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+	public void setAggregateRating(
+				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+
 				try {
 					aggregateRating = aggregateRatingUnsafeSupplier.get();
 	}
@@ -200,7 +215,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setAlternativeHeadline(UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
+	public void setAlternativeHeadline(
+				UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
+
 				try {
 					alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
 	}
@@ -220,7 +237,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setArticleBody(UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
+	public void setArticleBody(
+				UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
+
 				try {
 					articleBody = articleBodyUnsafeSupplier.get();
 	}
@@ -240,7 +259,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCaption(UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
+	public void setCaption(
+				UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
+
 				try {
 					caption = captionUnsafeSupplier.get();
 	}
@@ -260,7 +281,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+	public void setCategories(
+				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+
 				try {
 					categories = categoriesUnsafeSupplier.get();
 	}
@@ -280,7 +303,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+	public void setCategoryIds(
+				UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+
 				try {
 					categoryIds = categoryIdsUnsafeSupplier.get();
 	}
@@ -300,7 +325,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+	public void setComment(
+				UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+
 				try {
 					comment = commentUnsafeSupplier.get();
 	}
@@ -320,7 +347,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
 				try {
 					contentSpace = contentSpaceUnsafeSupplier.get();
 	}
@@ -340,7 +369,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -360,7 +391,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -380,7 +413,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -400,7 +435,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+	public void setDatePublished(
+				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+
 				try {
 					datePublished = datePublishedUnsafeSupplier.get();
 	}
@@ -420,7 +457,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -440,7 +479,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+
 				try {
 					encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
@@ -460,7 +501,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setFriendlyUrlPath(UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
+	public void setFriendlyUrlPath(
+				UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
+
 				try {
 					friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
 	}
@@ -480,7 +523,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+	public void setHeadline(
+				UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+
 				try {
 					headline = headlineUnsafeSupplier.get();
 	}
@@ -500,7 +545,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -520,7 +567,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setImage(UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
+	public void setImage(
+				UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
+
 				try {
 					image = imageUnsafeSupplier.get();
 	}
@@ -540,7 +589,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
+	public void setImageId(
+				UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
+
 				try {
 					imageId = imageIdUnsafeSupplier.get();
 	}
@@ -560,7 +611,9 @@ imageId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywords(
+				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+
 				try {
 					keywords = keywordsUnsafeSupplier.get();
 	}

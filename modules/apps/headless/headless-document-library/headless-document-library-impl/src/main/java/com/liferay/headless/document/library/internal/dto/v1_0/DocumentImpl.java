@@ -46,14 +46,20 @@ public class DocumentImpl implements Document {
 			return adaptedImages;
 	}
 
-	public void setAdaptedImages(AdaptedImages[] adaptedImages) {
+	public void setAdaptedImages(
+			AdaptedImages[] adaptedImages) {
+
 			this.adaptedImages = adaptedImages;
 	}
 
 	@JsonIgnore
-	public void setAdaptedImages(UnsafeSupplier<AdaptedImages[], Throwable> adaptedImagesUnsafeSupplier) {
+	public void setAdaptedImages(
+			UnsafeSupplier<AdaptedImages[], Throwable>
+				adaptedImagesUnsafeSupplier) {
+
 			try {
-				adaptedImages = adaptedImagesUnsafeSupplier.get();
+				adaptedImages =
+					adaptedImagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -67,14 +73,20 @@ public class DocumentImpl implements Document {
 			return aggregateRating;
 	}
 
-	public void setAggregateRating(AggregateRating aggregateRating) {
+	public void setAggregateRating(
+			AggregateRating aggregateRating) {
+
 			this.aggregateRating = aggregateRating;
 	}
 
 	@JsonIgnore
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+	public void setAggregateRating(
+			UnsafeSupplier<AggregateRating, Throwable>
+				aggregateRatingUnsafeSupplier) {
+
 			try {
-				aggregateRating = aggregateRatingUnsafeSupplier.get();
+				aggregateRating =
+					aggregateRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -88,14 +100,20 @@ public class DocumentImpl implements Document {
 			return categories;
 	}
 
-	public void setCategories(Categories[] categories) {
+	public void setCategories(
+			Categories[] categories) {
+
 			this.categories = categories;
 	}
 
 	@JsonIgnore
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+	public void setCategories(
+			UnsafeSupplier<Categories[], Throwable>
+				categoriesUnsafeSupplier) {
+
 			try {
-				categories = categoriesUnsafeSupplier.get();
+				categories =
+					categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -109,14 +127,20 @@ public class DocumentImpl implements Document {
 			return categoryIds;
 	}
 
-	public void setCategoryIds(Long[] categoryIds) {
+	public void setCategoryIds(
+			Long[] categoryIds) {
+
 			this.categoryIds = categoryIds;
 	}
 
 	@JsonIgnore
-	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+	public void setCategoryIds(
+			UnsafeSupplier<Long[], Throwable>
+				categoryIdsUnsafeSupplier) {
+
 			try {
-				categoryIds = categoryIdsUnsafeSupplier.get();
+				categoryIds =
+					categoryIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -130,14 +154,20 @@ public class DocumentImpl implements Document {
 			return contentUrl;
 	}
 
-	public void setContentUrl(String contentUrl) {
+	public void setContentUrl(
+			String contentUrl) {
+
 			this.contentUrl = contentUrl;
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+			UnsafeSupplier<String, Throwable>
+				contentUrlUnsafeSupplier) {
+
 			try {
-				contentUrl = contentUrlUnsafeSupplier.get();
+				contentUrl =
+					contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -151,14 +181,20 @@ public class DocumentImpl implements Document {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -172,14 +208,20 @@ public class DocumentImpl implements Document {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -193,14 +235,20 @@ public class DocumentImpl implements Document {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -214,14 +262,20 @@ public class DocumentImpl implements Document {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -235,14 +289,20 @@ public class DocumentImpl implements Document {
 			return encodingFormat;
 	}
 
-	public void setEncodingFormat(String encodingFormat) {
+	public void setEncodingFormat(
+			String encodingFormat) {
+
 			this.encodingFormat = encodingFormat;
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+			UnsafeSupplier<String, Throwable>
+				encodingFormatUnsafeSupplier) {
+
 			try {
-				encodingFormat = encodingFormatUnsafeSupplier.get();
+				encodingFormat =
+					encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -256,14 +316,20 @@ public class DocumentImpl implements Document {
 			return fileExtension;
 	}
 
-	public void setFileExtension(String fileExtension) {
+	public void setFileExtension(
+			String fileExtension) {
+
 			this.fileExtension = fileExtension;
 	}
 
 	@JsonIgnore
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtension(
+			UnsafeSupplier<String, Throwable>
+				fileExtensionUnsafeSupplier) {
+
 			try {
-				fileExtension = fileExtensionUnsafeSupplier.get();
+				fileExtension =
+					fileExtensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -277,14 +343,20 @@ public class DocumentImpl implements Document {
 			return folderId;
 	}
 
-	public void setFolderId(Long folderId) {
+	public void setFolderId(
+			Long folderId) {
+
 			this.folderId = folderId;
 	}
 
 	@JsonIgnore
-	public void setFolderId(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
+	public void setFolderId(
+			UnsafeSupplier<Long, Throwable>
+				folderIdUnsafeSupplier) {
+
 			try {
-				folderId = folderIdUnsafeSupplier.get();
+				folderId =
+					folderIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -298,14 +370,20 @@ public class DocumentImpl implements Document {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -319,14 +397,20 @@ public class DocumentImpl implements Document {
 			return keywords;
 	}
 
-	public void setKeywords(String[] keywords) {
+	public void setKeywords(
+			String[] keywords) {
+
 			this.keywords = keywords;
 	}
 
 	@JsonIgnore
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywords(
+			UnsafeSupplier<String[], Throwable>
+				keywordsUnsafeSupplier) {
+
 			try {
-				keywords = keywordsUnsafeSupplier.get();
+				keywords =
+					keywordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -340,14 +424,20 @@ public class DocumentImpl implements Document {
 			return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(
+			Number sizeInBytes) {
+
 			this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+			UnsafeSupplier<Number, Throwable>
+				sizeInBytesUnsafeSupplier) {
+
 			try {
-				sizeInBytes = sizeInBytesUnsafeSupplier.get();
+				sizeInBytes =
+					sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -361,14 +451,20 @@ public class DocumentImpl implements Document {
 			return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(
+			String title) {
+
 			this.title = title;
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+			UnsafeSupplier<String, Throwable>
+				titleUnsafeSupplier) {
+
 			try {
-				title = titleUnsafeSupplier.get();
+				title =
+					titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

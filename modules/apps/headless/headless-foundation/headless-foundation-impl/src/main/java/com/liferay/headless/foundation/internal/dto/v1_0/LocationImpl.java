@@ -40,14 +40,20 @@ public class LocationImpl implements Location {
 			return addressCountry;
 	}
 
-	public void setAddressCountry(String addressCountry) {
+	public void setAddressCountry(
+			String addressCountry) {
+
 			this.addressCountry = addressCountry;
 	}
 
 	@JsonIgnore
-	public void setAddressCountry(UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
+	public void setAddressCountry(
+			UnsafeSupplier<String, Throwable>
+				addressCountryUnsafeSupplier) {
+
 			try {
-				addressCountry = addressCountryUnsafeSupplier.get();
+				addressCountry =
+					addressCountryUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class LocationImpl implements Location {
 			return addressRegion;
 	}
 
-	public void setAddressRegion(String addressRegion) {
+	public void setAddressRegion(
+			String addressRegion) {
+
 			this.addressRegion = addressRegion;
 	}
 
 	@JsonIgnore
-	public void setAddressRegion(UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
+	public void setAddressRegion(
+			UnsafeSupplier<String, Throwable>
+				addressRegionUnsafeSupplier) {
+
 			try {
-				addressRegion = addressRegionUnsafeSupplier.get();
+				addressRegion =
+					addressRegionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class LocationImpl implements Location {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

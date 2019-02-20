@@ -45,14 +45,20 @@ public class CategoryImpl implements Category {
 			return availableLanguages;
 	}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
+	public void setAvailableLanguages(
+			String[] availableLanguages) {
+
 			this.availableLanguages = availableLanguages;
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
+
 			try {
-				availableLanguages = availableLanguagesUnsafeSupplier.get();
+				availableLanguages =
+					availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -66,14 +72,20 @@ public class CategoryImpl implements Category {
 			return parentCategory;
 	}
 
-	public void setParentCategory(ParentCategory parentCategory) {
+	public void setParentCategory(
+			ParentCategory parentCategory) {
+
 			this.parentCategory = parentCategory;
 	}
 
 	@JsonIgnore
-	public void setParentCategory(UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier) {
+	public void setParentCategory(
+			UnsafeSupplier<ParentCategory, Throwable>
+				parentCategoryUnsafeSupplier) {
+
 			try {
-				parentCategory = parentCategoryUnsafeSupplier.get();
+				parentCategory =
+					parentCategoryUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -87,14 +99,20 @@ public class CategoryImpl implements Category {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -108,14 +126,20 @@ public class CategoryImpl implements Category {
 			return creatorId;
 	}
 
-	public void setCreatorId(Long creatorId) {
+	public void setCreatorId(
+			Long creatorId) {
+
 			this.creatorId = creatorId;
 	}
 
 	@JsonIgnore
-	public void setCreatorId(UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
+	public void setCreatorId(
+			UnsafeSupplier<Long, Throwable>
+				creatorIdUnsafeSupplier) {
+
 			try {
-				creatorId = creatorIdUnsafeSupplier.get();
+				creatorId =
+					creatorIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -129,14 +153,20 @@ public class CategoryImpl implements Category {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -150,14 +180,20 @@ public class CategoryImpl implements Category {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -171,14 +207,20 @@ public class CategoryImpl implements Category {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -192,14 +234,20 @@ public class CategoryImpl implements Category {
 			return hasCategories;
 	}
 
-	public void setHasCategories(Boolean hasCategories) {
+	public void setHasCategories(
+			Boolean hasCategories) {
+
 			this.hasCategories = hasCategories;
 	}
 
 	@JsonIgnore
-	public void setHasCategories(UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+	public void setHasCategories(
+			UnsafeSupplier<Boolean, Throwable>
+				hasCategoriesUnsafeSupplier) {
+
 			try {
-				hasCategories = hasCategoriesUnsafeSupplier.get();
+				hasCategories =
+					hasCategoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -213,14 +261,20 @@ public class CategoryImpl implements Category {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -234,14 +288,20 @@ public class CategoryImpl implements Category {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -255,14 +315,20 @@ public class CategoryImpl implements Category {
 			return parentVocabulary;
 	}
 
-	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
+	public void setParentVocabulary(
+			ParentVocabulary parentVocabulary) {
+
 			this.parentVocabulary = parentVocabulary;
 	}
 
 	@JsonIgnore
-	public void setParentVocabulary(UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier) {
+	public void setParentVocabulary(
+			UnsafeSupplier<ParentVocabulary, Throwable>
+				parentVocabularyUnsafeSupplier) {
+
 			try {
-				parentVocabulary = parentVocabularyUnsafeSupplier.get();
+				parentVocabulary =
+					parentVocabularyUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -276,14 +342,20 @@ public class CategoryImpl implements Category {
 			return parentVocabularyId;
 	}
 
-	public void setParentVocabularyId(Long parentVocabularyId) {
+	public void setParentVocabularyId(
+			Long parentVocabularyId) {
+
 			this.parentVocabularyId = parentVocabularyId;
 	}
 
 	@JsonIgnore
-	public void setParentVocabularyId(UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
+	public void setParentVocabularyId(
+			UnsafeSupplier<Long, Throwable>
+				parentVocabularyIdUnsafeSupplier) {
+
 			try {
-				parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
+				parentVocabularyId =
+					parentVocabularyIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

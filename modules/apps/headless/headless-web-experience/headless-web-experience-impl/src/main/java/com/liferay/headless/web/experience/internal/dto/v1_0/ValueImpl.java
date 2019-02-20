@@ -43,14 +43,20 @@ public class ValueImpl implements Value {
 			return data;
 	}
 
-	public void setData(String data) {
+	public void setData(
+			String data) {
+
 			this.data = data;
 	}
 
 	@JsonIgnore
-	public void setData(UnsafeSupplier<String, Throwable> dataUnsafeSupplier) {
+	public void setData(
+			UnsafeSupplier<String, Throwable>
+				dataUnsafeSupplier) {
+
 			try {
-				data = dataUnsafeSupplier.get();
+				data =
+					dataUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -64,14 +70,20 @@ public class ValueImpl implements Value {
 			return document;
 	}
 
-	public void setDocument(ContentDocument document) {
+	public void setDocument(
+			ContentDocument document) {
+
 			this.document = document;
 	}
 
 	@JsonIgnore
-	public void setDocument(UnsafeSupplier<ContentDocument, Throwable> documentUnsafeSupplier) {
+	public void setDocument(
+			UnsafeSupplier<ContentDocument, Throwable>
+				documentUnsafeSupplier) {
+
 			try {
-				document = documentUnsafeSupplier.get();
+				document =
+					documentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -85,14 +97,20 @@ public class ValueImpl implements Value {
 			return documentId;
 	}
 
-	public void setDocumentId(Long documentId) {
+	public void setDocumentId(
+			Long documentId) {
+
 			this.documentId = documentId;
 	}
 
 	@JsonIgnore
-	public void setDocumentId(UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
+	public void setDocumentId(
+			UnsafeSupplier<Long, Throwable>
+				documentIdUnsafeSupplier) {
+
 			try {
-				documentId = documentIdUnsafeSupplier.get();
+				documentId =
+					documentIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -106,14 +124,20 @@ public class ValueImpl implements Value {
 			return geo;
 	}
 
-	public void setGeo(Geo geo) {
+	public void setGeo(
+			Geo geo) {
+
 			this.geo = geo;
 	}
 
 	@JsonIgnore
-	public void setGeo(UnsafeSupplier<Geo, Throwable> geoUnsafeSupplier) {
+	public void setGeo(
+			UnsafeSupplier<Geo, Throwable>
+				geoUnsafeSupplier) {
+
 			try {
-				geo = geoUnsafeSupplier.get();
+				geo =
+					geoUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,14 +151,20 @@ public class ValueImpl implements Value {
 			return link;
 	}
 
-	public void setLink(String link) {
+	public void setLink(
+			String link) {
+
 			this.link = link;
 	}
 
 	@JsonIgnore
-	public void setLink(UnsafeSupplier<String, Throwable> linkUnsafeSupplier) {
+	public void setLink(
+			UnsafeSupplier<String, Throwable>
+				linkUnsafeSupplier) {
+
 			try {
-				link = linkUnsafeSupplier.get();
+				link =
+					linkUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -148,14 +178,20 @@ public class ValueImpl implements Value {
 			return structuredContent;
 	}
 
-	public void setStructuredContent(StructuredContent structuredContent) {
+	public void setStructuredContent(
+			StructuredContent structuredContent) {
+
 			this.structuredContent = structuredContent;
 	}
 
 	@JsonIgnore
-	public void setStructuredContent(UnsafeSupplier<StructuredContent, Throwable> structuredContentUnsafeSupplier) {
+	public void setStructuredContent(
+			UnsafeSupplier<StructuredContent, Throwable>
+				structuredContentUnsafeSupplier) {
+
 			try {
-				structuredContent = structuredContentUnsafeSupplier.get();
+				structuredContent =
+					structuredContentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -169,14 +205,20 @@ public class ValueImpl implements Value {
 			return structuredContentId;
 	}
 
-	public void setStructuredContentId(Long structuredContentId) {
+	public void setStructuredContentId(
+			Long structuredContentId) {
+
 			this.structuredContentId = structuredContentId;
 	}
 
 	@JsonIgnore
-	public void setStructuredContentId(UnsafeSupplier<Long, Throwable> structuredContentIdUnsafeSupplier) {
+	public void setStructuredContentId(
+			UnsafeSupplier<Long, Throwable>
+				structuredContentIdUnsafeSupplier) {
+
 			try {
-				structuredContentId = structuredContentIdUnsafeSupplier.get();
+				structuredContentId =
+					structuredContentIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

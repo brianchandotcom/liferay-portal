@@ -64,7 +64,8 @@ public abstract class BaseDocumentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-document-library/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-document-library/v1.0");
 	}
 
 	@After
@@ -97,79 +98,93 @@ public abstract class BaseDocumentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceDocumentsPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceDocumentsPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/documents",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/documents",
+					contentSpaceId
+				);
 	}
-	protected Response invokePostContentSpaceDocument( Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostContentSpaceDocument(
+				Long contentSpaceId,MultipartBody multipartBody)
+			throws Exception {
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/documents",
-				contentSpaceId , multipartBody
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).post(
+					_resourceURL + "/content-spaces/{content-space-id}/documents",
+					contentSpaceId,multipartBody
+				);
 	}
-	protected Response invokeDeleteDocument( Long documentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteDocument(
+				Long documentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/documents/{document-id}",
-				documentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/documents/{document-id}",
+					documentId
+				);
 	}
-	protected Response invokeGetDocument( Long documentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetDocument(
+				Long documentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/documents/{document-id}",
-				documentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/documents/{document-id}",
+					documentId
+				);
 	}
-	protected Response invokeGetFolderDocumentsPage( Long folderId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFolderDocumentsPage(
+				Long folderId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/folders/{folder-id}/documents",
-				folderId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/folders/{folder-id}/documents",
+					folderId
+				);
 	}
-	protected Response invokePostFolderDocument( Long folderId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostFolderDocument(
+				Long folderId,MultipartBody multipartBody)
+			throws Exception {
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/folders/{folder-id}/documents",
-				folderId , multipartBody
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).post(
+					_resourceURL + "/folders/{folder-id}/documents",
+					folderId,multipartBody
+				);
 	}
 
 	protected Document randomDocument() {
 		return new DocumentImpl() {
 			{
-contentUrl = RandomTestUtil.randomString();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-folderId = RandomTestUtil.randomLong();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();			}
+
+						contentUrl = RandomTestUtil.randomString();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						encodingFormat = RandomTestUtil.randomString();
+						fileExtension = RandomTestUtil.randomString();
+						folderId = RandomTestUtil.randomLong();
+						id = RandomTestUtil.randomLong();
+						title = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -186,7 +201,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAdaptedImages(UnsafeSupplier<AdaptedImages[], Throwable> adaptedImagesUnsafeSupplier) {
+	public void setAdaptedImages(
+				UnsafeSupplier<AdaptedImages[], Throwable> adaptedImagesUnsafeSupplier) {
+
 				try {
 					adaptedImages = adaptedImagesUnsafeSupplier.get();
 	}
@@ -206,7 +223,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+	public void setAggregateRating(
+				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+
 				try {
 					aggregateRating = aggregateRatingUnsafeSupplier.get();
 	}
@@ -226,7 +245,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+	public void setCategories(
+				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+
 				try {
 					categories = categoriesUnsafeSupplier.get();
 	}
@@ -246,7 +267,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+	public void setCategoryIds(
+				UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
+
 				try {
 					categoryIds = categoryIdsUnsafeSupplier.get();
 	}
@@ -266,7 +289,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+
 				try {
 					contentUrl = contentUrlUnsafeSupplier.get();
 	}
@@ -286,7 +311,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -306,7 +333,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -326,7 +355,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -346,7 +377,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -366,7 +399,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+
 				try {
 					encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
@@ -386,7 +421,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtension(
+				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+
 				try {
 					fileExtension = fileExtensionUnsafeSupplier.get();
 	}
@@ -406,7 +443,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFolderId(UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
+	public void setFolderId(
+				UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
+
 				try {
 					folderId = folderIdUnsafeSupplier.get();
 	}
@@ -426,7 +465,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -446,7 +487,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywords(
+				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+
 				try {
 					keywords = keywordsUnsafeSupplier.get();
 	}
@@ -466,7 +509,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+
 				try {
 					sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
@@ -486,7 +531,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
 				try {
 					title = titleUnsafeSupplier.get();
 	}

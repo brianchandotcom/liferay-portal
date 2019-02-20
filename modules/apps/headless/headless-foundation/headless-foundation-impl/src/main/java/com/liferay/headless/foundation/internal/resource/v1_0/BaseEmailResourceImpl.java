@@ -44,23 +44,27 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseEmailResourceImpl implements EmailResource {
 
+	@Override
 	@GET
 	@Path("/emails")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Email> getGenericParentEmailsPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Email> getGenericParentEmailsPage(
+	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/emails/{email-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Email getEmail( @PathParam("email-id") Long emailId ) throws Exception {
-			return new EmailImpl();
+	public Email getEmail(
+	@PathParam("email-id") Long emailId)
+			throws Exception {
 
+				return new EmailImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

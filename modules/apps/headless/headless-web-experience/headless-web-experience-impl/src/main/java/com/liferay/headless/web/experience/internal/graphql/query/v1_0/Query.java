@@ -50,172 +50,234 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment getComment( @GraphQLName("comment-id") Long commentId ) throws Exception {
-CommentResource commentResource = _getCommentResource(); commentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId())); return commentResource.getComment( commentId );
+	public Comment getComment(
+	@GraphQLName("comment-id") Long commentId)
+			throws Exception {
+
+				CommentResource commentResource = _getCommentResource();
+
+				commentResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+
+				return commentResource.getComment(
+					commentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getCommentCommentsPage( @GraphQLName("comment-id") Long commentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Comment> getCommentCommentsPage(
+	@GraphQLName("comment-id") Long commentId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
+			throws Exception {
+
 				CommentResource commentResource = _getCommentResource();
 
-				commentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+				commentResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = commentResource.getCommentCommentsPage(
-
-					commentId , Pagination.of(pageSize, page)
-				);
+					commentId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
-
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getStructuredContentCommentsPage( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page ) throws Exception {
+	public Collection<Comment> getStructuredContentCommentsPage(
+	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
+			throws Exception {
+
 				CommentResource commentResource = _getCommentResource();
 
-				commentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+				commentResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = commentResource.getStructuredContentCommentsPage(
-
-					structuredContentId , Pagination.of(pageSize, page)
-				);
+					structuredContentId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
-
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<ContentStructure> getContentSpaceContentStructuresPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
+	public Collection<ContentStructure> getContentSpaceContentStructuresPage(
+	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("filter") Filter filter,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page,@GraphQLName("Sort[]") Sort[] sorts)
+			throws Exception {
+
 				ContentStructureResource contentStructureResource = _getContentStructureResource();
 
-				contentStructureResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+				contentStructureResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = contentStructureResource.getContentSpaceContentStructuresPage(
-
-					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
-				);
+					contentSpaceId,filter,Pagination.of(pageSize, page),sorts);
 
 				return paginationPage.getItems();
-
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public ContentStructure getContentStructure( @GraphQLName("content-structure-id") Long contentStructureId ) throws Exception {
-ContentStructureResource contentStructureResource = _getContentStructureResource(); contentStructureResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId())); return contentStructureResource.getContentStructure( contentStructureId );
+	public ContentStructure getContentStructure(
+	@GraphQLName("content-structure-id") Long contentStructureId)
+			throws Exception {
+
+				ContentStructureResource contentStructureResource = _getContentStructureResource();
+
+				contentStructureResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+
+				return contentStructureResource.getContentStructure(
+					contentStructureId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent> getContentSpaceContentStructureStructuredContentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("content-structure-id") Long contentStructureId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
+	public Collection<StructuredContent> getContentSpaceContentStructureStructuredContentsPage(
+	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("content-structure-id") Long contentStructureId,@GraphQLName("filter") Filter filter,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page,@GraphQLName("Sort[]") Sort[] sorts)
+			throws Exception {
+
 				StructuredContentResource structuredContentResource = _getStructuredContentResource();
 
-				structuredContentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+				structuredContentResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = structuredContentResource.getContentSpaceContentStructureStructuredContentsPage(
-
-					contentSpaceId , contentStructureId , filter , Pagination.of(pageSize, page) , sorts
-				);
+					contentSpaceId,contentStructureId,filter,Pagination.of(pageSize, page),sorts);
 
 				return paginationPage.getItems();
-
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent> getContentSpaceStructuredContentsPage( @GraphQLName("content-space-id") Long contentSpaceId , @GraphQLName("filter") Filter filter , @GraphQLName("pageSize") int pageSize , @GraphQLName("page") int page , @GraphQLName("Sort[]") Sort[] sorts ) throws Exception {
+	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
+	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("filter") Filter filter,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page,@GraphQLName("Sort[]") Sort[] sorts)
+			throws Exception {
+
 				StructuredContentResource structuredContentResource = _getStructuredContentResource();
 
-				structuredContentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+				structuredContentResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = structuredContentResource.getContentSpaceStructuredContentsPage(
-
-					contentSpaceId , filter , Pagination.of(pageSize, page) , sorts
-				);
+					contentSpaceId,filter,Pagination.of(pageSize, page),sorts);
 
 				return paginationPage.getItems();
-
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public StructuredContent getStructuredContent( @GraphQLName("structured-content-id") Long structuredContentId ) throws Exception {
-StructuredContentResource structuredContentResource = _getStructuredContentResource(); structuredContentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId())); return structuredContentResource.getStructuredContent( structuredContentId );
+	public StructuredContent getStructuredContent(
+	@GraphQLName("structured-content-id") Long structuredContentId)
+			throws Exception {
+
+				StructuredContentResource structuredContentResource = _getStructuredContentResource();
+
+				structuredContentResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+
+				return structuredContentResource.getStructuredContent(
+					structuredContentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContentImage> getStructuredContentStructuredContentImagesPage( @GraphQLName("structured-content-id") Long structuredContentId ) throws Exception {
+	public Collection<StructuredContentImage> getStructuredContentStructuredContentImagesPage(
+	@GraphQLName("structured-content-id") Long structuredContentId)
+			throws Exception {
+
 				StructuredContentImageResource structuredContentImageResource = _getStructuredContentImageResource();
 
-				structuredContentImageResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+				structuredContentImageResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				Page paginationPage = structuredContentImageResource.getStructuredContentStructuredContentImagesPage(
-
-					structuredContentId
-				);
+					structuredContentId);
 
 				return paginationPage.getItems();
-
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public StructuredContentImage getStructuredContentContentDocument( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("content-document-id") Long contentDocumentId ) throws Exception {
-StructuredContentImageResource structuredContentImageResource = _getStructuredContentImageResource(); structuredContentImageResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId())); return structuredContentImageResource.getStructuredContentContentDocument( structuredContentId , contentDocumentId );
+	public StructuredContentImage getStructuredContentContentDocument(
+	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("content-document-id") Long contentDocumentId)
+			throws Exception {
+
+				StructuredContentImageResource structuredContentImageResource = _getStructuredContentImageResource();
+
+				structuredContentImageResource.setContextCompany(
+					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+
+				return structuredContentImageResource.getStructuredContentContentDocument(
+					structuredContentId,contentDocumentId);
 	}
 
 	private static CommentResource _getCommentResource() {
 			return _commentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
+	private static final ServiceTracker<CommentResource, CommentResource>
+			_commentResourceServiceTracker;
 	private static ContentStructureResource _getContentStructureResource() {
 			return _contentStructureResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<ContentStructureResource, ContentStructureResource> _contentStructureResourceServiceTracker;
+	private static final ServiceTracker<ContentStructureResource, ContentStructureResource>
+			_contentStructureResourceServiceTracker;
 	private static StructuredContentResource _getStructuredContentResource() {
 			return _structuredContentResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<StructuredContentResource, StructuredContentResource> _structuredContentResourceServiceTracker;
+	private static final ServiceTracker<StructuredContentResource, StructuredContentResource>
+			_structuredContentResourceServiceTracker;
 	private static StructuredContentImageResource _getStructuredContentImageResource() {
 			return _structuredContentImageResourceServiceTracker.getService();
 	}
 
-	private static final ServiceTracker<StructuredContentImageResource, StructuredContentImageResource> _structuredContentImageResourceServiceTracker;
+	private static final ServiceTracker<StructuredContentImageResource, StructuredContentImageResource>
+			_structuredContentImageResourceServiceTracker;
 
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Query.class);
+		static {
+			Bundle bundle = FrameworkUtil.getBundle(Query.class);
 
-			ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), CommentResource.class, null);
+				ServiceTracker<CommentResource, CommentResource>
+					commentResourceServiceTracker =
+						new ServiceTracker<>(
+							bundle.getBundleContext(),
+							CommentResource.class, null);
 
-			commentResourceServiceTracker.open();
+				commentResourceServiceTracker.open();
 
-			_commentResourceServiceTracker = commentResourceServiceTracker;
-			ServiceTracker<ContentStructureResource, ContentStructureResource> contentStructureResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), ContentStructureResource.class, null);
+				_commentResourceServiceTracker =
+					commentResourceServiceTracker;
+				ServiceTracker<ContentStructureResource, ContentStructureResource>
+					contentStructureResourceServiceTracker =
+						new ServiceTracker<>(
+							bundle.getBundleContext(),
+							ContentStructureResource.class, null);
 
-			contentStructureResourceServiceTracker.open();
+				contentStructureResourceServiceTracker.open();
 
-			_contentStructureResourceServiceTracker = contentStructureResourceServiceTracker;
-			ServiceTracker<StructuredContentResource, StructuredContentResource> structuredContentResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), StructuredContentResource.class, null);
+				_contentStructureResourceServiceTracker =
+					contentStructureResourceServiceTracker;
+				ServiceTracker<StructuredContentResource, StructuredContentResource>
+					structuredContentResourceServiceTracker =
+						new ServiceTracker<>(
+							bundle.getBundleContext(),
+							StructuredContentResource.class, null);
 
-			structuredContentResourceServiceTracker.open();
+				structuredContentResourceServiceTracker.open();
 
-			_structuredContentResourceServiceTracker = structuredContentResourceServiceTracker;
-			ServiceTracker<StructuredContentImageResource, StructuredContentImageResource> structuredContentImageResourceServiceTracker =
-				new ServiceTracker<>(bundle.getBundleContext(), StructuredContentImageResource.class, null);
+				_structuredContentResourceServiceTracker =
+					structuredContentResourceServiceTracker;
+				ServiceTracker<StructuredContentImageResource, StructuredContentImageResource>
+					structuredContentImageResourceServiceTracker =
+						new ServiceTracker<>(
+							bundle.getBundleContext(),
+							StructuredContentImageResource.class, null);
 
-			structuredContentImageResourceServiceTracker.open();
+				structuredContentImageResourceServiceTracker.open();
 
-			_structuredContentImageResourceServiceTracker = structuredContentImageResourceServiceTracker;
+				_structuredContentImageResourceServiceTracker =
+					structuredContentImageResourceServiceTracker;
 	}
 
 }

@@ -45,14 +45,20 @@ public class FormRecordImpl implements FormRecord {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -66,14 +72,20 @@ public class FormRecordImpl implements FormRecord {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -87,14 +99,20 @@ public class FormRecordImpl implements FormRecord {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -108,14 +126,20 @@ public class FormRecordImpl implements FormRecord {
 			return datePublished;
 	}
 
-	public void setDatePublished(Date datePublished) {
+	public void setDatePublished(
+			Date datePublished) {
+
 			this.datePublished = datePublished;
 	}
 
 	@JsonIgnore
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+	public void setDatePublished(
+			UnsafeSupplier<Date, Throwable>
+				datePublishedUnsafeSupplier) {
+
 			try {
-				datePublished = datePublishedUnsafeSupplier.get();
+				datePublished =
+					datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -129,14 +153,20 @@ public class FormRecordImpl implements FormRecord {
 			return draft;
 	}
 
-	public void setDraft(Boolean draft) {
+	public void setDraft(
+			Boolean draft) {
+
 			this.draft = draft;
 	}
 
 	@JsonIgnore
-	public void setDraft(UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier) {
+	public void setDraft(
+			UnsafeSupplier<Boolean, Throwable>
+				draftUnsafeSupplier) {
+
 			try {
-				draft = draftUnsafeSupplier.get();
+				draft =
+					draftUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -150,14 +180,20 @@ public class FormRecordImpl implements FormRecord {
 			return fieldValues;
 	}
 
-	public void setFieldValues(FieldValues[] fieldValues) {
+	public void setFieldValues(
+			FieldValues[] fieldValues) {
+
 			this.fieldValues = fieldValues;
 	}
 
 	@JsonIgnore
-	public void setFieldValues(UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier) {
+	public void setFieldValues(
+			UnsafeSupplier<FieldValues[], Throwable>
+				fieldValuesUnsafeSupplier) {
+
 			try {
-				fieldValues = fieldValuesUnsafeSupplier.get();
+				fieldValues =
+					fieldValuesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -171,14 +207,20 @@ public class FormRecordImpl implements FormRecord {
 			return form;
 	}
 
-	public void setForm(Form form) {
+	public void setForm(
+			Form form) {
+
 			this.form = form;
 	}
 
 	@JsonIgnore
-	public void setForm(UnsafeSupplier<Form, Throwable> formUnsafeSupplier) {
+	public void setForm(
+			UnsafeSupplier<Form, Throwable>
+				formUnsafeSupplier) {
+
 			try {
-				form = formUnsafeSupplier.get();
+				form =
+					formUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -192,14 +234,20 @@ public class FormRecordImpl implements FormRecord {
 			return formId;
 	}
 
-	public void setFormId(Long formId) {
+	public void setFormId(
+			Long formId) {
+
 			this.formId = formId;
 	}
 
 	@JsonIgnore
-	public void setFormId(UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier) {
+	public void setFormId(
+			UnsafeSupplier<Long, Throwable>
+				formIdUnsafeSupplier) {
+
 			try {
-				formId = formIdUnsafeSupplier.get();
+				formId =
+					formIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -213,14 +261,20 @@ public class FormRecordImpl implements FormRecord {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

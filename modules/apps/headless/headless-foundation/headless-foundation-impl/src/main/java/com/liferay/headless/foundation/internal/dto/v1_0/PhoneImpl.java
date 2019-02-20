@@ -40,14 +40,20 @@ public class PhoneImpl implements Phone {
 			return extension;
 	}
 
-	public void setExtension(String extension) {
+	public void setExtension(
+			String extension) {
+
 			this.extension = extension;
 	}
 
 	@JsonIgnore
-	public void setExtension(UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
+	public void setExtension(
+			UnsafeSupplier<String, Throwable>
+				extensionUnsafeSupplier) {
+
 			try {
-				extension = extensionUnsafeSupplier.get();
+				extension =
+					extensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class PhoneImpl implements Phone {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class PhoneImpl implements Phone {
 			return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(
+			String phoneNumber) {
+
 			this.phoneNumber = phoneNumber;
 	}
 
 	@JsonIgnore
-	public void setPhoneNumber(UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
+	public void setPhoneNumber(
+			UnsafeSupplier<String, Throwable>
+				phoneNumberUnsafeSupplier) {
+
 			try {
-				phoneNumber = phoneNumberUnsafeSupplier.get();
+				phoneNumber =
+					phoneNumberUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class PhoneImpl implements Phone {
 			return phoneType;
 	}
 
-	public void setPhoneType(String phoneType) {
+	public void setPhoneType(
+			String phoneType) {
+
 			this.phoneType = phoneType;
 	}
 
 	@JsonIgnore
-	public void setPhoneType(UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
+	public void setPhoneType(
+			UnsafeSupplier<String, Throwable>
+				phoneTypeUnsafeSupplier) {
+
 			try {
-				phoneType = phoneTypeUnsafeSupplier.get();
+				phoneType =
+					phoneTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

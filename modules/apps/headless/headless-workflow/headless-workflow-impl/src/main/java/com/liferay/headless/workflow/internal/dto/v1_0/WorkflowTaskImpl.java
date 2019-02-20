@@ -44,14 +44,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return completed;
 	}
 
-	public void setCompleted(Boolean completed) {
+	public void setCompleted(
+			Boolean completed) {
+
 			this.completed = completed;
 	}
 
 	@JsonIgnore
-	public void setCompleted(UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
+	public void setCompleted(
+			UnsafeSupplier<Boolean, Throwable>
+				completedUnsafeSupplier) {
+
 			try {
-				completed = completedUnsafeSupplier.get();
+				completed =
+					completedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -65,14 +71,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return dateCompleted;
 	}
 
-	public void setDateCompleted(Date dateCompleted) {
+	public void setDateCompleted(
+			Date dateCompleted) {
+
 			this.dateCompleted = dateCompleted;
 	}
 
 	@JsonIgnore
-	public void setDateCompleted(UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
+	public void setDateCompleted(
+			UnsafeSupplier<Date, Throwable>
+				dateCompletedUnsafeSupplier) {
+
 			try {
-				dateCompleted = dateCompletedUnsafeSupplier.get();
+				dateCompleted =
+					dateCompletedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -86,14 +98,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -107,14 +125,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return definitionName;
 	}
 
-	public void setDefinitionName(String definitionName) {
+	public void setDefinitionName(
+			String definitionName) {
+
 			this.definitionName = definitionName;
 	}
 
 	@JsonIgnore
-	public void setDefinitionName(UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
+	public void setDefinitionName(
+			UnsafeSupplier<String, Throwable>
+				definitionNameUnsafeSupplier) {
+
 			try {
-				definitionName = definitionNameUnsafeSupplier.get();
+				definitionName =
+					definitionNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -128,14 +152,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -149,14 +179,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(
+			Date dueDate) {
+
 			this.dueDate = dueDate;
 	}
 
 	@JsonIgnore
-	public void setDueDate(UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
+	public void setDueDate(
+			UnsafeSupplier<Date, Throwable>
+				dueDateUnsafeSupplier) {
+
 			try {
-				dueDate = dueDateUnsafeSupplier.get();
+				dueDate =
+					dueDateUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -170,14 +206,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -191,14 +233,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return logs;
 	}
 
-	public void setLogs(WorkflowLog[] logs) {
+	public void setLogs(
+			WorkflowLog[] logs) {
+
 			this.logs = logs;
 	}
 
 	@JsonIgnore
-	public void setLogs(UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
+	public void setLogs(
+			UnsafeSupplier<WorkflowLog[], Throwable>
+				logsUnsafeSupplier) {
+
 			try {
-				logs = logsUnsafeSupplier.get();
+				logs =
+					logsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -212,14 +260,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return logsIds;
 	}
 
-	public void setLogsIds(Long[] logsIds) {
+	public void setLogsIds(
+			Long[] logsIds) {
+
 			this.logsIds = logsIds;
 	}
 
 	@JsonIgnore
-	public void setLogsIds(UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
+	public void setLogsIds(
+			UnsafeSupplier<Long[], Throwable>
+				logsIdsUnsafeSupplier) {
+
 			try {
-				logsIds = logsIdsUnsafeSupplier.get();
+				logsIds =
+					logsIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -233,14 +287,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -254,14 +314,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return objectReviewed;
 	}
 
-	public void setObjectReviewed(ObjectReviewed objectReviewed) {
+	public void setObjectReviewed(
+			ObjectReviewed objectReviewed) {
+
 			this.objectReviewed = objectReviewed;
 	}
 
 	@JsonIgnore
-	public void setObjectReviewed(UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier) {
+	public void setObjectReviewed(
+			UnsafeSupplier<ObjectReviewed, Throwable>
+				objectReviewedUnsafeSupplier) {
+
 			try {
-				objectReviewed = objectReviewedUnsafeSupplier.get();
+				objectReviewed =
+					objectReviewedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -275,14 +341,20 @@ public class WorkflowTaskImpl implements WorkflowTask {
 			return transitions;
 	}
 
-	public void setTransitions(String[] transitions) {
+	public void setTransitions(
+			String[] transitions) {
+
 			this.transitions = transitions;
 	}
 
 	@JsonIgnore
-	public void setTransitions(UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
+	public void setTransitions(
+			UnsafeSupplier<String[], Throwable>
+				transitionsUnsafeSupplier) {
+
 			try {
-				transitions = transitionsUnsafeSupplier.get();
+				transitions =
+					transitionsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

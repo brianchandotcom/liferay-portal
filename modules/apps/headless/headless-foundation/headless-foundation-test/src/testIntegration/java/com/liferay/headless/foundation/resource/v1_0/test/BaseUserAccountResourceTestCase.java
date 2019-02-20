@@ -62,7 +62,8 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -103,106 +104,124 @@ public abstract class BaseUserAccountResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetMyUserAccount( Long myUserAccountId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetMyUserAccount(
+				Long myUserAccountId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/my-user-accounts/{my-user-account-id}",
-				myUserAccountId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/my-user-accounts/{my-user-account-id}",
+					myUserAccountId
+				);
 	}
-	protected Response invokeGetOrganizationUserAccountsPage( Long organizationId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetOrganizationUserAccountsPage(
+				Long organizationId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/organizations/{organization-id}/user-accounts",
-				organizationId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/organizations/{organization-id}/user-accounts",
+					organizationId
+				);
 	}
-	protected Response invokeGetUserAccountsPage( String fullnamequery , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetUserAccountsPage(
+				String fullnamequery,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/user-accounts",
-				fullnamequery 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/user-accounts",
+					fullnamequery
+				);
 	}
-	protected Response invokePostUserAccount( UserAccount userAccount ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostUserAccount(
+				UserAccount userAccount)
+			throws Exception {
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/user-accounts",
-				userAccount
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).post(
+					_resourceURL + "/user-accounts",
+					userAccount
+				);
 	}
-	protected Response invokeDeleteUserAccount( Long userAccountId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteUserAccount(
+				Long userAccountId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/user-accounts/{user-account-id}",
-				userAccountId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/user-accounts/{user-account-id}",
+					userAccountId
+				);
 	}
-	protected Response invokeGetUserAccount( Long userAccountId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetUserAccount(
+				Long userAccountId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/user-accounts/{user-account-id}",
-				userAccountId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/user-accounts/{user-account-id}",
+					userAccountId
+				);
 	}
-	protected Response invokePutUserAccount( Long userAccountId , UserAccount userAccount ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutUserAccount(
+				Long userAccountId,UserAccount userAccount)
+			throws Exception {
 
-			return requestSpecification.body(
-				userAccount
-			).when(
-			).put(
-				_resourceURL + "/user-accounts/{user-account-id}",
-				userAccountId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					userAccount
+				).when(
+				).put(
+					_resourceURL + "/user-accounts/{user-account-id}",
+					userAccountId
+				);
 	}
-	protected Response invokeGetWebSiteUserAccountsPage( Long webSiteId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWebSiteUserAccountsPage(
+				Long webSiteId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/web-sites/{web-site-id}/user-accounts",
-				webSiteId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/web-sites/{web-site-id}/user-accounts",
+					webSiteId
+				);
 	}
 
 	protected UserAccount randomUserAccount() {
 		return new UserAccountImpl() {
 			{
-additionalName = RandomTestUtil.randomString();
-alternateName = RandomTestUtil.randomString();
-birthDate = RandomTestUtil.nextDate();
-dashboardURL = RandomTestUtil.randomString();
-email = RandomTestUtil.randomString();
-familyName = RandomTestUtil.randomString();
-givenName = RandomTestUtil.randomString();
-honorificPrefix = RandomTestUtil.randomString();
-honorificSuffix = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-image = RandomTestUtil.randomString();
-jobTitle = RandomTestUtil.randomString();
-name = RandomTestUtil.randomString();
-profileURL = RandomTestUtil.randomString();			}
+
+						additionalName = RandomTestUtil.randomString();
+						alternateName = RandomTestUtil.randomString();
+						birthDate = RandomTestUtil.nextDate();
+						dashboardURL = RandomTestUtil.randomString();
+						email = RandomTestUtil.randomString();
+						familyName = RandomTestUtil.randomString();
+						givenName = RandomTestUtil.randomString();
+						honorificPrefix = RandomTestUtil.randomString();
+						honorificSuffix = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						image = RandomTestUtil.randomString();
+						jobTitle = RandomTestUtil.randomString();
+						name = RandomTestUtil.randomString();
+						profileURL = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -219,7 +238,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
+	public void setAdditionalName(
+				UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
+
 				try {
 					additionalName = additionalNameUnsafeSupplier.get();
 	}
@@ -239,7 +260,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAlternateName(UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
+	public void setAlternateName(
+				UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
+
 				try {
 					alternateName = alternateNameUnsafeSupplier.get();
 	}
@@ -259,7 +282,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setBirthDate(UnsafeSupplier<Date, Throwable> birthDateUnsafeSupplier) {
+	public void setBirthDate(
+				UnsafeSupplier<Date, Throwable> birthDateUnsafeSupplier) {
+
 				try {
 					birthDate = birthDateUnsafeSupplier.get();
 	}
@@ -279,7 +304,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContactInformation(UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
+	public void setContactInformation(
+				UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
+
 				try {
 					contactInformation = contactInformationUnsafeSupplier.get();
 	}
@@ -299,7 +326,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDashboardURL(UnsafeSupplier<String, Throwable> dashboardURLUnsafeSupplier) {
+	public void setDashboardURL(
+				UnsafeSupplier<String, Throwable> dashboardURLUnsafeSupplier) {
+
 				try {
 					dashboardURL = dashboardURLUnsafeSupplier.get();
 	}
@@ -319,7 +348,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+	public void setEmail(
+				UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+
 				try {
 					email = emailUnsafeSupplier.get();
 	}
@@ -339,7 +370,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
+	public void setFamilyName(
+				UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
+
 				try {
 					familyName = familyNameUnsafeSupplier.get();
 	}
@@ -359,7 +392,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
+	public void setGivenName(
+				UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
+
 				try {
 					givenName = givenNameUnsafeSupplier.get();
 	}
@@ -379,7 +414,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setHonorificPrefix(UnsafeSupplier<String, Throwable> honorificPrefixUnsafeSupplier) {
+	public void setHonorificPrefix(
+				UnsafeSupplier<String, Throwable> honorificPrefixUnsafeSupplier) {
+
 				try {
 					honorificPrefix = honorificPrefixUnsafeSupplier.get();
 	}
@@ -399,7 +436,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setHonorificSuffix(UnsafeSupplier<String, Throwable> honorificSuffixUnsafeSupplier) {
+	public void setHonorificSuffix(
+				UnsafeSupplier<String, Throwable> honorificSuffixUnsafeSupplier) {
+
 				try {
 					honorificSuffix = honorificSuffixUnsafeSupplier.get();
 	}
@@ -419,7 +458,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -439,7 +480,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
+	public void setImage(
+				UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
+
 				try {
 					image = imageUnsafeSupplier.get();
 	}
@@ -459,7 +502,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setJobTitle(UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
+	public void setJobTitle(
+				UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
+
 				try {
 					jobTitle = jobTitleUnsafeSupplier.get();
 	}
@@ -479,7 +524,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setMyOrganizations(UnsafeSupplier<Organization[], Throwable> myOrganizationsUnsafeSupplier) {
+	public void setMyOrganizations(
+				UnsafeSupplier<Organization[], Throwable> myOrganizationsUnsafeSupplier) {
+
 				try {
 					myOrganizations = myOrganizationsUnsafeSupplier.get();
 	}
@@ -499,7 +546,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setMyOrganizationsIds(UnsafeSupplier<Long[], Throwable> myOrganizationsIdsUnsafeSupplier) {
+	public void setMyOrganizationsIds(
+				UnsafeSupplier<Long[], Throwable> myOrganizationsIdsUnsafeSupplier) {
+
 				try {
 					myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
 	}
@@ -519,7 +568,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}
@@ -539,7 +590,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
+	public void setProfileURL(
+				UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
+
 				try {
 					profileURL = profileURLUnsafeSupplier.get();
 	}
@@ -559,7 +612,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setRoles(UnsafeSupplier<Role[], Throwable> rolesUnsafeSupplier) {
+	public void setRoles(
+				UnsafeSupplier<Role[], Throwable> rolesUnsafeSupplier) {
+
 				try {
 					roles = rolesUnsafeSupplier.get();
 	}
@@ -579,7 +634,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setRolesIds(UnsafeSupplier<Long[], Throwable> rolesIdsUnsafeSupplier) {
+	public void setRolesIds(
+				UnsafeSupplier<Long[], Throwable> rolesIdsUnsafeSupplier) {
+
 				try {
 					rolesIds = rolesIdsUnsafeSupplier.get();
 	}
@@ -599,7 +656,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTasksAssignedToMe(UnsafeSupplier<String[], Throwable> tasksAssignedToMeUnsafeSupplier) {
+	public void setTasksAssignedToMe(
+				UnsafeSupplier<String[], Throwable> tasksAssignedToMeUnsafeSupplier) {
+
 				try {
 					tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
 	}
@@ -619,7 +678,9 @@ profileURL = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTasksAssignedToMyRoles(UnsafeSupplier<String[], Throwable> tasksAssignedToMyRolesUnsafeSupplier) {
+	public void setTasksAssignedToMyRoles(
+				UnsafeSupplier<String[], Throwable> tasksAssignedToMyRolesUnsafeSupplier) {
+
 				try {
 					tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();
 	}

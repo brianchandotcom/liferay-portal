@@ -60,7 +60,8 @@ public abstract class BaseCommentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-collaboration/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-collaboration/v1.0");
 	}
 
 	@After
@@ -81,45 +82,53 @@ public abstract class BaseCommentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetBlogPostingCommentsPage( Long blogPostingId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetBlogPostingCommentsPage(
+				Long blogPostingId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/blog-postings/{blog-posting-id}/comments",
-				blogPostingId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/blog-postings/{blog-posting-id}/comments",
+					blogPostingId
+				);
 	}
-	protected Response invokeGetComment( Long commentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetComment(
+				Long commentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/comments/{comment-id}",
-				commentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/comments/{comment-id}",
+					commentId
+				);
 	}
-	protected Response invokeGetCommentCommentsPage( Long commentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetCommentCommentsPage(
+				Long commentId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/comments/{comment-id}/comments",
-				commentId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/comments/{comment-id}/comments",
+					commentId
+				);
 	}
 
 	protected Comment randomComment() {
 		return new CommentImpl() {
 			{
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-hasComments = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-text = RandomTestUtil.randomString();			}
+
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						hasComments = RandomTestUtil.randomBoolean();
+						id = RandomTestUtil.randomLong();
+						text = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -136,7 +145,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setComments(UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
+	public void setComments(
+				UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
+
 				try {
 					comments = commentsUnsafeSupplier.get();
 	}
@@ -156,7 +167,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -176,7 +189,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -196,7 +211,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -216,7 +233,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setHasComments(UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+	public void setHasComments(
+				UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+
 				try {
 					hasComments = hasCommentsUnsafeSupplier.get();
 	}
@@ -236,7 +255,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -256,7 +277,9 @@ text = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+	public void setText(
+				UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+
 				try {
 					text = textUnsafeSupplier.get();
 	}

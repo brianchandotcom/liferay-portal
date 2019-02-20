@@ -48,71 +48,85 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseFolderResourceImpl implements FolderResource {
 
+	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Folder> getContentSpaceFoldersPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Folder> getContentSpaceFoldersPage(
+	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Folder postContentSpaceFolder( @PathParam("content-space-id") Long contentSpaceId , Folder folder ) throws Exception {
-			return new FolderImpl();
+	public Folder postContentSpaceFolder(
+	@PathParam("content-space-id") Long contentSpaceId,Folder folder)
+			throws Exception {
 
+				return new FolderImpl();
 	}
+	@Override
 	@DELETE
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteFolder( @PathParam("folder-id") Long folderId ) throws Exception {
-			return false;
+	public boolean deleteFolder(
+	@PathParam("folder-id") Long folderId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Folder getFolder( @PathParam("folder-id") Long folderId ) throws Exception {
-			return new FolderImpl();
+	public Folder getFolder(
+	@PathParam("folder-id") Long folderId)
+			throws Exception {
 
+				return new FolderImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Folder putFolder( @PathParam("folder-id") Long folderId , Folder folder ) throws Exception {
-			return new FolderImpl();
+	public Folder putFolder(
+	@PathParam("folder-id") Long folderId,Folder folder)
+			throws Exception {
 
+				return new FolderImpl();
 	}
+	@Override
 	@GET
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Folder> getFolderFoldersPage( @PathParam("folder-id") Long folderId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Folder> getFolderFoldersPage(
+	@PathParam("folder-id") Long folderId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Folder postFolderFolder( @PathParam("folder-id") Long folderId , Folder folder ) throws Exception {
-			return new FolderImpl();
+	public Folder postFolderFolder(
+	@PathParam("folder-id") Long folderId,Folder folder)
+			throws Exception {
 
+				return new FolderImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

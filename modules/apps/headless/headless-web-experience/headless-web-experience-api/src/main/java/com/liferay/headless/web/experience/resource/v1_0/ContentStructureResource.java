@@ -34,9 +34,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ContentStructureResource {
 
-	public Page<ContentStructure> getContentSpaceContentStructuresPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception;
-
-	public ContentStructure getContentStructure( Long contentStructureId ) throws Exception;
+	public Page<ContentStructure> getContentSpaceContentStructuresPage(
+				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception;
+	public ContentStructure getContentStructure(
+				Long contentStructureId)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

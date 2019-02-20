@@ -60,7 +60,8 @@ public abstract class BaseRoleResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -85,56 +86,66 @@ public abstract class BaseRoleResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetMyUserAccountRolesPage( Long myUserAccountId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetMyUserAccountRolesPage(
+				Long myUserAccountId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/my-user-accounts/{my-user-account-id}/roles",
-				myUserAccountId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/my-user-accounts/{my-user-account-id}/roles",
+					myUserAccountId
+				);
 	}
-	protected Response invokeGetRolesPage( Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetRolesPage(
+				Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/roles",
-				pagination
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/roles",
+					pagination
+				);
 	}
-	protected Response invokeGetRole( Long roleId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetRole(
+				Long roleId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/roles/{role-id}",
-				roleId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/roles/{role-id}",
+					roleId
+				);
 	}
-	protected Response invokeGetUserAccountRolesPage( Long userAccountId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetUserAccountRolesPage(
+				Long userAccountId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/user-accounts/{user-account-id}/roles",
-				userAccountId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/user-accounts/{user-account-id}/roles",
+					userAccountId
+				);
 	}
 
 	protected Role randomRole() {
 		return new RoleImpl() {
 			{
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-roleType = RandomTestUtil.randomString();			}
+
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+						roleType = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -151,7 +162,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+
 				try {
 					availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
@@ -171,7 +184,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -191,7 +206,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -211,7 +228,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -231,7 +250,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -251,7 +272,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -271,7 +294,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}
@@ -291,7 +316,9 @@ roleType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setRoleType(UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
+	public void setRoleType(
+				UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
+
 				try {
 					roleType = roleTypeUnsafeSupplier.get();
 	}

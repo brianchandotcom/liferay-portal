@@ -40,14 +40,20 @@ public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplat
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplat
 			return renderedContent;
 	}
 
-	public void setRenderedContent(String renderedContent) {
+	public void setRenderedContent(
+			String renderedContent) {
+
 			this.renderedContent = renderedContent;
 	}
 
 	@JsonIgnore
-	public void setRenderedContent(UnsafeSupplier<String, Throwable> renderedContentUnsafeSupplier) {
+	public void setRenderedContent(
+			UnsafeSupplier<String, Throwable>
+				renderedContentUnsafeSupplier) {
+
 			try {
-				renderedContent = renderedContentUnsafeSupplier.get();
+				renderedContent =
+					renderedContentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class RenderedContentsByTemplateImpl implements RenderedContentsByTemplat
 			return template;
 	}
 
-	public void setTemplate(String template) {
+	public void setTemplate(
+			String template) {
+
 			this.template = template;
 	}
 
 	@JsonIgnore
-	public void setTemplate(UnsafeSupplier<String, Throwable> templateUnsafeSupplier) {
+	public void setTemplate(
+			UnsafeSupplier<String, Throwable>
+				templateUnsafeSupplier) {
+
 			try {
-				template = templateUnsafeSupplier.get();
+				template =
+					templateUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

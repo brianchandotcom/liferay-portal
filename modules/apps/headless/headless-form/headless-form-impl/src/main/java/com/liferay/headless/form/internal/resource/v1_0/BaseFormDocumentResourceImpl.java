@@ -42,23 +42,27 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseFormDocumentResourceImpl implements FormDocumentResource {
 
+	@Override
 	@DELETE
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteFormDocument( @PathParam("form-document-id") Long formDocumentId ) throws Exception {
-			return false;
+	public boolean deleteFormDocument(
+	@PathParam("form-document-id") Long formDocumentId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public FormDocument getFormDocument( @PathParam("form-document-id") Long formDocumentId ) throws Exception {
-			return new FormDocumentImpl();
+	public FormDocument getFormDocument(
+	@PathParam("form-document-id") Long formDocumentId)
+			throws Exception {
 
+				return new FormDocumentImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

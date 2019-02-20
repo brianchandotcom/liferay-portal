@@ -27,38 +27,59 @@ public interface Creator {
 
 	public String getAdditionalName();
 
-	public void setAdditionalName(String additionalName);
+	public void setAdditionalName(
+			String additionalName);
 
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier);
+	public void setAdditionalName(
+			UnsafeSupplier<String, Throwable>
+				additionalNameUnsafeSupplier);
 	public String getFamilyName();
 
-	public void setFamilyName(String familyName);
+	public void setFamilyName(
+			String familyName);
 
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier);
+	public void setFamilyName(
+			UnsafeSupplier<String, Throwable>
+				familyNameUnsafeSupplier);
 	public String getGivenName();
 
-	public void setGivenName(String givenName);
+	public void setGivenName(
+			String givenName);
 
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier);
+	public void setGivenName(
+			UnsafeSupplier<String, Throwable>
+				givenNameUnsafeSupplier);
 	public Long getId();
 
-	public void setId(Long id);
+	public void setId(
+			Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier);
 	public String getImage();
 
-	public void setImage(String image);
+	public void setImage(
+			String image);
 
-	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier);
+	public void setImage(
+			UnsafeSupplier<String, Throwable>
+				imageUnsafeSupplier);
 	public String getName();
 
-	public void setName(String name);
+	public void setName(
+			String name);
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier);
 	public String getProfileURL();
 
-	public void setProfileURL(String profileURL);
+	public void setProfileURL(
+			String profileURL);
 
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier);
+	public void setProfileURL(
+			UnsafeSupplier<String, Throwable>
+				profileURLUnsafeSupplier);
 
 }

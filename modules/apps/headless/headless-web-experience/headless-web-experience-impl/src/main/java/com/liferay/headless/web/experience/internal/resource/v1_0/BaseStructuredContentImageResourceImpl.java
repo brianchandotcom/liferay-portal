@@ -44,32 +44,38 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseStructuredContentImageResourceImpl implements StructuredContentImageResource {
 
+	@Override
 	@GET
 	@Path("/structured-contents/{structured-content-id}/structured-content-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<StructuredContentImage> getStructuredContentStructuredContentImagesPage( @PathParam("structured-content-id") Long structuredContentId ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<StructuredContentImage> getStructuredContentStructuredContentImagesPage(
+	@PathParam("structured-content-id") Long structuredContentId)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@DELETE
 	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteStructuredContentContentDocument( @PathParam("structured-content-id") Long structuredContentId , @PathParam("content-document-id") Long contentDocumentId ) throws Exception {
-			return false;
+	public boolean deleteStructuredContentContentDocument(
+	@PathParam("structured-content-id") Long structuredContentId,@PathParam("content-document-id") Long contentDocumentId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public StructuredContentImage getStructuredContentContentDocument( @PathParam("structured-content-id") Long structuredContentId , @PathParam("content-document-id") Long contentDocumentId ) throws Exception {
-			return new StructuredContentImageImpl();
+	public StructuredContentImage getStructuredContentContentDocument(
+	@PathParam("structured-content-id") Long structuredContentId,@PathParam("content-document-id") Long contentDocumentId)
+			throws Exception {
 
+				return new StructuredContentImageImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

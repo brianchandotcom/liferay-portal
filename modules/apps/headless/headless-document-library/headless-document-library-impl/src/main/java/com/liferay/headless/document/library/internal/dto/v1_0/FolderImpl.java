@@ -42,14 +42,20 @@ public class FolderImpl implements Folder {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -63,14 +69,20 @@ public class FolderImpl implements Folder {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -84,14 +96,20 @@ public class FolderImpl implements Folder {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -105,14 +123,20 @@ public class FolderImpl implements Folder {
 			return hasDocuments;
 	}
 
-	public void setHasDocuments(Boolean hasDocuments) {
+	public void setHasDocuments(
+			Boolean hasDocuments) {
+
 			this.hasDocuments = hasDocuments;
 	}
 
 	@JsonIgnore
-	public void setHasDocuments(UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier) {
+	public void setHasDocuments(
+			UnsafeSupplier<Boolean, Throwable>
+				hasDocumentsUnsafeSupplier) {
+
 			try {
-				hasDocuments = hasDocumentsUnsafeSupplier.get();
+				hasDocuments =
+					hasDocumentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -126,14 +150,20 @@ public class FolderImpl implements Folder {
 			return hasFolders;
 	}
 
-	public void setHasFolders(Boolean hasFolders) {
+	public void setHasFolders(
+			Boolean hasFolders) {
+
 			this.hasFolders = hasFolders;
 	}
 
 	@JsonIgnore
-	public void setHasFolders(UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier) {
+	public void setHasFolders(
+			UnsafeSupplier<Boolean, Throwable>
+				hasFoldersUnsafeSupplier) {
+
 			try {
-				hasFolders = hasFoldersUnsafeSupplier.get();
+				hasFolders =
+					hasFoldersUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -147,14 +177,20 @@ public class FolderImpl implements Folder {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -168,14 +204,20 @@ public class FolderImpl implements Folder {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -189,14 +231,20 @@ public class FolderImpl implements Folder {
 			return repositoryId;
 	}
 
-	public void setRepositoryId(Long repositoryId) {
+	public void setRepositoryId(
+			Long repositoryId) {
+
 			this.repositoryId = repositoryId;
 	}
 
 	@JsonIgnore
-	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
+	public void setRepositoryId(
+			UnsafeSupplier<Long, Throwable>
+				repositoryIdUnsafeSupplier) {
+
 			try {
-				repositoryId = repositoryIdUnsafeSupplier.get();
+				repositoryId =
+					repositoryIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

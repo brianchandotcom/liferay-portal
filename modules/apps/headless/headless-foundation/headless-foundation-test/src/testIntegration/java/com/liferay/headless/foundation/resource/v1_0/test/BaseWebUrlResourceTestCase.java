@@ -57,7 +57,8 @@ public abstract class BaseWebUrlResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -74,33 +75,39 @@ public abstract class BaseWebUrlResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentWebUrlsPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetGenericParentWebUrlsPage(
+				Object genericParentId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/web-urls",
-				genericParentId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/web-urls",
+					genericParentId
+				);
 	}
-	protected Response invokeGetWebUrl( Long webUrlId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWebUrl(
+				Long webUrlId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/web-urls/{web-url-id}",
-				webUrlId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/web-urls/{web-url-id}",
+					webUrlId
+				);
 	}
 
 	protected WebUrl randomWebUrl() {
 		return new WebUrlImpl() {
 			{
-id = RandomTestUtil.randomLong();
-url = RandomTestUtil.randomString();
-urlType = RandomTestUtil.randomString();			}
+
+						id = RandomTestUtil.randomLong();
+						url = RandomTestUtil.randomString();
+						urlType = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -117,7 +124,9 @@ urlType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -137,7 +146,9 @@ urlType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+	public void setUrl(
+				UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+
 				try {
 					url = urlUnsafeSupplier.get();
 	}
@@ -157,7 +168,9 @@ urlType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setUrlType(UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
+	public void setUrlType(
+				UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
+
 				try {
 					urlType = urlTypeUnsafeSupplier.get();
 	}

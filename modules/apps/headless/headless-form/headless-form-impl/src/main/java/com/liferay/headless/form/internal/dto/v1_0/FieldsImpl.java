@@ -43,14 +43,20 @@ public class FieldsImpl implements Fields {
 			return autocomplete;
 	}
 
-	public void setAutocomplete(Boolean autocomplete) {
+	public void setAutocomplete(
+			Boolean autocomplete) {
+
 			this.autocomplete = autocomplete;
 	}
 
 	@JsonIgnore
-	public void setAutocomplete(UnsafeSupplier<Boolean, Throwable> autocompleteUnsafeSupplier) {
+	public void setAutocomplete(
+			UnsafeSupplier<Boolean, Throwable>
+				autocompleteUnsafeSupplier) {
+
 			try {
-				autocomplete = autocompleteUnsafeSupplier.get();
+				autocomplete =
+					autocompleteUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -64,14 +70,20 @@ public class FieldsImpl implements Fields {
 			return dataSourceType;
 	}
 
-	public void setDataSourceType(String dataSourceType) {
+	public void setDataSourceType(
+			String dataSourceType) {
+
 			this.dataSourceType = dataSourceType;
 	}
 
 	@JsonIgnore
-	public void setDataSourceType(UnsafeSupplier<String, Throwable> dataSourceTypeUnsafeSupplier) {
+	public void setDataSourceType(
+			UnsafeSupplier<String, Throwable>
+				dataSourceTypeUnsafeSupplier) {
+
 			try {
-				dataSourceType = dataSourceTypeUnsafeSupplier.get();
+				dataSourceType =
+					dataSourceTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -85,14 +97,20 @@ public class FieldsImpl implements Fields {
 			return dataType;
 	}
 
-	public void setDataType(String dataType) {
+	public void setDataType(
+			String dataType) {
+
 			this.dataType = dataType;
 	}
 
 	@JsonIgnore
-	public void setDataType(UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
+	public void setDataType(
+			UnsafeSupplier<String, Throwable>
+				dataTypeUnsafeSupplier) {
+
 			try {
-				dataType = dataTypeUnsafeSupplier.get();
+				dataType =
+					dataTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -106,14 +124,20 @@ public class FieldsImpl implements Fields {
 			return displayStyle;
 	}
 
-	public void setDisplayStyle(String displayStyle) {
+	public void setDisplayStyle(
+			String displayStyle) {
+
 			this.displayStyle = displayStyle;
 	}
 
 	@JsonIgnore
-	public void setDisplayStyle(UnsafeSupplier<String, Throwable> displayStyleUnsafeSupplier) {
+	public void setDisplayStyle(
+			UnsafeSupplier<String, Throwable>
+				displayStyleUnsafeSupplier) {
+
 			try {
-				displayStyle = displayStyleUnsafeSupplier.get();
+				displayStyle =
+					displayStyleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,14 +151,20 @@ public class FieldsImpl implements Fields {
 			return grid;
 	}
 
-	public void setGrid(Grid grid) {
+	public void setGrid(
+			Grid grid) {
+
 			this.grid = grid;
 	}
 
 	@JsonIgnore
-	public void setGrid(UnsafeSupplier<Grid, Throwable> gridUnsafeSupplier) {
+	public void setGrid(
+			UnsafeSupplier<Grid, Throwable>
+				gridUnsafeSupplier) {
+
 			try {
-				grid = gridUnsafeSupplier.get();
+				grid =
+					gridUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -148,14 +178,20 @@ public class FieldsImpl implements Fields {
 			return hasFormRules;
 	}
 
-	public void setHasFormRules(Boolean hasFormRules) {
+	public void setHasFormRules(
+			Boolean hasFormRules) {
+
 			this.hasFormRules = hasFormRules;
 	}
 
 	@JsonIgnore
-	public void setHasFormRules(UnsafeSupplier<Boolean, Throwable> hasFormRulesUnsafeSupplier) {
+	public void setHasFormRules(
+			UnsafeSupplier<Boolean, Throwable>
+				hasFormRulesUnsafeSupplier) {
+
 			try {
-				hasFormRules = hasFormRulesUnsafeSupplier.get();
+				hasFormRules =
+					hasFormRulesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -169,14 +205,20 @@ public class FieldsImpl implements Fields {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -190,14 +232,20 @@ public class FieldsImpl implements Fields {
 			return immutable;
 	}
 
-	public void setImmutable(Boolean immutable) {
+	public void setImmutable(
+			Boolean immutable) {
+
 			this.immutable = immutable;
 	}
 
 	@JsonIgnore
-	public void setImmutable(UnsafeSupplier<Boolean, Throwable> immutableUnsafeSupplier) {
+	public void setImmutable(
+			UnsafeSupplier<Boolean, Throwable>
+				immutableUnsafeSupplier) {
+
 			try {
-				immutable = immutableUnsafeSupplier.get();
+				immutable =
+					immutableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -211,14 +259,20 @@ public class FieldsImpl implements Fields {
 			return inline;
 	}
 
-	public void setInline(Boolean inline) {
+	public void setInline(
+			Boolean inline) {
+
 			this.inline = inline;
 	}
 
 	@JsonIgnore
-	public void setInline(UnsafeSupplier<Boolean, Throwable> inlineUnsafeSupplier) {
+	public void setInline(
+			UnsafeSupplier<Boolean, Throwable>
+				inlineUnsafeSupplier) {
+
 			try {
-				inline = inlineUnsafeSupplier.get();
+				inline =
+					inlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -232,14 +286,20 @@ public class FieldsImpl implements Fields {
 			return inputControl;
 	}
 
-	public void setInputControl(String inputControl) {
+	public void setInputControl(
+			String inputControl) {
+
 			this.inputControl = inputControl;
 	}
 
 	@JsonIgnore
-	public void setInputControl(UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
+	public void setInputControl(
+			UnsafeSupplier<String, Throwable>
+				inputControlUnsafeSupplier) {
+
 			try {
-				inputControl = inputControlUnsafeSupplier.get();
+				inputControl =
+					inputControlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -253,14 +313,20 @@ public class FieldsImpl implements Fields {
 			return label;
 	}
 
-	public void setLabel(String label) {
+	public void setLabel(
+			String label) {
+
 			this.label = label;
 	}
 
 	@JsonIgnore
-	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+	public void setLabel(
+			UnsafeSupplier<String, Throwable>
+				labelUnsafeSupplier) {
+
 			try {
-				label = labelUnsafeSupplier.get();
+				label =
+					labelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -274,14 +340,20 @@ public class FieldsImpl implements Fields {
 			return localizable;
 	}
 
-	public void setLocalizable(Boolean localizable) {
+	public void setLocalizable(
+			Boolean localizable) {
+
 			this.localizable = localizable;
 	}
 
 	@JsonIgnore
-	public void setLocalizable(UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier) {
+	public void setLocalizable(
+			UnsafeSupplier<Boolean, Throwable>
+				localizableUnsafeSupplier) {
+
 			try {
-				localizable = localizableUnsafeSupplier.get();
+				localizable =
+					localizableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -295,14 +367,20 @@ public class FieldsImpl implements Fields {
 			return multiple;
 	}
 
-	public void setMultiple(Boolean multiple) {
+	public void setMultiple(
+			Boolean multiple) {
+
 			this.multiple = multiple;
 	}
 
 	@JsonIgnore
-	public void setMultiple(UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier) {
+	public void setMultiple(
+			UnsafeSupplier<Boolean, Throwable>
+				multipleUnsafeSupplier) {
+
 			try {
-				multiple = multipleUnsafeSupplier.get();
+				multiple =
+					multipleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -316,14 +394,20 @@ public class FieldsImpl implements Fields {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -337,14 +421,20 @@ public class FieldsImpl implements Fields {
 			return options;
 	}
 
-	public void setOptions(Options options) {
+	public void setOptions(
+			Options options) {
+
 			this.options = options;
 	}
 
 	@JsonIgnore
-	public void setOptions(UnsafeSupplier<Options, Throwable> optionsUnsafeSupplier) {
+	public void setOptions(
+			UnsafeSupplier<Options, Throwable>
+				optionsUnsafeSupplier) {
+
 			try {
-				options = optionsUnsafeSupplier.get();
+				options =
+					optionsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -358,14 +448,20 @@ public class FieldsImpl implements Fields {
 			return placeholder;
 	}
 
-	public void setPlaceholder(String placeholder) {
+	public void setPlaceholder(
+			String placeholder) {
+
 			this.placeholder = placeholder;
 	}
 
 	@JsonIgnore
-	public void setPlaceholder(UnsafeSupplier<String, Throwable> placeholderUnsafeSupplier) {
+	public void setPlaceholder(
+			UnsafeSupplier<String, Throwable>
+				placeholderUnsafeSupplier) {
+
 			try {
-				placeholder = placeholderUnsafeSupplier.get();
+				placeholder =
+					placeholderUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -379,14 +475,20 @@ public class FieldsImpl implements Fields {
 			return predefinedValue;
 	}
 
-	public void setPredefinedValue(String predefinedValue) {
+	public void setPredefinedValue(
+			String predefinedValue) {
+
 			this.predefinedValue = predefinedValue;
 	}
 
 	@JsonIgnore
-	public void setPredefinedValue(UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier) {
+	public void setPredefinedValue(
+			UnsafeSupplier<String, Throwable>
+				predefinedValueUnsafeSupplier) {
+
 			try {
-				predefinedValue = predefinedValueUnsafeSupplier.get();
+				predefinedValue =
+					predefinedValueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -400,14 +502,20 @@ public class FieldsImpl implements Fields {
 			return readOnly;
 	}
 
-	public void setReadOnly(Boolean readOnly) {
+	public void setReadOnly(
+			Boolean readOnly) {
+
 			this.readOnly = readOnly;
 	}
 
 	@JsonIgnore
-	public void setReadOnly(UnsafeSupplier<Boolean, Throwable> readOnlyUnsafeSupplier) {
+	public void setReadOnly(
+			UnsafeSupplier<Boolean, Throwable>
+				readOnlyUnsafeSupplier) {
+
 			try {
-				readOnly = readOnlyUnsafeSupplier.get();
+				readOnly =
+					readOnlyUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -421,14 +529,20 @@ public class FieldsImpl implements Fields {
 			return repeatable;
 	}
 
-	public void setRepeatable(Boolean repeatable) {
+	public void setRepeatable(
+			Boolean repeatable) {
+
 			this.repeatable = repeatable;
 	}
 
 	@JsonIgnore
-	public void setRepeatable(UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier) {
+	public void setRepeatable(
+			UnsafeSupplier<Boolean, Throwable>
+				repeatableUnsafeSupplier) {
+
 			try {
-				repeatable = repeatableUnsafeSupplier.get();
+				repeatable =
+					repeatableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -442,14 +556,20 @@ public class FieldsImpl implements Fields {
 			return required;
 	}
 
-	public void setRequired(Boolean required) {
+	public void setRequired(
+			Boolean required) {
+
 			this.required = required;
 	}
 
 	@JsonIgnore
-	public void setRequired(UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier) {
+	public void setRequired(
+			UnsafeSupplier<Boolean, Throwable>
+				requiredUnsafeSupplier) {
+
 			try {
-				required = requiredUnsafeSupplier.get();
+				required =
+					requiredUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -463,14 +583,20 @@ public class FieldsImpl implements Fields {
 			return showAsSwitcher;
 	}
 
-	public void setShowAsSwitcher(Boolean showAsSwitcher) {
+	public void setShowAsSwitcher(
+			Boolean showAsSwitcher) {
+
 			this.showAsSwitcher = showAsSwitcher;
 	}
 
 	@JsonIgnore
-	public void setShowAsSwitcher(UnsafeSupplier<Boolean, Throwable> showAsSwitcherUnsafeSupplier) {
+	public void setShowAsSwitcher(
+			UnsafeSupplier<Boolean, Throwable>
+				showAsSwitcherUnsafeSupplier) {
+
 			try {
-				showAsSwitcher = showAsSwitcherUnsafeSupplier.get();
+				showAsSwitcher =
+					showAsSwitcherUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -484,14 +610,20 @@ public class FieldsImpl implements Fields {
 			return showLabel;
 	}
 
-	public void setShowLabel(Boolean showLabel) {
+	public void setShowLabel(
+			Boolean showLabel) {
+
 			this.showLabel = showLabel;
 	}
 
 	@JsonIgnore
-	public void setShowLabel(UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier) {
+	public void setShowLabel(
+			UnsafeSupplier<Boolean, Throwable>
+				showLabelUnsafeSupplier) {
+
 			try {
-				showLabel = showLabelUnsafeSupplier.get();
+				showLabel =
+					showLabelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -505,14 +637,20 @@ public class FieldsImpl implements Fields {
 			return style;
 	}
 
-	public void setStyle(String style) {
+	public void setStyle(
+			String style) {
+
 			this.style = style;
 	}
 
 	@JsonIgnore
-	public void setStyle(UnsafeSupplier<String, Throwable> styleUnsafeSupplier) {
+	public void setStyle(
+			UnsafeSupplier<String, Throwable>
+				styleUnsafeSupplier) {
+
 			try {
-				style = styleUnsafeSupplier.get();
+				style =
+					styleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -526,14 +664,20 @@ public class FieldsImpl implements Fields {
 			return text;
 	}
 
-	public void setText(String text) {
+	public void setText(
+			String text) {
+
 			this.text = text;
 	}
 
 	@JsonIgnore
-	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+	public void setText(
+			UnsafeSupplier<String, Throwable>
+				textUnsafeSupplier) {
+
 			try {
-				text = textUnsafeSupplier.get();
+				text =
+					textUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -547,14 +691,20 @@ public class FieldsImpl implements Fields {
 			return tooltip;
 	}
 
-	public void setTooltip(String tooltip) {
+	public void setTooltip(
+			String tooltip) {
+
 			this.tooltip = tooltip;
 	}
 
 	@JsonIgnore
-	public void setTooltip(UnsafeSupplier<String, Throwable> tooltipUnsafeSupplier) {
+	public void setTooltip(
+			UnsafeSupplier<String, Throwable>
+				tooltipUnsafeSupplier) {
+
 			try {
-				tooltip = tooltipUnsafeSupplier.get();
+				tooltip =
+					tooltipUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -568,14 +718,20 @@ public class FieldsImpl implements Fields {
 			return validation;
 	}
 
-	public void setValidation(Validation validation) {
+	public void setValidation(
+			Validation validation) {
+
 			this.validation = validation;
 	}
 
 	@JsonIgnore
-	public void setValidation(UnsafeSupplier<Validation, Throwable> validationUnsafeSupplier) {
+	public void setValidation(
+			UnsafeSupplier<Validation, Throwable>
+				validationUnsafeSupplier) {
+
 			try {
-				validation = validationUnsafeSupplier.get();
+				validation =
+					validationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

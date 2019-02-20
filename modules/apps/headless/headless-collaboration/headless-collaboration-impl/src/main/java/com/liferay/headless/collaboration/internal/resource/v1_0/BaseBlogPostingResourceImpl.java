@@ -48,52 +48,62 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource {
 
+	@Override
 	@DELETE
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception {
-			return false;
+	public boolean deleteBlogPosting(
+	@PathParam("blog-posting-id") Long blogPostingId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public BlogPosting getBlogPosting( @PathParam("blog-posting-id") Long blogPostingId ) throws Exception {
-			return new BlogPostingImpl();
+	public BlogPosting getBlogPosting(
+	@PathParam("blog-posting-id") Long blogPostingId)
+			throws Exception {
 
+				return new BlogPostingImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public BlogPosting putBlogPosting( @PathParam("blog-posting-id") Long blogPostingId , BlogPosting blogPosting ) throws Exception {
-			return new BlogPostingImpl();
+	public BlogPosting putBlogPosting(
+	@PathParam("blog-posting-id") Long blogPostingId,BlogPosting blogPosting)
+			throws Exception {
 
+				return new BlogPostingImpl();
 	}
+	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingsPage( @PathParam("content-space-id") Long contentSpaceId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
+	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public BlogPosting postContentSpaceBlogPosting( @PathParam("content-space-id") Long contentSpaceId , BlogPosting blogPosting ) throws Exception {
-			return new BlogPostingImpl();
+	public BlogPosting postContentSpaceBlogPosting(
+	@PathParam("content-space-id") Long contentSpaceId,BlogPosting blogPosting)
+			throws Exception {
 
+				return new BlogPostingImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

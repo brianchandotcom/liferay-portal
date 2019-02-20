@@ -41,14 +41,20 @@ public class FormPagesImpl implements FormPages {
 			return fields;
 	}
 
-	public void setFields(Fields[] fields) {
+	public void setFields(
+			Fields[] fields) {
+
 			this.fields = fields;
 	}
 
 	@JsonIgnore
-	public void setFields(UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
+	public void setFields(
+			UnsafeSupplier<Fields[], Throwable>
+				fieldsUnsafeSupplier) {
+
 			try {
-				fields = fieldsUnsafeSupplier.get();
+				fields =
+					fieldsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -62,14 +68,20 @@ public class FormPagesImpl implements FormPages {
 			return headline;
 	}
 
-	public void setHeadline(String headline) {
+	public void setHeadline(
+			String headline) {
+
 			this.headline = headline;
 	}
 
 	@JsonIgnore
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+	public void setHeadline(
+			UnsafeSupplier<String, Throwable>
+				headlineUnsafeSupplier) {
+
 			try {
-				headline = headlineUnsafeSupplier.get();
+				headline =
+					headlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -83,14 +95,20 @@ public class FormPagesImpl implements FormPages {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -104,14 +122,20 @@ public class FormPagesImpl implements FormPages {
 			return text;
 	}
 
-	public void setText(String text) {
+	public void setText(
+			String text) {
+
 			this.text = text;
 	}
 
 	@JsonIgnore
-	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+	public void setText(
+			UnsafeSupplier<String, Throwable>
+				textUnsafeSupplier) {
+
 			try {
-				text = textUnsafeSupplier.get();
+				text =
+					textUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

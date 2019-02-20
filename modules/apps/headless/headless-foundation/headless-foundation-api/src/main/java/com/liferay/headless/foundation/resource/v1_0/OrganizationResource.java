@@ -32,15 +32,21 @@ import javax.annotation.Generated;
 @Generated("")
 public interface OrganizationResource {
 
-	public Page<Organization> getMyUserAccountOrganizationsPage( Long myUserAccountId , Pagination pagination ) throws Exception;
-
-	public Page<Organization> getOrganizationsPage( Pagination pagination ) throws Exception;
-
-	public Organization getOrganization( Long organizationId ) throws Exception;
-
-	public Page<Organization> getOrganizationOrganizationsPage( Long organizationId , Pagination pagination ) throws Exception;
-
-	public Page<Organization> getUserAccountOrganizationsPage( Long userAccountId , Pagination pagination ) throws Exception;
+	public Page<Organization> getMyUserAccountOrganizationsPage(
+				Long myUserAccountId,Pagination pagination)
+			throws Exception;
+	public Page<Organization> getOrganizationsPage(
+				Pagination pagination)
+			throws Exception;
+	public Organization getOrganization(
+				Long organizationId)
+			throws Exception;
+	public Page<Organization> getOrganizationOrganizationsPage(
+				Long organizationId,Pagination pagination)
+			throws Exception;
+	public Page<Organization> getUserAccountOrganizationsPage(
+				Long userAccountId,Pagination pagination)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

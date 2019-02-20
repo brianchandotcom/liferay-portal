@@ -59,7 +59,8 @@ public abstract class BaseFolderResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-document-library/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-document-library/v1.0");
 	}
 
 	@After
@@ -96,94 +97,110 @@ public abstract class BaseFolderResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceFoldersPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceFoldersPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/folders",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/folders",
+					contentSpaceId
+				);
 	}
-	protected Response invokePostContentSpaceFolder( Long contentSpaceId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostContentSpaceFolder(
+				Long contentSpaceId,Folder folder)
+			throws Exception {
 
-			return requestSpecification.body(
-				folder
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/folders",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					folder
+				).when(
+				).post(
+					_resourceURL + "/content-spaces/{content-space-id}/folders",
+					contentSpaceId
+				);
 	}
-	protected Response invokeDeleteFolder( Long folderId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteFolder(
+				Long folderId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/folders/{folder-id}",
-				folderId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/folders/{folder-id}",
+					folderId
+				);
 	}
-	protected Response invokeGetFolder( Long folderId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFolder(
+				Long folderId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/folders/{folder-id}",
-				folderId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/folders/{folder-id}",
+					folderId
+				);
 	}
-	protected Response invokePutFolder( Long folderId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutFolder(
+				Long folderId,Folder folder)
+			throws Exception {
 
-			return requestSpecification.body(
-				folder
-			).when(
-			).put(
-				_resourceURL + "/folders/{folder-id}",
-				folderId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					folder
+				).when(
+				).put(
+					_resourceURL + "/folders/{folder-id}",
+					folderId
+				);
 	}
-	protected Response invokeGetFolderFoldersPage( Long folderId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFolderFoldersPage(
+				Long folderId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/folders/{folder-id}/folders",
-				folderId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/folders/{folder-id}/folders",
+					folderId
+				);
 	}
-	protected Response invokePostFolderFolder( Long folderId , Folder folder ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostFolderFolder(
+				Long folderId,Folder folder)
+			throws Exception {
 
-			return requestSpecification.body(
-				folder
-			).when(
-			).post(
-				_resourceURL + "/folders/{folder-id}/folders",
-				folderId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					folder
+				).when(
+				).post(
+					_resourceURL + "/folders/{folder-id}/folders",
+					folderId
+				);
 	}
 
 	protected Folder randomFolder() {
 		return new FolderImpl() {
 			{
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-hasDocuments = RandomTestUtil.randomBoolean();
-hasFolders = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-repositoryId = RandomTestUtil.randomLong();			}
+
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						hasDocuments = RandomTestUtil.randomBoolean();
+						hasFolders = RandomTestUtil.randomBoolean();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+						repositoryId = RandomTestUtil.randomLong();
+	}
 		};
 	}
 
@@ -200,7 +217,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -220,7 +239,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -240,7 +261,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -260,7 +283,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setHasDocuments(UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier) {
+	public void setHasDocuments(
+				UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier) {
+
 				try {
 					hasDocuments = hasDocumentsUnsafeSupplier.get();
 	}
@@ -280,7 +305,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setHasFolders(UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier) {
+	public void setHasFolders(
+				UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier) {
+
 				try {
 					hasFolders = hasFoldersUnsafeSupplier.get();
 	}
@@ -300,7 +327,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -320,7 +349,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}
@@ -340,7 +371,9 @@ repositoryId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setRepositoryId(UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
+	public void setRepositoryId(
+				UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
+
 				try {
 					repositoryId = repositoryIdUnsafeSupplier.get();
 	}

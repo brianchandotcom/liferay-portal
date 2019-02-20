@@ -58,7 +58,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-collaboration/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-collaboration/v1.0");
 	}
 
 	@After
@@ -83,55 +84,65 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceBlogPostingImagesPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceBlogPostingImagesPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
+					contentSpaceId
+				);
 	}
-	protected Response invokePostContentSpaceBlogPostingImage( Long contentSpaceId , MultipartBody multipartBody ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostContentSpaceBlogPostingImage(
+				Long contentSpaceId,MultipartBody multipartBody)
+			throws Exception {
 
-			return requestSpecification.when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
-				contentSpaceId , multipartBody
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).post(
+					_resourceURL + "/content-spaces/{content-space-id}/blog-posting-images",
+					contentSpaceId,multipartBody
+				);
 	}
-	protected Response invokeDeleteImageObject( Long imageObjectId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteImageObject(
+				Long imageObjectId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/blog-posting-images/{image-object-id}",
-				imageObjectId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/blog-posting-images/{image-object-id}",
+					imageObjectId
+				);
 	}
-	protected Response invokeGetImageObject( Long imageObjectId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetImageObject(
+				Long imageObjectId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/blog-posting-images/{image-object-id}",
-				imageObjectId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/blog-posting-images/{image-object-id}",
+					imageObjectId
+				);
 	}
 
 	protected BlogPostingImage randomBlogPostingImage() {
 		return new BlogPostingImageImpl() {
 			{
-contentUrl = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();			}
+
+						contentUrl = RandomTestUtil.randomString();
+						encodingFormat = RandomTestUtil.randomString();
+						fileExtension = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						title = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -148,7 +159,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+
 				try {
 					contentUrl = contentUrlUnsafeSupplier.get();
 	}
@@ -168,7 +181,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+
 				try {
 					encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
@@ -188,7 +203,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtension(
+				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+
 				try {
 					fileExtension = fileExtensionUnsafeSupplier.get();
 	}
@@ -208,7 +225,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -228,7 +247,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+
 				try {
 					sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
@@ -248,7 +269,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
 				try {
 					title = titleUnsafeSupplier.get();
 	}

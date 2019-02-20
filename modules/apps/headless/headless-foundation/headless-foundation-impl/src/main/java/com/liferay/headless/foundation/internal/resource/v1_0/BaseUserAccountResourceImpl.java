@@ -49,79 +49,95 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseUserAccountResourceImpl implements UserAccountResource {
 
+	@Override
 	@GET
 	@Path("/my-user-accounts/{my-user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public UserAccount getMyUserAccount( @PathParam("my-user-account-id") Long myUserAccountId ) throws Exception {
-			return new UserAccountImpl();
+	public UserAccount getMyUserAccount(
+	@PathParam("my-user-account-id") Long myUserAccountId)
+			throws Exception {
 
+				return new UserAccountImpl();
 	}
+	@Override
 	@GET
 	@Path("/organizations/{organization-id}/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<UserAccount> getOrganizationUserAccountsPage( @PathParam("organization-id") Long organizationId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<UserAccount> getOrganizationUserAccountsPage(
+	@PathParam("organization-id") Long organizationId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<UserAccount> getUserAccountsPage( @QueryParam("fullnamequery") String fullnamequery , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<UserAccount> getUserAccountsPage(
+	@QueryParam("fullnamequery") String fullnamequery,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public UserAccount postUserAccount( UserAccount userAccount ) throws Exception {
-			return new UserAccountImpl();
+	public UserAccount postUserAccount(
+				UserAccount userAccount)
+			throws Exception {
 
+				return new UserAccountImpl();
 	}
+	@Override
 	@DELETE
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteUserAccount( @PathParam("user-account-id") Long userAccountId ) throws Exception {
-			return false;
+	public boolean deleteUserAccount(
+	@PathParam("user-account-id") Long userAccountId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public UserAccount getUserAccount( @PathParam("user-account-id") Long userAccountId ) throws Exception {
-			return new UserAccountImpl();
+	public UserAccount getUserAccount(
+	@PathParam("user-account-id") Long userAccountId)
+			throws Exception {
 
+				return new UserAccountImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public UserAccount putUserAccount( @PathParam("user-account-id") Long userAccountId , UserAccount userAccount ) throws Exception {
-			return new UserAccountImpl();
+	public UserAccount putUserAccount(
+	@PathParam("user-account-id") Long userAccountId,UserAccount userAccount)
+			throws Exception {
 
+				return new UserAccountImpl();
 	}
+	@Override
 	@GET
 	@Path("/web-sites/{web-site-id}/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<UserAccount> getWebSiteUserAccountsPage( @PathParam("web-site-id") Long webSiteId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<UserAccount> getWebSiteUserAccountsPage(
+	@PathParam("web-site-id") Long webSiteId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

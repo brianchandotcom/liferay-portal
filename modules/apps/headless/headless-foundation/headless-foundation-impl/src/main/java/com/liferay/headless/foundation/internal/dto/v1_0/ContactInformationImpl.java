@@ -44,14 +44,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return address;
 	}
 
-	public void setAddress(PostalAddress[] address) {
+	public void setAddress(
+			PostalAddress[] address) {
+
 			this.address = address;
 	}
 
 	@JsonIgnore
-	public void setAddress(UnsafeSupplier<PostalAddress[], Throwable> addressUnsafeSupplier) {
+	public void setAddress(
+			UnsafeSupplier<PostalAddress[], Throwable>
+				addressUnsafeSupplier) {
+
 			try {
-				address = addressUnsafeSupplier.get();
+				address =
+					addressUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -65,14 +71,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return addressIds;
 	}
 
-	public void setAddressIds(Long[] addressIds) {
+	public void setAddressIds(
+			Long[] addressIds) {
+
 			this.addressIds = addressIds;
 	}
 
 	@JsonIgnore
-	public void setAddressIds(UnsafeSupplier<Long[], Throwable> addressIdsUnsafeSupplier) {
+	public void setAddressIds(
+			UnsafeSupplier<Long[], Throwable>
+				addressIdsUnsafeSupplier) {
+
 			try {
-				addressIds = addressIdsUnsafeSupplier.get();
+				addressIds =
+					addressIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -86,14 +98,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return email;
 	}
 
-	public void setEmail(Email[] email) {
+	public void setEmail(
+			Email[] email) {
+
 			this.email = email;
 	}
 
 	@JsonIgnore
-	public void setEmail(UnsafeSupplier<Email[], Throwable> emailUnsafeSupplier) {
+	public void setEmail(
+			UnsafeSupplier<Email[], Throwable>
+				emailUnsafeSupplier) {
+
 			try {
-				email = emailUnsafeSupplier.get();
+				email =
+					emailUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -107,14 +125,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return emailIds;
 	}
 
-	public void setEmailIds(Long[] emailIds) {
+	public void setEmailIds(
+			Long[] emailIds) {
+
 			this.emailIds = emailIds;
 	}
 
 	@JsonIgnore
-	public void setEmailIds(UnsafeSupplier<Long[], Throwable> emailIdsUnsafeSupplier) {
+	public void setEmailIds(
+			UnsafeSupplier<Long[], Throwable>
+				emailIdsUnsafeSupplier) {
+
 			try {
-				emailIds = emailIdsUnsafeSupplier.get();
+				emailIds =
+					emailIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -128,14 +152,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return facebook;
 	}
 
-	public void setFacebook(String facebook) {
+	public void setFacebook(
+			String facebook) {
+
 			this.facebook = facebook;
 	}
 
 	@JsonIgnore
-	public void setFacebook(UnsafeSupplier<String, Throwable> facebookUnsafeSupplier) {
+	public void setFacebook(
+			UnsafeSupplier<String, Throwable>
+				facebookUnsafeSupplier) {
+
 			try {
-				facebook = facebookUnsafeSupplier.get();
+				facebook =
+					facebookUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -149,14 +179,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -170,14 +206,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return jabber;
 	}
 
-	public void setJabber(String jabber) {
+	public void setJabber(
+			String jabber) {
+
 			this.jabber = jabber;
 	}
 
 	@JsonIgnore
-	public void setJabber(UnsafeSupplier<String, Throwable> jabberUnsafeSupplier) {
+	public void setJabber(
+			UnsafeSupplier<String, Throwable>
+				jabberUnsafeSupplier) {
+
 			try {
-				jabber = jabberUnsafeSupplier.get();
+				jabber =
+					jabberUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -191,14 +233,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return skype;
 	}
 
-	public void setSkype(String skype) {
+	public void setSkype(
+			String skype) {
+
 			this.skype = skype;
 	}
 
 	@JsonIgnore
-	public void setSkype(UnsafeSupplier<String, Throwable> skypeUnsafeSupplier) {
+	public void setSkype(
+			UnsafeSupplier<String, Throwable>
+				skypeUnsafeSupplier) {
+
 			try {
-				skype = skypeUnsafeSupplier.get();
+				skype =
+					skypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -212,14 +260,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return sms;
 	}
 
-	public void setSms(String sms) {
+	public void setSms(
+			String sms) {
+
 			this.sms = sms;
 	}
 
 	@JsonIgnore
-	public void setSms(UnsafeSupplier<String, Throwable> smsUnsafeSupplier) {
+	public void setSms(
+			UnsafeSupplier<String, Throwable>
+				smsUnsafeSupplier) {
+
 			try {
-				sms = smsUnsafeSupplier.get();
+				sms =
+					smsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -233,14 +287,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return telephone;
 	}
 
-	public void setTelephone(Phone[] telephone) {
+	public void setTelephone(
+			Phone[] telephone) {
+
 			this.telephone = telephone;
 	}
 
 	@JsonIgnore
-	public void setTelephone(UnsafeSupplier<Phone[], Throwable> telephoneUnsafeSupplier) {
+	public void setTelephone(
+			UnsafeSupplier<Phone[], Throwable>
+				telephoneUnsafeSupplier) {
+
 			try {
-				telephone = telephoneUnsafeSupplier.get();
+				telephone =
+					telephoneUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -254,14 +314,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return telephoneIds;
 	}
 
-	public void setTelephoneIds(Long[] telephoneIds) {
+	public void setTelephoneIds(
+			Long[] telephoneIds) {
+
 			this.telephoneIds = telephoneIds;
 	}
 
 	@JsonIgnore
-	public void setTelephoneIds(UnsafeSupplier<Long[], Throwable> telephoneIdsUnsafeSupplier) {
+	public void setTelephoneIds(
+			UnsafeSupplier<Long[], Throwable>
+				telephoneIdsUnsafeSupplier) {
+
 			try {
-				telephoneIds = telephoneIdsUnsafeSupplier.get();
+				telephoneIds =
+					telephoneIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -275,14 +341,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return twitter;
 	}
 
-	public void setTwitter(String twitter) {
+	public void setTwitter(
+			String twitter) {
+
 			this.twitter = twitter;
 	}
 
 	@JsonIgnore
-	public void setTwitter(UnsafeSupplier<String, Throwable> twitterUnsafeSupplier) {
+	public void setTwitter(
+			UnsafeSupplier<String, Throwable>
+				twitterUnsafeSupplier) {
+
 			try {
-				twitter = twitterUnsafeSupplier.get();
+				twitter =
+					twitterUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -296,14 +368,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return webUrl;
 	}
 
-	public void setWebUrl(WebUrl[] webUrl) {
+	public void setWebUrl(
+			WebUrl[] webUrl) {
+
 			this.webUrl = webUrl;
 	}
 
 	@JsonIgnore
-	public void setWebUrl(UnsafeSupplier<WebUrl[], Throwable> webUrlUnsafeSupplier) {
+	public void setWebUrl(
+			UnsafeSupplier<WebUrl[], Throwable>
+				webUrlUnsafeSupplier) {
+
 			try {
-				webUrl = webUrlUnsafeSupplier.get();
+				webUrl =
+					webUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -317,14 +395,20 @@ public class ContactInformationImpl implements ContactInformation {
 			return webUrlIds;
 	}
 
-	public void setWebUrlIds(Long[] webUrlIds) {
+	public void setWebUrlIds(
+			Long[] webUrlIds) {
+
 			this.webUrlIds = webUrlIds;
 	}
 
 	@JsonIgnore
-	public void setWebUrlIds(UnsafeSupplier<Long[], Throwable> webUrlIdsUnsafeSupplier) {
+	public void setWebUrlIds(
+			UnsafeSupplier<Long[], Throwable>
+				webUrlIdsUnsafeSupplier) {
+
 			try {
-				webUrlIds = webUrlIdsUnsafeSupplier.get();
+				webUrlIds =
+					webUrlIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

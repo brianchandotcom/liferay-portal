@@ -32,9 +32,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface WorkflowLogResource {
 
-	public WorkflowLog getWorkflowLog( Long workflowLogId ) throws Exception;
-
-	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage( Long workflowTaskId , Pagination pagination ) throws Exception;
+	public WorkflowLog getWorkflowLog(
+				Long workflowLogId)
+			throws Exception;
+	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+				Long workflowTaskId,Pagination pagination)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

@@ -62,7 +62,8 @@ public abstract class BaseFormStructureResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-form/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-form/v1.0");
 	}
 
 	@After
@@ -79,36 +80,42 @@ public abstract class BaseFormStructureResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceFormStructuresPage( Long contentSpaceId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceFormStructuresPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/form-structures",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/form-structures",
+					contentSpaceId
+				);
 	}
-	protected Response invokeGetFormStructure( Long formStructureId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFormStructure(
+				Long formStructureId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/form-structures/{form-structure-id}",
-				formStructureId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/form-structures/{form-structure-id}",
+					formStructureId
+				);
 	}
 
 	protected FormStructure randomFormStructure() {
 		return new FormStructureImpl() {
 			{
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();			}
+
+						contentSpace = RandomTestUtil.randomLong();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -125,7 +132,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+
 				try {
 					availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
@@ -145,7 +154,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
 				try {
 					contentSpace = contentSpaceUnsafeSupplier.get();
 	}
@@ -165,7 +176,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -185,7 +198,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -205,7 +220,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -225,7 +242,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -245,7 +264,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFormPages(UnsafeSupplier<FormPages[], Throwable> formPagesUnsafeSupplier) {
+	public void setFormPages(
+				UnsafeSupplier<FormPages[], Throwable> formPagesUnsafeSupplier) {
+
 				try {
 					formPages = formPagesUnsafeSupplier.get();
 	}
@@ -265,7 +286,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -285,7 +308,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}
@@ -305,7 +330,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setSuccessPage(UnsafeSupplier<SuccessPage, Throwable> successPageUnsafeSupplier) {
+	public void setSuccessPage(
+				UnsafeSupplier<SuccessPage, Throwable> successPageUnsafeSupplier) {
+
 				try {
 					successPage = successPageUnsafeSupplier.get();
 	}

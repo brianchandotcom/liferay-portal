@@ -59,7 +59,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-web-experience/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-web-experience/v1.0");
 	}
 
 	@After
@@ -80,47 +81,55 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetStructuredContentStructuredContentImagesPage( Long structuredContentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetStructuredContentStructuredContentImagesPage(
+				Long structuredContentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images",
-				structuredContentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images",
+					structuredContentId
+				);
 	}
-	protected Response invokeDeleteStructuredContentContentDocument( Long structuredContentId , Long contentDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteStructuredContentContentDocument(
+				Long structuredContentId,Long contentDocumentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
-				structuredContentId , contentDocumentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+					structuredContentId,contentDocumentId
+				);
 	}
-	protected Response invokeGetStructuredContentContentDocument( Long structuredContentId , Long contentDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetStructuredContentContentDocument(
+				Long structuredContentId,Long contentDocumentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
-				structuredContentId , contentDocumentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+					structuredContentId,contentDocumentId
+				);
 	}
 
 	protected StructuredContentImage randomStructuredContentImage() {
 		return new StructuredContentImageImpl() {
 			{
-contentUrl = RandomTestUtil.randomString();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();			}
+
+						contentUrl = RandomTestUtil.randomString();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						encodingFormat = RandomTestUtil.randomString();
+						fileExtension = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						title = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -137,7 +146,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+
 				try {
 					contentUrl = contentUrlUnsafeSupplier.get();
 	}
@@ -157,7 +168,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -177,7 +190,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -197,7 +212,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -217,7 +234,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+
 				try {
 					encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
@@ -237,7 +256,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtension(
+				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+
 				try {
 					fileExtension = fileExtensionUnsafeSupplier.get();
 	}
@@ -257,7 +278,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -277,7 +300,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+
 				try {
 					sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
@@ -297,7 +322,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
 				try {
 					title = titleUnsafeSupplier.get();
 	}

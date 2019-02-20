@@ -46,23 +46,27 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseContentStructureResourceImpl implements ContentStructureResource {
 
+	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<ContentStructure> getContentSpaceContentStructuresPage( @PathParam("content-space-id") Long contentSpaceId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<ContentStructure> getContentSpaceContentStructuresPage(
+	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public ContentStructure getContentStructure( @PathParam("content-structure-id") Long contentStructureId ) throws Exception {
-			return new ContentStructureImpl();
+	public ContentStructure getContentStructure(
+	@PathParam("content-structure-id") Long contentStructureId)
+			throws Exception {
 
+				return new ContentStructureImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

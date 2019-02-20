@@ -57,7 +57,8 @@ public abstract class BasePhoneResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -74,34 +75,40 @@ public abstract class BasePhoneResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentPhonesPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetGenericParentPhonesPage(
+				Object genericParentId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/phones",
-				genericParentId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/phones",
+					genericParentId
+				);
 	}
-	protected Response invokeGetPhone( Long phoneId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetPhone(
+				Long phoneId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/phones/{phone-id}",
-				phoneId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/phones/{phone-id}",
+					phoneId
+				);
 	}
 
 	protected Phone randomPhone() {
 		return new PhoneImpl() {
 			{
-extension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-phoneNumber = RandomTestUtil.randomString();
-phoneType = RandomTestUtil.randomString();			}
+
+						extension = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						phoneNumber = RandomTestUtil.randomString();
+						phoneType = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -118,7 +125,9 @@ phoneType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setExtension(UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
+	public void setExtension(
+				UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
+
 				try {
 					extension = extensionUnsafeSupplier.get();
 	}
@@ -138,7 +147,9 @@ phoneType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -158,7 +169,9 @@ phoneType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setPhoneNumber(UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
+	public void setPhoneNumber(
+				UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
+
 				try {
 					phoneNumber = phoneNumberUnsafeSupplier.get();
 	}
@@ -178,7 +191,9 @@ phoneType = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setPhoneType(UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
+	public void setPhoneType(
+				UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
+
 				try {
 					phoneType = phoneTypeUnsafeSupplier.get();
 	}

@@ -27,18 +27,27 @@ public interface WebUrl {
 
 	public Long getId();
 
-	public void setId(Long id);
+	public void setId(
+			Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier);
 	public String getUrl();
 
-	public void setUrl(String url);
+	public void setUrl(
+			String url);
 
-	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier);
+	public void setUrl(
+			UnsafeSupplier<String, Throwable>
+				urlUnsafeSupplier);
 	public String getUrlType();
 
-	public void setUrlType(String urlType);
+	public void setUrlType(
+			String urlType);
 
-	public void setUrlType(UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier);
+	public void setUrlType(
+			UnsafeSupplier<String, Throwable>
+				urlTypeUnsafeSupplier);
 
 }

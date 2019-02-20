@@ -57,7 +57,8 @@ public abstract class BaseEmailResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -74,33 +75,39 @@ public abstract class BaseEmailResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentEmailsPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetGenericParentEmailsPage(
+				Object genericParentId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/emails",
-				genericParentId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/emails",
+					genericParentId
+				);
 	}
-	protected Response invokeGetEmail( Long emailId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetEmail(
+				Long emailId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/emails/{email-id}",
-				emailId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/emails/{email-id}",
+					emailId
+				);
 	}
 
 	protected Email randomEmail() {
 		return new EmailImpl() {
 			{
-email = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-type = RandomTestUtil.randomString();			}
+
+						email = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						type = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -117,7 +124,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+	public void setEmail(
+				UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+
 				try {
 					email = emailUnsafeSupplier.get();
 	}
@@ -137,7 +146,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -157,7 +168,9 @@ type = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+	public void setType(
+				UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+
 				try {
 					type = typeUnsafeSupplier.get();
 	}

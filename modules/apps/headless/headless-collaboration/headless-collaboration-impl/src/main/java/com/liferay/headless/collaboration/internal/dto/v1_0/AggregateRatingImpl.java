@@ -40,14 +40,20 @@ public class AggregateRatingImpl implements AggregateRating {
 			return bestRating;
 	}
 
-	public void setBestRating(Number bestRating) {
+	public void setBestRating(
+			Number bestRating) {
+
 			this.bestRating = bestRating;
 	}
 
 	@JsonIgnore
-	public void setBestRating(UnsafeSupplier<Number, Throwable> bestRatingUnsafeSupplier) {
+	public void setBestRating(
+			UnsafeSupplier<Number, Throwable>
+				bestRatingUnsafeSupplier) {
+
 			try {
-				bestRating = bestRatingUnsafeSupplier.get();
+				bestRating =
+					bestRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class AggregateRatingImpl implements AggregateRating {
 			return ratingCount;
 	}
 
-	public void setRatingCount(Number ratingCount) {
+	public void setRatingCount(
+			Number ratingCount) {
+
 			this.ratingCount = ratingCount;
 	}
 
 	@JsonIgnore
-	public void setRatingCount(UnsafeSupplier<Number, Throwable> ratingCountUnsafeSupplier) {
+	public void setRatingCount(
+			UnsafeSupplier<Number, Throwable>
+				ratingCountUnsafeSupplier) {
+
 			try {
-				ratingCount = ratingCountUnsafeSupplier.get();
+				ratingCount =
+					ratingCountUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class AggregateRatingImpl implements AggregateRating {
 			return ratingValue;
 	}
 
-	public void setRatingValue(Number ratingValue) {
+	public void setRatingValue(
+			Number ratingValue) {
+
 			this.ratingValue = ratingValue;
 	}
 
 	@JsonIgnore
-	public void setRatingValue(UnsafeSupplier<Number, Throwable> ratingValueUnsafeSupplier) {
+	public void setRatingValue(
+			UnsafeSupplier<Number, Throwable>
+				ratingValueUnsafeSupplier) {
+
 			try {
-				ratingValue = ratingValueUnsafeSupplier.get();
+				ratingValue =
+					ratingValueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class AggregateRatingImpl implements AggregateRating {
 			return worstRating;
 	}
 
-	public void setWorstRating(Number worstRating) {
+	public void setWorstRating(
+			Number worstRating) {
+
 			this.worstRating = worstRating;
 	}
 
 	@JsonIgnore
-	public void setWorstRating(UnsafeSupplier<Number, Throwable> worstRatingUnsafeSupplier) {
+	public void setWorstRating(
+			UnsafeSupplier<Number, Throwable>
+				worstRatingUnsafeSupplier) {
+
 			try {
-				worstRating = worstRatingUnsafeSupplier.get();
+				worstRating =
+					worstRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

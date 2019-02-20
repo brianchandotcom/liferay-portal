@@ -32,11 +32,15 @@ import javax.annotation.Generated;
 @Generated("")
 public interface CommentResource {
 
-	public Comment getComment( Long commentId ) throws Exception;
-
-	public Page<Comment> getCommentCommentsPage( Long commentId , Pagination pagination ) throws Exception;
-
-	public Page<Comment> getDocumentCommentsPage( Long documentId , Pagination pagination ) throws Exception;
+	public Comment getComment(
+				Long commentId)
+			throws Exception;
+	public Page<Comment> getCommentCommentsPage(
+				Long commentId,Pagination pagination)
+			throws Exception;
+	public Page<Comment> getDocumentCommentsPage(
+				Long documentId,Pagination pagination)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

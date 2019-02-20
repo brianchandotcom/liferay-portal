@@ -63,7 +63,8 @@ public abstract class BaseContentStructureResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-web-experience/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-web-experience/v1.0");
 	}
 
 	@After
@@ -80,36 +81,42 @@ public abstract class BaseContentStructureResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceContentStructuresPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceContentStructuresPage(
+				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/content-structures",
-				contentSpaceId , filter  , sorts
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/content-structures",
+					contentSpaceId,filter,sorts
+				);
 	}
-	protected Response invokeGetContentStructure( Long contentStructureId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentStructure(
+				Long contentStructureId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-structures/{content-structure-id}",
-				contentStructureId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-structures/{content-structure-id}",
+					contentStructureId
+				);
 	}
 
 	protected ContentStructure randomContentStructure() {
 		return new ContentStructureImpl() {
 			{
-contentSpace = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();			}
+
+						contentSpace = RandomTestUtil.randomLong();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -126,7 +133,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+
 				try {
 					availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
@@ -146,7 +155,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
 				try {
 					contentSpace = contentSpaceUnsafeSupplier.get();
 	}
@@ -166,7 +177,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -186,7 +199,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -206,7 +221,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -226,7 +243,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -246,7 +265,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFields(UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
+	public void setFields(
+				UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
+
 				try {
 					fields = fieldsUnsafeSupplier.get();
 	}
@@ -266,7 +287,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -286,7 +309,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}

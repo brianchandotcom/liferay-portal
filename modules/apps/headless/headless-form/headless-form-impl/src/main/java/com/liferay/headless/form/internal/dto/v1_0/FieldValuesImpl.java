@@ -41,14 +41,20 @@ public class FieldValuesImpl implements FieldValues {
 			return document;
 	}
 
-	public void setDocument(FormDocument document) {
+	public void setDocument(
+			FormDocument document) {
+
 			this.document = document;
 	}
 
 	@JsonIgnore
-	public void setDocument(UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
+	public void setDocument(
+			UnsafeSupplier<FormDocument, Throwable>
+				documentUnsafeSupplier) {
+
 			try {
-				document = documentUnsafeSupplier.get();
+				document =
+					documentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -62,14 +68,20 @@ public class FieldValuesImpl implements FieldValues {
 			return documentId;
 	}
 
-	public void setDocumentId(Long documentId) {
+	public void setDocumentId(
+			Long documentId) {
+
 			this.documentId = documentId;
 	}
 
 	@JsonIgnore
-	public void setDocumentId(UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
+	public void setDocumentId(
+			UnsafeSupplier<Long, Throwable>
+				documentIdUnsafeSupplier) {
+
 			try {
-				documentId = documentIdUnsafeSupplier.get();
+				documentId =
+					documentIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -83,14 +95,20 @@ public class FieldValuesImpl implements FieldValues {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -104,14 +122,20 @@ public class FieldValuesImpl implements FieldValues {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -125,14 +149,20 @@ public class FieldValuesImpl implements FieldValues {
 			return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(
+			String value) {
+
 			this.value = value;
 	}
 
 	@JsonIgnore
-	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
+	public void setValue(
+			UnsafeSupplier<String, Throwable>
+				valueUnsafeSupplier) {
+
 			try {
-				value = valueUnsafeSupplier.get();
+				value =
+					valueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

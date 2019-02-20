@@ -40,14 +40,20 @@ public class OptionsImpl implements Options {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class OptionsImpl implements Options {
 			return label;
 	}
 
-	public void setLabel(String label) {
+	public void setLabel(
+			String label) {
+
 			this.label = label;
 	}
 
 	@JsonIgnore
-	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+	public void setLabel(
+			UnsafeSupplier<String, Throwable>
+				labelUnsafeSupplier) {
+
 			try {
-				label = labelUnsafeSupplier.get();
+				label =
+					labelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class OptionsImpl implements Options {
 			return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(
+			String value) {
+
 			this.value = value;
 	}
 
 	@JsonIgnore
-	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
+	public void setValue(
+			UnsafeSupplier<String, Throwable>
+				valueUnsafeSupplier) {
+
 			try {
-				value = valueUnsafeSupplier.get();
+				value =
+					valueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

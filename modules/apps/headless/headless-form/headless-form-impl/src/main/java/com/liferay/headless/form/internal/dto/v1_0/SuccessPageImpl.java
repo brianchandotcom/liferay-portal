@@ -40,14 +40,20 @@ public class SuccessPageImpl implements SuccessPage {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class SuccessPageImpl implements SuccessPage {
 			return headline;
 	}
 
-	public void setHeadline(String headline) {
+	public void setHeadline(
+			String headline) {
+
 			this.headline = headline;
 	}
 
 	@JsonIgnore
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+	public void setHeadline(
+			UnsafeSupplier<String, Throwable>
+				headlineUnsafeSupplier) {
+
 			try {
-				headline = headlineUnsafeSupplier.get();
+				headline =
+					headlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class SuccessPageImpl implements SuccessPage {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -40,14 +40,20 @@ public class ImageImpl implements Image {
 			return contentUrl;
 	}
 
-	public void setContentUrl(String contentUrl) {
+	public void setContentUrl(
+			String contentUrl) {
+
 			this.contentUrl = contentUrl;
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+			UnsafeSupplier<String, Throwable>
+				contentUrlUnsafeSupplier) {
+
 			try {
-				contentUrl = contentUrlUnsafeSupplier.get();
+				contentUrl =
+					contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class ImageImpl implements Image {
 			return imageId;
 	}
 
-	public void setImageId(Long imageId) {
+	public void setImageId(
+			Long imageId) {
+
 			this.imageId = imageId;
 	}
 
 	@JsonIgnore
-	public void setImageId(UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
+	public void setImageId(
+			UnsafeSupplier<Long, Throwable>
+				imageIdUnsafeSupplier) {
+
 			try {
-				imageId = imageIdUnsafeSupplier.get();
+				imageId =
+					imageIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class ImageImpl implements Image {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

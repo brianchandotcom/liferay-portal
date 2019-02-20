@@ -40,14 +40,20 @@ public class CategoriesImpl implements Categories {
 			return categoryId;
 	}
 
-	public void setCategoryId(Long categoryId) {
+	public void setCategoryId(
+			Long categoryId) {
+
 			this.categoryId = categoryId;
 	}
 
 	@JsonIgnore
-	public void setCategoryId(UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier) {
+	public void setCategoryId(
+			UnsafeSupplier<Long, Throwable>
+				categoryIdUnsafeSupplier) {
+
 			try {
-				categoryId = categoryIdUnsafeSupplier.get();
+				categoryId =
+					categoryIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class CategoriesImpl implements Categories {
 			return categoryName;
 	}
 
-	public void setCategoryName(String categoryName) {
+	public void setCategoryName(
+			String categoryName) {
+
 			this.categoryName = categoryName;
 	}
 
 	@JsonIgnore
-	public void setCategoryName(UnsafeSupplier<String, Throwable> categoryNameUnsafeSupplier) {
+	public void setCategoryName(
+			UnsafeSupplier<String, Throwable>
+				categoryNameUnsafeSupplier) {
+
 			try {
-				categoryName = categoryNameUnsafeSupplier.get();
+				categoryName =
+					categoryNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

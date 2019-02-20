@@ -32,21 +32,30 @@ import javax.annotation.Generated;
 @Generated("")
 public interface UserAccountResource {
 
-	public UserAccount getMyUserAccount( Long myUserAccountId ) throws Exception;
-
-	public Page<UserAccount> getOrganizationUserAccountsPage( Long organizationId , Pagination pagination ) throws Exception;
-
-	public Page<UserAccount> getUserAccountsPage( String fullnamequery , Pagination pagination ) throws Exception;
-
-	public UserAccount postUserAccount( UserAccount userAccount ) throws Exception;
-
-	public boolean deleteUserAccount( Long userAccountId ) throws Exception;
-
-	public UserAccount getUserAccount( Long userAccountId ) throws Exception;
-
-	public UserAccount putUserAccount( Long userAccountId , UserAccount userAccount ) throws Exception;
-
-	public Page<UserAccount> getWebSiteUserAccountsPage( Long webSiteId , Pagination pagination ) throws Exception;
+	public UserAccount getMyUserAccount(
+				Long myUserAccountId)
+			throws Exception;
+	public Page<UserAccount> getOrganizationUserAccountsPage(
+				Long organizationId,Pagination pagination)
+			throws Exception;
+	public Page<UserAccount> getUserAccountsPage(
+				String fullnamequery,Pagination pagination)
+			throws Exception;
+	public UserAccount postUserAccount(
+				UserAccount userAccount)
+			throws Exception;
+	public boolean deleteUserAccount(
+				Long userAccountId)
+			throws Exception;
+	public UserAccount getUserAccount(
+				Long userAccountId)
+			throws Exception;
+	public UserAccount putUserAccount(
+				Long userAccountId,UserAccount userAccount)
+			throws Exception;
+	public Page<UserAccount> getWebSiteUserAccountsPage(
+				Long webSiteId,Pagination pagination)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

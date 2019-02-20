@@ -40,14 +40,20 @@ public class WebUrlImpl implements WebUrl {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class WebUrlImpl implements WebUrl {
 			return url;
 	}
 
-	public void setUrl(String url) {
+	public void setUrl(
+			String url) {
+
 			this.url = url;
 	}
 
 	@JsonIgnore
-	public void setUrl(UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+	public void setUrl(
+			UnsafeSupplier<String, Throwable>
+				urlUnsafeSupplier) {
+
 			try {
-				url = urlUnsafeSupplier.get();
+				url =
+					urlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class WebUrlImpl implements WebUrl {
 			return urlType;
 	}
 
-	public void setUrlType(String urlType) {
+	public void setUrlType(
+			String urlType) {
+
 			this.urlType = urlType;
 	}
 
 	@JsonIgnore
-	public void setUrlType(UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
+	public void setUrlType(
+			UnsafeSupplier<String, Throwable>
+				urlTypeUnsafeSupplier) {
+
 			try {
-				urlType = urlTypeUnsafeSupplier.get();
+				urlType =
+					urlTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

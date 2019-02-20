@@ -44,14 +44,20 @@ public class OrganizationImpl implements Organization {
 			return comment;
 	}
 
-	public void setComment(String comment) {
+	public void setComment(
+			String comment) {
+
 			this.comment = comment;
 	}
 
 	@JsonIgnore
-	public void setComment(UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
+	public void setComment(
+			UnsafeSupplier<String, Throwable>
+				commentUnsafeSupplier) {
+
 			try {
-				comment = commentUnsafeSupplier.get();
+				comment =
+					commentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -65,14 +71,20 @@ public class OrganizationImpl implements Organization {
 			return contactInformation;
 	}
 
-	public void setContactInformation(ContactInformation contactInformation) {
+	public void setContactInformation(
+			ContactInformation contactInformation) {
+
 			this.contactInformation = contactInformation;
 	}
 
 	@JsonIgnore
-	public void setContactInformation(UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
+	public void setContactInformation(
+			UnsafeSupplier<ContactInformation, Throwable>
+				contactInformationUnsafeSupplier) {
+
 			try {
-				contactInformation = contactInformationUnsafeSupplier.get();
+				contactInformation =
+					contactInformationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -86,14 +98,20 @@ public class OrganizationImpl implements Organization {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -107,14 +125,20 @@ public class OrganizationImpl implements Organization {
 			return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(
+			Location location) {
+
 			this.location = location;
 	}
 
 	@JsonIgnore
-	public void setLocation(UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
+	public void setLocation(
+			UnsafeSupplier<Location, Throwable>
+				locationUnsafeSupplier) {
+
 			try {
-				location = locationUnsafeSupplier.get();
+				location =
+					locationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -128,14 +152,20 @@ public class OrganizationImpl implements Organization {
 			return logo;
 	}
 
-	public void setLogo(String logo) {
+	public void setLogo(
+			String logo) {
+
 			this.logo = logo;
 	}
 
 	@JsonIgnore
-	public void setLogo(UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
+	public void setLogo(
+			UnsafeSupplier<String, Throwable>
+				logoUnsafeSupplier) {
+
 			try {
-				logo = logoUnsafeSupplier.get();
+				logo =
+					logoUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -149,14 +179,20 @@ public class OrganizationImpl implements Organization {
 			return members;
 	}
 
-	public void setMembers(UserAccount[] members) {
+	public void setMembers(
+			UserAccount[] members) {
+
 			this.members = members;
 	}
 
 	@JsonIgnore
-	public void setMembers(UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
+	public void setMembers(
+			UnsafeSupplier<UserAccount[], Throwable>
+				membersUnsafeSupplier) {
+
 			try {
-				members = membersUnsafeSupplier.get();
+				members =
+					membersUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -170,14 +206,20 @@ public class OrganizationImpl implements Organization {
 			return membersIds;
 	}
 
-	public void setMembersIds(Long[] membersIds) {
+	public void setMembersIds(
+			Long[] membersIds) {
+
 			this.membersIds = membersIds;
 	}
 
 	@JsonIgnore
-	public void setMembersIds(UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
+	public void setMembersIds(
+			UnsafeSupplier<Long[], Throwable>
+				membersIdsUnsafeSupplier) {
+
 			try {
-				membersIds = membersIdsUnsafeSupplier.get();
+				membersIds =
+					membersIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -191,14 +233,20 @@ public class OrganizationImpl implements Organization {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -212,14 +260,20 @@ public class OrganizationImpl implements Organization {
 			return parentOrganization;
 	}
 
-	public void setParentOrganization(Organization parentOrganization) {
+	public void setParentOrganization(
+			Organization parentOrganization) {
+
 			this.parentOrganization = parentOrganization;
 	}
 
 	@JsonIgnore
-	public void setParentOrganization(UnsafeSupplier<Organization, Throwable> parentOrganizationUnsafeSupplier) {
+	public void setParentOrganization(
+			UnsafeSupplier<Organization, Throwable>
+				parentOrganizationUnsafeSupplier) {
+
 			try {
-				parentOrganization = parentOrganizationUnsafeSupplier.get();
+				parentOrganization =
+					parentOrganizationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -233,14 +287,20 @@ public class OrganizationImpl implements Organization {
 			return parentOrganizationId;
 	}
 
-	public void setParentOrganizationId(Long parentOrganizationId) {
+	public void setParentOrganizationId(
+			Long parentOrganizationId) {
+
 			this.parentOrganizationId = parentOrganizationId;
 	}
 
 	@JsonIgnore
-	public void setParentOrganizationId(UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
+	public void setParentOrganizationId(
+			UnsafeSupplier<Long, Throwable>
+				parentOrganizationIdUnsafeSupplier) {
+
 			try {
-				parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
+				parentOrganizationId =
+					parentOrganizationIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -254,14 +314,20 @@ public class OrganizationImpl implements Organization {
 			return services;
 	}
 
-	public void setServices(Services[] services) {
+	public void setServices(
+			Services[] services) {
+
 			this.services = services;
 	}
 
 	@JsonIgnore
-	public void setServices(UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
+	public void setServices(
+			UnsafeSupplier<Services[], Throwable>
+				servicesUnsafeSupplier) {
+
 			try {
-				services = servicesUnsafeSupplier.get();
+				services =
+					servicesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -275,14 +341,20 @@ public class OrganizationImpl implements Organization {
 			return subOrganization;
 	}
 
-	public void setSubOrganization(Organization[] subOrganization) {
+	public void setSubOrganization(
+			Organization[] subOrganization) {
+
 			this.subOrganization = subOrganization;
 	}
 
 	@JsonIgnore
-	public void setSubOrganization(UnsafeSupplier<Organization[], Throwable> subOrganizationUnsafeSupplier) {
+	public void setSubOrganization(
+			UnsafeSupplier<Organization[], Throwable>
+				subOrganizationUnsafeSupplier) {
+
 			try {
-				subOrganization = subOrganizationUnsafeSupplier.get();
+				subOrganization =
+					subOrganizationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -296,14 +368,20 @@ public class OrganizationImpl implements Organization {
 			return subOrganizationIds;
 	}
 
-	public void setSubOrganizationIds(Long[] subOrganizationIds) {
+	public void setSubOrganizationIds(
+			Long[] subOrganizationIds) {
+
 			this.subOrganizationIds = subOrganizationIds;
 	}
 
 	@JsonIgnore
-	public void setSubOrganizationIds(UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
+	public void setSubOrganizationIds(
+			UnsafeSupplier<Long[], Throwable>
+				subOrganizationIdsUnsafeSupplier) {
+
 			try {
-				subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
+				subOrganizationIds =
+					subOrganizationIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

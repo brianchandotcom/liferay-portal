@@ -40,14 +40,20 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 			return contentUrl;
 	}
 
-	public void setContentUrl(String contentUrl) {
+	public void setContentUrl(
+			String contentUrl) {
+
 			this.contentUrl = contentUrl;
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+			UnsafeSupplier<String, Throwable>
+				contentUrlUnsafeSupplier) {
+
 			try {
-				contentUrl = contentUrlUnsafeSupplier.get();
+				contentUrl =
+					contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 			return encodingFormat;
 	}
 
-	public void setEncodingFormat(String encodingFormat) {
+	public void setEncodingFormat(
+			String encodingFormat) {
+
 			this.encodingFormat = encodingFormat;
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+			UnsafeSupplier<String, Throwable>
+				encodingFormatUnsafeSupplier) {
+
 			try {
-				encodingFormat = encodingFormatUnsafeSupplier.get();
+				encodingFormat =
+					encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 			return fileExtension;
 	}
 
-	public void setFileExtension(String fileExtension) {
+	public void setFileExtension(
+			String fileExtension) {
+
 			this.fileExtension = fileExtension;
 	}
 
 	@JsonIgnore
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtension(
+			UnsafeSupplier<String, Throwable>
+				fileExtensionUnsafeSupplier) {
+
 			try {
-				fileExtension = fileExtensionUnsafeSupplier.get();
+				fileExtension =
+					fileExtensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,14 +148,20 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 			return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(
+			Number sizeInBytes) {
+
 			this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+			UnsafeSupplier<Number, Throwable>
+				sizeInBytesUnsafeSupplier) {
+
 			try {
-				sizeInBytes = sizeInBytesUnsafeSupplier.get();
+				sizeInBytes =
+					sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -145,14 +175,20 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 			return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(
+			String title) {
+
 			this.title = title;
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+			UnsafeSupplier<String, Throwable>
+				titleUnsafeSupplier) {
+
 			try {
-				title = titleUnsafeSupplier.get();
+				title =
+					titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

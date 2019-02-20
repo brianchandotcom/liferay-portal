@@ -50,71 +50,85 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
+	@Override
 	@DELETE
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public boolean deleteCategory( @PathParam("category-id") Long categoryId ) throws Exception {
-			return false;
+	public boolean deleteCategory(
+	@PathParam("category-id") Long categoryId)
+			throws Exception {
 
+				return false;
 	}
+	@Override
 	@GET
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Category getCategory( @PathParam("category-id") Long categoryId ) throws Exception {
-			return new CategoryImpl();
+	public Category getCategory(
+	@PathParam("category-id") Long categoryId)
+			throws Exception {
 
+				return new CategoryImpl();
 	}
+	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Category putCategory( @PathParam("category-id") Long categoryId , Category category ) throws Exception {
-			return new CategoryImpl();
+	public Category putCategory(
+	@PathParam("category-id") Long categoryId,Category category)
+			throws Exception {
 
+				return new CategoryImpl();
 	}
+	@Override
 	@GET
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Category> getCategoryCategoriesPage( @PathParam("category-id") Long categoryId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Category> getCategoryCategoriesPage(
+	@PathParam("category-id") Long categoryId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Category postCategoryCategory( @PathParam("category-id") Long categoryId , Category category ) throws Exception {
-			return new CategoryImpl();
+	public Category postCategoryCategory(
+	@PathParam("category-id") Long categoryId,Category category)
+			throws Exception {
 
+				return new CategoryImpl();
 	}
+	@Override
 	@GET
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Category> getVocabularyCategoriesPage( @PathParam("vocabulary-id") Long vocabularyId , @Context Filter filter , @Context Pagination pagination , @Context Sort[] sorts ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Category> getVocabularyCategoriesPage(
+	@PathParam("vocabulary-id") Long vocabularyId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Category postVocabularyCategory( @PathParam("vocabulary-id") Long vocabularyId , Category category ) throws Exception {
-			return new CategoryImpl();
+	public Category postVocabularyCategory(
+	@PathParam("vocabulary-id") Long vocabularyId,Category category)
+			throws Exception {
 
+				return new CategoryImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

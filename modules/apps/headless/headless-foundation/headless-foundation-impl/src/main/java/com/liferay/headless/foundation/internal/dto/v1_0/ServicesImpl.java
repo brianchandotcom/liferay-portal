@@ -41,14 +41,20 @@ public class ServicesImpl implements Services {
 			return hoursAvailable;
 	}
 
-	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
+	public void setHoursAvailable(
+			HoursAvailable[] hoursAvailable) {
+
 			this.hoursAvailable = hoursAvailable;
 	}
 
 	@JsonIgnore
-	public void setHoursAvailable(UnsafeSupplier<HoursAvailable[], Throwable> hoursAvailableUnsafeSupplier) {
+	public void setHoursAvailable(
+			UnsafeSupplier<HoursAvailable[], Throwable>
+				hoursAvailableUnsafeSupplier) {
+
 			try {
-				hoursAvailable = hoursAvailableUnsafeSupplier.get();
+				hoursAvailable =
+					hoursAvailableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -62,14 +68,20 @@ public class ServicesImpl implements Services {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -83,14 +95,20 @@ public class ServicesImpl implements Services {
 			return serviceType;
 	}
 
-	public void setServiceType(String serviceType) {
+	public void setServiceType(
+			String serviceType) {
+
 			this.serviceType = serviceType;
 	}
 
 	@JsonIgnore
-	public void setServiceType(UnsafeSupplier<String, Throwable> serviceTypeUnsafeSupplier) {
+	public void setServiceType(
+			UnsafeSupplier<String, Throwable>
+				serviceTypeUnsafeSupplier) {
+
 			try {
-				serviceType = serviceTypeUnsafeSupplier.get();
+				serviceType =
+					serviceTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

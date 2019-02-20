@@ -48,14 +48,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return aggregateRating;
 	}
 
-	public void setAggregateRating(AggregateRating aggregateRating) {
+	public void setAggregateRating(
+			AggregateRating aggregateRating) {
+
 			this.aggregateRating = aggregateRating;
 	}
 
 	@JsonIgnore
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+	public void setAggregateRating(
+			UnsafeSupplier<AggregateRating, Throwable>
+				aggregateRatingUnsafeSupplier) {
+
 			try {
-				aggregateRating = aggregateRatingUnsafeSupplier.get();
+				aggregateRating =
+					aggregateRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -69,14 +75,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return availableLanguages;
 	}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
+	public void setAvailableLanguages(
+			String[] availableLanguages) {
+
 			this.availableLanguages = availableLanguages;
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
+
 			try {
-				availableLanguages = availableLanguagesUnsafeSupplier.get();
+				availableLanguages =
+					availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -90,14 +102,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return categories;
 	}
 
-	public void setCategories(Categories[] categories) {
+	public void setCategories(
+			Categories[] categories) {
+
 			this.categories = categories;
 	}
 
 	@JsonIgnore
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+	public void setCategories(
+			UnsafeSupplier<Categories[], Throwable>
+				categoriesUnsafeSupplier) {
+
 			try {
-				categories = categoriesUnsafeSupplier.get();
+				categories =
+					categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -111,14 +129,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return comment;
 	}
 
-	public void setComment(Comment[] comment) {
+	public void setComment(
+			Comment[] comment) {
+
 			this.comment = comment;
 	}
 
 	@JsonIgnore
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+	public void setComment(
+			UnsafeSupplier<Comment[], Throwable>
+				commentUnsafeSupplier) {
+
 			try {
-				comment = commentUnsafeSupplier.get();
+				comment =
+					commentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -132,14 +156,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return contentSpace;
 	}
 
-	public void setContentSpace(Long contentSpace) {
+	public void setContentSpace(
+			Long contentSpace) {
+
 			this.contentSpace = contentSpace;
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+			UnsafeSupplier<Long, Throwable>
+				contentSpaceUnsafeSupplier) {
+
 			try {
-				contentSpace = contentSpaceUnsafeSupplier.get();
+				contentSpace =
+					contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -153,14 +183,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return contentStructureId;
 	}
 
-	public void setContentStructureId(Long contentStructureId) {
+	public void setContentStructureId(
+			Long contentStructureId) {
+
 			this.contentStructureId = contentStructureId;
 	}
 
 	@JsonIgnore
-	public void setContentStructureId(UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
+	public void setContentStructureId(
+			UnsafeSupplier<Long, Throwable>
+				contentStructureIdUnsafeSupplier) {
+
 			try {
-				contentStructureId = contentStructureIdUnsafeSupplier.get();
+				contentStructureId =
+					contentStructureIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -174,14 +210,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return creator;
 	}
 
-	public void setCreator(Creator creator) {
+	public void setCreator(
+			Creator creator) {
+
 			this.creator = creator;
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier) {
+
 			try {
-				creator = creatorUnsafeSupplier.get();
+				creator =
+					creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -195,14 +237,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(
+			Date dateCreated) {
+
 			this.dateCreated = dateCreated;
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier) {
+
 			try {
-				dateCreated = dateCreatedUnsafeSupplier.get();
+				dateCreated =
+					dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -216,14 +264,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return dateModified;
 	}
 
-	public void setDateModified(Date dateModified) {
+	public void setDateModified(
+			Date dateModified) {
+
 			this.dateModified = dateModified;
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier) {
+
 			try {
-				dateModified = dateModifiedUnsafeSupplier.get();
+				dateModified =
+					dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -237,14 +291,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return datePublished;
 	}
 
-	public void setDatePublished(Date datePublished) {
+	public void setDatePublished(
+			Date datePublished) {
+
 			this.datePublished = datePublished;
 	}
 
 	@JsonIgnore
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+	public void setDatePublished(
+			UnsafeSupplier<Date, Throwable>
+				datePublishedUnsafeSupplier) {
+
 			try {
-				datePublished = datePublishedUnsafeSupplier.get();
+				datePublished =
+					datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -258,14 +318,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(
+			String description) {
+
 			this.description = description;
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier) {
+
 			try {
-				description = descriptionUnsafeSupplier.get();
+				description =
+					descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -279,14 +345,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -300,14 +372,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return keywords;
 	}
 
-	public void setKeywords(String[] keywords) {
+	public void setKeywords(
+			String[] keywords) {
+
 			this.keywords = keywords;
 	}
 
 	@JsonIgnore
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywords(
+			UnsafeSupplier<String[], Throwable>
+				keywordsUnsafeSupplier) {
+
 			try {
-				keywords = keywordsUnsafeSupplier.get();
+				keywords =
+					keywordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -321,14 +399,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return lastReviewed;
 	}
 
-	public void setLastReviewed(Date lastReviewed) {
+	public void setLastReviewed(
+			Date lastReviewed) {
+
 			this.lastReviewed = lastReviewed;
 	}
 
 	@JsonIgnore
-	public void setLastReviewed(UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
+	public void setLastReviewed(
+			UnsafeSupplier<Date, Throwable>
+				lastReviewedUnsafeSupplier) {
+
 			try {
-				lastReviewed = lastReviewedUnsafeSupplier.get();
+				lastReviewed =
+					lastReviewedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -342,14 +426,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return renderedContentsByTemplate;
 	}
 
-	public void setRenderedContentsByTemplate(RenderedContentsByTemplate[] renderedContentsByTemplate) {
+	public void setRenderedContentsByTemplate(
+			RenderedContentsByTemplate[] renderedContentsByTemplate) {
+
 			this.renderedContentsByTemplate = renderedContentsByTemplate;
 	}
 
 	@JsonIgnore
-	public void setRenderedContentsByTemplate(UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier) {
+	public void setRenderedContentsByTemplate(
+			UnsafeSupplier<RenderedContentsByTemplate[], Throwable>
+				renderedContentsByTemplateUnsafeSupplier) {
+
 			try {
-				renderedContentsByTemplate = renderedContentsByTemplateUnsafeSupplier.get();
+				renderedContentsByTemplate =
+					renderedContentsByTemplateUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -363,14 +453,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(
+			String title) {
+
 			this.title = title;
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+			UnsafeSupplier<String, Throwable>
+				titleUnsafeSupplier) {
+
 			try {
-				title = titleUnsafeSupplier.get();
+				title =
+					titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -384,14 +480,20 @@ public class StructuredContentImpl implements StructuredContent {
 			return values;
 	}
 
-	public void setValues(Values[] values) {
+	public void setValues(
+			Values[] values) {
+
 			this.values = values;
 	}
 
 	@JsonIgnore
-	public void setValues(UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
+	public void setValues(
+			UnsafeSupplier<Values[], Throwable>
+				valuesUnsafeSupplier) {
+
 			try {
-				values = valuesUnsafeSupplier.get();
+				values =
+					valuesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -40,14 +40,20 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			return identifier;
 	}
 
-	public void setIdentifier(String identifier) {
+	public void setIdentifier(
+			String identifier) {
+
 			this.identifier = identifier;
 	}
 
 	@JsonIgnore
-	public void setIdentifier(UnsafeSupplier<String, Throwable> identifierUnsafeSupplier) {
+	public void setIdentifier(
+			UnsafeSupplier<String, Throwable>
+				identifierUnsafeSupplier) {
+
 			try {
-				identifier = identifierUnsafeSupplier.get();
+				identifier =
+					identifierUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 			return resourceType;
 	}
 
-	public void setResourceType(String resourceType) {
+	public void setResourceType(
+			String resourceType) {
+
 			this.resourceType = resourceType;
 	}
 
 	@JsonIgnore
-	public void setResourceType(UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier) {
+	public void setResourceType(
+			UnsafeSupplier<String, Throwable>
+				resourceTypeUnsafeSupplier) {
+
 			try {
-				resourceType = resourceTypeUnsafeSupplier.get();
+				resourceType =
+					resourceTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

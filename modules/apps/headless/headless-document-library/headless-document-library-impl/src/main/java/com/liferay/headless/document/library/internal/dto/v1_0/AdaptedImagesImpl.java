@@ -40,14 +40,20 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			return contentUrl;
 	}
 
-	public void setContentUrl(String contentUrl) {
+	public void setContentUrl(
+			String contentUrl) {
+
 			this.contentUrl = contentUrl;
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+			UnsafeSupplier<String, Throwable>
+				contentUrlUnsafeSupplier) {
+
 			try {
-				contentUrl = contentUrlUnsafeSupplier.get();
+				contentUrl =
+					contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			return height;
 	}
 
-	public void setHeight(Number height) {
+	public void setHeight(
+			Number height) {
+
 			this.height = height;
 	}
 
 	@JsonIgnore
-	public void setHeight(UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
+	public void setHeight(
+			UnsafeSupplier<Number, Throwable>
+				heightUnsafeSupplier) {
+
 			try {
-				height = heightUnsafeSupplier.get();
+				height =
+					heightUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			return resolutionName;
 	}
 
-	public void setResolutionName(String resolutionName) {
+	public void setResolutionName(
+			String resolutionName) {
+
 			this.resolutionName = resolutionName;
 	}
 
 	@JsonIgnore
-	public void setResolutionName(UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
+	public void setResolutionName(
+			UnsafeSupplier<String, Throwable>
+				resolutionNameUnsafeSupplier) {
+
 			try {
-				resolutionName = resolutionNameUnsafeSupplier.get();
+				resolutionName =
+					resolutionNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,14 +148,20 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(
+			Number sizeInBytes) {
+
 			this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+			UnsafeSupplier<Number, Throwable>
+				sizeInBytesUnsafeSupplier) {
+
 			try {
-				sizeInBytes = sizeInBytesUnsafeSupplier.get();
+				sizeInBytes =
+					sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -145,14 +175,20 @@ public class AdaptedImagesImpl implements AdaptedImages {
 			return width;
 	}
 
-	public void setWidth(Number width) {
+	public void setWidth(
+			Number width) {
+
 			this.width = width;
 	}
 
 	@JsonIgnore
-	public void setWidth(UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
+	public void setWidth(
+			UnsafeSupplier<Number, Throwable>
+				widthUnsafeSupplier) {
+
 			try {
-				width = widthUnsafeSupplier.get();
+				width =
+					widthUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

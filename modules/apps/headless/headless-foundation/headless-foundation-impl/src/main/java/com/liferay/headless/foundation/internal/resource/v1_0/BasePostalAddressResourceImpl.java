@@ -44,23 +44,27 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BasePostalAddressResourceImpl implements PostalAddressResource {
 
+	@Override
 	@GET
 	@Path("/addresses")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<PostalAddress> getGenericParentPostalAddressesPage( @PathParam("generic-parent-id") Object genericParentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<PostalAddress> getGenericParentPostalAddressesPage(
+	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/addresses/{address-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public PostalAddress getAddress( @PathParam("address-id") Long addressId ) throws Exception {
-			return new PostalAddressImpl();
+	public PostalAddress getAddress(
+	@PathParam("address-id") Long addressId)
+			throws Exception {
 
+				return new PostalAddressImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {

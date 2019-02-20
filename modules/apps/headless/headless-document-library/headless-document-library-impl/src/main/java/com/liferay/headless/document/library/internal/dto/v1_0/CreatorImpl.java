@@ -40,14 +40,20 @@ public class CreatorImpl implements Creator {
 			return additionalName;
 	}
 
-	public void setAdditionalName(String additionalName) {
+	public void setAdditionalName(
+			String additionalName) {
+
 			this.additionalName = additionalName;
 	}
 
 	@JsonIgnore
-	public void setAdditionalName(UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
+	public void setAdditionalName(
+			UnsafeSupplier<String, Throwable>
+				additionalNameUnsafeSupplier) {
+
 			try {
-				additionalName = additionalNameUnsafeSupplier.get();
+				additionalName =
+					additionalNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class CreatorImpl implements Creator {
 			return familyName;
 	}
 
-	public void setFamilyName(String familyName) {
+	public void setFamilyName(
+			String familyName) {
+
 			this.familyName = familyName;
 	}
 
 	@JsonIgnore
-	public void setFamilyName(UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
+	public void setFamilyName(
+			UnsafeSupplier<String, Throwable>
+				familyNameUnsafeSupplier) {
+
 			try {
-				familyName = familyNameUnsafeSupplier.get();
+				familyName =
+					familyNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class CreatorImpl implements Creator {
 			return givenName;
 	}
 
-	public void setGivenName(String givenName) {
+	public void setGivenName(
+			String givenName) {
+
 			this.givenName = givenName;
 	}
 
 	@JsonIgnore
-	public void setGivenName(UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
+	public void setGivenName(
+			UnsafeSupplier<String, Throwable>
+				givenNameUnsafeSupplier) {
+
 			try {
-				givenName = givenNameUnsafeSupplier.get();
+				givenName =
+					givenNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class CreatorImpl implements Creator {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,14 +148,20 @@ public class CreatorImpl implements Creator {
 			return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(
+			String image) {
+
 			this.image = image;
 	}
 
 	@JsonIgnore
-	public void setImage(UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
+	public void setImage(
+			UnsafeSupplier<String, Throwable>
+				imageUnsafeSupplier) {
+
 			try {
-				image = imageUnsafeSupplier.get();
+				image =
+					imageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -145,14 +175,20 @@ public class CreatorImpl implements Creator {
 			return name;
 	}
 
-	public void setName(String name) {
+	public void setName(
+			String name) {
+
 			this.name = name;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier) {
+
 			try {
-				name = nameUnsafeSupplier.get();
+				name =
+					nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -166,14 +202,20 @@ public class CreatorImpl implements Creator {
 			return profileURL;
 	}
 
-	public void setProfileURL(String profileURL) {
+	public void setProfileURL(
+			String profileURL) {
+
 			this.profileURL = profileURL;
 	}
 
 	@JsonIgnore
-	public void setProfileURL(UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
+	public void setProfileURL(
+			UnsafeSupplier<String, Throwable>
+				profileURLUnsafeSupplier) {
+
 			try {
-				profileURL = profileURLUnsafeSupplier.get();
+				profileURL =
+					profileURLUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

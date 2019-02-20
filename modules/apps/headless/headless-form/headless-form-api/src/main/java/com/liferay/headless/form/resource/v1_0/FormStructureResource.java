@@ -32,9 +32,12 @@ import javax.annotation.Generated;
 @Generated("")
 public interface FormStructureResource {
 
-	public Page<FormStructure> getContentSpaceFormStructuresPage( Long contentSpaceId , Pagination pagination ) throws Exception;
-
-	public FormStructure getFormStructure( Long formStructureId ) throws Exception;
+	public Page<FormStructure> getContentSpaceFormStructuresPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception;
+	public FormStructure getFormStructure(
+				Long formStructureId)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

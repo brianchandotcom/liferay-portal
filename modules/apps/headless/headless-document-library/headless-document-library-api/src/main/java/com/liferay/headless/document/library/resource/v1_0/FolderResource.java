@@ -32,19 +32,27 @@ import javax.annotation.Generated;
 @Generated("")
 public interface FolderResource {
 
-	public Page<Folder> getContentSpaceFoldersPage( Long contentSpaceId , Pagination pagination ) throws Exception;
-
-	public Folder postContentSpaceFolder( Long contentSpaceId , Folder folder ) throws Exception;
-
-	public boolean deleteFolder( Long folderId ) throws Exception;
-
-	public Folder getFolder( Long folderId ) throws Exception;
-
-	public Folder putFolder( Long folderId , Folder folder ) throws Exception;
-
-	public Page<Folder> getFolderFoldersPage( Long folderId , Pagination pagination ) throws Exception;
-
-	public Folder postFolderFolder( Long folderId , Folder folder ) throws Exception;
+	public Page<Folder> getContentSpaceFoldersPage(
+				Long contentSpaceId,Pagination pagination)
+			throws Exception;
+	public Folder postContentSpaceFolder(
+				Long contentSpaceId,Folder folder)
+			throws Exception;
+	public boolean deleteFolder(
+				Long folderId)
+			throws Exception;
+	public Folder getFolder(
+				Long folderId)
+			throws Exception;
+	public Folder putFolder(
+				Long folderId,Folder folder)
+			throws Exception;
+	public Page<Folder> getFolderFoldersPage(
+				Long folderId,Pagination pagination)
+			throws Exception;
+	public Folder postFolderFolder(
+				Long folderId,Folder folder)
+			throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

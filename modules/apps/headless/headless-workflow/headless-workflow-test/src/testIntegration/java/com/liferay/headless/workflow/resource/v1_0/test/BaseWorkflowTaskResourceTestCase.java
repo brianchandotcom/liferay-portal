@@ -61,7 +61,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-workflow/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-workflow/v1.0");
 	}
 
 	@After
@@ -98,96 +99,112 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetRoleWorkflowTasksPage( Long roleId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetRoleWorkflowTasksPage(
+				Long roleId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/roles/{role-id}/workflow-tasks",
-				roleId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/roles/{role-id}/workflow-tasks",
+					roleId
+				);
 	}
-	protected Response invokeGetWorkflowTasksPage( Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWorkflowTasksPage(
+				Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-tasks",
-				pagination
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/workflow-tasks",
+					pagination
+				);
 	}
-	protected Response invokeGetWorkflowTask( Long workflowTaskId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetWorkflowTask(
+				Long workflowTaskId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}",
-				workflowTaskId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/workflow-tasks/{workflow-task-id}",
+					workflowTaskId
+				);
 	}
-	protected Response invokePostWorkflowTaskAssignToMe( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostWorkflowTaskAssignToMe(
+				Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-me",
-				workflowTaskId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					workflowTask
+				).when(
+				).post(
+					_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-me",
+					workflowTaskId
+				);
 	}
-	protected Response invokePostWorkflowTaskAssignToUser( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostWorkflowTaskAssignToUser(
+				Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-user",
-				workflowTaskId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					workflowTask
+				).when(
+				).post(
+					_resourceURL + "/workflow-tasks/{workflow-task-id}/assign-to-user",
+					workflowTaskId
+				);
 	}
-	protected Response invokePostWorkflowTaskChangeTransition( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostWorkflowTaskChangeTransition(
+				Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/change-transition",
-				workflowTaskId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					workflowTask
+				).when(
+				).post(
+					_resourceURL + "/workflow-tasks/{workflow-task-id}/change-transition",
+					workflowTaskId
+				);
 	}
-	protected Response invokePostWorkflowTaskUpdateDueDate( Long workflowTaskId , WorkflowTask workflowTask ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostWorkflowTaskUpdateDueDate(
+				Long workflowTaskId,WorkflowTask workflowTask)
+			throws Exception {
 
-			return requestSpecification.body(
-				workflowTask
-			).when(
-			).post(
-				_resourceURL + "/workflow-tasks/{workflow-task-id}/update-due-date",
-				workflowTaskId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					workflowTask
+				).when(
+				).post(
+					_resourceURL + "/workflow-tasks/{workflow-task-id}/update-due-date",
+					workflowTaskId
+				);
 	}
 
 	protected WorkflowTask randomWorkflowTask() {
 		return new WorkflowTaskImpl() {
 			{
-completed = RandomTestUtil.randomBoolean();
-dateCompleted = RandomTestUtil.nextDate();
-dateCreated = RandomTestUtil.nextDate();
-definitionName = RandomTestUtil.randomString();
-description = RandomTestUtil.randomString();
-dueDate = RandomTestUtil.nextDate();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();			}
+
+						completed = RandomTestUtil.randomBoolean();
+						dateCompleted = RandomTestUtil.nextDate();
+						dateCreated = RandomTestUtil.nextDate();
+						definitionName = RandomTestUtil.randomString();
+						description = RandomTestUtil.randomString();
+						dueDate = RandomTestUtil.nextDate();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -204,7 +221,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCompleted(UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
+	public void setCompleted(
+				UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
+
 				try {
 					completed = completedUnsafeSupplier.get();
 	}
@@ -224,7 +243,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCompleted(UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
+	public void setDateCompleted(
+				UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
+
 				try {
 					dateCompleted = dateCompletedUnsafeSupplier.get();
 	}
@@ -244,7 +265,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -264,7 +287,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDefinitionName(UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
+	public void setDefinitionName(
+				UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
+
 				try {
 					definitionName = definitionNameUnsafeSupplier.get();
 	}
@@ -284,7 +309,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -304,7 +331,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDueDate(UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
+	public void setDueDate(
+				UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
+
 				try {
 					dueDate = dueDateUnsafeSupplier.get();
 	}
@@ -324,7 +353,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -344,7 +375,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setLogs(UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
+	public void setLogs(
+				UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
+
 				try {
 					logs = logsUnsafeSupplier.get();
 	}
@@ -364,7 +397,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setLogsIds(UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
+	public void setLogsIds(
+				UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
+
 				try {
 					logsIds = logsIdsUnsafeSupplier.get();
 	}
@@ -384,7 +419,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}
@@ -404,7 +441,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setObjectReviewed(UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier) {
+	public void setObjectReviewed(
+				UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier) {
+
 				try {
 					objectReviewed = objectReviewedUnsafeSupplier.get();
 	}
@@ -424,7 +463,9 @@ name = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTransitions(UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
+	public void setTransitions(
+				UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
+
 				try {
 					transitions = transitionsUnsafeSupplier.get();
 	}

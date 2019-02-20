@@ -56,7 +56,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-form/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-form/v1.0");
 	}
 
 	@After
@@ -73,35 +74,41 @@ public abstract class BaseFormDocumentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeDeleteFormDocument( Long formDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteFormDocument(
+				Long formDocumentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/form-documents/{form-document-id}",
-				formDocumentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/form-documents/{form-document-id}",
+					formDocumentId
+				);
 	}
-	protected Response invokeGetFormDocument( Long formDocumentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetFormDocument(
+				Long formDocumentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/form-documents/{form-document-id}",
-				formDocumentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/form-documents/{form-document-id}",
+					formDocumentId
+				);
 	}
 
 	protected FormDocument randomFormDocument() {
 		return new FormDocumentImpl() {
 			{
-contentUrl = RandomTestUtil.randomString();
-encodingFormat = RandomTestUtil.randomString();
-fileExtension = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-title = RandomTestUtil.randomString();			}
+
+						contentUrl = RandomTestUtil.randomString();
+						encodingFormat = RandomTestUtil.randomString();
+						fileExtension = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						title = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -118,7 +125,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentUrl(UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+	public void setContentUrl(
+				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+
 				try {
 					contentUrl = contentUrlUnsafeSupplier.get();
 	}
@@ -138,7 +147,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setEncodingFormat(UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+	public void setEncodingFormat(
+				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+
 				try {
 					encodingFormat = encodingFormatUnsafeSupplier.get();
 	}
@@ -158,7 +169,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setFileExtension(UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+	public void setFileExtension(
+				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+
 				try {
 					fileExtension = fileExtensionUnsafeSupplier.get();
 	}
@@ -178,7 +191,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -198,7 +213,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setSizeInBytes(UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+	public void setSizeInBytes(
+				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+
 				try {
 					sizeInBytes = sizeInBytesUnsafeSupplier.get();
 	}
@@ -218,7 +235,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
 				try {
 					title = titleUnsafeSupplier.get();
 	}

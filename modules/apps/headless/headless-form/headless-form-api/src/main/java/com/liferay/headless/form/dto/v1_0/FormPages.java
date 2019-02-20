@@ -27,23 +27,35 @@ public interface FormPages {
 
 	public Fields[] getFields();
 
-	public void setFields(Fields[] fields);
+	public void setFields(
+			Fields[] fields);
 
-	public void setFields(UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier);
+	public void setFields(
+			UnsafeSupplier<Fields[], Throwable>
+				fieldsUnsafeSupplier);
 	public String getHeadline();
 
-	public void setHeadline(String headline);
+	public void setHeadline(
+			String headline);
 
-	public void setHeadline(UnsafeSupplier<String, Throwable> headlineUnsafeSupplier);
+	public void setHeadline(
+			UnsafeSupplier<String, Throwable>
+				headlineUnsafeSupplier);
 	public Long getId();
 
-	public void setId(Long id);
+	public void setId(
+			Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier);
 	public String getText();
 
-	public void setText(String text);
+	public void setText(
+			String text);
 
-	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier);
+	public void setText(
+			UnsafeSupplier<String, Throwable>
+				textUnsafeSupplier);
 
 }

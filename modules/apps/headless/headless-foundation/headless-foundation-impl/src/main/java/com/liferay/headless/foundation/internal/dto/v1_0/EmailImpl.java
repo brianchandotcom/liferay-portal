@@ -40,14 +40,20 @@ public class EmailImpl implements Email {
 			return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(
+			String email) {
+
 			this.email = email;
 	}
 
 	@JsonIgnore
-	public void setEmail(UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+	public void setEmail(
+			UnsafeSupplier<String, Throwable>
+				emailUnsafeSupplier) {
+
 			try {
-				email = emailUnsafeSupplier.get();
+				email =
+					emailUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class EmailImpl implements Email {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class EmailImpl implements Email {
 			return type;
 	}
 
-	public void setType(String type) {
+	public void setType(
+			String type) {
+
 			this.type = type;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+	public void setType(
+			UnsafeSupplier<String, Throwable>
+				typeUnsafeSupplier) {
+
 			try {
-				type = typeUnsafeSupplier.get();
+				type =
+					typeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -29,88 +29,139 @@ public interface StructuredContent {
 
 	public AggregateRating getAggregateRating();
 
-	public void setAggregateRating(AggregateRating aggregateRating);
+	public void setAggregateRating(
+			AggregateRating aggregateRating);
 
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier);
+	public void setAggregateRating(
+			UnsafeSupplier<AggregateRating, Throwable>
+				aggregateRatingUnsafeSupplier);
 	public String[] getAvailableLanguages();
 
-	public void setAvailableLanguages(String[] availableLanguages);
+	public void setAvailableLanguages(
+			String[] availableLanguages);
 
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier);
+	public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier);
 	public Categories[] getCategories();
 
-	public void setCategories(Categories[] categories);
+	public void setCategories(
+			Categories[] categories);
 
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier);
+	public void setCategories(
+			UnsafeSupplier<Categories[], Throwable>
+				categoriesUnsafeSupplier);
 	public Comment[] getComment();
 
-	public void setComment(Comment[] comment);
+	public void setComment(
+			Comment[] comment);
 
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier);
+	public void setComment(
+			UnsafeSupplier<Comment[], Throwable>
+				commentUnsafeSupplier);
 	public Long getContentSpace();
 
-	public void setContentSpace(Long contentSpace);
+	public void setContentSpace(
+			Long contentSpace);
 
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
+	public void setContentSpace(
+			UnsafeSupplier<Long, Throwable>
+				contentSpaceUnsafeSupplier);
 	public Long getContentStructureId();
 
-	public void setContentStructureId(Long contentStructureId);
+	public void setContentStructureId(
+			Long contentStructureId);
 
-	public void setContentStructureId(UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier);
+	public void setContentStructureId(
+			UnsafeSupplier<Long, Throwable>
+				contentStructureIdUnsafeSupplier);
 	public Creator getCreator();
 
-	public void setCreator(Creator creator);
+	public void setCreator(
+			Creator creator);
 
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
+	public void setCreator(
+			UnsafeSupplier<Creator, Throwable>
+				creatorUnsafeSupplier);
 	public Date getDateCreated();
 
-	public void setDateCreated(Date dateCreated);
+	public void setDateCreated(
+			Date dateCreated);
 
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+	public void setDateCreated(
+			UnsafeSupplier<Date, Throwable>
+				dateCreatedUnsafeSupplier);
 	public Date getDateModified();
 
-	public void setDateModified(Date dateModified);
+	public void setDateModified(
+			Date dateModified);
 
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
+	public void setDateModified(
+			UnsafeSupplier<Date, Throwable>
+				dateModifiedUnsafeSupplier);
 	public Date getDatePublished();
 
-	public void setDatePublished(Date datePublished);
+	public void setDatePublished(
+			Date datePublished);
 
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier);
+	public void setDatePublished(
+			UnsafeSupplier<Date, Throwable>
+				datePublishedUnsafeSupplier);
 	public String getDescription();
 
-	public void setDescription(String description);
+	public void setDescription(
+			String description);
 
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
+	public void setDescription(
+			UnsafeSupplier<String, Throwable>
+				descriptionUnsafeSupplier);
 	public Long getId();
 
-	public void setId(Long id);
+	public void setId(
+			Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier);
 	public String[] getKeywords();
 
-	public void setKeywords(String[] keywords);
+	public void setKeywords(
+			String[] keywords);
 
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier);
+	public void setKeywords(
+			UnsafeSupplier<String[], Throwable>
+				keywordsUnsafeSupplier);
 	public Date getLastReviewed();
 
-	public void setLastReviewed(Date lastReviewed);
+	public void setLastReviewed(
+			Date lastReviewed);
 
-	public void setLastReviewed(UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier);
+	public void setLastReviewed(
+			UnsafeSupplier<Date, Throwable>
+				lastReviewedUnsafeSupplier);
 	public RenderedContentsByTemplate[] getRenderedContentsByTemplate();
 
-	public void setRenderedContentsByTemplate(RenderedContentsByTemplate[] renderedContentsByTemplate);
+	public void setRenderedContentsByTemplate(
+			RenderedContentsByTemplate[] renderedContentsByTemplate);
 
-	public void setRenderedContentsByTemplate(UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier);
+	public void setRenderedContentsByTemplate(
+			UnsafeSupplier<RenderedContentsByTemplate[], Throwable>
+				renderedContentsByTemplateUnsafeSupplier);
 	public String getTitle();
 
-	public void setTitle(String title);
+	public void setTitle(
+			String title);
 
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
+	public void setTitle(
+			UnsafeSupplier<String, Throwable>
+				titleUnsafeSupplier);
 	public Values[] getValues();
 
-	public void setValues(Values[] values);
+	public void setValues(
+			Values[] values);
 
-	public void setValues(UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier);
+	public void setValues(
+			UnsafeSupplier<Values[], Throwable>
+				valuesUnsafeSupplier);
 
 }

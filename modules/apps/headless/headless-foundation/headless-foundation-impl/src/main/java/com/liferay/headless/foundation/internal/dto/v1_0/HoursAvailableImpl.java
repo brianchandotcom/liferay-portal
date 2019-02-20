@@ -40,14 +40,20 @@ public class HoursAvailableImpl implements HoursAvailable {
 			return closes;
 	}
 
-	public void setCloses(String closes) {
+	public void setCloses(
+			String closes) {
+
 			this.closes = closes;
 	}
 
 	@JsonIgnore
-	public void setCloses(UnsafeSupplier<String, Throwable> closesUnsafeSupplier) {
+	public void setCloses(
+			UnsafeSupplier<String, Throwable>
+				closesUnsafeSupplier) {
+
 			try {
-				closes = closesUnsafeSupplier.get();
+				closes =
+					closesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class HoursAvailableImpl implements HoursAvailable {
 			return dayOfWeek;
 	}
 
-	public void setDayOfWeek(String dayOfWeek) {
+	public void setDayOfWeek(
+			String dayOfWeek) {
+
 			this.dayOfWeek = dayOfWeek;
 	}
 
 	@JsonIgnore
-	public void setDayOfWeek(UnsafeSupplier<String, Throwable> dayOfWeekUnsafeSupplier) {
+	public void setDayOfWeek(
+			UnsafeSupplier<String, Throwable>
+				dayOfWeekUnsafeSupplier) {
+
 			try {
-				dayOfWeek = dayOfWeekUnsafeSupplier.get();
+				dayOfWeek =
+					dayOfWeekUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class HoursAvailableImpl implements HoursAvailable {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class HoursAvailableImpl implements HoursAvailable {
 			return opens;
 	}
 
-	public void setOpens(String opens) {
+	public void setOpens(
+			String opens) {
+
 			this.opens = opens;
 	}
 
 	@JsonIgnore
-	public void setOpens(UnsafeSupplier<String, Throwable> opensUnsafeSupplier) {
+	public void setOpens(
+			UnsafeSupplier<String, Throwable>
+				opensUnsafeSupplier) {
+
 			try {
-				opens = opensUnsafeSupplier.get();
+				opens =
+					opensUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

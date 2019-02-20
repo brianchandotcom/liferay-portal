@@ -27,13 +27,19 @@ public interface ParentCategory {
 
 	public Long getId();
 
-	public void setId(Long id);
+	public void setId(
+			Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier);
 	public String getName();
 
-	public void setName(String name);
+	public void setName(
+			String name);
 
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+	public void setName(
+			UnsafeSupplier<String, Throwable>
+				nameUnsafeSupplier);
 
 }

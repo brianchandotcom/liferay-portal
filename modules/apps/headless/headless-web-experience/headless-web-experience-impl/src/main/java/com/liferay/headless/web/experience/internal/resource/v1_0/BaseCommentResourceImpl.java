@@ -44,32 +44,38 @@ import javax.ws.rs.core.Context;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
+	@Override
 	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Comment getComment( @PathParam("comment-id") Long commentId ) throws Exception {
-			return new CommentImpl();
+	public Comment getComment(
+	@PathParam("comment-id") Long commentId)
+			throws Exception {
 
+				return new CommentImpl();
 	}
+	@Override
 	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Comment> getCommentCommentsPage( @PathParam("comment-id") Long commentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Comment> getCommentCommentsPage(
+	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
+	@Override
 	@GET
 	@Path("/structured-contents/{structured-content-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	@Override
-	public Page<Comment> getStructuredContentCommentsPage( @PathParam("structured-content-id") Long structuredContentId , @Context Pagination pagination ) throws Exception {
-			return Page.of(Collections.emptyList());
+	public Page<Comment> getStructuredContentCommentsPage(
+	@PathParam("structured-content-id") Long structuredContentId,@Context Pagination pagination)
+			throws Exception {
 
+				return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {

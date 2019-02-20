@@ -67,7 +67,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-web-experience/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-web-experience/v1.0");
 	}
 
 	@After
@@ -104,93 +105,109 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetContentSpaceContentStructureStructuredContentsPage( Long contentSpaceId , Long contentStructureId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceContentStructureStructuredContentsPage(
+				Long contentSpaceId,Long contentStructureId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-structures/{content-structure-id}/structured-contents",
-				contentSpaceId , contentStructureId , filter  , sorts
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-structures/{content-structure-id}/structured-contents",
+					contentSpaceId,contentStructureId,filter,sorts
+				);
 	}
-	protected Response invokeGetContentSpaceStructuredContentsPage( Long contentSpaceId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetContentSpaceStructuredContentsPage(
+				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
-				contentSpaceId , filter  , sorts
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId,filter,sorts
+				);
 	}
-	protected Response invokePostContentSpaceStructuredContent( Long contentSpaceId , StructuredContent structuredContent ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostContentSpaceStructuredContent(
+				Long contentSpaceId,StructuredContent structuredContent)
+			throws Exception {
 
-			return requestSpecification.body(
-				structuredContent
-			).when(
-			).post(
-				_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
-				contentSpaceId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					structuredContent
+				).when(
+				).post(
+					_resourceURL + "/content-spaces/{content-space-id}/structured-contents",
+					contentSpaceId
+				);
 	}
-	protected Response invokeDeleteStructuredContent( Long structuredContentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteStructuredContent(
+				Long structuredContentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/structured-contents/{structured-content-id}",
+					structuredContentId
+				);
 	}
-	protected Response invokeGetStructuredContent( Long structuredContentId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetStructuredContent(
+				Long structuredContentId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/structured-contents/{structured-content-id}",
+					structuredContentId
+				);
 	}
-	protected Response invokePatchStructuredContent( Long structuredContentId , StructuredContent structuredContent ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePatchStructuredContent(
+				Long structuredContentId,StructuredContent structuredContent)
+			throws Exception {
 
-			return requestSpecification.when(
-			).patch(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId , structuredContent
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).patch(
+					_resourceURL + "/structured-contents/{structured-content-id}",
+					structuredContentId,structuredContent
+				);
 	}
-	protected Response invokePutStructuredContent( Long structuredContentId , StructuredContent structuredContent ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutStructuredContent(
+				Long structuredContentId,StructuredContent structuredContent)
+			throws Exception {
 
-			return requestSpecification.body(
-				structuredContent
-			).when(
-			).put(
-				_resourceURL + "/structured-contents/{structured-content-id}",
-				structuredContentId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					structuredContent
+				).when(
+				).put(
+					_resourceURL + "/structured-contents/{structured-content-id}",
+					structuredContentId
+				);
 	}
 
 	protected StructuredContent randomStructuredContent() {
 		return new StructuredContentImpl() {
 			{
-contentSpace = RandomTestUtil.randomLong();
-contentStructureId = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-datePublished = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-lastReviewed = RandomTestUtil.nextDate();
-title = RandomTestUtil.randomString();			}
+
+						contentSpace = RandomTestUtil.randomLong();
+						contentStructureId = RandomTestUtil.randomLong();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						datePublished = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						lastReviewed = RandomTestUtil.nextDate();
+						title = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -207,7 +224,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAggregateRating(UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+	public void setAggregateRating(
+				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
+
 				try {
 					aggregateRating = aggregateRatingUnsafeSupplier.get();
 	}
@@ -227,7 +246,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+
 				try {
 					availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
@@ -247,7 +268,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCategories(UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+	public void setCategories(
+				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
+
 				try {
 					categories = categoriesUnsafeSupplier.get();
 	}
@@ -267,7 +290,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+	public void setComment(
+				UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
+
 				try {
 					comment = commentUnsafeSupplier.get();
 	}
@@ -287,7 +312,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentSpace(UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+	public void setContentSpace(
+				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
 				try {
 					contentSpace = contentSpaceUnsafeSupplier.get();
 	}
@@ -307,7 +334,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setContentStructureId(UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
+	public void setContentStructureId(
+				UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
+
 				try {
 					contentStructureId = contentStructureIdUnsafeSupplier.get();
 	}
@@ -327,7 +356,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -347,7 +378,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -367,7 +400,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -387,7 +422,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDatePublished(UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+	public void setDatePublished(
+				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+
 				try {
 					datePublished = datePublishedUnsafeSupplier.get();
 	}
@@ -407,7 +444,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -427,7 +466,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -447,7 +488,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setKeywords(UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+	public void setKeywords(
+				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
+
 				try {
 					keywords = keywordsUnsafeSupplier.get();
 	}
@@ -467,7 +510,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setLastReviewed(UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
+	public void setLastReviewed(
+				UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
+
 				try {
 					lastReviewed = lastReviewedUnsafeSupplier.get();
 	}
@@ -487,7 +532,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setRenderedContentsByTemplate(UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier) {
+	public void setRenderedContentsByTemplate(
+				UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier) {
+
 				try {
 					renderedContentsByTemplate = renderedContentsByTemplateUnsafeSupplier.get();
 	}
@@ -507,7 +554,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+
 				try {
 					title = titleUnsafeSupplier.get();
 	}
@@ -527,7 +576,9 @@ title = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setValues(UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
+	public void setValues(
+				UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
+
 				try {
 					values = valuesUnsafeSupplier.get();
 	}

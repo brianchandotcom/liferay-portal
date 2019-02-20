@@ -57,7 +57,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -74,39 +75,45 @@ public abstract class BasePostalAddressResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeGetGenericParentPostalAddressesPage( Object genericParentId , Pagination pagination ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetGenericParentPostalAddressesPage(
+				Object genericParentId,Pagination pagination)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/addresses",
-				genericParentId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/addresses",
+					genericParentId
+				);
 	}
-	protected Response invokeGetAddress( Long addressId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetAddress(
+				Long addressId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/addresses/{address-id}",
-				addressId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/addresses/{address-id}",
+					addressId
+				);
 	}
 
 	protected PostalAddress randomPostalAddress() {
 		return new PostalAddressImpl() {
 			{
-addressCountry = RandomTestUtil.randomString();
-addressLocality = RandomTestUtil.randomString();
-addressRegion = RandomTestUtil.randomString();
-addressType = RandomTestUtil.randomString();
-id = RandomTestUtil.randomLong();
-postalCode = RandomTestUtil.randomString();
-streetAddressLine1 = RandomTestUtil.randomString();
-streetAddressLine2 = RandomTestUtil.randomString();
-streetAddressLine3 = RandomTestUtil.randomString();			}
+
+						addressCountry = RandomTestUtil.randomString();
+						addressLocality = RandomTestUtil.randomString();
+						addressRegion = RandomTestUtil.randomString();
+						addressType = RandomTestUtil.randomString();
+						id = RandomTestUtil.randomLong();
+						postalCode = RandomTestUtil.randomString();
+						streetAddressLine1 = RandomTestUtil.randomString();
+						streetAddressLine2 = RandomTestUtil.randomString();
+						streetAddressLine3 = RandomTestUtil.randomString();
+	}
 		};
 	}
 
@@ -123,7 +130,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAddressCountry(UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
+	public void setAddressCountry(
+				UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
+
 				try {
 					addressCountry = addressCountryUnsafeSupplier.get();
 	}
@@ -143,7 +152,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAddressLocality(UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
+	public void setAddressLocality(
+				UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
+
 				try {
 					addressLocality = addressLocalityUnsafeSupplier.get();
 	}
@@ -163,7 +174,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAddressRegion(UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
+	public void setAddressRegion(
+				UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
+
 				try {
 					addressRegion = addressRegionUnsafeSupplier.get();
 	}
@@ -183,7 +196,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setAddressType(UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
+	public void setAddressType(
+				UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
+
 				try {
 					addressType = addressTypeUnsafeSupplier.get();
 	}
@@ -203,7 +218,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -223,7 +240,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setPostalCode(UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
+	public void setPostalCode(
+				UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
+
 				try {
 					postalCode = postalCodeUnsafeSupplier.get();
 	}
@@ -243,7 +262,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setStreetAddressLine1(UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
+	public void setStreetAddressLine1(
+				UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
+
 				try {
 					streetAddressLine1 = streetAddressLine1UnsafeSupplier.get();
 	}
@@ -263,7 +284,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setStreetAddressLine2(UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
+	public void setStreetAddressLine2(
+				UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
+
 				try {
 					streetAddressLine2 = streetAddressLine2UnsafeSupplier.get();
 	}
@@ -283,7 +306,9 @@ streetAddressLine3 = RandomTestUtil.randomString();			}
 	}
 
 	@JsonIgnore
-	public void setStreetAddressLine3(UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
+	public void setStreetAddressLine3(
+				UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
+
 				try {
 					streetAddressLine3 = streetAddressLine3UnsafeSupplier.get();
 	}

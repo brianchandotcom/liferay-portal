@@ -64,7 +64,8 @@ public abstract class BaseCategoryResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL("http://localhost:8080/o/headless-foundation/v1.0");
+		_resourceURL = new URL(
+			"http://localhost:8080/o/headless-foundation/v1.0");
 	}
 
 	@After
@@ -101,94 +102,110 @@ public abstract class BaseCategoryResourceTestCase {
 			Assert.assertTrue(true);
 	}
 
-	protected Response invokeDeleteCategory( Long categoryId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeDeleteCategory(
+				Long categoryId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).delete(
-				_resourceURL + "/categories/{category-id}",
-				categoryId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).delete(
+					_resourceURL + "/categories/{category-id}",
+					categoryId
+				);
 	}
-	protected Response invokeGetCategory( Long categoryId ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetCategory(
+				Long categoryId)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/categories/{category-id}",
-				categoryId
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/categories/{category-id}",
+					categoryId
+				);
 	}
-	protected Response invokePutCategory( Long categoryId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePutCategory(
+				Long categoryId,Category category)
+			throws Exception {
 
-			return requestSpecification.body(
-				category
-			).when(
-			).put(
-				_resourceURL + "/categories/{category-id}",
-				categoryId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					category
+				).when(
+				).put(
+					_resourceURL + "/categories/{category-id}",
+					categoryId
+				);
 	}
-	protected Response invokeGetCategoryCategoriesPage( Long categoryId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetCategoryCategoriesPage(
+				Long categoryId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/categories/{category-id}/categories",
-				categoryId , filter  , sorts
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/categories/{category-id}/categories",
+					categoryId,filter,sorts
+				);
 	}
-	protected Response invokePostCategoryCategory( Long categoryId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostCategoryCategory(
+				Long categoryId,Category category)
+			throws Exception {
 
-			return requestSpecification.body(
-				category
-			).when(
-			).post(
-				_resourceURL + "/categories/{category-id}/categories",
-				categoryId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					category
+				).when(
+				).post(
+					_resourceURL + "/categories/{category-id}/categories",
+					categoryId
+				);
 	}
-	protected Response invokeGetVocabularyCategoriesPage( Long vocabularyId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokeGetVocabularyCategoriesPage(
+				Long vocabularyId,Filter filter,Pagination pagination,Sort[] sorts)
+			throws Exception {
 
-			return requestSpecification.when(
-			).get(
-				_resourceURL + "/vocabularies/{vocabulary-id}/categories",
-				vocabularyId , filter  , sorts
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.when(
+				).get(
+					_resourceURL + "/vocabularies/{vocabulary-id}/categories",
+					vocabularyId,filter,sorts
+				);
 	}
-	protected Response invokePostVocabularyCategory( Long vocabularyId , Category category ) throws Exception {
-		RequestSpecification requestSpecification = _createRequestSpecification();
+	protected Response invokePostVocabularyCategory(
+				Long vocabularyId,Category category)
+			throws Exception {
 
-			return requestSpecification.body(
-				category
-			).when(
-			).post(
-				_resourceURL + "/vocabularies/{vocabulary-id}/categories",
-				vocabularyId 
-			);
+			RequestSpecification requestSpecification = _createRequestSpecification();
 
+				return requestSpecification.body(
+					category
+				).when(
+				).post(
+					_resourceURL + "/vocabularies/{vocabulary-id}/categories",
+					vocabularyId
+				);
 	}
 
 	protected Category randomCategory() {
 		return new CategoryImpl() {
 			{
-creatorId = RandomTestUtil.randomLong();
-dateCreated = RandomTestUtil.nextDate();
-dateModified = RandomTestUtil.nextDate();
-description = RandomTestUtil.randomString();
-hasCategories = RandomTestUtil.randomBoolean();
-id = RandomTestUtil.randomLong();
-name = RandomTestUtil.randomString();
-parentVocabularyId = RandomTestUtil.randomLong();			}
+
+						creatorId = RandomTestUtil.randomLong();
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = RandomTestUtil.randomString();
+						hasCategories = RandomTestUtil.randomBoolean();
+						id = RandomTestUtil.randomLong();
+						name = RandomTestUtil.randomString();
+						parentVocabularyId = RandomTestUtil.randomLong();
+	}
 		};
 	}
 
@@ -205,7 +222,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setAvailableLanguages(UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+	public void setAvailableLanguages(
+				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+
 				try {
 					availableLanguages = availableLanguagesUnsafeSupplier.get();
 	}
@@ -225,7 +244,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setParentCategory(UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier) {
+	public void setParentCategory(
+				UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier) {
+
 				try {
 					parentCategory = parentCategoryUnsafeSupplier.get();
 	}
@@ -245,7 +266,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCreator(UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+	public void setCreator(
+				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
 				try {
 					creator = creatorUnsafeSupplier.get();
 	}
@@ -265,7 +288,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setCreatorId(UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
+	public void setCreatorId(
+				UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
+
 				try {
 					creatorId = creatorIdUnsafeSupplier.get();
 	}
@@ -285,7 +310,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateCreated(UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+	public void setDateCreated(
+				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
 				try {
 					dateCreated = dateCreatedUnsafeSupplier.get();
 	}
@@ -305,7 +332,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDateModified(UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+	public void setDateModified(
+				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
 				try {
 					dateModified = dateModifiedUnsafeSupplier.get();
 	}
@@ -325,7 +354,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setDescription(UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+	public void setDescription(
+				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
 				try {
 					description = descriptionUnsafeSupplier.get();
 	}
@@ -345,7 +376,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setHasCategories(UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+	public void setHasCategories(
+				UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+
 				try {
 					hasCategories = hasCategoriesUnsafeSupplier.get();
 	}
@@ -365,7 +398,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+
 				try {
 					id = idUnsafeSupplier.get();
 	}
@@ -385,7 +420,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+	public void setName(
+				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+
 				try {
 					name = nameUnsafeSupplier.get();
 	}
@@ -405,7 +442,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setParentVocabulary(UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier) {
+	public void setParentVocabulary(
+				UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier) {
+
 				try {
 					parentVocabulary = parentVocabularyUnsafeSupplier.get();
 	}
@@ -425,7 +464,9 @@ parentVocabularyId = RandomTestUtil.randomLong();			}
 	}
 
 	@JsonIgnore
-	public void setParentVocabularyId(UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
+	public void setParentVocabularyId(
+				UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
+
 				try {
 					parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
 	}

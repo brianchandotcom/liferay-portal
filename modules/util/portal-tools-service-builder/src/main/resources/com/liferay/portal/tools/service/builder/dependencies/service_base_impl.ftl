@@ -140,7 +140,7 @@ import org.osgi.service.component.annotations.Reference;
 
 	@ProviderType
 	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService,
-	<#if ds>
+	<#if dependencyInjectorDS>
 		AopService,
 	</#if>
 
@@ -179,7 +179,7 @@ import org.osgi.service.component.annotations.Reference;
 </#if>
 
 	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service,
-		<#if ds>
+		<#if dependencyInjectorDS>
 			AopService,
 		</#if>
 
@@ -1305,7 +1305,7 @@ import org.osgi.service.component.annotations.Reference;
 		}
 	</#if>
 
-	<#if !ds>
+	<#if !dependencyInjectorDS>
 		<#list referenceEntities as referenceEntity>
 			<#if referenceEntity.hasLocalService()>
 				/**
@@ -1409,7 +1409,7 @@ import org.osgi.service.component.annotations.Reference;
 		</#list>
 	</#if>
 
-	<#if ds>
+	<#if dependencyInjectorDS>
 		@Override
 		public Class<?>[] getAopInterfaces() {
 			return new Class<?>[] {
@@ -1818,8 +1818,8 @@ import org.osgi.service.component.annotations.Reference;
 
 	<#list referenceEntities as referenceEntity>
 		<#if referenceEntity.hasLocalService()>
-			<#if !ds || (referenceEntity.apiPackagePath != apiPackagePath) || (entity == referenceEntity)>
-				<#if ds>
+			<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath != apiPackagePath) || (entity == referenceEntity)>
+				<#if dependencyInjectorDS>
 					<#if !stringUtil.equals(sessionTypeName, "Local") || (entity != referenceEntity)>
 						@Reference
 					</#if>
@@ -1838,8 +1838,8 @@ import org.osgi.service.component.annotations.Reference;
 		</#if>
 
 		<#if !stringUtil.equals(sessionTypeName, "Local") && referenceEntity.hasRemoteService()>
-			<#if !ds || (referenceEntity.apiPackagePath != apiPackagePath) || (entity == referenceEntity)>
-				<#if ds>
+			<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath != apiPackagePath) || (entity == referenceEntity)>
+				<#if dependencyInjectorDS>
 					<#if entity != referenceEntity>
 						@Reference
 					</#if>
@@ -1858,8 +1858,8 @@ import org.osgi.service.component.annotations.Reference;
 		</#if>
 
 		<#if referenceEntity.hasEntityColumns() && referenceEntity.hasPersistence()>
-			<#if !ds || (referenceEntity.apiPackagePath == apiPackagePath)>
-				<#if ds>
+			<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath == apiPackagePath)>
+				<#if dependencyInjectorDS>
 					@Reference
 				<#elseif osgiModule && (referenceEntity.apiPackagePath != apiPackagePath)>
 					@ServiceReference(type = ${referenceEntity.name}Persistence.class)
@@ -1872,8 +1872,8 @@ import org.osgi.service.component.annotations.Reference;
 		</#if>
 
 		<#if referenceEntity.hasFinderClassName() && (stringUtil.equals(entity.name, "Counter") || !stringUtil.equals(referenceEntity.name, "Counter"))>
-			<#if !ds || (referenceEntity.apiPackagePath == apiPackagePath)>
-				<#if ds>
+			<#if !dependencyInjectorDS || (referenceEntity.apiPackagePath == apiPackagePath)>
+				<#if dependencyInjectorDS>
 					@Reference
 				<#elseif osgiModule && (referenceEntity.apiPackagePath != apiPackagePath)>
 					@ServiceReference(type = ${referenceEntity.name}Finder.class)
@@ -1886,7 +1886,7 @@ import org.osgi.service.component.annotations.Reference;
 		</#if>
 	</#list>
 
-	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !ds>
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>
 		<#if validator.isNull(pluginName)>
 			<#if osgiModule>
 				@ServiceReference(type = PersistedModelLocalServiceRegistry.class)

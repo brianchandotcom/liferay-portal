@@ -3,7 +3,7 @@ package ${packagePath}.service.persistence.impl;
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 
-<#if ds>
+<#if dependencyInjectorDS>
 	import ${packagePath}.service.persistence.impl.constants.${portletShortName}PersistenceConstants;
 </#if>
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	@Deprecated
 </#if>
 
-public <#if ds>abstract </#if>class ${entity.name}FinderBaseImpl
+public <#if dependencyInjectorDS>abstract </#if>class ${entity.name}FinderBaseImpl
 	extends BasePersistenceImpl<${entity.name}> {
 
 	public ${entity.name}FinderBaseImpl() {
@@ -67,7 +67,7 @@ public <#if ds>abstract </#if>class ${entity.name}FinderBaseImpl
 	<#if entity.badEntityColumns?size != 0>
 		@Override
 		public Set<String> getBadColumnNames() {
-			<#if ds>
+			<#if dependencyInjectorDS>
 				return ${entity.varName}Persistence.getBadColumnNames();
 			<#else>
 				return get${entity.name}Persistence().getBadColumnNames();
@@ -75,7 +75,7 @@ public <#if ds>abstract </#if>class ${entity.name}FinderBaseImpl
 		}
 	</#if>
 
-	<#if ds>
+	<#if dependencyInjectorDS>
 		<#include "persistence_references.ftl">
 	<#elseif entity.hasEntityColumns() && entity.hasPersistence()>
 		/**
@@ -98,7 +98,7 @@ public <#if ds>abstract </#if>class ${entity.name}FinderBaseImpl
 	</#if>
 
 	<#if entity.hasEntityColumns() && entity.hasPersistence()>
-		<#if ds>
+		<#if dependencyInjectorDS>
 			@Reference
 		<#else>
 			@BeanReference(type = ${entity.name}Persistence.class)

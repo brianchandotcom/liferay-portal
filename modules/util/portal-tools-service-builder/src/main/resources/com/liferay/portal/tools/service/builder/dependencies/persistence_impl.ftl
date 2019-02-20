@@ -36,7 +36,7 @@ import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 	import ${apiPackagePath}.service.persistence.${entity.PKClassName};
 </#if>
 
-<#if ds>
+<#if dependencyInjectorDS>
 	import ${packagePath}.service.persistence.impl.constants.${portletShortName}PersistenceConstants;
 </#if>
 
@@ -127,7 +127,7 @@ import org.osgi.service.component.annotations.Reference;
 		<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
 
 		<#if referenceEntity.hasPersistence()>
-			<#if ds>
+			<#if dependencyInjectorDS>
 				import ${referenceEntity.apiPackagePath}.model.${referenceEntity.name};
 			<#else>
 				import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
@@ -156,7 +156,7 @@ import org.osgi.service.component.annotations.Reference;
 	finderCacheEnabled = "${entity.name}ModelImpl.FINDER_CACHE_ENABLED"
 />
 
-<#if ds>
+<#if dependencyInjectorDS>
 	@Component(service = ${entity.name}Persistence.class)
 
 	<#assign
@@ -216,7 +216,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#if !serviceBuilder.isVersionLTE_7_1_0()>
 			setModelImplClass(${entity.name}Impl.class);
 			setModelPKClass(${entity.PKClassName}.class);
-			<#if !ds>
+			<#if !dependencyInjectorDS>
 				setEntityCacheEnabled(${entityCacheEnabled});
 			</#if>
 		<#elseif entity.badEntityColumns?size != 0>
@@ -1231,7 +1231,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return pks.clone();
 			}
 
-			<#if ds>
+			<#if dependencyInjectorDS>
 				/**
 				 * Returns all the ${entity.humanName} associated with the ${referenceEntity.humanName}.
 				 *
@@ -1810,7 +1810,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	/**
 	 * Initializes the ${entity.humanName} persistence.
 	 */
-	<#if ds>
+	<#if dependencyInjectorDS>
 		@Activate
 		public void activate() {
 			${entity.name}ModelImpl.setEntityCacheEnabled(entityCacheEnabled);
@@ -1830,7 +1830,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					companyEntity = serviceBuilder.getEntity(entityMapping.getEntityName(0))
 				/>
 
-				<#if ds>
+				<#if dependencyInjectorDS>
 					${entity.varName}To${referenceEntity.name}TableMapper = TableMapperFactory.getTableMapper("${entityColumn.mappingTableName}#${entity.PKDBName}", "${entityColumn.mappingTableName}", "${companyEntity.PKDBName}", "${entity.PKDBName}", "${referenceEntity.PKDBName}", this, ${referenceEntity.name}.class);
 				<#else>
 					${entity.varName}To${referenceEntity.name}TableMapper = TableMapperFactory.getTableMapper("${entityColumn.mappingTableName}", "${companyEntity.PKDBName}", "${entity.PKDBName}", "${referenceEntity.PKDBName}", this, ${referenceEntity.varName}Persistence);
@@ -2022,7 +2022,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#list>
 	}
 
-	<#if ds>
+	<#if dependencyInjectorDS>
 		@Deactivate
 		public void deactivate() {
 	<#else>
@@ -2036,7 +2036,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
-				<#if ds>
+				<#if dependencyInjectorDS>
 					TableMapperFactory.removeTableMapper("${entityColumn.mappingTableName}#${entity.PKDBName}");
 				<#else>
 					TableMapperFactory.removeTableMapper("${entityColumn.mappingTableName}");
@@ -2045,14 +2045,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#list>
 	}
 
-	<#if ds>
+	<#if dependencyInjectorDS>
 		<#include "persistence_references.ftl">
 
 		private boolean _columnBitmaskEnabled;
 	</#if>
 
 	<#if entity.isShardedModel()>
-		<#if ds>
+		<#if dependencyInjectorDS>
 			@Reference(service = CompanyProviderWrapper.class)
 		<#elseif osgiModule>
 			@ServiceReference(type = CompanyProviderWrapper.class)
@@ -2063,7 +2063,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#else>
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
-				<#if ds>
+				<#if dependencyInjectorDS>
 					@Reference(service = CompanyProviderWrapper.class)
 				<#elseif osgiModule>
 					@ServiceReference(type = CompanyProvider.class)
@@ -2078,14 +2078,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if osgiModule>
-		<#if ds>
+		<#if dependencyInjectorDS>
 			@Reference
 		<#else>
 			@ServiceReference(type = EntityCache.class)
 		</#if>
 		protected EntityCache entityCache;
 
-		<#if ds>
+		<#if dependencyInjectorDS>
 			@Reference
 		<#else>
 			@ServiceReference(type = FinderCache.class)
@@ -2097,7 +2097,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
 			<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
 
-			<#if !ds>
+			<#if !dependencyInjectorDS>
 				@BeanReference(type = ${referenceEntity.name}Persistence.class)
 				protected ${referenceEntity.name}Persistence ${referenceEntity.varName}Persistence;
 			</#if>

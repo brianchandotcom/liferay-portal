@@ -218,13 +218,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
 	<#if entity.hasEagerBlobColumn()>
-		<#if !ds>
+		<#if !dependencyInjectorDS>
 			public static final boolean ENTITY_CACHE_ENABLED = false;
 
 			public static final boolean FINDER_CACHE_ENABLED = false;
 		</#if>
 	<#else>
-		<#if !ds>
+		<#if !dependencyInjectorDS>
 			public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
 
 			<#if entity.isCacheEnabled()>
@@ -249,7 +249,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#assign columnBitmaskEnabled = true />
 
 		<#if entity.finderEntityColumns?size == 0>
-			<#if !ds>
+			<#if !dependencyInjectorDS>
 				public static final boolean COLUMN_BITMASK_ENABLED = false;
 			</#if>
 
@@ -257,7 +257,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		<#if entity.finderEntityColumns?size &gt; 64>
-			<#if !ds>
+			<#if !dependencyInjectorDS>
 				public static final boolean COLUMN_BITMASK_ENABLED = false;
 			</#if>
 
@@ -265,7 +265,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		<#if columnBitmaskEnabled>
-			<#if !ds>
+			<#if !dependencyInjectorDS>
 				public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
 			</#if>
 
@@ -287,7 +287,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	</#if>
 
-	<#if ds>
+	<#if dependencyInjectorDS>
 		public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 			_entityCacheEnabled = entityCacheEnabled;
 		}
@@ -373,7 +373,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	</#list>
 
-	<#if !ds>
+	<#if !dependencyInjectorDS>
 		public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(${propsUtil}.get("lock.expiration.time.${apiPackagePath}.model.${entity.name}"));
 	</#if>
 
@@ -1533,7 +1533,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		<#if ds>
+		<#if dependencyInjectorDS>
 			return _entityCacheEnabled;
 		<#else>
 			return ENTITY_CACHE_ENABLED;
@@ -1542,7 +1542,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		<#if ds>
+		<#if dependencyInjectorDS>
 			return _finderCacheEnabled;
 		<#else>
 			return FINDER_CACHE_ENABLED;
@@ -1746,7 +1746,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class, ModelWrapper.class};
 
-	<#if ds>
+	<#if dependencyInjectorDS>
 		private static boolean _entityCacheEnabled;
 		private static boolean _finderCacheEnabled;
 	</#if>

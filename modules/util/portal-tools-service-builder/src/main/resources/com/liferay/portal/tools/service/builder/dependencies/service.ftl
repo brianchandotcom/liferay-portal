@@ -64,7 +64,7 @@ import ${import};
 	@JSONWebService
 </#if>
 
-<#if !ds>
+<#if !dependencyInjectorDS>
 	<#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local") && osgiModule>
 		@OSGiBeanProperties(
 			property = {

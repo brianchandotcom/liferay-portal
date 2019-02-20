@@ -677,13 +677,14 @@ public class ServiceBuilder {
 			if ((dependencyInjector != null) || !_osgiModule ||
 				isVersionLTE_7_1_0() || springFile.exists()) {
 
-				_ds = StringUtil.equalsIgnoreCase(dependencyInjector, "ds");
+				_dependencyInjectorDS = StringUtil.equalsIgnoreCase(
+					dependencyInjector, "ds");
 			}
 			else {
-				_ds = true;
+				_dependencyInjectorDS = true;
 			}
 
-			if (_ds) {
+			if (_dependencyInjectorDS) {
 				if (isVersionLTE_7_1_0()) {
 					throw new IllegalArgumentException(
 						"Cannot use dependency-injector=\"ds\" without using " +
@@ -2932,7 +2933,7 @@ public class ServiceBuilder {
 	}
 
 	private void _createPersistenceConstants() throws Exception {
-		if (!_ds) {
+		if (!_dependencyInjectorDS) {
 			return;
 		}
 
@@ -3293,7 +3294,7 @@ public class ServiceBuilder {
 				_implDirName, "/", StringUtil.replace(_propsUtil, '.', '/'),
 				".java"));
 
-		if (_ds) {
+		if (_dependencyInjectorDS) {
 			if (file.exists()) {
 				file.delete();
 
@@ -3414,7 +3415,7 @@ public class ServiceBuilder {
 
 		File xmlFile = new File(_springFileName);
 
-		if (_ds) {
+		if (_dependencyInjectorDS) {
 			if (xmlFile.exists()) {
 				xmlFile.delete();
 
@@ -4344,7 +4345,7 @@ public class ServiceBuilder {
 		context.put("apiPackagePath", _apiPackagePath);
 		context.put("author", _author);
 		context.put("beanLocatorUtil", _beanLocatorUtil);
-		context.put("ds", _ds);
+		context.put("dependencyInjectorDS", _dependencyInjectorDS);
 		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
 		context.put("osgiModule", _osgiModule);
 		context.put("packagePath", _packagePath);
@@ -7093,7 +7094,7 @@ public class ServiceBuilder {
 	private Properties _compatProperties;
 	private String _currentTplName;
 	private int _databaseNameMaxLength = 30;
-	private boolean _ds;
+	private boolean _dependencyInjectorDS;
 	private Version _dtdVersion;
 	private List<Entity> _entities;
 	private Map<String, EntityMapping> _entityMappings;

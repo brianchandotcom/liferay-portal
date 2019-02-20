@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  */
 </#if>
 
-<#if ds>
+<#if dependencyInjectorDS>
 	@Component(
 		<#if stringUtil.equals(sessionTypeName, "Local")>
 			property = "model.class.name=${apiPackagePath}.model.${entity.name}"

@@ -2046,7 +2046,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	<#if ds>
-		<#include "persistence_ds_references.ftl">
+		<#include "persistence_references.ftl">
 
 		private boolean _columnBitmaskEnabled;
 	</#if>

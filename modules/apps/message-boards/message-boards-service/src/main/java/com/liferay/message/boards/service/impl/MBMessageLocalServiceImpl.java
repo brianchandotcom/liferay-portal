@@ -748,6 +748,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 						mbMessagePersistence.update(childMessage);
 					}
+
+					Indexer<MBMessage> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
+					indexer.reindex(childrenMessages);
 				}
 				else if (message.getStatus() ==
 							WorkflowConstants.STATUS_APPROVED) {

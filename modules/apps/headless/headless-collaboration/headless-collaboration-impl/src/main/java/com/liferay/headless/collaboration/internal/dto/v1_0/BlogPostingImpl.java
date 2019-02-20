@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Categories;
-import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -205,33 +204,6 @@ public class BlogPostingImpl implements BlogPosting {
 	@GraphQLField
 	@JsonProperty
 	protected Long[] categoryIds;
-	public Comment[] getComment() {
-			return comment;
-	}
-
-	public void setComment(
-			Comment[] comment) {
-
-			this.comment = comment;
-	}
-
-	@JsonIgnore
-	public void setComment(
-			UnsafeSupplier<Comment[], Throwable>
-				commentUnsafeSupplier) {
-
-			try {
-				comment =
-					commentUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected Comment[] comment;
 	public Long getContentSpace() {
 			return contentSpace;
 	}
@@ -448,6 +420,33 @@ public class BlogPostingImpl implements BlogPosting {
 	@GraphQLField
 	@JsonProperty
 	protected String friendlyUrlPath;
+	public Boolean getHasComments() {
+			return hasComments;
+	}
+
+	public void setHasComments(
+			Boolean hasComments) {
+
+			this.hasComments = hasComments;
+	}
+
+	@JsonIgnore
+	public void setHasComments(
+			UnsafeSupplier<Boolean, Throwable>
+				hasCommentsUnsafeSupplier) {
+
+			try {
+				hasComments =
+					hasCommentsUnsafeSupplier.get();
+	}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+	}
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Boolean hasComments;
 	public String getHeadline() {
 			return headline;
 	}

@@ -46,6 +46,14 @@ public class Mutation {
 					blogPostingId);
 	}
 	@GraphQLInvokeDetached
+	public BlogPosting patchBlogPosting(
+	@GraphQLName("blog-posting-id") Long blogPostingId,@GraphQLName("BlogPosting") BlogPosting blogPosting)
+			throws Exception {
+
+				return _getBlogPostingResource().patchBlogPosting(
+					blogPostingId,blogPosting);
+	}
+	@GraphQLInvokeDetached
 	public BlogPosting putBlogPosting(
 	@GraphQLName("blog-posting-id") Long blogPostingId,@GraphQLName("BlogPosting") BlogPosting blogPosting)
 			throws Exception {

@@ -22,6 +22,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -117,7 +118,54 @@ public abstract class BaseStructuredContentResourceImpl implements StructuredCon
 	@PathParam("structured-content-id") Long structuredContentId,StructuredContent structuredContent)
 			throws Exception {
 
-				return new StructuredContentImpl();
+				StructuredContent oldStructuredContent = getStructuredContent(structuredContentId);
+
+						if (Validator.isNotNull(structuredContent.getAvailableLanguages())) {
+							oldStructuredContent.setAvailableLanguages(
+								structuredContent.getAvailableLanguages());
+	}
+						if (Validator.isNotNull(structuredContent.getContentSpace())) {
+							oldStructuredContent.setContentSpace(
+								structuredContent.getContentSpace());
+	}
+						if (Validator.isNotNull(structuredContent.getContentStructureId())) {
+							oldStructuredContent.setContentStructureId(
+								structuredContent.getContentStructureId());
+	}
+						if (Validator.isNotNull(structuredContent.getDateCreated())) {
+							oldStructuredContent.setDateCreated(
+								structuredContent.getDateCreated());
+	}
+						if (Validator.isNotNull(structuredContent.getDateModified())) {
+							oldStructuredContent.setDateModified(
+								structuredContent.getDateModified());
+	}
+						if (Validator.isNotNull(structuredContent.getDatePublished())) {
+							oldStructuredContent.setDatePublished(
+								structuredContent.getDatePublished());
+	}
+						if (Validator.isNotNull(structuredContent.getDescription())) {
+							oldStructuredContent.setDescription(
+								structuredContent.getDescription());
+	}
+						if (Validator.isNotNull(structuredContent.getId())) {
+							oldStructuredContent.setId(
+								structuredContent.getId());
+	}
+						if (Validator.isNotNull(structuredContent.getKeywords())) {
+							oldStructuredContent.setKeywords(
+								structuredContent.getKeywords());
+	}
+						if (Validator.isNotNull(structuredContent.getLastReviewed())) {
+							oldStructuredContent.setLastReviewed(
+								structuredContent.getLastReviewed());
+	}
+						if (Validator.isNotNull(structuredContent.getTitle())) {
+							oldStructuredContent.setTitle(
+								structuredContent.getTitle());
+	}
+
+				return putStructuredContent(structuredContentId, oldStructuredContent);
 	}
 	@Override
 	@Consumes("application/json")

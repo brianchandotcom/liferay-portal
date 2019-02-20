@@ -20,6 +20,7 @@ import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -33,6 +34,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -69,6 +71,85 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 			throws Exception {
 
 				return new BlogPostingImpl();
+	}
+	@Override
+	@Consumes("application/json")
+	@PATCH
+	@Path("/blog-postings/{blog-posting-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public BlogPosting patchBlogPosting(
+	@PathParam("blog-posting-id") Long blogPostingId,BlogPosting blogPosting)
+			throws Exception {
+
+				BlogPosting oldBlogPosting = getBlogPosting(blogPostingId);
+
+						if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
+							oldBlogPosting.setAlternativeHeadline(
+								blogPosting.getAlternativeHeadline());
+	}
+						if (Validator.isNotNull(blogPosting.getArticleBody())) {
+							oldBlogPosting.setArticleBody(
+								blogPosting.getArticleBody());
+	}
+						if (Validator.isNotNull(blogPosting.getCaption())) {
+							oldBlogPosting.setCaption(
+								blogPosting.getCaption());
+	}
+						if (Validator.isNotNull(blogPosting.getCategoryIds())) {
+							oldBlogPosting.setCategoryIds(
+								blogPosting.getCategoryIds());
+	}
+						if (Validator.isNotNull(blogPosting.getContentSpace())) {
+							oldBlogPosting.setContentSpace(
+								blogPosting.getContentSpace());
+	}
+						if (Validator.isNotNull(blogPosting.getDateCreated())) {
+							oldBlogPosting.setDateCreated(
+								blogPosting.getDateCreated());
+	}
+						if (Validator.isNotNull(blogPosting.getDateModified())) {
+							oldBlogPosting.setDateModified(
+								blogPosting.getDateModified());
+	}
+						if (Validator.isNotNull(blogPosting.getDatePublished())) {
+							oldBlogPosting.setDatePublished(
+								blogPosting.getDatePublished());
+	}
+						if (Validator.isNotNull(blogPosting.getDescription())) {
+							oldBlogPosting.setDescription(
+								blogPosting.getDescription());
+	}
+						if (Validator.isNotNull(blogPosting.getEncodingFormat())) {
+							oldBlogPosting.setEncodingFormat(
+								blogPosting.getEncodingFormat());
+	}
+						if (Validator.isNotNull(blogPosting.getFriendlyUrlPath())) {
+							oldBlogPosting.setFriendlyUrlPath(
+								blogPosting.getFriendlyUrlPath());
+	}
+						if (Validator.isNotNull(blogPosting.getHasComments())) {
+							oldBlogPosting.setHasComments(
+								blogPosting.getHasComments());
+	}
+						if (Validator.isNotNull(blogPosting.getHeadline())) {
+							oldBlogPosting.setHeadline(
+								blogPosting.getHeadline());
+	}
+						if (Validator.isNotNull(blogPosting.getId())) {
+							oldBlogPosting.setId(
+								blogPosting.getId());
+	}
+						if (Validator.isNotNull(blogPosting.getImageId())) {
+							oldBlogPosting.setImageId(
+								blogPosting.getImageId());
+	}
+						if (Validator.isNotNull(blogPosting.getKeywords())) {
+							oldBlogPosting.setKeywords(
+								blogPosting.getKeywords());
+	}
+
+				return putBlogPosting(blogPostingId, oldBlogPosting);
 	}
 	@Override
 	@Consumes("application/json")

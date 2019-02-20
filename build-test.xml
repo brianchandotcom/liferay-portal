@@ -6476,6 +6476,36 @@ go</echo>
 		/>
 	</target>
 
+	<target name="get-log">
+		<local name="log.dir" />
+
+		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/logs" property="log.dir" value="${app.server.parent.dir}/logs">
+			<or>
+				<not>
+					<isset property="app.server.bundle.index" />
+				</not>
+				<equals arg1="${app.server.bundle.index}" arg2="0" />
+			</or>
+		</condition>
+
+		<for param="log.file">
+			<path>
+				<fileset
+					dir="${log.dir}"
+				>
+					<include name="*.log" />
+				</fileset>
+			</path>
+			<sequential>
+				<copy
+					file="@{log.file}"
+					overwrite="true"
+					tofile="${liferay.home}/cluster.log"
+				/>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="install-patch">
 		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
 

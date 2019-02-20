@@ -89,21 +89,21 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.oauth2.provider.model.OAuth2ScopeGrant"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.oauth2.provider.model.OAuth2ScopeGrant"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2ScopeGrant"),
-			true);
 	public static final long APPLICATIONNAME_COLUMN_BITMASK = 1L;
 	public static final long BUNDLESYMBOLICNAME_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK = 8L;
 	public static final long SCOPE_COLUMN_BITMASK = 16L;
 	public static final long OAUTH2SCOPEGRANTID_COLUMN_BITMASK = 32L;
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
+
 	public static final String MAPPING_TABLE_OA2AUTHS_OA2SCOPEGRANTS_NAME = "OA2Auths_OA2ScopeGrants";
 	public static final Object[][] MAPPING_TABLE_OA2AUTHS_OA2SCOPEGRANTS_COLUMNS =
 		{
@@ -112,11 +112,6 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 			{ "oAuth2ScopeGrantId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_OA2AUTHS_OA2SCOPEGRANTS_SQL_CREATE = "create table OA2Auths_OA2ScopeGrants (companyId LONG not null,oAuth2AuthorizationId LONG not null,oAuth2ScopeGrantId LONG not null,primary key (oAuth2AuthorizationId, oAuth2ScopeGrantId))";
-	public static final boolean FINDER_CACHE_ENABLED_OA2AUTHS_OA2SCOPEGRANTS = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.OA2Auths_OA2ScopeGrants"),
-			true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.oauth2.provider.model.OAuth2ScopeGrant"));
 
 	public OAuth2ScopeGrantModelImpl() {
 	}
@@ -441,12 +436,12 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -568,6 +563,8 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			OAuth2ScopeGrant.class, ModelWrapper.class
 		};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 	private long _oAuth2ScopeGrantId;
 	private long _companyId;
 	private long _originalCompanyId;

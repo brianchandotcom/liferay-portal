@@ -378,45 +378,45 @@ public interface OAuth2ScopeGrantPersistence extends BasePersistence<OAuth2Scope
 	public long[] getOAuth2AuthorizationPrimaryKeys(long pk);
 
 	/**
-	* Returns all the o auth2 authorizations associated with the o auth2 scope grant.
+	* Returns all the o auth2 scope grant associated with the o auth2 authorization.
 	*
-	* @param pk the primary key of the o auth2 scope grant
-	* @return the o auth2 authorizations associated with the o auth2 scope grant
+	* @param pk the primary key of the o auth2 authorization
+	* @return the o auth2 scope grants associated with the o auth2 authorization
 	*/
-	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+	public java.util.List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
 		long pk);
 
 	/**
-	* Returns a range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	* Returns all the o auth2 scope grant associated with the o auth2 authorization.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param pk the primary key of the o auth2 scope grant
-	* @param start the lower bound of the range of o auth2 scope grants
-	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	* @return the range of o auth2 authorizations associated with the o auth2 scope grant
+	* @param pk the primary key of the o auth2 authorization
+	* @param start the lower bound of the range of o auth2 authorizations
+	* @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	* @return the range of o auth2 scope grants associated with the o auth2 authorization
 	*/
-	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+	public java.util.List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
 		long pk, int start, int end);
 
 	/**
-	* Returns an ordered range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	* Returns all the o auth2 scope grant associated with the o auth2 authorization.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param pk the primary key of the o auth2 scope grant
-	* @param start the lower bound of the range of o auth2 scope grants
-	* @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	* @param pk the primary key of the o auth2 authorization
+	* @param start the lower bound of the range of o auth2 authorizations
+	* @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of o auth2 authorizations associated with the o auth2 scope grant
+	* @return the ordered range of o auth2 scope grants associated with the o auth2 authorization
 	*/
-	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+	public java.util.List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2ScopeGrant> orderByComparator);
 
 	/**
 	* Returns the number of o auth2 authorizations associated with the o auth2 scope grant.

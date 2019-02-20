@@ -17,15 +17,16 @@ package com.liferay.oauth2.provider.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl;
-import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
+import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
 
 import com.liferay.petra.string.StringBundler;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -41,12 +43,17 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -59,6 +66,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 /**
  * The persistence implementation for the o auth2 scope grant service.
  *
@@ -69,6 +78,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = OAuth2ScopeGrantPersistence.class)
 @ProviderType
 public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2ScopeGrant>
 	implements OAuth2ScopeGrantPersistence {
@@ -974,7 +984,6 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		setModelImplClass(OAuth2ScopeGrantImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -984,9 +993,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void cacheResult(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		entityCache.putResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey(),
-			oAuth2ScopeGrant);
+		entityCache.putResult(entityCacheEnabled, OAuth2ScopeGrantImpl.class,
+			oAuth2ScopeGrant.getPrimaryKey(), oAuth2ScopeGrant);
 
 		finderCache.putResult(_finderPathFetchByC_O_A_B_S,
 			new Object[] {
@@ -1008,8 +1016,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	@Override
 	public void cacheResult(List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-			if (entityCache.getResult(
-						OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(entityCacheEnabled,
 						OAuth2ScopeGrantImpl.class,
 						oAuth2ScopeGrant.getPrimaryKey()) == null) {
 				cacheResult(oAuth2ScopeGrant);
@@ -1045,7 +1052,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void clearCache(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		entityCache.removeResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(entityCacheEnabled,
 			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1061,7 +1068,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-			entityCache.removeResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(entityCacheEnabled,
 				OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey());
 
 			clearUniqueFindersCache((OAuth2ScopeGrantModelImpl)oAuth2ScopeGrant,
@@ -1264,7 +1271,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!OAuth2ScopeGrantModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
@@ -1306,9 +1313,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 			}
 		}
 
-		entityCache.putResult(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey(),
-			oAuth2ScopeGrant, false);
+		entityCache.putResult(entityCacheEnabled, OAuth2ScopeGrantImpl.class,
+			oAuth2ScopeGrant.getPrimaryKey(), oAuth2ScopeGrant, false);
 
 		clearUniqueFindersCache(oAuth2ScopeGrantModelImpl, false);
 		cacheUniqueFindersCache(oAuth2ScopeGrantModelImpl);
@@ -1570,53 +1576,54 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	}
 
 	/**
-	 * Returns all the o auth2 authorizations associated with the o auth2 scope grant.
+	 * Returns all the o auth2 scope grant associated with the o auth2 authorization.
 	 *
-	 * @param pk the primary key of the o auth2 scope grant
-	 * @return the o auth2 authorizations associated with the o auth2 scope grant
+	 * @param pk the primary key of the o auth2 authorization
+	 * @return the o auth2 scope grants associated with the o auth2 authorization
 	 */
 	@Override
-	public List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
 		long pk) {
-		return getOAuth2Authorizations(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		return getOAuth2AuthorizationOAuth2ScopeGrants(pk, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	/**
-	 * Returns a range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	 * Returns all the o auth2 scope grant associated with the o auth2 authorization.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param pk the primary key of the o auth2 scope grant
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	 * @return the range of o auth2 authorizations associated with the o auth2 scope grant
+	 * @param pk the primary key of the o auth2 authorization
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @return the range of o auth2 scope grants associated with the o auth2 authorization
 	 */
 	@Override
-	public List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
 		long pk, int start, int end) {
-		return getOAuth2Authorizations(pk, start, end, null);
+		return getOAuth2AuthorizationOAuth2ScopeGrants(pk, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the o auth2 authorizations associated with the o auth2 scope grant.
+	 * Returns all the o auth2 scope grant associated with the o auth2 authorization.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param pk the primary key of the o auth2 scope grant
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
+	 * @param pk the primary key of the o auth2 authorization
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of o auth2 authorizations associated with the o auth2 scope grant
+	 * @return the ordered range of o auth2 scope grants associated with the o auth2 authorization
 	 */
 	@Override
-	public List<com.liferay.oauth2.provider.model.OAuth2Authorization> getOAuth2Authorizations(
+	public List<OAuth2ScopeGrant> getOAuth2AuthorizationOAuth2ScopeGrants(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
-		return oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.getRightBaseModels(pk,
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
+		return oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.getLeftBaseModels(pk,
 			start, end, orderByComparator);
 	}
 
@@ -1691,7 +1698,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void addOAuth2Authorization(long pk,
-		com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization) {
+		OAuth2Authorization oAuth2Authorization) {
 		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(pk);
 
 		if (oAuth2ScopeGrant == null) {
@@ -1735,10 +1742,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void addOAuth2Authorizations(long pk,
-		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		List<OAuth2Authorization> oAuth2Authorizations) {
 		addOAuth2Authorizations(pk,
 			ListUtil.toLongArray(oAuth2Authorizations,
-				com.liferay.oauth2.provider.model.OAuth2Authorization.O_AUTH2_AUTHORIZATION_ID_ACCESSOR));
+				OAuth2Authorization.O_AUTH2_AUTHORIZATION_ID_ACCESSOR));
 	}
 
 	/**
@@ -1771,7 +1778,7 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void removeOAuth2Authorization(long pk,
-		com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization) {
+		OAuth2Authorization oAuth2Authorization) {
 		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper.deleteTableMapping(pk,
 			oAuth2Authorization.getPrimaryKey());
 	}
@@ -1797,10 +1804,10 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void removeOAuth2Authorizations(long pk,
-		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		List<OAuth2Authorization> oAuth2Authorizations) {
 		removeOAuth2Authorizations(pk,
 			ListUtil.toLongArray(oAuth2Authorizations,
-				com.liferay.oauth2.provider.model.OAuth2Authorization.O_AUTH2_AUTHORIZATION_ID_ACCESSOR));
+				OAuth2Authorization.O_AUTH2_AUTHORIZATION_ID_ACCESSOR));
 	}
 
 	/**
@@ -1847,13 +1854,12 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	 */
 	@Override
 	public void setOAuth2Authorizations(long pk,
-		List<com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2Authorizations) {
+		List<OAuth2Authorization> oAuth2Authorizations) {
 		try {
 			long[] oAuth2AuthorizationPKs = new long[oAuth2Authorizations.size()];
 
 			for (int i = 0; i < oAuth2Authorizations.size(); i++) {
-				com.liferay.oauth2.provider.model.OAuth2Authorization oAuth2Authorization =
-					oAuth2Authorizations.get(i);
+				OAuth2Authorization oAuth2Authorization = oAuth2Authorizations.get(i);
 
 				oAuth2AuthorizationPKs[i] = oAuth2Authorization.getPrimaryKey();
 			}
@@ -1893,30 +1899,31 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 	/**
 	 * Initializes the o auth2 scope grant persistence.
 	 */
-	public void afterPropertiesSet() {
-		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper = TableMapperFactory.getTableMapper("OA2Auths_OA2ScopeGrants",
-				"companyId", "oAuth2ScopeGrantId", "oAuth2AuthorizationId",
-				this, oAuth2AuthorizationPersistence);
+	@Activate
+	public void activate() {
+		OAuth2ScopeGrantModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		OAuth2ScopeGrantModelImpl.setFinderCacheEnabled(finderCacheEnabled);
 
-		_finderPathWithPaginationFindAll = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
-				OAuth2ScopeGrantImpl.class,
+		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper = TableMapperFactory.getTableMapper("OA2Auths_OA2ScopeGrants#oAuth2ScopeGrantId",
+				"OA2Auths_OA2ScopeGrants", "companyId", "oAuth2ScopeGrantId",
+				"oAuth2AuthorizationId", this, OAuth2Authorization.class);
+
+		_finderPathWithPaginationFindAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, OAuth2ScopeGrantImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
-				OAuth2ScopeGrantImpl.class,
+		_finderPathWithoutPaginationFindAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, OAuth2ScopeGrantImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 				new String[0]);
 
-		_finderPathCountAll = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountAll = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 				new String[0]);
 
-		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
-				OAuth2ScopeGrantImpl.class,
+		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, OAuth2ScopeGrantImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByOAuth2ApplicationScopeAliasesId",
 				new String[] {
@@ -1926,24 +1933,22 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 					OrderByComparator.class.getName()
 				});
 
-		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
-				OAuth2ScopeGrantImpl.class,
+		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, OAuth2ScopeGrantImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByOAuth2ApplicationScopeAliasesId",
 				new String[] { Long.class.getName() },
 				OAuth2ScopeGrantModelImpl.OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK);
 
-		_finderPathCountByOAuth2ApplicationScopeAliasesId = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByOAuth2ApplicationScopeAliasesId = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"countByOAuth2ApplicationScopeAliasesId",
 				new String[] { Long.class.getName() });
 
-		_finderPathFetchByC_O_A_B_S = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED,
-				OAuth2ScopeGrantImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByC_O_A_B_S",
+		_finderPathFetchByC_O_A_B_S = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, OAuth2ScopeGrantImpl.class,
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
 				new String[] {
 					Long.class.getName(), Long.class.getName(),
 					String.class.getName(), String.class.getName(),
@@ -1955,8 +1960,8 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 				OAuth2ScopeGrantModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK |
 				OAuth2ScopeGrantModelImpl.SCOPE_COLUMN_BITMASK);
 
-		_finderPathCountByC_O_A_B_S = new FinderPath(OAuth2ScopeGrantModelImpl.ENTITY_CACHE_ENABLED,
-				OAuth2ScopeGrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+		_finderPathCountByC_O_A_B_S = new FinderPath(entityCacheEnabled,
+				finderCacheEnabled, Long.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O_A_B_S",
 				new String[] {
 					Long.class.getName(), Long.class.getName(),
@@ -1965,24 +1970,47 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 				});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(OAuth2ScopeGrantImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		TableMapperFactory.removeTableMapper("OA2Auths_OA2ScopeGrants");
+		TableMapperFactory.removeTableMapper(
+			"OA2Auths_OA2ScopeGrants#oAuth2ScopeGrantId");
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(configuration.get(
+					"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2ScopeGrant"),
+				true);
+	}
+
+	@Override
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
-	@BeanReference(type = OAuth2AuthorizationPersistence.class)
-	protected OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence;
-	protected TableMapper<OAuth2ScopeGrant, com.liferay.oauth2.provider.model.OAuth2Authorization> oAuth2ScopeGrantToOAuth2AuthorizationTableMapper;
+	protected TableMapper<OAuth2ScopeGrant, OAuth2Authorization> oAuth2ScopeGrantToOAuth2AuthorizationTableMapper;
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant";
 	private static final String _SQL_SELECT_OAUTH2SCOPEGRANT_WHERE = "SELECT oAuth2ScopeGrant FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
 	private static final String _SQL_COUNT_OAUTH2SCOPEGRANT = "SELECT COUNT(oAuth2ScopeGrant) FROM OAuth2ScopeGrant oAuth2ScopeGrant";

@@ -16,48 +16,53 @@ package com.liferay.oauth2.provider.service.persistence.impl;
 
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
+import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Set;
+
+import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class OAuth2ScopeGrantFinderBaseImpl extends BasePersistenceImpl<OAuth2ScopeGrant> {
+public abstract class OAuth2ScopeGrantFinderBaseImpl extends BasePersistenceImpl<OAuth2ScopeGrant> {
 	public OAuth2ScopeGrantFinderBaseImpl() {
 		setModelClass(OAuth2ScopeGrant.class);
 	}
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getOAuth2ScopeGrantPersistence().getBadColumnNames();
+		return oAuth2ScopeGrantPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the o auth2 scope grant persistence.
-	 *
-	 * @return the o auth2 scope grant persistence
-	 */
-	public OAuth2ScopeGrantPersistence getOAuth2ScopeGrantPersistence() {
-		return oAuth2ScopeGrantPersistence;
+	@Override
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the o auth2 scope grant persistence.
-	 *
-	 * @param oAuth2ScopeGrantPersistence the o auth2 scope grant persistence
-	 */
-	public void setOAuth2ScopeGrantPersistence(
-		OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence) {
-		this.oAuth2ScopeGrantPersistence = oAuth2ScopeGrantPersistence;
+	@Override
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = OAuth2ScopeGrantPersistence.class)
+	@Override
+	@Reference(target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
 	private static final Log _log = LogFactoryUtil.getLog(OAuth2ScopeGrantFinderBaseImpl.class);
 }

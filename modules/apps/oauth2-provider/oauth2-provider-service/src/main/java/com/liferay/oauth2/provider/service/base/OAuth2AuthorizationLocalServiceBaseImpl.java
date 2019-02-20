@@ -22,7 +22,7 @@ import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersis
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -40,11 +40,12 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -66,7 +67,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements OAuth2AuthorizationLocalService,
-		IdentifiableOSGiService {
+		AopService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -418,7 +419,7 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	@Override
 	public List<OAuth2Authorization> getOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId) {
-		return oAuth2ScopeGrantPersistence.getOAuth2Authorizations(oAuth2ScopeGrantId);
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrantOAuth2Authorizations(oAuth2ScopeGrantId);
 	}
 
 	/**
@@ -426,7 +427,7 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	@Override
 	public List<OAuth2Authorization> getOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, int start, int end) {
-		return oAuth2ScopeGrantPersistence.getOAuth2Authorizations(oAuth2ScopeGrantId,
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrantOAuth2Authorizations(oAuth2ScopeGrantId,
 			start, end);
 	}
 
@@ -436,7 +437,7 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	public List<OAuth2Authorization> getOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, int start, int end,
 		OrderByComparator<OAuth2Authorization> orderByComparator) {
-		return oAuth2ScopeGrantPersistence.getOAuth2Authorizations(oAuth2ScopeGrantId,
+		return oAuth2AuthorizationPersistence.getOAuth2ScopeGrantOAuth2Authorizations(oAuth2ScopeGrantId,
 			start, end, orderByComparator);
 	}
 
@@ -474,128 +475,17 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 			oAuth2AuthorizationIds);
 	}
 
-	/**
-	 * Returns the o auth2 authorization local service.
-	 *
-	 * @return the o auth2 authorization local service
-	 */
-	public OAuth2AuthorizationLocalService getOAuth2AuthorizationLocalService() {
-		return oAuth2AuthorizationLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			OAuth2AuthorizationLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the o auth2 authorization local service.
-	 *
-	 * @param oAuth2AuthorizationLocalService the o auth2 authorization local service
-	 */
-	public void setOAuth2AuthorizationLocalService(
-		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService) {
-		this.oAuth2AuthorizationLocalService = oAuth2AuthorizationLocalService;
-	}
-
-	/**
-	 * Returns the o auth2 authorization persistence.
-	 *
-	 * @return the o auth2 authorization persistence
-	 */
-	public OAuth2AuthorizationPersistence getOAuth2AuthorizationPersistence() {
-		return oAuth2AuthorizationPersistence;
-	}
-
-	/**
-	 * Sets the o auth2 authorization persistence.
-	 *
-	 * @param oAuth2AuthorizationPersistence the o auth2 authorization persistence
-	 */
-	public void setOAuth2AuthorizationPersistence(
-		OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence) {
-		this.oAuth2AuthorizationPersistence = oAuth2AuthorizationPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the o auth2 scope grant local service.
-	 *
-	 * @return the o auth2 scope grant local service
-	 */
-	public com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService getOAuth2ScopeGrantLocalService() {
-		return oAuth2ScopeGrantLocalService;
-	}
-
-	/**
-	 * Sets the o auth2 scope grant local service.
-	 *
-	 * @param oAuth2ScopeGrantLocalService the o auth2 scope grant local service
-	 */
-	public void setOAuth2ScopeGrantLocalService(
-		com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService) {
-		this.oAuth2ScopeGrantLocalService = oAuth2ScopeGrantLocalService;
-	}
-
-	/**
-	 * Returns the o auth2 scope grant persistence.
-	 *
-	 * @return the o auth2 scope grant persistence
-	 */
-	public OAuth2ScopeGrantPersistence getOAuth2ScopeGrantPersistence() {
-		return oAuth2ScopeGrantPersistence;
-	}
-
-	/**
-	 * Sets the o auth2 scope grant persistence.
-	 *
-	 * @param oAuth2ScopeGrantPersistence the o auth2 scope grant persistence
-	 */
-	public void setOAuth2ScopeGrantPersistence(
-		OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence) {
-		this.oAuth2ScopeGrantPersistence = oAuth2ScopeGrantPersistence;
-	}
-
-	/**
-	 * Returns the o auth2 scope grant finder.
-	 *
-	 * @return the o auth2 scope grant finder
-	 */
-	public OAuth2ScopeGrantFinder getOAuth2ScopeGrantFinder() {
-		return oAuth2ScopeGrantFinder;
-	}
-
-	/**
-	 * Sets the o auth2 scope grant finder.
-	 *
-	 * @param oAuth2ScopeGrantFinder the o auth2 scope grant finder
-	 */
-	public void setOAuth2ScopeGrantFinder(
-		OAuth2ScopeGrantFinder oAuth2ScopeGrantFinder) {
-		this.oAuth2ScopeGrantFinder = oAuth2ScopeGrantFinder;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.oauth2.provider.model.OAuth2Authorization",
-			oAuth2AuthorizationLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.oauth2.provider.model.OAuth2Authorization");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		oAuth2AuthorizationLocalService = (OAuth2AuthorizationLocalService)aopProxy;
 	}
 
 	/**
@@ -640,18 +530,13 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = OAuth2AuthorizationLocalService.class)
 	protected OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService;
-	@BeanReference(type = OAuth2AuthorizationPersistence.class)
+	@Reference
 	protected OAuth2AuthorizationPersistence oAuth2AuthorizationPersistence;
-	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService;
-	@BeanReference(type = OAuth2ScopeGrantPersistence.class)
+	@Reference
 	protected OAuth2ScopeGrantPersistence oAuth2ScopeGrantPersistence;
-	@BeanReference(type = OAuth2ScopeGrantFinder.class)
+	@Reference
 	protected OAuth2ScopeGrantFinder oAuth2ScopeGrantFinder;
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

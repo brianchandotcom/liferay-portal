@@ -122,18 +122,17 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.oauth2.provider.model.OAuth2Application"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.oauth2.provider.model.OAuth2Application"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2Application"),
-			true);
 	public static final long CLIENTID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 4L;
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -190,9 +189,6 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 		return models;
 	}
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.oauth2.provider.model.OAuth2Application"));
 
 	public OAuth2ApplicationModelImpl() {
 	}
@@ -717,12 +713,12 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -918,6 +914,8 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			OAuth2Application.class, ModelWrapper.class
 		};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 	private long _oAuth2ApplicationId;
 	private long _companyId;
 	private long _originalCompanyId;

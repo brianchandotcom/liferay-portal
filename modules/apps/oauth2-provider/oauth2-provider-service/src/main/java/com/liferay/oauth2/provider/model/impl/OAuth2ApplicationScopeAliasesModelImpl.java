@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -97,21 +96,18 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases"),
-			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 2L;
 	public static final long SCOPEALIASESHASH_COLUMN_BITMASK = 4L;
 	public static final long OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases"));
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public OAuth2ApplicationScopeAliasesModelImpl() {
 	}
@@ -460,12 +456,12 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -596,6 +592,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			OAuth2ApplicationScopeAliases.class, ModelWrapper.class
 		};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 	private long _oAuth2ApplicationScopeAliasesId;
 	private long _companyId;
 	private long _originalCompanyId;

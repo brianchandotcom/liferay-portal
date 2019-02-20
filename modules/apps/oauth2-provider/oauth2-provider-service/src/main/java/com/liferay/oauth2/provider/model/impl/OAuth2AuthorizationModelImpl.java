@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -116,20 +115,19 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.oauth2.provider.model.OAuth2Authorization"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.oauth2.provider.model.OAuth2Authorization"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2Authorization"),
-			true);
 	public static final long ACCESSTOKENCONTENTHASH_COLUMN_BITMASK = 1L;
 	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 2L;
 	public static final long REFRESHTOKENCONTENTHASH_COLUMN_BITMASK = 4L;
 	public static final long USERID_COLUMN_BITMASK = 8L;
 	public static final long OAUTH2AUTHORIZATIONID_COLUMN_BITMASK = 16L;
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -193,11 +191,6 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			{ "oAuth2ScopeGrantId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_OA2AUTHS_OA2SCOPEGRANTS_SQL_CREATE = "create table OA2Auths_OA2ScopeGrants (companyId LONG not null,oAuth2AuthorizationId LONG not null,oAuth2ScopeGrantId LONG not null,primary key (oAuth2AuthorizationId, oAuth2ScopeGrantId))";
-	public static final boolean FINDER_CACHE_ENABLED_OA2AUTHS_OA2SCOPEGRANTS = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.OA2Auths_OA2ScopeGrants"),
-			true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.oauth2.provider.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.oauth2.provider.model.OAuth2Authorization"));
 
 	public OAuth2AuthorizationModelImpl() {
 	}
@@ -668,12 +661,12 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -859,6 +852,8 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			OAuth2Authorization.class, ModelWrapper.class
 		};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 	private long _oAuth2AuthorizationId;
 	private long _companyId;
 	private long _userId;

@@ -46,6 +46,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		_uploadHandler.upload(
 			_imageBlogsUploadFileEntryHandler, _imageBlogsUploadResponseHandler,
 			actionRequest, actionResponse);

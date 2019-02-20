@@ -60,17 +60,15 @@ public class ExtensionImpl implements Extension {
 	private static List<Field> _getFieldInjectionPoints(Class<?> clazz) {
 		List<Field> injectionPoints = new ArrayList<>();
 
-		if (clazz == null) {
-			return injectionPoints;
-		}
-
-		for (Field field : clazz.getDeclaredFields()) {
-			if (_isInjectionPoint(field)) {
-				injectionPoints.add(field);
+		while (clazz != null) {
+			for (Field field : clazz.getDeclaredFields()) {
+				if (_isInjectionPoint(field)) {
+					injectionPoints.add(field);
+				}
 			}
-		}
 
-		injectionPoints.addAll(_getFieldInjectionPoints(clazz.getSuperclass()));
+			clazz = clazz.getSuperclass();
+		}
 
 		return injectionPoints;
 	}
@@ -78,17 +76,15 @@ public class ExtensionImpl implements Extension {
 	private static List<Method> _getObserverMethods(Class<?> clazz) {
 		List<Method> observerMethods = new ArrayList<>();
 
-		if (clazz == null) {
-			return observerMethods;
-		}
-
-		for (Method method : clazz.getDeclaredMethods()) {
-			if (_isObserverMethod(method)) {
-				observerMethods.add(method);
+		while (clazz != null) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				if (_isObserverMethod(method)) {
+					observerMethods.add(method);
+				}
 			}
-		}
 
-		observerMethods.addAll(_getObserverMethods(clazz.getSuperclass()));
+			clazz = clazz.getSuperclass();
+		}
 
 		return observerMethods;
 	}

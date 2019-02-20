@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(immediate = true, service = {})
-public class BlogsEntrySearcherRegistrar {
+public class BlogsEntrySearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

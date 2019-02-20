@@ -188,6 +188,27 @@ paths:
                 $ref: "#/components/schemas/BlogPosting"
           description: ""
       tags: ["BlogPosting"]
+    patch:
+      parameters:
+        - in: path
+          name: blog-posting-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPosting"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPosting"
+          description: ""
+      tags: ["BlogPosting"]
     put:
       parameters:
         - in: path

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.service.internal.search;
+package com.liferay.organizations.service.internal.search.contributor.sort;
 
 import com.liferay.portal.search.contributor.ContributorConstants;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;

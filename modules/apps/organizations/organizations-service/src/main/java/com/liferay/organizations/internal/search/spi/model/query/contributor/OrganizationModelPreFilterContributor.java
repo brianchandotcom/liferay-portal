@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.service.internal.search;
+package com.liferay.organizations.internal.search.spi.model.query.contributor;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

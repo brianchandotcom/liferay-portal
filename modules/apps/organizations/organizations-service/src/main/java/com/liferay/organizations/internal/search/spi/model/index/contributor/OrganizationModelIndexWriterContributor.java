@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.service.internal.search;
+package com.liferay.organizations.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Document;

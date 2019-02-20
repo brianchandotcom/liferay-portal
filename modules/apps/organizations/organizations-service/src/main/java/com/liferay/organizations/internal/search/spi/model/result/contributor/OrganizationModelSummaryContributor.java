@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.service.internal.search;
+package com.liferay.organizations.internal.search.spi.model.result.contributor;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Summary;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "indexer.class.name=com.liferay.portal.kernel.model.Organization",
 	service = ModelSummaryContributor.class
 )
-public class OrganizationSummaryContributor implements ModelSummaryContributor {
+public class OrganizationModelSummaryContributor implements ModelSummaryContributor {
 
 	@Override
 	public Summary getSummary(

@@ -74,23 +74,16 @@ public class ManagerImpl implements Manager {
 	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
 		List<ObserverMethod> observers = new ArrayList<>();
 
-		List<ObserverMethod> interceptorObservers = new ArrayList<>();
-
 		Class<?> eventClass = event.getClass();
 
 		for (Extension extension : _extensions) {
 			for (ObserverMethod observerMethod : extension.getObservers()) {
 				Type type = observerMethod.getType();
 
-				Class<?> clazz = _getType(type);
+				Class<?> clazz = (Class<?>)type;
 
 				if (clazz.isAssignableFrom(eventClass)) {
-					if (_isType(type, EventContext.class)) {
-						interceptorObservers.add(observerMethod);
-					}
-					else {
-						observers.add(observerMethod);
-					}
+					observers.add(observerMethod);
 				}
 			}
 		}
@@ -105,8 +98,7 @@ public class ManagerImpl implements Manager {
 			}
 
 			EventContext<T> eventContext = new EventContextImpl<>(
-				this, interceptorObservers, observers, nonManagedObserver,
-				event);
+				this, observers, nonManagedObserver, event);
 
 			eventContext.proceed();
 		}
@@ -229,19 +221,6 @@ public class ManagerImpl implements Manager {
 					_getType(injectionPoint.getType()),
 					injectionPoint.getScope(), this));
 		}
-	}
-
-	private boolean _isType(Type type, Class<?> clazz) {
-		if (type instanceof Class<?> && ((Class<?>)type == clazz)) {
-			return true;
-		}
-		else if (type instanceof ParameterizedType &&
-				 (((ParameterizedType)type).getRawType() == clazz)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private final ApplicationContext _applicationContext;

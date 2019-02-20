@@ -28,13 +28,10 @@ import org.jboss.arquillian.core.spi.ObserverMethod;
 public class EventContextImpl<T> implements EventContext<T> {
 
 	public EventContextImpl(
-		Manager manager, List<ObserverMethod> interceptors,
-		List<ObserverMethod> observers,
+		Manager manager, List<ObserverMethod> observers,
 		NonManagedObserver<T> nonManagedObserver, T event) {
 
 		_manager = manager;
-
-		_interceptors.addAll(interceptors);
 
 		_observers.addAll(observers);
 
@@ -49,17 +46,9 @@ public class EventContextImpl<T> implements EventContext<T> {
 
 	@Override
 	public void proceed() {
-		if (_currentInterceptor == _interceptors.size()) {
-			_invokeObservers();
+		_invokeObservers();
 
-			_invokeNonmanagedObserver();
-		}
-		else {
-			ObserverMethod interceptor = _interceptors.get(
-				_currentInterceptor++);
-
-			interceptor.invoke(_manager, this);
-		}
+		_invokeNonmanagedObserver();
 	}
 
 	private void _invokeNonmanagedObserver() {
@@ -75,9 +64,7 @@ public class EventContextImpl<T> implements EventContext<T> {
 		}
 	}
 
-	private int _currentInterceptor;
 	private final T _event;
-	private final List<ObserverMethod> _interceptors = new ArrayList<>();
 	private final Manager _manager;
 	private final NonManagedObserver<T> _nonManagedObserver;
 	private final List<ObserverMethod> _observers = new ArrayList<>();

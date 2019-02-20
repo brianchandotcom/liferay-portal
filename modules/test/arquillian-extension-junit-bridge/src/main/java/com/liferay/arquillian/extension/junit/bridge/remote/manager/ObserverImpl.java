@@ -105,7 +105,9 @@ public class ObserverImpl implements ObserverMethod {
 	}
 
 	private Object[] _resolveArguments(Manager manager, Object event) {
-		Class<?>[] argumentTypes = getMethod().getParameterTypes();
+		Method method = getMethod();
+
+		Class<?>[] argumentTypes = method.getParameterTypes();
 
 		int numberOfArguments = argumentTypes.length;
 

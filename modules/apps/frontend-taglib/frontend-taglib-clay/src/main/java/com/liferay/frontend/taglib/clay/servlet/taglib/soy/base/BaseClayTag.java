@@ -15,9 +15,9 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
-import com.liferay.frontend.taglib.clay.internal.ClayComponentAttributeProvidersProvider;
+import com.liferay.frontend.taglib.clay.internal.ClayTagContextContributorsProvider;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContextContributor;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -64,11 +64,11 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			}
 		}
 
-		String attributeProviderKey = GetterUtil.getString(
-			context.get("attributeProviderKey"));
+		String contributorKey = GetterUtil.getString(
+			context.get("contributorKey"));
 
-		if (Validator.isNotNull(attributeProviderKey)) {
-			_setAttributeProviderAttributes(attributeProviderKey);
+		if (Validator.isNotNull(contributorKey)) {
+			_populateContext(contributorKey);
 		}
 
 		setTemplateNamespace(_componentBaseName + ".render");
@@ -104,12 +104,12 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return _namespace;
 	}
 
-	public void setAttributeProviderKey(String attributeProviderKey) {
-		putValue("attributeProviderKey", attributeProviderKey);
-	}
-
 	public void setComponentBaseName(String componentBaseName) {
 		_componentBaseName = componentBaseName;
+	}
+
+	public void setContributorKey(String contributorKey) {
+		putValue("contributorKey", contributorKey);
 	}
 
 	public void setData(Map<String, String> data) {
@@ -155,19 +155,19 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return null;
 	}
 
-	private void _setAttributeProviderAttributes(String key) {
-		List<ClayComponentAttributeProvider> clayComponentAttributeProviders =
-			ClayComponentAttributeProvidersProvider.
-				getClayComponentAttributeProviders(key);
+	private void _populateContext(String contributorKey) {
+		List<ClayTagContextContributor> clayTagContextContributors =
+			ClayTagContextContributorsProvider.getClayTagContextContributors(
+				contributorKey);
 
-		if (clayComponentAttributeProviders == null) {
+		if (clayTagContextContributors == null) {
 			return;
 		}
 
-		for (ClayComponentAttributeProvider clayComponentAttributeProvider :
-				clayComponentAttributeProviders) {
+		for (ClayTagContextContributor clayTagContextContributor :
+				clayTagContextContributors) {
 
-			clayComponentAttributeProvider.getAttributes(getContext());
+			clayTagContextContributor.populate(getContext());
 		}
 	}
 

@@ -16,12 +16,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -35,6 +29,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -106,13 +106,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -166,12 +166,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>block</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -179,6 +173,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -280,12 +280,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -293,6 +287,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -370,12 +370,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>buttonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -401,6 +395,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -466,12 +466,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>buttonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -491,6 +485,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -598,13 +598,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -784,13 +784,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -904,13 +904,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -970,13 +970,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1162,12 +1162,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>closeable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1175,6 +1169,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1252,12 +1252,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>buttonStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1265,6 +1259,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1368,12 +1368,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>checkboxStatus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1399,6 +1393,12 @@
 		<attribute>
 			<description></description>
 			<name>contentRenderer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1626,6 +1626,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>contributorKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1716,13 +1722,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1776,13 +1782,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1848,12 +1854,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1861,6 +1861,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1932,13 +1938,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2010,13 +2016,13 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2100,12 +2106,6 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2113,6 +2113,12 @@
 		<attribute>
 			<description></description>
 			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2184,7 +2190,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2256,13 +2262,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2412,13 +2418,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>attributeProviderKey</name>
+			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>componentId</name>
+			<name>contributorKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

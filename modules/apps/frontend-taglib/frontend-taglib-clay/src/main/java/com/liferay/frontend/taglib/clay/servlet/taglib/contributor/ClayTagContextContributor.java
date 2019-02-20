@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.attribute.provider;
+package com.liferay.frontend.taglib.clay.servlet.taglib.contributor;
 
 import java.util.Map;
 
 /**
  * @author Rodolfo Roza Miranda
  */
-public interface ClayComponentAttributeProvider {
+public interface ClayTagContextContributor {
 
-	public void getAttributes(Map<String, Object> context);
+	public void populate(Map<String, Object> context);
 
 }

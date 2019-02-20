@@ -22,20 +22,7 @@
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= assetCategoriesDisplayContext.getCategoriesActionItemsDropdownItems() %>"
-	clearResultsURL="<%= assetCategoriesDisplayContext.getCategoriesClearResultsURL() %>"
-	componentId="assetCategoriesManagementToolbar"
-	creationMenu="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() ? assetCategoriesDisplayContext.getCategoriesCreationMenu() : null %>"
-	disabled="<%= assetCategoriesDisplayContext.isDisabledCategoriesManagementBar() %>"
-	filterDropdownItems="<%= assetCategoriesDisplayContext.getCategoriesFilterItemsDropdownItems() %>"
-	itemsTotal="<%= assetCategoriesDisplayContext.getCategoriesTotalItems() %>"
-	searchActionURL="<%= assetCategoriesDisplayContext.getCategoriesSearchActionURL() %>"
-	searchContainerId="assetCategories"
-	searchFormName="searchFm"
-	showSearch="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>"
-	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetCategoriesDisplayContext.getCategoriesSortingURL() %>"
-	viewTypeItems="<%= !assetCategoriesDisplayContext.isFlattenedNavigationAllowed() ? assetCategoriesDisplayContext.getCategoriesViewTypeItems() : null %>"
+	displayContext="<%= new AssetCategoriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext) %>"
 />
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">

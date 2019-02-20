@@ -22,19 +22,7 @@
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesActionItemsDropdownItems() %>"
-	clearResultsURL="<%= assetCategoriesDisplayContext.getVocabulariesClearResultsURL() %>"
-	componentId="assetVocabulariesManagementToolbar"
-	creationMenu="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() ? assetCategoriesDisplayContext.getVocabulariesCreationMenu() : null %>"
-	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
-	filterDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
-	itemsTotal="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
-	searchActionURL="<%= assetCategoriesDisplayContext.getVocabulariesSearchActionURL() %>"
-	searchContainerId="assetVocabularies"
-	searchFormName="searchFm"
-	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetCategoriesDisplayContext.getVocabulariesSortingURL() %>"
-	viewTypeItems="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
+	displayContext="<%= new AssetVocabulariesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext) %>"
 />
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">

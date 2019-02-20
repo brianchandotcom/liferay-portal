@@ -12,6 +12,7 @@
 	{@param spritemap: string}
 	{@param? _userEmailAddresses: list<?>}
 	{@param? _closeDialog: any}
+	{@param? _dataSource: string|[]|list<?>}
 	{@param? _handleInputChange: any}
 	{@param? _handleDataChange: any}
 	{@param? _handleSubmit: any}
@@ -29,7 +30,7 @@
 				<div class="form-group {$emailErrorMessage ? ' has-error' : '' }">
 					{call ClayMultiSelect.render}
 						{param contentRenderer: 'sharingUser' /}
-						{param dataSource: [] /}
+						{param dataSource: $_dataSource ? $_dataSource : [] /}
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
 							'dataChange': $_handleDataChange,

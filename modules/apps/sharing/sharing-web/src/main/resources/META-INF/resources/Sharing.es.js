@@ -18,12 +18,12 @@ class Sharing extends PortletBase {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Fetches autocomplete results
+	 * @private
+	 * @review
 	 */
-	attached(...args) {
-		super.attached(...args);
-
-		this.refs.multiSelect.dataSource = query => this.fetch(
+	_dataSource(query) {
+		return this.fetch(
 			this.sharingUserAutocompleteURL,
 			{
 				query
@@ -32,15 +32,13 @@ class Sharing extends PortletBase {
 			res => res.json()
 		).then(
 			users => users.map(
-				({emailAddress, fullName, portraitURL}) => (
-					{
-						emailAddress,
-						fullName,
-						label: fullName,
-						portraitURL,
-						value: emailAddress
-					}
-				)
+				({emailAddress, fullName, portraitURL}) => ({
+					emailAddress,
+					fullName,
+					label: fullName,
+					portraitURL,
+					value: emailAddress
+				})
 			)
 		);
 	}

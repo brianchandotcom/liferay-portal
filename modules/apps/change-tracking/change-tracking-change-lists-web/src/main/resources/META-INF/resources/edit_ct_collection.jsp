@@ -38,7 +38,9 @@ if (ctCollection != null) {
 	<aui:form action='<%= actionURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="addChangeListFm">
 		<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
 
-		<aui:input label="name" name="name" placeholder="change-list-name-placeholder" value="<%= name %>" />
+		<aui:input label="name" name="name" placeholder="change-list-name-placeholder" value="<%= name %>">
+			<aui:validator name="required" />
+		</aui:input>
 
 		<aui:input label="description" name="description" placeholder="change-list-description-placeholder" value="<%= description %>" />
 

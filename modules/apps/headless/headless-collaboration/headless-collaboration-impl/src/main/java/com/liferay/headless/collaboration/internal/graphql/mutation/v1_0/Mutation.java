@@ -16,8 +16,10 @@ package com.liferay.headless.collaboration.internal.graphql.mutation.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
+import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -64,6 +66,28 @@ return _getBlogPostingImageResource().postContentSpaceBlogPostingImage( contentS
 return _getBlogPostingImageResource().deleteImageObject( imageObjectId );
 	}
 
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postBlogPostingComment( @GraphQLName("blog-posting-id") Long blogPostingId , @GraphQLName("Comment") Comment comment ) throws Exception {
+return _getCommentResource().postBlogPostingComment( blogPostingId , comment );
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteComment( @GraphQLName("comment-id") Long commentId ) throws Exception {
+return _getCommentResource().deleteComment( commentId );
+	}
+
+	@GraphQLInvokeDetached
+	public Comment putComment( @GraphQLName("comment-id") Long commentId , @GraphQLName("Comment") Comment comment ) throws Exception {
+return _getCommentResource().putComment( commentId , comment );
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postCommentComment( @GraphQLName("comment-id") Long commentId , @GraphQLName("Comment") Comment comment ) throws Exception {
+return _getCommentResource().postCommentComment( commentId , comment );
+	}
+
 	private static BlogPostingResource _getBlogPostingResource() {
 			return _blogPostingResourceServiceTracker.getService();
 	}
@@ -74,6 +98,11 @@ return _getBlogPostingImageResource().deleteImageObject( imageObjectId );
 	}
 
 	private static final ServiceTracker<BlogPostingImageResource, BlogPostingImageResource> _blogPostingImageResourceServiceTracker;
+	private static CommentResource _getCommentResource() {
+			return _commentResourceServiceTracker.getService();
+	}
+
+	private static final ServiceTracker<CommentResource, CommentResource> _commentResourceServiceTracker;
 
 	static {
 			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
@@ -90,6 +119,12 @@ return _getBlogPostingImageResource().deleteImageObject( imageObjectId );
 			blogPostingImageResourceServiceTracker.open();
 
 			_blogPostingImageResourceServiceTracker = blogPostingImageResourceServiceTracker;
+			ServiceTracker<CommentResource, CommentResource> commentResourceServiceTracker =
+				new ServiceTracker<>(bundle.getBundleContext(), CommentResource.class, null);
+
+			commentResourceServiceTracker.open();
+
+			_commentResourceServiceTracker = commentResourceServiceTracker;
 	}
 
 }

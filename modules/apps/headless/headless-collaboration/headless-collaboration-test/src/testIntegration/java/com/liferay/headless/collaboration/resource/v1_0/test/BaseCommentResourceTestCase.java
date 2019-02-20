@@ -73,11 +73,27 @@ public abstract class BaseCommentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
+	public void testPostBlogPostingComment() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
+	public void testDeleteComment() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testGetComment() throws Exception {
 			Assert.assertTrue(true);
 	}
 	@Test
+	public void testPutComment() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testGetCommentCommentsPage() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
+	public void testPostCommentComment() throws Exception {
 			Assert.assertTrue(true);
 	}
 
@@ -91,6 +107,28 @@ public abstract class BaseCommentResourceTestCase {
 			);
 
 	}
+	protected Response invokePostBlogPostingComment( Long blogPostingId , Comment comment ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.body(
+				comment
+			).when(
+			).post(
+				_resourceURL + "/blog-postings/{blog-posting-id}/comments",
+				blogPostingId 
+			);
+
+	}
+	protected Response invokeDeleteComment( Long commentId ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).delete(
+				_resourceURL + "/comments/{comment-id}",
+				commentId
+			);
+
+	}
 	protected Response invokeGetComment( Long commentId ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
@@ -101,11 +139,35 @@ public abstract class BaseCommentResourceTestCase {
 			);
 
 	}
+	protected Response invokePutComment( Long commentId , Comment comment ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.body(
+				comment
+			).when(
+			).put(
+				_resourceURL + "/comments/{comment-id}",
+				commentId 
+			);
+
+	}
 	protected Response invokeGetCommentCommentsPage( Long commentId , Pagination pagination ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
 
 			return requestSpecification.when(
 			).get(
+				_resourceURL + "/comments/{comment-id}/comments",
+				commentId 
+			);
+
+	}
+	protected Response invokePostCommentComment( Long commentId , Comment comment ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.body(
+				comment
+			).when(
+			).post(
 				_resourceURL + "/comments/{comment-id}/comments",
 				commentId 
 			);

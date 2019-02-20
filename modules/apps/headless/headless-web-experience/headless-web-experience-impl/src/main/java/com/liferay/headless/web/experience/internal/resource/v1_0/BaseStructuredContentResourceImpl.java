@@ -117,6 +117,15 @@ public abstract class BaseStructuredContentResourceImpl implements StructuredCon
 			return new StructuredContentImpl();
 
 	}
+	@GET
+	@Path("/structured-contents/{structured-content-id}/rendered-content/{template-id}")
+	@Produces("text/html")
+	@RequiresScope("everything.read")
+	@Override
+	public boolean getStructuredContentTemplate( @PathParam("structured-content-id") Long structuredContentId , @PathParam("template-id") Long templateId ) throws Exception {
+			return false;
+
+	}
 
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;

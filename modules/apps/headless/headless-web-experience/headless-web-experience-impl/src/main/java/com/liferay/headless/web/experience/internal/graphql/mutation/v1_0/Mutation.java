@@ -73,7 +73,7 @@ return _getStructuredContentImageResource().deleteStructuredContentContentDocume
 	private static final ServiceTracker<StructuredContentImageResource, StructuredContentImageResource> _structuredContentImageResourceServiceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
+			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
 			ServiceTracker<StructuredContentResource, StructuredContentResource> structuredContentResourceServiceTracker =
 				new ServiceTracker<>(bundle.getBundleContext(), StructuredContentResource.class, null);

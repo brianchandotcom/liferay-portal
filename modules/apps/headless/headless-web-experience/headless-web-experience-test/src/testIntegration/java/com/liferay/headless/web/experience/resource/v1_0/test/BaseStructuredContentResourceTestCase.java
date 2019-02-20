@@ -93,6 +93,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 	public void testPutStructuredContent() throws Exception {
 			Assert.assertTrue(true);
 	}
+	@Test
+	public void testGetStructuredContentTemplate() throws Exception {
+			Assert.assertTrue(true);
+	}
 
 	protected Response invokeGetContentSpaceContentStructureStructuredContentsPage( Long contentSpaceId , Long contentStructureId , Filter filter , Pagination pagination , Sort[] sorts ) throws Exception {
 		RequestSpecification requestSpecification = _createRequestSpecification();
@@ -165,6 +169,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 			).put(
 				_resourceURL + "/structured-contents/{structured-content-id}",
 				structuredContentId 
+			);
+
+	}
+	protected Response invokeGetStructuredContentTemplate( Long structuredContentId , Long templateId ) throws Exception {
+		RequestSpecification requestSpecification = _createRequestSpecification();
+
+			return requestSpecification.when(
+			).get(
+				_resourceURL + "/structured-contents/{structured-content-id}/rendered-content/{template-id}",
+				structuredContentId , templateId
 			);
 
 	}

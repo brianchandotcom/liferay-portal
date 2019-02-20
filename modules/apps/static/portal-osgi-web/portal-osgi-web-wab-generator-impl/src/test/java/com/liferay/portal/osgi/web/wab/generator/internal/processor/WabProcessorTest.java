@@ -42,6 +42,7 @@ import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -247,15 +248,16 @@ public class WabProcessorTest {
 
 			// Did the beans.xml file have a discovery mode of none?
 
-			Document document = SAXReaderUtil.read(
-				beansXMLFile.openInputStream());
+			try (InputStream inputStream = beansXMLFile.openInputStream()) {
+				Document document = SAXReaderUtil.read(inputStream);
 
-			Node beanDiscoveryMode = document.selectSingleNode(
-				"/beans/@bean-discovery-mode");
+				Node beanDiscoveryMode = document.selectSingleNode(
+					"/beans/@bean-discovery-mode");
 
-			String value = beanDiscoveryMode.getStringValue();
+				String value = beanDiscoveryMode.getStringValue();
 
-			Assert.assertNotEquals("none", value);
+				Assert.assertNotEquals("none", value);
+			}
 
 			// Now that we've established CDI discovery would kick
 			// in, check to see if the WAB opted-out of integration by
@@ -267,11 +269,15 @@ public class WabProcessorTest {
 
 			Properties properties = new Properties();
 
-			properties.load(packageProperties.openInputStream());
+			try (InputStream inputStream =
+					packageProperties.openInputStream()) {
+
+				properties.load(inputStream);
+			}
 
 			Assert.assertTrue(properties.containsKey(Constants.CDIANNOTATIONS));
 
-			value = properties.getProperty(Constants.CDIANNOTATIONS);
+			String value = properties.getProperty(Constants.CDIANNOTATIONS);
 
 			Assert.assertEquals("", value);
 
@@ -331,15 +337,16 @@ public class WabProcessorTest {
 
 			// Did the beans.xml file have a discovery mode of none?
 
-			Document document = SAXReaderUtil.read(
-				beansXMLFile.openInputStream());
+			try (InputStream inputStream = beansXMLFile.openInputStream()) {
+				Document document = SAXReaderUtil.read(inputStream);
 
-			Node beanDiscoveryMode = document.selectSingleNode(
-				"/beans/@bean-discovery-mode");
+				Node beanDiscoveryMode = document.selectSingleNode(
+					"/beans/@bean-discovery-mode");
 
-			String value = beanDiscoveryMode.getStringValue();
+				String value = beanDiscoveryMode.getStringValue();
 
-			Assert.assertNotEquals("none", value);
+				Assert.assertNotEquals("none", value);
+			}
 
 			// Now that we've established CDI discovery would kick
 			// in, check to see if the WAB opted-out of integration by
@@ -351,7 +358,11 @@ public class WabProcessorTest {
 
 			Properties properties = new Properties();
 
-			properties.load(packageProperties.openInputStream());
+			try (InputStream inputStream =
+					packageProperties.openInputStream()) {
+
+				properties.load(inputStream);
+			}
 
 			Assert.assertFalse(
 				properties.containsKey(Constants.CDIANNOTATIONS));
@@ -449,15 +460,16 @@ public class WabProcessorTest {
 
 			// Did the beans.xml file have a discovery mode of none?
 
-			Document document = SAXReaderUtil.read(
-				beansXMLFile.openInputStream());
+			try (InputStream inputStream = beansXMLFile.openInputStream()) {
+				Document document = SAXReaderUtil.read(inputStream);
 
-			Node beanDiscoveryMode = document.selectSingleNode(
-				"/beans/@bean-discovery-mode");
+				Node beanDiscoveryMode = document.selectSingleNode(
+					"/beans/@bean-discovery-mode");
 
-			String value = beanDiscoveryMode.getStringValue();
+				String value = beanDiscoveryMode.getStringValue();
 
-			Assert.assertNotEquals("none", value);
+				Assert.assertNotEquals("none", value);
+			}
 
 			// Finally, make sure the requirement on the OSGI CDI
 			// Integration extender was added to the manifest.

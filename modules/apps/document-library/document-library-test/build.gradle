@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testIntegrationCompile group: "org.jodd", name: "jodd-core", version: "3.6.4"
 	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:document-library:document-library-content-api")
 	testIntegrationCompile project(":apps:document-library:document-library-sync-api")

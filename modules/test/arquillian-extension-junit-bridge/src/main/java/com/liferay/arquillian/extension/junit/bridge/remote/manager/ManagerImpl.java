@@ -30,7 +30,6 @@ import java.util.Stack;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
-import org.jboss.arquillian.core.impl.ExtensionImpl;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.core.spi.Extension;
 import org.jboss.arquillian.core.spi.HashObjectStore;

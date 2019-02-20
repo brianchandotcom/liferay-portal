@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Reader;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -162,22 +159,14 @@ public class SoyTestHelper {
 			(SingleVMPool)ProxyUtil.newProxyInstance(
 				SingleVMPool.class.getClassLoader(),
 				new Class<?>[] {SingleVMPool.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						if ("getPortalCache".equals(method.getName())) {
-							return mockPortalCache();
-						}
-
-						throw new UnsupportedOperationException(
-							method.toString());
+				(proxy, method, args) -> {
+					if ("getPortalCache".equals(method.getName())) {
+						return mockPortalCache();
 					}
 
-				}));
+					throw new UnsupportedOperationException(method.toString());
+				}
+			));
 	}
 
 	private static final String _TPL_PATH =

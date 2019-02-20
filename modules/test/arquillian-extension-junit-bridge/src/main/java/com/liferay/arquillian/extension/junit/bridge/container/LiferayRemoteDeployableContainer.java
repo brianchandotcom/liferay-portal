@@ -37,24 +37,19 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.jboss.arquillian.container.spi.client.container.ContainerConfiguration;
-import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
-import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
-import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 
 import org.osgi.jmx.framework.FrameworkMBean;
 
 /**
  * @author Preston Crary
  */
-public class LiferayRemoteDeployableContainer
-	implements DeployableContainer<ContainerConfiguration> {
+public class LiferayRemoteDeployableContainer {
 
 	public LiferayRemoteDeployableContainer(
 		InstanceProducer<MBeanServerConnection>
@@ -64,7 +59,6 @@ public class LiferayRemoteDeployableContainer
 			mBeanServerConnectionInstanceProducer;
 	}
 
-	@Override
 	public ProtocolMetaData deploy(Archive<?> archive)
 		throws DeploymentException {
 
@@ -83,25 +77,6 @@ public class LiferayRemoteDeployableContainer
 		return null;
 	}
 
-	@Override
-	public void deploy(Descriptor descriptor) {
-	}
-
-	@Override
-	public Class<ContainerConfiguration> getConfigurationClass() {
-		return ContainerConfiguration.class;
-	}
-
-	@Override
-	public ProtocolDescription getDefaultProtocol() {
-		return _protocolDescription;
-	}
-
-	@Override
-	public void setup(ContainerConfiguration containerConfiguration) {
-	}
-
-	@Override
 	public void start() throws LifecycleException {
 		try {
 			JMXConnector jmxConnector = JMXConnectorFactory.connect(
@@ -126,11 +101,6 @@ public class LiferayRemoteDeployableContainer
 		}
 	}
 
-	@Override
-	public void stop() {
-	}
-
-	@Override
 	public void undeploy(Archive<?> archive) throws DeploymentException {
 		long bundleId = _deployedBundleIds.remove(archive.getName());
 
@@ -145,10 +115,6 @@ public class LiferayRemoteDeployableContainer
 			throw new DeploymentException(
 				"Unable to uninstall bundle " + bundleId, ioe);
 		}
-	}
-
-	@Override
-	public void undeploy(Descriptor descriptor) {
 	}
 
 	private long _installBundle(Archive<?> archive) throws Exception {
@@ -179,8 +145,6 @@ public class LiferayRemoteDeployableContainer
 		Collections.singletonMap(
 			JMXConnector.CREDENTIALS, new String[] {"", ""});
 	private static final JMXServiceURL _liferayJMXServiceURL;
-	private static final ProtocolDescription _protocolDescription =
-		new ProtocolDescription("jmx-osgi");
 
 	static {
 		try {

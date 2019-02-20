@@ -11,6 +11,7 @@ import {getActiveEditableElement} from '../fragment_processors/EditableTextFragm
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
+import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
 
@@ -192,6 +193,29 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
+	 * Creates a new instance of FloatingToolbar
+	 * @private
+	 * @review
+	 */
+	_createFloatingToolbar() {
+		if (this._floatingToolbar) {
+			this._floatingToolbar.forceUpdate();
+		}
+		else {
+			this._floatingToolbar = new FloatingToolbar(
+				{
+					anchorElement: this.element,
+					item: this.editableId,
+					itemId: this.editableId,
+					panels: FLOATING_TOOLBAR_PANELS,
+					portalElement: document.body,
+					store: this.store
+				}
+			);
+		}
+	}
+
+	/**
 	 * Call destroy method on all processors
 	 * @private
 	 * @review
@@ -200,6 +224,19 @@ class FragmentEditableField extends Component {
 		Object.values(FragmentProcessors).forEach(
 			fragmentProcessor => fragmentProcessor.destroy()
 		);
+	}
+
+	/**
+	 * Disposes an existing instance of FloatingToolbar
+	 * @private
+	 * @review
+	 */
+	_disposeFloatingToolbar() {
+		if (this._floatingToolbar) {
+			this._floatingToolbar.dispose();
+
+			this._floatingToolbar = null;
+		}
 	}
 
 	/**
@@ -559,6 +596,17 @@ FragmentEditableField.STATE = {
 	 * @type {!object}
 	 */
 	editableValues: Config.object().required(),
+
+	/**
+	 * Internal FloatingToolbar instance.
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {object|null}
+	 */
+	_floatingToolbar: Config.internal()
+		.value(null),
 
 	/**
 	 * FragmentEntryLink id

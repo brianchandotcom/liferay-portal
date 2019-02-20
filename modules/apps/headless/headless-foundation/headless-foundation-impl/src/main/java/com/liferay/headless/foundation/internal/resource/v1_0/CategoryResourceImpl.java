@@ -74,6 +74,13 @@ public class CategoryResourceImpl
 	extends BaseCategoryResourceImpl implements EntityModelResource {
 
 	@Override
+	public boolean deleteCategory(Long categoryId) throws Exception {
+		_assetCategoryService.deleteCategory(categoryId);
+
+		return true;
+	}
+
+	@Override
 	public Category getCategory(Long categoryId) throws Exception {
 		return _toCategory(_assetCategoryService.getCategory(categoryId));
 	}

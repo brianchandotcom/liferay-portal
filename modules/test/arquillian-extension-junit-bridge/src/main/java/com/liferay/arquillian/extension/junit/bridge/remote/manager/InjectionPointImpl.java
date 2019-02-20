@@ -20,7 +20,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.impl.Reflections;
+import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.spi.InjectionPoint;
 import org.jboss.arquillian.core.spi.InvocationException;
 
@@ -30,13 +30,12 @@ import org.jboss.arquillian.core.spi.InvocationException;
 public class InjectionPointImpl implements InjectionPoint {
 
 	public static InjectionPointImpl of(Object target, Field field) {
-		return new InjectionPointImpl(
-			target, field, Reflections.getScope(field));
+		return new InjectionPointImpl(target, field);
 	}
 
 	@Override
 	public Class<? extends Annotation> getScope() {
-		return _scope;
+		return ApplicationScoped.class;
 	}
 
 	@Override
@@ -69,16 +68,12 @@ public class InjectionPointImpl implements InjectionPoint {
 		}
 	}
 
-	private InjectionPointImpl(
-		Object target, Field field, Class<? extends Annotation> scope) {
-
+	private InjectionPointImpl(Object target, Field field) {
 		_target = target;
 		_field = field;
-		_scope = scope;
 	}
 
 	private final Field _field;
-	private final Class<? extends Annotation> _scope;
 	private final Object _target;
 
 }

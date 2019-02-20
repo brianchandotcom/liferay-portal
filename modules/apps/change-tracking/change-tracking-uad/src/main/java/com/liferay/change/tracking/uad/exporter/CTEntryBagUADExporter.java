@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.change.tracking.uad.constants;
+package com.liferay.change.tracking.uad.exporter;
+
+import com.liferay.user.associated.data.exporter.UADExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class CTUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_CT_COLLECTION = {
-			"userId", "statusByUserId"
-		};
-	public static final String[] USER_ID_FIELD_NAMES_CT_ENTRY = { "userId" };
-	public static final String[] USER_ID_FIELD_NAMES_CT_ENTRY_BAG = { "userId" };
+@Component(immediate = true, service = UADExporter.class)
+public class CTEntryBagUADExporter extends BaseCTEntryBagUADExporter {
 }

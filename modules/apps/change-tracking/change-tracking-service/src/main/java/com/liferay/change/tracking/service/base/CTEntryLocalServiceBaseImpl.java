@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
+import com.liferay.change.tracking.service.persistence.CTEntryBagPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
@@ -321,6 +322,134 @@ public abstract class CTEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 */
 	@Override
+	public void addCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId) {
+		ctEntryBagPersistence.addCTEntry(ctEntryBagId, ctEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCTEntryBagCTEntry(long ctEntryBagId, CTEntry ctEntry) {
+		ctEntryBagPersistence.addCTEntry(ctEntryBagId, ctEntry);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds) {
+		ctEntryBagPersistence.addCTEntries(ctEntryBagId, ctEntryIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCTEntryBagCTEntries(long ctEntryBagId,
+		List<CTEntry> ctEntries) {
+		ctEntryBagPersistence.addCTEntries(ctEntryBagId, ctEntries);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearCTEntryBagCTEntries(long ctEntryBagId) {
+		ctEntryBagPersistence.clearCTEntries(ctEntryBagId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId) {
+		ctEntryBagPersistence.removeCTEntry(ctEntryBagId, ctEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTEntryBagCTEntry(long ctEntryBagId, CTEntry ctEntry) {
+		ctEntryBagPersistence.removeCTEntry(ctEntryBagId, ctEntry);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds) {
+		ctEntryBagPersistence.removeCTEntries(ctEntryBagId, ctEntryIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCTEntryBagCTEntries(long ctEntryBagId,
+		List<CTEntry> ctEntries) {
+		ctEntryBagPersistence.removeCTEntries(ctEntryBagId, ctEntries);
+	}
+
+	/**
+	 * Returns the ctEntryBagIds of the ct entry bags associated with the ct entry.
+	 *
+	 * @param ctEntryId the ctEntryId of the ct entry
+	 * @return long[] the ctEntryBagIds of ct entry bags associated with the ct entry
+	 */
+	@Override
+	public long[] getCTEntryBagPrimaryKeys(long ctEntryId) {
+		return ctEntryPersistence.getCTEntryBagPrimaryKeys(ctEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CTEntry> getCTEntryBagCTEntries(long ctEntryBagId) {
+		return ctEntryBagPersistence.getCTEntries(ctEntryBagId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CTEntry> getCTEntryBagCTEntries(long ctEntryBagId, int start,
+		int end) {
+		return ctEntryBagPersistence.getCTEntries(ctEntryBagId, start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CTEntry> getCTEntryBagCTEntries(long ctEntryBagId, int start,
+		int end, OrderByComparator<CTEntry> orderByComparator) {
+		return ctEntryBagPersistence.getCTEntries(ctEntryBagId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getCTEntryBagCTEntriesCount(long ctEntryBagId) {
+		return ctEntryBagPersistence.getCTEntriesSize(ctEntryBagId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId) {
+		return ctEntryBagPersistence.containsCTEntry(ctEntryBagId, ctEntryId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCTEntryBagCTEntries(long ctEntryBagId) {
+		return ctEntryBagPersistence.containsCTEntries(ctEntryBagId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds) {
+		ctEntryBagPersistence.setCTEntries(ctEntryBagId, ctEntryIds);
+	}
+
+	/**
+	 */
+	@Override
 	public void addCTCollectionCTEntry(long ctCollectionId, long ctEntryId) {
 		ctCollectionPersistence.addCTEntry(ctCollectionId, ctEntryId);
 	}
@@ -540,6 +669,44 @@ public abstract class CTEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the ct entry bag local service.
+	 *
+	 * @return the ct entry bag local service
+	 */
+	public com.liferay.change.tracking.service.CTEntryBagLocalService getCTEntryBagLocalService() {
+		return ctEntryBagLocalService;
+	}
+
+	/**
+	 * Sets the ct entry bag local service.
+	 *
+	 * @param ctEntryBagLocalService the ct entry bag local service
+	 */
+	public void setCTEntryBagLocalService(
+		com.liferay.change.tracking.service.CTEntryBagLocalService ctEntryBagLocalService) {
+		this.ctEntryBagLocalService = ctEntryBagLocalService;
+	}
+
+	/**
+	 * Returns the ct entry bag persistence.
+	 *
+	 * @return the ct entry bag persistence
+	 */
+	public CTEntryBagPersistence getCTEntryBagPersistence() {
+		return ctEntryBagPersistence;
+	}
+
+	/**
+	 * Sets the ct entry bag persistence.
+	 *
+	 * @param ctEntryBagPersistence the ct entry bag persistence
+	 */
+	public void setCTEntryBagPersistence(
+		CTEntryBagPersistence ctEntryBagPersistence) {
+		this.ctEntryBagPersistence = ctEntryBagPersistence;
+	}
+
+	/**
 	 * Returns the ct process local service.
 	 *
 	 * @return the ct process local service
@@ -752,6 +919,10 @@ public abstract class CTEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected CTEntryPersistence ctEntryPersistence;
 	@BeanReference(type = CTEntryFinder.class)
 	protected CTEntryFinder ctEntryFinder;
+	@BeanReference(type = com.liferay.change.tracking.service.CTEntryBagLocalService.class)
+	protected com.liferay.change.tracking.service.CTEntryBagLocalService ctEntryBagLocalService;
+	@BeanReference(type = CTEntryBagPersistence.class)
+	protected CTEntryBagPersistence ctEntryBagPersistence;
 	@BeanReference(type = com.liferay.change.tracking.service.CTProcessLocalService.class)
 	protected com.liferay.change.tracking.service.CTProcessLocalService ctProcessLocalService;
 	@BeanReference(type = CTProcessPersistence.class)

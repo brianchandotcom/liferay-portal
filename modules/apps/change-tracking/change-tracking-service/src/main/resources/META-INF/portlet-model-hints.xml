@@ -28,6 +28,16 @@
 		<field name="changeType" type="int" />
 		<field name="status" type="int" />
 	</model>
+	<model name="com.liferay.change.tracking.model.CTEntryBag">
+		<field name="ctEntryBagId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="ownerCTEntryId" type="long" />
+		<field name="ctCollectionId" type="long" />
+	</model>
 	<model name="com.liferay.change.tracking.model.CTProcess">
 		<field name="ctProcessId" type="long" />
 		<field name="companyId" type="long" />

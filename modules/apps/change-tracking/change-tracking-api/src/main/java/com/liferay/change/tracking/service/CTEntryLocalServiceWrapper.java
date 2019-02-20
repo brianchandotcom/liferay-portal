@@ -77,8 +77,35 @@ public class CTEntryLocalServiceWrapper implements CTEntryLocalService,
 	}
 
 	@Override
+	public void addCTEntryBagCTEntries(long ctEntryBagId,
+		java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
+		_ctEntryLocalService.addCTEntryBagCTEntries(ctEntryBagId, ctEntries);
+	}
+
+	@Override
+	public void addCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds) {
+		_ctEntryLocalService.addCTEntryBagCTEntries(ctEntryBagId, ctEntryIds);
+	}
+
+	@Override
+	public void addCTEntryBagCTEntry(long ctEntryBagId,
+		com.liferay.change.tracking.model.CTEntry ctEntry) {
+		_ctEntryLocalService.addCTEntryBagCTEntry(ctEntryBagId, ctEntry);
+	}
+
+	@Override
+	public void addCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId) {
+		_ctEntryLocalService.addCTEntryBagCTEntry(ctEntryBagId, ctEntryId);
+	}
+
+	@Override
 	public void clearCTCollectionCTEntries(long ctCollectionId) {
 		_ctEntryLocalService.clearCTCollectionCTEntries(ctCollectionId);
+	}
+
+	@Override
+	public void clearCTEntryBagCTEntries(long ctEntryBagId) {
+		_ctEntryLocalService.clearCTEntryBagCTEntries(ctEntryBagId);
 	}
 
 	/**
@@ -142,6 +169,28 @@ public class CTEntryLocalServiceWrapper implements CTEntryLocalService,
 		long ctEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ctEntryLocalService.deleteCTEntry(ctEntryId);
+	}
+
+	@Override
+	public void deleteCTEntryBagCTEntries(long ctEntryBagId,
+		java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries) {
+		_ctEntryLocalService.deleteCTEntryBagCTEntries(ctEntryBagId, ctEntries);
+	}
+
+	@Override
+	public void deleteCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds) {
+		_ctEntryLocalService.deleteCTEntryBagCTEntries(ctEntryBagId, ctEntryIds);
+	}
+
+	@Override
+	public void deleteCTEntryBagCTEntry(long ctEntryBagId,
+		com.liferay.change.tracking.model.CTEntry ctEntry) {
+		_ctEntryLocalService.deleteCTEntryBagCTEntry(ctEntryBagId, ctEntry);
+	}
+
+	@Override
+	public void deleteCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId) {
+		_ctEntryLocalService.deleteCTEntryBagCTEntry(ctEntryBagId, ctEntryId);
 	}
 
 	/**
@@ -363,6 +412,43 @@ public class CTEntryLocalServiceWrapper implements CTEntryLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry> getCTEntryBagCTEntries(
+		long ctEntryBagId) {
+		return _ctEntryLocalService.getCTEntryBagCTEntries(ctEntryBagId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry> getCTEntryBagCTEntries(
+		long ctEntryBagId, int start, int end) {
+		return _ctEntryLocalService.getCTEntryBagCTEntries(ctEntryBagId, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTEntry> getCTEntryBagCTEntries(
+		long ctEntryBagId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.change.tracking.model.CTEntry> orderByComparator) {
+		return _ctEntryLocalService.getCTEntryBagCTEntries(ctEntryBagId, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getCTEntryBagCTEntriesCount(long ctEntryBagId) {
+		return _ctEntryLocalService.getCTEntryBagCTEntriesCount(ctEntryBagId);
+	}
+
+	/**
+	* Returns the ctEntryBagIds of the ct entry bags associated with the ct entry.
+	*
+	* @param ctEntryId the ctEntryId of the ct entry
+	* @return long[] the ctEntryBagIds of ct entry bags associated with the ct entry
+	*/
+	@Override
+	public long[] getCTEntryBagPrimaryKeys(long ctEntryId) {
+		return _ctEntryLocalService.getCTEntryBagPrimaryKeys(ctEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _ctEntryLocalService.getIndexableActionableDynamicQuery();
 	}
@@ -403,8 +489,23 @@ public class CTEntryLocalServiceWrapper implements CTEntryLocalService,
 	}
 
 	@Override
+	public boolean hasCTEntryBagCTEntries(long ctEntryBagId) {
+		return _ctEntryLocalService.hasCTEntryBagCTEntries(ctEntryBagId);
+	}
+
+	@Override
+	public boolean hasCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId) {
+		return _ctEntryLocalService.hasCTEntryBagCTEntry(ctEntryBagId, ctEntryId);
+	}
+
+	@Override
 	public void setCTCollectionCTEntries(long ctCollectionId, long[] ctEntryIds) {
 		_ctEntryLocalService.setCTCollectionCTEntries(ctCollectionId, ctEntryIds);
+	}
+
+	@Override
+	public void setCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds) {
+		_ctEntryLocalService.setCTEntryBagCTEntries(ctEntryBagId, ctEntryIds);
 	}
 
 	/**

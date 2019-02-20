@@ -187,6 +187,11 @@ public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry
 		return model.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<CTEntryBag> getCTEntryBags() {
+		return model.getCTEntryBags();
+	}
+
 	/**
 	* Returns the ct entry ID of this ct entry.
 	*
@@ -265,6 +270,11 @@ public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	@Override
+	public boolean hasCTEntryBag() {
+		return model.hasCTEntryBag();
 	}
 
 	@Override

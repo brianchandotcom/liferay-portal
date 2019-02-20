@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.impl.CTEntryImpl;
 import com.liferay.change.tracking.model.impl.CTEntryModelImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
+import com.liferay.change.tracking.service.persistence.CTEntryBagPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 
 import com.liferay.petra.string.StringBundler;
@@ -985,6 +986,8 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 
 	@Override
 	protected CTEntry removeImpl(CTEntry ctEntry) {
+		ctEntryToCTEntryBagTableMapper.deleteLeftPrimaryKeyTableMappings(ctEntry.getPrimaryKey());
+
 		ctEntryToCTCollectionTableMapper.deleteLeftPrimaryKeyTableMappings(ctEntry.getPrimaryKey());
 
 		Session session = null;
@@ -1365,6 +1368,310 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 	}
 
 	/**
+	 * Returns the primaryKeys of ct entry bags associated with the ct entry.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @return long[] of the primaryKeys of ct entry bags associated with the ct entry
+	 */
+	@Override
+	public long[] getCTEntryBagPrimaryKeys(long pk) {
+		long[] pks = ctEntryToCTEntryBagTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.clone();
+	}
+
+	/**
+	 * Returns all the ct entry bags associated with the ct entry.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @return the ct entry bags associated with the ct entry
+	 */
+	@Override
+	public List<com.liferay.change.tracking.model.CTEntryBag> getCTEntryBags(
+		long pk) {
+		return getCTEntryBags(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the ct entry bags associated with the ct entry.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @return the range of ct entry bags associated with the ct entry
+	 */
+	@Override
+	public List<com.liferay.change.tracking.model.CTEntryBag> getCTEntryBags(
+		long pk, int start, int end) {
+		return getCTEntryBags(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct entry bags associated with the ct entry.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param start the lower bound of the range of ct entries
+	 * @param end the upper bound of the range of ct entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of ct entry bags associated with the ct entry
+	 */
+	@Override
+	public List<com.liferay.change.tracking.model.CTEntryBag> getCTEntryBags(
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.change.tracking.model.CTEntryBag> orderByComparator) {
+		return ctEntryToCTEntryBagTableMapper.getRightBaseModels(pk, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of ct entry bags associated with the ct entry.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @return the number of ct entry bags associated with the ct entry
+	 */
+	@Override
+	public int getCTEntryBagsSize(long pk) {
+		long[] pks = ctEntryToCTEntryBagTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the ct entry bag is associated with the ct entry.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBagPK the primary key of the ct entry bag
+	 * @return <code>true</code> if the ct entry bag is associated with the ct entry; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCTEntryBag(long pk, long ctEntryBagPK) {
+		return ctEntryToCTEntryBagTableMapper.containsTableMapping(pk,
+			ctEntryBagPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the ct entry has any ct entry bags associated with it.
+	 *
+	 * @param pk the primary key of the ct entry to check for associations with ct entry bags
+	 * @return <code>true</code> if the ct entry has any ct entry bags associated with it; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCTEntryBags(long pk) {
+		if (getCTEntryBagsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the ct entry and the ct entry bag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBagPK the primary key of the ct entry bag
+	 */
+	@Override
+	public void addCTEntryBag(long pk, long ctEntryBagPK) {
+		CTEntry ctEntry = fetchByPrimaryKey(pk);
+
+		if (ctEntry == null) {
+			ctEntryToCTEntryBagTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, ctEntryBagPK);
+		}
+		else {
+			ctEntryToCTEntryBagTableMapper.addTableMapping(ctEntry.getCompanyId(),
+				pk, ctEntryBagPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the ct entry and the ct entry bag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBag the ct entry bag
+	 */
+	@Override
+	public void addCTEntryBag(long pk,
+		com.liferay.change.tracking.model.CTEntryBag ctEntryBag) {
+		CTEntry ctEntry = fetchByPrimaryKey(pk);
+
+		if (ctEntry == null) {
+			ctEntryToCTEntryBagTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, ctEntryBag.getPrimaryKey());
+		}
+		else {
+			ctEntryToCTEntryBagTableMapper.addTableMapping(ctEntry.getCompanyId(),
+				pk, ctEntryBag.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Adds an association between the ct entry and the ct entry bags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBagPKs the primary keys of the ct entry bags
+	 */
+	@Override
+	public void addCTEntryBags(long pk, long[] ctEntryBagPKs) {
+		long companyId = 0;
+
+		CTEntry ctEntry = fetchByPrimaryKey(pk);
+
+		if (ctEntry == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = ctEntry.getCompanyId();
+		}
+
+		ctEntryToCTEntryBagTableMapper.addTableMappings(companyId, pk,
+			ctEntryBagPKs);
+	}
+
+	/**
+	 * Adds an association between the ct entry and the ct entry bags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBags the ct entry bags
+	 */
+	@Override
+	public void addCTEntryBags(long pk,
+		List<com.liferay.change.tracking.model.CTEntryBag> ctEntryBags) {
+		addCTEntryBags(pk,
+			ListUtil.toLongArray(ctEntryBags,
+				com.liferay.change.tracking.model.CTEntryBag.CT_ENTRY_BAG_ID_ACCESSOR));
+	}
+
+	/**
+	 * Clears all associations between the ct entry and its ct entry bags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry to clear the associated ct entry bags from
+	 */
+	@Override
+	public void clearCTEntryBags(long pk) {
+		ctEntryToCTEntryBagTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the ct entry and the ct entry bag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBagPK the primary key of the ct entry bag
+	 */
+	@Override
+	public void removeCTEntryBag(long pk, long ctEntryBagPK) {
+		ctEntryToCTEntryBagTableMapper.deleteTableMapping(pk, ctEntryBagPK);
+	}
+
+	/**
+	 * Removes the association between the ct entry and the ct entry bag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBag the ct entry bag
+	 */
+	@Override
+	public void removeCTEntryBag(long pk,
+		com.liferay.change.tracking.model.CTEntryBag ctEntryBag) {
+		ctEntryToCTEntryBagTableMapper.deleteTableMapping(pk,
+			ctEntryBag.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the ct entry and the ct entry bags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBagPKs the primary keys of the ct entry bags
+	 */
+	@Override
+	public void removeCTEntryBags(long pk, long[] ctEntryBagPKs) {
+		ctEntryToCTEntryBagTableMapper.deleteTableMappings(pk, ctEntryBagPKs);
+	}
+
+	/**
+	 * Removes the association between the ct entry and the ct entry bags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBags the ct entry bags
+	 */
+	@Override
+	public void removeCTEntryBags(long pk,
+		List<com.liferay.change.tracking.model.CTEntryBag> ctEntryBags) {
+		removeCTEntryBags(pk,
+			ListUtil.toLongArray(ctEntryBags,
+				com.liferay.change.tracking.model.CTEntryBag.CT_ENTRY_BAG_ID_ACCESSOR));
+	}
+
+	/**
+	 * Sets the ct entry bags associated with the ct entry, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBagPKs the primary keys of the ct entry bags to be associated with the ct entry
+	 */
+	@Override
+	public void setCTEntryBags(long pk, long[] ctEntryBagPKs) {
+		Set<Long> newCTEntryBagPKsSet = SetUtil.fromArray(ctEntryBagPKs);
+		Set<Long> oldCTEntryBagPKsSet = SetUtil.fromArray(ctEntryToCTEntryBagTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeCTEntryBagPKsSet = new HashSet<Long>(oldCTEntryBagPKsSet);
+
+		removeCTEntryBagPKsSet.removeAll(newCTEntryBagPKsSet);
+
+		ctEntryToCTEntryBagTableMapper.deleteTableMappings(pk,
+			ArrayUtil.toLongArray(removeCTEntryBagPKsSet));
+
+		newCTEntryBagPKsSet.removeAll(oldCTEntryBagPKsSet);
+
+		long companyId = 0;
+
+		CTEntry ctEntry = fetchByPrimaryKey(pk);
+
+		if (ctEntry == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = ctEntry.getCompanyId();
+		}
+
+		ctEntryToCTEntryBagTableMapper.addTableMappings(companyId, pk,
+			ArrayUtil.toLongArray(newCTEntryBagPKsSet));
+	}
+
+	/**
+	 * Sets the ct entry bags associated with the ct entry, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the ct entry
+	 * @param ctEntryBags the ct entry bags to be associated with the ct entry
+	 */
+	@Override
+	public void setCTEntryBags(long pk,
+		List<com.liferay.change.tracking.model.CTEntryBag> ctEntryBags) {
+		try {
+			long[] ctEntryBagPKs = new long[ctEntryBags.size()];
+
+			for (int i = 0; i < ctEntryBags.size(); i++) {
+				com.liferay.change.tracking.model.CTEntryBag ctEntryBag = ctEntryBags.get(i);
+
+				ctEntryBagPKs[i] = ctEntryBag.getPrimaryKey();
+			}
+
+			setCTEntryBags(pk, ctEntryBagPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+
+	/**
 	 * Returns the primaryKeys of ct collections associated with the ct entry.
 	 *
 	 * @param pk the primary key of the ct entry
@@ -1692,6 +1999,10 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 	 * Initializes the ct entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		ctEntryToCTEntryBagTableMapper = TableMapperFactory.getTableMapper("CTEntryBags_CTEntries",
+				"companyId", "ctEntryId", "ctEntryBagId", this,
+				ctEntryBagPersistence);
+
 		ctEntryToCTCollectionTableMapper = TableMapperFactory.getTableMapper("CTCollections_CTEntries",
 				"companyId", "ctEntryId", "ctCollectionId", this,
 				ctCollectionPersistence);
@@ -1751,6 +2062,7 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
+		TableMapperFactory.removeTableMapper("CTEntryBags_CTEntries");
 		TableMapperFactory.removeTableMapper("CTCollections_CTEntries");
 	}
 
@@ -1760,6 +2072,9 @@ public class CTEntryPersistenceImpl extends BasePersistenceImpl<CTEntry>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@BeanReference(type = CTEntryBagPersistence.class)
+	protected CTEntryBagPersistence ctEntryBagPersistence;
+	protected TableMapper<CTEntry, com.liferay.change.tracking.model.CTEntryBag> ctEntryToCTEntryBagTableMapper;
 	@BeanReference(type = CTCollectionPersistence.class)
 	protected CTCollectionPersistence ctCollectionPersistence;
 	protected TableMapper<CTEntry, com.liferay.change.tracking.model.CTCollection> ctEntryToCTCollectionTableMapper;

@@ -21,24 +21,24 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the CTEntry service. Represents a row in the &quot;CTEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CTEntryBag service. Represents a row in the &quot;CTEntryBag&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see CTEntryModel
+ * @see CTEntryBagModel
  * @generated
  */
-@ImplementationClassName("com.liferay.change.tracking.model.impl.CTEntryImpl")
+@ImplementationClassName("com.liferay.change.tracking.model.impl.CTEntryBagImpl")
 @ProviderType
-public interface CTEntry extends CTEntryModel, PersistedModel {
+public interface CTEntryBag extends CTEntryBagModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTEntryBagImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CTEntry, Long> CT_ENTRY_ID_ACCESSOR = new Accessor<CTEntry, Long>() {
+	public static final Accessor<CTEntryBag, Long> CT_ENTRY_BAG_ID_ACCESSOR = new Accessor<CTEntryBag, Long>() {
 			@Override
-			public Long get(CTEntry ctEntry) {
-				return ctEntry.getCtEntryId();
+			public Long get(CTEntryBag ctEntryBag) {
+				return ctEntryBag.getCtEntryBagId();
 			}
 
 			@Override
@@ -47,12 +47,10 @@ public interface CTEntry extends CTEntryModel, PersistedModel {
 			}
 
 			@Override
-			public Class<CTEntry> getTypeClass() {
-				return CTEntry.class;
+			public Class<CTEntryBag> getTypeClass() {
+				return CTEntryBag.class;
 			}
 		};
 
-	public java.util.List<CTEntryBag> getCTEntryBags();
-
-	public boolean hasCTEntryBag();
+	public java.util.List<CTEntry> getRelatedCTEntries();
 }

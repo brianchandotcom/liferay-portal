@@ -12,6 +12,8 @@
 	<bean class="com.liferay.change.tracking.service.impl.CTEntryLocalServiceImpl" id="com.liferay.change.tracking.service.CTEntryLocalService" />
 	<bean class="com.liferay.change.tracking.service.persistence.impl.CTEntryPersistenceImpl" id="com.liferay.change.tracking.service.persistence.CTEntryPersistence" />
 	<bean class="com.liferay.change.tracking.service.persistence.impl.CTEntryFinderImpl" id="com.liferay.change.tracking.service.persistence.CTEntryFinder" />
+	<bean class="com.liferay.change.tracking.service.impl.CTEntryBagLocalServiceImpl" id="com.liferay.change.tracking.service.CTEntryBagLocalService" />
+	<bean class="com.liferay.change.tracking.service.persistence.impl.CTEntryBagPersistenceImpl" id="com.liferay.change.tracking.service.persistence.CTEntryBagPersistence" />
 	<bean class="com.liferay.change.tracking.service.impl.CTProcessLocalServiceImpl" id="com.liferay.change.tracking.service.CTProcessLocalService" />
 	<bean class="com.liferay.change.tracking.service.persistence.impl.CTProcessPersistenceImpl" id="com.liferay.change.tracking.service.persistence.CTProcessPersistence" />
 </beans>

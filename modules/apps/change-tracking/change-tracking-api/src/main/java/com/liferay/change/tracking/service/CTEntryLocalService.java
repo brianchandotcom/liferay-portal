@@ -83,7 +83,18 @@ public interface CTEntryLocalService extends BaseLocalService,
 		long resourcePrimKey, int changeType, long ctCollectionId,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void addCTEntryBagCTEntries(long ctEntryBagId,
+		List<CTEntry> ctEntries);
+
+	public void addCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds);
+
+	public void addCTEntryBagCTEntry(long ctEntryBagId, CTEntry ctEntry);
+
+	public void addCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId);
+
 	public void clearCTCollectionCTEntries(long ctCollectionId);
+
+	public void clearCTEntryBagCTEntries(long ctEntryBagId);
 
 	/**
 	* Creates a new ct entry with the primary key. Does not add the ct entry to the database.
@@ -122,6 +133,15 @@ public interface CTEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CTEntry deleteCTEntry(long ctEntryId) throws PortalException;
+
+	public void deleteCTEntryBagCTEntries(long ctEntryBagId,
+		List<CTEntry> ctEntries);
+
+	public void deleteCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds);
+
+	public void deleteCTEntryBagCTEntry(long ctEntryBagId, CTEntry ctEntry);
+
+	public void deleteCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId);
 
 	/**
 	* @throws PortalException
@@ -276,6 +296,29 @@ public interface CTEntryLocalService extends BaseLocalService,
 	public CTEntry getCTEntry(long ctEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getCTEntryBagCTEntries(long ctEntryBagId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getCTEntryBagCTEntries(long ctEntryBagId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTEntry> getCTEntryBagCTEntries(long ctEntryBagId, int start,
+		int end, OrderByComparator<CTEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCTEntryBagCTEntriesCount(long ctEntryBagId);
+
+	/**
+	* Returns the ctEntryBagIds of the ct entry bags associated with the ct entry.
+	*
+	* @param ctEntryId the ctEntryId of the ct entry
+	* @return long[] the ctEntryBagIds of ct entry bags associated with the ct entry
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCTEntryBagPrimaryKeys(long ctEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -301,7 +344,15 @@ public interface CTEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCTCollectionCTEntry(long ctCollectionId, long ctEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCTEntryBagCTEntries(long ctEntryBagId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCTEntryBagCTEntry(long ctEntryBagId, long ctEntryId);
+
 	public void setCTCollectionCTEntries(long ctCollectionId, long[] ctEntryIds);
+
+	public void setCTEntryBagCTEntries(long ctEntryBagId, long[] ctEntryIds);
 
 	/**
 	* Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

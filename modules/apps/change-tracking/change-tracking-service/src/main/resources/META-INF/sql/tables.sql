@@ -34,6 +34,24 @@ create table CTEntry (
 	status INTEGER
 );
 
+create table CTEntryBag (
+	ctEntryBagId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	ownerCTEntryId LONG,
+	ctCollectionId LONG
+);
+
+create table CTEntryBags_CTEntries (
+	companyId LONG not null,
+	ctEntryId LONG not null,
+	ctEntryBagId LONG not null,
+	primary key (ctEntryId, ctEntryBagId)
+);
+
 create table CTProcess (
 	ctProcessId LONG not null primary key,
 	companyId LONG,

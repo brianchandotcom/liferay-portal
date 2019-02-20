@@ -53,7 +53,7 @@ class Sharing extends PortletBase {
 	_handleDataChange(e) {
 		e.preventDefault();
 
-		if (e.data) {
+		if (e.data && e.target.refs.autocomplete._query) {
 			e.target.filteredItems = e.data.map(
 				(element, index) => ({
 					data: element,

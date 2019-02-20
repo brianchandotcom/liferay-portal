@@ -14,6 +14,7 @@ import {Store} from '../../store/store.es';
 import templates from './FragmentEditableField.soy';
 import {
 	OPEN_MAPPING_FIELDS_DIALOG,
+	UPDATE_ACTIVE_ITEM,
 	UPDATE_EDITABLE_VALUE,
 	UPDATE_HOVERED_ITEM,
 	UPDATE_LAST_SAVE_DATE,
@@ -280,6 +281,16 @@ class FragmentEditableField extends Component {
 	_handleEditableClick(event) {
 		event.preventDefault();
 		event.stopPropagation();
+
+		if (!this._editing) {
+			this.store.dispatchAction(
+				UPDATE_ACTIVE_ITEM,
+				{
+					activeItemId: this.editableId,
+					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
+				}
+			);
+		}
 
 		if (this._tooltipLabel) {
 			this._showTooltip = false;

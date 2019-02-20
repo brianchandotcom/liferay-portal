@@ -259,9 +259,9 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 
 	var form = document.<portlet:namespace />fm;
 
-	var unitConverterPortlet = document.querySelector('#p_p_id<portlet:namespace />');
+	var unitConverterPortlet = document.getElementById('p_p_id<portlet:namespace />');
 
-	if(unitConverterPortlet) {
+	if (unitConverterPortlet) {
 		dom.delegate(
 			unitConverterPortlet,
 			'change',
@@ -283,18 +283,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 				}
 			}
 		);
-	}
 
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		var fromValue = Liferay.Util.getFormElement(form, 'fromValue');
-
-		if (fromValue) {
-			Liferay.Util.focusFormField(fromValue);
-		}
-	</c:if>
-
-
-	if(unitConverterPortlet) {
 		dom.delegate(
 			unitConverterPortlet,
 			'click',
@@ -323,4 +312,12 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 			}
 		);
 	}
+
+	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+		var fromValue = Liferay.Util.getFormElement(form, 'fromValue');
+
+		if (fromValue) {
+			Liferay.Util.focusFormField(fromValue);
+		}
+	</c:if>
 </aui:script>

@@ -24,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +35,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.io.output.TeeOutputStream;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -442,5 +441,55 @@ public class NodeExecutor {
 	private final Project _project;
 	private boolean _useGradleExec;
 	private Object _workingDir;
+
+	private static class TeeOutputStream extends OutputStream {
+
+		public TeeOutputStream(
+			OutputStream outputStream1, OutputStream outputStream2) {
+
+			_outputStream1 = outputStream1;
+			_outputStream2 = outputStream2;
+		}
+
+		@Override
+		public void close() throws IOException {
+			try {
+				_outputStream1.close();
+			}
+			finally {
+				_outputStream2.close();
+			}
+		}
+
+		@Override
+		public void flush() throws IOException {
+			_outputStream1.flush();
+			_outputStream2.flush();
+		}
+
+		@Override
+		public synchronized void write(byte[] bytes) throws IOException {
+			_outputStream1.write(bytes);
+			_outputStream2.write(bytes);
+		}
+
+		@Override
+		public synchronized void write(byte[] bytes, int offset, int length)
+			throws IOException {
+
+			_outputStream1.write(bytes, offset, length);
+			_outputStream2.write(bytes, offset, length);
+		}
+
+		@Override
+		public synchronized void write(int b) throws IOException {
+			_outputStream1.write(b);
+			_outputStream2.write(b);
+		}
+
+		private final OutputStream _outputStream1;
+		private final OutputStream _outputStream2;
+
+	}
 
 }

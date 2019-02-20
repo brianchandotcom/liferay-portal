@@ -1,3 +1,5 @@
+@import "mixins";
+
 .portlet-journal {
 	.article-content-content {
 		img {
@@ -43,6 +45,32 @@
 		@extend .article-content-content;
 
 		.alloy-editor-switch {
+			display: none;
+		}
+	}
+
+	@include media-query(null, $screen-sm-max) {
+		.edit-article-sidebar {
+			top: 49px !important;
+		}
+	}
+
+	@include media-query($screen-md-min, null) {
+		.contextual-sidebar-content {
+			.sheet {
+				margin-right: 320px;
+			}
+		}
+	}
+
+	@include media-query(null, $screen-md-max) {
+		.contextual-sidebar-content {
+			.sheet {
+				margin-right: auto;
+			}
+		}
+
+		.contextual-sidebar {
 			display: none;
 		}
 	}

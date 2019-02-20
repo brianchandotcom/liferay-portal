@@ -190,24 +190,21 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 		thread2.interrupt();
 
-		_testMessageListener.unblock();
-
-		futureTask1.get();
-
-		Exception exception = null;
-
 		try {
 			futureTask2.get();
 		}
 		catch (ExecutionException ee) {
-			exception = ee;
+			Assert.fail("Should not throw exception " + ee);
 		}
+
+		_testMessageListener.unblock();
+
+		futureTask1.get();
 
 		Assert.assertSame(
 			"Message is not processed", _testMessage1.getPayload(),
 			_testMessage1.getResponse());
 		Assert.assertNull(_testMessage2.getResponse());
-		Assert.assertNull(exception);
 	}
 
 	private FutureTask<Void> _startThread(
@@ -240,19 +237,19 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 		@Override
 		public void receive(Message message) {
-			_lock.lock();
+			if (_lock.tryLock()) {
+				try {
+					_waitCountDownLatch.countDown();
 
-			try {
-				_waitCountDownLatch.countDown();
+					_blockCountDownLatch.await();
 
-				_blockCountDownLatch.await();
-
-				message.setResponse(message.getPayload());
-			}
-			catch (InterruptedException ie) {
-			}
-			finally {
-				_lock.unlock();
+					message.setResponse(message.getPayload());
+				}
+				catch (InterruptedException ie) {
+				}
+				finally {
+					_lock.unlock();
+				}
 			}
 		}
 

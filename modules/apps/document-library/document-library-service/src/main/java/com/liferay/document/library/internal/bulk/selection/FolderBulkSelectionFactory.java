@@ -43,7 +43,7 @@ public class FolderBulkSelectionFactory
 	@Override
 	public BulkSelection<Folder> create(Map<String, String[]> parameterMap) {
 		if (!parameterMap.containsKey("rowIdsFolder")) {
-			throw new IllegalArgumentException();
+			return new EmptyBulkSelection<>();
 		}
 
 		String[] values = parameterMap.get("rowIdsFolder");

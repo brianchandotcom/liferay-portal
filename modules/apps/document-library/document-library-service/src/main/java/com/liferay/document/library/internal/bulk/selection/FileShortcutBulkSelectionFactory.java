@@ -47,7 +47,7 @@ public class FileShortcutBulkSelectionFactory
 		Map<String, String[]> parameterMap) {
 
 		if (!parameterMap.containsKey("rowIdsDLFileShortcut")) {
-			throw new IllegalArgumentException();
+			return new EmptyBulkSelection<>();
 		}
 
 		String[] values = parameterMap.get("rowIdsDLFileShortcut");

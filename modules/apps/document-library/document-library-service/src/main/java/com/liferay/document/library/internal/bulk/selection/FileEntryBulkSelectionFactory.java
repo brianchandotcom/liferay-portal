@@ -43,7 +43,7 @@ public class FileEntryBulkSelectionFactory
 
 	public BulkSelection<FileEntry> create(Map<String, String[]> parameterMap) {
 		if (!parameterMap.containsKey("rowIdsFileEntry")) {
-			throw new IllegalArgumentException();
+			return new EmptyBulkSelection<>();
 		}
 
 		String[] values = parameterMap.get("rowIdsFileEntry");

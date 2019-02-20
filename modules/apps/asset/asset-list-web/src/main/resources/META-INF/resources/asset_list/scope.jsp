@@ -131,7 +131,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 </liferay-frontend:edit-form>
 
 <aui:script>
-	var selectManageableGroupIcon = document.querySelector('#<portlet:namespace />selectManageableGroup');
+	var selectManageableGroupIcon = document.getElementById('<portlet:namespace />selectManageableGroup');
 
 	if (selectManageableGroupIcon) {
 		selectManageableGroupIcon.addEventListener(

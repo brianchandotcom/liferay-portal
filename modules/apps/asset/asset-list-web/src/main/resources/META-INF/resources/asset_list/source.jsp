@@ -258,8 +258,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 <aui:script require="metal-dom/src/dom as dom">
 	var Util = Liferay.Util;
 
-	var assetMultipleSelector = document.querySelector('#<portlet:namespace />currentClassNameIds');
-	var assetSelector = document.querySelector('#<portlet:namespace />anyAssetType');
+	var assetMultipleSelector = document.getElementById('<portlet:namespace />currentClassNameIds');
+	var assetSelector = document.getElementById('<portlet:namespace />anyAssetType');
 	var sourcePanel = document.querySelector('.source-container');
 
 	<%
@@ -269,7 +269,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 		Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
 
-		var <%= className %>Options = document.querySelector('#<portlet:namespace /><%= className %>Options');
+		var <%= className %>Options = document.getElementById('<portlet:namespace /><%= className %>Options');
 
 		function <portlet:namespace />toggle<%= className %>() {
 			var assetOptions = assetMultipleSelector.options;
@@ -299,7 +299,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		}
 		%>
 
-		var <%= className %>SubtypeSelector = document.querySelector('#<portlet:namespace />anyClassType<%= className %>');
+		var <%= className %>SubtypeSelector = document.getElementById('<portlet:namespace />anyClassType<%= className %>');
 
 		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
 			var selectedSubtype = <%= className %>SubtypeSelector.value;
@@ -340,7 +340,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 			function(event) {
 				setDDMFields('<%= className %>', '', '', '', '');
 
-				var subtypeFieldsFilterEnabledCheckbox = document.querySelector('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+				var subtypeFieldsFilterEnabledCheckbox = document.getElementById('<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
 				if (subtypeFieldsFilterEnabledCheckbox) {
 					subtypeFieldsFilterEnabledCheckbox.checked = false;
@@ -380,8 +380,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 	<portlet:namespace />toggleSubclasses();
 
-	var ddmStructureFieldNameInput = document.querySelector('#<portlet:namespace />ddmStructureFieldName');
-	var ddmStructureFieldValueInput = document.querySelector('#<portlet:namespace />ddmStructureFieldValue');
+	var ddmStructureFieldNameInput = document.getElementById('<portlet:namespace />ddmStructureFieldName');
+	var ddmStructureFieldValueInput = document.getElementById('<portlet:namespace />ddmStructureFieldValue');
 
 	if (assetSelector && ddmStructureFieldNameInput && ddmStructureFieldValueInput) {
 		assetSelector.addEventListener(
@@ -424,7 +424,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		}
 	);
 
-	var ddmStructureDisplayFieldValueInput = document.querySelector('#<portlet:namespace />ddmStructureDisplayFieldValue');
+	var ddmStructureDisplayFieldValueInput = document.getElementById('<portlet:namespace />ddmStructureDisplayFieldValue');
 
 	dom.delegate(
 		sourcePanel,
@@ -464,7 +464,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		ddmStructureFieldValueInput.value = value;
 		ddmStructureDisplayFieldValueInput.value = displayValue;
 
-		var ddmStructureFieldMessageContainer = document.querySelector('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
+		var ddmStructureFieldMessageContainer = document.getElementById('<portlet:namespace />' + className + 'ddmStructureFieldMessage');
 
 		if (ddmStructureFieldMessageContainer) {
 			ddmStructureFieldMessageContainer.innerHTML = Liferay.Util.escape(message);
@@ -473,7 +473,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 	Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
 
-	var saveButton = document.querySelector('#<portlet:namespace />save');
+	var saveButton = document.getElementById('<portlet:namespace />save');
 
 	if (saveButton) {
 		saveButton.addEventListener(

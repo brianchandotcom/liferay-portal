@@ -67,6 +67,21 @@ public class SubrepositoryGitRepositoryJob
 		return gitWorkingDirectory;
 	}
 
+	@Override
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		if (portalGitWorkingDirectory == null) {
+			portalGitWorkingDirectory =
+				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+					getBranchName());
+		}
+
+		if (!(portalGitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
+			throw new RuntimeException("Invalid portal Git working directory");
+		}
+
+		return portalGitWorkingDirectory;
+	}
+
 	public String getPoshiQuery(String testBatchName) {
 		Properties jobProperties = getJobProperties();
 
@@ -152,6 +167,7 @@ public class SubrepositoryGitRepositoryJob
 		readJobProperties();
 	}
 
+	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected boolean testRunValidation;
 
 }

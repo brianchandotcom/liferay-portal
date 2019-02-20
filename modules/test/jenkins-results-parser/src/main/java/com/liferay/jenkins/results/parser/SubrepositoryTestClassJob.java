@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Yi-Chen Tsai
  */
-public interface SubrepositoryTestClassJob extends Job {
+public interface SubrepositoryTestClassJob extends PortalTestClassJob {
 
 	public SubrepositoryGitWorkingDirectory
 		getSubrepositoryGitWorkingDirectory();

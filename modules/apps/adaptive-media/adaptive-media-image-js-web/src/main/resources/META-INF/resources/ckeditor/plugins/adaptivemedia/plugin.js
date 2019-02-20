@@ -128,11 +128,21 @@
 					el = instance._getImgElement(imageSrc, selectedItem, fileEntryAttributeName);
 				}
 
-				editor.insertHtml(el.getOuterHtml());
+				var elementOuterHtml = el.getOuterHtml();
+
+				editor.insertHtml(elementOuterHtml);
 
 				if (instance._isEmptySelection(editor)) {
 					if (IE9AndUp) {
-						(typeof AlloyEditor == 'undefined') ? editor.insertHtml('<br />') : editor.insertHtml(el.getOuterHtml() + '<br />');
+						var emptySelectionMarkup = '<br />';
+
+						var usingAlloyEditor = typeof AlloyEditor == 'undefined';
+
+						if (!usingAlloyEditor) {
+							emptySelectionMarkup = elementOuterHtml + emptySelectionMarkup;
+						}
+
+						editor.insertHtml(emptySelectionMarkup);
 					}
 					else {
 						editor.execCommand('enter');

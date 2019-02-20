@@ -404,11 +404,21 @@
 									callback(imageSrc, selectedItem);
 								}
 								else {
-									editor.insertHtml('<img src="' + imageSrc + '">');
+									var elementOuterHtml = '<img src="' + imageSrc + '">';
+
+									editor.insertHtml(elementOuterHtml);
 
 									if (instance._isEmptySelection(editor)) {
 										if (IE9AndUp) {
-											(typeof AlloyEditor == 'undefined') ? editor.insertHtml('<br />') : editor.insertHtml('<img src="' + imageSrc + '"><br />');
+											var emptySelectionMarkup = '<br />';
+
+											var usingAlloyEditor = typeof AlloyEditor == 'undefined';
+
+											if (!usingAlloyEditor) {
+												emptySelectionMarkup = elementOuterHtml + emptySelectionMarkup;
+											}
+
+											editor.insertHtml(emptySelectionMarkup);
 										}
 										else {
 											editor.execCommand('enter');

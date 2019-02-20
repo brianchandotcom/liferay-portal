@@ -33,6 +33,7 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.ImageImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -237,6 +238,17 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 	}
 
+	private boolean _hasComments(BlogsEntry blogsEntry) {
+		int count = _commentManager.getCommentsCount(
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return new BlogPostingImpl() {
 			{
@@ -257,6 +269,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				description = blogsEntry.getDescription();
 				encodingFormat = "text/html";
 				friendlyUrlPath = blogsEntry.getUrlTitle();
+				hasComments = _hasComments(blogsEntry);
 				headline = blogsEntry.getTitle();
 				id = blogsEntry.getEntryId();
 				image = _getImage(blogsEntry);
@@ -274,6 +287,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private DLAppService _dlAppService;

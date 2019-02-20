@@ -26,7 +26,6 @@ import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -140,13 +138,11 @@ public class CategoryResourceImpl
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
 			categoryId);
 
-		Group group = _groupService.getGroup(assetCategory.getGroupId());
-
-		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
+		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
 		return _toCategory(
 			_assetCategoryService.addCategory(
-				group.getGroupId(), categoryId,
+				assetCategory.getGroupId(), categoryId,
 				Collections.singletonMap(locale, category.getName()),
 				Collections.singletonMap(locale, category.getDescription()),
 				assetCategory.getVocabularyId(), null, new ServiceContext()));
@@ -159,9 +155,7 @@ public class CategoryResourceImpl
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			vocabularyId);
 
-		Group group = _groupService.getGroup(assetVocabulary.getGroupId());
-
-		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
+		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
 		return _toCategory(
 			_assetCategoryService.addCategory(
@@ -255,9 +249,6 @@ public class CategoryResourceImpl
 
 	@Reference
 	private ClassNameService _classNameService;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

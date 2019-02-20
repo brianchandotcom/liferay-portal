@@ -14,7 +14,7 @@
 
 package com.liferay.sharing.web.internal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -63,7 +63,7 @@ public class SharingSitesFormNavigatorEntry
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return _language.get(resourceBundle, getKey());
+		return LanguageUtil.get(resourceBundle, getKey());
 	}
 
 	@Override
@@ -93,9 +93,6 @@ public class SharingSitesFormNavigatorEntry
 	protected String getJspPath() {
 		return "/sites_admin/sharing.jsp";
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
 	private ResourceBundleLoader _resourceBundleLoader;

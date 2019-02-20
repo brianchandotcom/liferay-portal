@@ -15,7 +15,7 @@
 package com.liferay.sharing.web.internal.display.context.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -49,7 +49,7 @@ public class SharingMenuItemFactoryImpl
 		javaScriptMenuItem.setJavaScript(
 			_sharingJavaScriptFactory.createSharingJavaScript(request));
 		javaScriptMenuItem.setKey("#share");
-		javaScriptMenuItem.setLabel(_language.get(request, "share"));
+		javaScriptMenuItem.setLabel(LanguageUtil.get(request, "share"));
 		javaScriptMenuItem.setOnClick(
 			_sharingJavaScriptFactory.createSharingOnClickMethod(
 				className, classPK, request));
@@ -68,16 +68,13 @@ public class SharingMenuItemFactoryImpl
 		javaScriptToolbarItem.setJavaScript(
 			_sharingJavaScriptFactory.createSharingJavaScript(request));
 		javaScriptToolbarItem.setKey("#share");
-		javaScriptToolbarItem.setLabel(_language.get(request, "share"));
+		javaScriptToolbarItem.setLabel(LanguageUtil.get(request, "share"));
 		javaScriptToolbarItem.setOnClick(
 			_sharingJavaScriptFactory.createSharingOnClickMethod(
 				className, classPK, request));
 
 		return javaScriptToolbarItem;
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private SharingJavaScriptFactory _sharingJavaScriptFactory;

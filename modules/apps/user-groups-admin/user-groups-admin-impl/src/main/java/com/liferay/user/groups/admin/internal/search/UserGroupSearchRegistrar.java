@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(immediate = true, service = {})
-public class UserGroupSearcherRegistrar {
+public class UserGroupSearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

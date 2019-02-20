@@ -450,7 +450,7 @@ public class JavaParser {
 			return 0;
 		}
 
-		int x = 0;
+		int x = -1;
 
 		for (int i = 1; i < lineNumber; i++) {
 			x = content.indexOf(CharPool.NEW_LINE, x + 1);
@@ -590,24 +590,47 @@ public class JavaParser {
 
 		int followingLineAction = parsedJavaTerm.getFollowingLineAction();
 
-		if ((followingLineAction ==
-				ParsedJavaTerm.DOUBLE_LINE_BREAK_REQUIRED) &&
-			Validator.isNotNull(
-				StringUtil.trim(fileContents.getLine(endLineNumber)))) {
+		if (followingLineAction != ParsedJavaTerm.NO_ACTION_REQUIRED) {
+			String trimmedFollowingLine = StringUtil.trim(
+				fileContents.getLine(endLineNumber));
 
-			return StringUtil.insert(
-				content, "\n", _getLineStartPos(content, endLineNumber + 1));
+			if ((followingLineAction ==
+					ParsedJavaTerm.DOUBLE_LINE_BREAK_REQUIRED) &&
+				Validator.isNotNull(trimmedFollowingLine)) {
+
+				return StringUtil.insert(
+					content, "\n",
+					_getLineStartPos(content, endLineNumber + 1));
+			}
+
+			if ((followingLineAction ==
+					ParsedJavaTerm.SINGLE_LINE_BREAK_REQUIRED) &&
+				Validator.isNull(trimmedFollowingLine)) {
+
+				return _removeLine(content, endLineNumber + 1);
+			}
 		}
 
 		int precedingLineAction = parsedJavaTerm.getPrecedingLineAction();
 
-		if ((precedingLineAction ==
-				ParsedJavaTerm.DOUBLE_LINE_BREAK_REQUIRED) &&
-			Validator.isNotNull(
-				StringUtil.trim(fileContents.getLine(startLineNumber - 2)))) {
+		if (precedingLineAction != ParsedJavaTerm.NO_ACTION_REQUIRED) {
+			String trimmedPrecedingLine = StringUtil.trim(
+				fileContents.getLine(startLineNumber - 2));
 
-			return StringUtil.insert(
-				content, "\n", _getLineStartPos(content, startLineNumber));
+			if ((precedingLineAction ==
+					ParsedJavaTerm.DOUBLE_LINE_BREAK_REQUIRED) &&
+				Validator.isNotNull(trimmedPrecedingLine)) {
+
+				return StringUtil.insert(
+					content, "\n", _getLineStartPos(content, startLineNumber));
+			}
+
+			if ((precedingLineAction ==
+					ParsedJavaTerm.SINGLE_LINE_BREAK_REQUIRED) &&
+				Validator.isNull(trimmedPrecedingLine)) {
+
+				return _removeLine(content, startLineNumber - 1);
+			}
 		}
 
 		String actualIndent = _getIndent(
@@ -830,6 +853,15 @@ public class JavaParser {
 		}
 
 		return parsedJavaClass;
+	}
+
+	private static String _removeLine(String content, int lineNumber) {
+		int x = _getLineStartPos(content, lineNumber);
+
+		int y = content.indexOf(CharPool.NEW_LINE, x);
+
+		return StringUtil.replaceFirst(
+			content, content.substring(x, y + 1), StringPool.BLANK, x);
 	}
 
 	private static String _trimLine(

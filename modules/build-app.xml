@@ -501,12 +501,16 @@
 	</target>
 
 	<target depends="get-app-names-core" name="get-app-names" unless="app.names">
+		<condition else="Liferay-Releng-Suite:\s*[\w-]+$" property="liferay.releng.suite.pattern" value="." >
+			<istrue value="${include.standalone.apps}" />
+		</condition>
+
 		<pathconvert pathsep="," property="app.names">
 			<fileset
 				dir="${modules.dir}"
 			>
 				<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Bundle: true" />
-				<containsregexp casesensitive="false" expression="Liferay-Releng-Suite:\s*[\w-]+$" multiline="true" />
+				<containsregexp casesensitive="false" expression="${liferay.releng.suite.pattern}" multiline="true" />
 				<include name="apps/**/app.bnd" />
 				<include name="private/apps/**/app.bnd" />
 				<present targetdir="${modules.dir}/.releng">

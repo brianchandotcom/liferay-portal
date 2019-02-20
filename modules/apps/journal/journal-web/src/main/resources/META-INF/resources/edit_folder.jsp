@@ -150,7 +150,7 @@ renderResponse.setTitle(title);
 						<aui:button name="selectFolderButton" value="select" />
 
 						<aui:script use="liferay-item-selector-dialog">
-							var selectFolderButton = document.querySelector('#<portlet:namespace />selectFolderButton');
+							var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 							if (selectFolderButton) {
 								selectFolderButton.addEventListener(
@@ -401,7 +401,7 @@ renderResponse.setTitle(title);
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
-	var selectDDMStructureButton = document.querySelector('#<portlet:namespace />selectDDMStructure');
+	var selectDDMStructureButton = document.getElementById('<portlet:namespace />selectDDMStructure');
 
 	if (selectDDMStructureButton) {
 		selectDDMStructureButton.addEventListener(

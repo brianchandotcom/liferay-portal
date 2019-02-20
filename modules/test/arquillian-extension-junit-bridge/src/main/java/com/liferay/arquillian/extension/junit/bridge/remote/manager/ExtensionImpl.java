@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.core.impl.EventPointImpl;
 import org.jboss.arquillian.core.impl.InjectionPointImpl;
 import org.jboss.arquillian.core.impl.ObserverImpl;
 import org.jboss.arquillian.core.impl.Reflections;
@@ -40,14 +39,13 @@ public class ExtensionImpl implements Extension {
 			target,
 			_injections(
 				target, Reflections.getFieldInjectionPoints(target.getClass())),
-			_events(target, Reflections.getEventPoints(target.getClass())),
 			_observers(
 				target, Reflections.getObserverMethods(target.getClass())));
 	}
 
 	@Override
 	public List<EventPoint> getEventPoints() {
-		return Collections.unmodifiableList(_eventPoints);
+		return Collections.<EventPoint>emptyList();
 	}
 
 	@Override
@@ -62,18 +60,6 @@ public class ExtensionImpl implements Extension {
 
 	public Object getTarget() {
 		return _target;
-	}
-
-	private static List<EventPoint> _events(
-		Object extension, List<Field> eventPoints) {
-
-		List<EventPoint> result = new ArrayList<>();
-
-		for (Field method : eventPoints) {
-			result.add(EventPointImpl.of(extension, method));
-		}
-
-		return result;
 	}
 
 	private static List<InjectionPoint> _injections(
@@ -102,15 +88,13 @@ public class ExtensionImpl implements Extension {
 
 	private ExtensionImpl(
 		Object target, List<InjectionPoint> injectionPoints,
-		List<EventPoint> eventPoints, List<ObserverMethod> observers) {
+		List<ObserverMethod> observers) {
 
 		_target = target;
 		_injectionPoints = injectionPoints;
-		_eventPoints = eventPoints;
 		_observers = observers;
 	}
 
-	private final List<EventPoint> _eventPoints;
 	private final List<InjectionPoint> _injectionPoints;
 	private final List<ObserverMethod> _observers;
 	private final Object _target;

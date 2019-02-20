@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -63,6 +64,21 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				return StringPool.BLANK;
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());
+			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch")>
+				<#assign firstJavaParameter = javaMethodSignature.javaParameters[0] />
+
+				${schemaName} old${schemaName} = get${schemaName}(${firstJavaParameter.parameterName});
+
+				<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schemaName, false) as javaParameter>
+					<#if !freeMarkerTool.isSchemaParameter(javaParameter, openAPIYAML)>
+						if (Validator.isNotNull(${schemaName?uncap_first}.get${javaParameter.parameterName?cap_first}())) {
+							old${schemaName}.set${javaParameter.parameterName?cap_first}(
+								${schemaName?uncap_first}.get${javaParameter.parameterName?cap_first}());
+						}
+					</#if>
+				</#list>
+
+				return put${schemaName}(${firstJavaParameter.parameterName}, old${schemaName});
 			<#else>
 				return new ${javaMethodSignature.returnType}Impl();
 			</#if>

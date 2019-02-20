@@ -20,12 +20,14 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaP
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,6 +46,14 @@ public class FreeMarkerTool {
 
 		return DTOOpenAPIParser.getJavaParameters(
 			configYAML, openAPIYAML, schema, fullyQualifiedNames);
+	}
+
+	public List<JavaParameter> getDTOJavaParameters(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
+		boolean fullyQualifiedNames) {
+
+		return DTOOpenAPIParser.getJavaParameters(
+			configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
 	}
 
 	public String getGraphQLArguments(List<JavaParameter> javaParameters) {
@@ -110,6 +120,12 @@ public class FreeMarkerTool {
 		return _hasHTTPMethod(javaMethodSignature, httpMethods);
 	}
 
+	public boolean isSchemaParameter(
+		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+
+		return _isSchemaParameter(javaParameter, openAPIYAML);
+	}
+
 	private FreeMarkerTool() {
 	}
 
@@ -117,6 +133,18 @@ public class FreeMarkerTool {
 		Class<? extends Operation> clazz = operation.getClass();
 
 		return StringUtil.lowerCase(clazz.getSimpleName());
+	}
+
+	private String _getSimpleClassName(String type) {
+		if (type.endsWith("[]")) {
+			return type.substring(0, type.length() - 2);
+		}
+
+		if (type.endsWith(">")) {
+			return type.substring(0, type.indexOf("<"));
+		}
+
+		return type;
 	}
 
 	private boolean _hasHTTPMethod(
@@ -128,6 +156,21 @@ public class FreeMarkerTool {
 			if (Objects.equals(httpMethod, _getHTTPMethod(operation))) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSchemaParameter(
+		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+
+		String simpleClassName = _getSimpleClassName(
+			javaParameter.getParameterType());
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+
+		if (schemas.containsKey(simpleClassName)) {
+			return true;
 		}
 
 		return false;

@@ -65,10 +65,6 @@ public class ObserverImpl implements ObserverMethod {
 				return false;
 			}
 
-			if (!_method.isAccessible()) {
-				_method.setAccessible(true);
-			}
-
 			_method.invoke(_target, arguments);
 
 			return true;

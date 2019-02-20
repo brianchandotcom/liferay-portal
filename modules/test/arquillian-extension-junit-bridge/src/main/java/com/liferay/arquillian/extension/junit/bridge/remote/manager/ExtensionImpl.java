@@ -63,6 +63,8 @@ public class ExtensionImpl implements Extension {
 		while (clazz != null) {
 			for (Field field : clazz.getDeclaredFields()) {
 				if (_isInjectionPoint(field)) {
+					field.setAccessible(true);
+
 					injectionPoints.add(field);
 				}
 			}
@@ -79,6 +81,8 @@ public class ExtensionImpl implements Extension {
 		while (clazz != null) {
 			for (Method method : clazz.getDeclaredMethods()) {
 				if (_isObserverMethod(method)) {
+					method.setAccessible(true);
+
 					observerMethods.add(method);
 				}
 			}

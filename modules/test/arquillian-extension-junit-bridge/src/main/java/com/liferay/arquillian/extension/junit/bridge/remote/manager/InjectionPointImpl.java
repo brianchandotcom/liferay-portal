@@ -59,9 +59,7 @@ public class InjectionPointImpl implements InjectionPoint {
 	@Override
 	public void set(Instance<?> instance) throws InvocationException {
 		try {
-			if (!_field.isAccessible()) {
-				_field.setAccessible(true);
-			} _field.set(_target, instance);
+			_field.set(_target, instance);
 		}
 		catch (Exception e) {
 			throw new InvocationException(e.getCause());

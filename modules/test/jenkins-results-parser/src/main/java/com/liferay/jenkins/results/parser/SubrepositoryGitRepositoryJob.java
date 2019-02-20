@@ -25,7 +25,8 @@ import java.util.TreeSet;
 /**
  * @author Michael Hashimoto
  */
-public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
+public class SubrepositoryGitRepositoryJob
+	extends GitRepositoryJob implements SubrepositoryTestClassJob {
 
 	@Override
 	public Set<String> getBatchNames() {
@@ -82,6 +83,22 @@ public abstract class SubrepositoryGitRepositoryJob extends GitRepositoryJob {
 		}
 
 		return null;
+	}
+
+	@Override
+	public SubrepositoryGitWorkingDirectory
+		getSubrepositoryGitWorkingDirectory() {
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		if (!(gitWorkingDirectory instanceof
+				SubrepositoryGitWorkingDirectory)) {
+
+			throw new RuntimeException(
+				"Invalid subrepository Git working directory");
+		}
+
+		return (SubrepositoryGitWorkingDirectory)gitWorkingDirectory;
 	}
 
 	public boolean getTestRunValidation() {

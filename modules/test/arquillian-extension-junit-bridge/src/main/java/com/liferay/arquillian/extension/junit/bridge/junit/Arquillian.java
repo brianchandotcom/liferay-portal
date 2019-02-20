@@ -37,10 +37,7 @@ import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
-import org.jboss.arquillian.test.spi.event.suite.AfterSuite;
-import org.jboss.arquillian.test.spi.event.suite.AfterTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
-import org.jboss.arquillian.test.spi.event.suite.BeforeSuite;
 import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
@@ -112,8 +109,6 @@ public class Arquillian extends Runner implements Filterable {
 
 				manager.start();
 
-				manager.fire(new BeforeSuite());
-
 				_managerThreadLocal.set(manager);
 			}
 			catch (Exception e) {
@@ -123,21 +118,12 @@ public class Arquillian extends Runner implements Filterable {
 			}
 		}
 
-		final Manager finalManager = manager;
-
 		runNotifier.addListener(
 			new RunListener() {
 
 				@Override
 				public void testRunFinished(Result result) throws Exception {
-					try {
-						finalManager.fire(new AfterSuite());
-
-						finalManager.shutdown();
-					}
-					finally {
-						_managerThreadLocal.remove();
-					}
+					_managerThreadLocal.remove();
 				}
 
 			});
@@ -327,20 +313,6 @@ public class Arquillian extends Runner implements Filterable {
 				}
 				catch (Throwable t) {
 					throwable = t;
-				}
-				finally {
-					try {
-						manager.fire(
-							new AfterTestLifecycleEvent(
-								test, frameworkMethod.getMethod()));
-					}
-					catch (Throwable t) {
-						if (throwable != null) {
-							t.addSuppressed(throwable);
-						}
-
-						throwable = t;
-					}
 				}
 
 				if (throwable != null) {

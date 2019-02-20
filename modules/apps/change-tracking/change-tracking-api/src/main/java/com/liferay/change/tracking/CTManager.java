@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryBag;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +37,19 @@ import java.util.Optional;
 public interface CTManager {
 
 	/**
+	 * Puts a model change to a change bag associated with the owner model
+	 * change. If there is no change bag associated with the owner it creates a
+	 * new one.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  ownerCTEntry the owner of the change bag
+	 * @param  relatedCTEntry the change to add to the bag
+	 * @return the created or updated change bag
+	 */
+	public Optional<CTEntryBag> addRelatedCTEntry(
+		long userId, CTEntry ownerCTEntry, CTEntry relatedCTEntry);
+
+	/**
 	 * Executes a model addition or update using the given supplier, with
 	 * setting and un-setting the flag that indicates the update before and
 	 * after the operation. Therefore during the execution {@link
@@ -46,7 +60,7 @@ public interface CTManager {
 	 * @return The created or updated model of type T
 	 */
 	public <T> T executeModelUpdate(
-			UnsafeSupplier<T, PortalException> modelUpdateSupplier)
+		UnsafeSupplier<T, PortalException> modelUpdateSupplier)
 		throws PortalException;
 
 	/**
@@ -98,6 +112,19 @@ public interface CTManager {
 	public List<CTEntry> getModelChangeCTEntries(
 		long userId, long resourcePrimKey,
 		QueryDefinition<CTEntry> queryDefinition);
+
+	/**
+	 * Retrieves a model change's bag, first looking for it in the current
+	 * user's active change collection, and if it doesn't exist, looking for it
+	 * in the production change collection
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  classNameId the primary key of the changed version model's class
+	 * @param  classPK the primary key of the changed version model
+	 * @return the change tracking entry representing the model change
+	 */
+	public Optional<CTEntryBag> getModelChangeCTEntryBagOptional(
+		long userId, long classNameId, long classPK);
 
 	/**
 	 * Retrieves a model change, first looking for it in the current user's

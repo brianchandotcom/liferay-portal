@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.internal.search;
+package com.liferay.calendar.internal.search.spi.model.index.contributor;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;

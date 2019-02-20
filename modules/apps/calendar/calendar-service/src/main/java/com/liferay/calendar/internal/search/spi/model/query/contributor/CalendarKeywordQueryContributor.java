@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.calendar.internal.search;
+package com.liferay.calendar.internal.search.spi.model.query.contributor;
 
+import com.liferay.calendar.internal.search.CalendarField;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -25,14 +26,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bryan Engler
+ * @author Michael C. Han
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.calendar.model.CalendarBooking",
+	property = "indexer.class.name=com.liferay.calendar.model.Calendar",
 	service = KeywordQueryContributor.class
 )
-public class CalendarBookingKeywordQueryContributor
+public class CalendarKeywordQueryContributor
 	implements KeywordQueryContributor {
 
 	@Override
@@ -46,7 +47,9 @@ public class CalendarBookingKeywordQueryContributor
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.DESCRIPTION, true);
 		queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, Field.TITLE, true);
+			booleanQuery, searchContext, Field.NAME, true);
+		queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, CalendarField.RESOURCE_NAME, true);
 	}
 
 	@Reference

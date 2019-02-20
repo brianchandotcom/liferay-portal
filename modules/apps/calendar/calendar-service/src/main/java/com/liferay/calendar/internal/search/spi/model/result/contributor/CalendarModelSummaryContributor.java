@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.internal.search;
+package com.liferay.calendar.internal.search.spi.model.result.contributor;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;

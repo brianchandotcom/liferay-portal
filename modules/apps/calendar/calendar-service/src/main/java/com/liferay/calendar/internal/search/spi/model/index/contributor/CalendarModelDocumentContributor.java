@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.calendar.internal.search;
+package com.liferay.calendar.internal.search.spi.model.index.contributor;
 
+import com.liferay.calendar.internal.search.CalendarField;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;

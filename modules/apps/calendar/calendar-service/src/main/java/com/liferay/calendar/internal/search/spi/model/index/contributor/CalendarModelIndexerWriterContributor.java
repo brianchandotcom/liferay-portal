@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.calendar.internal.search;
+package com.liferay.calendar.internal.search.spi.model.index.contributor;
 
+import com.liferay.calendar.internal.search.CalendarBookingBatchReindexer;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;

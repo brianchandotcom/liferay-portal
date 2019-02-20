@@ -63,14 +63,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#list freeMarkerTool.getResourceJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
 		@Test
 		public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 			Assert.assertTrue(true);
 		}
 	</#list>
 
-	<#list freeMarkerTool.getResourceJavaMethodSignatures(openAPIYAML, schemaName) as javaMethodSignature>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
 		protected Response invoke${javaMethodSignature.methodName?cap_first}(
 				${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)})
 			throws Exception {
@@ -79,19 +79,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters) />
 
-			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && arguments?ends_with(", ${schemaName?uncap_first}")>
+			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post", "put") && arguments?ends_with(",${schemaName?uncap_first}")>
 				return requestSpecification.body(
 					${schemaName?uncap_first}
 				).when(
 				).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
 					_resourceURL + "${javaMethodSignature.path}",
-					${stringUtil.replaceLast(arguments, ", ${schemaName?uncap_first}", "")}
+					${stringUtil.replaceLast(arguments, ",${schemaName?uncap_first}", "")}
 				);
 			<#else>
 				return requestSpecification.when(
 				).${freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)}(
 					_resourceURL + "${javaMethodSignature.path}",
-					${stringUtil.replaceLast(arguments, ", pagination", "")}
+					${stringUtil.replaceLast(arguments, ",pagination", "")}
 				);
 			</#if>
 		}
@@ -102,7 +102,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			{
 				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
 
-				<#list freeMarkerTool.getDTOJavaParameters(schema) as javaParameter>
+				<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
 					<#if randomDataTypes?seq_contains(javaParameter.parameterType)>
 						${javaParameter.parameterName} = RandomTestUtil.random${javaParameter.parameterType}();
 					<#elseif stringUtil.equals(javaParameter.parameterType, "Date")>
@@ -117,7 +117,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	protected class ${schemaName}Impl implements ${schemaName} {
 
-		<#list freeMarkerTool.getDTOJavaParameters(schema) as javaParameter>
+		<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
 			public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
 				return ${javaParameter.parameterName};
 			}

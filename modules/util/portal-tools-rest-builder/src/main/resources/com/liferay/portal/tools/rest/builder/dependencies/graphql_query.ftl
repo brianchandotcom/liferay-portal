@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
-	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(openAPIYAML, "query") />
+	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, openAPIYAML, "query", false) />
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		<#assign schemaName = javaMethodSignature.schemaName />

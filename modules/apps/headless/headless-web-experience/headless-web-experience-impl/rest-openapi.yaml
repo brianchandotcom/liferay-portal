@@ -194,16 +194,14 @@ components:
         lastReviewed:
           format: date-time
           type: string
-        renderedContentsByTemplate:
+        renderedContentsURL:
           description: https://www.schema.org/templates
           items:
             properties:
-              id:
-                format: int64
-                type: integer
-              renderedContent:
+              renderedContentURL:
+                format: uri
                 type: string
-              template:
+              templateName:
                 type: string
             type: object
           type: array
@@ -610,6 +608,29 @@ paths:
                 type: array
           description: ""
       tags: ["Comment"]
+  "/structured-contents/{structured-content-id}/rendered-content/{template-id}":
+    get:
+      parameters:
+      - in: path
+        name: structured-content-id
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - in: path
+        name: template-id
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        200:
+          content:
+            text/html:
+              schema:
+                type: string
+          description: ""
+      tags: ["StructuredContent"]
   "/structured-contents/{structured-content-id}/structured-content-images":
     get:
       parameters:

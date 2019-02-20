@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.util;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;

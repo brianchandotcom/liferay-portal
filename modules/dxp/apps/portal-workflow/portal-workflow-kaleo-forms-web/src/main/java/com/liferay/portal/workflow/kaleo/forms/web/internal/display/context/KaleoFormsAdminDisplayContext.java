@@ -47,8 +47,8 @@ import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessCreat
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.util.KaleoFormsAdminRequestHelper;
-import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoDefinitionVersionActivePredicate;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch;
+import com.liferay.portal.workflow.kaleo.forms.web.internal.util.KaleoDefinitionVersionActivePredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 

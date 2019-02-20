@@ -12,19 +12,19 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter;
+package com.liferay.portal.workflow.kaleo.forms.web.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDefinitionVersionConstants;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.function.Predicate;
 
 /**
- * @author Inácio Nery
+ * @author Lino Alves
  */
 public class KaleoDefinitionVersionActivePredicate
 	implements Predicate<KaleoDefinitionVersion> {
@@ -35,7 +35,7 @@ public class KaleoDefinitionVersionActivePredicate
 
 	@Override
 	public boolean test(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		if (_status == KaleoDefinitionVersionConstants.STATUS_ALL) {
+		if (_status == WorkflowConstants.STATUS_ANY) {
 			return true;
 		}
 
@@ -43,7 +43,7 @@ public class KaleoDefinitionVersionActivePredicate
 			KaleoDefinition kaleoDefinition =
 				kaleoDefinitionVersion.getKaleoDefinition();
 
-			if (_status == KaleoDefinitionVersionConstants.STATUS_PUBLISHED) {
+			if (_status == WorkflowConstants.STATUS_APPROVED) {
 				return kaleoDefinition.isActive();
 			}
 
@@ -54,7 +54,7 @@ public class KaleoDefinitionVersionActivePredicate
 				_log.debug(pe, pe);
 			}
 
-			if (_status == KaleoDefinitionVersionConstants.STATUS_PUBLISHED) {
+			if (_status == WorkflowConstants.STATUS_DRAFT) {
 				return false;
 			}
 

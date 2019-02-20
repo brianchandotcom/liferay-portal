@@ -96,41 +96,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				" where defaultLanguageId is null or defaultLanguageId = ''";
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, title, content from JournalArticle" + whereClause);
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update JournalArticle set defaultLanguageId = ? where " +
-						"id_ = ?");
-			ResultSet rs = ps1.executeQuery()) {
-
-			Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-			while (rs.next()) {
-				String title = rs.getString(2);
-
-				String defaultLanguageId = null;
-
-				if (Validator.isXml(title)) {
-					defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-						title, defaultLocale);
-				}
-				else {
-					defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-						rs.getString(3), defaultLocale);
-				}
-
-				ps2.setString(1, defaultLanguageId);
-
-				ps2.setLong(2, rs.getLong(1));
-
-				ps2.addBatch();
-			}
-
-			ps2.executeBatch();
-		}
+		_updateDefaultLanguage("title", whereClause, false);
+		_updateDefaultLanguage("content", whereClause, true);
 	}
 
 	protected void updateJournalArticleLocalizedFields() throws Exception {
@@ -248,6 +215,41 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		String returnValue = new String(convertedValue, StringPool.UTF8);
 
 		return StringUtil.shorten(returnValue, returnValue.length() - 1);
+	}
+
+	private void _updateDefaultLanguage(
+			String sourceField, String whereClause, boolean strictUpdate)
+		throws Exception {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select id_, ", sourceField, " from JournalArticle",
+					whereClause));
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update JournalArticle set defaultLanguageId = ? where " +
+						"id_ = ?");
+			ResultSet rs = ps1.executeQuery()) {
+
+			while (rs.next()) {
+				String sourceFieldValue = rs.getString(2);
+
+				if (Validator.isXml(sourceFieldValue) || strictUpdate) {
+					ps2.setString(
+						1,
+						LocalizationUtil.getDefaultLanguageId(
+							sourceFieldValue, LocaleUtil.getSiteDefault()));
+
+					ps2.setLong(2, rs.getLong(1));
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+		}
 	}
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;

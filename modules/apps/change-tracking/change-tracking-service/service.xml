@@ -74,6 +74,7 @@
 
 		<!-- Relationships -->
 
+		<column entity="CTEntryBag" mapping-table="CTEntryBags_CTEntries" name="bags" type="Collection" />
 		<column entity="CTCollection" mapping-table="CTCollections_CTEntries" name="collections" type="Collection" />
 
 		<!-- Finder methods -->
@@ -86,6 +87,41 @@
 		<!-- References -->
 
 		<reference entity="CTCollection" package-path="com.liferay.change.tracking" />
+		<reference entity="CTEntryBag" package-path="com.liferay.change.tracking" />
+	</entity>
+	<entity local-service="true" name="CTEntryBag" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="ctEntryBagId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="ownerCTEntryId" type="long" />
+		<column name="ctCollectionId" type="long" />
+
+		<!-- Relationships -->
+
+		<column entity="CTEntry" mapping-table="CTEntryBags_CTEntries" name="entries" type="Collection" />
+
+		<!-- Finder methods -->
+
+		<finder name="O_C" return-type="Collection">
+			<finder-column name="ownerCTEntryId" />
+			<finder-column name="ctCollectionId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="CTEntry" package-path="com.liferay.change.tracking" />
 	</entity>
 	<entity local-service="true" name="CTProcess" remote-service="false" trash-enabled="false" uuid="false">
 

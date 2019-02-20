@@ -25,13 +25,14 @@ import java.util.List;
 public class JavaMethodSignature {
 
 	public JavaMethodSignature(
-		String path, PathItem pathItem, Operation operation,
+		String path, PathItem pathItem, Operation operation, String schemaName,
 		List<JavaParameter> javaParameters, String methodName,
 		String returnType) {
 
 		_path = path;
 		_pathItem = pathItem;
 		_operation = operation;
+		_schemaName = schemaName;
 		_javaParameters = javaParameters;
 		_methodName = methodName;
 		_returnType = returnType;
@@ -61,11 +62,16 @@ public class JavaMethodSignature {
 		return _returnType;
 	}
 
+	public String getSchemaName() {
+		return _schemaName;
+	}
+
 	private final List<JavaParameter> _javaParameters;
 	private final String _methodName;
 	private final Operation _operation;
 	private final String _path;
 	private final PathItem _pathItem;
 	private final String _returnType;
+	private final String _schemaName;
 
 }

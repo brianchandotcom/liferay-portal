@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.document.library.internal.search;
+package com.liferay.document.library.internal.search.spi.model.result.contributor;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
@@ -29,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFolder",
+	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = ModelSummaryContributor.class
 )
-public class DLFolderModelSummaryContributor
+public class DLFileEntryModelSummaryContributor
 	implements ModelSummaryContributor {
 
 	@Override
@@ -41,9 +42,15 @@ public class DLFolderModelSummaryContributor
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		String title = document.get(prefix + Field.TITLE, Field.TITLE);
 		String content = document.get(
-			prefix + Field.DESCRIPTION, Field.DESCRIPTION);
+			locale, prefix + Field.CONTENT, Field.CONTENT);
+
+		if (Validator.isNull(content)) {
+			content = document.get(
+				prefix + Field.DESCRIPTION, Field.DESCRIPTION);
+		}
+
+		String title = document.get(prefix + Field.TITLE, Field.TITLE);
 
 		Summary summary = new Summary(title, content);
 

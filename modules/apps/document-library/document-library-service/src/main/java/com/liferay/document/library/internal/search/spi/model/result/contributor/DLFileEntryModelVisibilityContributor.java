@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.search;
+package com.liferay.document.library.internal.search.spi.model.result.contributor;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

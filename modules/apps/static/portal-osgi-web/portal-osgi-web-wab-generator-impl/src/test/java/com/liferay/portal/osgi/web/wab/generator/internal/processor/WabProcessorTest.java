@@ -106,7 +106,7 @@ public class WabProcessorTest {
 
 	@Test
 	public void testClassicThemeWab() throws Exception {
-		File file = getFile("classic-theme.autodeployed.war");
+		File file = getFile("/classic-theme.autodeployed.war");
 
 		try (Jar jar = new Jar(file)) {
 			Assert.assertNull(jar.getBsn());
@@ -121,8 +121,7 @@ public class WabProcessorTest {
 		parameters.put("Bundle-Version", new String[] {"7.0.0.8"});
 		parameters.put("Web-ContextPath", new String[] {"/classic-theme"});
 
-		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file, parameters);
+		WabProcessor wabProcessor = new TestWabProcessor(file, parameters);
 
 		File processedFile = wabProcessor.getProcessedFile();
 
@@ -220,10 +219,10 @@ public class WabProcessorTest {
 
 	@Test
 	public void testFatCDIWabOptsOutOfOSGiCDIIntegration() throws Exception {
-		File file = getFile("jsf.cdi.applicant.portlet.war");
+		File file = getFile("/jsf.cdi.applicant.portlet.war");
 
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file,
+			file,
 			Collections.singletonMap(
 				"Web-ContextPath",
 				new String[] {"/jsf-cdi-applicant-portlet"}));
@@ -304,10 +303,10 @@ public class WabProcessorTest {
 
 	@Test
 	public void testSkinnyCDIWabGainsOSGiCDIIntegration() throws Exception {
-		File file = getFile("PortletV3AnnotatedDemo.war");
+		File file = getFile("/PortletV3AnnotatedDemo.war");
 
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file,
+			file,
 			Collections.singletonMap(
 				"Web-ContextPath",
 				new String[] {"/portlet-V3-annotated-demo"}));
@@ -422,10 +421,10 @@ public class WabProcessorTest {
 
 	@Test
 	public void testThatEmbeddedLibsAreHandledProperly() throws Exception {
-		File file = getFile("tck-V3URLTests.wab.war");
+		File file = getFile("/tck-V3URLTests.wab.war");
 
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file,
+			file,
 			Collections.singletonMap(
 				"Web-ContextPath",
 				new String[] {"/portlet-V3-annotated-demo"}));
@@ -562,16 +561,8 @@ public class WabProcessorTest {
 		return null;
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	protected File getFile(String fileName) throws URISyntaxException {
-		ClassLoader classLoader = getClassLoader();
-
-		URL url = classLoader.getResource(fileName);
+		URL url = WabProcessor.class.getResource(fileName);
 
 		Assert.assertEquals(
 			url + "is not file protocol", "file", url.getProtocol());
@@ -581,16 +572,7 @@ public class WabProcessorTest {
 		return path.toFile();
 	}
 
-	protected class TestWabProcessor extends WabProcessor {
-
-		public TestWabProcessor(
-			ClassLoader classLoader, File file,
-			Map<String, String[]> parameters) {
-
-			super(classLoader, file, parameters);
-
-			_file = file;
-		}
+	private static class TestWabProcessor extends WabProcessor {
 
 		@Override
 		protected void executeAutoDeployers(
@@ -622,6 +604,12 @@ public class WabProcessorTest {
 			catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
+		}
+
+		private TestWabProcessor(File file, Map<String, String[]> parameters) {
+			super(TestWabProcessor.class.getClassLoader(), file, parameters);
+
+			_file = file;
 		}
 
 		private final File _file;

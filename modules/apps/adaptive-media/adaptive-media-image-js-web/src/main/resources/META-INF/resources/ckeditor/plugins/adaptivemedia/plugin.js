@@ -9,7 +9,7 @@
 
 	var TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
 
-	var IE9 = AUI.Env.UA.ie >= 9;
+	var IE9AndUp = AUI.Env.UA.ie >= 9;
 
 	CKEDITOR.plugins.add(
 		'adaptivemedia',
@@ -111,7 +111,7 @@
 
 				var ranges = selection.getRanges();
 
-				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE9));
+				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE9AndUp));
 			},
 
 			_onSelectedImageChange: function(editor, imageSrc, selectedItem) {
@@ -131,7 +131,7 @@
 				editor.insertHtml(el.getOuterHtml());
 
 				if (instance._isEmptySelection(editor)) {
-					if (IE9) {
+					if (IE9AndUp) {
 						(typeof AlloyEditor == 'undefined') ? editor.insertHtml('<br />') : editor.insertHtml(el.getOuterHtml() + '<br />');
 					}
 					else {

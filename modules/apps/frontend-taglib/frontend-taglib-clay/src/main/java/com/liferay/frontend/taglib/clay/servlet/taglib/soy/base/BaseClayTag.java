@@ -16,8 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
-import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProviderRegistry;
-import com.liferay.frontend.taglib.clay.internal.ClayComponentAttributeProviderRegistryHelper;
+import com.liferay.frontend.taglib.clay.internal.ClayComponentAttributeProvidersProvider;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
@@ -157,14 +156,8 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	}
 
 	private void _setAttributeProviderAttributes(String key) {
-		ClayComponentAttributeProviderRegistry registry =
-			ClayComponentAttributeProviderRegistryHelper.getRegistry();
-
-		if (registry == null) {
-			return;
-		}
-
-		List<ClayComponentAttributeProvider> providers = registry.get(key);
+		List<ClayComponentAttributeProvider> providers =
+			ClayComponentAttributeProvidersProvider.get(key);
 
 		if (providers == null) {
 			return;

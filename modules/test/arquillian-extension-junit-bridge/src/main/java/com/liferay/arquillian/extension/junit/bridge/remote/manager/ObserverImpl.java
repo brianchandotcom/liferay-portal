@@ -14,12 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
-import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.InvocationException;
 import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.ObserverMethod;
@@ -27,8 +25,7 @@ import org.jboss.arquillian.core.spi.ObserverMethod;
 /**
  * @author Matthew Tambara
  */
-public class ObserverImpl
-	implements ObserverMethod, Comparable<ObserverMethod> {
+public class ObserverImpl implements ObserverMethod {
 
 	public static ObserverImpl of(Object extension, Method method) {
 		return new ObserverImpl(extension, method);
@@ -40,10 +37,13 @@ public class ObserverImpl
 			return 1;
 		}
 
-		Integer integer1 = _getPrecedence(getMethod());
-		Integer integer2 = _getPrecedence(observerMethod.getMethod());
+		Method method = getMethod();
 
-		return integer2.compareTo(integer1);
+		String methodName = method.getName();
+
+		method = observerMethod.getMethod();
+
+		return methodName.compareTo(method.getName());
 	}
 
 	@Override
@@ -102,18 +102,6 @@ public class ObserverImpl
 		}
 
 		return false;
-	}
-
-	private Integer _getPrecedence(Method method) {
-		for (Annotation[] annotations : method.getParameterAnnotations()) {
-			for (Annotation annotation : annotations) {
-				if (annotation.annotationType() == Observes.class) {
-					return ((Observes)annotation).precedence();
-				}
-			}
-		}
-
-		return 0;
 	}
 
 	private Object[] _resolveArguments(Manager manager, Object event) {

@@ -31,16 +31,19 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
+import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsURL;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentDocumentImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.GeoImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.RenderedContentsURLImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ValueImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ValuesImpl;
@@ -49,12 +52,17 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructu
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.EntityFieldsProvider;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.StructuredContentEntityModel;
+import com.liferay.headless.web.experience.internal.resource.v1_0.util.EmptyHttpServletResponse;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -73,19 +81,25 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+
+import java.net.URI;
 
 import java.time.LocalDateTime;
 
@@ -99,7 +113,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -207,6 +227,44 @@ public class StructuredContentResourceImpl
 
 		return _toStructuredContent(
 			_journalArticleService.getLatestArticle(structuredContentId));
+	}
+
+	@Override
+	public String getStructuredContentTemplate(
+			Long structuredContentId, Long templateId)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		HttpServletResponse response = new EmptyHttpServletResponse();
+
+		EventsProcessorUtil.process(
+			PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
+			PropsValues.SERVLET_SERVICE_EVENTS_PRE, _contextHttpServletRequest,
+			response);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLocale(_contextHttpServletRequest.getLocale());
+		themeDisplay.setSiteGroupId(journalArticle.getGroupId());
+		themeDisplay.setScopeGroupId(journalArticle.getGroupId());
+
+		DDMTemplate ddmTemplate = _ddmTemplateService.getTemplate(templateId);
+
+		Locale locale = contextAcceptLanguage.getPreferredLocale();
+
+		JournalArticleDisplay journalArticleDisplay =
+			_journalContent.getDisplay(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				ddmTemplate.getTemplateKey(), null, locale.toString(),
+				themeDisplay);
+
+		String content = journalArticleDisplay.getContent();
+
+		return content.replaceAll("[\\t\\n]", "");
 	}
 
 	@Override
@@ -345,6 +403,20 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
+	}
+
+	private URI _getMethodURI(String methodName, Object[] objects) {
+		return UriBuilder.fromMethod(
+			BaseStructuredContentResourceImpl.class, methodName
+		).build(
+			objects
+		);
+	}
+
+	private URI _getResourceUri() {
+		return UriBuilder.fromResource(
+			BaseStructuredContentResourceImpl.class
+		).build();
 	}
 
 	private ServiceContext _getServiceContext(
@@ -537,6 +609,39 @@ public class StructuredContentResourceImpl
 				title = journalArticle.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 				values = _toValues(journalArticle);
+
+				renderedContentsURL =
+					transform(
+						ddmStructure.getTemplates(),
+						ddmTemplate -> new RenderedContentsURLImpl() {
+							{
+								setRenderedContentURL(
+									() -> {
+										URI baseURI = _uriInfo.getBaseUri();
+
+										URI resourceURI = _getResourceUri();
+
+										URI methodURI = _getMethodURI(
+											"getStructuredContentTemplate",
+											new Object[] {
+												journalArticle.
+													getResourcePrimKey(),
+												ddmTemplate.getTemplateId()
+											});
+
+										return StringBundler.concat(
+											baseURI.toString(),
+											resourceURI.toString(),
+											methodURI.toString());
+
+									});
+
+								templateName = ddmTemplate.getName(
+									contextAcceptLanguage.getPreferredLocale());
+							}
+						}
+					).toArray(
+						new RenderedContentsURL[0]);
 			}
 		};
 	}
@@ -699,6 +804,9 @@ public class StructuredContentResourceImpl
 		return values.toArray(new Values[0]);
 	}
 
+	@Context
+	private HttpServletRequest _contextHttpServletRequest;
+
 	@Reference
 	private DDM _ddm;
 
@@ -707,6 +815,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private DDMTemplateService _ddmTemplateService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -727,6 +838,9 @@ public class StructuredContentResourceImpl
 	private JournalArticleService _journalArticleService;
 
 	@Reference
+	private JournalContent _journalContent;
+
+	@Reference
 	private JournalConverter _journalConverter;
 
 	@Reference
@@ -744,6 +858,9 @@ public class StructuredContentResourceImpl
 	@Reference
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
+
+	@Context
+	private UriInfo _uriInfo;
 
 	@Reference
 	private UserLocalService _userLocalService;

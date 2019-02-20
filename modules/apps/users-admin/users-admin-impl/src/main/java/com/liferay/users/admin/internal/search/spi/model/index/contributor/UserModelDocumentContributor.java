@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.internal.search.contributor;
+package com.liferay.users.admin.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;

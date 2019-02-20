@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.internal.search.contributor;
+package com.liferay.users.admin.internal.search.spi.model.result.contributor;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;

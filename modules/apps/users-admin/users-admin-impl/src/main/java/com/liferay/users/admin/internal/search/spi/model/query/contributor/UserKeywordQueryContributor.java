@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.internal.search.contributor;
+package com.liferay.users.admin.internal.search.spi.model.query.contributor;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;

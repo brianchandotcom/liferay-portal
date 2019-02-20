@@ -1016,7 +1016,11 @@ import org.osgi.service.component.annotations.Reference;
 				 */
 				@Override
 				public List<${entity.name}> get${referenceEntity.name}${entity.names}(${referenceEntity.PKClassName} ${referenceEntity.PKVarName}) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${referenceEntity.varName}Persistence.get${entity.names}(${referenceEntity.PKVarName});
+					<#if dependencyInjectorDS>
+						return ${entity.varName}Persistence.get${referenceEntity.name}${entity.names}(${referenceEntity.PKVarName});
+					<#else>
+						return ${referenceEntity.varName}Persistence.get${entity.names}(${referenceEntity.PKVarName});
+					</#if>
 				}
 
 				<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "get" + referenceEntity.name + entity.names, [referenceEntity.PKClassName, "int", "int"], []) />
@@ -1028,7 +1032,11 @@ import org.osgi.service.component.annotations.Reference;
 				 */
 				@Override
 				public List<${entity.name}> get${referenceEntity.name}${entity.names}(${referenceEntity.PKClassName} ${referenceEntity.PKVarName}, int start, int end) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${referenceEntity.varName}Persistence.get${entity.names}(${referenceEntity.PKVarName}, start, end);
+					<#if dependencyInjectorDS>
+						return ${entity.varName}Persistence.get${referenceEntity.name}${entity.names}(${referenceEntity.PKVarName}, start, end);
+					<#else>
+						return ${referenceEntity.varName}Persistence.get${entity.names}(${referenceEntity.PKVarName}, start, end);
+					</#if>
 				}
 
 				<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "get" + referenceEntity.name + entity.names, [referenceEntity.PKClassName, "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"], []) />
@@ -1040,7 +1048,11 @@ import org.osgi.service.component.annotations.Reference;
 				 */
 				@Override
 				public List<${entity.name}> get${referenceEntity.name}${entity.names}(${referenceEntity.PKClassName} ${referenceEntity.PKVarName}, int start, int end, OrderByComparator<${entity.name}> orderByComparator) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${referenceEntity.varName}Persistence.get${entity.names}(${referenceEntity.PKVarName}, start, end, orderByComparator);
+					<#if dependencyInjectorDS>
+						return ${entity.varName}Persistence.get${referenceEntity.name}${entity.names}(${referenceEntity.PKVarName}, start, end, orderByComparator);
+					<#else>
+						return ${referenceEntity.varName}Persistence.get${entity.names}(${referenceEntity.PKVarName}, start, end, orderByComparator);
+					</#if>
 				}
 
 				<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "get" + referenceEntity.name + entity.names + "Count", [referenceEntity.PKClassName], []) />

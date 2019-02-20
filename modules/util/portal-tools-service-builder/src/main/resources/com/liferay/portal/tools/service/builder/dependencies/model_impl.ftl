@@ -369,7 +369,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			public static final String MAPPING_TABLE_${stringUtil.upperCase(entityColumn.mappingTableName)}_SQL_CREATE = "${serviceBuilder.getCreateMappingTableSQL(serviceBuilder.getEntityMapping(entityColumn.mappingTableName))}";
 
-			public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(entityColumn.mappingTableName)} = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${entityColumn.mappingTableName}"), true);
+			<#if !dependencyInjectorDS>
+				public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(entityColumn.mappingTableName)} = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${entityColumn.mappingTableName}"), true);
+			</#if>
 		</#if>
 	</#list>
 

@@ -17,20 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= assetTagsDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= assetTagsDisplayContext.getClearResultsURL() %>"
-	componentId="assetTagsManagementToolbar"
-	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? assetTagsDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= assetTagsDisplayContext.getTotalItems() == 0 %>"
-	filterDropdownItems="<%= assetTagsDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= assetTagsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= assetTagsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="assetTags"
-	searchFormName="searchFm"
-	showSearch="<%= assetTagsDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= assetTagsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetTagsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= assetTagsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new AssetTagsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetTagsDisplayContext) %>"
 />
 
 <portlet:actionURL name="deleteTag" var="deleteTagURL">

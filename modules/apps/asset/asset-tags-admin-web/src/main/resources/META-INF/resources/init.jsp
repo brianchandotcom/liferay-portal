@@ -31,6 +31,7 @@ page import="com.liferay.asset.kernel.exception.DuplicateTagException" %><%@
 page import="com.liferay.asset.kernel.exception.NoSuchTagException" %><%@
 page import="com.liferay.asset.kernel.model.AssetTag" %><%@
 page import="com.liferay.asset.tags.admin.web.internal.display.context.AssetTagsDisplayContext" %><%@
+page import="com.liferay.asset.tags.admin.web.internal.display.context.AssetTagsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.util.AssetHelper" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

@@ -2,7 +2,7 @@
 	background-color: #FFF;
 
 	.sharing-modal-form-content {
-		padding: 1.5rem 1.5rem 0;
+		padding: 1.5rem 1.5rem 8px;
 	}
 
 	.custom-radio .form-text {
@@ -12,14 +12,19 @@
 		padding-left: 1.5rem;
 	}
 
-	.dropdown-item {
-		.sticker {
-			float: left;
-			margin-right: 1rem;
-		}
+	.dropdown-menu {
+		min-width: 300px;
+		width: auto;
 
-		strong {
-			display: block;
+		.dropdown-item {
+			.sticker {
+				float: left;
+				margin-right: 1rem;
+			}
+
+			strong {
+				display: block;
+			}
 		}
 	}
 }

@@ -1149,6 +1149,10 @@ public abstract class BaseBuild implements Build {
 
 		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
+		if (!buildURL.endsWith("/")) {
+			buildURL += "/";
+		}
+
 		String thisBuildURL = getBuildURL();
 
 		if (thisBuildURL != null) {

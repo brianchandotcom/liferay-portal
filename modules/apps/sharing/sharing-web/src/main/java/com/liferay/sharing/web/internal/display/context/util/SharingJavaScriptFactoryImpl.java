@@ -131,34 +131,16 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		sb.append("sharing('");
 		sb.append(sharingURL.toString());
 		sb.append("', '");
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			request.getLocale(), SharingJavaScriptFactoryImpl.class);
-
-		String title = _getTitle(className, classPK, request.getLocale());
-
-		if (Validator.isNotNull(title)) {
-			sb.append(LanguageUtil.format(resourceBundle, "share-x", title));
-		}
-		else {
-			sb.append(LanguageUtil.get(resourceBundle, "share"));
-		}
+		sb.append(_getDialogTitle(className, classPK, request.getLocale()));
 
 		sb.append("');");
 
 		return sb.toString();
 	}
 
-	private LiferayPortletResponse _getLiferayPortletResponse(
-		HttpServletRequest request) {
+	private String _getAssetTitle(
+		String className, long classPK, Locale locale) {
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		return _portal.getLiferayPortletResponse(portletResponse);
-	}
-
-	private String _getTitle(String className, long classPK, Locale locale) {
 		try {
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
@@ -185,6 +167,30 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 			return null;
 		}
+	}
+
+	private String _getDialogTitle(
+		String className, long classPK, Locale locale) {
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, SharingJavaScriptFactoryImpl.class);
+
+		String title = _getAssetTitle(className, classPK, locale);
+
+		if (Validator.isNotNull(title)) {
+			return LanguageUtil.format(resourceBundle, "share-x", title);
+		}
+
+		return LanguageUtil.get(resourceBundle, "share");
+	}
+
+	private LiferayPortletResponse _getLiferayPortletResponse(
+		HttpServletRequest request) {
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return _portal.getLiferayPortletResponse(portletResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

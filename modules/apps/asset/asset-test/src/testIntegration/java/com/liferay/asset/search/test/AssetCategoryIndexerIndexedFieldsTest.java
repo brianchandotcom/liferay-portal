@@ -178,8 +178,6 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		map.put(
 			"leftCategoryId",
 			String.valueOf(assetCategory.getLeftCategoryId()));
-		map.put(
-			"localized_title", StringUtil.lowerCase(assetCategory.getName()));
 		map.put("name_sortable", StringUtil.lowerCase(assetCategory.getName()));
 		map.put(
 			"parentCategoryId",
@@ -193,7 +191,6 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 
 		_populateDates(assetCategory, map);
 		_populateRoles(assetCategory, map);
-		_populateTitles(assetCategory.getName(), map);
 
 		return map;
 	}
@@ -215,25 +212,6 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 			assetCategory.getCompanyId(), AssetCategory.class.getName(),
 			assetCategory.getCategoryId(), assetCategory.getGroupId(), null,
 			map);
-	}
-
-	private void _populateTitles(String title, Map<String, String> map) {
-		map.put(Field.TITLE, title);
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("localized_title_");
-			sb.append(locale.getLanguage());
-			sb.append("_");
-			sb.append(locale.getCountry());
-
-			map.put(sb.toString(), title);
-
-			sb.append("_sortable");
-
-			map.put(sb.toString(), title);
-		}
 	}
 
 	@DeleteAfterTestRun

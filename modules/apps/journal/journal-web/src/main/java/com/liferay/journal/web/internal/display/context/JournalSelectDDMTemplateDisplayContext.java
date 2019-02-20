@@ -22,6 +22,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -126,16 +127,6 @@ public class JournalSelectDDMTemplateDisplayContext {
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
 			themeDisplay.getScopeGroupId());
 
-		int total = DDMTemplateServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), groupIds,
-			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
-			new long[] {getDDMStructureId()},
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-			WorkflowConstants.STATUS_ANY);
-
-		templateSearch.setTotal(total);
-
 		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
 			themeDisplay.getCompanyId(), groupIds,
 			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
@@ -146,6 +137,13 @@ public class JournalSelectDDMTemplateDisplayContext {
 			templateSearch.getEnd(), templateSearch.getOrderByComparator());
 
 		templateSearch.setResults(results);
+
+		if (ListUtil.isNotEmpty(results)) {
+			templateSearch.setTotal(results.size());
+		}
+		else {
+			templateSearch.setTotal(0);
+		}
 
 		_templateSearch = templateSearch;
 

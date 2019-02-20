@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,10 +44,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -365,28 +363,15 @@ public class ExpandoPortlet extends MVCPortlet {
 			String name)
 		throws Exception {
 
-		Enumeration<String> enu = actionRequest.getParameterNames();
+		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+			actionRequest, "Property--");
 
-		UnicodeProperties properties = expandoBridge.getAttributeProperties(
-			name);
+		boolean searchable = ParamUtil.getBoolean(actionRequest, "searchable");
 
-		List<String> propertyNames = new ArrayList<>();
-
-		while (enu.hasMoreElements()) {
-			String param = enu.nextElement();
-
-			if (param.contains("PropertyName--")) {
-				String propertyName = ParamUtil.getString(actionRequest, param);
-
-				propertyNames.add(propertyName);
-			}
-		}
-
-		for (String propertyName : propertyNames) {
-			String value = ParamUtil.getString(
-				actionRequest, "Property--" + propertyName + "--");
-
-			properties.setProperty(propertyName, value);
+		if (!searchable) {
+			properties.setProperty(
+				ExpandoColumnConstants.INDEX_TYPE,
+				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_NONE));
 		}
 
 		expandoBridge.setAttributeProperties(name, properties);

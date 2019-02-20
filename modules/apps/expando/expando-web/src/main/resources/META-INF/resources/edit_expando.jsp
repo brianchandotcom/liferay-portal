@@ -70,7 +70,9 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 	<portlet:param name="mvcPath" value="/edit_expando.jsp" />
 </portlet:actionURL>
 
-<liferay-frontend:edit-form action="<%= editExpandoURL %>">
+<liferay-frontend:edit-form
+	action="<%= editExpandoURL %>"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
@@ -234,58 +236,63 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 					collapsible="<%= true %>"
 					label="advanced-properties"
 				>
-					<aui:input name="PropertyName--hidden--" type="hidden" value="hidden" />
+					<aui:field-wrapper>
+						<aui:input label="visible-with-update-permission" name="Property--visible-with-update-permission--" type="toggle-switch" value="<%= propertyVisibleWithUpdatePermission %>" />
 
-					<aui:select helpMessage="custom-field-hidden-help" label="hidden" name="Property--hidden--">
-						<aui:option label="<%= true %>" selected="<%= propertyHidden %>" value="1" />
-						<aui:option label="<%= false %>" selected="<%= !propertyHidden %>" value="0" />
-					</aui:select>
+						<div class="form-text">
+							<liferay-ui:message key="setting-a-custom-field-to-visible-with-update-permission-means-that-a-user-with-update-permission-can-view-this-field.-this-setting-overrides-the-value-of-hidden-in-this-case" />
+						</div>
+					</aui:field-wrapper>
 
-					<aui:input name="PropertyName--visible-with-update-permission--" type="hidden" value="visible-with-update-permission" />
+					<aui:field-wrapper>
+						<aui:input label="hidden" name="Property--hidden--" type="toggle-switch" value="<%= propertyHidden %>" />
 
-					<aui:select helpMessage="custom-field-visible-with-update-permission-help" label="visible-with-update-permission" name="Property--visible-with-update-permission--">
-						<aui:option label="<%= true %>" selected="<%= propertyVisibleWithUpdatePermission %>" value="1" />
-						<aui:option label="<%= false %>" selected="<%= !propertyVisibleWithUpdatePermission %>" value="0" />
-					</aui:select>
+						<div class="form-text">
+							<liferay-ui:message key="setting-a-custom-field-to-hidden-means-that-the-field's-value-is-never-shown-in-any-user-interface-besides-this-one.-this-lets-the-field-be-used-for-more-obscure-and-advanced-purposes-such-as-acting-as-a-placeholder-for-custom-permissions" />
+						</div>
+					</aui:field-wrapper>
 
-					<aui:input name="PropertyName--index-type--" type="hidden" value="index-type" />
+					<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
+						<aui:field-wrapper>
+							<aui:input label="secret" name="Property--secret--" type="toggle-switch" value="<%= propertySecret %>" />
 
-					<aui:select helpMessage="custom-field-index-type-help" label="searchability" name="Property--index-type--">
-						<aui:option label="not-searchable" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_NONE %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_NONE %>" />
+							<div class="form-text">
+								<liferay-ui:message key="setting-a-custom-field-to-secret-means-that-typing-is-hidden-on-the-screen.-use-this-for-passwords" />
+							</div>
+						</aui:field-wrapper>
+					</c:if>
 
-						<c:if test="<%= (type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
-							<aui:option label="as-text" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
-						</c:if>
+					<aui:field-wrapper>
+						<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE %>" />
 
-						<aui:option label="as-keyword" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
-					</aui:select>
+						<div class="form-text">
+							<liferay-ui:message key="setting-a-custom-field-to-searchable-means-that-the-value-of-the-field-is-indexed-when-the-entity-such-as-user-is-modified.-only-java.lang.string-fields-can-be-made-searchable.-note-that-when-an-field-is-newly-made-searchable,-the-indexes-must-be-updated-before-the-data-is-available-to-search" />
+						</div>
+
+						<div class="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
+							<div class="radio">
+								<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+							</div>
+
+							<div class="radio">
+								<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" label="as-text" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
+							</div>
+						</div>
+					</aui:field-wrapper>
+
+					<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
+						<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
+
+						<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
+					</c:if>
 
 					<c:if test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.NUMBER_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
-						<aui:input name="PropertyName--display-type--" type="hidden" value="display-type" />
-
 						<aui:select helpMessage="custom-field-display-type-help" label="display-type" name="Property--display-type--" value="<%= propertyDisplayType %>">
 							<aui:option label="checkbox" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX %>" />
 							<aui:option label="radio" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO %>" />
 							<aui:option label="selection-list" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST %>" />
 							<aui:option label="text-box" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX %>" />
 						</aui:select>
-					</c:if>
-
-					<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
-						<aui:input name="PropertyName--secret--" type="hidden" value="secret" />
-
-						<aui:select helpMessage="custom-field-secret-help" label="secret" name="Property--secret--">
-							<aui:option label="<%= true %>" selected="<%= propertySecret %>" value="1" />
-							<aui:option label="<%= false %>" selected="<%= !propertySecret %>" value="0" />
-						</aui:select>
-
-						<aui:input name="PropertyName--height--" type="hidden" value="height" />
-
-						<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
-
-						<aui:input name="PropertyName--width--" type="hidden" value="width" />
-
-						<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
 					</c:if>
 				</liferay-frontend:fieldset>
 			</c:if>
@@ -308,3 +315,7 @@ if (column != null) {
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((column == null) ? "add-attribute" : "edit")), currentURL);
 %>
+
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace />searchable', '<portlet:namespace />propertyIndexType');
+</aui:script>

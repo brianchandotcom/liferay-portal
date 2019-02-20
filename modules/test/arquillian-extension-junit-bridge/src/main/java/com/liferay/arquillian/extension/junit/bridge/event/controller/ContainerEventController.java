@@ -19,7 +19,6 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDes
 
 import javax.management.MBeanServerConnection;
 
-import org.jboss.arquillian.container.spi.client.container.DeploymentException;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -33,9 +32,7 @@ import org.jboss.shrinkwrap.api.Archive;
  */
 public class ContainerEventController {
 
-	public void execute(@Observes AfterClass afterClass)
-		throws DeploymentException {
-
+	public void execute(@Observes AfterClass afterClass) throws Exception {
 		_lifeRemoteDeployableContainer.undeploy(_archive);
 	}
 

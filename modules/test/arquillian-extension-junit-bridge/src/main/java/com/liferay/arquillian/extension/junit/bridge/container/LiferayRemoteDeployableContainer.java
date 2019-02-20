@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -37,9 +36,6 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.jboss.arquillian.container.spi.client.container.DeploymentException;
-import org.jboss.arquillian.container.spi.client.container.LifecycleException;
-import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -59,62 +55,41 @@ public class LiferayRemoteDeployableContainer {
 			mBeanServerConnectionInstanceProducer;
 	}
 
-	public ProtocolMetaData deploy(Archive<?> archive)
-		throws DeploymentException {
+	public void deploy(Archive<?> archive) throws Exception {
+		long bundleId = _installBundle(archive);
 
-		try {
-			long bundleId = _installBundle(archive);
+		_frameworkMBean.startBundle(bundleId);
 
-			_frameworkMBean.startBundle(bundleId);
-
-			_deployedBundleIds.put(archive.getName(), bundleId);
-		}
-		catch (Exception e) {
-			throw new DeploymentException(
-				"Unable to deploy " + archive.getName(), e);
-		}
-
-		return null;
+		_deployedBundleIds.put(archive.getName(), bundleId);
 	}
 
-	public void start() throws LifecycleException {
-		try {
-			JMXConnector jmxConnector = JMXConnectorFactory.connect(
-				_liferayJMXServiceURL, _liferayEnv);
+	public void start() throws Exception {
+		JMXConnector jmxConnector = JMXConnectorFactory.connect(
+			_liferayJMXServiceURL, _liferayEnv);
 
-			MBeanServerConnection mBeanServerConnection =
-				jmxConnector.getMBeanServerConnection();
+		MBeanServerConnection mBeanServerConnection =
+			jmxConnector.getMBeanServerConnection();
 
-			_mBeanServerConnectionInstanceProducer.set(mBeanServerConnection);
+		_mBeanServerConnectionInstanceProducer.set(mBeanServerConnection);
 
-			Set<ObjectName> names = mBeanServerConnection.queryNames(
-				_frameworkObjectName, null);
+		Set<ObjectName> names = mBeanServerConnection.queryNames(
+			_frameworkObjectName, null);
 
-			Iterator<ObjectName> iterator = names.iterator();
+		Iterator<ObjectName> iterator = names.iterator();
 
-			_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
-				mBeanServerConnection, iterator.next(), FrameworkMBean.class,
-				false);
-		}
-		catch (IOException ioe) {
-			throw new LifecycleException("Unable to start", ioe);
-		}
+		_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
+			mBeanServerConnection, iterator.next(), FrameworkMBean.class,
+			false);
 	}
 
-	public void undeploy(Archive<?> archive) throws DeploymentException {
+	public void undeploy(Archive<?> archive) throws Exception {
 		long bundleId = _deployedBundleIds.remove(archive.getName());
 
 		if (bundleId == 0) {
 			return;
 		}
 
-		try {
-			_frameworkMBean.uninstallBundle(bundleId);
-		}
-		catch (IOException ioe) {
-			throw new DeploymentException(
-				"Unable to uninstall bundle " + bundleId, ioe);
-		}
+		_frameworkMBean.uninstallBundle(bundleId);
 	}
 
 	private long _installBundle(Archive<?> archive) throws Exception {

@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -36,11 +35,13 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.model.SharingEntry;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -130,13 +131,17 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		sb.append(sharingURL.toString());
 		sb.append("', '");
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			request.getLocale(), SharingJavaScriptFactoryImpl.class);
+
 		String title = _getTitle(className, classPK, request.getLocale());
 
 		if (Validator.isNotNull(title)) {
-			sb.append(_language.format(request, "share-x", title));
+			sb.append(
+				ResourceBundleUtil.getString(resourceBundle, "share-x", title));
 		}
 		else {
-			sb.append(_language.get(request, "share"));
+			sb.append(ResourceBundleUtil.getString(resourceBundle, "share"));
 		}
 
 		sb.append("');");
@@ -187,9 +192,6 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

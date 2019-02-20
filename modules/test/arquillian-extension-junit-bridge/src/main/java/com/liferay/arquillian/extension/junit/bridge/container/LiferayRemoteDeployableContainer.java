@@ -48,22 +48,15 @@ import org.osgi.jmx.framework.FrameworkMBean;
 public class LiferayRemoteDeployableContainer {
 
 	public LiferayRemoteDeployableContainer(
-		InstanceProducer<MBeanServerConnection>
-			mBeanServerConnectionInstanceProducer,
-		Archive<?> archive) {
+			InstanceProducer<MBeanServerConnection>
+				mBeanServerConnectionInstanceProducer,
+			Archive<?> archive)
+		throws Exception {
 
 		_mBeanServerConnectionInstanceProducer =
 			mBeanServerConnectionInstanceProducer;
 		_archive = archive;
-	}
 
-	public void deploy() throws Exception {
-		_bundleId = _installBundle(_archive);
-
-		_frameworkMBean.startBundle(_bundleId);
-	}
-
-	public void start() throws Exception {
 		JMXConnector jmxConnector = JMXConnectorFactory.connect(
 			_liferayJMXServiceURL, _liferayEnv);
 
@@ -80,6 +73,10 @@ public class LiferayRemoteDeployableContainer {
 		_frameworkMBean = MBeanServerInvocationHandler.newProxyInstance(
 			mBeanServerConnection, iterator.next(), FrameworkMBean.class,
 			false);
+
+		_bundleId = _installBundle(_archive);
+
+		_frameworkMBean.startBundle(_bundleId);
 	}
 
 	public void undeploy() throws IOException {
@@ -128,8 +125,8 @@ public class LiferayRemoteDeployableContainer {
 	}
 
 	private final Archive<?> _archive;
-	private long _bundleId;
-	private FrameworkMBean _frameworkMBean;
+	private final long _bundleId;
+	private final FrameworkMBean _frameworkMBean;
 	private final InstanceProducer<MBeanServerConnection>
 		_mBeanServerConnectionInstanceProducer;
 

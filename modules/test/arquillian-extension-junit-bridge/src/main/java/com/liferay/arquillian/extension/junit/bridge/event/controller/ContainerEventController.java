@@ -39,10 +39,6 @@ public class ContainerEventController {
 		_lifeRemoteDeployableContainer = new LiferayRemoteDeployableContainer(
 			_mBeanServerConnectionInstanceProducer,
 			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass()));
-
-		_lifeRemoteDeployableContainer.start();
-
-		_lifeRemoteDeployableContainer.deploy();
 	}
 
 	private LiferayRemoteDeployableContainer _lifeRemoteDeployableContainer;

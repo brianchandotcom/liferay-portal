@@ -946,6 +946,8 @@ definition {
 			item = "Remove Membership"
 		);
 
+		Confirm();
+
 		Alert.viewSuccessMessage();
 	}
 

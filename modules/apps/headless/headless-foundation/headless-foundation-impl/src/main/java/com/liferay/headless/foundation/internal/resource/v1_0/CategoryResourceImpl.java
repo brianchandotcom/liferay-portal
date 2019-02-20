@@ -47,8 +47,10 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -163,6 +165,28 @@ public class CategoryResourceImpl
 				Collections.singletonMap(locale, category.getName()),
 				Collections.singletonMap(locale, category.getDescription()),
 				vocabularyId, null, new ServiceContext()));
+	}
+
+	@Override
+	public Category putCategory(Long categoryId, Category category)
+		throws Exception {
+
+		AssetCategory assetCategory = _assetCategoryService.getCategory(
+			categoryId);
+
+		Locale locale = contextAcceptLanguage.getPreferredLocale();
+
+		return _toCategory(
+			_assetCategoryService.updateCategory(
+				categoryId, assetCategory.getParentCategoryId(),
+				LocalizedMapUtil.merge(
+					assetCategory.getTitleMap(),
+					new AbstractMap.SimpleEntry<>(locale, category.getName())),
+				LocalizedMapUtil.merge(
+					assetCategory.getTitleMap(),
+					new AbstractMap.SimpleEntry<>(
+						locale, category.getDescription())),
+				assetCategory.getVocabularyId(), null, new ServiceContext()));
 	}
 
 	private Page<Category> _getCategoriesPage(

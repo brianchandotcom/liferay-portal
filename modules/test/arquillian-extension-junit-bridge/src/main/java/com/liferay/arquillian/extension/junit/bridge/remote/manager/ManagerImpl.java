@@ -72,10 +72,28 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
-		List<ObserverMethod> observers = _resolveObservers(event.getClass());
+		List<ObserverMethod> observers = new ArrayList<>();
 
-		List<ObserverMethod> interceptorObservers =
-			_resolveInterceptorObservers(event.getClass());
+		List<ObserverMethod> interceptorObservers = new ArrayList<>();
+
+		Class<?> eventClass = event.getClass();
+
+		for (Extension extension : _extensions) {
+			for (ObserverMethod observerMethod : extension.getObservers()) {
+				Type type = observerMethod.getType();
+
+				Class<?> clazz = _getType(type);
+
+				if (clazz.isAssignableFrom(eventClass)) {
+					if (_isType(type, EventContext.class)) {
+						interceptorObservers.add(observerMethod);
+					}
+					else {
+						observers.add(observerMethod);
+					}
+				}
+			}
+		}
 
 		boolean activatedApplicationContext = false;
 
@@ -224,48 +242,6 @@ public class ManagerImpl implements Manager {
 		}
 
 		return false;
-	}
-
-	private List<ObserverMethod> _resolveInterceptorObservers(
-		Class<?> eventClass) {
-
-		List<ObserverMethod> observers = new ArrayList<>();
-
-		for (Extension extension : _extensions) {
-			for (ObserverMethod observer : extension.getObservers()) {
-				Type type = observer.getType();
-
-				Class<?> clazz = _getType(type);
-
-				if (clazz.isAssignableFrom(eventClass) &&
-					_isType(type, EventContext.class)) {
-
-					observers.add(observer);
-				}
-			}
-		}
-
-		return observers;
-	}
-
-	private List<ObserverMethod> _resolveObservers(Class<?> eventClass) {
-		List<ObserverMethod> observers = new ArrayList<>();
-
-		for (Extension extension : _extensions) {
-			for (ObserverMethod observer : extension.getObservers()) {
-				Type type = observer.getType();
-
-				Class<?> clazz = _getType(type);
-
-				if (clazz.isAssignableFrom(eventClass) &&
-					!_isType(type, EventContext.class)) {
-
-					observers.add(observer);
-				}
-			}
-		}
-
-		return observers;
 	}
 
 	private final ApplicationContext _applicationContext;

@@ -53,6 +53,7 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -221,13 +222,11 @@ public class WabProcessorTest {
 	public void testFatCDIWabOptsOutOfOSGiCDIIntegration() throws Exception {
 		File file = getFile("jsf.cdi.applicant.portlet.war");
 
-		Map<String, String[]> parameters = new HashMap<>();
-
-		parameters.put(
-			"Web-ContextPath", new String[] {"/jsf-cdi-applicant-portlet"});
-
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file, parameters);
+			getClassLoader(), file,
+			Collections.singletonMap(
+				"Web-ContextPath",
+				new String[] {"/jsf-cdi-applicant-portlet"}));
 
 		File processedFile = wabProcessor.getProcessedFile();
 
@@ -307,13 +306,11 @@ public class WabProcessorTest {
 	public void testSkinnyCDIWabGainsOSGiCDIIntegration() throws Exception {
 		File file = getFile("PortletV3AnnotatedDemo.war");
 
-		Map<String, String[]> parameters = new HashMap<>();
-
-		parameters.put(
-			"Web-ContextPath", new String[] {"/portlet-V3-annotated-demo"});
-
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file, parameters);
+			getClassLoader(), file,
+			Collections.singletonMap(
+				"Web-ContextPath",
+				new String[] {"/portlet-V3-annotated-demo"}));
 
 		File processedFile = wabProcessor.getProcessedFile();
 
@@ -427,13 +424,11 @@ public class WabProcessorTest {
 	public void testThatEmbeddedLibsAreHandledProperly() throws Exception {
 		File file = getFile("tck-V3URLTests.wab.war");
 
-		Map<String, String[]> parameters = new HashMap<>();
-
-		parameters.put(
-			"Web-ContextPath", new String[] {"/portlet-V3-annotated-demo"});
-
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getClassLoader(), file, parameters);
+			getClassLoader(), file,
+			Collections.singletonMap(
+				"Web-ContextPath",
+				new String[] {"/portlet-V3-annotated-demo"}));
 
 		File processedFile = wabProcessor.getProcessedFile();
 

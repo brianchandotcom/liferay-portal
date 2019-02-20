@@ -15,9 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
@@ -25,8 +23,11 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.filter.FilterToQueryBuilderTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.query.QueryToQueryBuilderTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.util.Collection;
@@ -77,9 +78,11 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	protected QueryBuilder getQueryBuilder(
 		BaseSearchRequest searchSearchRequest) {
 
-		Query query = searchSearchRequest.getQuery();
+		com.liferay.portal.kernel.search.Query query =
+			searchSearchRequest.getQuery71();
 
-		QueryBuilder queryBuilder = _queryTranslator.translate(query, null);
+		QueryBuilder queryBuilder =
+			_legacyQueryToQueryBuilderTranslator.translate(query, null);
 
 		if ((query.getPreBooleanFilter() == null) ||
 			(query instanceof BooleanQuery)) {
@@ -96,7 +99,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
 		boolQueryBuilder.filter(
-			_filterTranslator.translate(query.getPreBooleanFilter(), null));
+			_filterToQueryBuilderTranslator.translate(
+				query.getPreBooleanFilter(), null));
 		boolQueryBuilder.must(queryBuilder);
 
 		return boolQueryBuilder;
@@ -141,7 +145,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		BaseSearchRequest baseSearchRequest) {
 
 		_facetTranslator.translate(
-			searchRequestBuilder, baseSearchRequest.getQuery(),
+			searchRequestBuilder, baseSearchRequest.getQuery71(),
 			baseSearchRequest.getFacets(),
 			baseSearchRequest.isBasicFacetSelection());
 	}
@@ -151,11 +155,11 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		_facetTranslator = facetTranslator;
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setFilterTranslator(
-		FilterTranslator<QueryBuilder> filterTranslator) {
+	@Reference(unbind = "-")
+	protected void setFilterToQueryBuilderTranslator(
+		FilterToQueryBuilderTranslator filterToQueryBuilderTranslator) {
 
-		_filterTranslator = filterTranslator;
+		_filterToQueryBuilderTranslator = filterToQueryBuilderTranslator;
 	}
 
 	protected void setIndices(
@@ -163,6 +167,14 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		BaseSearchRequest baseSearchRequest) {
 
 		searchRequestBuilder.setIndices(baseSearchRequest.getIndexNames());
+	}
+
+	@Reference(unbind = "-")
+	protected void setLegacyQueryToQueryBuilderTranslator(
+		com.liferay.portal.search.elasticsearch6.internal.legacy.
+			query.QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
+
+		_legacyQueryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
 	}
 
 	protected void setMinScore(
@@ -211,8 +223,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getPostFilter() != null) {
-			QueryBuilder postFilterQueryBuilder = _filterTranslator.translate(
-				baseSearchRequest.getPostFilter(), null);
+			QueryBuilder postFilterQueryBuilder =
+				_filterToQueryBuilderTranslator.translate(
+					baseSearchRequest.getPostFilter(), null);
 
 			searchRequestBuilder.setPostFilter(postFilterQueryBuilder);
 		}
@@ -225,11 +238,11 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		searchRequestBuilder.setQuery(getQueryBuilder(baseSearchRequest));
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
+	@Reference(unbind = "-")
+	protected void setQueryToQueryBuilderTranslator(
+		QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
 
-		_queryTranslator = queryTranslator;
+		_queryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
 	}
 
 	protected void setRequestCache(
@@ -253,7 +266,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		}
 
 		searchRequestBuilder.setRescorer(
-			new QueryRescorerBuilder(_queryTranslator.translate(query, null)));
+			new QueryRescorerBuilder(
+				_queryToQueryBuilderTranslator.translate(query)));
 	}
 
 	protected void setStatsRequests(
@@ -295,10 +309,12 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;
 	private FacetTranslator _facetTranslator;
-	private FilterTranslator<QueryBuilder> _filterTranslator;
+	private FilterTranslator<QueryBuilder> _filterToQueryBuilderTranslator;
+	private com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+		QueryToQueryBuilderTranslator _legacyQueryToQueryBuilderTranslator;
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>
 		_pipelineAggregationTranslator;
-	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private QueryToQueryBuilderTranslator _queryToQueryBuilderTranslator;
 	private StatsTranslator _statsTranslator;
 
 }

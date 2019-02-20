@@ -183,7 +183,7 @@ if (portletTitleBasedNavigation) {
 </aui:fieldset>
 
 <aui:script>
-	var compareVersionsButton = document.querySelector('#<portlet:namespace />compare');
+	var compareVersionsButton = document.getElementById('<portlet:namespace />compare');
 
 	if (compareVersionsButton) {
 		compareVersionsButton.addEventListener(

@@ -110,7 +110,7 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	var selectKBObjectButton = document.querySelector('#<portlet:namespace />selectKBObjectButton');
+	var selectKBObjectButton = document.getElementById('<portlet:namespace />selectKBObjectButton');
 
 	if (selectKBObjectButton) {
 		selectKBObjectButton.addEventListener(

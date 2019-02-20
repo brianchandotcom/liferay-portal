@@ -32,6 +32,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 <aui:row>
 	<aui:col width="<%= 100 %>">
 		<ul class="sidebar-block tabular-list-group-unstyled">
+
 			<%
 			for (KBArticle curKBArticle : kbArticles) {
 			%>
@@ -99,9 +100,11 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 						</liferay-ui:icon-menu>
 					</div>
 				</li>
+
 			<%
 			}
 			%>
+
 		</ul>
 	</aui:col>
 </aui:row>

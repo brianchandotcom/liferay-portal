@@ -937,6 +937,11 @@ public class DDMFormAdminDisplayContext {
 		return formInstanceSettings.published();
 	}
 
+	public boolean isShowPublishAlert() {
+		return ParamUtil.getBoolean(
+			_renderRequest, DDMFormWebKeys.SHOW_PUBLISH_ALERT);
+	}
+
 	protected DDMForm getDDMForm() throws PortalException {
 		DDMStructure structure = getDDMStructure();
 

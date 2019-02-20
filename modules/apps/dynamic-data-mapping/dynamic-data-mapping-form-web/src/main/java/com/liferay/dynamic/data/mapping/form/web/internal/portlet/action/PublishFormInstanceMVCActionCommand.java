@@ -16,9 +16,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.exception.RequiredFormInstanceException;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
+import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -62,17 +63,14 @@ public class PublishFormInstanceMVCActionCommand
 	extends SaveFormInstanceMVCActionCommand {
 
 	@Override
-	protected DDMFormInstance doService(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception, PortalException, RequiredFormInstanceException {
+	protected void doService(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			LiferayPortletURL redirectPortletURL)
+		throws Exception {
 
 		DDMFormInstance formInstance =
 			saveFormInstanceMVCCommandHelper.saveFormInstance(
 				actionRequest, actionResponse, true);
-
-		if (formInstance == null) {
-			throw new RequiredFormInstanceException();
-		}
 
 		boolean published = !_isFormInstancePublished(formInstance);
 
@@ -111,7 +109,11 @@ public class PublishFormInstanceMVCActionCommand
 			latestStructureVersion.getDDMFormLayout(), settingsDDMFormValues,
 			serviceContext);
 
-		return formInstance;
+		redirectPortletURL.setParameter(
+			"formInstanceId", String.valueOf(formInstance.getFormInstanceId()));
+
+		redirectPortletURL.setParameter(
+			DDMFormWebKeys.SHOW_PUBLISH_ALERT, Boolean.TRUE.toString());
 	}
 
 	@Reference(unbind = "-")

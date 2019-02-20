@@ -32,4 +32,6 @@ public class DDMFormWebKeys {
 
 	public static final String REFERER_GROUP_ID = "refererGroupId";
 
+	public static final String SHOW_PUBLISH_ALERT = "SHOW_PUBLISH_ALERT";
+
 }

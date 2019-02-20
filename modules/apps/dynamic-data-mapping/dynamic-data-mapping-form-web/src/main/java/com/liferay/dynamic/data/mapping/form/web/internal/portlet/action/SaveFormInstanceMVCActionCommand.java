@@ -47,15 +47,17 @@ import org.osgi.service.component.annotations.Reference;
 public class SaveFormInstanceMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
-	protected DDMFormInstance doService(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doService(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			LiferayPortletURL redirectPortletURL)
 		throws Exception {
 
 		DDMFormInstance formInstance =
 			saveFormInstanceMVCCommandHelper.saveFormInstance(
 				actionRequest, actionResponse, true);
 
-		return formInstance;
+		redirectPortletURL.setParameter(
+			"formInstanceId", String.valueOf(formInstance.getFormInstanceId()));
 	}
 
 	@Override
@@ -77,12 +79,7 @@ public class SaveFormInstanceMVCActionCommand
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		try {
-			DDMFormInstance formInstance = doService(
-				actionRequest, actionResponse);
-
-			portletURL.setParameter(
-				"formInstanceId",
-				String.valueOf(formInstance.getFormInstanceId()));
+			doService(actionRequest, actionResponse, portletURL);
 
 			portletURL.setParameter("redirect", redirect);
 

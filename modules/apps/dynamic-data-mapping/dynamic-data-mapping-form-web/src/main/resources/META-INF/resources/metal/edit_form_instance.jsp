@@ -140,7 +140,9 @@ if (!isFormPublished && isFormSaved) {
 	</div>
 </div>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishFormInstance" var="publishFormInstanceURL" />
+<portlet:actionURL name="publishFormInstance" var="publishFormInstanceURL">
+	<portlet:param name="mvcRenderCommandName" value="/admin/edit_form_instance" />
+</portlet:actionURL>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
 
@@ -202,6 +204,7 @@ if (!isFormPublished && isFormSaved) {
 							rolesURL: '<%= rolesURL %>',
 							rules: <%= serializedDDMFormRules %>,
 							saved: <%= formInstance != null %>,
+							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
 							spritemap: Liferay.DDM.FormSettings.spritemap,
 							strings: Liferay.DDM.FormSettings.strings
 						},

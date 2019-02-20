@@ -80,6 +80,12 @@ public class SearchRequestExecutorFixture {
 			elasticsearchQueryTranslatorFixture =
 				new ElasticsearchQueryTranslatorFixture();
 
+		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+			ElasticsearchQueryTranslatorFixture
+			legacyElasticsearchQueryTranslatorFixture =
+				new com.liferay.portal.search.elasticsearch6.internal.
+					legacy.query.ElasticsearchQueryTranslatorFixture();
+
 		return new CommonSearchRequestBuilderAssemblerImpl() {
 			{
 				setAggregationTranslator(
@@ -88,15 +94,19 @@ public class SearchRequestExecutorFixture {
 
 				setFacetTranslator(createFacetTranslator(facetProcessor));
 
-				setFilterTranslator(
+				setFilterToQueryBuilderTranslator(
 					elasticsearchFilterTranslatorFixture.
 						getElasticsearchFilterTranslator());
+
+				setLegacyQueryToQueryBuilderTranslator(
+					legacyElasticsearchQueryTranslatorFixture.
+						getElasticsearchQueryTranslator());
 
 				setPipelineAggregationTranslator(
 					elasticsearchPipelineAggregationVisitorFixture.
 						getElasticsearchPipelineAggregationVisitor());
 
-				setQueryTranslator(
+				setQueryToQueryBuilderTranslator(
 					elasticsearchQueryTranslatorFixture.
 						getElasticsearchQueryTranslator());
 

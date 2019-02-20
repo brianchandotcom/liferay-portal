@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -92,6 +93,57 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			pagination,
 			_blogsEntryService.getGroupEntriesCount(
 				parentId, WorkflowConstants.STATUS_APPROVED));
+	}
+
+	@Override
+	public BlogPosting patchBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		BlogPosting oldBlogPosting = getBlogPosting(blogPostingId);
+
+		if (Validator.isNotNull(blogPosting.getDatePublished())) {
+			oldBlogPosting.setDatePublished(blogPosting.getDatePublished());
+		}
+
+		if (Validator.isNotNull(blogPosting.getHeadline())) {
+			oldBlogPosting.setHeadline(blogPosting.getHeadline());
+		}
+
+		if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
+			oldBlogPosting.setAlternativeHeadline(
+				blogPosting.getAlternativeHeadline());
+		}
+
+		if (Validator.isNotNull(blogPosting.getFriendlyUrlPath())) {
+			oldBlogPosting.setFriendlyUrlPath(blogPosting.getFriendlyUrlPath());
+		}
+
+		if (Validator.isNotNull(blogPosting.getDescription())) {
+			oldBlogPosting.setDescription(blogPosting.getDescription());
+		}
+
+		if (Validator.isNotNull(blogPosting.getArticleBody())) {
+			oldBlogPosting.setArticleBody(blogPosting.getArticleBody());
+		}
+
+		if (Validator.isNotNull(blogPosting.getCaption())) {
+			oldBlogPosting.setCaption(blogPosting.getCaption());
+		}
+
+		if (Validator.isNotNull(blogPosting.getImageId())) {
+			oldBlogPosting.setImageId(blogPosting.getImageId());
+		}
+
+		if (Validator.isNotNull(blogPosting.getCategoryIds())) {
+			oldBlogPosting.setCategoryIds(blogPosting.getCategoryIds());
+		}
+
+		if (Validator.isNotNull(blogPosting.getKeywords())) {
+			oldBlogPosting.setKeywords(blogPosting.getKeywords());
+		}
+
+		return putBlogPosting(blogPostingId, oldBlogPosting);
 	}
 
 	@Override

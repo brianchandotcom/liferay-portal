@@ -76,7 +76,7 @@ public <#if ds>abstract </#if>class ${entity.name}FinderBaseImpl
 	</#if>
 
 	<#if ds>
-		<#include "persistence_ds_references.ftl">
+		<#include "persistence_references.ftl">
 	<#elseif entity.hasEntityColumns() && entity.hasPersistence()>
 		/**
 		 * Returns the ${entity.humanName} persistence.

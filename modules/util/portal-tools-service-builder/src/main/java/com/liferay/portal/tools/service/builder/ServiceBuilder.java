@@ -906,7 +906,7 @@ public class ServiceBuilder {
 
 				_createExceptions(exceptionList);
 
-				_createPersistenceDSConstants();
+				_createPersistenceConstants();
 
 				_createServicePropsUtil();
 				_createServletContextUtil();
@@ -2915,7 +2915,7 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createPersistenceDSConstants() throws Exception {
+	private void _createPersistenceConstants() throws Exception {
 		if (!_ds) {
 			return;
 		}
@@ -2926,7 +2926,7 @@ public class ServiceBuilder {
 				_portletShortName, "PersistenceConstants.java"));
 
 		String content = _processTemplate(
-			_tplPersistenceDSConstants, _getContext());
+			_tplPersistenceConstants, _getContext());
 
 		_write(file, content, AUTHOR, _jalopySettings, _modifiedFileNames);
 	}
@@ -7127,8 +7127,8 @@ public class ServiceBuilder {
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
 	private String _tplModelWrapper = _TPL_ROOT + "model_wrapper.ftl";
 	private String _tplPersistence = _TPL_ROOT + "persistence.ftl";
-	private String _tplPersistenceDSConstants =
-		_TPL_ROOT + "persistence_ds_constants.ftl";
+	private String _tplPersistenceConstants =
+		_TPL_ROOT + "persistence_constants.ftl";
 	private String _tplPersistenceImpl = _TPL_ROOT + "persistence_impl.ftl";
 	private String _tplPersistenceTest = _TPL_ROOT + "persistence_test.ftl";
 	private String _tplPersistenceUtil = _TPL_ROOT + "persistence_util.ftl";

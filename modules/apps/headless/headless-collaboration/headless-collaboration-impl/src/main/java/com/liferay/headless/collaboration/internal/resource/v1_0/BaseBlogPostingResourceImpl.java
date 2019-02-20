@@ -87,8 +87,7 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 		}
 
 		if (Validator.isNotNull(blogPosting.getAlternativeHeadline())) {
-			oldBlogPosting.setAlternativeHeadline(
-				blogPosting.getAlternativeHeadline());
+			oldBlogPosting.setAlternativeHeadline(blogPosting.getAlternativeHeadline());
 		}
 
 		if (Validator.isNotNull(blogPosting.getFriendlyUrlPath())) {

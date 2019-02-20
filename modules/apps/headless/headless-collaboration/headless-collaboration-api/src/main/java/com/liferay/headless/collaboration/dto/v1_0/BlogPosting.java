@@ -57,11 +57,6 @@ public interface BlogPosting {
 	public void setCategoryIds(Long[] categoryIds);
 
 	public void setCategoryIds(UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier);
-	public Comment[] getComment();
-
-	public void setComment(Comment[] comment);
-
-	public void setComment(UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier);
 	public Long getContentSpace();
 
 	public void setContentSpace(Long contentSpace);
@@ -102,6 +97,11 @@ public interface BlogPosting {
 	public void setFriendlyUrlPath(String friendlyUrlPath);
 
 	public void setFriendlyUrlPath(UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier);
+	public Boolean getHasComments();
+
+	public void setHasComments(Boolean hasComments);
+
+	public void setHasComments(UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier);
 	public String getHeadline();
 
 	public void setHeadline(String headline);

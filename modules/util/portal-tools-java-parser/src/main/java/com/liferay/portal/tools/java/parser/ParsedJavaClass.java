@@ -24,7 +24,13 @@ import java.util.Map;
  */
 public class ParsedJavaClass {
 
-	public void addParsedJavaTerm(ParsedJavaTerm parsedJavaTerm) {
+	public void addJavaTerm(
+		String content, Position startPosition, Position endPosition,
+		String className) {
+
+		ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
+			content, startPosition, endPosition, className);
+
 		if (_firstParsedJavaTerm == null) {
 			_firstParsedJavaTerm = parsedJavaTerm;
 			_lastParsedJavaTerm = parsedJavaTerm;

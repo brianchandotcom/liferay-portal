@@ -77,11 +77,10 @@ public class JavaParser {
 			String content = javaClosingBrace.toString(
 				curlyExpecedIndent, StringPool.BLANK, _maxLineLength);
 
-			parsedJavaClass.addParsedJavaTerm(
-				new ParsedJavaTerm(
-					content, DetailASTUtil.getStartPosition(rcurlyDetailAST),
-					DetailASTUtil.getEndPosition(rcurlyDetailAST, fileContents),
-					className));
+			parsedJavaClass.addJavaTerm(
+				content, DetailASTUtil.getStartPosition(rcurlyDetailAST),
+				DetailASTUtil.getEndPosition(rcurlyDetailAST, fileContents),
+				className);
 		}
 
 		return parsedJavaClass;
@@ -127,10 +126,8 @@ public class JavaParser {
 					detailAST, fileContents);
 			}
 
-			ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
+			parsedJavaClass.addJavaTerm(
 				content, startPosition, endPosition, className);
-
-			parsedJavaClass.addParsedJavaTerm(parsedJavaTerm);
 
 			return parsedJavaClass;
 		}
@@ -163,9 +160,8 @@ public class JavaParser {
 				partEndPosition = curlyBracePositionList.get(i * 2);
 			}
 
-			parsedJavaClass.addParsedJavaTerm(
-				new ParsedJavaTerm(
-					parts[i], partStartPosition, partEndPosition, className));
+			parsedJavaClass.addJavaTerm(
+				parts[i], partStartPosition, partEndPosition, className);
 		}
 
 		return parsedJavaClass;

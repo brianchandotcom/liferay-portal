@@ -110,9 +110,7 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 			_className.equals(JavaStaticInitialization.class.getName()) ||
 			_className.equals(JavaSynchronizedStatement.class.getName()) ||
 			_className.equals(JavaThrowStatement.class.getName()) ||
-			_className.equals(JavaTryStatement.class.getName()) ||
-			(_className.equals(JavaMethodDefinition.class.getName()) &&
-			 _content.endsWith(StringPool.SEMICOLON))) {
+			_className.equals(JavaTryStatement.class.getName())) {
 
 			return DOUBLE_LINE_BREAK_REQUIRED;
 		}

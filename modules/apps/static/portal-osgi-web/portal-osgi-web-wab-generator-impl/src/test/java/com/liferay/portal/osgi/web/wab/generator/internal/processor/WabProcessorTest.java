@@ -393,37 +393,28 @@ public class WabProcessorTest {
 
 			// The bean portlet extension
 
-			arguments = new HashMap<>();
-
-			arguments.put(
-				"osgi.cdi.extension", "com.liferay.bean.portlet.cdi.extension");
-
-			entry = findRequirement(
-				requirements, "osgi.cdi.extension", arguments);
-
-			Assert.assertNotNull(entry);
+			Assert.assertNotNull(
+				findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension",
+						"com.liferay.bean.portlet.cdi.extension")));
 
 			// The http extension
 
-			arguments = new HashMap<>();
-
-			arguments.put("osgi.cdi.extension", "aries.cdi.http");
-
-			entry = findRequirement(
-				requirements, "osgi.cdi.extension", arguments);
-
-			Assert.assertNotNull(entry);
+			Assert.assertNotNull(
+				findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension", "aries.cdi.http")));
 
 			// The EL extension
 
-			arguments = new HashMap<>();
-
-			arguments.put("osgi.cdi.extension", "aries.cdi.el.jsp");
-
-			entry = findRequirement(
-				requirements, "osgi.cdi.extension", arguments);
-
-			Assert.assertNotNull(entry);
+			Assert.assertNotNull(
+				findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension", "aries.cdi.el.jsp")));
 		}
 	}
 
@@ -506,37 +497,28 @@ public class WabProcessorTest {
 
 			// The bean portlet extension
 
-			arguments = new HashMap<>();
-
-			arguments.put(
-				"osgi.cdi.extension", "com.liferay.bean.portlet.cdi.extension");
-
-			entry = findRequirement(
-				requirements, "osgi.cdi.extension", arguments);
-
-			Assert.assertNotNull(entry);
+			Assert.assertNotNull(
+				findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension",
+						"com.liferay.bean.portlet.cdi.extension")));
 
 			// The http extension
 
-			arguments = new HashMap<>();
-
-			arguments.put("osgi.cdi.extension", "aries.cdi.http");
-
-			entry = findRequirement(
-				requirements, "osgi.cdi.extension", arguments);
-
-			Assert.assertNotNull(entry);
+			Assert.assertNotNull(
+				findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension", "aries.cdi.http")));
 
 			// The EL extension
 
-			arguments = new HashMap<>();
-
-			arguments.put("osgi.cdi.extension", "aries.cdi.el.jsp");
-
-			entry = findRequirement(
-				requirements, "osgi.cdi.extension", arguments);
-
-			Assert.assertNotNull(entry);
+			Assert.assertNotNull(
+				findRequirement(
+					requirements, "osgi.cdi.extension",
+					Collections.singletonMap(
+						"osgi.cdi.extension", "aries.cdi.el.jsp")));
 		}
 	}
 

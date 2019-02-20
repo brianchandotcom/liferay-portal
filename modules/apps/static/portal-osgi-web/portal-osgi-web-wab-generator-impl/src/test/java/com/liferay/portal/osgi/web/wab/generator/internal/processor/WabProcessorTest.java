@@ -275,11 +275,8 @@ public class WabProcessorTest {
 				properties.load(inputStream);
 			}
 
-			Assert.assertTrue(properties.containsKey(Constants.CDIANNOTATIONS));
-
-			String value = properties.getProperty(Constants.CDIANNOTATIONS);
-
-			Assert.assertEquals("", value);
+			Assert.assertEquals(
+				"", properties.getProperty(Constants.CDIANNOTATIONS));
 
 			// Finally, make sure no requirement on the OSGI CDI
 			// Integration extender were added to the manifest.

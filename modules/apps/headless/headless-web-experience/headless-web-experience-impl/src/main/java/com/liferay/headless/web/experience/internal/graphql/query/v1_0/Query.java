@@ -148,7 +148,7 @@ StructuredContentResource structuredContentResource = _getStructuredContentResou
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean getStructuredContentTemplate( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("template-id") Long templateId ) throws Exception {
+	public String getStructuredContentTemplate( @GraphQLName("structured-content-id") Long structuredContentId , @GraphQLName("template-id") Long templateId ) throws Exception {
 StructuredContentResource structuredContentResource = _getStructuredContentResource(); structuredContentResource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId())); return structuredContentResource.getStructuredContentTemplate( structuredContentId , templateId );
 	}
 

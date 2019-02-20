@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslatorFixture;
+import com.liferay.portal.search.elasticsearch6.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;

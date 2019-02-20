@@ -158,12 +158,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	public Comment putComment(Long commentId, Comment comment)
 		throws Exception {
 
-		com.liferay.portal.kernel.comment.Comment currentComment =
-			_commentManager.fetchComment(commentId);
-
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkUpdatePermission(commentId);
+
+		com.liferay.portal.kernel.comment.Comment currentComment =
+			_commentManager.fetchComment(commentId);
 
 		try {
 			_commentManager.updateComment(

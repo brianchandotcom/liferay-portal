@@ -134,24 +134,18 @@ public class SoyTestHelper {
 			(proxy, method, args) -> {
 				String methodName = method.getName();
 
-				if (methodName.equals("get") && (args != null) &&
-					(args.length == 1)) {
-
+				if (methodName.equals("get")) {
 					return cache.get(args[0]);
 				}
-				else if (methodName.equals("getKeys") && (args == null)) {
+				else if (methodName.equals("getKeys")) {
 					return new ArrayList<>(cache.keySet());
 				}
-				else if (methodName.equals("put") && (args != null) &&
-						 (args.length >= 2)) {
-
+				else if (methodName.equals("put")) {
 					cache.put(
 						(HashSet<TemplateResource>)args[0],
 						(SoyTofuCacheBag)args[1]);
 				}
-				else if (methodName.equals("remove") && (args != null) &&
-						 (args.length == 1)) {
-
+				else if (methodName.equals("remove")) {
 					cache.remove(args[0]);
 				}
 

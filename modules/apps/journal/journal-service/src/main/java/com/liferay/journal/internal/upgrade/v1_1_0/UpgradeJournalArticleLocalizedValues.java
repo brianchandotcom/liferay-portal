@@ -84,17 +84,14 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleDefaultLanguageId() throws Exception {
-		String whereClause = StringPool.BLANK;
-
 		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
 			runSQL(
 				"alter table JournalArticle add defaultLanguageId " +
 					"VARCHAR(75) null");
 		}
-		else {
-			whereClause =
-				" where defaultLanguageId is null or defaultLanguageId = ''";
-		}
+
+		String whereClause =
+			" where defaultLanguageId is null or defaultLanguageId = ''";
 
 		_updateDefaultLanguage("title", whereClause, false);
 		_updateDefaultLanguage("content", whereClause, true);
@@ -246,9 +243,9 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 					ps2.addBatch();
 				}
-
-				ps2.executeBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

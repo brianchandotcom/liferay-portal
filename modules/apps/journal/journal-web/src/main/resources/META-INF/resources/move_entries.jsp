@@ -168,7 +168,7 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var selectFolderButton = document.querySelector('#<portlet:namespace />selectFolderButton');
+	var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 	if (selectFolderButton) {
 		selectFolderButton.addEventListener(

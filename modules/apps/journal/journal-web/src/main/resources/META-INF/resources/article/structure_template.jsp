@@ -93,7 +93,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	}
 	%>
 
-	var selectDDMStructureButton = document.querySelector('#<portlet:namespace />selectDDMStructure');
+	var selectDDMStructureButton = document.getElementById('<portlet:namespace />selectDDMStructure');
 
 	if (selectDDMStructureButton) {
 		selectDDMStructureButton.addEventListener(
@@ -133,7 +133,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		);
 	}
 
-	var editDDMStructureLink = document.querySelector('#<portlet:namespace />editDDMStructure');
+	var editDDMStructureLink = document.getElementById('<portlet:namespace />editDDMStructure');
 
 	if (editDDMStructureLink) {
 		editDDMStructureLink.addEventListener(
@@ -165,7 +165,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		);
 	}
 
-	var selectDDMTemplateButton = document.querySelector('#<portlet:namespace />selectDDMTemplate');
+	var selectDDMTemplateButton = document.getElementById('<portlet:namespace />selectDDMTemplate');
 
 	if (selectDDMTemplateButton) {
 		selectDDMTemplateButton.addEventListener(
@@ -202,7 +202,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		);
 	}
 
-	var editDDMTemplateLink = document.querySelector('#<portlet:namespace />editDDMTemplate');
+	var editDDMTemplateLink = document.getElementById('<portlet:namespace />editDDMTemplate');
 
 	if (editDDMTemplateLink) {
 		editDDMTemplateLink.addEventListener(

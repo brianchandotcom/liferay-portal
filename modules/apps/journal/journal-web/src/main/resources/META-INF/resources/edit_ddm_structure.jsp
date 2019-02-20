@@ -207,7 +207,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(
-					form, 
+					form,
 					{
 						parentDDMStructureId: event.ddmstructureid,
 						parentDDMStructureName: Liferay.Util.unescape(event.name)
@@ -227,7 +227,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 		var form = document.<portlet:namespace />fm;
 
 		Liferay.Util.setFormValues(
-			form, 
+			form,
 			{
 				parentDDMStructureId: '',
 				parentDDMStructureName: ''
@@ -242,10 +242,8 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 	}
 
 	function <portlet:namespace />saveDDMStructure() {
-		var form = document.<portlet:namespace />fm;
-
 		Liferay.Util.postForm(
-			form,
+			document.<portlet:namespace />fm,
 			{
 				data: {
 					definition: <portlet:namespace />formBuilder.getContentValue()

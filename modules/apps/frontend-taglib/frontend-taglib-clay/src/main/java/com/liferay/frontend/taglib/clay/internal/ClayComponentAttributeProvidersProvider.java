@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.internal;
 
-import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.attribute.provider.ClayComponentAttributeProvider;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

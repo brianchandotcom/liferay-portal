@@ -55,7 +55,7 @@ public class JavaParser {
 
 	private static ParsedJavaClass _addClosingJavaTerm(
 		ParsedJavaClass parsedJavaClass, DetailAST closingDetailAST,
-		FileContents fileContents) {
+		FileContents fileContents, String className) {
 
 		DetailAST rcurlyDetailAST = null;
 
@@ -80,8 +80,8 @@ public class JavaParser {
 			parsedJavaClass.addParsedJavaTerm(
 				new ParsedJavaTerm(
 					content, DetailASTUtil.getStartPosition(rcurlyDetailAST),
-					DetailASTUtil.getEndPosition(
-						rcurlyDetailAST, fileContents)));
+					DetailASTUtil.getEndPosition(rcurlyDetailAST, fileContents),
+					className));
 		}
 
 		return parsedJavaClass;
@@ -95,12 +95,16 @@ public class JavaParser {
 			return parsedJavaClass;
 		}
 
+		Class<?> clazz = javaTerm.getClass();
+
+		String className = clazz.getName();
+
 		DetailAST closingDetailAST = DetailASTUtil.getClosingDetailAST(
 			detailAST);
 
 		if (closingDetailAST != null) {
 			parsedJavaClass = _addClosingJavaTerm(
-				parsedJavaClass, closingDetailAST, fileContents);
+				parsedJavaClass, closingDetailAST, fileContents, className);
 		}
 
 		Position startPosition = DetailASTUtil.getStartPosition(detailAST);
@@ -124,7 +128,7 @@ public class JavaParser {
 			}
 
 			ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
-				content, startPosition, endPosition);
+				content, startPosition, endPosition, className);
 
 			parsedJavaTerm = _processSurroundingLineBreaks(
 				parsedJavaTerm, javaTerm);
@@ -164,7 +168,7 @@ public class JavaParser {
 
 			parsedJavaClass.addParsedJavaTerm(
 				new ParsedJavaTerm(
-					parts[i], partStartPosition, partEndPosition));
+					parts[i], partStartPosition, partEndPosition, className));
 		}
 
 		return parsedJavaClass;

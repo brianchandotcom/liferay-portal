@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	public ParsedJavaTerm(
-		String content, Position startPosition, Position endPosition) {
+		String content, Position startPosition, Position endPosition,
+		String className) {
 
 		_content = content;
 		_startPosition = startPosition;
 		_endPosition = endPosition;
+		_className = className;
 	}
 
 	@Override
@@ -38,6 +40,10 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	public boolean containsCommentToken() {
 		return _containsCommentToken;
+	}
+
+	public String getClassName() {
+		return _className;
 	}
 
 	public String getContent() {
@@ -138,6 +144,7 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		_requirePrecedingEmptyLine = requirePrecedingEmptyLine;
 	}
 
+	private final String _className;
 	private boolean _containsCommentToken;
 	private final String _content;
 	private final Position _endPosition;

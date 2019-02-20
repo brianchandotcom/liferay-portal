@@ -14,15 +14,20 @@
 
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -127,6 +132,11 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "assetCategoriesManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public List<DropdownItem> getFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -142,12 +152,20 @@ public class AssetCategoriesManagementToolbarDisplayContext
 						isFlattenedNavigationAllowed()) {
 
 					add(
-						dropdownItem -> {
-							dropdownItem.setActive(_isNavigationCategory());
-							dropdownItem.putData("action", "selectCategory");
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "category"));
-						});
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setActive(_isNavigationCategory());
+								dropdownItem.putData(
+									"action", "selectCategory");
+								dropdownItem.putData(
+									"categoriesSelectorURL",
+									_getCategoriesSelectorURL());
+								dropdownItem.putData(
+									"viewCategoriesURL",
+									_getViewCategoriesURL());
+								dropdownItem.setLabel(
+									LanguageUtil.get(request, "category"));
+							}));
 				}
 			}
 		};
@@ -186,6 +204,35 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		}
 
 		return new String[] {"create-date"};
+	}
+
+	private String _getCategoriesSelectorURL() throws Exception {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		portletURL.setParameter(
+			"vocabularyIds",
+			String.valueOf(_assetCategoriesDisplayContext.getVocabularyId()));
+		portletURL.setParameter(
+			"eventName",
+			liferayPortletResponse.getNamespace() + "selectCategory");
+		portletURL.setParameter("singleSelect", Boolean.TRUE.toString());
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
+	}
+
+	private String _getViewCategoriesURL() {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view_categories.jsp");
+		portletURL.setParameter("navigation", "category");
+		portletURL.setParameter(
+			"vocabularyId",
+			String.valueOf(_assetCategoriesDisplayContext.getVocabularyId()));
+
+		return portletURL.toString();
 	}
 
 	private boolean _isNavigationAll() {

@@ -16,13 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementToolbarDisplayContext = new AssetVocabulariesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext);
+%>
+
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	displayContext="<%= new AssetVocabulariesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext) %>"
+	displayContext="<%= assetVocabulariesManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
@@ -146,29 +150,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	var deleteSelectedVocabularies = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'));
-		}
-	}
-
-	var ACTIONS = {
-		'deleteSelectedVocabularies': deleteSelectedVocabularies
-	};
-
-	Liferay.componentReady('assetVocabulariesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				['actionItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= assetVocabulariesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AssetVocabulariesManagementToolbarDefaultEventHandler.es"
+/>

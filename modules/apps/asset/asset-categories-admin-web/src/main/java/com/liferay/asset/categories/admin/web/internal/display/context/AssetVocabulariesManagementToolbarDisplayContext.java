@@ -100,6 +100,11 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "assetVocabulariesManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

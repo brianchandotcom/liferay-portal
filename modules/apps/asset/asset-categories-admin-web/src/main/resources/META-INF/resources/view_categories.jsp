@@ -16,13 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext);
+%>
+
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	displayContext="<%= new AssetCategoriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext) %>"
+	displayContext="<%= assetCategoriesManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
@@ -153,60 +157,7 @@
 	<aui:input name="vocabularyId" type="hidden" />
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var selectCategory = function() {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectCategory',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
-						var category = selectedItem ? selectedItem[Object.keys(selectedItem)[0]] : null;
-
-						if (category) {
-							var uri = '<portlet:renderURL><portlet:param name="mvcPath" value="/view_categories.jsp" /><portlet:param name="navigation" value="all" /><portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" /></portlet:renderURL>';
-
-							uri = Liferay.Util.addParams('<portlet:namespace />categoryId=' + category.categoryId, uri);
-
-							location.href = uri;
-						}
-					}
-				},
-				strings: {
-					add: '<liferay-ui:message key="select" />',
-					cancel: '<liferay-ui:message key="cancel" />'
-				},
-				title: '<liferay-ui:message key="select-category" />',
-				url: '<%= assetCategoriesDisplayContext.getAssetCategoriesSelectorURL() %>'
-			}
-		);
-
-		itemSelectorDialog.open();
-	};
-
-	var deleteSelectedCategories = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'));
-		}
-	};
-
-	var ACTIONS = {
-		'deleteSelectedCategories': deleteSelectedCategories,
-		'selectCategories': selectCategory
-	};
-
-	Liferay.componentReady('assetCategoriesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				['actionItemClicked', 'filterItemClicked'],
-				function(event) {
-					var itemData = event.data.item.data;
-
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
-</aui:script>
+<liferay-frontend:component
+	componentId="<%= assetCategoriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AssetCategoriesManagementToolbarDefaultEventHandler.es"
+/>

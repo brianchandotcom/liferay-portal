@@ -111,21 +111,6 @@ public class AssetCategoriesDisplayContext {
 		};
 	}
 
-	public String getAssetCategoriesSelectorURL() throws Exception {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_request, AssetCategory.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		portletURL.setParameter(
-			"vocabularyIds", String.valueOf(getVocabularyId()));
-		portletURL.setParameter(
-			"eventName", _renderResponse.getNamespace() + "selectCategory");
-		portletURL.setParameter("singleSelect", Boolean.TRUE.toString());
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
-	}
-
 	public String getAssetType(AssetVocabulary vocabulary)
 		throws PortalException {
 

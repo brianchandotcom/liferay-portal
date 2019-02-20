@@ -9,6 +9,7 @@
 	{@param type: string}
 	{@param? _editing: bool}
 	{@param? _handleEditableClick: any}
+	{@param? _handleEditableFocusOut: any}
 	{@param? _handleEditableHoverStart: any}
 	{@param? _handleEditableMouseEnter: any}
 	{@param? _handleEditableMouseLeave: any}
@@ -25,6 +26,7 @@
 
 	<lfr-editable
 		data-onclick="{$_handleEditableClick}"
+		data-onfocusout="{$_handleEditableFocusOut}"
 		data-onmouseenter="{$_handleEditableMouseEnter}"
 		data-onmouseleave="{$_handleEditableMouseLeave}"
 		data-onmouseover="{$_handleEditableHoverStart}"

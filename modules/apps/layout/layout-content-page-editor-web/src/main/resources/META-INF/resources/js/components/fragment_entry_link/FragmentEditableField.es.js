@@ -13,6 +13,7 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
 import templates from './FragmentEditableField.soy';
 import {
+	CLEAR_ACTIVE_ITEM,
 	OPEN_MAPPING_FIELDS_DIALOG,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_EDITABLE_VALUE,
@@ -322,6 +323,19 @@ class FragmentEditableField extends Component {
 	 */
 	_handleEditableDestroyed() {
 		this._editing = false;
+	}
+
+	/**
+	 * Callback executed when an editable lose the focus
+	 * @private
+	 * @review
+	 */
+	_handleEditableFocusOut() {
+		requestAnimationFrame(
+			() => {
+				this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+			}
+		);
 	}
 
 	/**

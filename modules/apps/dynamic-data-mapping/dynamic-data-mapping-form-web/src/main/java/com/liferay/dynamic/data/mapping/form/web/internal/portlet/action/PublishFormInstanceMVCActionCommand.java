@@ -44,6 +44,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -110,6 +113,13 @@ public class PublishFormInstanceMVCActionCommand
 			latestStructureVersion.getDDMForm(),
 			latestStructureVersion.getDDMFormLayout(), settingsDDMFormValues,
 			serviceContext);
+
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			actionRequest);
+
+		HttpSession httpSession = request.getSession();
+
+		httpSession.setAttribute("isShowPublishAlert", Boolean.TRUE);
 
 		return formInstance;
 	}

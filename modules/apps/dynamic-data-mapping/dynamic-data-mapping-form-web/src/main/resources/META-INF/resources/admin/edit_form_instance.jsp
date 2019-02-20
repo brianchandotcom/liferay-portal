@@ -237,6 +237,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 								published: !!<%= ddmFormAdminDisplayContext.isFormPublished() %>,
 								publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
 								ruleBuilder: Liferay.component('<portlet:namespace />ruleBuilder'),
+								showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
 								translationManager: Liferay.component('<portlet:namespace />translationManager')
 							}
 						)

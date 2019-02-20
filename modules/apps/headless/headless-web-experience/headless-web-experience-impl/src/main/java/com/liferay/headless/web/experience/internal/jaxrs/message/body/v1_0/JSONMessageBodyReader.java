@@ -29,7 +29,7 @@ import com.liferay.headless.web.experience.dto.v1_0.Creator;
 import com.liferay.headless.web.experience.dto.v1_0.Fields;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
-import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsByTemplate;
+import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsURL;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
@@ -43,7 +43,7 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.FieldsImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.GeoImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.OptionsImpl;
-import com.liferay.headless.web.experience.internal.dto.v1_0.RenderedContentsByTemplateImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.RenderedContentsURLImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImageImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ValueImpl;
@@ -115,7 +115,7 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 			if (clazz.equals(Options.class)) {
 				return true;
 	}
-			if (clazz.equals(RenderedContentsByTemplate.class)) {
+			if (clazz.equals(RenderedContentsURL.class)) {
 				return true;
 	}
 			if (clazz.equals(StructuredContent.class)) {
@@ -161,7 +161,7 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 										addMapping(Fields.class, FieldsImpl.class);
 										addMapping(Geo.class, GeoImpl.class);
 										addMapping(Options.class, OptionsImpl.class);
-										addMapping(RenderedContentsByTemplate.class, RenderedContentsByTemplateImpl.class);
+										addMapping(RenderedContentsURL.class, RenderedContentsURLImpl.class);
 										addMapping(StructuredContent.class, StructuredContentImpl.class);
 										addMapping(StructuredContentImage.class, StructuredContentImageImpl.class);
 										addMapping(Value.class, ValueImpl.class);

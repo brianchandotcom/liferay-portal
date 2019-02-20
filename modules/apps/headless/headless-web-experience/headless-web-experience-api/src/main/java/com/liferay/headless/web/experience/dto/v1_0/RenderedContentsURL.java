@@ -23,22 +23,17 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface RenderedContentsByTemplate {
+public interface RenderedContentsURL {
 
-	public Long getId();
+	public String getRenderedContentURL();
 
-	public void setId(Long id);
+	public void setRenderedContentURL(String renderedContentURL);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
-	public String getRenderedContent();
+	public void setRenderedContentURL(UnsafeSupplier<String, Throwable> renderedContentURLUnsafeSupplier);
+	public String getTemplateName();
 
-	public void setRenderedContent(String renderedContent);
+	public void setTemplateName(String templateName);
 
-	public void setRenderedContent(UnsafeSupplier<String, Throwable> renderedContentUnsafeSupplier);
-	public String getTemplate();
-
-	public void setTemplate(String template);
-
-	public void setTemplate(UnsafeSupplier<String, Throwable> templateUnsafeSupplier);
+	public void setTemplateName(UnsafeSupplier<String, Throwable> templateNameUnsafeSupplier);
 
 }

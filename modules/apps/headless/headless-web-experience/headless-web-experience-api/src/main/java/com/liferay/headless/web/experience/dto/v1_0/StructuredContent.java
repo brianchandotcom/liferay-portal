@@ -97,11 +97,11 @@ public interface StructuredContent {
 	public void setLastReviewed(Date lastReviewed);
 
 	public void setLastReviewed(UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier);
-	public RenderedContentsByTemplate[] getRenderedContentsByTemplate();
+	public RenderedContentsURL[] getRenderedContentsURL();
 
-	public void setRenderedContentsByTemplate(RenderedContentsByTemplate[] renderedContentsByTemplate);
+	public void setRenderedContentsURL(RenderedContentsURL[] renderedContentsURL);
 
-	public void setRenderedContentsByTemplate(UnsafeSupplier<RenderedContentsByTemplate[], Throwable> renderedContentsByTemplateUnsafeSupplier);
+	public void setRenderedContentsURL(UnsafeSupplier<RenderedContentsURL[], Throwable> renderedContentsURLUnsafeSupplier);
 	public String getTitle();
 
 	public void setTitle(String title);

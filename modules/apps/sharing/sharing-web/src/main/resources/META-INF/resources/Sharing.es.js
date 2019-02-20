@@ -36,7 +36,7 @@ class Sharing extends PortletBase {
 					{
 						emailAddress,
 						fullName,
-						label: `${fullName} (${emailAddress})`,
+						label: fullName,
 						portraitURL,
 						value: emailAddress
 					}

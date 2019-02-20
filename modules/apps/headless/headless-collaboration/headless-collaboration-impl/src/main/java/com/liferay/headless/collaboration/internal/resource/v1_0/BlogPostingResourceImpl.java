@@ -32,7 +32,6 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRating
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -190,13 +189,11 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(coverImageFileEntryId);
 
-		FileVersion fileVersion = _dlAppService.getFileVersion(
-			fileEntry.getFileEntryId());
-
 		return new ImageImpl() {
 			{
 				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileVersion, null, "", false, false);
+					fileEntry, fileEntry.getFileVersion(), null, "", false,
+					false);
 				imageId = coverImageFileEntryId;
 				name = blogsEntry.getCoverImageCaption();
 			}

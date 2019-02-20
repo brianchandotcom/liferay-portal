@@ -588,7 +588,10 @@ public class JavaParser {
 			return content;
 		}
 
-		if (parsedJavaTerm.requireFollowingEmptyLine() &&
+		int followingLineAction = parsedJavaTerm.getFollowingLineAction();
+
+		if ((followingLineAction ==
+				ParsedJavaTerm.DOUBLE_LINE_BREAK_REQUIRED) &&
 			Validator.isNotNull(
 				StringUtil.trim(fileContents.getLine(endLineNumber)))) {
 
@@ -596,7 +599,10 @@ public class JavaParser {
 				content, "\n", _getLineStartPos(content, endLineNumber + 1));
 		}
 
-		if (parsedJavaTerm.requirePrecedingEmptyLine() &&
+		int precedingLineAction = parsedJavaTerm.getPrecedingLineAction();
+
+		if ((precedingLineAction ==
+				ParsedJavaTerm.DOUBLE_LINE_BREAK_REQUIRED) &&
 			Validator.isNotNull(
 				StringUtil.trim(fileContents.getLine(startLineNumber - 2)))) {
 

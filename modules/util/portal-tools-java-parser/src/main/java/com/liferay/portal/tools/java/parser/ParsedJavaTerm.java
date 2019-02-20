@@ -55,6 +55,16 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		return _endPosition;
 	}
 
+	public int getFollowingLineAction() {
+		if (_className.equals(JavaMethodDefinition.class.getName()) &&
+			_content.endsWith(StringPool.SEMICOLON)) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		return NO_ACTION_REQUIRED;
+	}
+
 	public ParsedJavaTerm getNextParsedJavaTerm() {
 		return _nextParsedJavaTerm;
 	}
@@ -63,47 +73,29 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		return _precedingCommentToken;
 	}
 
+	public int getPrecedingLineAction() {
+		if ((_precedingCommentToken != null) &&
+			StringUtil.startsWith(
+				StringUtil.trim(_precedingCommentToken.getText()), "*")) {
+
+			return SINGLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (_className.equals(JavaMethodDefinition.class.getName()) &&
+			_content.endsWith(StringPool.SEMICOLON)) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		return NO_ACTION_REQUIRED;
+	}
+
 	public ParsedJavaTerm getPreviousParsedJavaTerm() {
 		return _previousParsedJavaTerm;
 	}
 
 	public Position getStartPosition() {
 		return _startPosition;
-	}
-
-	public boolean requireFollowingEmptyLine() {
-		if (_className.equals(JavaMethodDefinition.class.getName()) &&
-			_content.endsWith(StringPool.SEMICOLON)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean requireNoFollowingEmptyLine() {
-		return false;
-	}
-
-	public boolean requireNoPrecedingEmptyLine() {
-		return false;
-	}
-
-	public boolean requirePrecedingEmptyLine() {
-		if ((_precedingCommentToken != null) &&
-			StringUtil.startsWith(
-				StringUtil.trim(_precedingCommentToken.getText()), "*")) {
-
-			return false;
-		}
-
-		if (_className.equals(JavaMethodDefinition.class.getName()) &&
-			_content.endsWith(StringPool.SEMICOLON)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	public void setContainsCommentToken(boolean containsCommentToken) {
@@ -125,6 +117,12 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 		_previousParsedJavaTerm = previousParsedJavaTerm;
 	}
+
+	protected static final int DOUBLE_LINE_BREAK_REQUIRED = 0;
+
+	protected static final int NO_ACTION_REQUIRED = 1;
+
+	protected static final int SINGLE_LINE_BREAK_REQUIRED = 2;
 
 	private final String _className;
 	private boolean _containsCommentToken;

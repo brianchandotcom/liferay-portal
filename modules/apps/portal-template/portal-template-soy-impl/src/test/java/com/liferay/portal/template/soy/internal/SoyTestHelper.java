@@ -65,7 +65,7 @@ public class SoyTestHelper {
 		return getSoyTemplate(templateResources);
 	}
 
-	public void setUp() throws Exception {
+	public void setUp() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
@@ -150,7 +150,7 @@ public class SoyTestHelper {
 			});
 	}
 
-	protected void setUpSoyManager() throws Exception {
+	protected void setUpSoyManager() {
 		_soyManager = new SoyManager();
 
 		_soyManager.setTemplateContextHelper(new SoyTemplateContextHelper());

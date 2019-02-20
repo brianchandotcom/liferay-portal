@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.internal.search.contributor;
+package com.liferay.contact.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.search.Document;

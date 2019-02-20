@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -21,9 +22,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.impl.InjectionPointImpl;
 import org.jboss.arquillian.core.impl.ObserverImpl;
-import org.jboss.arquillian.core.impl.Reflections;
 import org.jboss.arquillian.core.spi.EventPoint;
 import org.jboss.arquillian.core.spi.Extension;
 import org.jboss.arquillian.core.spi.InjectionPoint;
@@ -37,10 +41,8 @@ public class ExtensionImpl implements Extension {
 	public static ExtensionImpl of(Object target) {
 		return new ExtensionImpl(
 			target,
-			_injections(
-				target, Reflections.getFieldInjectionPoints(target.getClass())),
-			_observers(
-				target, Reflections.getObserverMethods(target.getClass())));
+			_injections(target, _getFieldInjectionPoints(target.getClass())),
+			_observers(target, _getObserverMethods(target.getClass())));
 	}
 
 	@Override
@@ -62,6 +64,42 @@ public class ExtensionImpl implements Extension {
 		return _target;
 	}
 
+	private static List<Field> _getFieldInjectionPoints(Class<?> clazz) {
+		List<Field> injectionPoints = new ArrayList<>();
+
+		if (clazz == null) {
+			return injectionPoints;
+		}
+
+		for (Field field : clazz.getDeclaredFields()) {
+			if (_isInjectionPoint(field)) {
+				injectionPoints.add(field);
+			}
+		}
+
+		injectionPoints.addAll(_getFieldInjectionPoints(clazz.getSuperclass()));
+
+		return injectionPoints;
+	}
+
+	private static List<Method> _getObserverMethods(Class<?> clazz) {
+		List<Method> observerMethods = new ArrayList<>();
+
+		if (clazz == null) {
+			return observerMethods;
+		}
+
+		for (Method method : clazz.getDeclaredMethods()) {
+			if (_isObserverMethod(method)) {
+				observerMethods.add(method);
+			}
+		}
+
+		observerMethods.addAll(_getObserverMethods(clazz.getSuperclass()));
+
+		return observerMethods;
+	}
+
 	private static List<InjectionPoint> _injections(
 		Object extension, List<Field> injectionPoints) {
 
@@ -72,6 +110,38 @@ public class ExtensionImpl implements Extension {
 		}
 
 		return result;
+	}
+
+	private static boolean _isInjectionPoint(Field field) {
+		if (field.isAnnotationPresent(Inject.class)) {
+			Class<?> type = field.getType();
+
+			if (type.equals(Instance.class) ||
+				type.equals(InstanceProducer.class)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean _isObserverMethod(Method method) {
+		Annotation[][] annotations = method.getParameterAnnotations();
+
+		if ((method.getParameterTypes().length < 1) ||
+			(annotations.length < 1)) {
+
+			return false;
+		}
+
+		for (Annotation annotation : annotations[0]) {
+			if (annotation.annotationType() == Observes.class) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static List<ObserverMethod> _observers(

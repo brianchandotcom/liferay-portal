@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
+import com.liferay.portal.kernel.search.generic.FuzzyQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface MoreLikeThisQueryTranslator {
+public interface FuzzyQueryTranslator {
 
-	public QueryBuilder translate(MoreLikeThisQuery moreLikeThisQuery);
+	public QueryBuilder translate(FuzzyQuery fuzzyQuery);
 
 }

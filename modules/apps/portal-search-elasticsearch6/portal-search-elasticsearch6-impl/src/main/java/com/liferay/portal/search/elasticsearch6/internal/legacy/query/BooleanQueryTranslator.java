@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-public interface TermQueryTranslator {
+public interface BooleanQueryTranslator {
 
-	public QueryBuilder translate(TermQuery termQuery);
+	public QueryBuilder translate(
+		BooleanQuery booleanQuery, QueryVisitor<QueryBuilder> queryVisitor);
 
 }

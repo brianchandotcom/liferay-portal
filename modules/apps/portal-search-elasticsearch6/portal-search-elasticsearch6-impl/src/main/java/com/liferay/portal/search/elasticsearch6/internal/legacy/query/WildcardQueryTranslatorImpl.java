@@ -12,39 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
 import com.liferay.portal.kernel.search.QueryTerm;
-import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.WildcardQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
-@Component(immediate = true, service = TermQueryTranslator.class)
-public class TermQueryTranslatorImpl implements TermQueryTranslator {
+@Component(immediate = true, service = WildcardQueryTranslator.class)
+public class WildcardQueryTranslatorImpl implements WildcardQueryTranslator {
 
 	@Override
-	public QueryBuilder translate(TermQuery termQuery) {
-		QueryTerm queryTerm = termQuery.getQueryTerm();
+	public QueryBuilder translate(WildcardQuery wildcardQuery) {
+		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
 
-		String field = queryTerm.getField();
-		String value = queryTerm.getValue();
+		WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery(
+			queryTerm.getField(), queryTerm.getValue());
 
-		TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
-			field, value);
-
-		if (!termQuery.isDefaultBoost()) {
-			termQueryBuilder.boost(termQuery.getBoost());
+		if (!wildcardQuery.isDefaultBoost()) {
+			wildcardQueryBuilder.boost(wildcardQuery.getBoost());
 		}
 
-		return termQueryBuilder;
+		return wildcardQueryBuilder;
 	}
 
 }

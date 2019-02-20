@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
-import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.generic.DisMaxQuery;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Michael C. Han
  */
-public interface WildcardQueryTranslator {
+public interface DisMaxQueryTranslator {
 
-	public QueryBuilder translate(WildcardQuery wildcardQuery);
+	public QueryBuilder translate(
+		DisMaxQuery disMaxQuery, QueryVisitor<QueryBuilder> queryVisitor);
 
 }

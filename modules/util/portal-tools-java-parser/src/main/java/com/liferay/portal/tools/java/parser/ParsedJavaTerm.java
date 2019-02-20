@@ -16,8 +16,11 @@ package com.liferay.portal.tools.java.parser;
 
 import antlr.CommonHiddenStreamToken;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -74,17 +77,64 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	}
 
 	public int getPrecedingLineAction() {
-		if ((_precedingCommentToken != null) &&
+		if (((_precedingCommentToken != null) &&
+			 StringUtil.startsWith(
+				 StringUtil.trim(_precedingCommentToken.getText()),
+				 CharPool.STAR)) ||
 			StringUtil.startsWith(
-				StringUtil.trim(_precedingCommentToken.getText()), "*")) {
+				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+
+			return NO_ACTION_REQUIRED;
+		}
+
+		ParsedJavaTerm previousParsedJavaTerm = getPreviousParsedJavaTerm();
+
+		if (StringUtil.endsWith(
+				previousParsedJavaTerm.getContent(),
+				CharPool.OPEN_CURLY_BRACE)) {
+
+			return NO_ACTION_REQUIRED;
+		}
+
+		if (_className.equals(JavaAnnotationFieldDefinition.class.getName()) ||
+			_className.equals(JavaBreakStatement.class.getName()) ||
+			_className.equals(JavaConstructorDefinition.class.getName()) ||
+			_className.equals(JavaContinueStatement.class.getName()) ||
+			_className.equals(JavaDoStatement.class.getName()) ||
+			_className.equals(JavaEnhancedForStatement.class.getName()) ||
+			_className.equals(JavaEnumConstantDefinitions.class.getName()) ||
+			_className.equals(JavaForStatement.class.getName()) ||
+			_className.equals(JavaIfStatement.class.getName()) ||
+			_className.equals(JavaMethodDefinition.class.getName()) ||
+			_className.equals(JavaReturnStatement.class.getName()) ||
+			_className.equals(JavaStaticInitialization.class.getName()) ||
+			_className.equals(JavaSynchronizedStatement.class.getName()) ||
+			_className.equals(JavaThrowStatement.class.getName()) ||
+			_className.equals(JavaTryStatement.class.getName()) ||
+			(_className.equals(JavaMethodDefinition.class.getName()) &&
+			 _content.endsWith(StringPool.SEMICOLON))) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (_className.equals(JavaCatchStatement.class.getName()) ||
+			_className.equals(JavaElseStatement.class.getName()) ||
+			_className.equals(JavaFinallyStatement.class.getName())) {
 
 			return SINGLE_LINE_BREAK_REQUIRED;
 		}
 
-		if (_className.equals(JavaMethodDefinition.class.getName()) &&
-			_content.endsWith(StringPool.SEMICOLON)) {
+		if (_className.equals(JavaWhileStatement.class.getName())) {
+			if (_content.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
 
-			return DOUBLE_LINE_BREAK_REQUIRED;
+			if (Objects.equals(
+					previousParsedJavaTerm.getClassName(),
+					JavaDoStatement.class.getName())) {
+
+				return SINGLE_LINE_BREAK_REQUIRED;
+			}
 		}
 
 		return NO_ACTION_REQUIRED;

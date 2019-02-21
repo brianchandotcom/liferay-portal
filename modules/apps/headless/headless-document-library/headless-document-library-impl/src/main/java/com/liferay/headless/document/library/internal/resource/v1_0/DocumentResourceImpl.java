@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -256,12 +255,10 @@ public class DocumentResourceImpl
 		Hits hits = SearchUtil.getHits(
 			filter, _indexerRegistry.nullSafeGetIndexer(DLFileEntry.class),
 			pagination, booleanQueryConsumer,
-			queryConfig -> {
-				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
-			},
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
 			_searchResultPermissionFilterFactory, sorts);
 
 		for (com.liferay.portal.kernel.search.Document document :
@@ -374,9 +371,6 @@ public class DocumentResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private ClassNameService _classNameService;
 
 	@Reference
 	private DLAppService _dlAppService;

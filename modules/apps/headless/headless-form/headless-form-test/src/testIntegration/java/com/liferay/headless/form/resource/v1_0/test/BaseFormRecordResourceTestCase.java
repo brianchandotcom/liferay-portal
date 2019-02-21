@@ -119,7 +119,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(formRecord), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/form-records/{form-record-id}", formRecordId,formRecord));
+			options.setLocation(_resourceURL + _toPath("/form-records/{form-record-id}", formRecordId));
 
 				options.setPut(true);
 
@@ -134,7 +134,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(formRecord), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/form-records/{form-record-id}", formRecordId,formRecord));
+			options.setLocation(_resourceURL + _toPath("/form-records/{form-record-id}", formRecordId));
 
 				options.setPut(true);
 
@@ -173,7 +173,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(formRecord), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/form-records", formId,formRecord));
+			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/form-records", formId));
 
 				options.setPost(true);
 
@@ -188,7 +188,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(formRecord), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/form-records", formId,formRecord));
+			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/form-records", formId));
 
 				options.setPost(true);
 
@@ -432,8 +432,8 @@ public abstract class BaseFormRecordResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

@@ -115,7 +115,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-structures/{content-structure-id}/structured-contents", contentSpaceId,contentStructureId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-structures/{content-structure-id}/structured-contents", contentSpaceId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -126,7 +126,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-structures/{content-structure-id}/structured-contents", contentSpaceId,contentStructureId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-structures/{content-structure-id}/structured-contents", contentSpaceId));
 
 			HttpUtil.URLtoString(options);
 
@@ -138,7 +138,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -149,7 +149,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId));
 
 			HttpUtil.URLtoString(options);
 
@@ -163,7 +163,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId));
 
 				options.setPost(true);
 
@@ -178,7 +178,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId));
 
 				options.setPost(true);
 
@@ -242,7 +242,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImpl.class);
 	}
@@ -253,7 +253,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 			HttpUtil.URLtoString(options);
 
@@ -267,7 +267,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 				options.setPut(true);
 
@@ -282,7 +282,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 				options.setPut(true);
 
@@ -296,7 +296,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/rendered-content/{template-id}", structuredContentId,templateId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/rendered-content/{template-id}", structuredContentId));
 
 				return HttpUtil.URLtoString(options);
 	}
@@ -307,7 +307,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/rendered-content/{template-id}", structuredContentId,templateId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/rendered-content/{template-id}", structuredContentId));
 
 			HttpUtil.URLtoString(options);
 
@@ -728,8 +728,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

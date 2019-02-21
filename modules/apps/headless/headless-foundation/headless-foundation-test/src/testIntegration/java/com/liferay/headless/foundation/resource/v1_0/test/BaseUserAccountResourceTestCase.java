@@ -257,7 +257,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(userAccount), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId,userAccount));
+			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId));
 
 				options.setPut(true);
 
@@ -272,7 +272,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(userAccount), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId,userAccount));
+			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId));
 
 				options.setPut(true);
 
@@ -811,8 +811,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

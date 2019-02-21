@@ -339,8 +339,8 @@ public abstract class BaseCommentResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

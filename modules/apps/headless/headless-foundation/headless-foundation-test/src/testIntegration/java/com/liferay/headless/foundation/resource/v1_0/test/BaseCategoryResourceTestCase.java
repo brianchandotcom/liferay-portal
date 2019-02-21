@@ -159,7 +159,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
 				options.setPut(true);
 
@@ -174,7 +174,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
 				options.setPut(true);
 
@@ -188,7 +188,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -199,7 +199,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId));
 
 			HttpUtil.URLtoString(options);
 
@@ -213,7 +213,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId));
 
 				options.setPost(true);
 
@@ -228,7 +228,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId));
 
 				options.setPost(true);
 
@@ -242,7 +242,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -253,7 +253,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId));
 
 			HttpUtil.URLtoString(options);
 
@@ -267,7 +267,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,category));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId));
 
 				options.setPost(true);
 
@@ -282,7 +282,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,category));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId));
 
 				options.setPost(true);
 
@@ -594,8 +594,8 @@ public abstract class BaseCategoryResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

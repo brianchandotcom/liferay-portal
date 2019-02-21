@@ -128,7 +128,7 @@ public abstract class BaseCommentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId,comment));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
 
 				options.setPost(true);
 
@@ -143,7 +143,7 @@ public abstract class BaseCommentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId,comment));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
 
 				options.setPost(true);
 
@@ -209,7 +209,7 @@ public abstract class BaseCommentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId,comment));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
 
 				options.setPut(true);
 
@@ -224,7 +224,7 @@ public abstract class BaseCommentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId,comment));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
 
 				options.setPut(true);
 
@@ -263,7 +263,7 @@ public abstract class BaseCommentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId,comment));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
 
 				options.setPost(true);
 
@@ -278,7 +278,7 @@ public abstract class BaseCommentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId,comment));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
 
 				options.setPost(true);
 
@@ -477,8 +477,8 @@ public abstract class BaseCommentResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

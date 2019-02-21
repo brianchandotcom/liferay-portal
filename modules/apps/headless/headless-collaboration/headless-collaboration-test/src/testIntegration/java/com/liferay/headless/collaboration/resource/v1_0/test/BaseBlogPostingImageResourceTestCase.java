@@ -110,7 +110,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId,multipartBody));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId));
 
 				options.setPost(true);
 
@@ -123,7 +123,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId,multipartBody));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId));
 
 				options.setPost(true);
 
@@ -350,8 +350,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

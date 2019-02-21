@@ -175,7 +175,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-me", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-me", workflowTaskId));
 
 				options.setPost(true);
 
@@ -190,7 +190,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-me", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-me", workflowTaskId));
 
 				options.setPost(true);
 
@@ -206,7 +206,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-user", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-user", workflowTaskId));
 
 				options.setPost(true);
 
@@ -221,7 +221,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-user", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/assign-to-user", workflowTaskId));
 
 				options.setPost(true);
 
@@ -237,7 +237,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/change-transition", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/change-transition", workflowTaskId));
 
 				options.setPost(true);
 
@@ -252,7 +252,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/change-transition", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/change-transition", workflowTaskId));
 
 				options.setPost(true);
 
@@ -268,7 +268,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/update-due-date", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/update-due-date", workflowTaskId));
 
 				options.setPost(true);
 
@@ -283,7 +283,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(workflowTask), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/update-due-date", workflowTaskId,workflowTask));
+			options.setLocation(_resourceURL + _toPath("/workflow-tasks/{workflow-task-id}/update-due-date", workflowTaskId));
 
 				options.setPost(true);
 
@@ -595,8 +595,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

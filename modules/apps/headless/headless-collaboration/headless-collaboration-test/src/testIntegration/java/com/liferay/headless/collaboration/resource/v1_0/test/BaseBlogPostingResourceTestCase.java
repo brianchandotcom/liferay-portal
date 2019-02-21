@@ -152,7 +152,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId,blogPosting));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), BlogPostingImpl.class);
 	}
@@ -163,7 +163,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId,blogPosting));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId));
 
 			HttpUtil.URLtoString(options);
 
@@ -177,7 +177,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(blogPosting), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId,blogPosting));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId));
 
 				options.setPut(true);
 
@@ -192,7 +192,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(blogPosting), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId,blogPosting));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}", blogPostingId));
 
 				options.setPut(true);
 
@@ -231,7 +231,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(blogPosting), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-postings", contentSpaceId,blogPosting));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-postings", contentSpaceId));
 
 				options.setPost(true);
 
@@ -246,7 +246,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(blogPosting), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-postings", contentSpaceId,blogPosting));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-postings", contentSpaceId));
 
 				options.setPost(true);
 
@@ -740,8 +740,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

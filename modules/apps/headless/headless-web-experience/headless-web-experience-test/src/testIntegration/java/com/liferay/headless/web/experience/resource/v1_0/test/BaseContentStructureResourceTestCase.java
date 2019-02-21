@@ -85,7 +85,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/content-structures", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/content-structures", contentSpaceId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -96,7 +96,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/content-structures", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/content-structures", contentSpaceId));
 
 			HttpUtil.URLtoString(options);
 
@@ -361,8 +361,8 @@ public abstract class BaseContentStructureResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

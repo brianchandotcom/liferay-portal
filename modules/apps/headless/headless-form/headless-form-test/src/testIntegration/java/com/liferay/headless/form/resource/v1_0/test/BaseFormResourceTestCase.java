@@ -146,7 +146,7 @@ public abstract class BaseFormResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(form), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId,form));
+			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId));
 
 				options.setPost(true);
 
@@ -161,7 +161,7 @@ public abstract class BaseFormResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(form), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId,form));
+			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/evaluate-context", formId));
 
 				options.setPost(true);
 
@@ -200,7 +200,7 @@ public abstract class BaseFormResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(form), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/upload-file", formId,form));
+			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/upload-file", formId));
 
 				options.setPost(true);
 
@@ -215,7 +215,7 @@ public abstract class BaseFormResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(form), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/upload-file", formId,form));
+			options.setLocation(_resourceURL + _toPath("/forms/{form-id}/upload-file", formId));
 
 				options.setPost(true);
 
@@ -572,8 +572,8 @@ public abstract class BaseFormResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

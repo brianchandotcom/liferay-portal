@@ -97,7 +97,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -108,7 +108,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
 
 			HttpUtil.URLtoString(options);
 
@@ -122,7 +122,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId,vocabulary));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
 
 				options.setPost(true);
 
@@ -137,7 +137,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId,vocabulary));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
 
 				options.setPost(true);
 
@@ -203,7 +203,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId,vocabulary));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
 
 				options.setPut(true);
 
@@ -218,7 +218,7 @@ public abstract class BaseVocabularyResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId,vocabulary));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
 
 				options.setPut(true);
 
@@ -463,8 +463,8 @@ public abstract class BaseVocabularyResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

@@ -103,7 +103,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -114,7 +114,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId));
 
 			HttpUtil.URLtoString(options);
 
@@ -126,7 +126,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId,multipartBody));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId));
 
 				options.setPost(true);
 
@@ -139,7 +139,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId,multipartBody));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/documents", contentSpaceId));
 
 				options.setPost(true);
 
@@ -203,7 +203,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
@@ -214,7 +214,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId,filter,sorts));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
 
 			HttpUtil.URLtoString(options);
 
@@ -226,7 +226,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId,multipartBody));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
 
 				options.setPost(true);
 
@@ -239,7 +239,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId,multipartBody));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
 
 				options.setPost(true);
 
@@ -640,8 +640,8 @@ public abstract class BaseDocumentResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

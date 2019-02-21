@@ -110,7 +110,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 
 				options.setDelete(true);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId,contentDocumentId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
 	}
@@ -123,7 +123,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 
 				options.setDelete(true);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId,contentDocumentId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
 
 			HttpUtil.URLtoString(options);
 
@@ -135,7 +135,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId,contentDocumentId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImageImpl.class);
 	}
@@ -146,7 +146,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId,contentDocumentId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
 
 			HttpUtil.URLtoString(options);
 
@@ -389,8 +389,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

@@ -17,17 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= assetTagsSelectorDisplayContext.getClearResultsURL() %>"
-	componentId="assetTagsSelectorManagementToolbar"
-	disabled="<%= assetTagsSelectorDisplayContext.isDisabledTagsManagementBar() %>"
-	filterDropdownItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= assetTagsSelectorDisplayContext.getSearchActionURL() %>"
-	searchContainerId="tags"
-	searchFormName="searchFm"
-	showSearch="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>"
-	sortingOrder="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetTagsSelectorDisplayContext.getSortingURL() %>"
+	displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetTagsSelectorDisplayContext) %>"
 />
 
 <div class="container-fluid-1280">

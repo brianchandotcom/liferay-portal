@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
-import com.liferay.portal.workflow.kaleo.internal.search.KaleoInstanceField;
-import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceQuery;
+import com.liferay.portal.workflow.kaleo.internal.search.KaleoInstanceTokenField;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenQuery;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,10 +32,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance",
+	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken",
 	service = KeywordQueryContributor.class
 )
-public class KaleoInstanceKeywordQueryContributor
+public class KaleoInstanceTokenKeywordQueryContributor
 	implements KeywordQueryContributor {
 
 	@Override
@@ -43,27 +43,27 @@ public class KaleoInstanceKeywordQueryContributor
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		KaleoInstanceQuery kaleoInstanceQuery = getKaleoInstanceQuery(
-			keywordQueryContributorHelper);
+		KaleoInstanceTokenQuery kaleoInstanceTokenQuery =
+			getKaleoInstanceTokenQuery(keywordQueryContributorHelper);
 
-		if (kaleoInstanceQuery == null) {
+		if (kaleoInstanceTokenQuery == null) {
 			return;
 		}
 
-		appendAssetTitleTerm(
-			booleanQuery, kaleoInstanceQuery.getAssetTitle(),
-			keywordQueryContributorHelper);
 		appendAssetDescriptionTerm(
-			booleanQuery, kaleoInstanceQuery.getAssetDescription(),
+			booleanQuery, kaleoInstanceTokenQuery.getAssetDescription(),
+			keywordQueryContributorHelper);
+		appendAssetTitleTerm(
+			booleanQuery, kaleoInstanceTokenQuery.getAssetTitle(),
 			keywordQueryContributorHelper);
 		appendClassNameTerm(
-			booleanQuery, kaleoInstanceQuery.getClassName(),
+			booleanQuery, kaleoInstanceTokenQuery.getClassName(),
+			keywordQueryContributorHelper);
+		appendCurrentKaleoNodeNameTerm(
+			booleanQuery, kaleoInstanceTokenQuery.getCurrentKaleoNodeName(),
 			keywordQueryContributorHelper);
 		appendKaleoDefinitionNameTerm(
-			booleanQuery, kaleoInstanceQuery.getKaleoDefinitionName(),
-			keywordQueryContributorHelper);
-		appendStatusTerm(
-			booleanQuery, kaleoInstanceQuery.getStatus(),
+			booleanQuery, kaleoInstanceTokenQuery.getKaleoDefinitionName(),
 			keywordQueryContributorHelper);
 	}
 
@@ -80,15 +80,15 @@ public class KaleoInstanceKeywordQueryContributor
 
 		String assetDescriptionLocalizedName =
 			LocalizationUtil.getLocalizedName(
-				KaleoInstanceField.ASSET_DESCRIPTION,
+				KaleoInstanceTokenField.ASSET_DESCRIPTION,
 				searchContext.getLanguageId());
 
 		searchContext.setAttribute(
 			assetDescriptionLocalizedName, assetDescription);
 
 		queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, KaleoInstanceField.ASSET_DESCRIPTION,
-			true);
+			booleanQuery, searchContext,
+			KaleoInstanceTokenField.ASSET_DESCRIPTION, true);
 	}
 
 	protected void appendAssetTitleTerm(
@@ -103,12 +103,13 @@ public class KaleoInstanceKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		String assetTitleLocalizedName = LocalizationUtil.getLocalizedName(
-			KaleoInstanceField.ASSET_TITLE, searchContext.getLanguageId());
+			KaleoInstanceTokenField.ASSET_TITLE, searchContext.getLanguageId());
 
 		searchContext.setAttribute(assetTitleLocalizedName, assetTitle);
 
 		queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, KaleoInstanceField.ASSET_TITLE, false);
+			booleanQuery, searchContext, KaleoInstanceTokenField.ASSET_TITLE,
+			false);
 	}
 
 	protected void appendClassNameTerm(
@@ -122,11 +123,32 @@ public class KaleoInstanceKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		searchContext.setAttribute(KaleoInstanceField.CLASS_NAME, className);
+		searchContext.setAttribute(
+			KaleoInstanceTokenField.CLASS_NAME, className);
 
 		queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			KaleoInstanceField.CLASS_NAME, false);
+			KaleoInstanceTokenField.CLASS_NAME, false);
+	}
+
+	protected void appendCurrentKaleoNodeNameTerm(
+		BooleanQuery booleanQuery, String currentKaleoNodeName,
+		KeywordQueryContributorHelper keywordQueryContributorHelper) {
+
+		if (Validator.isNull(currentKaleoNodeName)) {
+			return;
+		}
+
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
+
+		searchContext.setAttribute(
+			KaleoInstanceTokenField.CURRENT_KALEO_NODE_NAME,
+			currentKaleoNodeName);
+
+		queryHelper.addSearchTerm(
+			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
+			KaleoInstanceTokenField.CURRENT_KALEO_NODE_NAME, false);
 	}
 
 	protected void appendKaleoDefinitionNameTerm(
@@ -141,39 +163,21 @@ public class KaleoInstanceKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		searchContext.setAttribute(
-			KaleoInstanceField.KALEO_DEFINITION_NAME, kaleoDefinitionName);
+			KaleoInstanceTokenField.KALEO_DEFINITION_NAME, kaleoDefinitionName);
 
 		queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			KaleoInstanceField.KALEO_DEFINITION_NAME, false);
+			KaleoInstanceTokenField.KALEO_DEFINITION_NAME, false);
 	}
 
-	protected void appendStatusTerm(
-		BooleanQuery booleanQuery, String status,
-		KeywordQueryContributorHelper keywordQueryContributorHelper) {
-
-		if (Validator.isNull(status)) {
-			return;
-		}
-
-		SearchContext searchContext =
-			keywordQueryContributorHelper.getSearchContext();
-
-		searchContext.setAttribute(KaleoInstanceField.STATUS, status);
-
-		queryHelper.addSearchTerm(
-			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			KaleoInstanceField.STATUS, false);
-	}
-
-	protected KaleoInstanceQuery getKaleoInstanceQuery(
+	protected KaleoInstanceTokenQuery getKaleoInstanceTokenQuery(
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		return (KaleoInstanceQuery)searchContext.getAttribute(
-			"kaleoInstanceQuery");
+		return (KaleoInstanceTokenQuery)searchContext.getAttribute(
+			"kaleoInstanceTokenQuery");
 	}
 
 	@Reference

@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1149,17 +1150,24 @@ public abstract class BaseBuild implements Build {
 
 		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
-		if (!buildURL.endsWith("/")) {
-			buildURL += "/";
-		}
-
 		String thisBuildURL = getBuildURL();
 
 		if (thisBuildURL != null) {
 			thisBuildURL = JenkinsResultsParserUtil.getLocalURL(thisBuildURL);
 
-			if (thisBuildURL.equals(buildURL)) {
-				return true;
+			try {
+				if (URLCompareUtil.matches(
+						new URL(buildURL), new URL(thisBuildURL))) {
+
+					return true;
+				}
+			}
+			catch (MalformedURLException murle) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to compare urls ", buildURL, " and ",
+						thisBuildURL),
+					murle);
 			}
 		}
 

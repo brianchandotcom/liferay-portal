@@ -99,10 +99,13 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	public SegmentsEntry getSegmentsEntry(long segmentsEntryId)
 		throws PortalException {
 
+		SegmentsEntry segmentsEntry =
+			segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
+
 		_segmentsEntryResourcePermission.check(
 			getPermissionChecker(), segmentsEntryId, ActionKeys.VIEW);
 
-		return segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
+		return segmentsEntry;
 	}
 
 	@Override

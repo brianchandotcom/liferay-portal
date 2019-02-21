@@ -68,7 +68,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			context.get("contributorName"));
 
 		if (Validator.isNotNull(contributorName)) {
-			_setClayTagContextContributorsAttributes(contributorName);
+			_populateContext(contributorName);
 		}
 
 		setTemplateNamespace(_componentBaseName + ".render");
@@ -155,9 +155,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return null;
 	}
 
-	private void _setClayTagContextContributorsAttributes(
-		String contributorName) {
-
+	private void _populateContext(String contributorName) {
 		List<ClayTagContextContributor> clayTagContextContributors =
 			ClayTagContextContributorsProvider.get(contributorName);
 

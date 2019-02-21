@@ -2,8 +2,8 @@ package ${configYAML.apiPackagePath}.internal.graphql.query.${versionDirName};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
-		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
+		import ${configYAML.apiPackagePath}.internal.dto.${versionDirName}.${schemaName}Impl;
+		import ${configYAML.apiPackagePath}.internal.resource.${versionDirName}.${schemaName}ResourceImpl;
 	</#list>
 </#compress>
 
@@ -27,10 +27,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.Response;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author ${configYAML.author}
  * @generated
@@ -41,36 +37,49 @@ public class Query {
 	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, openAPIYAML, "query", false) />
 
 	<#list javaMethodSignatures as javaMethodSignature>
-		<#assign schemaName = javaMethodSignature.schemaName />
+		<#assign
+			returnType = javaMethodSignature.returnType
+			schemaName = javaMethodSignature.schemaName
+		/>
+
+		<#if returnType?starts_with("Collection<")>
+			<#assign simpleClassName = returnType[11..(returnType?length - 2)] />
+
+			<#if allSchemas?keys?seq_contains(simpleClassName)>
+				<#assign returnType = "Collection<" + simpleClassName + "Impl>" />
+			</#if>
+		<#elseif allSchemas?keys?seq_contains(returnType)>
+			<#assign returnType = returnType + "Impl" />
+		</#if>
 
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+		public ${returnType} ${javaMethodSignature.methodName}(
 				${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaParameters, true)})
 			throws Exception {
 
-			<#if stringUtil.equals(javaMethodSignature.returnType, "Response")>
+			<#if stringUtil.equals(returnType, "Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
 				return responseBuilder.build();
-			<#elseif javaMethodSignature.returnType?contains("Collection<")>
-				${schemaName}Resource ${schemaName?uncap_first}Resource = _get${schemaName}Resource();
+			<#elseif returnType?contains("Collection<")>
+				${schemaName}ResourceImpl ${schemaName?uncap_first}ResourceImpl = _get${schemaName}ResourceImpl();
 
-				${schemaName?uncap_first}Resource.setContextCompany(
+				${schemaName?uncap_first}ResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters) />
 
-				Page paginationPage = ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+				Page paginationPage = ${schemaName?uncap_first}ResourceImpl.${javaMethodSignature.methodName}(
 					${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
 				return paginationPage.getItems();
 			<#else>
-				${schemaName}Resource ${schemaName?uncap_first}Resource = _get${schemaName}Resource();
+				${schemaName}ResourceImpl ${schemaName?uncap_first}ResourceImpl = _get${schemaName}ResourceImpl();
 
-				${schemaName?uncap_first}Resource.setContextCompany(
+				${schemaName?uncap_first}ResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+				return ${schemaName?uncap_first}ResourceImpl.${javaMethodSignature.methodName}(
 					${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters)});
 			</#if>
 		}
@@ -79,31 +88,9 @@ public class Query {
 	<#assign schemaNames = freeMarkerTool.getGraphQLSchemaNames(javaMethodSignatures) />
 
 	<#list schemaNames as schemaName>
-		private static ${schemaName}Resource _get${schemaName}Resource() {
-			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
+		private static ${schemaName}ResourceImpl _get${schemaName}ResourceImpl() {
+			return new ${schemaName}ResourceImpl();
 		}
-
-		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
-			_${schemaName?uncap_first}ResourceServiceTracker;
 	</#list>
-
-	<#if schemaNames?size != 0>
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-			<#list schemaNames as schemaName>
-				ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
-					${schemaName?uncap_first}ResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							${schemaName}Resource.class, null);
-
-				${schemaName?uncap_first}ResourceServiceTracker.open();
-
-				_${schemaName?uncap_first}ResourceServiceTracker =
-					${schemaName?uncap_first}ResourceServiceTracker;
-			</#list>
-		}
-	</#if>
 
 }

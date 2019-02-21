@@ -62,7 +62,13 @@ public class ParsedJavaClass {
 				return;
 			}
 
-			if (parsedJavaTerm.compareTo(previousParsedJavaTerm) > 0) {
+			int value = parsedJavaTerm.compareTo(previousParsedJavaTerm);
+
+			if (value == 0) {
+				return;
+			}
+
+			if (value > 0) {
 				parsedJavaTerm.setPreviousParsedJavaTerm(
 					previousParsedJavaTerm);
 

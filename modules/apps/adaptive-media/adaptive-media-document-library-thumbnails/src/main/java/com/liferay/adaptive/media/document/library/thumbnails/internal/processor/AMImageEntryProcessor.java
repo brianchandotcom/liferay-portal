@@ -46,6 +46,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -58,8 +59,14 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
+	@Activate
+	public void activate() throws Exception {
+		afterPropertiesSet();
+	}
+
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		_imageProcessor = new ImageProcessorImpl();
 	}
 
 	@Override
@@ -350,6 +357,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	private AMImageFinder _amImageFinder;
 	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
 	private AMImageValidator _amImageValidator;
-	private final ImageProcessor _imageProcessor = new ImageProcessorImpl();
+	private ImageProcessor _imageProcessor;
 
 }

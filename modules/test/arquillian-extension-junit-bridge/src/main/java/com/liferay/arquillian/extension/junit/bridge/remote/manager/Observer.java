@@ -57,7 +57,7 @@ public class Observer {
 
 		Object[] arguments = _resolveArguments(manager, event);
 
-		if (_containsNull(arguments)) {
+		if (arguments == null) {
 			return;
 		}
 
@@ -87,16 +87,6 @@ public class Observer {
 		_method = method;
 	}
 
-	private boolean _containsNull(Object[] arguments) {
-		for (Object argument : arguments) {
-			if (argument == null) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private Object[] _resolveArguments(Manager manager, Object event) {
 		Class<?>[] argumentTypes = _method.getParameterTypes();
 
@@ -110,6 +100,10 @@ public class Observer {
 			Class<?> argumentType = argumentTypes[i];
 
 			arguments[i] = manager.resolve(argumentType);
+
+			if (arguments[i] == null) {
+				return null;
+			}
 		}
 
 		return arguments;

@@ -130,8 +130,8 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 						operation, path, returnType, schemaName);
 
 					if (returnType.startsWith("Page<")) {
-						returnType =
-							"Collection<".concat(returnType.substring(5));
+						returnType = "Collection<".concat(
+							returnType.substring(5));
 					}
 
 					javaMethodSignatures.add(

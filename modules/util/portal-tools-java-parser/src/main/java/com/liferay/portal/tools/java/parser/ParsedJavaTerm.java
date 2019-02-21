@@ -17,8 +17,13 @@ package com.liferay.portal.tools.java.parser;
 import antlr.CommonHiddenStreamToken;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.portal.tools.java.parser.util.JavaParserUtil;
+
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.Objects;
 
@@ -59,13 +64,124 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	}
 
 	public int getFollowingLineAction() {
-		if (_className.equals(JavaMethodDefinition.class.getName()) &&
-			_content.endsWith(StringPool.SEMICOLON)) {
+		ParsedJavaTerm nextParsedJavaTerm = getNextParsedJavaTerm();
+
+		if (nextParsedJavaTerm == null) {
+			return NO_ACTION_REQUIRED;
+		}
+
+		CommonHiddenStreamToken precedingCommentToken =
+			nextParsedJavaTerm.getPrecedingCommentToken();
+
+		if (precedingCommentToken != null) {
+			while (precedingCommentToken.getHiddenBefore() != null) {
+				precedingCommentToken = precedingCommentToken.getHiddenBefore();
+			}
+
+			if (((precedingCommentToken.getType() ==
+					TokenTypes.BLOCK_COMMENT_BEGIN) &&
+				 StringUtil.startsWith(
+					 precedingCommentToken.getText(), CharPool.STAR)) ||
+				((precedingCommentToken.getType() ==
+					TokenTypes.SINGLE_LINE_COMMENT) &&
+				 StringUtil.startsWith(
+					 precedingCommentToken.getText(), CharPool.SPACE))) {
+
+				return NO_ACTION_REQUIRED;
+			}
+		}
+
+		if (_content.endsWith("-> {")) {
+			return SINGLE_LINE_BREAK_REQUIRED;
+		}
+
+		String trimmedNextJavaTermContent = StringUtil.trim(
+			nextParsedJavaTerm.getContent());
+
+		if (StringUtil.startsWith(
+				StringUtil.trim(_content), CharPool.CLOSE_CURLY_BRACE)) {
+
+			if (!_content.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+				return NO_ACTION_REQUIRED;
+			}
+
+			if (!trimmedNextJavaTermContent.equals(
+					StringPool.OPEN_CURLY_BRACE)) {
+
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
+		}
+
+		if (_className.equals(JavaAnnotationFieldDefinition.class.getName())) {
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		int lineCount = StringUtil.count(_content, CharPool.NEW_LINE) + 1;
+
+		if (_className.equals(JavaEnumConstantDefinitions.class.getName()) &&
+			(!_content.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+			 (lineCount == 1) ||
+			 Objects.equals(
+				 _getIndent(_content, 1), _getIndent(_content, lineCount)))) {
 
 			return DOUBLE_LINE_BREAK_REQUIRED;
 		}
 
-		return NO_ACTION_REQUIRED;
+		if (_content.endsWith(StringPool.SEMICOLON)) {
+			if (_className.equals(JavaMethodDefinition.class.getName())) {
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
+
+			if (_className.equals(JavaBreakStatement.class.getName()) ||
+				_className.equals(JavaContinueStatement.class.getName()) ||
+				_className.equals(JavaReturnStatement.class.getName()) ||
+				_className.equals(JavaThrowStatement.class.getName())) {
+
+				return SINGLE_LINE_BREAK_REQUIRED;
+			}
+
+			return NO_ACTION_REQUIRED;
+		}
+
+		if (!_content.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+			trimmedNextJavaTermContent.startsWith(
+				StringPool.CLOSE_CURLY_BRACE)) {
+
+			return NO_ACTION_REQUIRED;
+		}
+
+		if (_className.equals(JavaClassDefinition.class.getName())) {
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (trimmedNextJavaTermContent.equals(StringPool.OPEN_CURLY_BRACE)) {
+			String lastLine = StringUtil.trim(
+				JavaParserUtil.getLastLine(_content));
+
+			if (lastLine.startsWith("new ") || lastLine.contains(" new ")) {
+				return SINGLE_LINE_BREAK_REQUIRED;
+			}
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if ((lineCount == 1) ||
+			Objects.equals(
+				_getIndent(_content, 1), _getIndent(_content, lineCount))) {
+
+			String lastLine = StringUtil.trim(
+				JavaParserUtil.getLastLine(_content));
+
+			int x = lastLine.lastIndexOf(" new ");
+
+			if ((x != -1) && (ToolsUtil.getLevel(lastLine.substring(x)) == 0)) {
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
+
+			return SINGLE_LINE_BREAK_REQUIRED;
+		}
+
+		return DOUBLE_LINE_BREAK_REQUIRED;
 	}
 
 	public ParsedJavaTerm getNextParsedJavaTerm() {
@@ -171,6 +287,24 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	protected static final int NO_ACTION_REQUIRED = 1;
 
 	protected static final int SINGLE_LINE_BREAK_REQUIRED = 2;
+
+	private String _getIndent(String s, int lineNumber) {
+		int x = -1;
+
+		for (int i = 1; i < lineNumber; i++) {
+			x = s.indexOf(CharPool.NEW_LINE, x + 1);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = x + 1;; i++) {
+			if (s.charAt(i) != CharPool.TAB) {
+				return sb.toString();
+			}
+
+			sb.append(CharPool.TAB);
+		}
+	}
 
 	private final String _className;
 	private boolean _containsCommentToken;

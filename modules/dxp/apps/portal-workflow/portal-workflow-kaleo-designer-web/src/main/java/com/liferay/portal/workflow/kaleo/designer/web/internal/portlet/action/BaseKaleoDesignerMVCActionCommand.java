@@ -73,24 +73,26 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 			return SessionErrors.isEmpty(actionRequest);
 		}
 		catch (WorkflowException we) {
+			if (_log.isWarnEnabled()) {
+				Throwable rootCause = getRootCause(we);
+
+				_log.warn(rootCause, rootCause);
+			}
+
 			hideDefaultErrorMessage(actionRequest);
 
 			SessionErrors.add(actionRequest, we.getClass(), we);
 
-			Throwable cause = we.getCause();
-
-			if (cause != null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(cause.getMessage());
-				}
-			}
-
 			return false;
 		}
 		catch (PortletException pe) {
+			_log.error(pe, pe);
+
 			throw pe;
 		}
 		catch (Exception e) {
+			_log.error(e, e);
+
 			throw new PortletException(e);
 		}
 	}
@@ -111,6 +113,14 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		Locale locale = themeDisplay.getLocale();
 
 		return ResourceBundleUtil.getBundle(locale, getClass());
+	}
+
+	protected Throwable getRootCause(Throwable throwable) {
+		if (throwable.getCause() == null) {
+			return throwable;
+		}
+
+		return getRootCause(throwable.getCause());
 	}
 
 	protected abstract String getSuccessMessage(ActionRequest actionRequest);

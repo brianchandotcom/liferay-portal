@@ -225,6 +225,8 @@
 			>
 				<include name="*.tld" />
 			</fileset>
+			<schema file="${definitions.dir}/xml.xsd" namespace="http://www.w3.org/XML/1998/namespace" />
+			<schema file="${definitions.dir}/web-jsptaglibrary_2_0.xsd" namespace="http://java.sun.com/xml/ns/j2ee" />
 		</schemavalidate>
 	</target>
 </project>

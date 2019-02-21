@@ -447,7 +447,7 @@ boolean liferayAnalyticsEnableAllGroupIds = PrefsPropsUtil.getBoolean(company.ge
 String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCompanyId(), "liferayAnalyticsGroupIds", StringPool.COMMA);
 %>
 
-<c:if test="<%= _isAnalyticsTrackingEnabled(liferayAnalyticsKey, liferayAnalyticsDataSourceId, liferayAnalyticsEndpointURL, liferayAnalyticsEnableAllGroupIds, liferayAnalyticsGroupIds, String.valueOf(group.getGroupId()), layout.isTypeControlPanel()) %>">
+<c:if test="<%= _isAnalyticsTrackingEnabled(liferayAnalyticsKey, liferayAnalyticsDataSourceId, liferayAnalyticsEndpointURL, liferayAnalyticsEnableAllGroupIds, liferayAnalyticsGroupIds, group, layout.isTypeControlPanel(), request) %>">
 	<script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
 		(function(u, c, a, m, o, l) {
 			o = 'script';
@@ -628,7 +628,7 @@ private static String _getDateFormatPattern(Locale locale) {
 	return dateFormatPattern;
 }
 
-private static boolean _isAnalyticsTrackingEnabled(String liferayAnalyticsKey, String liferayAnalyticsDataSourceId, String liferayAnalyticsEndpointURL, boolean liferayAnalyticsEnableAllGroupIds, String[] liferayAnalyticsGroupIds, String groupId, boolean controlPanel) {
+private static boolean _isAnalyticsTrackingEnabled(String liferayAnalyticsKey, String liferayAnalyticsDataSourceId, String liferayAnalyticsEndpointURL, boolean liferayAnalyticsEnableAllGroupIds, String[] liferayAnalyticsGroupIds, Group group, boolean controlPanel, HttpServletRequest request) {
 	if (controlPanel) {
 		return false;
 	}
@@ -645,8 +645,20 @@ private static boolean _isAnalyticsTrackingEnabled(String liferayAnalyticsKey, S
 		return false;
 	}
 
-	if (liferayAnalyticsEnableAllGroupIds || ArrayUtil.contains(liferayAnalyticsGroupIds, groupId)) {
+	if (_isSharedFormEnabled(liferayAnalyticsGroupIds, group, request)) {
 		return true;
+	}
+
+	if (liferayAnalyticsEnableAllGroupIds || ArrayUtil.contains(liferayAnalyticsGroupIds, String.valueOf(group.getGroupId()))) {
+		return true;
+	}
+
+	return false;
+}
+
+private static boolean _isSharedFormEnabled(String[] liferayAnalyticsGroupIds, Group group, HttpServletRequest request) {
+	if (Objects.equals(group.getGroupKey(), "Forms")) {
+		return ArrayUtil.contains(liferayAnalyticsGroupIds, String.valueOf(request.getAttribute("refererGroupId")));
 	}
 
 	return false;

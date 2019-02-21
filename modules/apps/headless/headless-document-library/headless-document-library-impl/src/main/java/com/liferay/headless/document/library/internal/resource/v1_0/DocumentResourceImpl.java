@@ -34,6 +34,7 @@ import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.internal.dto.v1_0.AdaptedImagesImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.CategoriesImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.DocumentEntityModel;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
@@ -64,6 +65,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,6 +247,12 @@ public class DocumentResourceImpl
 		);
 	}
 
+	private Long[] _getCategoryIds(FileEntry fileEntry) {
+		return ArrayUtil.toArray(
+			_assetCategoryLocalService.getCategoryIds(
+				FileEntry.class.getName(), fileEntry.getFileEntryId()));
+	}
+
 	private Page<Document> _getDocumentsPage(
 			Consumer<BooleanQuery> booleanQueryConsumer, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -340,7 +348,11 @@ public class DocumentResourceImpl
 		return new DocumentImpl() {
 			{
 				adaptedImages = _getAdaptiveMedias(fileEntry);
+				aggregateRating = AggregateRatingUtil.toAggregateRating(
+					_ratingsStatsLocalService.fetchStats(
+						FileEntry.class.getName(), fileEntry.getFileEntryId()));
 				categories = _getCategories(fileEntry);
+				categoryIds = _getCategoryIds(fileEntry);
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);
@@ -383,6 +395,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
 	private SearchResultPermissionFilterFactory

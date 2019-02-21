@@ -97,7 +97,8 @@ public class CommentResourceImpl
 
 		Discussion discussion = _commentManager.getDiscussion(
 			blogsEntry.getUserId(), blogsEntry.getGroupId(),
-			BlogsEntry.class.getName(), blogPostingId, null);
+			BlogsEntry.class.getName(), blogPostingId,
+			_createServiceContextFunction());
 
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();

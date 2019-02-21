@@ -229,7 +229,7 @@ public class DBUpgrader {
 		// Update indexes
 
 		if (StartupHelperUtil.isUpgraded() ||
-				PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
+			PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
 
 			StartupHelperUtil.setDropIndexes(true);
 

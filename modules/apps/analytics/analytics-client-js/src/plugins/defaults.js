@@ -1,4 +1,5 @@
 import blogs from './blogs';
+import custom from './custom';
 import documents from './documents';
 import forms from './forms';
 import resolution from './resolution';
@@ -13,6 +14,7 @@ export default [
 	resolution,
 
 	blogs,
+	custom,
 	documents,
 	forms,
 	scrolling,

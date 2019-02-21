@@ -121,10 +121,10 @@ public class RESTBuilder {
 
 			context.put("versionDirName", versionDirName);
 
-			_createJSONMessageBodyReaderFile(context, versionDirName);
 			_createGraphQLMutationFile(context, versionDirName);
 			_createGraphQLQueryFile(context, versionDirName);
 			_createGraphQLServletDataFile(context, versionDirName);
+			_createObjectMapperContextResolver(context, versionDirName);
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 				String schemaName = entry.getKey();
@@ -421,7 +421,7 @@ public class RESTBuilder {
 				_copyrightFileName, "graphql_servlet_data", context));
 	}
 
-	private void _createJSONMessageBodyReaderFile(
+	private void _createObjectMapperContextResolver(
 			Map<String, Object> context, String versionDirName)
 		throws Exception {
 
@@ -434,9 +434,9 @@ public class RESTBuilder {
 
 		sb.append(apiPackagePath.replace('.', '/'));
 
-		sb.append("/internal/jaxrs/message/body/");
+		sb.append("/internal/jaxrs/context/resolver/");
 		sb.append(versionDirName);
-		sb.append("/JSONMessageBodyReader.java");
+		sb.append("/ObjectMapperContextResolver.java");
 
 		File file = new File(sb.toString());
 
@@ -445,7 +445,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFileName, "json_message_body_reader", context));
+				_copyrightFileName, "object_mapper_context_resolver", context));
 	}
 
 	private void _createPropertiesFile(

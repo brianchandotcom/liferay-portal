@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.internal.jaxrs.message.body.${versionDirName};
+package ${configYAML.apiPackagePath}.internal.jaxrs.context.resolver.${versionDirName};
 
 <#compress>
 	<#list allSchemas?keys as schemaName>
@@ -8,24 +8,16 @@ package ${configYAML.apiPackagePath}.internal.jaxrs.message.body.${versionDirNam
 </#compress>
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,37 +30,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=${configYAML.application.name})",
-		"osgi.jaxrs.name=${configYAML.application.name}.${versionDirName}.JSONMessageBodyReader"
+		"osgi.jaxrs.name=${configYAML.application.name}.${versionDirName}.ObjectMapperContextResolver"
 	},
-	service = MessageBodyReader.class
+	service = ContextResolver.class
 )
-@Consumes(MediaType.APPLICATION_JSON)
 @Generated("")
 @Provider
-public class JSONMessageBodyReader implements MessageBodyReader<Object> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
-	@Override
-	public boolean isReadable(
-		Class<?> clazz, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
-		<#list allSchemas?keys as schemaName>
-			if (clazz.equals(${schemaName}.class)) {
-				return true;
-			}
-		</#list>
-
-		return false;
-	}
-
-	@Override
-	public Object readFrom(
-			Class<Object> clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException, WebApplicationException {
-
-		return _objectMapper.readValue(inputStream, clazz);
+	public ObjectMapper getContext(Class<?> aClass) {
+		return _objectMapper;
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
@@ -80,13 +52,15 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 							new SimpleAbstractTypeResolver() {
 								{
 									<#list allSchemas?keys as schemaName>
-										addMapping(${schemaName}.class, ${schemaName}Impl.class);
+									addMapping(${schemaName}.class, ${schemaName}Impl.class);
 									</#list>
 								}
 							});
-					}
+						}
 				});
 
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());
 		}
 	};

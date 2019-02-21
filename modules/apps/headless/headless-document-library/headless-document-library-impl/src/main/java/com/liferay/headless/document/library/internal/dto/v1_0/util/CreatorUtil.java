@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.internal.dto.v1_0.util;
 
-import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.headless.document.library.internal.dto.v1_0.CreatorImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -27,7 +26,7 @@ import com.liferay.portal.kernel.util.Portal;
  */
 public class CreatorUtil {
 
-	public static Creator toCreator(Portal portal, User user) {
+	public static CreatorImpl toCreator(Portal portal, User user) {
 		if ((user == null) || user.isDefaultUser()) {
 			return null;
 		}

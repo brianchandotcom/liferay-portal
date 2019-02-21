@@ -91,7 +91,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Page<Document> getContentSpaceDocumentsPage(
+	public Page<DocumentImpl> getContentSpaceDocumentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -112,7 +112,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Document getDocument(Long documentId) throws Exception {
+	public DocumentImpl getDocument(Long documentId) throws Exception {
 		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
 
 		return _toDocument(fileEntry);
@@ -124,7 +124,7 @@ public class DocumentResourceImpl
 	}
 
 	@Override
-	public Page<Document> getFolderDocumentsPage(
+	public Page<DocumentImpl> getFolderDocumentsPage(
 			Long folderId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -193,7 +193,7 @@ public class DocumentResourceImpl
 		);
 	}
 
-	private Page<Document> _getDocumentsPage(
+	private Page<DocumentImpl> _getDocumentsPage(
 			Consumer<BooleanQuery> booleanQueryConsumer, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -254,13 +254,13 @@ public class DocumentResourceImpl
 		};
 	}
 
-	private Document _toDocument(FileEntry fileEntry) throws Exception {
+	private DocumentImpl _toDocument(FileEntry fileEntry) throws Exception {
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
 			_userLocalService.getUserById(fileEntry.getUserId()));
 	}
 
-	private Document _toDocument(
+	private DocumentImpl _toDocument(
 			FileEntry fileEntry, FileVersion fileVersion, User user)
 		throws Exception {
 

@@ -80,12 +80,12 @@ public class CategoryResourceImpl
 	}
 
 	@Override
-	public Category getCategory(Long categoryId) throws Exception {
+	public CategoryImpl getCategory(Long categoryId) throws Exception {
 		return _toCategory(_assetCategoryService.getCategory(categoryId));
 	}
 
 	@Override
-	public Page<Category> getCategoryCategoriesPage(
+	public Page<CategoryImpl> getCategoryCategoriesPage(
 			Long categoryId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -111,7 +111,7 @@ public class CategoryResourceImpl
 	}
 
 	@Override
-	public Page<Category> getVocabularyCategoriesPage(
+	public Page<CategoryImpl> getVocabularyCategoriesPage(
 			Long vocabularyId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -133,7 +133,7 @@ public class CategoryResourceImpl
 	}
 
 	@Override
-	public Category postCategoryCategory(Long categoryId, Category category)
+	public CategoryImpl postCategoryCategory(Long categoryId, Category category)
 		throws Exception {
 
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
@@ -152,7 +152,8 @@ public class CategoryResourceImpl
 	}
 
 	@Override
-	public Category postVocabularyCategory(Long vocabularyId, Category category)
+	public CategoryImpl postVocabularyCategory(
+			Long vocabularyId, Category category)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
@@ -171,7 +172,7 @@ public class CategoryResourceImpl
 	}
 
 	@Override
-	public Category putCategory(Long categoryId, Category category)
+	public CategoryImpl putCategory(Long categoryId, Category category)
 		throws Exception {
 
 		AssetCategory assetCategory = _assetCategoryService.getCategory(
@@ -193,7 +194,7 @@ public class CategoryResourceImpl
 				assetCategory.getVocabularyId(), null, new ServiceContext()));
 	}
 
-	private Page<Category> _getCategoriesPage(
+	private Page<CategoryImpl> _getCategoriesPage(
 			Consumer<BooleanQuery> booleanQueryConsumer, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -223,7 +224,9 @@ public class CategoryResourceImpl
 			assetCategories.size());
 	}
 
-	private Category _toCategory(AssetCategory assetCategory) throws Exception {
+	private CategoryImpl _toCategory(AssetCategory assetCategory)
+		throws Exception {
+
 		return new CategoryImpl() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(

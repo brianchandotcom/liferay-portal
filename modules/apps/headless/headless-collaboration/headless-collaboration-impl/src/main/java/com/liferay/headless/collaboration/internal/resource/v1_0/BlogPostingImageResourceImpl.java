@@ -16,7 +16,6 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImageImpl;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -44,7 +43,7 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
-	public BlogPostingImage getImageObject(Long imageObjectId)
+	public BlogPostingImageImpl getImageObject(Long imageObjectId)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(imageObjectId);
@@ -52,7 +51,7 @@ public class BlogPostingImageResourceImpl
 		return _toBlogPostingImage(fileEntry, fileEntry.getFileVersion());
 	}
 
-	private BlogPostingImage _toBlogPostingImage(
+	private BlogPostingImageImpl _toBlogPostingImage(
 		FileEntry fileEntry, FileVersion fileVersion) {
 
 		return new BlogPostingImageImpl() {

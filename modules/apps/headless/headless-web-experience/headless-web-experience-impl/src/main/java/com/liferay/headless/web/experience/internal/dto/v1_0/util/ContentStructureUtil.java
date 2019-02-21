@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.dto.v1_0.Fields;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureImpl;
@@ -41,7 +40,7 @@ import java.util.stream.Stream;
  */
 public class ContentStructureUtil {
 
-	public static ContentStructure toContentStructure(
+	public static ContentStructureImpl toContentStructure(
 			DDMStructure ddmStructure, Locale locale, Portal portal,
 			UserLocalService userLocalService)
 		throws Exception {

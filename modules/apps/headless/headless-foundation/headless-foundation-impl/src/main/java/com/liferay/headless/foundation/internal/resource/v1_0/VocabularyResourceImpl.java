@@ -70,7 +70,7 @@ public class VocabularyResourceImpl
 	}
 
 	@Override
-	public Page<Vocabulary> getContentSpaceVocabulariesPage(
+	public Page<VocabularyImpl> getContentSpaceVocabulariesPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -111,13 +111,13 @@ public class VocabularyResourceImpl
 	}
 
 	@Override
-	public Vocabulary getVocabulary(Long vocabularyId) throws Exception {
+	public VocabularyImpl getVocabulary(Long vocabularyId) throws Exception {
 		return _toVocabulary(
 			_assetVocabularyService.getVocabulary(vocabularyId));
 	}
 
 	@Override
-	public Vocabulary postContentSpaceVocabulary(
+	public VocabularyImpl postContentSpaceVocabulary(
 			Long contentSpaceId, Vocabulary vocabulary)
 		throws Exception {
 
@@ -134,7 +134,8 @@ public class VocabularyResourceImpl
 	}
 
 	@Override
-	public Vocabulary putVocabulary(Long vocabularyId, Vocabulary vocabulary)
+	public VocabularyImpl putVocabulary(
+			Long vocabularyId, Vocabulary vocabulary)
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
@@ -156,7 +157,7 @@ public class VocabularyResourceImpl
 				null, new ServiceContext()));
 	}
 
-	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary)
+	private VocabularyImpl _toVocabulary(AssetVocabulary assetVocabulary)
 		throws Exception {
 
 		return new VocabularyImpl() {

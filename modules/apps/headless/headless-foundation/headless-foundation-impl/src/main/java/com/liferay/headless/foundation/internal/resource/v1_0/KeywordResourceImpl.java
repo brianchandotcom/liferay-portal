@@ -69,7 +69,7 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public Page<Keyword> getContentSpaceKeywordsPage(
+	public Page<KeywordImpl> getContentSpaceKeywordsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -107,12 +107,13 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public Keyword getKeyword(Long keywordId) throws Exception {
+	public KeywordImpl getKeyword(Long keywordId) throws Exception {
 		return _toKeyword(_assetTagService.getTag(keywordId));
 	}
 
 	@Override
-	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
+	public KeywordImpl postContentSpaceKeyword(
+			Long contentSpaceId, Keyword keyword)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -138,7 +139,7 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public Keyword putKeyword(Long keywordId, Keyword keyword)
+	public KeywordImpl putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
 		try {
@@ -156,7 +157,7 @@ public class KeywordResourceImpl
 		}
 	}
 
-	private Keyword _toKeyword(AssetTag assetTag) throws Exception {
+	private KeywordImpl _toKeyword(AssetTag assetTag) throws Exception {
 		return new KeywordImpl() {
 			{
 				contentSpace = assetTag.getGroupId();

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.collaboration.internal.dto.v1_0.util;
 
-import com.liferay.headless.collaboration.dto.v1_0.AggregateRating;
 import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingImpl;
 import com.liferay.ratings.kernel.model.RatingsStats;
 
@@ -23,7 +22,9 @@ import com.liferay.ratings.kernel.model.RatingsStats;
  */
 public class AggregateRatingUtil {
 
-	public static AggregateRating toAggregateRating(RatingsStats ratingsStats) {
+	public static AggregateRatingImpl toAggregateRating(
+		RatingsStats ratingsStats) {
+
 		if (ratingsStats == null) {
 			return null;
 		}

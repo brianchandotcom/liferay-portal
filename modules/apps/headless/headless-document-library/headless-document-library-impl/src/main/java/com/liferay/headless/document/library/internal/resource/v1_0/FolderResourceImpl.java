@@ -44,7 +44,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Page<Folder> getContentSpaceFoldersPage(
+	public Page<FolderImpl> getContentSpaceFoldersPage(
 			Long contentSpaceId, Pagination pagination)
 		throws Exception {
 
@@ -54,12 +54,12 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder getFolder(Long folderId) throws Exception {
+	public FolderImpl getFolder(Long folderId) throws Exception {
 		return _toFolder(_dlAppService.getFolder(folderId));
 	}
 
 	@Override
-	public Page<Folder> getFolderFoldersPage(
+	public Page<FolderImpl> getFolderFoldersPage(
 			Long folderId, Pagination pagination)
 		throws Exception {
 
@@ -70,14 +70,14 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
+	public FolderImpl postContentSpaceFolder(Long contentSpaceId, Folder folder)
 		throws Exception {
 
 		return _addFolder(contentSpaceId, 0L, folder);
 	}
 
 	@Override
-	public Folder postFolderFolder(Long folderId, Folder folder)
+	public FolderImpl postFolderFolder(Long folderId, Folder folder)
 		throws Exception {
 
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
@@ -87,14 +87,14 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
-	public Folder putFolder(Long folderId, Folder folder) throws Exception {
+	public FolderImpl putFolder(Long folderId, Folder folder) throws Exception {
 		return _toFolder(
 			_dlAppService.updateFolder(
 				folderId, folder.getName(), folder.getDescription(),
 				new ServiceContext()));
 	}
 
-	private Folder _addFolder(
+	private FolderImpl _addFolder(
 			Long documentsRepositoryId, Long parentFolderId, Folder folder)
 		throws Exception {
 
@@ -104,7 +104,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				folder.getDescription(), new ServiceContext()));
 	}
 
-	private Page<Folder> _getFolderPage(
+	private Page<FolderImpl> _getFolderPage(
 			Long documentsRepositoryId, Long parentFolderId,
 			Pagination pagination)
 		throws Exception {
@@ -121,7 +121,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				documentsRepositoryId, parentFolderId));
 	}
 
-	private Folder _toFolder(
+	private FolderImpl _toFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder) {
 
 		return new FolderImpl() {

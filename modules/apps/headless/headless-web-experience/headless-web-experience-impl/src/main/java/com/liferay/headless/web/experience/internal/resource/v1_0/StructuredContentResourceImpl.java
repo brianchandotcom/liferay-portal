@@ -144,7 +144,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent>
+	public Page<StructuredContentImpl>
 			getContentSpaceContentStructureStructuredContentsPage(
 				Long contentSpaceId, Long contentStructureId, Filter filter,
 				Pagination pagination, Sort[] sorts)
@@ -184,7 +184,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+	public Page<StructuredContentImpl> getContentSpaceStructuredContentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -216,7 +216,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent getStructuredContent(Long structuredContentId)
+	public StructuredContentImpl getStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		return _toStructuredContent(
@@ -260,7 +260,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent postContentSpaceStructuredContent(
+	public StructuredContentImpl postContentSpaceStructuredContent(
 			Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -302,7 +302,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public StructuredContent putStructuredContent(
+	public StructuredContentImpl putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
@@ -578,7 +578,7 @@ public class StructuredContentResourceImpl
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
-	private StructuredContent _toStructuredContent(
+	private StructuredContentImpl _toStructuredContent(
 			JournalArticle journalArticle)
 		throws Exception {
 

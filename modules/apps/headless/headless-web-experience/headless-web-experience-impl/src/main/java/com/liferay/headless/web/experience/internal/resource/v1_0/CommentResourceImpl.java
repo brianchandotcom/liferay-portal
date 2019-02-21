@@ -15,6 +15,7 @@
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import com.liferay.headless.web.experience.dto.v1_0.Comment;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CommentImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.journal.model.JournalArticle;
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 	@Override
-	public Comment getComment(Long commentId) throws Exception {
+	public CommentImpl getComment(Long commentId) throws Exception {
 		com.liferay.portal.kernel.comment.Comment comment =
 			_commentManager.fetchComment(commentId);
 
@@ -56,7 +57,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Page<Comment> getCommentCommentsPage(
+	public Page<CommentImpl> getCommentCommentsPage(
 			Long commentId, Pagination pagination)
 		throws Exception {
 
@@ -74,7 +75,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Page<Comment> getStructuredContentCommentsPage(
+	public Page<CommentImpl> getStructuredContentCommentsPage(
 			Long structuredContentId, Pagination pagination)
 		throws Exception {
 

@@ -16,7 +16,7 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.odata.entity.v1_0.ContentStructureEntityModel;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
@@ -57,7 +57,7 @@ public class ContentStructureResourceImpl
 	extends BaseContentStructureResourceImpl implements EntityModelResource {
 
 	@Override
-	public Page<ContentStructure> getContentSpaceContentStructuresPage(
+	public Page<ContentStructureImpl> getContentSpaceContentStructuresPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -93,7 +93,7 @@ public class ContentStructureResourceImpl
 	}
 
 	@Override
-	public ContentStructure getContentStructure(Long contentStructureId)
+	public ContentStructureImpl getContentStructure(Long contentStructureId)
 		throws Exception {
 
 		return _toContentStructure(
@@ -105,7 +105,7 @@ public class ContentStructureResourceImpl
 		return _entityModel;
 	}
 
-	private ContentStructure _toContentStructure(DDMStructure ddmStructure)
+	private ContentStructureImpl _toContentStructure(DDMStructure ddmStructure)
 		throws Exception {
 
 		return ContentStructureUtil.toContentStructure(

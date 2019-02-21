@@ -14,8 +14,8 @@
 
 package com.liferay.headless.document.library.internal.dto.v1_0.util;
 
-import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.internal.dto.v1_0.CommentImpl;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.util.Portal;
 
 /**
@@ -23,8 +23,7 @@ import com.liferay.portal.kernel.util.Portal;
  */
 public class CommentUtil {
 
-	public static Comment toComment(
-			com.liferay.portal.kernel.comment.Comment comment, Portal portal)
+	public static CommentImpl toComment(Comment comment, Portal portal)
 		throws Exception {
 
 		if (comment == null) {

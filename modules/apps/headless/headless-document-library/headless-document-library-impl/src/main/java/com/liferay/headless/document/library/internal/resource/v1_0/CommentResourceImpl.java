@@ -16,7 +16,7 @@ package com.liferay.headless.document.library.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
-import com.liferay.headless.document.library.dto.v1_0.Comment;
+import com.liferay.headless.document.library.internal.dto.v1_0.CommentImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 	@Override
-	public Page<Comment> getDocumentCommentsPage(
+	public Page<CommentImpl> getDocumentCommentsPage(
 			Long fileEntryId, Pagination pagination)
 		throws Exception {
 

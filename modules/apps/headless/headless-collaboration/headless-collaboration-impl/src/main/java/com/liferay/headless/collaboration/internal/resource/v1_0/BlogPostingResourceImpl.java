@@ -76,14 +76,14 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
-	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
+	public BlogPostingImpl getBlogPosting(Long blogPostingId) throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return _toBlogPosting(blogsEntry);
 	}
 
 	@Override
-	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
+	public Page<BlogPostingImpl> getContentSpaceBlogPostingsPage(
 		Long parentId, Pagination pagination) {
 
 		return Page.of(
@@ -98,7 +98,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
-	public BlogPosting postContentSpaceBlogPosting(
+	public BlogPostingImpl postContentSpaceBlogPosting(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -118,7 +118,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
-	public BlogPosting putBlogPosting(
+	public BlogPostingImpl putBlogPosting(
 			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
@@ -249,7 +249,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		return false;
 	}
 
-	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
+	private BlogPostingImpl _toBlogPosting(BlogsEntry blogsEntry)
+		throws Exception {
+
 		return new BlogPostingImpl() {
 			{
 				alternativeHeadline = blogsEntry.getSubtitle();

@@ -17,6 +17,7 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CommentImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
@@ -65,7 +66,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Page<Comment> getBlogPostingCommentsPage(
+	public Page<CommentImpl> getBlogPostingCommentsPage(
 			Long blogPostingId, Pagination pagination)
 		throws Exception {
 
@@ -94,7 +95,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Comment getComment(Long commentId) throws Exception {
+	public CommentImpl getComment(Long commentId) throws Exception {
 		com.liferay.portal.kernel.comment.Comment comment =
 			_commentManager.fetchComment(commentId);
 
@@ -104,7 +105,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Page<Comment> getCommentCommentsPage(
+	public Page<CommentImpl> getCommentCommentsPage(
 			Long commentId, Pagination pagination)
 		throws Exception {
 
@@ -122,7 +123,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
+	public CommentImpl postBlogPostingComment(
+			Long blogPostingId, Comment comment)
 		throws Exception {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
@@ -137,7 +139,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Comment postCommentComment(Long parentCommentId, Comment comment)
+	public CommentImpl postCommentComment(Long parentCommentId, Comment comment)
 		throws Exception {
 
 		com.liferay.portal.kernel.comment.Comment parentComment =
@@ -157,7 +159,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	}
 
 	@Override
-	public Comment putComment(Long commentId, Comment comment)
+	public CommentImpl putComment(Long commentId, Comment comment)
 		throws Exception {
 
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
@@ -228,7 +230,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		return permissionChecker.getUserId();
 	}
 
-	private Comment _postComment(
+	private CommentImpl _postComment(
 			long groupId, long classPK,
 			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier)
 		throws Exception {

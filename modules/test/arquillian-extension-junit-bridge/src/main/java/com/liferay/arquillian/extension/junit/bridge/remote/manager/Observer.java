@@ -36,17 +36,11 @@ public class Observer implements Comparable<Observer> {
 			return 1;
 		}
 
-		Method method = getMethod();
+		String methodName = _method.getName();
 
-		String methodName = method.getName();
-
-		method = observer.getMethod();
+		Method method = observer._method;
 
 		return methodName.compareTo(method.getName());
-	}
-
-	public Method getMethod() {
-		return _method;
 	}
 
 	public Type getType() {
@@ -92,9 +86,7 @@ public class Observer implements Comparable<Observer> {
 	}
 
 	private Object[] _resolveArguments(Manager manager, Object event) {
-		Method method = getMethod();
-
-		Class<?>[] argumentTypes = method.getParameterTypes();
+		Class<?>[] argumentTypes = _method.getParameterTypes();
 
 		int numberOfArguments = argumentTypes.length;
 

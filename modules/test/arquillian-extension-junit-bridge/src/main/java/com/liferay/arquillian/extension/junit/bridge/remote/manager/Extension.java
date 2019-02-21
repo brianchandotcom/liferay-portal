@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.core.spi.EventPoint;
 
 /**
  * @author Matthew Tambara
@@ -34,10 +33,6 @@ public class Extension {
 	public Extension(Object target) {
 		_injectionPoints = _injections(target);
 		_observers = _observers(target);
-	}
-
-	public List<EventPoint> getEventPoints() {
-		return Collections.<EventPoint>emptyList();
 	}
 
 	public List<InjectionPoint> getInjectionPoints() {

@@ -24,11 +24,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Stack;
 
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
-import org.jboss.arquillian.core.api.event.ManagerStopping;
 import org.jboss.arquillian.core.spi.HashObjectStore;
 import org.jboss.arquillian.core.spi.InvocationException;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
@@ -105,18 +103,6 @@ public class Manager {
 		}
 	}
 
-	public <T> T getContext(Class<T> type) {
-		if (type.equals(ApplicationContext.class)) {
-			return type.cast(_applicationContext);
-		}
-
-		return null;
-	}
-
-	public void inject(Object obj) {
-		_inject(new Extension(obj));
-	}
-
 	public <T> T resolve(Class<T> type) {
 		if (!_applicationContext.isActive()) {
 			return null;
@@ -131,20 +117,6 @@ public class Manager {
 		}
 
 		return null;
-	}
-
-	public void shutdown() {
-		fire(new ManagerStopping());
-
-		synchronized (this) {
-			_applicationContext.clearAll();
-
-			_extensions.clear();
-
-			if (_eventStack != null) {
-				_eventStack.remove();
-			}
-		}
 	}
 
 	public void start() {
@@ -220,14 +192,13 @@ public class Manager {
 		}
 
 		if (nonManagedObserver != null) {
-			inject(nonManagedObserver);
+			_inject(new Extension(nonManagedObserver));
 
 			nonManagedObserver.fired(event);
 		}
 	}
 
 	private final ApplicationContext _applicationContext;
-	private ThreadLocal<Stack<Object>> _eventStack;
 	private final List<Extension> _extensions = new ArrayList<>();
 
 	private class ApplicationContextImpl

@@ -751,6 +751,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					Indexer<MBMessage> indexer =
 						IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
+
 					indexer.reindex(childrenMessages);
 				}
 				else if (message.getStatus() ==

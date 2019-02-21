@@ -80,6 +80,7 @@ public class DEDataRecordCollectionSearchRequest {
 		private final DEDataRecordCollectionSearchRequest
 			_deDataRecordCollectionSearchRequest =
 				new DEDataRecordCollectionSearchRequest();
+
 	}
 
 	private DEDataRecordCollectionSearchRequest() {

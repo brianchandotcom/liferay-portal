@@ -54,11 +54,13 @@ public class DEDataRecordCollectionSearchResponse {
 
 		private final DEDataRecordCollectionSearchResponse
 			_deDataRecordCollectionSearchResponse =
-			new DEDataRecordCollectionSearchResponse();
+				new DEDataRecordCollectionSearchResponse();
+
 	}
 
 	private DEDataRecordCollectionSearchResponse() {
 	}
 
 	private List<DEDataRecordCollection> _deDataRecordCollections;
+
 }

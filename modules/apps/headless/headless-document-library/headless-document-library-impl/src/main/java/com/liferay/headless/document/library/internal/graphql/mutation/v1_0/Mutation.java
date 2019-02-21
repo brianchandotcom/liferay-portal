@@ -14,8 +14,10 @@
 
 package com.liferay.headless.document.library.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -37,6 +39,40 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteComment(
+	@GraphQLName("comment-id") Long commentId)
+			throws Exception {
+
+				return _getCommentResource().deleteComment(
+					commentId);
+	}
+	@GraphQLInvokeDetached
+	public Comment putComment(
+	@GraphQLName("comment-id") Long commentId,@GraphQLName("Comment") Comment comment)
+			throws Exception {
+
+				return _getCommentResource().putComment(
+					commentId,comment);
+	}
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postCommentComment(
+	@GraphQLName("comment-id") Long commentId,@GraphQLName("Comment") Comment comment)
+			throws Exception {
+
+				return _getCommentResource().postCommentComment(
+					commentId,comment);
+	}
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postDocumentComment(
+	@GraphQLName("document-id") Long documentId,@GraphQLName("Comment") Comment comment)
+			throws Exception {
+
+				return _getCommentResource().postDocumentComment(
+					documentId,comment);
+	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Document postContentSpaceDocument(
@@ -98,6 +134,12 @@ public class Mutation {
 					folderId,folder);
 	}
 
+	private static CommentResource _getCommentResource() {
+			return _commentResourceServiceTracker.getService();
+	}
+
+	private static final ServiceTracker<CommentResource, CommentResource>
+			_commentResourceServiceTracker;
 	private static DocumentResource _getDocumentResource() {
 			return _documentResourceServiceTracker.getService();
 	}
@@ -114,6 +156,16 @@ public class Mutation {
 		static {
 			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
+				ServiceTracker<CommentResource, CommentResource>
+					commentResourceServiceTracker =
+						new ServiceTracker<>(
+							bundle.getBundleContext(),
+							CommentResource.class, null);
+
+				commentResourceServiceTracker.open();
+
+				_commentResourceServiceTracker =
+					commentResourceServiceTracker;
 				ServiceTracker<DocumentResource, DocumentResource>
 					documentResourceServiceTracker =
 						new ServiceTracker<>(

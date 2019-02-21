@@ -14,7 +14,9 @@
 
 package com.liferay.headless.web.experience.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.web.experience.dto.v1_0.Comment;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentImageResource;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
 
@@ -35,6 +37,40 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteComment(
+	@GraphQLName("comment-id") Long commentId)
+			throws Exception {
+
+				return _getCommentResource().deleteComment(
+					commentId);
+	}
+	@GraphQLInvokeDetached
+	public Comment putComment(
+	@GraphQLName("comment-id") Long commentId,@GraphQLName("Comment") Comment comment)
+			throws Exception {
+
+				return _getCommentResource().putComment(
+					commentId,comment);
+	}
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postCommentComment(
+	@GraphQLName("comment-id") Long commentId,@GraphQLName("Comment") Comment comment)
+			throws Exception {
+
+				return _getCommentResource().postCommentComment(
+					commentId,comment);
+	}
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Comment postStructuredContentComment(
+	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("Comment") Comment comment)
+			throws Exception {
+
+				return _getCommentResource().postStructuredContentComment(
+					structuredContentId,comment);
+	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContent postContentSpaceStructuredContent(
@@ -77,6 +113,12 @@ public class Mutation {
 					structuredContentId,contentDocumentId);
 	}
 
+	private static CommentResource _getCommentResource() {
+			return _commentResourceServiceTracker.getService();
+	}
+
+	private static final ServiceTracker<CommentResource, CommentResource>
+			_commentResourceServiceTracker;
 	private static StructuredContentResource _getStructuredContentResource() {
 			return _structuredContentResourceServiceTracker.getService();
 	}
@@ -93,6 +135,16 @@ public class Mutation {
 		static {
 			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
 
+				ServiceTracker<CommentResource, CommentResource>
+					commentResourceServiceTracker =
+						new ServiceTracker<>(
+							bundle.getBundleContext(),
+							CommentResource.class, null);
+
+				commentResourceServiceTracker.open();
+
+				_commentResourceServiceTracker =
+					commentResourceServiceTracker;
 				ServiceTracker<StructuredContentResource, StructuredContentResource>
 					structuredContentResourceServiceTracker =
 						new ServiceTracker<>(

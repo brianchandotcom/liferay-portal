@@ -72,7 +72,9 @@ public class AssetCategoryModelDocumentContributor
 			assetCategory.getDescriptionMap());
 
 		document.addText(Field.NAME, assetCategory.getName());
-		document.addText(Field.TITLE, assetCategory.getTitle());
+		document.addText(
+			Field.TITLE,
+			assetCategory.getTitle(assetCategory.getDefaultLanguageId()));
 		document.addLocalizedKeyword(
 			Field.TITLE,
 			_populateMap(assetCategory, assetCategory.getTitleMap()), true,

@@ -57,7 +57,9 @@ public class AssetVocabularyModelDocumentContributor
 			assetVocabulary.getDescriptionMap());
 
 		document.addText(Field.NAME, assetVocabulary.getName());
-		document.addText(Field.TITLE, assetVocabulary.getTitle());
+		document.addText(
+			Field.TITLE,
+			assetVocabulary.getTitle(assetVocabulary.getDefaultLanguageId()));
 		document.addLocalizedKeyword(
 			Field.TITLE,
 			_populateMap(assetVocabulary, assetVocabulary.getTitleMap()), true,

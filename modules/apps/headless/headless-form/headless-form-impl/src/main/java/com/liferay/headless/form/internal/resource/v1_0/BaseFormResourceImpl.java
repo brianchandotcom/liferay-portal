@@ -55,53 +55,57 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Path("/content-spaces/{content-space-id}/form")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Form> getContentSpaceFormsPage(
+	public Page<FormImpl> getContentSpaceFormsPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/forms/{form-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getForm(
+	public FormImpl getForm(
 	@PathParam("form-id") Long formId)
 			throws Exception {
 
 				return new FormImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/evaluate-context")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormEvaluateContext(
+	public FormImpl postFormEvaluateContext(
 	@PathParam("form-id") Long formId,Form form)
 			throws Exception {
 
 				return new FormImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/forms/{form-id}/fetch-latest-draft")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Form getFormFetchLatestDraft(
+	public FormImpl getFormFetchLatestDraft(
 	@PathParam("form-id") Long formId)
 			throws Exception {
 
 				return new FormImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/upload-file")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public Form postFormUploadFile(
+	public FormImpl postFormUploadFile(
 	@PathParam("form-id") Long formId,Form form)
 			throws Exception {
 

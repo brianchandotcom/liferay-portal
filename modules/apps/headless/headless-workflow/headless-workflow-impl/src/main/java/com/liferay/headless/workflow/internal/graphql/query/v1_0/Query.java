@@ -44,7 +44,7 @@ public class Query {
 	@GraphQLName("workflow-log-id") Long workflowLogId)
 			throws Exception {
 
-				WorkflowLogResourceImpl workflowLogResourceImpl = _getWorkflowLogResource();
+				WorkflowLogResourceImpl workflowLogResourceImpl = _getWorkflowLogResourceImpl();
 
 				workflowLogResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
@@ -55,11 +55,11 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTaskImpl> getWorkflowTaskWorkflowLogsPage(
+	public Collection<WorkflowLogImpl> getWorkflowTaskWorkflowLogsPage(
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				WorkflowLogResourceImpl workflowLogResourceImpl = _getWorkflowLogResource();
+				WorkflowLogResourceImpl workflowLogResourceImpl = _getWorkflowLogResourceImpl();
 
 				workflowLogResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
@@ -76,7 +76,7 @@ public class Query {
 	@GraphQLName("role-id") Long roleId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResource();
+				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResourceImpl();
 
 				workflowTaskResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
@@ -93,7 +93,7 @@ public class Query {
 	@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResource();
+				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResourceImpl();
 
 				workflowTaskResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
@@ -110,7 +110,7 @@ public class Query {
 	@GraphQLName("workflow-task-id") Long workflowTaskId)
 			throws Exception {
 
-				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResource();
+				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResourceImpl();
 
 				workflowTaskResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
@@ -119,12 +119,11 @@ public class Query {
 					workflowTaskId);
 	}
 
-	private static WorkflowLogResourceImpl _getWorkflowLogResource() {
-		return new WorkflowLogResourceImpl();
+	private static WorkflowLogResourceImpl _getWorkflowLogResourceImpl() {
+			return new WorkflowLogResourceImpl();
 	}
-
-	private static WorkflowTaskResourceImpl _getWorkflowTaskResource() {
-		return new WorkflowTaskResourceImpl();
+	private static WorkflowTaskResourceImpl _getWorkflowTaskResourceImpl() {
+			return new WorkflowTaskResourceImpl();
 	}
 
 }

@@ -56,42 +56,45 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@Path("/form-records/{form-record-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormRecord getFormRecord(
+	public FormRecordImpl getFormRecord(
 	@PathParam("form-record-id") Long formRecordId)
 			throws Exception {
 
 				return new FormRecordImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/form-records/{form-record-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormRecord putFormRecord(
+	public FormRecordImpl putFormRecord(
 	@PathParam("form-record-id") Long formRecordId,FormRecord formRecord)
 			throws Exception {
 
 				return new FormRecordImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<FormRecord> getFormFormRecordsPage(
+	public Page<FormRecordImpl> getFormFormRecordsPage(
 	@PathParam("form-id") Long formId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormRecord postFormFormRecord(
+	public FormRecordImpl postFormFormRecord(
 	@PathParam("form-id") Long formId,FormRecord formRecord)
 			throws Exception {
 

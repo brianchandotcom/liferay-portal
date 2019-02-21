@@ -65,24 +65,26 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting getBlogPosting(
+	public BlogPostingImpl getBlogPosting(
 	@PathParam("blog-posting-id") Long blogPostingId)
 			throws Exception {
 
 				return new BlogPostingImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PATCH
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting patchBlogPosting(
+	public BlogPostingImpl patchBlogPosting(
 	@PathParam("blog-posting-id") Long blogPostingId,BlogPosting blogPosting)
 			throws Exception {
 
@@ -139,36 +141,39 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 
 				return putBlogPosting(blogPostingId, existingBlogPosting);
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/blog-postings/{blog-posting-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting putBlogPosting(
+	public BlogPostingImpl putBlogPosting(
 	@PathParam("blog-posting-id") Long blogPostingId,BlogPosting blogPosting)
 			throws Exception {
 
 				return new BlogPostingImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
+	public Page<BlogPostingImpl> getContentSpaceBlogPostingsPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-postings")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPosting postContentSpaceBlogPosting(
+	public BlogPostingImpl postContentSpaceBlogPosting(
 	@PathParam("content-space-id") Long contentSpaceId,BlogPosting blogPosting)
 			throws Exception {
 

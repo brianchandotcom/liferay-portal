@@ -14,7 +14,6 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Organization;
 import com.liferay.headless.foundation.internal.dto.v1_0.OrganizationImpl;
 import com.liferay.headless.foundation.resource.v1_0.OrganizationResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,51 +52,55 @@ public abstract class BaseOrganizationResourceImpl implements OrganizationResour
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getMyUserAccountOrganizationsPage(
+	public Page<OrganizationImpl> getMyUserAccountOrganizationsPage(
 	@PathParam("my-user-account-id") Long myUserAccountId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationsPage(
+	public Page<OrganizationImpl> getOrganizationsPage(
 	@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Organization getOrganization(
+	public OrganizationImpl getOrganization(
 	@PathParam("organization-id") Long organizationId)
 			throws Exception {
 
 				return new OrganizationImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationOrganizationsPage(
+	public Page<OrganizationImpl> getOrganizationOrganizationsPage(
 	@PathParam("organization-id") Long organizationId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Organization> getUserAccountOrganizationsPage(
+	public Page<OrganizationImpl> getUserAccountOrganizationsPage(
 	@PathParam("user-account-id") Long userAccountId,@Context Pagination pagination)
 			throws Exception {
 

@@ -35,10 +35,12 @@ public interface CommentResource {
 	public Comment getComment(
 				Long commentId)
 			throws Exception;
-	public Page<Comment> getCommentCommentsPage(
+
+	public Page<? extends Comment> getCommentCommentsPage(
 				Long commentId,Pagination pagination)
 			throws Exception;
-	public Page<Comment> getStructuredContentCommentsPage(
+
+	public Page<? extends Comment> getStructuredContentCommentsPage(
 				Long structuredContentId,Pagination pagination)
 			throws Exception;
 

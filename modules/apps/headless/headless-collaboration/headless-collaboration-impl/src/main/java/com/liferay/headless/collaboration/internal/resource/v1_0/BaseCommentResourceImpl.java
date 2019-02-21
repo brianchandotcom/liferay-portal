@@ -57,24 +57,26 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/blog-postings/{blog-posting-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getBlogPostingCommentsPage(
+	public Page<CommentImpl> getBlogPostingCommentsPage(
 	@PathParam("blog-posting-id") Long blogPostingId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/blog-postings/{blog-posting-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment postBlogPostingComment(
+	public CommentImpl postBlogPostingComment(
 	@PathParam("blog-posting-id") Long blogPostingId,Comment comment)
 			throws Exception {
 
 				return new CommentImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/comments/{comment-id}")
@@ -86,47 +88,51 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment getComment(
+	public CommentImpl getComment(
 	@PathParam("comment-id") Long commentId)
 			throws Exception {
 
 				return new CommentImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment putComment(
+	public CommentImpl putComment(
 	@PathParam("comment-id") Long commentId,Comment comment)
 			throws Exception {
 
 				return new CommentImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getCommentCommentsPage(
+	public Page<CommentImpl> getCommentCommentsPage(
 	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment postCommentComment(
+	public CommentImpl postCommentComment(
 	@PathParam("comment-id") Long commentId,Comment comment)
 			throws Exception {
 

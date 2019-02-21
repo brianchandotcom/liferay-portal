@@ -59,24 +59,26 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Keyword> getContentSpaceKeywordsPage(
+	public Page<KeywordImpl> getContentSpaceKeywordsPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/keywords")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword postContentSpaceKeyword(
+	public KeywordImpl postContentSpaceKeyword(
 	@PathParam("content-space-id") Long contentSpaceId,Keyword keyword)
 			throws Exception {
 
 				return new KeywordImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/keywords/{keyword-id}")
@@ -88,24 +90,26 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword getKeyword(
+	public KeywordImpl getKeyword(
 	@PathParam("keyword-id") Long keywordId)
 			throws Exception {
 
 				return new KeywordImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/keywords/{keyword-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Keyword putKeyword(
+	public KeywordImpl putKeyword(
 	@PathParam("keyword-id") Long keywordId,Keyword keyword)
 			throws Exception {
 

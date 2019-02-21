@@ -34,18 +34,22 @@ import javax.annotation.Generated;
 @Generated("")
 public interface VocabularyResource {
 
-	public Page<Vocabulary> getContentSpaceVocabulariesPage(
+	public Page<? extends Vocabulary> getContentSpaceVocabulariesPage(
 				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
+
 	public Vocabulary postContentSpaceVocabulary(
 				Long contentSpaceId,Vocabulary vocabulary)
 			throws Exception;
+
 	public boolean deleteVocabulary(
 				Long vocabularyId)
 			throws Exception;
+
 	public Vocabulary getVocabulary(
 				Long vocabularyId)
 			throws Exception;
+
 	public Vocabulary putVocabulary(
 				Long vocabularyId,Vocabulary vocabulary)
 			throws Exception;

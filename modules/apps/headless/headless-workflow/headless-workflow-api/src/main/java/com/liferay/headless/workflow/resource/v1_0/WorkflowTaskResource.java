@@ -35,21 +35,27 @@ public interface WorkflowTaskResource {
 	public Page<? extends WorkflowTask> getRoleWorkflowTasksPage(
 				Long roleId,Pagination pagination)
 			throws Exception;
+
 	public Page<? extends WorkflowTask> getWorkflowTasksPage(
 				Pagination pagination)
 			throws Exception;
+
 	public WorkflowTask getWorkflowTask(
 				Long workflowTaskId)
 			throws Exception;
+
 	public WorkflowTask postWorkflowTaskAssignToMe(
 				Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception;
+
 	public WorkflowTask postWorkflowTaskAssignToUser(
 				Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception;
+
 	public WorkflowTask postWorkflowTaskChangeTransition(
 				Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception;
+
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
 				Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception;

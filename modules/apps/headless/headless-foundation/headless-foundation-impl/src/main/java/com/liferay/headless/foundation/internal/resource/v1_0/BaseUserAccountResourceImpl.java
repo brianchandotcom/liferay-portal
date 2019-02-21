@@ -58,46 +58,50 @@ public abstract class BaseUserAccountResourceImpl implements UserAccountResource
 	@Path("/my-user-accounts/{my-user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount getMyUserAccount(
+	public UserAccountImpl getMyUserAccount(
 	@PathParam("my-user-account-id") Long myUserAccountId)
 			throws Exception {
 
 				return new UserAccountImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/organizations/{organization-id}/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getOrganizationUserAccountsPage(
+	public Page<UserAccountImpl> getOrganizationUserAccountsPage(
 	@PathParam("organization-id") Long organizationId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getUserAccountsPage(
+	public Page<UserAccountImpl> getUserAccountsPage(
 	@QueryParam("fullnamequery") String fullnamequery,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount postUserAccount(
+	public UserAccountImpl postUserAccount(
 				UserAccount userAccount)
 			throws Exception {
 
 				return new UserAccountImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/user-accounts/{user-account-id}")
@@ -109,35 +113,38 @@ public abstract class BaseUserAccountResourceImpl implements UserAccountResource
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount getUserAccount(
+	public UserAccountImpl getUserAccount(
 	@PathParam("user-account-id") Long userAccountId)
 			throws Exception {
 
 				return new UserAccountImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/user-accounts/{user-account-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public UserAccount putUserAccount(
+	public UserAccountImpl putUserAccount(
 	@PathParam("user-account-id") Long userAccountId,UserAccount userAccount)
 			throws Exception {
 
 				return new UserAccountImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/web-sites/{web-site-id}/user-accounts")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<UserAccount> getWebSiteUserAccountsPage(
+	public Page<UserAccountImpl> getWebSiteUserAccountsPage(
 	@PathParam("web-site-id") Long webSiteId,@Context Pagination pagination)
 			throws Exception {
 

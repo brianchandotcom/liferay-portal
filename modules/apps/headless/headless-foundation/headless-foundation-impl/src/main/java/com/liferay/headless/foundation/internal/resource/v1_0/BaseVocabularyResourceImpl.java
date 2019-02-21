@@ -59,24 +59,26 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Vocabulary> getContentSpaceVocabulariesPage(
+	public Page<VocabularyImpl> getContentSpaceVocabulariesPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/vocabularies")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Vocabulary postContentSpaceVocabulary(
+	public VocabularyImpl postContentSpaceVocabulary(
 	@PathParam("content-space-id") Long contentSpaceId,Vocabulary vocabulary)
 			throws Exception {
 
 				return new VocabularyImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/vocabularies/{vocabulary-id}")
@@ -88,24 +90,26 @@ public abstract class BaseVocabularyResourceImpl implements VocabularyResource {
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Vocabulary getVocabulary(
+	public VocabularyImpl getVocabulary(
 	@PathParam("vocabulary-id") Long vocabularyId)
 			throws Exception {
 
 				return new VocabularyImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/vocabularies/{vocabulary-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Vocabulary putVocabulary(
+	public VocabularyImpl putVocabulary(
 	@PathParam("vocabulary-id") Long vocabularyId,Vocabulary vocabulary)
 			throws Exception {
 

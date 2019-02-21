@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.internal.resource.v1_0;
 
-import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
 import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -59,24 +58,26 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Document> getContentSpaceDocumentsPage(
+	public Page<DocumentImpl> getContentSpaceDocumentsPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/content-spaces/{content-space-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Document postContentSpaceDocument(
+	public DocumentImpl postContentSpaceDocument(
 	@PathParam("content-space-id") Long contentSpaceId,MultipartBody multipartBody)
 			throws Exception {
 
 				return new DocumentImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/documents/{document-id}")
@@ -88,35 +89,38 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Document getDocument(
+	public DocumentImpl getDocument(
 	@PathParam("document-id") Long documentId)
 			throws Exception {
 
 				return new DocumentImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Document> getFolderDocumentsPage(
+	public Page<DocumentImpl> getFolderDocumentsPage(
 	@PathParam("folder-id") Long folderId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/folders/{folder-id}/documents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Document postFolderDocument(
+	public DocumentImpl postFolderDocument(
 	@PathParam("folder-id") Long folderId,MultipartBody multipartBody)
 			throws Exception {
 

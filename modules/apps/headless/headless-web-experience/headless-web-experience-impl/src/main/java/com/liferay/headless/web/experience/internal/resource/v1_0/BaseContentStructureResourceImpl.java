@@ -14,7 +14,6 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureImpl;
 import com.liferay.headless.web.experience.resource.v1_0.ContentStructureResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -55,18 +54,19 @@ public abstract class BaseContentStructureResourceImpl implements ContentStructu
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<ContentStructure> getContentSpaceContentStructuresPage(
+	public Page<ContentStructureImpl> getContentSpaceContentStructuresPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public ContentStructure getContentStructure(
+	public ContentStructureImpl getContentStructure(
 	@PathParam("content-structure-id") Long contentStructureId)
 			throws Exception {
 

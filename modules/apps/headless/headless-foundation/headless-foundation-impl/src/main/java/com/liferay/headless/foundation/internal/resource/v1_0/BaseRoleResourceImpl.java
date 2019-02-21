@@ -14,7 +14,6 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.headless.foundation.internal.dto.v1_0.RoleImpl;
 import com.liferay.headless.foundation.resource.v1_0.RoleResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,40 +52,43 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Role> getMyUserAccountRolesPage(
+	public Page<RoleImpl> getMyUserAccountRolesPage(
 	@PathParam("my-user-account-id") Long myUserAccountId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Role> getRolesPage(
+	public Page<RoleImpl> getRolesPage(
 	@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Role getRole(
+	public RoleImpl getRole(
 	@PathParam("role-id") Long roleId)
 			throws Exception {
 
 				return new RoleImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Role> getUserAccountRolesPage(
+	public Page<RoleImpl> getUserAccountRolesPage(
 	@PathParam("user-account-id") Long userAccountId,@Context Pagination pagination)
 			throws Exception {
 

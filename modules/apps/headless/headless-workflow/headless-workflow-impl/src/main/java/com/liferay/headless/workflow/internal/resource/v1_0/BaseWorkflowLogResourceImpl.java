@@ -58,6 +58,7 @@ public abstract class BaseWorkflowLogResourceImpl implements WorkflowLogResource
 
 				return new WorkflowLogImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}/workflow-logs")

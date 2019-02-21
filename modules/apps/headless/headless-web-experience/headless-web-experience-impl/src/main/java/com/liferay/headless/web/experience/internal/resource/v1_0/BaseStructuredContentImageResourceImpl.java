@@ -14,7 +14,6 @@
 
 package com.liferay.headless.web.experience.internal.resource.v1_0;
 
-import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImageImpl;
 import com.liferay.headless.web.experience.resource.v1_0.StructuredContentImageResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,12 +52,13 @@ public abstract class BaseStructuredContentImageResourceImpl implements Structur
 	@Path("/structured-contents/{structured-content-id}/structured-content-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<StructuredContentImage> getStructuredContentStructuredContentImagesPage(
+	public Page<StructuredContentImageImpl> getStructuredContentStructuredContentImagesPage(
 	@PathParam("structured-content-id") Long structuredContentId)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@DELETE
 	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
@@ -70,12 +70,13 @@ public abstract class BaseStructuredContentImageResourceImpl implements Structur
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public StructuredContentImage getStructuredContentContentDocument(
+	public StructuredContentImageImpl getStructuredContentContentDocument(
 	@PathParam("structured-content-id") Long structuredContentId,@PathParam("content-document-id") Long contentDocumentId)
 			throws Exception {
 

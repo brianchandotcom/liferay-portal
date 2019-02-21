@@ -14,10 +14,11 @@
 
 package com.liferay.headless.document.library.internal.graphql.mutation.v1_0;
 
-import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
-import com.liferay.headless.document.library.resource.v1_0.DocumentResource;
-import com.liferay.headless.document.library.resource.v1_0.FolderResource;
+import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.FolderImpl;
+import com.liferay.headless.document.library.internal.resource.v1_0.DocumentResourceImpl;
+import com.liferay.headless.document.library.internal.resource.v1_0.FolderResourceImpl;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -25,10 +26,6 @@ import graphql.annotations.annotationTypes.GraphQLInvokeDetached;
 import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Javier Gamarra
@@ -39,101 +36,76 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document postContentSpaceDocument(
+	public DocumentImpl postContentSpaceDocument(
 	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
 			throws Exception {
 
-				return _getDocumentResource().postContentSpaceDocument(
+				return _getDocumentResourceImpl().postContentSpaceDocument(
 					contentSpaceId,multipartBody);
 	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteDocument(
 	@GraphQLName("document-id") Long documentId)
 			throws Exception {
 
-				return _getDocumentResource().deleteDocument(
+				return _getDocumentResourceImpl().deleteDocument(
 					documentId);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Document postFolderDocument(
+	public DocumentImpl postFolderDocument(
 	@GraphQLName("folder-id") Long folderId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
 			throws Exception {
 
-				return _getDocumentResource().postFolderDocument(
+				return _getDocumentResourceImpl().postFolderDocument(
 					folderId,multipartBody);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postContentSpaceFolder(
+	public FolderImpl postContentSpaceFolder(
 	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("Folder") Folder folder)
 			throws Exception {
 
-				return _getFolderResource().postContentSpaceFolder(
+				return _getFolderResourceImpl().postContentSpaceFolder(
 					contentSpaceId,folder);
 	}
+
 	@GraphQLInvokeDetached
 	public boolean deleteFolder(
 	@GraphQLName("folder-id") Long folderId)
 			throws Exception {
 
-				return _getFolderResource().deleteFolder(
+				return _getFolderResourceImpl().deleteFolder(
 					folderId);
 	}
+
 	@GraphQLInvokeDetached
-	public Folder putFolder(
+	public FolderImpl putFolder(
 	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") Folder folder)
 			throws Exception {
 
-				return _getFolderResource().putFolder(
+				return _getFolderResourceImpl().putFolder(
 					folderId,folder);
 	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Folder postFolderFolder(
+	public FolderImpl postFolderFolder(
 	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") Folder folder)
 			throws Exception {
 
-				return _getFolderResource().postFolderFolder(
+				return _getFolderResourceImpl().postFolderFolder(
 					folderId,folder);
 	}
 
-	private static DocumentResource _getDocumentResource() {
-			return _documentResourceServiceTracker.getService();
+	private static DocumentResourceImpl _getDocumentResourceImpl() {
+			return new DocumentResourceImpl();
 	}
-
-	private static final ServiceTracker<DocumentResource, DocumentResource>
-			_documentResourceServiceTracker;
-	private static FolderResource _getFolderResource() {
-			return _folderResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<FolderResource, FolderResource>
-			_folderResourceServiceTracker;
-
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-				ServiceTracker<DocumentResource, DocumentResource>
-					documentResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							DocumentResource.class, null);
-
-				documentResourceServiceTracker.open();
-
-				_documentResourceServiceTracker =
-					documentResourceServiceTracker;
-				ServiceTracker<FolderResource, FolderResource>
-					folderResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							FolderResource.class, null);
-
-				folderResourceServiceTracker.open();
-
-				_folderResourceServiceTracker =
-					folderResourceServiceTracker;
+	private static FolderResourceImpl _getFolderResourceImpl() {
+			return new FolderResourceImpl();
 	}
 
 }

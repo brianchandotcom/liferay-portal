@@ -14,7 +14,6 @@
 
 package com.liferay.headless.document.library.internal.resource.v1_0;
 
-import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.internal.dto.v1_0.CommentImpl;
 import com.liferay.headless.document.library.resource.v1_0.CommentResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,29 +52,31 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment getComment(
+	public CommentImpl getComment(
 	@PathParam("comment-id") Long commentId)
 			throws Exception {
 
 				return new CommentImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getCommentCommentsPage(
+	public Page<CommentImpl> getCommentCommentsPage(
 	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/documents/{document-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Comment> getDocumentCommentsPage(
+	public Page<CommentImpl> getDocumentCommentsPage(
 	@PathParam("document-id") Long documentId,@Context Pagination pagination)
 			throws Exception {
 

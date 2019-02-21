@@ -65,70 +65,76 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category getCategory(
+	public CategoryImpl getCategory(
 	@PathParam("category-id") Long categoryId)
 			throws Exception {
 
 				return new CategoryImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category putCategory(
+	public CategoryImpl putCategory(
 	@PathParam("category-id") Long categoryId,Category category)
 			throws Exception {
 
 				return new CategoryImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Category> getCategoryCategoriesPage(
+	public Page<CategoryImpl> getCategoryCategoriesPage(
 	@PathParam("category-id") Long categoryId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category postCategoryCategory(
+	public CategoryImpl postCategoryCategory(
 	@PathParam("category-id") Long categoryId,Category category)
 			throws Exception {
 
 				return new CategoryImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Category> getVocabularyCategoriesPage(
+	public Page<CategoryImpl> getVocabularyCategoriesPage(
 	@PathParam("vocabulary-id") Long vocabularyId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category postVocabularyCategory(
+	public CategoryImpl postVocabularyCategory(
 	@PathParam("vocabulary-id") Long vocabularyId,Category category)
 			throws Exception {
 

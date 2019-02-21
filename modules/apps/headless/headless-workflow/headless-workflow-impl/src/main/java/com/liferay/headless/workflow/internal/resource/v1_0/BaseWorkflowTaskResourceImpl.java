@@ -61,6 +61,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/workflow-tasks")
@@ -72,6 +73,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/workflow-tasks/{workflow-task-id}")
@@ -83,6 +85,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 
 				return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -95,6 +98,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 
 				return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -107,6 +111,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 
 				return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
@@ -119,6 +124,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 
 				return new WorkflowTaskImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST

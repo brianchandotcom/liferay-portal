@@ -14,7 +14,6 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.internal.dto.v1_0.PostalAddressImpl;
 import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,18 +52,19 @@ public abstract class BasePostalAddressResourceImpl implements PostalAddressReso
 	@Path("/addresses")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<PostalAddress> getGenericParentPostalAddressesPage(
+	public Page<PostalAddressImpl> getGenericParentPostalAddressesPage(
 	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/addresses/{address-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public PostalAddress getAddress(
+	public PostalAddressImpl getAddress(
 	@PathParam("address-id") Long addressId)
 			throws Exception {
 

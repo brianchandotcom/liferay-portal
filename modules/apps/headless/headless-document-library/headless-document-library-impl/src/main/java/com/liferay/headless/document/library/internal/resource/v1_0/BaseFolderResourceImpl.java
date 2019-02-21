@@ -57,24 +57,26 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Folder> getContentSpaceFoldersPage(
+	public Page<FolderImpl> getContentSpaceFoldersPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Folder postContentSpaceFolder(
+	public FolderImpl postContentSpaceFolder(
 	@PathParam("content-space-id") Long contentSpaceId,Folder folder)
 			throws Exception {
 
 				return new FolderImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/folders/{folder-id}")
@@ -86,47 +88,51 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Folder getFolder(
+	public FolderImpl getFolder(
 	@PathParam("folder-id") Long folderId)
 			throws Exception {
 
 				return new FolderImpl();
 	}
+
 	@Override
 	@Consumes("application/json")
 	@PUT
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Folder putFolder(
+	public FolderImpl putFolder(
 	@PathParam("folder-id") Long folderId,Folder folder)
 			throws Exception {
 
 				return new FolderImpl();
 	}
+
 	@Override
 	@GET
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Folder> getFolderFoldersPage(
+	public Page<FolderImpl> getFolderFoldersPage(
 	@PathParam("folder-id") Long folderId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Folder postFolderFolder(
+	public FolderImpl postFolderFolder(
 	@PathParam("folder-id") Long folderId,Folder folder)
 			throws Exception {
 

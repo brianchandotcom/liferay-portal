@@ -14,7 +14,6 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImageImpl;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -57,24 +56,26 @@ public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingIma
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
+	public Page<BlogPostingImageImpl> getContentSpaceBlogPostingImagesPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/content-spaces/{content-space-id}/blog-posting-images")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPostingImage postContentSpaceBlogPostingImage(
+	public BlogPostingImageImpl postContentSpaceBlogPostingImage(
 	@PathParam("content-space-id") Long contentSpaceId,MultipartBody multipartBody)
 			throws Exception {
 
 				return new BlogPostingImageImpl();
 	}
+
 	@Override
 	@DELETE
 	@Path("/blog-posting-images/{image-object-id}")
@@ -86,12 +87,13 @@ public abstract class BaseBlogPostingImageResourceImpl implements BlogPostingIma
 
 				return false;
 	}
+
 	@Override
 	@GET
 	@Path("/blog-posting-images/{image-object-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPostingImage getImageObject(
+	public BlogPostingImageImpl getImageObject(
 	@PathParam("image-object-id") Long imageObjectId)
 			throws Exception {
 

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
-import com.liferay.headless.foundation.dto.v1_0.WebUrl;
 import com.liferay.headless.foundation.internal.dto.v1_0.WebUrlImpl;
 import com.liferay.headless.foundation.resource.v1_0.WebUrlResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,18 +52,19 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Path("/web-urls")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WebUrl> getGenericParentWebUrlsPage(
+	public Page<WebUrlImpl> getGenericParentWebUrlsPage(
 	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/web-urls/{web-url-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public WebUrl getWebUrl(
+	public WebUrlImpl getWebUrl(
 	@PathParam("web-url-id") Long webUrlId)
 			throws Exception {
 

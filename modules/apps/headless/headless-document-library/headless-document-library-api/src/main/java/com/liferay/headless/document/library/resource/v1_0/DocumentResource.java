@@ -35,21 +35,26 @@ import javax.annotation.Generated;
 @Generated("")
 public interface DocumentResource {
 
-	public Page<Document> getContentSpaceDocumentsPage(
+	public Page<? extends Document> getContentSpaceDocumentsPage(
 				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
+
 	public Document postContentSpaceDocument(
 				Long contentSpaceId,MultipartBody multipartBody)
 			throws Exception;
+
 	public boolean deleteDocument(
 				Long documentId)
 			throws Exception;
+
 	public Document getDocument(
 				Long documentId)
 			throws Exception;
-	public Page<Document> getFolderDocumentsPage(
+
+	public Page<? extends Document> getFolderDocumentsPage(
 				Long folderId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
+
 	public Document postFolderDocument(
 				Long folderId,MultipartBody multipartBody)
 			throws Exception;

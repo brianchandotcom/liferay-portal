@@ -14,7 +14,6 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
-import com.liferay.headless.form.dto.v1_0.FormStructure;
 import com.liferay.headless.form.internal.dto.v1_0.FormStructureImpl;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
@@ -53,18 +52,19 @@ public abstract class BaseFormStructureResourceImpl implements FormStructureReso
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<FormStructure> getContentSpaceFormStructuresPage(
+	public Page<FormStructureImpl> getContentSpaceFormStructuresPage(
 	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
 	}
+
 	@Override
 	@GET
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public FormStructure getFormStructure(
+	public FormStructureImpl getFormStructure(
 	@PathParam("form-structure-id") Long formStructureId)
 			throws Exception {
 

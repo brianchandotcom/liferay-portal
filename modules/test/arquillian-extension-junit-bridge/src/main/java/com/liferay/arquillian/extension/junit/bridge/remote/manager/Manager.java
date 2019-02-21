@@ -49,7 +49,7 @@ public class Manager {
 		}
 	}
 
-	public <T> void fire(T event) {
+	public <T> void fire(T event) throws Throwable {
 		for (Observer observer : _observers) {
 			Class<?> clazz = observer.getType();
 
@@ -57,13 +57,8 @@ public class Manager {
 				try {
 					observer.invoke(event);
 				}
-				catch (ReflectiveOperationException roe) {
-					if (roe instanceof InvocationTargetException) {
-						_throwException(roe.getCause());
-					}
-					else {
-						_throwException(roe);
-					}
+				catch (InvocationTargetException ite) {
+					throw ite.getCause();
 				}
 			}
 		}
@@ -71,13 +66,6 @@ public class Manager {
 
 	public Registry getRegistry() {
 		return _registry;
-	}
-
-	private static <T, E extends Throwable> T _throwException(
-			Throwable throwable)
-		throws E {
-
-		throw (E)throwable;
 	}
 
 	private final List<Observer> _observers;

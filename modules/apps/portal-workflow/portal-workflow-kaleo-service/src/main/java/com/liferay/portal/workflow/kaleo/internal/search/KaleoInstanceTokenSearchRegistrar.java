@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.internal.search;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -30,19 +30,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author István András Dézsi
  */
 @Component(immediate = true, service = {})
-public class KaleoInstanceSearchRegistrar {
+public class KaleoInstanceTokenSearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
-			KaleoInstance.class, bundleContext,
+			KaleoInstanceToken.class, bundleContext,
 			modelSearchDefinition -> {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-					Field.ENTRY_CLASS_PK, Field.UID);
+					Field.ENTRY_CLASS_PK, Field.UID,
+					KaleoInstanceTokenField.KALEO_INSTANCE_ID);
 				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
-					KaleoInstanceField.ASSET_DESCRIPTION,
-					KaleoInstanceField.ASSET_TITLE);
+					KaleoInstanceTokenField.ASSET_DESCRIPTION,
+					KaleoInstanceTokenField.ASSET_TITLE);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 			});
@@ -54,9 +55,9 @@ public class KaleoInstanceSearchRegistrar {
 	}
 
 	@Reference(
-		target = "(indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance)"
+		target = "(indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken)"
 	)
-	protected ModelIndexerWriterContributor<KaleoInstance>
+	protected ModelIndexerWriterContributor<KaleoInstanceToken>
 		modelIndexWriterContributor;
 
 	@Reference

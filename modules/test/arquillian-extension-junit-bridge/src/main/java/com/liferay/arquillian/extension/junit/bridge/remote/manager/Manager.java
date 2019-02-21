@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
 import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
@@ -24,14 +23,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
-import org.jboss.arquillian.core.spi.HashObjectStore;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
-import org.jboss.arquillian.core.spi.context.AbstractContext;
-import org.jboss.arquillian.core.spi.context.ApplicationContext;
-import org.jboss.arquillian.core.spi.context.ObjectStore;
 
 /**
  * @author Matthew Tambara
@@ -39,19 +35,13 @@ import org.jboss.arquillian.core.spi.context.ObjectStore;
 public class Manager {
 
 	public Manager() throws ReflectiveOperationException {
-		_applicationContext = new ApplicationContextImpl();
-
 		_extensions.addAll(
 			_createExtensions(
 				LiferayArquillianJUnitBridgeExtension.getObservers()));
-
-		_applicationContext.activate();
 	}
 
 	public <T> void bind(Class<T> type, T instance) {
-		ObjectStore objectStore = _applicationContext.getObjectStore();
-
-		objectStore.add(type, instance);
+		_context.put(type, instance);
 	}
 
 	public void fire(Object event) {
@@ -79,15 +69,7 @@ public class Manager {
 			return;
 		}
 
-		boolean activatedApplicationContext = false;
-
 		try {
-			if (!_applicationContext.isActive()) {
-				_applicationContext.activate();
-
-				activatedApplicationContext = true;
-			}
-
 			_proceed(observers, nonManagedObserver, event);
 		}
 		catch (ReflectiveOperationException roe) {
@@ -98,24 +80,13 @@ public class Manager {
 				_throwException(roe);
 			}
 		}
-		finally {
-			if (activatedApplicationContext && _applicationContext.isActive()) {
-				_applicationContext.deactivate();
-			}
-		}
 	}
 
 	public <T> T resolve(Class<T> type) {
-		if (!_applicationContext.isActive()) {
-			return null;
-		}
-
-		ObjectStore objectStore = _applicationContext.getObjectStore();
-
-		T object = objectStore.get(type);
+		Object object = _context.get(type);
 
 		if (object != null) {
-			return object;
+			return type.cast(object);
 		}
 
 		return null;
@@ -123,8 +94,6 @@ public class Manager {
 
 	public void start() {
 		fire(new ManagerStarted());
-
-		_applicationContext.activate();
 	}
 
 	private static <T, E extends Throwable> T _throwException(
@@ -188,34 +157,7 @@ public class Manager {
 		}
 	}
 
-	private final ApplicationContext _applicationContext;
+	private final Map<Class<?>, Object> _context = new ConcurrentHashMap<>();
 	private final List<Object> _extensions = new ArrayList<>();
-
-	private class ApplicationContextImpl
-		extends AbstractContext<String> implements ApplicationContext {
-
-		@Override
-		public void activate() {
-			super.activate(_APP_CONTEXT_ID);
-		}
-
-		@Override
-		public void destroy() {
-			super.destroy(_APP_CONTEXT_ID);
-		}
-
-		@Override
-		public Class<? extends Annotation> getScope() {
-			return ApplicationScoped.class;
-		}
-
-		@Override
-		protected ObjectStore createNewObjectStore() {
-			return new HashObjectStore();
-		}
-
-		private static final String _APP_CONTEXT_ID = "app";
-
-	}
 
 }

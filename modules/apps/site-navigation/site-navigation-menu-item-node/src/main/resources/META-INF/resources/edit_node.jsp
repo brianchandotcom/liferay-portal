@@ -18,18 +18,8 @@
 
 <%
 SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)request.getAttribute(SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
-
-String name = StringPool.BLANK;
-
-if (siteNavigationMenuItem != null) {
-	UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-	typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
-
-	name = typeSettingsProperties.get("name");
-}
 %>
 
-<aui:input label="name" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" placeholder="name" value="<%= name %>">
+<aui:input autoFocus="<%= true %>" label="name" localized="<%= true %>" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="name" placeholder="name" type="text" value='<%= SiteNavigationMenuItemUtil.getSiteNavigationMenuItemXML(siteNavigationMenuItem, "name") %>'>
 	<aui:validator name="required" />
 </aui:input>

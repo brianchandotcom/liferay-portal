@@ -16,7 +16,10 @@ package com.liferay.site.navigation.menu.item.node.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -56,6 +59,27 @@ public class NodeSiteNavigationMenuItemType
 			locale, NodeSiteNavigationMenuItemType.class);
 
 		return LanguageUtil.get(resourceBundle, "submenu");
+	}
+
+	@Override
+	public String getTitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		String defaultLanguageId = typeSettingsProperties.getProperty(
+			Field.DEFAULT_LANGUAGE_ID,
+			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale()));
+
+		String defaultTitle = typeSettingsProperties.getProperty(
+			"name_" + defaultLanguageId,
+			typeSettingsProperties.getProperty("name", getLabel(locale)));
+
+		return typeSettingsProperties.getProperty(
+			"name_" + LocaleUtil.toLanguageId(locale), defaultTitle);
 	}
 
 	@Override

@@ -103,7 +103,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 					mvcPath: '/view_template.jsp',
 					navigationStartsOn: '<%= DDMNavigationHelper.VIEW_TEMPLATES %>',
 					refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATE %>',
-					title: '<%= UnicodeLanguageUtil.get(request, "application-display-templates") %>'
+					title: '<%= UnicodeLanguageUtil.get(request, "widget-templates") %>'
 				},
 				function(event) {
 					if (!event.newVal) {

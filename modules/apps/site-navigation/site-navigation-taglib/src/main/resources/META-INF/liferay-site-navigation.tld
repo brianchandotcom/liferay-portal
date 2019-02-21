@@ -26,14 +26,14 @@
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The group ID of the DDM template to use for rendering the navigation (see Application Display Templates).</description>
+			<description>The group ID of the DDM template to use for rendering the navigation (see Widget Templates).</description>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>The key of the DDM template to use for rendering the navigation (see Application Display Templates). If not set, the default ADT is used.</description>
+			<description>The key of the DDM template to use for rendering the navigation (see Widget Templates). If not set, the default ADT is used.</description>
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -82,14 +82,14 @@
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The group ID of the DDM template to use for rendering the navigation menu (see Application Display Templates).</description>
+			<description>The group ID of the DDM template to use for rendering the navigation menu (see Widget Templates).</description>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>The key of the DDM template to use for rendering the navigation menu(see Application Display Templates). If not set, the default ADT is used.</description>
+			<description>The key of the DDM template to use for rendering the navigation menu(see Widget Templates). If not set, the default ADT is used.</description>
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

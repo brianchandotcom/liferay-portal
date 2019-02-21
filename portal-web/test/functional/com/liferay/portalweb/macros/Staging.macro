@@ -63,7 +63,7 @@ definition {
 				Click(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
 			}
 
-			for (var contentName : list "Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Forms,Knowledge Base,Message Boards,Mobile Device Families,Polls,Web Content,Wiki") {
+			for (var contentName : list "Widget Template,Blogs,Bookmarks,Calendar,Documents and Media,Forms,Knowledge Base,Message Boards,Mobile Device Families,Polls,Web Content,Wiki") {
 				var key_contentName = "${contentName}";
 
 				Click(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");

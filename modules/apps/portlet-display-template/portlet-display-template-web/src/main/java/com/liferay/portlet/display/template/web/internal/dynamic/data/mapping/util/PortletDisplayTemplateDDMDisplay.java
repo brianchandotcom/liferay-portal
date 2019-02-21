@@ -149,12 +149,12 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	protected String getDefaultEditTemplateTitle(Locale locale) {
-		return LanguageUtil.get(locale, "new-application-display-template");
+		return LanguageUtil.get(locale, "new-widget-template");
 	}
 
 	@Override
 	protected String getDefaultViewTemplateTitle(Locale locale) {
-		return LanguageUtil.get(locale, "application-display-templates");
+		return LanguageUtil.get(locale, "widget-templates");
 	}
 
 	@Override

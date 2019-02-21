@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Application Display Templates",
+		"javax.portlet.display-name=Widget Templates",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.refererWebDAVToken=application_display_template",

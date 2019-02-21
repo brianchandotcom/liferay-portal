@@ -1,5 +1,5 @@
 <#--
-Application display templates can be used to modify the look of a
+Widget templates can be used to modify the look of a
 specific application.
 
 Please use the left panel to quickly add commonly used variables.

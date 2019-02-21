@@ -81,7 +81,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Display styles for languages are deprecated in favor of " +
-						"application display templates");
+						"widget templates");
 			}
 		}
 	}

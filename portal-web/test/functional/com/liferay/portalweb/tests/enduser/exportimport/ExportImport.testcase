@@ -557,7 +557,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
-			portlet = "Application Display Templates"
+			portlet = "Widget Templates"
 		);
 
 		ApplicationDisplayTemplates.addCP(

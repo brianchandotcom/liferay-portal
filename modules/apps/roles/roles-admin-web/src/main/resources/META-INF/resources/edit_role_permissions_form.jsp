@@ -139,7 +139,7 @@ if (Validator.isNotNull(portletResource)) {
 					headerNames.add("permissions");
 					headerNames.add("sites");
 
-					SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, liferayPortletResponse.createRenderURL(), headerNames, "there-are-no-applications-that-support-application-display-templates");
+					SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, liferayPortletResponse.createRenderURL(), headerNames, "there-are-no-applications-that-support-widget-templates");
 
 					searchContainer.setRowChecker(new ResourceActionRowChecker(liferayPortletResponse));
 

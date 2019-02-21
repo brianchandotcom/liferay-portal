@@ -73,7 +73,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Display styles for breadcrumbs are deprecated in favor " +
-						"of application display templates");
+						"of widget templates");
 			}
 		}
 	}

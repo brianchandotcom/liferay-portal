@@ -345,6 +345,33 @@ paths:
                 $ref: "#/components/schemas/Document"
           description: ""
       tags: ["Document"]
+    put:
+      parameters:
+        - in: path
+          name: document-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  $ref: "#/components/schemas/Document"
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+          description: ""
+      tags: ["Document"]
   "/documents/{document-id}/comments":
     get:
       parameters:

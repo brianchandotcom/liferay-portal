@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -47,9 +48,11 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 
 	public SortContextProvider(
 		EntityModelResourceRegistrar entityModelResourceRegistrar,
-		Portal portal, SortParserProvider sortParserProvider) {
+		Language language, Portal portal,
+		SortParserProvider sortParserProvider) {
 
 		_entityModelResourceRegistrar = entityModelResourceRegistrar;
+		_language = language;
 		_portal = portal;
 		_sortParserProvider = sortParserProvider;
 	}
@@ -111,7 +114,7 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 		}
 
 		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
-			httpServletRequest, _portal);
+			httpServletRequest, _language, _portal);
 
 		List<SortField> sortFields = oDataSort.getSortFields();
 
@@ -133,6 +136,7 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 		SortContextProvider.class);
 
 	private final EntityModelResourceRegistrar _entityModelResourceRegistrar;
+	private final Language _language;
 	private final Portal _portal;
 	private final SortParserProvider _sortParserProvider;
 

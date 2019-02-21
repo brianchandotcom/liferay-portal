@@ -108,12 +108,12 @@ public class MultipartBodyMessageBodyReader
 	}
 
 	@Context
-	private Providers _providers;
-
-	@Context
 	private HttpServletRequest _httpServletRequest;
 
 	@Context
 	private ObjectMapper _objectMapper;
+
+	@Context
+	private Providers _providers;
 
 }

@@ -19,10 +19,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,12 +29,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.portal.workflow.kaleo.internal.search.KaleoInstanceField;
+import com.liferay.portal.workflow.kaleo.internal.search.KaleoInstanceTokenField;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
-import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalServiceUtil;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,37 +43,53 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance",
+	property = "indexer.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken",
 	service = ModelDocumentContributor.class
 )
-public class KaleoInstanceModelDocumentContributor
-	implements ModelDocumentContributor<KaleoInstance> {
+public class KaleoInstanceTokenModelDocumentContributor
+	implements ModelDocumentContributor<KaleoInstanceToken> {
 
 	@Override
-	public void contribute(Document document, KaleoInstance kaleoInstance) {
-		String status = getStatus(kaleoInstance);
+	public void contribute(
+		Document document, KaleoInstanceToken kaleoInstanceToken) {
 
-		if (status.equals("created")) {
-			return;
+		document.addKeyword(
+			KaleoInstanceTokenField.CLASS_NAME,
+			kaleoInstanceToken.getClassName());
+		document.addKeyword(Field.CLASS_PK, kaleoInstanceToken.getClassPK());
+		document.addKeyword(
+			KaleoInstanceTokenField.COMPLETED,
+			kaleoInstanceToken.isCompleted());
+		document.addDate(
+			KaleoInstanceTokenField.COMPLETION_DATE,
+			kaleoInstanceToken.getCompletionDate());
+		document.addKeyword(
+			KaleoInstanceTokenField.CURRENT_KALEO_NODE_NAME,
+			kaleoInstanceToken.getCurrentKaleoNodeName());
+		document.addKeyword(
+			KaleoInstanceTokenField.KALEO_INSTANCE_TOKEN_ID,
+			kaleoInstanceToken.getKaleoInstanceTokenId());
+		document.addKeyword(
+			KaleoInstanceTokenField.PARENT_KALEO_INSTANCE_TOKEN_ID,
+			kaleoInstanceToken.getParentKaleoInstanceTokenId());
+
+		try {
+			KaleoInstance kaleoInstance = kaleoInstanceToken.getKaleoInstance();
+
+			document.addKeyword(
+				KaleoInstanceTokenField.KALEO_DEFINITION_NAME,
+				kaleoInstance.getKaleoDefinitionName());
+			document.addKeyword(
+				KaleoInstanceTokenField.KALEO_INSTANCE_ID,
+				kaleoInstance.getKaleoInstanceId());
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
-		document.addKeyword(
-			KaleoInstanceField.CLASS_NAME, kaleoInstance.getClassName());
-		document.addKeyword(Field.CLASS_PK, kaleoInstance.getClassPK());
-		document.addKeyword(
-			KaleoInstanceField.COMPLETED, kaleoInstance.isCompleted());
-		document.addDate(
-			KaleoInstanceField.COMPLETION_DATE,
-			kaleoInstance.getCompletionDate());
-		document.addKeyword(
-			KaleoInstanceField.KALEO_DEFINITION_NAME,
-			kaleoInstance.getKaleoDefinitionName());
-		document.addKeyword(
-			KaleoInstanceField.KALEO_INSTANCE_ID,
-			kaleoInstance.getKaleoInstanceId());
-		document.addKeyword(KaleoInstanceField.STATUS, status);
-
-		AssetEntry assetEntry = getAssetEntry(kaleoInstance);
+		AssetEntry assetEntry = getAssetEntry(kaleoInstanceToken);
 
 		if (assetEntry == null) {
 			return;
@@ -95,7 +105,7 @@ public class KaleoInstanceModelDocumentContributor
 		for (String titleLanguageId : titleLanguageIds) {
 			document.addText(
 				LocalizationUtil.getLocalizedName(
-					KaleoInstanceField.ASSET_TITLE, titleLanguageId),
+					KaleoInstanceTokenField.ASSET_TITLE, titleLanguageId),
 				assetEntry.getTitle(titleLanguageId));
 		}
 
@@ -105,20 +115,20 @@ public class KaleoInstanceModelDocumentContributor
 		for (String descriptionLanguageId : descriptionLanguageIds) {
 			document.addText(
 				LocalizationUtil.getLocalizedName(
-					KaleoInstanceField.ASSET_DESCRIPTION,
+					KaleoInstanceTokenField.ASSET_DESCRIPTION,
 					descriptionLanguageId),
 				assetEntry.getDescription(descriptionLanguageId));
 		}
 	}
 
-	protected AssetEntry getAssetEntry(KaleoInstance kaleoInstance) {
+	protected AssetEntry getAssetEntry(KaleoInstanceToken kaleoInstanceToken) {
 		try {
 			AssetRendererFactory<?> assetRendererFactory =
-				getAssetRendererFactory(kaleoInstance.getClassName());
+				getAssetRendererFactory(kaleoInstanceToken.getClassName());
 
 			AssetRenderer<?> assetRenderer =
 				assetRendererFactory.getAssetRenderer(
-					kaleoInstance.getClassPK());
+					kaleoInstanceToken.getClassPK());
 
 			return assetEntryLocalService.getEntry(
 				assetRenderer.getClassName(), assetRenderer.getClassPK());
@@ -152,28 +162,6 @@ public class KaleoInstanceModelDocumentContributor
 		return languageIds;
 	}
 
-	protected String getStatus(KaleoInstance kaleoInstance) {
-		String status = StringPool.BLANK;
-
-		DynamicQuery dynamicQuery =
-			KaleoInstanceTokenLocalServiceUtil.dynamicQuery();
-
-		Property kaleoInstanceIdProperty = PropertyFactoryUtil.forName(
-			"kaleoInstanceId");
-
-		dynamicQuery.add(
-			kaleoInstanceIdProperty.eq(kaleoInstance.getKaleoInstanceId()));
-
-		List<KaleoInstanceToken> kaleoInstanceTokenList =
-			KaleoInstanceTokenLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		KaleoInstanceToken kaleoInstanceToken = kaleoInstanceTokenList.get(0);
-
-		status = kaleoInstanceToken.getCurrentKaleoNodeName();
-
-		return status;
-	}
-
 	@Reference
 	protected AssetEntryLocalService assetEntryLocalService;
 
@@ -184,6 +172,6 @@ public class KaleoInstanceModelDocumentContributor
 	protected Portal portal;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoInstanceModelDocumentContributor.class);
+		KaleoInstanceTokenModelDocumentContributor.class);
 
 }

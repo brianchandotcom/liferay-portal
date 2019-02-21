@@ -26,9 +26,9 @@ import java.util.Date;
 /**
  * @author István András Dézsi
  */
-public class KaleoInstanceQuery implements Serializable {
+public class KaleoInstanceTokenQuery implements Serializable {
 
-	public KaleoInstanceQuery(ServiceContext serviceContext) {
+	public KaleoInstanceTokenQuery(ServiceContext serviceContext) {
 		_serviceContext = serviceContext;
 
 		_companyId = serviceContext.getCompanyId();
@@ -59,6 +59,10 @@ public class KaleoInstanceQuery implements Serializable {
 		return _completionDateLT;
 	}
 
+	public String getCurrentKaleoNodeName() {
+		return _currentKaleoNodeName;
+	}
+
 	public int getEnd() {
 		return _end;
 	}
@@ -71,8 +75,16 @@ public class KaleoInstanceQuery implements Serializable {
 		return _kaleoInstanceId;
 	}
 
+	public Long getKaleoInstanceTokenId() {
+		return _kaleoInstanceTokenId;
+	}
+
 	public OrderByComparator<KaleoInstance> getOrderByComparator() {
 		return _orderByComparator;
+	}
+
+	public long getParentKaleoInstanceTokenId() {
+		return _parentKaleoInstanceTokenId;
 	}
 
 	public ServiceContext getServiceContext() {
@@ -81,10 +93,6 @@ public class KaleoInstanceQuery implements Serializable {
 
 	public int getStart() {
 		return _start;
-	}
-
-	public String getStatus() {
-		return _status;
 	}
 
 	public long getUserId() {
@@ -131,6 +139,10 @@ public class KaleoInstanceQuery implements Serializable {
 		_completionDateLT = completionDateLT;
 	}
 
+	public void setCurrentKaleoNodeName(String currentKaleoNodeName) {
+		_currentKaleoNodeName = currentKaleoNodeName;
+	}
+
 	public void setEnd(int end) {
 		_end = end;
 	}
@@ -143,10 +155,18 @@ public class KaleoInstanceQuery implements Serializable {
 		_kaleoInstanceId = kaleoInstanceId;
 	}
 
+	public void setKaleoInstanceTokenId(Long kaleoInstanceTokenId) {
+		_kaleoInstanceTokenId = kaleoInstanceTokenId;
+	}
+
 	public void setOrderByComparator(
 		OrderByComparator<KaleoInstance> orderByComparator) {
 
 		_orderByComparator = orderByComparator;
+	}
+
+	public void setParentKaleoInstanceTokenId(long parentKaleoInstanceTokenId) {
+		_parentKaleoInstanceTokenId = parentKaleoInstanceTokenId;
 	}
 
 	public void setServiceContext(ServiceContext serviceContext) {
@@ -155,10 +175,6 @@ public class KaleoInstanceQuery implements Serializable {
 
 	public void setStart(int start) {
 		_start = start;
-	}
-
-	public void setStatus(String status) {
-		_status = status;
 	}
 
 	public void setUserId(long userId) {
@@ -173,13 +189,15 @@ public class KaleoInstanceQuery implements Serializable {
 	private Boolean _completed;
 	private Date _completionDateGT;
 	private Date _completionDateLT;
+	private String _currentKaleoNodeName;
 	private int _end = QueryUtil.ALL_POS;
 	private String _kaleoDefinitionName;
 	private Long _kaleoInstanceId;
+	private Long _kaleoInstanceTokenId;
 	private OrderByComparator<KaleoInstance> _orderByComparator;
+	private long _parentKaleoInstanceTokenId;
 	private ServiceContext _serviceContext;
 	private int _start = QueryUtil.ALL_POS;
-	private String _status;
 	private long _userId;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.internal.search;
 /**
  * @author István András Dézsi
  */
-public class KaleoInstanceField {
+public class KaleoInstanceTokenField {
 
 	public static final String ASSET_DESCRIPTION = "assetDescription";
 
@@ -29,10 +29,15 @@ public class KaleoInstanceField {
 
 	public static final String COMPLETION_DATE = "completionDate";
 
+	public static final String CURRENT_KALEO_NODE_NAME = "currentKaleoNodeName";
+
 	public static final String KALEO_DEFINITION_NAME = "kaleoDefinitionName";
 
 	public static final String KALEO_INSTANCE_ID = "kaleoInstanceId";
 
-	public static final String STATUS = "status";
+	public static final String KALEO_INSTANCE_TOKEN_ID = "kaleoInstanceTokenId";
+
+	public static final String PARENT_KALEO_INSTANCE_TOKEN_ID =
+		"parentKaleoInstanceTokenId";
 
 }

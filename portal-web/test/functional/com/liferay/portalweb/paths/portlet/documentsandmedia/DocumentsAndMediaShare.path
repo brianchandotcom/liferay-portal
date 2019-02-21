@@ -9,8 +9,18 @@
 </thead>
 <tbody>
 <tr>
+	<td>INVITE_TO_COLLABORATE_DROPDOWN</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(@class,'dropdown-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVITE_TO_COLLABORATE_INPUT</td>
 	<td>//div[contains(@class,'form-control')]/input[contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_TO_COLLABORATE_TAG</td>
+	<td>//div/span[contains(@id,'item-tag')]/span[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>

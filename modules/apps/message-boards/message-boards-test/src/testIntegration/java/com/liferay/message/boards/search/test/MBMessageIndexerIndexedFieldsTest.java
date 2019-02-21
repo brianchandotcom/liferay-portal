@@ -167,6 +167,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		map.put(Field.USER_NAME, StringUtil.lowerCase(mbMessage.getUserName()));
 
 		map.put("discussion", "false");
+		map.put(
+			"parentMessageId", String.valueOf(mbMessage.getParentMessageId()));
 		map.put("threadId", String.valueOf(mbMessage.getThreadId()));
 		map.put("visible", "true");
 

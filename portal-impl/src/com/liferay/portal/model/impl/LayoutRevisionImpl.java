@@ -138,13 +138,13 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 	@Override
 	public String getTarget() {
-		String target = getTypeSettingsProperty("target", StringPool.BLANK);
+		String target = getTypeSettingsProperty("target");
 
-		if (!Validator.isBlank(target)) {
-			target = "target=\"" + HtmlUtil.escapeAttribute(target) + "\"";
+		if (Validator.isNull(target)) {
+			return StringPool.BLANK;
 		}
 
-		return target;
+		return "target=\"" + HtmlUtil.escapeAttribute(target) + "\"";
 	}
 
 	@Override

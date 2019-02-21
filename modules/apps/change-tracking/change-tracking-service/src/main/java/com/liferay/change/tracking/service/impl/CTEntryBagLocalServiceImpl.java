@@ -50,9 +50,9 @@ public class CTEntryBagLocalServiceImpl extends CTEntryBagLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		long ctBagId = counterLocalService.increment();
+		long ctEntryBagId = counterLocalService.increment();
 
-		CTEntryBag ctEntryBag = ctEntryBagPersistence.create(ctBagId);
+		CTEntryBag ctEntryBag = ctEntryBagPersistence.create(ctEntryBagId);
 
 		User user = userLocalService.getUser(userId);
 

@@ -90,7 +90,7 @@ public class CTManagerImpl implements CTManager {
 
 	@Override
 	public <T> T executeModelUpdate(
-		UnsafeSupplier<T, PortalException> modelUpdateSupplier)
+			UnsafeSupplier<T, PortalException> modelUpdateSupplier)
 		throws PortalException {
 
 		boolean resetFlag = false;

@@ -16,6 +16,8 @@ package com.liferay.headless.document.library.resource.v1_0;
 
 import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -42,13 +44,13 @@ public interface CommentResource {
 				Long commentId,Comment comment)
 			throws Exception;
 	public Page<Comment> getCommentCommentsPage(
-				Long commentId,Pagination pagination)
+				Long commentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
 	public Comment postCommentComment(
 				Long commentId,Comment comment)
 			throws Exception;
 	public Page<Comment> getDocumentCommentsPage(
-				Long documentId,Pagination pagination)
+				Long documentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
 	public Comment postDocumentComment(
 				Long documentId,Comment comment)

@@ -23,6 +23,8 @@ import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -98,23 +100,23 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Page<Comment> invokeGetBlogPostingCommentsPage(
-				Long blogPostingId,Pagination pagination)
+				Long blogPostingId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId,filter,sorts));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetBlogPostingCommentsPageResponse(
-				Long blogPostingId,Pagination pagination)
+				Long blogPostingId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
+			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId,filter,sorts));
 
 			HttpUtil.URLtoString(options);
 
@@ -233,23 +235,23 @@ public abstract class BaseCommentResourceTestCase {
 			return options.getResponse();
 	}
 	protected Page<Comment> invokeGetCommentCommentsPage(
-				Long commentId,Pagination pagination)
+				Long commentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId,filter,sorts));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetCommentCommentsPageResponse(
-				Long commentId,Pagination pagination)
+				Long commentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId,filter,sorts));
 
 			HttpUtil.URLtoString(options);
 

@@ -24,6 +24,8 @@ import com.liferay.headless.web.experience.dto.v1_0.Creator;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -180,23 +182,23 @@ public abstract class BaseCommentResourceTestCase {
 			return options.getResponse();
 	}
 	protected Page<Comment> invokeGetCommentCommentsPage(
-				Long commentId,Pagination pagination)
+				Long commentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId,filter,sorts));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetCommentCommentsPageResponse(
-				Long commentId,Pagination pagination)
+				Long commentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId,filter,sorts));
 
 			HttpUtil.URLtoString(options);
 
@@ -234,23 +236,23 @@ public abstract class BaseCommentResourceTestCase {
 			return options.getResponse();
 	}
 	protected Page<Comment> invokeGetStructuredContentCommentsPage(
-				Long structuredContentId,Pagination pagination)
+				Long structuredContentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/comments", structuredContentId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/comments", structuredContentId,filter,sorts));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetStructuredContentCommentsPageResponse(
-				Long structuredContentId,Pagination pagination)
+				Long structuredContentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/comments", structuredContentId));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/comments", structuredContentId,filter,sorts));
 
 			HttpUtil.URLtoString(options);
 

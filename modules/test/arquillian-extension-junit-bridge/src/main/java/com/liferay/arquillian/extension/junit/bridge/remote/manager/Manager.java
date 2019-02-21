@@ -66,8 +66,8 @@ public class Manager {
 
 		Class<?> eventClass = event.getClass();
 
-		for (Extension extension : _extensions) {
-			for (Observer observer : extension.getObservers()) {
+		for (Object extension : _extensions) {
+			for (Observer observer : Observer.getObservers(extension)) {
 				Type type = observer.getType();
 
 				Class<?> clazz = (Class<?>)type;
@@ -132,14 +132,13 @@ public class Manager {
 		throw (E)throwable;
 	}
 
-	private List<Extension> _createExtensions(
+	private List<Object> _createExtensions(
 		Collection<Class<?>> extensionClasses) {
 
-		List<Extension> created = new ArrayList<>();
+		List<Object> created = new ArrayList<>();
 
 		for (Class<?> extensionClass : extensionClasses) {
-			Extension extension = new Extension(
-				_createInstance(extensionClass));
+			Object extension = _createInstance(extensionClass);
 
 			_inject(extension);
 
@@ -174,8 +173,10 @@ public class Manager {
 		return null;
 	}
 
-	private void _inject(Extension extension) {
-		for (InjectionPoint injectionPoint : extension.getInjectionPoints()) {
+	private void _inject(Object extension) {
+		for (InjectionPoint injectionPoint :
+				InjectionPoint.getInjections(extension)) {
+
 			injectionPoint.set(
 				new Instance<>(
 					_getType(injectionPoint.getType()),
@@ -192,14 +193,14 @@ public class Manager {
 		}
 
 		if (nonManagedObserver != null) {
-			_inject(new Extension(nonManagedObserver));
+			_inject(nonManagedObserver);
 
 			nonManagedObserver.fired(event);
 		}
 	}
 
 	private final ApplicationContext _applicationContext;
-	private final List<Extension> _extensions = new ArrayList<>();
+	private final List<Object> _extensions = new ArrayList<>();
 
 	private class ApplicationContextImpl
 		extends AbstractContext<String> implements ApplicationContext {

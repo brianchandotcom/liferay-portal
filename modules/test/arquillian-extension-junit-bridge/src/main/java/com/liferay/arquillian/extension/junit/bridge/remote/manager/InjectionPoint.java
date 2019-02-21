@@ -19,7 +19,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.spi.InvocationException;
 
 /**
@@ -27,9 +31,24 @@ import org.jboss.arquillian.core.spi.InvocationException;
  */
 public class InjectionPoint {
 
-	public InjectionPoint(Object target, Field field) {
-		_target = target;
-		_field = field;
+	public static List<InjectionPoint> getInjections(Object target) {
+		List<InjectionPoint> injectionPoints = new ArrayList<>();
+
+		Class<?> clazz = target.getClass();
+
+		while (clazz != null) {
+			for (Field field : clazz.getDeclaredFields()) {
+				if (_isInjectionPoint(field)) {
+					field.setAccessible(true);
+
+					injectionPoints.add(new InjectionPoint(target, field));
+				}
+			}
+
+			clazz = clazz.getSuperclass();
+		}
+
+		return injectionPoints;
 	}
 
 	public Class<? extends Annotation> getScope() {
@@ -60,6 +79,23 @@ public class InjectionPoint {
 		catch (Exception e) {
 			throw new InvocationException(e.getCause());
 		}
+	}
+
+	private static boolean _isInjectionPoint(Field field) {
+		if (field.isAnnotationPresent(Inject.class)) {
+			Class<?> type = field.getType();
+
+			if (type.equals(Instance.class)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private InjectionPoint(Object target, Field field) {
+		_target = target;
+		_field = field;
 	}
 
 	private final Field _field;

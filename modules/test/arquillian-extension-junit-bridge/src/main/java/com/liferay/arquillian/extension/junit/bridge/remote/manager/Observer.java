@@ -14,10 +14,15 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.InvocationException;
 
 /**
@@ -25,9 +30,24 @@ import org.jboss.arquillian.core.spi.InvocationException;
  */
 public class Observer implements Comparable<Observer> {
 
-	public Observer(Object target, Method method) {
-		_target = target;
-		_method = method;
+	public static List<Observer> getObservers(Object target) {
+		List<Observer> observers = new ArrayList<>();
+
+		Class<?> clazz = target.getClass();
+
+		while (clazz != null) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				if (_isObserverMethod(method)) {
+					method.setAccessible(true);
+
+					observers.add(new Observer(target, method));
+				}
+			}
+
+			clazz = clazz.getSuperclass();
+		}
+
+		return observers;
 	}
 
 	@Override
@@ -73,6 +93,29 @@ public class Observer implements Comparable<Observer> {
 
 			throw new InvocationException(e);
 		}
+	}
+
+	private static boolean _isObserverMethod(Method method) {
+		Annotation[][] annotations = method.getParameterAnnotations();
+
+		if ((method.getParameterTypes().length < 1) ||
+			(annotations.length < 1)) {
+
+			return false;
+		}
+
+		for (Annotation annotation : annotations[0]) {
+			if (annotation.annotationType() == Observes.class) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private Observer(Object target, Method method) {
+		_target = target;
+		_method = method;
 	}
 
 	private boolean _containsNull(Object[] arguments) {

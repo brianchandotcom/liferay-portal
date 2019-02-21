@@ -184,7 +184,7 @@ public class JavaClassParser {
 
 		String s = StringUtil.trim(content.substring(x + 1));
 
-		if (!s.startsWith("{\n\n")) {
+		if (!s.startsWith("{\n")) {
 			return null;
 		}
 

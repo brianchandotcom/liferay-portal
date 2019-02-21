@@ -164,6 +164,6 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 	}
 
 	private static final Pattern _missingEmptyLinePattern = Pattern.compile(
-		"([^{\n]\n)(\t*\\}\n?)$");
+		"([^{}\n]\n)(\t*\\}\n?)$");
 
 }

@@ -19,7 +19,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -36,11 +35,11 @@ public class Extension {
 	}
 
 	public List<InjectionPoint> getInjectionPoints() {
-		return Collections.unmodifiableList(_injectionPoints);
+		return _injectionPoints;
 	}
 
 	public List<Observer> getObservers() {
-		return Collections.unmodifiableList(_observers);
+		return _observers;
 	}
 
 	private static List<InjectionPoint> _injections(Object target) {

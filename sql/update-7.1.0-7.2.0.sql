@@ -64,8 +64,6 @@ from LayoutSetVersion;
 alter table LayoutSet add head BOOLEAN;
 alter table LayoutSet add headId LONG;
 
-drop index IX_48550691 on LayoutSet;
-
 COMMIT_TRANSACTION;
 
 update LayoutSet set headId = -1 * layoutSetId, head = TRUE;

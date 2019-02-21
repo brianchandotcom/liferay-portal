@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -22,7 +21,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 
 /**
@@ -48,10 +46,6 @@ public class InjectionPoint {
 		}
 
 		return injectionPoints;
-	}
-
-	public Class<? extends Annotation> getScope() {
-		return ApplicationScoped.class;
 	}
 
 	public Type getType() {

@@ -14,18 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import java.lang.annotation.Annotation;
-
 /**
  * @author Matthew Tambara
  */
 public class Instance<T> {
 
-	public Instance(
-		Class<T> type, Class<? extends Annotation> scope, Manager manager) {
-
+	public Instance(Class<T> type, Manager manager) {
 		_type = type;
-		_scope = scope;
 		_manager = manager;
 	}
 
@@ -34,19 +29,12 @@ public class Instance<T> {
 	}
 
 	public void set(T value) {
-		if (_scope == null) {
-			throw new IllegalStateException(
-				"Value can not be set, instance has no Scope defined: " +
-					value);
-		}
-
-		_manager.bind(_scope, _type, value);
+		_manager.bind(_type, value);
 
 		_manager.fire(value);
 	}
 
 	private final Manager _manager;
-	private final Class<? extends Annotation> _scope;
 	private final Class<T> _type;
 
 }

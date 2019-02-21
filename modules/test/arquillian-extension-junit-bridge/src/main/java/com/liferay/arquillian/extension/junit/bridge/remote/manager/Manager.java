@@ -49,9 +49,7 @@ public class Manager {
 		_applicationContext.activate();
 	}
 
-	public <T> void bind(
-		Class<? extends Annotation> scope, Class<T> type, T instance) {
-
+	public <T> void bind(Class<T> type, T instance) {
 		ObjectStore objectStore = _applicationContext.getObjectStore();
 
 		objectStore.add(type, instance);
@@ -184,9 +182,7 @@ public class Manager {
 				InjectionPoint.getInjections(extension)) {
 
 			injectionPoint.set(
-				new Instance<>(
-					_getType(injectionPoint.getType()),
-					injectionPoint.getScope(), this));
+				new Instance<>(_getType(injectionPoint.getType()), this));
 		}
 	}
 

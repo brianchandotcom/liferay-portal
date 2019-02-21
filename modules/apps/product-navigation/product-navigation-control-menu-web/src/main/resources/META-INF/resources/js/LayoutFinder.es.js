@@ -23,8 +23,22 @@ class LayoutFinder extends Component {
 	 * @inheritDoc
  	 * @review
 	 */
-	attached() {
-		dom.on(document, 'click', this._handleDocClick.bind(this));
+	created() {
+		this._handleDocumentClick = this._handleDocumentClick.bind(this);
+
+		this._documentClickHandler = dom.on(document, 'click', this._handleDocumentClick);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	disposed() {
+		if (this._documentClickHandler) {
+			this._documentClickHandler.removeListener();
+
+			this._documentClickHandler = null;
+		}
 	}
 
 	/**
@@ -46,7 +60,7 @@ class LayoutFinder extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleDocClick(event) {
+	_handleDocumentClick(event) {
 		if (this._showFinder && !this.refs.dialog.contains(event.target)) {
 			this._handleCloseDialogClick();
 		}
@@ -221,6 +235,19 @@ LayoutFinder.STATE = {
 	totalCount: Config
 		.number()
 		.value(0),
+
+	/**
+	 * Document click handler
+	 * @default null
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @review
+	 * @type {Object}
+	 */
+	_documentClickHandler: Config
+		.object()
+		.internal()
+		.value(null),
 
 	/**
 	 * Keywords to find layouts with

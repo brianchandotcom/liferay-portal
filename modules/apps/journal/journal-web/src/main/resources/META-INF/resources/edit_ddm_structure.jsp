@@ -218,7 +218,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 				if (removeParentDDMStructureButton) {
 					Liferay.Util.toggleDisabled(removeParentDDMStructureButton, false);
-				};
+				}
 			}
 		);
 	}
@@ -238,7 +238,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 		if (removeParentDDMStructureButton) {
 			Liferay.Util.toggleDisabled(removeParentDDMStructureButton, true);
-		};
+		}
 	}
 
 	function <portlet:namespace />saveDDMStructure() {

@@ -7,6 +7,7 @@
 	{@param layouts: list<[name: string, url: string]>}
 	{@param spritemap: string}
 	{@param totalCount: number}
+	{@param? namespace: string}
 	{@param _handleCloseDialogClick: any}
 	{@param _handleSearchInputKeyUp: any}
 	{@param _toggleDialog: any}
@@ -15,15 +16,20 @@
 	{@param? _viewInPageAdministrationURL: string}
 
 	<div class="layout-finder">
-		<span
-			class="layout-finder-icon lfr-portal-tooltip"
+		<button
+			class="btn btn-sm btn-unstyled lfr-portal-tooltip text-secondary"
 			data-onclick="{$_toggleDialog}"
 			data-title="{msg desc=""}find-a-page{/msg}"
+			type="button"
 		>
+			<span class="sr-only">
+				{msg desc=""}find-a-page{/msg}
+			</span>
+
 			<svg class="lexicon-icon">
 				<use xlink:href="{$spritemap}#caret-bottom"></use>
 			</svg>
-		</span>
+		</button>
 
 		{if $_showFinder}
 			<div class="fade modal show">
@@ -31,79 +37,74 @@
 					class="modal-dialog modal-dialog-sm mt-5 position-relative"
 					ref="dialog"
 					role="dialog"
-					tabindex="0"
 				>
 					<div class="modal-content">
 						<header class="modal-header">
-							<div class="modal-title">
+							<h1 class="modal-title">
 								{msg desc=""}pages-finder{/msg}
-							</div>
+							</h1>
 
 							<button
 								class="close"
 								data-onclick="{$_handleCloseDialogClick}"
 								type="button"
 							>
+								<span class="sr-only">
+									{msg desc=""}close-dialog{/msg}
+								</span>
+
 								<svg class="lexicon-icon">
 									<use xlink:href="{$spritemap}#times"></use>
 								</svg>
 							</button>
 						</header>
 
-						<section
-							class="modal-body"
-							role="document"
-							tabindex="0"
-						>
-							<nav class="management-bar navbar-light">
-								<div class="navbar-form-autofit">
-									<form role="search">
-										<div class="input-group input-group-inset search-bar">
-											<input
-												class="form-control"
-												data-onkeyup="{$_handleSearchInputKeyUp}"
-												placeholder="{msg desc=""}start-typing-to-find-a-page{/msg}..."
-												type="text"
-												value="{$_keywords ?: ''}"
-											/>
-										</div>
-									</form>
-								</div>
-							</nav>
+						<section class="modal-body">
+							<form role="search">
+								<label class="sr-only" for="{$namespace}-layout-finder-page-input">
+									{msg desc=""}page-name{/msg}
+								</label>
 
-							<div class="layout-finder-results">
-								{if $totalCount > 0}
-									<table class="table table-hover table-sm">
-										<tbody>
-											{foreach $layout in $layouts}
-												{if index($layout) < 10}
-													<tr key="{$layout.url}">
-														<td class="layout-name">
-															<a href="{$layout.url}">
-																<span class="d-inline-block text-truncate">
-																	{$layout.name}
-																</span>
-															</a>
-														</td>
-													</tr>
-												{/if}
-											{/foreach}
-										</tbody>
-									</table>
+								<input
+									autofocus
+									class="form-control"
+									data-onkeyup="{$_handleSearchInputKeyUp}"
+									id="{$namespace}-layout-finder-page-input"
+									placeholder="{msg desc=""}start-typing-to-find-a-page{/msg}..."
+									type="text"
+									value="{$_keywords ?: ''}"
+								/>
+							</form>
 
-									{if $totalCount > 10}
-										<div class="pt-2 text-center text-info">
-											{$totalCount - 10} {msg desc=""}results-more-refine-keywords{/msg}
-										</div>
+							{if $totalCount > 0}
+								<table class="mt-3 table table-autofit">
+									<tbody>
+										{foreach $layout in $layouts}
+											{if index($layout) < 10}
+												<tr key="{$layout.url}">
+													<td class="p-0 table-cell-expand">
+														<a class="d-block p-2 text-truncate" href="{$layout.url}">
+															{$layout.name}
+														</a>
+													</td>
+												</tr>
+											{/if}
+										{/foreach}
+									</tbody>
+								</table>
 
-										<div class="text-center">
-											<a href="{$_viewInPageAdministrationURL}">
-												{msg desc=""}view-in-page-administration{/msg}
-											</a>
-										</div>
-									{/if}
+								{if $totalCount > 10}
+									<div class="mt-3 text-center text-info">
+										{$totalCount - 10} {msg desc=""}results-more-refine-keywords{/msg}
+									</div>
+
+									<div class="text-center">
+										<a href="{$_viewInPageAdministrationURL}">
+											{msg desc=""}view-in-page-administration{/msg}
+										</a>
+									</div>
 								{/if}
-							</div>
+							{/if}
 						</section>
 					</div>
 				</div>

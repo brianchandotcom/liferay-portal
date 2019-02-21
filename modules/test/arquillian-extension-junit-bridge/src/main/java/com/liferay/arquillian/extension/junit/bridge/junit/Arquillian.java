@@ -27,13 +27,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
-import org.jboss.arquillian.test.spi.event.suite.BeforeTestLifecycleEvent;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
 import org.junit.AssumptionViolatedException;
@@ -276,46 +274,11 @@ public class Arquillian extends Runner implements Filterable {
 
 		statement = _withPotentialTimeout(frameworkMethod, statement);
 
-		final Statement oldStatement = statement;
-
 		for (MethodRule methodRule : _getMethodRules(test)) {
 			statement = methodRule.apply(statement, frameworkMethod, test);
 		}
 
-		final Statement newStatement = statement;
-
-		return new Statement() {
-
-			@Override
-			public void evaluate() throws Throwable {
-				final AtomicBoolean flag = new AtomicBoolean();
-
-				Throwable throwable = null;
-
-				try {
-					manager.fire(
-						new BeforeTestLifecycleEvent(
-							test, frameworkMethod.getMethod(),
-							() -> {
-								flag.set(true);
-
-								newStatement.evaluate();
-							}));
-
-					if (flag.get() == false) {
-						oldStatement.evaluate();
-					}
-				}
-				catch (Throwable t) {
-					throwable = t;
-				}
-
-				if (throwable != null) {
-					throw throwable;
-				}
-			}
-
-		};
+		return statement;
 	}
 
 	private Statement _methodInvoker(

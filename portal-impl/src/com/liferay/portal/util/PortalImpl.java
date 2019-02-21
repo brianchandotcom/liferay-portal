@@ -7957,19 +7957,24 @@ public class PortalImpl implements Portal {
 		long doAsUserId = 0;
 
 		try {
-			Company company = getCompany(request);
-
-			doAsUserId = GetterUtil.getLong(
-				Encryptor.decrypt(company.getKeyObj(), doAsUserIdString));
+			doAsUserId = Long.parseLong(doAsUserIdString);
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to impersonate " + doAsUserIdString +
-						" because the string cannot be decrypted");
-			}
+		catch (NumberFormatException nfe) {
+			try {
+				Company company = getCompany(request);
 
-			return 0;
+				doAsUserId = GetterUtil.getLong(
+					Encryptor.decrypt(company.getKeyObj(), doAsUserIdString));
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to impersonate " + doAsUserIdString +
+							" because the string cannot be decrypted");
+				}
+
+				return 0;
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

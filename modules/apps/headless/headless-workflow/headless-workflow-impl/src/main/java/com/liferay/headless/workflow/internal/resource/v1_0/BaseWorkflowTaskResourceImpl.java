@@ -55,7 +55,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getRoleWorkflowTasksPage(
+	public Page<WorkflowTaskImpl> getRoleWorkflowTasksPage(
 	@PathParam("role-id") Long roleId,@Context Pagination pagination)
 			throws Exception {
 
@@ -66,7 +66,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getWorkflowTasksPage(
+	public Page<WorkflowTaskImpl> getWorkflowTasksPage(
 	@Context Pagination pagination)
 			throws Exception {
 
@@ -77,7 +77,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public WorkflowTask getWorkflowTask(
+	public WorkflowTaskImpl getWorkflowTask(
 	@PathParam("workflow-task-id") Long workflowTaskId)
 			throws Exception {
 
@@ -89,7 +89,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-me")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTaskAssignToMe(
+	public WorkflowTaskImpl postWorkflowTaskAssignToMe(
 	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception {
 
@@ -101,7 +101,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-user")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTaskAssignToUser(
+	public WorkflowTaskImpl postWorkflowTaskAssignToUser(
 	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception {
 
@@ -113,7 +113,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/workflow-tasks/{workflow-task-id}/change-transition")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTaskChangeTransition(
+	public WorkflowTaskImpl postWorkflowTaskChangeTransition(
 	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception {
 
@@ -125,7 +125,7 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 	@Path("/workflow-tasks/{workflow-task-id}/update-due-date")
 	@Produces("application/json")
 	@RequiresScope("everything.write")
-	public WorkflowTask postWorkflowTaskUpdateDueDate(
+	public WorkflowTaskImpl postWorkflowTaskUpdateDueDate(
 	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
 			throws Exception {
 

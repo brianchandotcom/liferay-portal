@@ -238,9 +238,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		WorkflowHandler workflowHandler = new BaseWorkflowHandler() {
 
 			@Override
-			public AssetRenderer getAssetRenderer(long classPK)
-				throws PortalException {
-
+			public AssetRenderer getAssetRenderer(long classPK) {
 				return assetRenderer;
 			}
 
@@ -255,9 +253,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			}
 
 			@Override
-			public Object updateStatus(int status, Map workflowContext)
-				throws PortalException {
-
+			public Object updateStatus(int status, Map workflowContext) {
 				return null;
 			}
 

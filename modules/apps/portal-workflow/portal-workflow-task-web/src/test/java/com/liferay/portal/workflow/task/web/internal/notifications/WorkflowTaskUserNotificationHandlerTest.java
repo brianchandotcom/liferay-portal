@@ -191,7 +191,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		return userNotificationEvent;
 	}
 
-	protected WorkflowHandler mockWorkflowHandler() throws PortalException {
+	protected WorkflowHandler mockWorkflowHandler() {
 		return new BaseWorkflowHandler() {
 
 			@Override
@@ -206,8 +206,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 			@Override
 			public String getURLEditWorkflowTask(
-					long workflowTaskId, ServiceContext serviceContext)
-				throws PortalException {
+				long workflowTaskId, ServiceContext serviceContext) {
 
 				if (_serviceContext == serviceContext) {
 					return _VALID_LINK;
@@ -217,9 +216,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			}
 
 			@Override
-			public Object updateStatus(int status, Map workflowContext)
-				throws PortalException {
-
+			public Object updateStatus(int status, Map workflowContext) {
 				return null;
 			}
 

@@ -104,7 +104,6 @@ public class UpgradeContentTargetingTest {
 
 	@After
 	public void tearDown() throws Exception {
-		dropContentTargetingTables();
 	}
 
 	@Test
@@ -122,7 +121,7 @@ public class UpgradeContentTargetingTest {
 
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT." + contentTargetingUserSegmentId,
+				_group.getGroupId(), "ct_" + contentTargetingUserSegmentId,
 				false);
 
 		Assert.assertNotNull(segmentsEntry);

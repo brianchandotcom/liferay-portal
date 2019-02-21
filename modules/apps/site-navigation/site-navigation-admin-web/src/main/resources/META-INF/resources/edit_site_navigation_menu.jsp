@@ -101,7 +101,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var addMenuItemClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.dropdown-item',
+		'*[data-type="add-button"] .dropdown-item',
 		function(event) {
 			Liferay.Util.openInDialog(
 				event,

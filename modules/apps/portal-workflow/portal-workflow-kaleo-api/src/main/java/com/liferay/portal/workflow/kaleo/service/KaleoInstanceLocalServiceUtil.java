@@ -380,6 +380,14 @@ public class KaleoInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
+		long kaleoInstanceId, long rootKaleoInstanceTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKaleoInstance(kaleoInstanceId,
+			rootKaleoInstanceTokenId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
 		long kaleoInstanceId,
 		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

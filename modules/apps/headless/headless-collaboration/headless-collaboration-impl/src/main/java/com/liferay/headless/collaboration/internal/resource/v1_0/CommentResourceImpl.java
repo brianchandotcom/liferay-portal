@@ -148,7 +148,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		}
 
 		return _postComment(
-			parentComment.getGroupId(), parentComment.getGroupId(),
+			parentComment.getGroupId(), parentComment.getClassPK(),
 			() -> _commentManager.addComment(
 				_getUserId(), BlogsEntry.class.getName(),
 				parentComment.getClassPK(), StringPool.BLANK, parentCommentId,
@@ -170,8 +170,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		try {
 			_commentManager.updateComment(
 				existingComment.getUserId(), existingComment.getClassName(),
-				existingComment.getClassPK(), commentId, "", comment.getText(),
-				_createServiceContextFunction());
+				existingComment.getClassPK(), commentId, StringPool.BLANK,
+				comment.getText(), _createServiceContextFunction());
 
 			return CommentUtil.toComment(
 				_commentManager.fetchComment(commentId), _portal);

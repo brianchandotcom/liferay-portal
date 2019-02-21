@@ -56,9 +56,21 @@ import javax.ws.rs.core.UriInfo;
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
+		<#assign returnType = javaMethodSignature.returnType />
+
+		<#if returnType?starts_with("Page<")>
+			<#assign simpleClassName = returnType[5..(returnType?length - 2)] />
+
+			<#if allSchemas?keys?seq_contains(simpleClassName)>
+				<#assign returnType = "Page<" + simpleClassName + "Impl>" />
+			</#if>
+		<#elseif allSchemas?keys?seq_contains(returnType)>
+			<#assign returnType = returnType + "Impl" />
+		</#if>
+
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+		public ${returnType} ${javaMethodSignature.methodName}(
 				${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, true)})
 			throws Exception {
 

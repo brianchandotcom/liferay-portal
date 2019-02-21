@@ -26,6 +26,8 @@ definition {
 	}
 
 	macro _editItemPage {
+		Uncheck.uncheckToggleSwitch(locator1 = "SiteNavigationMenu#PAGE_TRANSLATIONS_CHECKBOX");
+
 		if (isSet(name)) {
 			Type(locator1 = "TextInput#NAME", value1 = "${name}");
 		}

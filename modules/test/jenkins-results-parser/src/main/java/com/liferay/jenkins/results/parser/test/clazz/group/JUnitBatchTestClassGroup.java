@@ -527,11 +527,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
-
 		try {
 			Files.walkFileTree(
-				workingDirectory.toPath(),
+				_rootWorkingDirectory.toPath(),
 				new SimpleFileVisitor<Path>() {
 
 					@Override
@@ -590,7 +588,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		catch (IOException ioe) {
 			throw new RuntimeException(
 				"Unable to search for test file names in " +
-					workingDirectory.getPath(),
+					_rootWorkingDirectory.getPath(),
 				ioe);
 		}
 

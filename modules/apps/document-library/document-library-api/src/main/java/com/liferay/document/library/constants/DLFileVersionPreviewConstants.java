@@ -19,8 +19,8 @@ package com.liferay.document.library.constants;
  */
 public class DLFileVersionPreviewConstants {
 
-	public static final int FAILURE = 1;
+	public static final int STATUS_FAILURE = 1;
 
-	public static final int SUCCESS = 0;
+	public static final int STATUS_SUCCESS = 0;
 
 }

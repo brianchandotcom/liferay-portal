@@ -97,6 +97,7 @@ class FragmentEditableField extends Component {
 		this._handleBeforeUnload = this._handleBeforeUnload.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 		this._handleEditableDestroyed = this._handleEditableDestroyed.bind(this);
+		this._handleFloatingToolbarPanelSelected = this._handleFloatingToolbarPanelSelected.bind(this);
 
 		this._beforeNavigateHandler = Liferay.on(
 			'beforeNavigate',
@@ -216,6 +217,9 @@ class FragmentEditableField extends Component {
 			this._floatingToolbar = new FloatingToolbar(
 				{
 					anchorElement: this.element,
+					events: {
+						panelSelected: this._handleFloatingToolbarPanelSelected
+					},
 					item: this.editableId,
 					itemId: this.editableId,
 					panels: FLOATING_TOOLBAR_PANELS,
@@ -465,6 +469,30 @@ class FragmentEditableField extends Component {
 			},
 			SAVE_CHANGES_DELAY
 		);
+	}
+
+	_handleFloatingToolbarPanelSelected(event, data) {
+		event.preventDefault();
+
+		const {panelId} = data;
+
+		if (panelId === FLOATING_TOOLBAR_EDIT_PANEL_ID) {
+			this._showEditor = true;
+		}
+		else if (panelId === FLOATING_TOOLBAR_MAP_PANEL_ID) {
+			this.store
+				.dispatchAction(
+					OPEN_MAPPING_FIELDS_DIALOG,
+					{
+						editableId: this.editableId,
+						editableType: this.type,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						mappedFieldId: this.editableValues.mappedField || ''
+					}
+				);
+		}
+
+		this._showTooltip = false;
 	}
 
 	/**

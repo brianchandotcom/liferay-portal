@@ -286,14 +286,6 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 
 					<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
 						<aui:field-wrapper>
-							<aui:input cssClass="lfr-input-text short-input-text" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
-
-							<div class="form-text">
-								<liferay-ui:message key="custom-field-height-help" />
-							</div>
-						</aui:field-wrapper>
-
-						<aui:field-wrapper>
 							<aui:input cssClass="lfr-input-text short-input-text" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
 
 							<div class="form-text">

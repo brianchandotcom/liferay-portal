@@ -6,7 +6,9 @@ class SiteDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	deactivateSite(itemData) {
-		this._send(itemData.deactivateSiteURL);
+		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-deactivate-this'))) {
+			this._send(itemData.deactivateSiteURL);
+		}
 	}
 
 	deleteSite(itemData) {

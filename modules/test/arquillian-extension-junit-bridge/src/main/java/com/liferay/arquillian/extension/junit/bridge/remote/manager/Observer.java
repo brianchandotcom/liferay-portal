@@ -26,7 +26,7 @@ import org.jboss.arquillian.core.api.annotation.Observes;
 /**
  * @author Matthew Tambara
  */
-public class Observer implements Comparable<Observer> {
+public class Observer {
 
 	public static List<Observer> getObservers(Object target) {
 		List<Observer> observers = new ArrayList<>();
@@ -46,19 +46,6 @@ public class Observer implements Comparable<Observer> {
 		}
 
 		return observers;
-	}
-
-	@Override
-	public int compareTo(Observer observer) {
-		if (observer == null) {
-			return 1;
-		}
-
-		String methodName = _method.getName();
-
-		Method method = observer._method;
-
-		return methodName.compareTo(method.getName());
 	}
 
 	public Type getType() {

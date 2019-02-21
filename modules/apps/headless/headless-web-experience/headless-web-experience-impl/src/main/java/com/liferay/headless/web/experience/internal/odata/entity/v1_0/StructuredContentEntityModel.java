@@ -43,6 +43,9 @@ public class StructuredContentEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
+			new CollectionEntityField(
+				new IntegerEntityField(
+					"categoryIds", locale -> "assetCategoryIds")),
 			new ComplexEntityField("values", entityFields),
 			new DateTimeEntityField(
 				"dateCreated",

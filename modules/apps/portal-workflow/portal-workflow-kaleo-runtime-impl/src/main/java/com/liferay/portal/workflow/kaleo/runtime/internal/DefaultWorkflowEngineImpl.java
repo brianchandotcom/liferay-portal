@@ -421,24 +421,30 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
+	 *             String, String, String, String, String, Boolean, int, int,
+	 *             OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowInstance> search(
-			Long userId, String assetType, String nodeName,
+			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator,
 			ServiceContext serviceContext)
 		throws WorkflowException {
 
 		return search(
-			userId, null, null, assetType, nodeName, kaleoDefinitionName,
+			userId, assetClassName, null, null, nodeName, kaleoDefinitionName,
 			completed, start, end, orderByComparator, serviceContext);
 	}
 
 	@Override
 	public List<WorkflowInstance> search(
-			Long userId, String assetDescription, String assetTitle,
-			String assetType, String nodeName, String kaleoDefinitionName,
-			Boolean completed, int start, int end,
+			Long userId, String assetClassName, String assetTitle,
+			String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator,
 			ServiceContext serviceContext)
 		throws WorkflowException {
@@ -446,8 +452,8 @@ public class DefaultWorkflowEngineImpl
 		try {
 			List<KaleoInstance> kaleoInstances =
 				kaleoInstanceLocalService.search(
-					userId, assetDescription, assetTitle, assetType, nodeName,
-					kaleoDefinitionName, completed, start, end,
+					userId, assetClassName, assetTitle, assetDescription,
+					nodeName, kaleoDefinitionName, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
@@ -460,28 +466,35 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
+	 *             String, String, String, String, String, Boolean,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public int searchCount(
-			Long userId, String assetType, String nodeName,
+			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			ServiceContext serviceContext)
 		throws WorkflowException {
 
 		return searchCount(
-			userId, null, null, assetType, nodeName, kaleoDefinitionName,
+			userId, assetClassName, null, null, nodeName, kaleoDefinitionName,
 			completed, serviceContext);
 	}
 
 	@Override
 	public int searchCount(
-			Long userId, String assetDescription, String assetTitle,
-			String assetType, String nodeName, String kaleoDefinitionName,
-			Boolean completed, ServiceContext serviceContext)
+			Long userId, String assetClassName, String assetTitle,
+			String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed,
+			ServiceContext serviceContext)
 		throws WorkflowException {
 
 		try {
 			return kaleoInstanceLocalService.searchCount(
-				userId, assetDescription, assetTitle, assetType, nodeName,
+				userId, assetClassName, assetTitle, assetDescription, nodeName,
 				kaleoDefinitionName, completed, serviceContext);
 		}
 		catch (Exception e) {

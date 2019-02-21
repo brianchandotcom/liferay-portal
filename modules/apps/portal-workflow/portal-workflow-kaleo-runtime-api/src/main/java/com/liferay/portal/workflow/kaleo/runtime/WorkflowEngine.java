@@ -118,6 +118,12 @@ public interface WorkflowEngine {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
+	 *             String, String, String, String, String, Boolean, int, int,
+	 *             OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	public List<WorkflowInstance> search(
 			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
@@ -125,25 +131,38 @@ public interface WorkflowEngine {
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
-	public List<WorkflowInstance> search(
-			Long userId, String assetDescription, String assetTitle,
-			String assetClassName, String nodeName, String kaleoDefinitionName,
-			Boolean completed, int start, int end,
+	public default List<WorkflowInstance> search(
+			Long userId, String assetClassName, String assetTitle,
+			String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator,
 			ServiceContext serviceContext)
-		throws WorkflowException;
+		throws WorkflowException {
 
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
+	 *             String, String, String, String, String, Boolean,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	public int searchCount(
 			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
-	public int searchCount(
-			Long userId, String assetDescription, String assetTitle,
-			String assetClassName, String nodeName, String kaleoDefinitionName,
-			Boolean completed, ServiceContext serviceContext)
-		throws WorkflowException;
+	public default int searchCount(
+			Long userId, String assetClassName, String assetTitle,
+			String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public WorkflowInstance signalWorkflowInstance(
 			long workflowInstanceId, String transitionName,

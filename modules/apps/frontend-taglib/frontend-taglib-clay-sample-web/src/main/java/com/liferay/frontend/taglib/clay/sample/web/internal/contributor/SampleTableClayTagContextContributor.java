@@ -39,7 +39,11 @@ public class SampleTableClayTagContextContributor
 	@Override
 	public void populate(Map<String, Object> context) {
 		context.put("items", _getItems());
-		context.put("schema", _getSchema().toMap());
+
+		Schema schema = _getSchema();
+
+		context.put("schema", schema.toMap());
+
 		context.put("selectable", true);
 		context.put("tableClasses", "sample-table");
 	}

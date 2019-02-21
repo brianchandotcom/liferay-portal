@@ -34,12 +34,11 @@ public class SampleTableStyleClayTagContextContributor
 
 	@Override
 	public void populate(Map<String, Object> context) {
-		String currentTableClasses = GetterUtil.getString(
-			context.get("tableClasses"));
+		String tableClasses = GetterUtil.getString(context.get("tableClasses"));
 
-		currentTableClasses += " sample-table-style";
+		tableClasses += " sample-table-style";
 
-		context.put("tableClasses", currentTableClasses);
+		context.put("tableClasses", tableClasses);
 	}
 
 }

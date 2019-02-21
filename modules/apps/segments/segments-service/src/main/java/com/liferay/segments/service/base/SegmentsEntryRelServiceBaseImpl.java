@@ -31,6 +31,7 @@ import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
+import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 
 import javax.sql.DataSource;
 
@@ -165,6 +166,63 @@ public abstract class SegmentsEntryRelServiceBaseImpl extends BaseServiceImpl
 	public void setSegmentsEntryRelPersistence(
 		SegmentsEntryRelPersistence segmentsEntryRelPersistence) {
 		this.segmentsEntryRelPersistence = segmentsEntryRelPersistence;
+	}
+
+	/**
+	 * Returns the segments experience local service.
+	 *
+	 * @return the segments experience local service
+	 */
+	public com.liferay.segments.service.SegmentsExperienceLocalService getSegmentsExperienceLocalService() {
+		return segmentsExperienceLocalService;
+	}
+
+	/**
+	 * Sets the segments experience local service.
+	 *
+	 * @param segmentsExperienceLocalService the segments experience local service
+	 */
+	public void setSegmentsExperienceLocalService(
+		com.liferay.segments.service.SegmentsExperienceLocalService segmentsExperienceLocalService) {
+		this.segmentsExperienceLocalService = segmentsExperienceLocalService;
+	}
+
+	/**
+	 * Returns the segments experience remote service.
+	 *
+	 * @return the segments experience remote service
+	 */
+	public com.liferay.segments.service.SegmentsExperienceService getSegmentsExperienceService() {
+		return segmentsExperienceService;
+	}
+
+	/**
+	 * Sets the segments experience remote service.
+	 *
+	 * @param segmentsExperienceService the segments experience remote service
+	 */
+	public void setSegmentsExperienceService(
+		com.liferay.segments.service.SegmentsExperienceService segmentsExperienceService) {
+		this.segmentsExperienceService = segmentsExperienceService;
+	}
+
+	/**
+	 * Returns the segments experience persistence.
+	 *
+	 * @return the segments experience persistence
+	 */
+	public SegmentsExperiencePersistence getSegmentsExperiencePersistence() {
+		return segmentsExperiencePersistence;
+	}
+
+	/**
+	 * Sets the segments experience persistence.
+	 *
+	 * @param segmentsExperiencePersistence the segments experience persistence
+	 */
+	public void setSegmentsExperiencePersistence(
+		SegmentsExperiencePersistence segmentsExperiencePersistence) {
+		this.segmentsExperiencePersistence = segmentsExperiencePersistence;
 	}
 
 	/**
@@ -378,6 +436,12 @@ public abstract class SegmentsEntryRelServiceBaseImpl extends BaseServiceImpl
 	protected SegmentsEntryRelService segmentsEntryRelService;
 	@BeanReference(type = SegmentsEntryRelPersistence.class)
 	protected SegmentsEntryRelPersistence segmentsEntryRelPersistence;
+	@BeanReference(type = com.liferay.segments.service.SegmentsExperienceLocalService.class)
+	protected com.liferay.segments.service.SegmentsExperienceLocalService segmentsExperienceLocalService;
+	@BeanReference(type = com.liferay.segments.service.SegmentsExperienceService.class)
+	protected com.liferay.segments.service.SegmentsExperienceService segmentsExperienceService;
+	@BeanReference(type = SegmentsExperiencePersistence.class)
+	protected SegmentsExperiencePersistence segmentsExperiencePersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

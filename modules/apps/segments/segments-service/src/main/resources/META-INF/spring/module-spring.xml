@@ -13,4 +13,7 @@
 	<bean class="com.liferay.segments.service.impl.SegmentsEntryRelLocalServiceImpl" id="com.liferay.segments.service.SegmentsEntryRelLocalService" />
 	<bean class="com.liferay.segments.service.impl.SegmentsEntryRelServiceImpl" id="com.liferay.segments.service.SegmentsEntryRelService" />
 	<bean class="com.liferay.segments.service.persistence.impl.SegmentsEntryRelPersistenceImpl" id="com.liferay.segments.service.persistence.SegmentsEntryRelPersistence" />
+	<bean class="com.liferay.segments.service.impl.SegmentsExperienceLocalServiceImpl" id="com.liferay.segments.service.SegmentsExperienceLocalService" />
+	<bean class="com.liferay.segments.service.impl.SegmentsExperienceServiceImpl" id="com.liferay.segments.service.SegmentsExperienceService" />
+	<bean class="com.liferay.segments.service.persistence.impl.SegmentsExperiencePersistenceImpl" id="com.liferay.segments.service.persistence.SegmentsExperiencePersistence" />
 </beans>

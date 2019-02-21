@@ -30,6 +30,7 @@ import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveModel
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRecordRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSearchExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionDeserializerTracker;
 import com.liferay.data.engine.internal.rule.DEDataDefinitionRuleFunctionTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
@@ -68,6 +69,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionSearchRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionSearchResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
@@ -83,6 +86,9 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -92,10 +98,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -501,6 +503,24 @@ public class DEDataRecordCollectionServiceImpl
 		}
 	}
 
+	@Override
+	public DEDataRecordCollectionSearchResponse execute(
+		DEDataRecordCollectionSearchRequest deDataRecordCollectionSearchRequest)
+		throws DEDataRecordCollectionException {
+
+		DEDataRecordCollectionSearchExecutor
+			deDataRecordCollectionSearchExecutor =
+				getDeDataRecordCollectionSearchExecutor();
+
+		try {
+			return deDataRecordCollectionSearchExecutor.execute(
+				deDataRecordCollectionSearchRequest);
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException(e);
+		}
+	}
+
 	protected DEDataDefinitionRuleFunctionApplyRequest
 		createDEDataDefinitionRuleFunctionApplyRequest(
 			DEDataDefinitionField deDataDefinitionField,
@@ -596,6 +616,153 @@ public class DEDataRecordCollectionServiceImpl
 	@Override
 	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
 		return new DEDataEnginePermissionSupport(groupLocalService);
+	}
+
+	protected DEDataEngineRequestExecutor getDEDataEngineRequestExecutor() {
+		if (_deDataEngineRequestExecutor == null) {
+			_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
+				deDataDefinitionDeserializerTracker, deDataStorageTracker);
+		}
+
+		return _deDataEngineRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionDeleteModelPermissionsRequestExecutor
+		getDEDataRecordCollectionDeleteModelPermissionsRequestExecutor() {
+
+		if (_deDataRecordCollectionDeleteModelPermissionsRequestExecutor ==
+				null) {
+
+			_deDataRecordCollectionDeleteModelPermissionsRequestExecutor =
+				new DEDataRecordCollectionDeleteModelPermissionsRequestExecutor(
+					resourcePermissionLocalService, roleLocalService);
+		}
+
+		return _deDataRecordCollectionDeleteModelPermissionsRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionDeletePermissionsRequestExecutor
+		getDEDataRecordCollectionDeletePermissionsRequestExecutor() {
+
+		if (_deDataRecordCollectionDeletePermissionsRequestExecutor == null) {
+			_deDataRecordCollectionDeletePermissionsRequestExecutor =
+				new DEDataRecordCollectionDeletePermissionsRequestExecutor(
+					resourcePermissionLocalService, roleLocalService);
+		}
+
+		return _deDataRecordCollectionDeletePermissionsRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionDeleteRecordRequestExecutor
+		getDEDataRecordCollectionDeleteRecordRequestExecutor() {
+
+		if (_deDataRecordCollectionDeleteRecordRequestExecutor == null) {
+			_deDataRecordCollectionDeleteRecordRequestExecutor =
+				new DEDataRecordCollectionDeleteRecordRequestExecutor(
+					deDataStorageTracker, ddlRecordLocalService);
+		}
+
+		return _deDataRecordCollectionDeleteRecordRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionDeleteRequestExecutor
+		getDEDataRecordCollectionDeleteRequestExecutor() {
+
+		if (_deDataRecordCollectionDeleteRequestExecutor == null) {
+			_deDataRecordCollectionDeleteRequestExecutor =
+				new DEDataRecordCollectionDeleteRequestExecutor(
+					ddlRecordSetLocalService);
+		}
+
+		return _deDataRecordCollectionDeleteRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionGetRecordRequestExecutor
+		getDEDataRecordCollectionGetRecordRequestExecutor() {
+
+		if (_deDataRecordCollectionGetRecordRequestExecutor == null) {
+			_deDataRecordCollectionGetRecordRequestExecutor =
+				new DEDataRecordCollectionGetRecordRequestExecutor(
+					getDEDataEngineRequestExecutor(), ddlRecordLocalService);
+		}
+
+		return _deDataRecordCollectionGetRecordRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionGetRequestExecutor
+		getDEDataRecordCollectionGetRequestExecutor() {
+
+		if (_deDataRecordCollectionGetRequestExecutor == null) {
+			_deDataRecordCollectionGetRequestExecutor =
+				new DEDataRecordCollectionGetRequestExecutor(
+					ddlRecordSetLocalService, getDEDataEngineRequestExecutor());
+		}
+
+		return _deDataRecordCollectionGetRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionSaveModelPermissionsRequestExecutor
+		getDEDataRecordCollectionSaveModelPermissionsRequestExecutor() {
+
+		if (_deDataRecordCollectionSaveModelPermissionsRequestExecutor ==
+				null) {
+
+			_deDataRecordCollectionSaveModelPermissionsRequestExecutor =
+				new DEDataRecordCollectionSaveModelPermissionsRequestExecutor(
+					resourcePermissionLocalService);
+		}
+
+		return _deDataRecordCollectionSaveModelPermissionsRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionSavePermissionsRequestExecutor
+		getDEDataRecordCollectionSavePermissionsRequestExecutor() {
+
+		if (_deDataRecordCollectionSavePermissionsRequestExecutor == null) {
+			_deDataRecordCollectionSavePermissionsRequestExecutor =
+				new DEDataRecordCollectionSavePermissionsRequestExecutor(
+					resourcePermissionLocalService, roleLocalService);
+		}
+
+		return _deDataRecordCollectionSavePermissionsRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionSaveRecordRequestExecutor
+		getDEDataRecordCollectionSaveRecordRequestExecutor() {
+
+		if (_deDataRecordCollectionSaveRecordRequestExecutor == null) {
+			_deDataRecordCollectionSaveRecordRequestExecutor =
+				new DEDataRecordCollectionSaveRecordRequestExecutor(
+					ddlRecordLocalService, deDataStorageTracker,
+					ddmStorageLinkLocalService, portal);
+		}
+
+		return _deDataRecordCollectionSaveRecordRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionSaveRequestExecutor
+		getDEDataRecordCollectionSaveRequestExecutor() {
+
+		if (_deDataRecordCollectionSaveRequestExecutor == null) {
+			_deDataRecordCollectionSaveRequestExecutor =
+				new DEDataRecordCollectionSaveRequestExecutor(
+					getDEDataEngineRequestExecutor(), ddlRecordSetLocalService,
+					resourceLocalService);
+		}
+
+		return _deDataRecordCollectionSaveRequestExecutor;
+	}
+
+	protected DEDataRecordCollectionSearchExecutor
+		getDeDataRecordCollectionSearchExecutor() {
+
+		if (_deDataRecordCollectionSearchExecutor == null) {
+			_deDataRecordCollectionSearchExecutor =
+				new DEDataRecordCollectionSearchExecutor(
+					getDEDataEngineRequestExecutor(), ddlRecordSetLocalService);
+		}
+
+		return _deDataRecordCollectionSearchExecutor;
 	}
 
 	protected boolean isValidationRule(
@@ -820,6 +987,8 @@ public class DEDataRecordCollectionServiceImpl
 		_deDataRecordCollectionSaveRecordRequestExecutor;
 	private DEDataRecordCollectionSaveRequestExecutor
 		_deDataRecordCollectionSaveRequestExecutor;
+	private DEDataRecordCollectionSearchExecutor
+		_deDataRecordCollectionSearchExecutor;
 	private ModelResourcePermission<DEDataRecordCollection>
 		_modelResourcePermission;
 

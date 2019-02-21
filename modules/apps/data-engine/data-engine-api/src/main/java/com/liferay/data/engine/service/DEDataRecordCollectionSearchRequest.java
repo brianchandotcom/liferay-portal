@@ -37,7 +37,7 @@ public class DEDataRecordCollectionSearchRequest {
 		return _keywords;
 	}
 
-	public long getStart() {
+	public int getStart() {
 		return _start;
 	}
 
@@ -89,6 +89,6 @@ public class DEDataRecordCollectionSearchRequest {
 	private int _end = QueryUtil.ALL_POS;
 	private long _groupId;
 	private String _keywords;
-	private long _start = QueryUtil.ALL_POS;
+	private int _start = QueryUtil.ALL_POS;
 
 }

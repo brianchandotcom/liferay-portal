@@ -171,4 +171,9 @@ public interface DEDataRecordCollectionService {
 			DEDataRecordCollectionSaveRequest deDataRecordCollectionSaveRequest)
 		throws DEDataRecordCollectionException;
 
+	public DEDataRecordCollectionSearchResponse execute(
+			DEDataRecordCollectionSearchRequest
+				deDataRecordCollectionSearchRequest)
+		throws DEDataRecordCollectionException;
+
 }

@@ -15,7 +15,11 @@
 	{@param? _viewInPageAdministrationURL: string}
 
 	<div class="layout-finder">
-		<span class="layout-finder-icon lfr-portal-tooltip" data-onclick="{$_toggleDialog}" data-title="{msg desc=""}find-a-page{/msg}">
+		<span
+			class="layout-finder-icon lfr-portal-tooltip"
+			data-onclick="{$_toggleDialog}"
+			data-title="{msg desc=""}find-a-page{/msg}"
+		>
 			<svg class="lexicon-icon">
 				<use xlink:href="{$spritemap}#caret-bottom"></use>
 			</svg>
@@ -23,19 +27,34 @@
 
 		{if $_showFinder}
 			<div class="fade modal show">
-				<div class="modal-dialog modal-dialog-sm mt-5 position-relative" ref="dialog" role="dialog" tabindex="0">
+				<div
+					class="modal-dialog modal-dialog-sm mt-5 position-relative"
+					ref="dialog"
+					role="dialog"
+					tabindex="0"
+				>
 					<div class="modal-content">
 						<header class="modal-header">
-							<div class="modal-title">{msg desc=""}pages-finder{/msg}</div>
+							<div class="modal-title">
+								{msg desc=""}pages-finder{/msg}
+							</div>
 
-							<button class="close" type="button" data-onclick="{$_handleCloseDialogClick}">
+							<button
+								class="close"
+								data-onclick="{$_handleCloseDialogClick}"
+								type="button"
+							>
 								<svg class="lexicon-icon">
 									<use xlink:href="{$spritemap}#times"></use>
 								</svg>
 							</button>
 						</header>
 
-						<section class="modal-body" role="document" tabindex="0">
+						<section
+							class="modal-body"
+							role="document"
+							tabindex="0"
+						>
 							<nav class="management-bar navbar-light">
 								<div class="navbar-form-autofit">
 									<form role="search">
@@ -58,21 +77,29 @@
 										<tbody>
 											{foreach $layout in $layouts}
 												{if index($layout) < 10}
-												<tr>
-													<td class="layout-name"><a href="{$layout.url}"><span class="d-inline-block text-truncate">{$layout.name}</span></a></td>
-												</tr>
+													<tr key="{$layout.url}">
+														<td class="layout-name">
+															<a href="{$layout.url}">
+																<span class="d-inline-block text-truncate">
+																	{$layout.name}
+																</span>
+															</a>
+														</td>
+													</tr>
 												{/if}
 											{/foreach}
 										</tbody>
 									</table>
 
 									{if $totalCount > 10}
-										<div class="pt-2 text-info text-center">
+										<div class="pt-2 text-center text-info">
 											{$totalCount - 10} {msg desc=""}results-more-refine-keywords{/msg}
 										</div>
 
 										<div class="text-center">
-											<a href="{$_viewInPageAdministrationURL}">{msg desc=""}view-in-page-administration{/msg}</a>
+											<a href="{$_viewInPageAdministrationURL}">
+												{msg desc=""}view-in-page-administration{/msg}
+											</a>
 										</div>
 									{/if}
 								{/if}
@@ -83,5 +110,4 @@
 			</div>
 		{/if}
 	</div>
-
 {/template}

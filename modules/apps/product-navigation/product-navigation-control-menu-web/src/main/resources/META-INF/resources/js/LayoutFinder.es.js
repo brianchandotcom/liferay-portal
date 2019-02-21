@@ -1,11 +1,9 @@
-import 'metal';
+import {Config} from 'metal-state';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
-
 import templates from './LayoutFinder.soy';
 
 /**
@@ -13,28 +11,27 @@ import templates from './LayoutFinder.soy';
  * @review
  * @type {!string}
  */
-
 const ENTER_KEY = 'Enter';
 
 /**
  * LayoutFinder
+ * @review
  */
 class LayoutFinder extends Component {
 
 	/**
 	 * @inheritDoc
+ 	 * @review
 	 */
-
 	attached() {
 		dom.on(document, 'click', this._handleDocClick.bind(this));
 	}
 
 	/**
-	 * Handles close button click in order to hide the dialog.
-	 * @param {!Event} event
-	 * @protected
+	 * Handles close button click in order to hide the dialog
+	 * @private
+	 * @review
 	 */
-
 	_handleCloseDialogClick() {
 		this.layouts = [];
 		this.totalCount = 0;
@@ -44,11 +41,11 @@ class LayoutFinder extends Component {
 	}
 
 	/**
-	 * Handles document click in order to hide the dialog.
+	 * Handles document click in order to hide the dialog
 	 * @param {!Event} event
-	 * @protected
+	 * @private
+	 * @review
 	 */
-
 	_handleDocClick(event) {
 		if (this._showFinder && !this.refs.dialog.contains(event.target)) {
 			this._handleCloseDialogClick();
@@ -56,11 +53,11 @@ class LayoutFinder extends Component {
 	}
 
 	/**
-	 * Handles keyUp event on the filter input to filter the layouts.
-	 * @param {!Event} event
-	 * @protected
+	 * Handles keyUp event on the filter input to filter the layouts
+	 * @param {!KeyboardEvent} event
+	 * @private
+	 * @preview
 	 */
-
 	_handleSearchInputKeyUp(event) {
 		if (event.key === ENTER_KEY) {
 			event.preventDefault();
@@ -116,137 +113,154 @@ class LayoutFinder extends Component {
 	}
 
 	/**
-	 * Toggles layout finder dialog visivility.
-	 * @protected
+	 * Toggles layout finder dialog visivility
+	 * @private
+	 * @review
 	 */
-
 	_toggleDialog() {
 		this._showFinder = !this._showFinder;
 	}
 
 }
 
+/**
+ * State definition
+ * @review
+ * @static
+ * @type {!Object}
+ */
 LayoutFinder.STATE = {
 
 	/**
-	 * Namespace for Pages Administration portlet.
+	 * Namespace for Pages Administration portlet
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
 	 * @type {!string}
 	 */
-
-	administrationPortletNamespace: Config.string(),
+	administrationPortletNamespace: Config
+		.string()
+		.required(),
 
 	/**
-	 * URL to access Pages Administration portlet.
+	 * URL to access Pages Administration portlet
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
 	 * @type {!string}
 	 */
-
-	administrationPortletURL: Config.string(),
+	administrationPortletURL: Config
+		.string()
+		.required(),
 
 	/**
-	 * URL to find layouts by keywords.
+	 * URL to find layouts by keywords
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
 	 * @type {!string}
 	 */
-
-	findLayoutsURL: Config.string(),
+	findLayoutsURL: Config
+		.string()
+		.required(),
 
 	/**
-	 * Layouts found by current keywords.
+	 * Layouts found by current keywords
 	 * @default []
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
 	 * @type {!Array}
 	 */
-
-	layouts: Config.arrayOf(
-		Config.shapeOf(
-			{
-				name: Config.string().required(),
-				url: Config.string().required()
-			}
+	layouts: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					name: Config.string().required(),
+					url: Config.string().required()
+				}
+			)
 		)
-	),
+		.required(),
 
 	/**
-	 * Current portlet namespace.
+	 * Current portlet namespace
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
 	 * @type {!string}
 	 */
-
-	namespace: Config.string(),
+	namespace: Config
+		.string()
+		.required(),
 
 	/**
-	 * Path of the available icons.
+	 * Path of the available icons
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
 	 * @type {!string}
 	 */
-
-	spritemap: Config.string(),
+	spritemap: Config
+		.string()
+		.required(),
 
 	/**
-	 * Total count of layouts found.
+	 * Total count of layouts found
 	 * @default 0
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
-	 * @type {!number}
+	 * @type {number}
 	 */
-
-	totalCount: Config.number().value(0),
+	totalCount: Config
+		.number()
+		.value(0),
 
 	/**
-	 * Keywords to find layouts with.
+	 * Keywords to find layouts with
 	 * @default ''
 	 * @instance
 	 * @memberOf LayoutFinder
+	 * @private
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-
-	_keywords: Config.string().value(''),
+	_keywords: Config
+		.string()
+		.value(''),
 
 	/**
-	 * Show layout finder dialog.
+	 * Show layout finder dialog
 	 * @default false
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
-	 * @type {!boolean}
+	 * @type {boolean}
 	 */
-
-	_showFinder: Config.bool().value(false),
+	_showFinder: Config
+		.bool()
+		.value(false),
 
 	/**
-	 * URL to access Pages Administration portlet with keywords parameter.
+	 * URL to access Pages Administration portlet with keywords parameter
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutFinder
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-
-	_viewInPageAdministrationURL: Config.string()
+	_viewInPageAdministrationURL: Config
+		.string()
 
 };
 
 Soy.register(LayoutFinder, templates);
 
+export {LayoutFinder};
 export default LayoutFinder;

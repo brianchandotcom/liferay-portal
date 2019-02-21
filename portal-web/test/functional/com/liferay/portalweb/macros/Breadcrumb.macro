@@ -103,7 +103,7 @@ definition {
 				var key_breadcrumbName = "${breadcrumbName}";
 
 				AssertElementNotPresent(
-					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
 					key_breadcrumbName = "${breadcrumbName}"
 				);
 			}
@@ -114,7 +114,7 @@ definition {
 
 	macro viewEntry {
 		AssertTextEquals(
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
 			value1 = "${breadcrumbName}",
 			key_breadcrumbName = "${breadcrumbName}"
 		);
@@ -126,7 +126,7 @@ definition {
 				var key_breadcrumbName = "${breadcrumbName}";
 
 				AssertTextEquals(
-					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
 					value1 = "${breadcrumbName}"
 				);
 			}
@@ -135,7 +135,7 @@ definition {
 		if (isSet(breadcrumbListNotVisible)) {
 			for (var breadcrumbName : list "${breadcrumbListNotVisible}") {
 				AssertElementNotPresent(
-					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
 					key_breadcrumbName = "${breadcrumbName}"
 				);
 			}

@@ -5,23 +5,14 @@ import Soy from 'metal-soy';
 
 import './FragmentEditableFieldTooltip.es';
 
-import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
+import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
+import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
-import {
-	CLEAR_ACTIVE_ITEM,
-	OPEN_MAPPING_FIELDS_DIALOG,
-	UPDATE_ACTIVE_ITEM,
-	UPDATE_EDITABLE_VALUE,
-	UPDATE_HOVERED_ITEM,
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS,
-	UPDATE_TRANSLATION_STATUS
-} from '../../actions/actions.es';
 
 /**
  * Default key used for translated values when there is no languageId

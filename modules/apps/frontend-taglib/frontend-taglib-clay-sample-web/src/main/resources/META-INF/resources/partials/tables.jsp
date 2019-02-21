@@ -25,5 +25,5 @@
 <blockquote><p>Table with attributes set by the service layer</p></blockquote>
 
 <clay:table
-	attributeProviderKey="SampleTableAttributeProvider"
+	contributorName="SampleTable"
 />

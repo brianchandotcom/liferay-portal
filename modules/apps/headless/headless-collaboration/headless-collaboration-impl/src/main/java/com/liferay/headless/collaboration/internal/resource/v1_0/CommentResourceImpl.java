@@ -22,6 +22,7 @@ import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -128,11 +129,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return _postComment(
-			blogsEntry.getGroupId(), blogsEntry.getEntryId(),
+			blogsEntry.getGroupId(), blogPostingId,
 			() -> _commentManager.addComment(
 				_getUserId(), blogsEntry.getGroupId(),
-				blogsEntry.getModelClassName(), blogsEntry.getEntryId(),
-				StringPool.BLANK, StringPool.BLANK, comment.getText(),
+				blogsEntry.getModelClassName(), blogPostingId, StringPool.BLANK,
+				StringPool.BLANK,
+				StringBundler.concat("<p>", comment.getText(), "</p>"),
 				_createServiceContextFunction()));
 	}
 
@@ -152,7 +154,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			() -> _commentManager.addComment(
 				_getUserId(), BlogsEntry.class.getName(),
 				parentComment.getClassPK(), StringPool.BLANK, parentCommentId,
-				StringPool.BLANK, comment.getText(),
+				StringPool.BLANK,
+				StringBundler.concat("<p>", comment.getText(), "</p>"),
 				_createServiceContextFunction()));
 	}
 
@@ -171,7 +174,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 			_commentManager.updateComment(
 				existingComment.getUserId(), existingComment.getClassName(),
 				existingComment.getClassPK(), commentId, StringPool.BLANK,
-				comment.getText(), _createServiceContextFunction());
+				StringBundler.concat("<p>", comment.getText(), "</p>"),
+				_createServiceContextFunction());
 
 			return CommentUtil.toComment(
 				_commentManager.fetchComment(commentId), _portal);

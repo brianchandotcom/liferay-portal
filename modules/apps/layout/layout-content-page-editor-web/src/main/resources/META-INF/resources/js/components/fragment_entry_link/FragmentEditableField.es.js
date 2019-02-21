@@ -114,6 +114,7 @@ class FragmentEditableField extends Component {
 		clearTimeout(this._saveChangesTimeout);
 
 		this._destroyProcessors();
+		this._disposeFloatingToolbar();
 
 		window.removeEventListener('beforeunload', this._handleBeforeUnload);
 	}
@@ -179,6 +180,16 @@ class FragmentEditableField extends Component {
 
 		if (this.refs.editable !== this._tooltipAlignElement) {
 			this._tooltipAlignElement = this.refs.editable;
+		}
+
+		if (
+			(this.editableId === this.activeItemId) &&
+			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable)
+		) {
+			this._createFloatingToolbar();
+		}
+		else {
+			this._disposeFloatingToolbar();
 		}
 	}
 

@@ -171,7 +171,7 @@ public class VocabularyResourceImpl
 				dateModified = assetVocabulary.getModifiedDate();
 				description = assetVocabulary.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
-				hasCategories = ListUtil.isEmpty(
+				hasCategories = ListUtil.isNotEmpty(
 					assetVocabulary.getCategories());
 				id = assetVocabulary.getVocabularyId();
 				name = assetVocabulary.getTitle(

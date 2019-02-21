@@ -30,8 +30,6 @@ public class Instance<T> {
 
 	public void set(T value) {
 		_manager.bind(_type, value);
-
-		_manager.fire(value);
 	}
 
 	private final Manager _manager;

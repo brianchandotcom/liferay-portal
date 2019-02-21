@@ -1050,7 +1050,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	protected Layout updateLayoutWithLayoutRevision(
 			LayoutRevision layoutRevision)
-		throws PortalException{
+		throws PortalException {
 
 		// Suppress the usage of the advice to get the latest layout to prevent
 		// a StaleObjectStateException

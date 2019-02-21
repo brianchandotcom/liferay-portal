@@ -35,9 +35,9 @@ import org.jboss.arquillian.test.spi.event.suite.Test;
 /**
  * @author Matthew Tambara
  */
-public class JMXMethodExecutor {
+public class ClientExecutorObserver {
 
-	public JMXMethodExecutor(Registry registry) {
+	public ClientExecutorObserver(Registry registry) {
 		_registry = registry;
 	}
 

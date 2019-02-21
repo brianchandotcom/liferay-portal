@@ -14,9 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
-import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
-import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.event.controller.DeploymentObserver;
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.ClientExecutorObserver;
+import com.liferay.arquillian.extension.junit.bridge.remote.observer.ServerExecutorObserver;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -38,14 +38,14 @@ public class Manager {
 
 			_observers.addAll(
 				Observer.getObservers(
-					new ContainerEventController(_registry), _registry));
+					new DeploymentObserver(_registry), _registry));
 			_observers.addAll(
 				Observer.getObservers(
-					new JMXMethodExecutor(_registry), _registry));
+					new ClientExecutorObserver(_registry), _registry));
 		}
 		else {
 			_observers = Observer.getObservers(
-				new JUnitBridgeObserver(_registry), _registry);
+				new ServerExecutorObserver(_registry), _registry);
 		}
 	}
 

@@ -48,9 +48,9 @@ import org.junit.runners.model.Statement;
 /**
  * @author Shuyang Zhou
  */
-public class JUnitBridgeObserver {
+public class ServerExecutorObserver {
 
-	public JUnitBridgeObserver(Registry registry) {
+	public ServerExecutorObserver(Registry registry) {
 		_registry = registry;
 	}
 

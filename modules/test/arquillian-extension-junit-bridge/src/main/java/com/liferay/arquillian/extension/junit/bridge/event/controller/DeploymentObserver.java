@@ -49,9 +49,9 @@ import org.osgi.jmx.framework.FrameworkMBean;
 /**
  * @author Matthew Tambara
  */
-public class ContainerEventController {
+public class DeploymentObserver {
 
-	public ContainerEventController(Registry registry) {
+	public DeploymentObserver(Registry registry) {
 		_registry = registry;
 	}
 

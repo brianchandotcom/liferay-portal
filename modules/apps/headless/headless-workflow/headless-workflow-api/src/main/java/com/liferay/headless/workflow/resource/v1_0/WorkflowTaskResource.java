@@ -32,10 +32,10 @@ import javax.annotation.Generated;
 @Generated("")
 public interface WorkflowTaskResource {
 
-	public Page<WorkflowTask> getRoleWorkflowTasksPage(
+	public Page<? extends WorkflowTask> getRoleWorkflowTasksPage(
 				Long roleId,Pagination pagination)
 			throws Exception;
-	public Page<WorkflowTask> getWorkflowTasksPage(
+	public Page<? extends WorkflowTask> getWorkflowTasksPage(
 				Pagination pagination)
 			throws Exception;
 	public WorkflowTask getWorkflowTask(

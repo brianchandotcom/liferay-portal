@@ -35,7 +35,7 @@ public interface WorkflowLogResource {
 	public WorkflowLog getWorkflowLog(
 				Long workflowLogId)
 			throws Exception;
-	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+	public Page<? extends WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 				Long workflowTaskId,Pagination pagination)
 			throws Exception;
 

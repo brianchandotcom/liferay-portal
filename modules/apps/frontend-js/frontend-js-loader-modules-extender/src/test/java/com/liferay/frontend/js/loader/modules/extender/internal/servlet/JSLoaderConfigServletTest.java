@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 
 import aQute.lib.converter.Converter;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.Details;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;

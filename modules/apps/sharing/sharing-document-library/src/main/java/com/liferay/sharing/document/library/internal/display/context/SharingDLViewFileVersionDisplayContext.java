@@ -107,7 +107,15 @@ public class SharingDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isSharingLinkVisible() {
-		return _sharingConfiguration.isEnabled();
+		if (_sharingConfiguration.isEnabled() &&
+			_sharingPermissionHelper.isShareable(
+				_themeDisplay.getPermissionChecker(),
+				_fileEntry.getFileEntryId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isShowActions() throws PortalException {

@@ -34,32 +34,35 @@ public class Manager {
 		URL url = Manager.class.getResource("/arquillian.remote.marker");
 
 		if (url == null) {
-			_extensions.add(new ContainerEventController(_registry));
-			_extensions.add(new JMXMethodExecutor(_registry));
+			_observers = new ArrayList<>();
+
+			_observers.addAll(
+				Observer.getObservers(
+					new ContainerEventController(_registry), _registry));
+			_observers.addAll(
+				Observer.getObservers(
+					new JMXMethodExecutor(_registry), _registry));
 		}
 		else {
-			_extensions.add(new JUnitBridgeObserver(_registry));
+			_observers = Observer.getObservers(
+				new JUnitBridgeObserver(_registry), _registry);
 		}
 	}
 
 	public <T> void fire(T event) {
-		for (Object extension : _extensions) {
-			for (Observer observer :
-					Observer.getObservers(extension, _registry)) {
+		for (Observer observer : _observers) {
+			Class<?> clazz = observer.getType();
 
-				Class<?> clazz = observer.getType();
-
-				if (clazz.isInstance(event)) {
-					try {
-						observer.invoke(event);
+			if (clazz.isInstance(event)) {
+				try {
+					observer.invoke(event);
+				}
+				catch (ReflectiveOperationException roe) {
+					if (roe instanceof InvocationTargetException) {
+						_throwException(roe.getCause());
 					}
-					catch (ReflectiveOperationException roe) {
-						if (roe instanceof InvocationTargetException) {
-							_throwException(roe.getCause());
-						}
-						else {
-							_throwException(roe);
-						}
+					else {
+						_throwException(roe);
 					}
 				}
 			}
@@ -77,7 +80,7 @@ public class Manager {
 		throw (E)throwable;
 	}
 
-	private final List<Object> _extensions = new ArrayList<>();
+	private final List<Observer> _observers;
 	private final Registry _registry = new Registry();
 
 }

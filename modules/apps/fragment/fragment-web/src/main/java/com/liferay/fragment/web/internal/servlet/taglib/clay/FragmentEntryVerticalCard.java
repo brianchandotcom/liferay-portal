@@ -135,7 +135,13 @@ public class FragmentEntryVerticalCard
 
 	@Override
 	public String getStickerIcon() {
-		return "cards";
+		if (_fragmentEntry.getType() ==
+				FragmentEntryTypeConstants.TYPE_ELEMENT) {
+
+			return "cards2";
+		}
+
+		return "cards-full";
 	}
 
 	@Override

@@ -22,9 +22,19 @@
 		label: string
 	]>}
 	{@param? _tooltipLabel: string}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
+	{@param? itemTypes: ?}
 	{@param? store: ?}
 
+	{let $editableClasses kind="text"}
+		{if $activeItemId == $editableId and $activeItemType == $itemTypes.editable}
+			fragments-editor__editable--active
+		{/if}
+	{/let}
+
 	<lfr-editable
+		class="{$editableClasses}"
 		data-onblur="{$_handleEditableBlur}"
 		data-onclick="{$_handleEditableClick}"
 		data-onmouseenter="{$_handleEditableMouseEnter}"

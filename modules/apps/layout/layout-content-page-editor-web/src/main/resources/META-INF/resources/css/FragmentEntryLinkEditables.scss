@@ -16,6 +16,13 @@ lfr-editable {
 		max-width: 100%;
 	}
 
+	&.fragments-editor__editable {
+		&--active, &--active.mapped {
+			box-shadow: 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
+			outline: 0;
+		}
+	}
+
 	&:hover {
 		box-shadow: 0 0 0 1px $fragmentEditableFieldHoverBorderColor;
 	}
@@ -63,11 +70,6 @@ lfr-editable {
 	.fragment-entry-link-list.mapping &.mapped {
 		background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridAccentColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.7);
-	}
-
-	&.mapped:hover,
-	.fragment-entry-link-list.mapping &.mapped:hover {
-		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.4);
 	}
 }
 

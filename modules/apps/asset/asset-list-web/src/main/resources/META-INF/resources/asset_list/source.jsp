@@ -304,14 +304,11 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
 			var selectedSubtype = <%= className %>SubtypeSelector.value;
 
-			var structureOptions = document.querySelectorAll('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
+			var structureOptions = document.getElementById('<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
 
-			Array.prototype.forEach.call(
-				structureOptions,
-				function(structureOption) {
-					structureOption.classList.remove('hide');
-				}
-			);
+			if (structureOptions) {
+				structureOptions.classList.remove('hide');
+			}
 
 			var subtypeFieldsWrappers = document.querySelectorAll('#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
 
@@ -319,7 +316,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 				subtypeFieldsWrappers,
 				function(subtypeFieldsWrapper) {
 					if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-						if (structureOptions.length) {
+						if (structureOptions) {
 							subtypeFieldsWrapper.classList.remove('hide');
 						}
 						else if (hideSubtypeFilterEnableWrapper) {

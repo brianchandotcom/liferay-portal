@@ -81,8 +81,8 @@ public class KeywordResourceImpl
 			pagination,
 			booleanQuery -> {
 			},
-			queryConfig ->
-				queryConfig.setSelectedFieldNames(Field.ASSET_TAG_IDS),
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ASSET_TAG_IDS),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {contentSpaceId});

@@ -55,7 +55,7 @@ describe('Custom Asset Plugin', () => {
 				applicationId,
 				eventId: 'assetViewed',
 			});
-			expect(events[0].properties.entryId).to.equal('assetId');
+			expect(events[0].properties.assetId).to.equal('assetId');
 
 			document.body.removeChild(customAssetElement);
 		});
@@ -78,7 +78,7 @@ describe('Custom Asset Plugin', () => {
 			});
 
 			Analytics.events[0].properties.should.deep.include({
-				entryId: 'assetId',
+				assetId: 'assetId',
 				src: googleUrl,
 				tagName: 'img',
 			});
@@ -104,7 +104,7 @@ describe('Custom Asset Plugin', () => {
 			});
 
 			Analytics.events[0].properties.should.deep.include({
-				entryId: 'assetId',
+				assetId: 'assetId',
 				href: googleUrl,
 				tagName: 'a',
 				text,
@@ -130,7 +130,7 @@ describe('Custom Asset Plugin', () => {
 			});
 
 			Analytics.events[0].properties.should.deep.include({
-				entryId: 'assetId',
+				assetId: 'assetId',
 				tagName: 'p',
 			});
 

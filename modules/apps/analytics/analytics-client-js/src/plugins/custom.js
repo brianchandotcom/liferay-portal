@@ -13,13 +13,13 @@ const applicationId = 'Custom';
 function getCustomAssetPayload({dataset}) {
 	const {
 		analyticsAssetCategory: category,
-		analyticsAssetId: entryId,
+		analyticsAssetId: assetId,
 		analyticsAssetTitle: title,
 	} = dataset;
 
 	return {
+		assetId,
 		category,
-		entryId,
 		title,
 	};
 }

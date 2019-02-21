@@ -2,6 +2,7 @@ Bundle-Name: Liferay Frontend Taglib Clay
 Bundle-SymbolicName: com.liferay.frontend.taglib.clay
 Bundle-Version: 2.0.0
 Export-Package:\
+	com.liferay.frontend.taglib.clay.servlet.taglib.contributor,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.display.context,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.soy,\

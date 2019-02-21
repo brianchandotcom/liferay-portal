@@ -1,0 +1,36 @@
+{namespace com.liferay.asset.taglib.AssetVocabularyCategoriesSelector}
+
+/**
+* AssetVocabularyCategoriesSelector
+*/
+{template .render}
+	{@param id: string}
+	{@param inputName: string}
+	{@param spritemap: string}
+	{@param? categoryIds: string}
+	{@param? selectedItems: list<?>}
+	{@param? _dataSource: ?}
+	{@param? _handleButtonClicked: any}
+	{@param? _handleItemAdded: any}
+	{@param? _handleItemRemoved: any}
+
+	<div class="lfr-tags-selector-content" id="{$id}">
+		<input id="{$inputName}" name="{$inputName}" type="hidden" value="{$categoryIds}" />
+
+		{call ClayMultiSelect.render}
+			{param dataSource: $_dataSource ?: [] /}
+			{param events: [
+				'buttonClicked': $_handleButtonClicked,
+				'itemAdded': $_handleItemAdded,
+				'itemRemoved': $_handleItemRemoved,
+				'itemSelected': $_handleItemAdded
+			] /}
+			{param helpText: '' /}
+			{param inputName: $inputName /}
+			{param labelLocator: 'label' /}
+			{param ref: 'multiSelect' /}
+			{param selectedItems: $selectedItems /}
+			{param spritemap: $spritemap /}
+		{/call}
+	</div>
+{/template}

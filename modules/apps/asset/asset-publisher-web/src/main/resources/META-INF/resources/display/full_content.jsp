@@ -319,6 +319,3 @@ request.setAttribute("view.jsp-showIconLabel", true);
 <c:if test="<%= !assetPublisherDisplayContext.isShowAssetTitle() && ((assetEntryIndex + 1) < results.size()) %>">
 	<div class="separator"><!-- --></div>
 </c:if>
-
-<%!
-%>

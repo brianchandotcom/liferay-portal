@@ -127,7 +127,7 @@ public abstract class BaseFolderResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(folder), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/folders", contentSpaceId,folder));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/folders", contentSpaceId));
 
 				options.setPost(true);
 
@@ -142,7 +142,7 @@ public abstract class BaseFolderResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(folder), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/folders", contentSpaceId,folder));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/folders", contentSpaceId));
 
 				options.setPost(true);
 
@@ -208,7 +208,7 @@ public abstract class BaseFolderResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(folder), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}", folderId,folder));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}", folderId));
 
 				options.setPut(true);
 
@@ -223,7 +223,7 @@ public abstract class BaseFolderResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(folder), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}", folderId,folder));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}", folderId));
 
 				options.setPut(true);
 
@@ -262,7 +262,7 @@ public abstract class BaseFolderResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(folder), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/folders", folderId,folder));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/folders", folderId));
 
 				options.setPost(true);
 
@@ -277,7 +277,7 @@ public abstract class BaseFolderResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(folder), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/folders", folderId,folder));
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/folders", folderId));
 
 				options.setPost(true);
 
@@ -501,8 +501,8 @@ public abstract class BaseFolderResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

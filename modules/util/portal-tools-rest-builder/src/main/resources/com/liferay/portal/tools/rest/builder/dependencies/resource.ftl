@@ -29,7 +29,13 @@ import javax.annotation.Generated;
 public interface ${schemaName}Resource {
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
+		<#assign returnType = javaMethodSignature.returnType />
+
+		<#if returnType?starts_with("Page<")>
+			<#assign returnType = "Page<? extends " + returnType[5..] />
+		</#if>
+
+		public ${returnType} ${javaMethodSignature.methodName}(
 				${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)})
 			throws Exception;
 	</#list>

@@ -17,9 +17,9 @@ package com.liferay.site.navigation.type;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -129,7 +129,7 @@ public interface SiteNavigationMenuItemType {
 		SiteNavigationMenuItem siteNavigationMenuItem, String languageId) {
 
 		return getTitle(
-			siteNavigationMenuItem, LanguageUtil.getLocale(languageId));
+			siteNavigationMenuItem, LocaleUtil.fromLanguageId(languageId));
 	}
 
 	public default boolean hasPermission(

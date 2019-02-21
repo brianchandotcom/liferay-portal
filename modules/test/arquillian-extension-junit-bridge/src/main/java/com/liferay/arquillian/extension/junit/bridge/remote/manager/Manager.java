@@ -14,13 +14,19 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
+import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerEventController;
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
+import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
+import java.net.URL;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,9 +40,7 @@ import org.jboss.arquillian.core.spi.NonManagedObserver;
 public class Manager {
 
 	public Manager() throws ReflectiveOperationException {
-		for (Class<?> observerClass :
-				LiferayArquillianJUnitBridgeExtension.getObservers()) {
-
+		for (Class<?> observerClass : _getObservers()) {
 			Constructor<?> constructor = observerClass.getDeclaredConstructor();
 
 			Object extension = constructor.newInstance();
@@ -101,6 +105,18 @@ public class Manager {
 
 	public void start() {
 		fire(new ManagerStarted());
+	}
+
+	private static List<Class<?>> _getObservers() {
+		URL url = Manager.class.getResource("/arquillian.remote.marker");
+
+		if (url == null) {
+			return Arrays.asList(
+				ContainerEventController.class, JMXMethodExecutor.class
+			);
+		}
+
+		return Collections.singletonList(JUnitBridgeObserver.class);
 	}
 
 	private static <T, E extends Throwable> T _throwException(

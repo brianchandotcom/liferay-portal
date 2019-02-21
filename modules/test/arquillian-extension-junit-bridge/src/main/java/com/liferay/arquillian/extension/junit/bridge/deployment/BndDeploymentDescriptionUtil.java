@@ -20,7 +20,6 @@ import aQute.bnd.build.Workspace;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
-import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunner;
 import com.liferay.arquillian.extension.junit.bridge.remote.activator.ArquillianBundleActivator;
@@ -198,7 +197,6 @@ public class BndDeploymentDescriptionUtil {
 			_addArquillianDependencies(javaArchive);
 
 			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
-			javaArchive.addClass(LiferayArquillianJUnitBridgeExtension.class);
 			javaArchive.addPackages(
 				true, "com.liferay.arquillian.extension.junit.bridge.remote");
 

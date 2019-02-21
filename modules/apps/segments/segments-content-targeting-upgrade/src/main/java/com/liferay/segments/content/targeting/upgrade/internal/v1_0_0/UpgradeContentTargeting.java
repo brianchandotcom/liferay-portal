@@ -163,7 +163,7 @@ public class UpgradeContentTargeting extends UpgradeProcess {
 
 				_segmentsEntryLocalService.addSegmentsEntry(
 					nameMap, descriptionMap, true, getCriteria(userSegmentId),
-					"CT." + userSegmentId, SegmentsConstants.SOURCE_DEFAULT,
+					"ct_" + userSegmentId, SegmentsConstants.SOURCE_DEFAULT,
 					User.class.getName(), serviceContext);
 			}
 		}

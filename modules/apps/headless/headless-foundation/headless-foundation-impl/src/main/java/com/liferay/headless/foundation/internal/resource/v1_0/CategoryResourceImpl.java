@@ -187,7 +187,7 @@ public class CategoryResourceImpl
 						contextAcceptLanguage.getPreferredLocale(),
 						category.getName())),
 				LocalizedMapUtil.merge(
-					assetCategory.getTitleMap(),
+					assetCategory.getDescriptionMap(),
 					new AbstractMap.SimpleEntry<>(
 						contextAcceptLanguage.getPreferredLocale(),
 						category.getDescription())),

@@ -26,6 +26,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.document.library.dto.v1_0.AdaptedImages;
@@ -167,6 +168,36 @@ public class DocumentResourceImpl
 		return _addDocument(
 			multipartBody, folder.getRepositoryId(), folderId,
 			folder.getGroupId());
+	}
+
+	@Override
+	public Document putDocument(Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		Document document = multipartBody.getJSONObjectValue(
+			"Document", DocumentImpl.class);
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String binaryFileName = binaryFile.getFileName();
+
+		String title = Optional.ofNullable(
+			document.getTitle()
+		).orElse(
+			binaryFileName
+		);
+
+		FileEntry oldFileEntry = _dlAppService.getFileEntry(documentId);
+
+		FileEntry fileEntry = _dlAppService.updateFileEntry(
+			documentId, binaryFileName, binaryFile.getContentType(), title,
+			document.getDescription(), null, DLVersionNumberIncrease.AUTOMATIC,
+			binaryFile.getInputStream(), binaryFile.getSize(),
+			_getServiceContext(oldFileEntry.getGroupId(), document));
+
+		return _toDocument(
+			fileEntry, fileEntry.getFileVersion(),
+			_userService.getUserById(fileEntry.getUserId()));
 	}
 
 	private Document _addDocument(

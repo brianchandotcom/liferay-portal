@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.CentralMergePullRequestJob;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.SubrepositoryTestClassJob;
 
 import java.io.File;
 import java.io.IOException;
@@ -384,6 +385,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			_includeUnstagedTestClassFiles = false;
 		}
 
+		if (portalTestClassJob instanceof SubrepositoryTestClassJob) {
+			_rootWorkingDirectory =
+				((SubrepositoryTestClassJob)portalTestClassJob).
+					getSubrepositoryGitWorkingDirectory().getWorkingDirectory();
+		}
+		else {
+			_rootWorkingDirectory =
+				portalTestClassJob.getPortalGitWorkingDirectory().
+					getWorkingDirectory();
+		}
+
 		_setAutoBalanceTestFiles();
 
 		_setTestClassNamesExcludesRelativeGlobs();
@@ -700,11 +712,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testBatchClassNamesIncludesRequiredPropertyValue));
 		}
 
-		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
-
 		testClassNamesIncludesPathMatchers.addAll(
 			JenkinsResultsParserUtil.toPathMatchers(
-				workingDirectory.getAbsolutePath() + File.separator,
+				_rootWorkingDirectory.getAbsolutePath() + File.separator,
 				testClassNamesIncludesRelativeGlobs.toArray(
 					new String[testClassNamesIncludesRelativeGlobs.size()])));
 	}
@@ -717,5 +727,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	private final List<File> _autoBalanceTestFiles = new ArrayList<>();
 	private boolean _includeAutoBalanceTests;
 	private final boolean _includeUnstagedTestClassFiles;
+	private final File _rootWorkingDirectory;
 
 }

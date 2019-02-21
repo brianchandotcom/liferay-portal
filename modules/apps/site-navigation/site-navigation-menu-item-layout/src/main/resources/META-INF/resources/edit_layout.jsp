@@ -22,9 +22,15 @@ Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 
 boolean useLayoutName = GetterUtil.getBoolean(request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.USE_LAYOUT_NAME));
+
+String taglibOnChange = "Liferay.Util.toggleDisabled('#" + renderResponse.getNamespace() + "name, [for=" + renderResponse.getNamespace() + "name]', event.target.checked)";
 %>
 
-<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>">
+<aui:fieldset>
+	<aui:input checked="<%= useLayoutName %>" helpMessage="use-layout-name-help" label="use-layout-name" name="TypeSettingsProperties--useLayoutName--" onChange="<%= taglibOnChange %>" type="checkbox" />
+</aui:fieldset>
+
+<aui:input disabled="<%= useLayoutName %>" label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>">
 	<aui:validator name="required" />
 </aui:input>
 
@@ -35,10 +41,6 @@ boolean useLayoutName = GetterUtil.getBoolean(request.getAttribute(SiteNavigatio
 <aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
-
-<aui:fieldset>
-	<aui:input checked="<%= useLayoutName %>" helpMessage="use-layout-name-help" label="use-layout-name" name="TypeSettingsProperties--useLayoutName--" type="checkbox" />
-</aui:fieldset>
 
 <div class="form-group input-text-wrapper text-default">
 	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">

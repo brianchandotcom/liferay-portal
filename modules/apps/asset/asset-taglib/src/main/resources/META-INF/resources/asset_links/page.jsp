@@ -21,23 +21,36 @@ List<Tuple> assetLinkEntries = (List<Tuple>)request.getAttribute("liferay-asset:
 %>
 
 <div class="taglib-asset-links">
-	<h2 class="asset-links-title">
-		<aui:icon image="link" />
-
-		<liferay-ui:message key="related-assets" />:
-	</h2>
-
-	<ul class="asset-links-list">
+	<ul class="asset-links-list list-group">
+		<li class="list-group-header">
+			<h3 class="list-group-header-title">
+				<liferay-ui:message key="related-assets" />
+			</h3>
+		</li>
 
 		<%
 		for (Tuple tuple : assetLinkEntries) {
 			AssetEntry assetLinkEntry = (AssetEntry)tuple.getObject(0);
+
+			AssetRenderer assetRenderer = assetLinkEntry.getAssetRenderer();
 		%>
 
-			<li class="asset-links-list-item">
-				<aui:a href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
-					<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
-				</aui:a>
+			<li class="list-group-item list-group-item-flex">
+				<div class="autofit-col">
+					<div class="sticker sticker-secondary">
+						<span class="inline-item">
+							<aui:icon image="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
+						</span>
+					</div>
+				</div>
+
+				<div class="autofit-col autofit-col-expand">
+					<h4 class="list-group-title text-truncate">
+						<aui:a href="<%= (String)tuple.getObject(1) %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
+							<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
+						</aui:a>
+					</h4>
+				</div>
 			</li>
 
 		<%

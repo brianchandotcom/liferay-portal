@@ -37,7 +37,7 @@ import org.jboss.arquillian.core.spi.ObserverMethod;
 public class ExtensionImpl implements Extension {
 
 	public static ExtensionImpl of(Object target) {
-		return new ExtensionImpl(_injections(target), _observers(target));
+		return new ExtensionImpl(target);
 	}
 
 	@Override
@@ -143,11 +143,9 @@ public class ExtensionImpl implements Extension {
 		return result;
 	}
 
-	private ExtensionImpl(
-		List<InjectionPoint> injectionPoints, List<ObserverMethod> observers) {
-
-		_injectionPoints = injectionPoints;
-		_observers = observers;
+	private ExtensionImpl(Object target) {
+		_injectionPoints = _injections(target);
+		_observers = _observers(target);
 	}
 
 	private final List<InjectionPoint> _injectionPoints;

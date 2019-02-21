@@ -75,9 +75,16 @@
 						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/asset_list_entry_action.jsp"
-					/>
+					<%
+					AssetEntryListActionDropdownItems assetEntryListActionDropdownItems = new AssetEntryListActionDropdownItems(assetListEntry, liferayPortletRequest, liferayPortletResponse);
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							defaultEventHandler="assetEntryListDropdownDefaultEventHandler"
+							dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator

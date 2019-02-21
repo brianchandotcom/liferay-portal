@@ -19,14 +19,19 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationPermission;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -68,6 +73,26 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(
+			SiteNavigationMenu siteNavigationMenu)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (SiteNavigationMenuPermission.contains(
+				themeDisplay.getPermissionChecker(), siteNavigationMenu,
+				ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add(
+				"deleteSelectedSiteNavigationMenus");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override

@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -69,6 +72,18 @@ public class SiteAdminManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(Group group)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (_hasDeleteGroupPermission(group)) {
+			availableActionDropdownItems.add("deleteSites");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override
@@ -177,6 +192,30 @@ public class SiteAdminManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
+	}
+
+	private boolean _hasDeleteGroupPermission(Group group)
+		throws PortalException {
+
+		if (group.isCompany()) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), group,
+				ActionKeys.DELETE)) {
+
+			return false;
+		}
+
+		if (PortalUtil.isSystemGroup(group.getGroupKey())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final SiteAdminDisplayContext _siteAdminDisplayContext;

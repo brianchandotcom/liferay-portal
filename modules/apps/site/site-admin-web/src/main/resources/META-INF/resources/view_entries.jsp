@@ -31,6 +31,12 @@
 		List<Group> childSites = curGroup.getChildren(true);
 
 		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
+
+		Map<String, Object> rowData = new HashMap<>();
+
+		rowData.put("actions", String.join(StringPool.COMMA, siteAdminManagementToolbarDisplayContext.getAvailableActionDropdownItems(curGroup)));
+
+		row.setData(rowData);
 		%>
 
 		<portlet:renderURL var="viewSubsitesURL">

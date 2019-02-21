@@ -38,6 +38,15 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 			keyProperty="siteNavigationMenuId"
 			modelVar="siteNavigationMenu"
 		>
+
+			<%
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, siteNavigationAdminManagementToolbarDisplayContext.getAvailableActionDropdownItems(siteNavigationMenu)));
+
+			row.setData(rowData);
+			%>
+
 			<portlet:renderURL var="editSiteNavigationMenuURL">
 				<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

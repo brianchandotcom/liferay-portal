@@ -19,13 +19,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -120,6 +123,32 @@ public class JournalHistoryManagementToolbarDisplayContext
 				}
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(JournalArticle article)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (JournalArticlePermission.contains(
+				themeDisplay.getPermissionChecker(), article,
+				ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteArticles");
+		}
+
+		if (JournalArticlePermission.contains(
+				themeDisplay.getPermissionChecker(), article,
+				ActionKeys.EXPIRE) &&
+			(article.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
+
+			availableActionDropdownItems.add("expireArticles");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override

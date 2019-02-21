@@ -51,6 +51,12 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 				rowURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
 				rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 			}
+
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, siteTeamsManagementToolbarDisplayContext.getAvailableActionDropdownItems(team)));
+
+			row.setData(rowData);
 			%>
 
 			<c:choose>

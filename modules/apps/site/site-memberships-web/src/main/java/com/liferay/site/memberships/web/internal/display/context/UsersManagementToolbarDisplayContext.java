@@ -22,16 +22,20 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +157,30 @@ public class UsersManagementToolbarDisplayContext
 				}
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(User user)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				ActionKeys.ASSIGN_MEMBERS) &&
+			!SiteMembershipPolicyUtil.isMembershipProtected(
+				themeDisplay.getPermissionChecker(), user.getUserId(),
+				themeDisplay.getScopeGroupId()) &&
+			!SiteMembershipPolicyUtil.isMembershipRequired(
+				user.getUserId(), themeDisplay.getScopeGroupId())) {
+
+			availableActionDropdownItems.add("deleteSelectedUsers");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override

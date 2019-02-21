@@ -66,15 +66,25 @@ public class UserGroupsManagementToolbarDisplayContext
 
 		return new DropdownItemList() {
 			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteSelectedUserGroups");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+				try {
+					if (GroupPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(),
+							themeDisplay.getScopeGroup(),
+							ActionKeys.ASSIGN_MEMBERS)) {
+
+						add(
+							dropdownItem -> {
+								dropdownItem.putData(
+									"action", "deleteSelectedUserGroups");
+								dropdownItem.setIcon("times-circle");
+								dropdownItem.setLabel(
+									LanguageUtil.get(request, "delete"));
+								dropdownItem.setQuickAction(true);
+							});
+					}
+				}
+				catch (Exception e) {
+				}
 
 				try {
 					if (GroupPermissionUtil.contains(

@@ -31,8 +31,6 @@ if (group != null) {
 
 	renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
 }
-
-SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContext = new SiteAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteAdminDisplayContext);
 %>
 
 <clay:management-toolbar

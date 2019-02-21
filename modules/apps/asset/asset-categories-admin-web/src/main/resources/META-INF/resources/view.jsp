@@ -47,6 +47,15 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 			keyProperty="vocabularyId"
 			modelVar="vocabulary"
 		>
+
+			<%
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, assetVocabulariesManagementToolbarDisplayContext.getAvailableActionDropdownItems(vocabulary)));
+
+			row.setData(rowData);
+			%>
+
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/view_categories.jsp" />
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />

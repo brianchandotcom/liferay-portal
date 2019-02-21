@@ -23,9 +23,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -132,6 +134,58 @@ public class JournalManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(JournalArticle article)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		if (JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.EXPIRE) &&
+			(article.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
+
+			availableActionDropdownItems.add("expireEntries");
+		}
+
+		if (JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.UPDATE)) {
+
+			availableActionDropdownItems.add("moveEntries");
+		}
+
+		return availableActionDropdownItems;
+	}
+
+	public List<String> getAvailableActionDropdownItems(JournalFolder folder)
+		throws PortalException {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (JournalFolderPermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.UPDATE)) {
+
+			availableActionDropdownItems.add("deleteEntries");
+		}
+
+		if (JournalFolderPermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("moveEntries");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override

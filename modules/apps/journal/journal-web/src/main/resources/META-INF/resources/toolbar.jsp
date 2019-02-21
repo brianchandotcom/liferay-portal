@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
-%>
-
 <clay:management-toolbar
 	displayContext="<%= journalManagementToolbarlDisplayContext %>"
 />

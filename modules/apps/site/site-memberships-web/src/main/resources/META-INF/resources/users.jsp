@@ -76,6 +76,12 @@ Role role = usersDisplayContext.getRole();
 					String displayStyle = usersDisplayContext.getDisplayStyle();
 
 					boolean selectUsers = false;
+
+					Map<String, Object> rowData = new HashMap<>();
+
+					rowData.put("actions", String.join(StringPool.COMMA, usersManagementToolbarDisplayContext.getAvailableActionDropdownItems(user2)));
+
+					row.setData(rowData);
 					%>
 
 					<%@ include file="/user_columns.jspf" %>

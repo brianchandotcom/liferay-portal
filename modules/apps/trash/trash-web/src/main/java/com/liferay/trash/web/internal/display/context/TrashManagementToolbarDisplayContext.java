@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.model.TrashEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,6 +71,16 @@ public class TrashManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(TrashEntry trashEntry) {
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (_isDeletable(trashEntry)) {
+			availableActionDropdownItems.add("deleteSelectedEntries");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override
@@ -175,6 +187,17 @@ public class TrashManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"removed-date"};
+	}
+
+	private boolean _isDeletable(TrashEntry trashEntry) {
+		if (trashEntry.getRootEntry() == null) {
+			return true;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			trashEntry.getClassName());
+
+		return trashHandler.isDeletable();
 	}
 
 }

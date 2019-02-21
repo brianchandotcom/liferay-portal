@@ -55,6 +55,21 @@ public class OrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (!GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup(), ActionKeys.ASSIGN_MEMBERS)) {
+
+				return null;
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+
 		return new DropdownItemList() {
 			{
 				add(

@@ -53,6 +53,12 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 
 						editURL = editAssetListEntryURL.toString();
 					}
+
+					Map<String, Object> rowData = new HashMap<>();
+
+					rowData.put("actions", String.join(StringPool.COMMA, assetListManagementToolbarDisplayContext.getAvailableActionDropdownItems(assetListEntry)));
+
+					row.setData(rowData);
 					%>
 
 					<liferay-ui:search-container-column-icon

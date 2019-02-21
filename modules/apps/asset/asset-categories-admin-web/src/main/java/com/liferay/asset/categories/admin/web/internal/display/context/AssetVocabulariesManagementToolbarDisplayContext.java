@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -51,6 +53,8 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, request,
 			assetCategoriesDisplayContext.getVocabulariesSearchContainer());
+
+		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
 	}
 
 	@Override
@@ -68,6 +72,20 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(
+		AssetVocabulary vocabulary) {
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (_assetCategoriesDisplayContext.hasPermission(
+				vocabulary, ActionKeys.UPDATE)) {
+
+			availableActionDropdownItems.add("deleteSelectedVocabularies");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override
@@ -147,5 +165,7 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date"};
 	}
+
+	private final AssetCategoriesDisplayContext _assetCategoriesDisplayContext;
 
 }

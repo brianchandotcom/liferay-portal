@@ -22,13 +22,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -69,6 +72,24 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	public List<String> getAvailableActionDropdownItems(
+		LayoutPrototype layoutPrototype) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		if (LayoutPrototypePermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE)) {
+
+			availableActionDropdownItems.add("deleteSelectedLayoutPrototypes");
+		}
+
+		return availableActionDropdownItems;
 	}
 
 	@Override

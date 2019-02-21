@@ -65,6 +65,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 				editURL = editFeedURL.toString();
 			}
+
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, journalFeedsManagementToolbarDisplayContext.getAvailableActionDropdownItems(feed)));
+
+			row.setData(rowData);
 			%>
 
 			<c:choose>

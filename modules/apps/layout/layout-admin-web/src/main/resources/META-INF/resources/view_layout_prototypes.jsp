@@ -51,6 +51,12 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 			LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(layoutPageTemplateEntry.getLayoutPrototypeId());
 
 			row.setCssClass("entry-card lfr-asset-item");
+
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, layoutPrototypeManagementToolbarDisplayContext.getAvailableActionDropdownItems(layoutPrototype)));
+
+			row.setData(rowData);
 			%>
 
 			<liferay-ui:search-container-column-text>

@@ -133,6 +133,12 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 
 						viewContentURLString = viewContentURL.toString();
 					}
+
+					Map<String, Object> rowData = new HashMap<>();
+
+					rowData.put("actions", String.join(StringPool.COMMA, trashManagementToolbarDisplayContext.getAvailableActionDropdownItems(trashEntry)));
+
+					row.setData(rowData);
 					%>
 
 					<c:choose>

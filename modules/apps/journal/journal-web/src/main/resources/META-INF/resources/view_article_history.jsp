@@ -45,7 +45,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 		/>
 
 		<clay:management-toolbar
-			displayContext="<%= new JournalHistoryManagementToolbarDisplayContext(article, liferayPortletRequest, liferayPortletResponse, request, journalHistoryDisplayContext) %>"
+			displayContext="<%= journalHistoryManagementToolbarDisplayContext %>"
 		/>
 
 		<%
@@ -66,6 +66,12 @@ JournalArticle article = journalDisplayContext.getArticle();
 				>
 
 					<%
+					Map<String, Object> rowData = new HashMap<>();
+
+					rowData.put("actions", String.join(StringPool.COMMA, journalHistoryManagementToolbarDisplayContext.getAvailableActionDropdownItems(articleVersion)));
+
+					row.setData(rowData);
+
 					row.setPrimaryKey(articleVersion.getArticleId() + JournalPortlet.VERSION_SEPARATOR + articleVersion.getVersion());
 					%>
 

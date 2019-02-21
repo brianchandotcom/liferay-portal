@@ -68,6 +68,12 @@ if (ddmStructure != null) {
 
 				rowHREF = rowURL.toString();
 			}
+
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, journalDDMTemplateManagementToolbarDisplayContext.getAvailableActionDropdownItems(ddmTemplate)));
+
+			row.setData(rowData);
 			%>
 
 			<liferay-ui:search-container-column-text

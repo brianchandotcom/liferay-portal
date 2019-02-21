@@ -71,7 +71,9 @@ page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

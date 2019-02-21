@@ -53,6 +53,12 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", String.join(StringPool.COMMA, displayPageManagementToolbarDisplayContext.getAvailableActionDropdownItems(layoutPageTemplateEntry)));
+
+			row.setData(rowData);
 			%>
 
 			<liferay-ui:search-container-column-text>

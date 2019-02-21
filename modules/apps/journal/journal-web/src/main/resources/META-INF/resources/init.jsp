@@ -238,6 +238,8 @@ JournalWebConfiguration journalWebConfiguration = (JournalWebConfiguration)reque
 
 JournalDisplayContext journalDisplayContext = new JournalDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences, trashHelper);
 
+JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+
 JournalWebRequestHelper journalWebRequestHelper = new JournalWebRequestHelper(request);
 
 JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalWebRequestHelper.getJournalGroupServiceConfiguration();

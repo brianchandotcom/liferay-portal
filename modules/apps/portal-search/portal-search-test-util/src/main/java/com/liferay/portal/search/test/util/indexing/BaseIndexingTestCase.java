@@ -41,6 +41,8 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderImpl;
+import com.liferay.portal.search.internal.query.QueriesImpl;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
@@ -264,6 +266,7 @@ public abstract class BaseIndexingTestCase {
 	protected static final long GROUP_ID = RandomTestUtil.randomLong();
 
 	protected final Aggregations aggregations = new AggregationsImpl();
+	protected final Queries queries = new QueriesImpl();
 
 	protected class IndexingTestHelper {
 

@@ -145,6 +145,7 @@ import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutSetVersionModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.LayoutVersionModel;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
@@ -192,6 +193,7 @@ import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.LayoutSetVersionModelImpl;
+import com.liferay.portal.model.impl.LayoutVersionModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
@@ -259,6 +261,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -2218,6 +2222,18 @@ public class DataFactory {
 		return layoutSetVersionModels;
 	}
 
+	public List<LayoutVersionModel> newLayoutVersionModels(
+		List<LayoutModel> layoutModels) {
+
+		Stream<LayoutModel> layoutModelStream = layoutModels.stream();
+
+		return layoutModelStream.map(
+			this::newLayoutVersionModel
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
 		List<MBCategoryModel> mbCategoryModels = new ArrayList<>(
 			_maxMBCategoryCount);
@@ -3476,6 +3492,33 @@ public class DataFactory {
 		layoutSetVersionModel.setPageCount(layoutSetModel.getPageCount());
 
 		return layoutSetVersionModel;
+	}
+
+	protected LayoutVersionModel newLayoutVersionModel(
+		LayoutModel layoutModel) {
+
+		LayoutVersionModel layoutVersionModel = new LayoutVersionModelImpl();
+
+		long layoutVersionId = _counter.get();
+
+		layoutVersionModel.setLayoutVersionId(layoutVersionId);
+
+		layoutVersionModel.setUuid(SequentialUUID.generate());
+		layoutVersionModel.setPlid(layoutModel.getPlid());
+		layoutVersionModel.setGroupId(layoutModel.getGroupId());
+		layoutVersionModel.setCompanyId(_companyId);
+		layoutVersionModel.setUserId(_sampleUserId);
+		layoutVersionModel.setUserName(_SAMPLE_USER_NAME);
+		layoutVersionModel.setCreateDate(new Date());
+		layoutVersionModel.setModifiedDate(new Date());
+		layoutVersionModel.setLayoutId(layoutModel.getLayoutId());
+		layoutVersionModel.setName(layoutModel.getName());
+		layoutVersionModel.setType(layoutModel.getType());
+		layoutVersionModel.setFriendlyURL(layoutModel.getFriendlyURL());
+		layoutVersionModel.setTypeSettings(layoutModel.getTypeSettings());
+		layoutVersionModel.setLastPublishDate(new Date());
+
+		return layoutVersionModel;
 	}
 
 	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {

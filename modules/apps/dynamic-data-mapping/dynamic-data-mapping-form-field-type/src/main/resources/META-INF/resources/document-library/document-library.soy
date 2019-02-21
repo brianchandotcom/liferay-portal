@@ -74,10 +74,8 @@
 			<input class="field form-control" name="{$name}" type="hidden" value="{$value ? $value : ''}">
 		</div>
 
-		{if $showLabel}
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
+		{if $tip}
+			<span class="form-text">{$tip}</span>
 		{/if}
 	</div>
 {/template}

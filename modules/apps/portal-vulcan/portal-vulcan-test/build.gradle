@@ -1,4 +1,6 @@
 dependencies {
+	compileOnly group: "org.assertj", name: "assertj-core", version: "3.10.0"
+
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.2.5"

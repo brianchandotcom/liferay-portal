@@ -37,10 +37,10 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockF
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.HttpHeaders;
 
@@ -76,7 +76,9 @@ public class AcceptLanguageContextProviderTest {
 		_company = CompanyTestUtil.addCompany();
 
 		CompanyTestUtil.resetCompanyLocales(
-			_company.getCompanyId(), Collections.singletonList(Locale.TAIWAN),
+			_company.getCompanyId(),
+			Arrays.asList(
+				LocaleUtil.BRAZIL, Locale.GERMAN, Locale.JAPAN, Locale.TAIWAN),
 			Locale.TAIWAN);
 
 		_company = CompanyLocalServiceUtil.getCompany(_company.getCompanyId());
@@ -150,6 +152,25 @@ public class AcceptLanguageContextProviderTest {
 
 		Assert.assertEquals(
 			user.getLocale(), acceptLanguage.getPreferredLocale());
+
+		//No available locale
+
+		acceptLanguage = _contextProvider.createContext(
+			new MockMessage(
+				new AcceptLanguageMockHttpServletRequest(
+					user, LocaleUtil.SPAIN)));
+
+		try {
+			Locale locale = acceptLanguage.getPreferredLocale();
+
+			Assert.fail("The locale  " + locale + " should not be available");
+		}
+		catch (Exception e) {
+			Assert.assertEquals(ClientErrorException.class, e.getClass());
+			Assert.assertEquals(
+				"The  preferred locale: es_ES is not available",
+				e.getMessage());
+		}
 	}
 
 	private static Set<Locale> _availableLocales;

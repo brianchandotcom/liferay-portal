@@ -4034,30 +4034,12 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				5, deDataRecordCollections.size());
-
-			return null;
-		});
-	}
-
-	@Test
-	public void testSearchNonCaseSensitive() throws Exception {
-		int total = 5;
-
-		for (int i = 0; i < total; i++) {
-			DEDataEngineTestUtil.insertDEDataRecordCollection(
-				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
-		}
-
-		List<DEDataRecordCollection> deDataRecordCollections =
-			searchDEDataRecordCollection(_group, "description1");
-
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				1, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 5,
+				deDataRecordCollections.size());
 
 			return null;
 		});
@@ -4076,9 +4058,12 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "Description1");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				1, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 1,
+				deDataRecordCollections.size());
 
 			return null;
 		});
@@ -4097,9 +4082,12 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "Name1");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				1, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 1,
+				deDataRecordCollections.size());
 
 			return null;
 		});
@@ -4122,16 +4110,43 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "nonascii£");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				1, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 1,
+				deDataRecordCollections.size());
 
 			return null;
 		});
 	}
 
 	@Test
-	public void testSearchNonExistingNameDescription() throws Exception {
+	public void testSearchNoncaseSensitive() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "description1");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 1,
+				deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchNonexistingNameDescription() throws Exception {
 		int total = 5;
 
 		for (int i = 0; i < total; i++) {
@@ -4143,9 +4158,12 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "NonExistingNameDescription");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				0, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 0,
+				deDataRecordCollections.size());
 
 			return null;
 		});
@@ -4164,9 +4182,12 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "Descrip");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				5, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 5,
+				deDataRecordCollections.size());
 
 			return null;
 		});
@@ -4193,9 +4214,12 @@ public class DEDataRecordCollectionServiceTest {
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "Spaced ");
 
-		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
-			Assert.assertEquals(deDataRecordCollections.toString(),
-				2, deDataRecordCollections.size());
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+			Assert.assertEquals(
+				deDataRecordCollections.toString(), 2,
+				deDataRecordCollections.size());
 
 			return null;
 		});
@@ -4449,24 +4473,24 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	protected List<DEDataRecordCollection> searchDEDataRecordCollection(
-		Group group, String keywords)
+			Group group, String keywords)
 		throws Exception {
 
 		DEDataRecordCollectionSearchRequest
 			deDataRecordCollectionSearchRequest =
-				DEDataRecordCollectionRequestBuilder.searchBuilder(
-				).havingKeywords(
-					keywords
-				).inCompany(
-					group.getCompanyId()
-				).inGroup(
-					group.getGroupId()
-				).build();
+			DEDataRecordCollectionRequestBuilder.searchBuilder(
+			).havingKeywords(
+				keywords
+			).inCompany(
+				group.getCompanyId()
+			).inGroup(
+				group.getGroupId()
+			).build();
 
 		DEDataRecordCollectionSearchResponse
 			deDataRecordCollectionSearchResponse =
-				_deDataRecordCollectionService.execute(
-					deDataRecordCollectionSearchRequest);
+			_deDataRecordCollectionService.execute(
+				deDataRecordCollectionSearchRequest);
 
 		return
 			deDataRecordCollectionSearchResponse.getDeDataRecordCollections();

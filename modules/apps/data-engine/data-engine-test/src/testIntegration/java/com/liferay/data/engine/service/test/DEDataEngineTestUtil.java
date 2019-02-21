@@ -583,8 +583,8 @@ public class DEDataEngineTestUtil {
 	}
 
 	public static DEDataRecordCollection insertDEDataRecordCollection(
-		User user, Group group, String description, String name,
-		DEDataRecordCollectionService deDataRecordCollectionService)
+			User user, Group group, String description, String name,
+			DEDataRecordCollectionService deDataRecordCollectionService)
 		throws Exception {
 
 		PermissionThreadLocal.setPermissionChecker(
@@ -615,8 +615,8 @@ public class DEDataEngineTestUtil {
 
 			DEDataRecordCollectionSaveResponse
 				deDataRecordCollectionSaveResponse =
-					deDataRecordCollectionService.
-						execute(deDataRecordCollectionSaveRequest);
+					deDataRecordCollectionService.execute(
+						deDataRecordCollectionSaveRequest);
 
 			return
 				deDataRecordCollectionSaveResponse.getDEDataRecordCollection();

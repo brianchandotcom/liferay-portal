@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.query;
+package com.liferay.portal.search.elasticsearch6.internal.legacy.query;
 
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.query.BaseStringQueryTestCase;
+import com.liferay.portal.search.test.util.legacy.query.BaseStringQueryTestCase;
 
 import java.util.Arrays;
 

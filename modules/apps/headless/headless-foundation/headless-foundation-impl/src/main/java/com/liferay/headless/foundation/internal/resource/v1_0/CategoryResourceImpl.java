@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/category.properties",
-	scope = ServiceScope.PROTOTYPE, service = CategoryResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {CategoryResource.class, EntityModelResource.class}
 )
 public class CategoryResourceImpl
 	extends BaseCategoryResourceImpl implements EntityModelResource {

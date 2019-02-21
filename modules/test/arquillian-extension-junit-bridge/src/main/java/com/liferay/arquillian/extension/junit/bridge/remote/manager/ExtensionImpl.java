@@ -56,15 +56,17 @@ public class ExtensionImpl implements Extension {
 		return Collections.unmodifiableList(_observers);
 	}
 
-	private static List<Field> _getFieldInjectionPoints(Class<?> clazz) {
-		List<Field> injectionPoints = new ArrayList<>();
+	private static List<InjectionPoint> _injections(Object target) {
+		List<InjectionPoint> injectionPoints = new ArrayList<>();
+
+		Class<?> clazz = target.getClass();
 
 		while (clazz != null) {
 			for (Field field : clazz.getDeclaredFields()) {
 				if (_isInjectionPoint(field)) {
 					field.setAccessible(true);
 
-					injectionPoints.add(field);
+					injectionPoints.add(new InjectionPointImpl(target, field));
 				}
 			}
 
@@ -72,34 +74,6 @@ public class ExtensionImpl implements Extension {
 		}
 
 		return injectionPoints;
-	}
-
-	private static List<Method> _getObserverMethods(Class<?> clazz) {
-		List<Method> observerMethods = new ArrayList<>();
-
-		while (clazz != null) {
-			for (Method method : clazz.getDeclaredMethods()) {
-				if (_isObserverMethod(method)) {
-					method.setAccessible(true);
-
-					observerMethods.add(method);
-				}
-			}
-
-			clazz = clazz.getSuperclass();
-		}
-
-		return observerMethods;
-	}
-
-	private static List<InjectionPoint> _injections(Object extension) {
-		List<InjectionPoint> result = new ArrayList<>();
-
-		for (Field field : _getFieldInjectionPoints(extension.getClass())) {
-			result.add(new InjectionPointImpl(extension, field));
-		}
-
-		return result;
 	}
 
 	private static boolean _isInjectionPoint(Field field) {
@@ -134,14 +108,24 @@ public class ExtensionImpl implements Extension {
 		return false;
 	}
 
-	private static List<ObserverMethod> _observers(Object extension) {
-		List<ObserverMethod> result = new ArrayList<>();
+	private static List<ObserverMethod> _observers(Object target) {
+		List<ObserverMethod> observerMethods = new ArrayList<>();
 
-		for (Method method : _getObserverMethods(extension.getClass())) {
-			result.add(new ObserverImpl(extension, method));
+		Class<?> clazz = target.getClass();
+
+		while (clazz != null) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				if (_isObserverMethod(method)) {
+					method.setAccessible(true);
+
+					observerMethods.add(new ObserverImpl(target, method));
+				}
+			}
+
+			clazz = clazz.getSuperclass();
 		}
 
-		return result;
+		return observerMethods;
 	}
 
 	private final List<InjectionPoint> _injectionPoints;

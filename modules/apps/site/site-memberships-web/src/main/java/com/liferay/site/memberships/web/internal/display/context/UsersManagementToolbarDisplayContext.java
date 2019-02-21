@@ -36,9 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -192,19 +190,6 @@ public class UsersManagementToolbarDisplayContext
 		clearResultsURL.setParameter("roleId", "0");
 
 		return clearResultsURL.toString();
-	}
-
-	public Map<String, Object> getComponentContext() throws Exception {
-		Map<String, Object> componentContext = new HashMap<>();
-
-		PortletURL selectUsersURL = liferayPortletResponse.createRenderURL();
-
-		selectUsersURL.setParameter("mvcPath", "/select_users.jsp");
-		selectUsersURL.setWindowState(LiferayWindowState.POP_UP);
-
-		componentContext.put("selectUsersURL", selectUsersURL.toString());
-
-		return componentContext;
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.core.spi.InvocationException;
 
 /**
  * @author Matthew Tambara
@@ -67,32 +65,16 @@ public class Observer implements Comparable<Observer> {
 		return _method.getGenericParameterTypes()[0];
 	}
 
-	public boolean invoke(Manager manager, Object event) {
-		try {
-			Object[] arguments = _resolveArguments(manager, event);
+	public void invoke(Manager manager, Object event)
+		throws ReflectiveOperationException {
 
-			if (_containsNull(arguments)) {
-				return false;
-			}
+		Object[] arguments = _resolveArguments(manager, event);
 
-			_method.invoke(_target, arguments);
-
-			return true;
+		if (_containsNull(arguments)) {
+			return;
 		}
-		catch (Exception e) {
-			if (e instanceof InvocationTargetException) {
-				Throwable throwable =
-					((InvocationTargetException)e).getTargetException();
 
-				if (throwable instanceof InvocationException) {
-					throw (InvocationException)throwable;
-				}
-
-				throw new InvocationException(throwable);
-			}
-
-			throw new InvocationException(e);
-		}
+		_method.invoke(_target, arguments);
 	}
 
 	private static boolean _isObserverMethod(Method method) {

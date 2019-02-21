@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridg
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -28,7 +29,6 @@ import java.util.List;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.spi.HashObjectStore;
-import org.jboss.arquillian.core.spi.InvocationException;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.core.spi.context.AbstractContext;
 import org.jboss.arquillian.core.spi.context.ApplicationContext;
@@ -39,7 +39,7 @@ import org.jboss.arquillian.core.spi.context.ObjectStore;
  */
 public class Manager {
 
-	public Manager() {
+	public Manager() throws ReflectiveOperationException {
 		_applicationContext = new ApplicationContextImpl();
 
 		_extensions.addAll(
@@ -93,8 +93,13 @@ public class Manager {
 
 			_proceed(observers, nonManagedObserver, event);
 		}
-		catch (InvocationException ie) {
-			_throwException(ie.getCause());
+		catch (ReflectiveOperationException roe) {
+			if (roe instanceof InvocationTargetException) {
+				_throwException(roe.getCause());
+			}
+			else {
+				_throwException(roe);
+			}
 		}
 		finally {
 			if (activatedApplicationContext && _applicationContext.isActive()) {
@@ -133,7 +138,8 @@ public class Manager {
 	}
 
 	private List<Object> _createExtensions(
-		Collection<Class<?>> extensionClasses) {
+			Collection<Class<?>> extensionClasses)
+		throws ReflectiveOperationException {
 
 		List<Object> created = new ArrayList<>();
 
@@ -173,7 +179,7 @@ public class Manager {
 		return null;
 	}
 
-	private void _inject(Object extension) {
+	private void _inject(Object extension) throws ReflectiveOperationException {
 		for (InjectionPoint injectionPoint :
 				InjectionPoint.getInjections(extension)) {
 
@@ -185,8 +191,9 @@ public class Manager {
 	}
 
 	private <T> void _proceed(
-		List<Observer> observers, NonManagedObserver<T> nonManagedObserver,
-		T event) {
+			List<Observer> observers, NonManagedObserver<T> nonManagedObserver,
+			T event)
+		throws ReflectiveOperationException {
 
 		for (Observer observer : observers) {
 			observer.invoke(this, event);

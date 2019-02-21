@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.spi.InvocationException;
 
 /**
  * @author Matthew Tambara
@@ -72,13 +71,8 @@ public class InjectionPoint {
 		return (Class<?>)parameterizedType.getActualTypeArguments()[0];
 	}
 
-	public void set(Instance<?> instance) throws InvocationException {
-		try {
-			_field.set(_target, instance);
-		}
-		catch (Exception e) {
-			throw new InvocationException(e.getCause());
-		}
+	public void set(Instance<?> instance) throws ReflectiveOperationException {
+		_field.set(_target, instance);
 	}
 
 	private static boolean _isInjectionPoint(Field field) {

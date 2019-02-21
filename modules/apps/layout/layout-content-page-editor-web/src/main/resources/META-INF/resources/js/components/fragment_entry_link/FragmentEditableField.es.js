@@ -9,7 +9,7 @@ import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDAT
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
@@ -325,6 +325,22 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
+	 * Callback executed when an editable lose the focus
+	 * @private
+	 * @review
+	 */
+	_handleEditableBlur() {
+		requestAnimationFrame(
+			() => {
+		if (shouldClearFocus(this.element)) {
+			this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+					this._editing = false;
+				}
+		}
+		);
+	}
+
+	/**
 	 * Handle editable click event
 	 * @param {Event} event
 	 * @private
@@ -373,19 +389,6 @@ class FragmentEditableField extends Component {
 	 */
 	_handleEditableDestroyed() {
 		this._editing = false;
-	}
-
-	/**
-	 * Callback executed when an editable lose the focus
-	 * @private
-	 * @review
-	 */
-	_handleEditableFocusOut() {
-		requestAnimationFrame(
-			() => {
-				this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
-			}
-		);
 	}
 
 	/**

@@ -15,6 +15,9 @@
 package com.liferay.portal.vulcan.internal.accept.language;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -23,9 +26,11 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.HttpHeaders;
@@ -36,9 +41,11 @@ import javax.ws.rs.core.HttpHeaders;
 public class AcceptLanguageImpl implements AcceptLanguage {
 
 	public AcceptLanguageImpl(
-		HttpServletRequest httpServletRequest, Portal portal) {
+		HttpServletRequest httpServletRequest, Language language,
+		Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_language = language;
 		_portal = portal;
 	}
 
@@ -58,26 +65,57 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 	public Locale getPreferredLocale() {
 		List<Locale> locales = getLocales();
 
+		final Locale locale;
+
 		if (ListUtil.isNotEmpty(locales)) {
-			return locales.get(0);
+			locale = locales.get(0);
 		}
+		else {
+			try {
+				User user = _portal.initUser(_httpServletRequest);
+
+				locale = user.getLocale();
+			}
+			catch (NoSuchUserException nsue) {
+				throw new NotFoundException(
+					"Unable to get preferred locale from nonexistent user",
+					nsue);
+			}
+			catch (Exception e) {
+				throw new InternalServerErrorException(
+					"Unable to get preferred locale: " + e.getMessage(), e);
+			}
+		}
+
+		if (!_isAvailableLocale(locale)) {
+			throw new ClientErrorException(
+				"The  preferred locale: " + _language.getLanguageId(locale) +
+					" is not available",
+				422);
+		}
+
+		return locale;
+	}
+
+	private boolean _isAvailableLocale(Locale locale) {
+		final Company company;
 
 		try {
-			User user = _portal.initUser(_httpServletRequest);
-
-			return user.getLocale();
+			company = _portal.getCompany(_httpServletRequest);
 		}
-		catch (NoSuchUserException nsue) {
-			throw new NotFoundException(
-				"Unable to get preferred locale from nonexistent user", nsue);
-		}
-		catch (Throwable t) {
+		catch (PortalException pe) {
 			throw new InternalServerErrorException(
-				"Unable to get preferred locale: " + t.getMessage(), t);
+				"Unable to get preferred locale: " + pe.getMessage(), pe);
 		}
+
+		Set<Locale> companyAvailableLocales =
+			_language.getCompanyAvailableLocales(company.getCompanyId());
+
+		return companyAvailableLocales.contains(locale);
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
 	private final Portal _portal;
 
 }

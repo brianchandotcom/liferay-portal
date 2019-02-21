@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -48,11 +49,13 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 	public FilterContextProvider(
 		EntityModelResourceRegistry entityModelResourceRegistry,
 		ExpressionConvert<Filter> expressionConvert,
-		FilterParserProvider filterParserProvider, Portal portal) {
+		FilterParserProvider filterParserProvider, Language language,
+		Portal portal) {
 
 		_entityModelResourceRegistry = entityModelResourceRegistry;
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
+		_language = language;
 		_portal = portal;
 	}
 
@@ -116,7 +119,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 		}
 
 		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
-			httpServletRequest, _portal);
+			httpServletRequest, _language, _portal);
 
 		Filter filter = _expressionConvert.convert(
 			oDataFilter.getExpression(), acceptLanguage.getPreferredLocale(),
@@ -135,6 +138,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 	private final EntityModelResourceRegistry _entityModelResourceRegistry;
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
+	private final Language _language;
 	private final Portal _portal;
 
 }

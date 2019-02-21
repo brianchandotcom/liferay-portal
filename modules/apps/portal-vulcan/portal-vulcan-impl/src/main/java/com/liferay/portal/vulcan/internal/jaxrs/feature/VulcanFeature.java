@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -70,15 +71,17 @@ public class VulcanFeature implements Feature {
 		featureContext.register(PortalExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);
 
-		featureContext.register(new AcceptLanguageContextProvider(_portal));
+		featureContext.register(
+			new AcceptLanguageContextProvider(_language, _portal));
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new FilterContextProvider(
 				_entityModelResourceRegistry, _expressionConvert,
-				_filterParserProvider, _portal));
+				_filterParserProvider, _language, _portal));
 		featureContext.register(
 			new SortContextProvider(
-				_entityModelResourceRegistry, _portal, _sortParserProvider));
+				_entityModelResourceRegistry, _language, _portal,
+				_sortParserProvider));
 
 		return false;
 	}
@@ -100,6 +103,9 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

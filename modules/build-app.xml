@@ -501,7 +501,7 @@
 	</target>
 
 	<target depends="get-app-names-core" name="get-app-names" unless="app.names">
-		<condition else="Liferay-Releng-Suite:\s*[\w-]+$" property="liferay.releng.suite.pattern" value="." >
+		<condition else="Liferay-Releng-Suite:\s*[\w-]+$" property="liferay.releng.suite.pattern" value=".">
 			<istrue value="${include.standalone.apps}" />
 		</condition>
 

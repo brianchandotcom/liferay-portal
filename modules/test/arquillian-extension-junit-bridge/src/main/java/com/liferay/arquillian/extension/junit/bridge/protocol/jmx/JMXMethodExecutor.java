@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.InputStream;
@@ -27,8 +27,6 @@ import javax.management.MBeanServerInvocationHandler;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
-import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
@@ -38,6 +36,10 @@ import org.jboss.arquillian.test.spi.event.suite.Test;
  * @author Matthew Tambara
  */
 public class JMXMethodExecutor {
+
+	public JMXMethodExecutor(Registry registry) {
+		_registry = registry;
+	}
 
 	public void invoke(@Observes Test test) {
 		TestMethodExecutor testMethodExecutor = test.getTestMethodExecutor();
@@ -50,7 +52,7 @@ public class JMXMethodExecutor {
 
 		JMXTestRunnerMBean jmxTestRunnerMBean =
 			MBeanServerInvocationHandler.newProxyInstance(
-				_mBeanServerConnectionInstance.get(), _objectName,
+				_registry.get(MBeanServerConnection.class), _objectName,
 				JMXTestRunnerMBean.class, false);
 
 		try {
@@ -64,7 +66,7 @@ public class JMXMethodExecutor {
 
 				testResult.setEnd(System.currentTimeMillis());
 
-				_testResultInstanceProducer.set(testResult);
+				_registry.set(TestResult.class, testResult);
 			}
 		}
 		catch (Throwable t) {
@@ -72,7 +74,7 @@ public class JMXMethodExecutor {
 
 			testResult.setEnd(System.currentTimeMillis());
 
-			_testResultInstanceProducer.set(testResult);
+			_registry.set(TestResult.class, testResult);
 		}
 	}
 
@@ -87,11 +89,6 @@ public class JMXMethodExecutor {
 		}
 	}
 
-	@Inject
-	private Instance<MBeanServerConnection> _mBeanServerConnectionInstance;
-
-	@ApplicationScoped
-	@Inject
-	private Instance<TestResult> _testResultInstanceProducer;
+	private final Registry _registry;
 
 }

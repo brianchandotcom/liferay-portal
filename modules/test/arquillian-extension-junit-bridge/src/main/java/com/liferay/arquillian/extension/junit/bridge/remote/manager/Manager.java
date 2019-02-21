@@ -30,6 +30,18 @@ import java.util.List;
  */
 public class Manager {
 
+	public Manager() {
+		URL url = Manager.class.getResource("/arquillian.remote.marker");
+
+		if (url == null) {
+			_extensions.add(new ContainerEventController(_registry));
+			_extensions.add(new JMXMethodExecutor(_registry));
+		}
+		else {
+			_extensions.add(new JUnitBridgeObserver(_registry));
+		}
+	}
+
 	public <T> void fire(T event) {
 		for (Object extension : _extensions) {
 			for (Observer observer :
@@ -56,30 +68,6 @@ public class Manager {
 
 	public Registry getRegistry() {
 		return _registry;
-	}
-
-	public void start() throws ReflectiveOperationException {
-		for (Object extension : _getExtensions()) {
-			for (InjectionPoint injectionPoint :
-					InjectionPoint.getInjections(extension, _registry)) {
-
-				injectionPoint.set(this);
-			}
-
-			_extensions.add(extension);
-		}
-	}
-
-	private static Object[] _getExtensions() {
-		URL url = Manager.class.getResource("/arquillian.remote.marker");
-
-		if (url == null) {
-			return new Object[] {
-				new ContainerEventController(), new JMXMethodExecutor()
-			};
-		}
-
-		return new Object[] {new JUnitBridgeObserver()};
 	}
 
 	private static <T, E extends Throwable> T _throwException(

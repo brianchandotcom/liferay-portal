@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.observer;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
-import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
@@ -52,12 +50,16 @@ import org.junit.runners.model.Statement;
  */
 public class JUnitBridgeObserver {
 
+	public JUnitBridgeObserver(Registry registry) {
+		_registry = registry;
+	}
+
 	public void aroundTest(@Observes Test test) throws Throwable {
 		Statement statement = new InvokeMethod(null, test.getTestInstance()) {
 
 			@Override
 			public void evaluate() {
-				TestResult result = TestResult.passed();
+				TestResult testResult = TestResult.passed();
 
 				TestMethodExecutor testMethodExecutor =
 					test.getTestMethodExecutor();
@@ -74,15 +76,15 @@ public class JUnitBridgeObserver {
 					testMethodExecutor.invoke();
 				}
 				catch (Throwable t) {
-					result = TestResult.failed(t);
+					testResult = TestResult.failed(t);
 				}
 				finally {
-					result.setEnd(System.currentTimeMillis());
+					testResult.setEnd(System.currentTimeMillis());
 
 					currentThread.setContextClassLoader(classLoader);
 				}
 
-				_testResultInstanceProducer.set(result);
+				_registry.set(TestResult.class, testResult);
 			}
 
 		};
@@ -261,8 +263,6 @@ public class JUnitBridgeObserver {
 		return statement;
 	}
 
-	@ApplicationScoped
-	@Inject
-	private Instance<TestResult> _testResultInstanceProducer;
+	private final Registry _registry;
 
 }

@@ -101,8 +101,6 @@ public class Arquillian extends Runner implements Filterable {
 			try {
 				manager = new Manager();
 
-				manager.start();
-
 				_managerThreadLocal.set(manager);
 			}
 			catch (Exception e) {

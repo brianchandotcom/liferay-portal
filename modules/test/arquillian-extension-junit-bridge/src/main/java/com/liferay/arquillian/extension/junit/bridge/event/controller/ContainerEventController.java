@@ -15,7 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDescriptionUtil;
-import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 
 import java.io.InputStream;
 
@@ -38,8 +38,6 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
-import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
@@ -53,6 +51,10 @@ import org.osgi.jmx.framework.FrameworkMBean;
  */
 public class ContainerEventController {
 
+	public ContainerEventController(Registry registry) {
+		_registry = registry;
+	}
+
 	public void execute(@Observes AfterClass afterClass) throws Exception {
 		_frameworkMBean.uninstallBundle(_bundleId);
 	}
@@ -64,7 +66,7 @@ public class ContainerEventController {
 		MBeanServerConnection mBeanServerConnection =
 			jmxConnector.getMBeanServerConnection();
 
-		_mBeanServerConnectionInstanceProducer.set(mBeanServerConnection);
+		_registry.set(MBeanServerConnection.class, mBeanServerConnection);
 
 		Set<ObjectName> names = mBeanServerConnection.queryNames(
 			_frameworkObjectName, null);
@@ -124,10 +126,6 @@ public class ContainerEventController {
 
 	private long _bundleId;
 	private FrameworkMBean _frameworkMBean;
-
-	@ApplicationScoped
-	@Inject
-	private Instance<MBeanServerConnection>
-		_mBeanServerConnectionInstanceProducer;
+	private final Registry _registry;
 
 }

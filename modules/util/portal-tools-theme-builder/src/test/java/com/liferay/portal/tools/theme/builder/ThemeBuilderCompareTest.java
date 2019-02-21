@@ -48,6 +48,7 @@ import org.json.simple.JSONValue;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -126,6 +127,7 @@ public class ThemeBuilderCompareTest {
 		_parentDir = _getParentDir(parentName);
 	}
 
+	@Ignore
 	@Test
 	public void testThemeBuilderCompare() throws Exception {
 		File outputDir = temporaryFolder.newFolder("output");

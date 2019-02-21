@@ -22,18 +22,15 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageSubjectException;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -45,6 +42,9 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -54,9 +54,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.function.Function;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
@@ -220,48 +220,6 @@ public class CommentResourceImpl
 		};
 	}
 
-	private DiscussionPermission _getDiscussionPermission() {
-		return _commentManager.getDiscussionPermission(
-			PermissionThreadLocal.getPermissionChecker());
-	}
-
-	private long _getUserId() {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		return permissionChecker.getUserId();
-	}
-
-	private Comment _postComment(
-			long groupId, long classPK,
-			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier)
-		throws Exception {
-
-		DiscussionPermission discussionPermission = _getDiscussionPermission();
-
-		discussionPermission.checkAddPermission(
-			contextCompany.getCompanyId(), groupId,
-			JournalArticle.class.getName(), classPK);
-
-		try {
-			long commentId = addCommentUnsafeSupplier.get();
-
-			return CommentUtil.toComment(
-				_commentManager.fetchComment(commentId), _portal);
-		}
-		catch (DiscussionMaxCommentsException dmce) {
-			throw new ClientErrorException(
-				"Maximum number of comments has been reached", 422, dmce);
-		}
-		catch (DuplicateCommentException dce) {
-			throw new ClientErrorException(
-				"A comment with the same text already exists", 409, dce);
-		}
-		catch (MessageSubjectException mse) {
-			throw new ClientErrorException("Comment text is null", 422, mse);
-		}
-	}
-
 	private Page<Comment> _getComments(
 			Long parentCommentId, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -305,6 +263,48 @@ public class CommentResourceImpl
 			transform(
 				comments, comment -> CommentUtil.toComment(comment, _portal)),
 			pagination, comments.size());
+	}
+
+	private DiscussionPermission _getDiscussionPermission() {
+		return _commentManager.getDiscussionPermission(
+			PermissionThreadLocal.getPermissionChecker());
+	}
+
+	private long _getUserId() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return permissionChecker.getUserId();
+	}
+
+	private Comment _postComment(
+			long groupId, long classPK,
+			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier)
+		throws Exception {
+
+		DiscussionPermission discussionPermission = _getDiscussionPermission();
+
+		discussionPermission.checkAddPermission(
+			contextCompany.getCompanyId(), groupId,
+			JournalArticle.class.getName(), classPK);
+
+		try {
+			long commentId = addCommentUnsafeSupplier.get();
+
+			return CommentUtil.toComment(
+				_commentManager.fetchComment(commentId), _portal);
+		}
+		catch (DiscussionMaxCommentsException dmce) {
+			throw new ClientErrorException(
+				"Maximum number of comments has been reached", 422, dmce);
+		}
+		catch (DuplicateCommentException dce) {
+			throw new ClientErrorException(
+				"A comment with the same text already exists", 409, dce);
+		}
+		catch (MessageSubjectException mse) {
+			throw new ClientErrorException("Comment text is null", 422, mse);
+		}
 	}
 
 	private static final EntityModel _entityModel = new CommentEntityModel();

@@ -168,7 +168,7 @@ public class Manager {
 		for (InjectionPoint injectionPoint :
 				InjectionPoint.getInjections(extension)) {
 
-			injectionPoint.set(new Instance<>(injectionPoint.getType(), this));
+			injectionPoint.set(this);
 		}
 	}
 

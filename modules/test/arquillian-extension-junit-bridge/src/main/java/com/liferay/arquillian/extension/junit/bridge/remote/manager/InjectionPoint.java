@@ -47,15 +47,15 @@ public class InjectionPoint {
 		return injectionPoints;
 	}
 
-	public Class<?> getType() {
+	public void set(Manager manager) throws ReflectiveOperationException {
 		ParameterizedType parameterizedType =
 			(ParameterizedType)_field.getGenericType();
 
-		return (Class<?>)parameterizedType.getActualTypeArguments()[0];
-	}
-
-	public void set(Instance<?> instance) throws ReflectiveOperationException {
-		_field.set(_target, instance);
+		_field.set(
+			_target,
+			new Instance<>(
+				(Class<?>)parameterizedType.getActualTypeArguments()[0],
+				manager));
 	}
 
 	private static boolean _isInjectionPoint(Field field) {

@@ -140,7 +140,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							%>
 
 							<c:choose>
-								<c:when test="<%= rowChecker != null && i == 0 %>">
+								<c:when test="<%= (rowChecker != null) && (i == 0) %>">
 									<span class="sr-only">
 										<%= LanguageUtil.get(request, "selected-item") %>
 									</span>

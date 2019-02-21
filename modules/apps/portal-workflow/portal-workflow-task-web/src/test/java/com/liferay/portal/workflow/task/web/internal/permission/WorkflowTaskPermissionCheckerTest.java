@@ -365,7 +365,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 		workflowTaskAssignees.add(workflowTaskAssignee);
 
-		DefaultWorkflowTask workflowTask = new DefaultWorkflowTask() {
+		return new DefaultWorkflowTask() {
 
 			@Override
 			public Map<String, Serializable> getOptionalAttributes() {
@@ -385,8 +385,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			}
 
 		};
-
-		return workflowTask;
 	}
 
 	protected long[] randomPermissionCheckerRoleIds() {

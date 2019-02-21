@@ -645,6 +645,10 @@ private static boolean _isAnalyticsTrackingEnabled(String liferayAnalyticsKey, S
 		return false;
 	}
 
+	if (Objects.equals(request.getRequestURI(), "/c/portal/api/jsonws")) {
+		return false;
+	}
+
 	if (_isSharedFormEnabled(liferayAnalyticsGroupIds, group, request)) {
 		return true;
 	}

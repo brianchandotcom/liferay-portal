@@ -165,8 +165,7 @@ public class SoyTestHelper {
 					}
 
 					throw new UnsupportedOperationException(method.toString());
-				}
-			));
+				}));
 	}
 
 	private static final String _TPL_PATH =

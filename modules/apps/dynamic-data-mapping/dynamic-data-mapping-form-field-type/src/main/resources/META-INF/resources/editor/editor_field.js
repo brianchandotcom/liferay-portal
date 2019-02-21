@@ -99,6 +99,7 @@ AUI.add(
 									editorConfig: {
 										extraPlugins: 'ae_placeholder,ae_selectionregion,ae_uicore',
 										removePlugins: 'contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar',
+										spritemap: Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 										srcNode: editorNode,
 										toolbars: {
 											add: {

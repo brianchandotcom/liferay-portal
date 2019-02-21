@@ -188,7 +188,7 @@ public class LayoutSiteNavigationMenuItemType
 
 		String label = getName(siteNavigationMenuItem.getTypeSettings());
 
-		Boolean useLayoutName = _isUseLayoutName(siteNavigationMenuItem);
+		boolean useLayoutName = _isUseLayoutName(siteNavigationMenuItem);
 
 		if (Validator.isNotNull(label) && !useLayoutName) {
 			return label;
@@ -431,7 +431,7 @@ public class LayoutSiteNavigationMenuItemType
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
 	}
 
-	private Boolean _isUseLayoutName(
+	private boolean _isUseLayoutName(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();

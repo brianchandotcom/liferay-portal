@@ -582,6 +582,50 @@ public class DEDataEngineTestUtil {
 			user, group, deDataDefinition, deDataRecordCollectionService);
 	}
 
+	public static DEDataRecordCollection insertDEDataRecordCollection(
+		User user, Group group, String description, String name,
+		DEDataRecordCollectionService deDataRecordCollectionService)
+		throws Exception {
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			DEDataRecordCollection deDataRecordCollection =
+				new DEDataRecordCollection();
+
+			deDataRecordCollection.addDescription(LocaleUtil.US, description);
+			deDataRecordCollection.addName(LocaleUtil.US, name);
+
+			DEDataRecordCollectionSaveRequest
+				deDataRecordCollectionSaveRequest =
+					DEDataRecordCollectionRequestBuilder.saveBuilder(
+						deDataRecordCollection
+					).inGroup(
+						group.getGroupId()
+					).onBehalfOf(
+						user.getUserId()
+					).build();
+
+			DEDataRecordCollectionSaveResponse
+				deDataRecordCollectionSaveResponse =
+					deDataRecordCollectionService.
+						execute(deDataRecordCollectionSaveRequest);
+
+			return
+				deDataRecordCollectionSaveResponse.getDEDataRecordCollection();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	public static DEDataRecord saveDataRecord(
 			User user, Group group,
 			DEDataRecordCollectionService deDataRecordCollectionService,

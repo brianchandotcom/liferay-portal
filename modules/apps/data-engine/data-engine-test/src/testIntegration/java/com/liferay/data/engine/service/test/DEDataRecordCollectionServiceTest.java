@@ -36,6 +36,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsRequ
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionSearchRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionSearchResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -59,12 +61,14 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -4018,6 +4022,186 @@ public class DEDataRecordCollectionServiceTest {
 	}
 
 	@Test
+	public void testSearchBlank() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				5, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchNonCaseSensitive() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "description1");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				1, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchExactDescriptionCaseSensitive() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "Description1");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				1, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchExactNameCaseSensitive() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "Name1");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				1, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchNonascii() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, "nonascii£", "Name",
+			_deDataRecordCollectionService);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "nonascii£");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				1, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchNonExistingNameDescription() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "NonExistingNameDescription");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				0, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchPartial() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "Descrip");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				5, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
+	public void testSearchWithSpace() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, "Spaced Words", "Name",
+			_deDataRecordCollectionService);
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, "Spaced ", "Name",
+			_deDataRecordCollectionService);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, "Spaced ");
+
+		IdempotentRetryAssert.retryAssert(3, TimeUnit.SECONDS, () -> {
+			Assert.assertEquals(deDataRecordCollections.toString(),
+				2, deDataRecordCollections.size());
+
+			return null;
+		});
+	}
+
+	@Test
 	public void testUpdateDataRecord() throws Exception {
 		DEDataRecord deDataRecord = DEDataEngineTestUtil.insertDEDataRecord(
 			_adminUser, _group, _deDataDefinitionService,
@@ -4262,6 +4446,30 @@ public class DEDataRecordCollectionServiceTest {
 	protected void setUpPermissionThreadLocal() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+	}
+
+	protected List<DEDataRecordCollection> searchDEDataRecordCollection(
+		Group group, String keywords)
+		throws Exception {
+
+		DEDataRecordCollectionSearchRequest
+			deDataRecordCollectionSearchRequest =
+				DEDataRecordCollectionRequestBuilder.searchBuilder(
+				).havingKeywords(
+					keywords
+				).inCompany(
+					group.getCompanyId()
+				).inGroup(
+					group.getGroupId()
+				).build();
+
+		DEDataRecordCollectionSearchResponse
+			deDataRecordCollectionSearchResponse =
+				_deDataRecordCollectionService.execute(
+					deDataRecordCollectionSearchRequest);
+
+		return
+			deDataRecordCollectionSearchResponse.getDeDataRecordCollections();
 	}
 
 	@DeleteAfterTestRun

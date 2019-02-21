@@ -217,7 +217,7 @@ public class ManagerImpl implements Manager {
 	private void _inject(Extension extension) {
 		for (InjectionPoint injectionPoint : extension.getInjectionPoints()) {
 			injectionPoint.set(
-				InstanceImpl.of(
+				new InstanceImpl<>(
 					_getType(injectionPoint.getType()),
 					injectionPoint.getScope(), this));
 		}

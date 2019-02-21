@@ -21,7 +21,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,9 +34,17 @@ import org.jboss.arquillian.core.spi.NonManagedObserver;
 public class Manager {
 
 	public Manager() throws ReflectiveOperationException {
-		_extensions.addAll(
-			_createExtensions(
-				LiferayArquillianJUnitBridgeExtension.getObservers()));
+		for (Class<?> observerClass :
+				LiferayArquillianJUnitBridgeExtension.getObservers()) {
+
+			Constructor<?> constructor = observerClass.getDeclaredConstructor();
+
+			Object extension = constructor.newInstance();
+
+			_inject(extension);
+
+			_extensions.add(extension);
+		}
 	}
 
 	public <T> void bind(Class<T> type, T instance) {
@@ -101,36 +108,6 @@ public class Manager {
 		throws E {
 
 		throw (E)throwable;
-	}
-
-	private List<Object> _createExtensions(
-			Collection<Class<?>> extensionClasses)
-		throws ReflectiveOperationException {
-
-		List<Object> created = new ArrayList<>();
-
-		for (Class<?> extensionClass : extensionClasses) {
-			Object extension = _createInstance(extensionClass);
-
-			_inject(extension);
-
-			created.add(extension);
-		}
-
-		return created;
-	}
-
-	private <T>T _createInstance(Class<T> clazz) {
-		try {
-			Constructor<T> constructor = clazz.getDeclaredConstructor();
-
-			constructor.setAccessible(true);
-
-			return constructor.newInstance();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private void _inject(Object extension) throws ReflectiveOperationException {

@@ -70,8 +70,8 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 				new BlogsEntryImageActionDropdownItemsProvider(
 					_fileEntry, _renderRequest, _renderResponse);
 
-		return
-			blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems();
+		return blogsEntryImageActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	@Override
@@ -113,9 +113,8 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 		return new LabelItemList() {
 			{
 				add(
-					labelItem ->
-						labelItem.setStatus(
-							workflowCapability.getStatus(_fileEntry)));
+					labelItem -> labelItem.setStatus(
+						workflowCapability.getStatus(_fileEntry)));
 			}
 		};
 	}

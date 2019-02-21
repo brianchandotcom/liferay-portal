@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -52,9 +51,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,11 +79,20 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		_serviceContext = new ServiceContext();
+		_serviceContext = new ServiceContext() {
+
+			public ThemeDisplay getThemeDisplay() {
+				ThemeDisplay themeDisplay = new ThemeDisplay();
+
+				themeDisplay.setSiteGroupId(RandomTestUtil.randomLong());
+
+				return themeDisplay;
+			}
+
+		};
 
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
-		setUpThemeDisplay();
 		setUpUserNotificationEventLocalService();
 		setUpWorkflowTaskManagerUtil();
 		setUpWorkflowTaskPermissionChecker();
@@ -246,28 +251,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(_jsonFactory);
-	}
-
-	protected void setUpThemeDisplay() {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setSiteGroupId(RandomTestUtil.randomLong());
-
-		HttpServletRequest request = new HttpServletRequestWrapper(
-			ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
-
-			@Override
-			public Object getAttribute(String name) {
-				if (WebKeys.THEME_DISPLAY.equals(name)) {
-					return themeDisplay;
-				}
-
-				return null;
-			}
-
-		};
-
-		_serviceContext.setRequest(request);
 	}
 
 	protected void setUpUserNotificationEventLocalService() throws Exception {

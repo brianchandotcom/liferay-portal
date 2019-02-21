@@ -233,7 +233,7 @@ public class ContentPageEditorDisplayContext {
 		SoyContext availableSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
 
-		availableSoyContext.put("icon", "cards");
+		availableSoyContext.put("icon", "cards-full");
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
@@ -247,10 +247,19 @@ public class ContentPageEditorDisplayContext {
 
 		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-		availableSoyContext.put("icon", "page-template");
+		availableSoyContext.put("icon", "cards2");
 		availableSoyContext.put(
 			"label", LanguageUtil.get(resourceBundle, "section-builder"));
 		availableSoyContext.put("sidebarPanelId", "elements");
+
+		soyContexts.add(availableSoyContext);
+
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "square-hole");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(resourceBundle, "widgets"));
+		availableSoyContext.put("sidebarPanelId", "widgets");
 
 		soyContexts.add(availableSoyContext);
 
@@ -271,15 +280,6 @@ public class ContentPageEditorDisplayContext {
 		availableSoyContext.put(
 			"label", LanguageUtil.get(resourceBundle, "structure"));
 		availableSoyContext.put("sidebarPanelId", "structure");
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("icon", "chip");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "widgets"));
-		availableSoyContext.put("sidebarPanelId", "widgets");
 
 		soyContexts.add(availableSoyContext);
 

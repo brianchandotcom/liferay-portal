@@ -71,6 +71,14 @@ public class SiteActionDropdownItemsProvider {
 					ActionKeys.UPDATE);
 
 				if (hasUpdatePermission) {
+					int count = GroupLocalServiceUtil.getGroupsCount(
+						_themeDisplay.getCompanyId(), _group.getGroupId(),
+						true);
+
+					if (count > 0) {
+						add(_getViewChildSitesActionConsumer());
+					}
+
 					if (_siteAdminDisplayContext.hasAddChildSitePermission(
 							_group)) {
 
@@ -203,6 +211,16 @@ public class SiteActionDropdownItemsProvider {
 			_request, "redirect", _themeDisplay.getURLCurrent());
 
 		return _redirect;
+	}
+
+	private Consumer<DropdownItem> _getViewChildSitesActionConsumer() {
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_liferayPortletResponse.createRenderURL(), "backURL",
+				_getRedirect(), "groupId", String.valueOf(_group.getGroupId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_request, "view-child-sites"));
+		};
 	}
 
 	private Consumer<DropdownItem> _getViewSitePrivatePagesActionConsumer() {

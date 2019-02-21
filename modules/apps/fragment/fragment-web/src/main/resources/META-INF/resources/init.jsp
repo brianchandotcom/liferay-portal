@@ -48,6 +48,7 @@ page import="com.liferay.fragment.web.internal.dao.search.FragmentEntryResultRow
 page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionResourcesDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionResourcesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionsDisplayContext" %><%@
+page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryLinkDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryUsageManagementToolbarDisplayContext" %><%@

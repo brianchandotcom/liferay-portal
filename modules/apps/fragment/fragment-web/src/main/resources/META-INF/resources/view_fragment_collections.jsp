@@ -21,14 +21,7 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= fragmentCollectionsDisplayContext.getClearResultsURL() %>"
-	filterDropdownItems="<%= fragmentCollectionsDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= fragmentCollectionsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= fragmentCollectionsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="fragmentCollections"
-	searchFormName="searchFm"
-	sortingOrder="<%= fragmentCollectionsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= fragmentCollectionsDisplayContext.getSortingURL() %>"
+	displayContext="<%= new FragmentCollectionsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentCollectionsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

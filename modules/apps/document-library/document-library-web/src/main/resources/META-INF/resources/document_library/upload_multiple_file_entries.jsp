@@ -105,12 +105,11 @@ if (portletTitleBasedNavigation) {
 						PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-multiple-file-entries"), currentURL);
 						%>
 
-						<aui:script>
+						<aui:script use="aui-base,aui-io-request,aui-loading-mask-deprecated,node-load">
 							Liferay.provide(
 								window,
 								'<portlet:namespace />updateMultipleFiles',
 								function() {
-									var A = AUI();
 									var Lang = A.Lang;
 
 									var commonFileMetadataContainer = A.one('#<portlet:namespace />commonFileMetadataContainer');

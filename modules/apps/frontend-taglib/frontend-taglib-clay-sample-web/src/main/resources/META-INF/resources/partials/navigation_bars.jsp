@@ -30,6 +30,6 @@
 <blockquote><p>The navigation bar attributes can also be specified using the service layer.</p></blockquote>
 
 <clay:navigation-bar
-	attributeProviderKey="SampleNavigationBarAttributeProvider"
+	contributorName="SampleNavigationBar"
 	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
 />

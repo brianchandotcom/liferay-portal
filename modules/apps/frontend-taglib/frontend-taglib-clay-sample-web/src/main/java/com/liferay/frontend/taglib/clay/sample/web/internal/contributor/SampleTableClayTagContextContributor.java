@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.sample.web.internal.attribute.provider;
+package com.liferay.frontend.taglib.clay.sample.web.internal.contributor;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.attribute.provider.ClayComponentAttributeProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContextContributor;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,27 +30,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"clay.component.attribute.provider.key=SampleTableAttributeProvider",
-		"service.ranking:Integer=2"
-	},
-	service = ClayComponentAttributeProvider.class
+	property = {"contributor.name=SampleTable", "service.ranking:Integer=2"},
+	service = ClayTagContextContributor.class
 )
-public class SampleTableAttributeProvider
-	implements ClayComponentAttributeProvider {
+public class SampleTableClayTagContextContributor
+	implements ClayTagContextContributor {
 
 	@Override
-	public void getAttributes(Map<String, Object> context) {
+	public void populate(Map<String, Object> context) {
 		context.put("items", _getItems());
 		context.put("schema", _getSchema().toMap());
 		context.put("selectable", true);
-
-		String currentTableClasses = GetterUtil.getString(
-			context.get("tableClasses"));
-
-		currentTableClasses += " service-ranking-2";
-
-		context.put("tableClasses", currentTableClasses);
+		context.put("tableClasses", "sample-table");
 	}
 
 	private Map<String, Object> _getItem(

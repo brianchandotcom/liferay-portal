@@ -18,14 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.event.controller.ContainerE
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
 import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridgeObserver;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -72,11 +69,7 @@ public class Manager {
 	}
 
 	public void start() throws ReflectiveOperationException {
-		for (Class<?> observerClass : _getObservers()) {
-			Constructor<?> constructor = observerClass.getDeclaredConstructor();
-
-			Object extension = constructor.newInstance();
-
+		for (Object extension : _getExtensions()) {
 			for (InjectionPoint injectionPoint :
 					InjectionPoint.getInjections(extension)) {
 
@@ -87,16 +80,16 @@ public class Manager {
 		}
 	}
 
-	private static List<Class<?>> _getObservers() {
+	private static Object[] _getExtensions() {
 		URL url = Manager.class.getResource("/arquillian.remote.marker");
 
 		if (url == null) {
-			return Arrays.asList(
-				ContainerEventController.class, JMXMethodExecutor.class
-			);
+			return new Object[] {
+				new ContainerEventController(), new JMXMethodExecutor()
+			};
 		}
 
-		return Collections.singletonList(JUnitBridgeObserver.class);
+		return new Object[] {new JUnitBridgeObserver()};
 	}
 
 	private static <T, E extends Throwable> T _throwException(

@@ -22,9 +22,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockMessage;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockResource;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashMap;
@@ -64,8 +64,10 @@ public class FilterContextProviderTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
+		_mockResource = new MockResource();
+
 		_serviceRegistration = registry.registerService(
-			MockResource.class, new MockResource(),
+			EntityModelResource.class, _mockResource,
 			new HashMap<String, Object>() {
 				{
 					put(
@@ -74,11 +76,6 @@ public class FilterContextProviderTest {
 					put("osgi.jaxrs.resource", "true");
 				}
 			});
-
-		ServiceReference<MockResource> serviceReference =
-			_serviceRegistration.getServiceReference();
-
-		_mockResource = registry.getService(serviceReference);
 	}
 
 	@After
@@ -118,6 +115,6 @@ public class FilterContextProviderTest {
 	private Feature _feature;
 
 	private MockResource _mockResource;
-	private ServiceRegistration<MockResource> _serviceRegistration;
+	private ServiceRegistration<EntityModelResource> _serviceRegistration;
 
 }

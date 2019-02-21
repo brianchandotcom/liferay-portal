@@ -27,11 +27,11 @@ import java.util.Date;
 public class MBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
-		"modelCategory ASC, priority DESC, modifiedDate ASC, name ASC, " +
+		"modelCategory ASC, priority DESC, modifiedDate DESC, name ASC, " +
 			"modelId ASC";
 
 	public static final String ORDER_BY_DESC =
-		"modelCategory ASC, priority DESC, modifiedDate DESC, name ASC, " +
+		"modelCategory ASC, priority DESC, modifiedDate ASC, name DESC, " +
 			"modelId ASC";
 
 	public static final String[] ORDER_BY_FIELDS = {

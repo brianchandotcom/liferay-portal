@@ -339,7 +339,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 		}
 		else {
 			orderByType = _portalPreferences.getValue(
-				MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", "desc");
+				MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", "asc");
 		}
 
 		_orderByType = orderByType;

@@ -119,8 +119,8 @@ renderResponse.setTitle(title);
 <portlet:resourceURL id="/mobile_device_rules/edit_rule" var="editorURL" />
 
 <aui:script sandbox="<%= true %>">
-	var typeNode = document.querySelector('#<portlet:namespace />type');
-	var typeSettingsContainer = document.querySelector('#<portlet:namespace />typeSettings');
+	var typeNode = document.getElementById('<portlet:namespace />type');
+	var typeSettingsContainer = document.getElementById('<portlet:namespace />typeSettings');
 
 	if (typeNode && typeSettingsContainer) {
 		var loadTypeFields = function() {

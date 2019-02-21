@@ -67,7 +67,7 @@
 			}
 		).then(
 			function(response) {
-				var uniqueRuleGroupInstancesContainer = document.querySelector('#<portlet:namespace />uniqueRuleGroupInstancesContainer');
+				var uniqueRuleGroupInstancesContainer = document.getElementById('<portlet:namespace />uniqueRuleGroupInstancesContainer');
 
 				if (uniqueRuleGroupInstancesContainer) {
 					uniqueRuleGroupInstancesContainer.innerHTML = response;
@@ -117,7 +117,7 @@
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
-	var saveInstanceButton = document.querySelector('#<portlet:namespace />saveInstance');
+	var saveInstanceButton = document.getElementById('<portlet:namespace />saveInstance');
 
 	if (saveInstanceButton) {
 		saveInstanceButton.addEventListener(
@@ -142,7 +142,7 @@
 		);
 	}
 
-	var managePrioritiesButton = document.querySelector('#<portlet:namespace />managePriorities');
+	var managePrioritiesButton = document.getElementById('<portlet:namespace />managePriorities');
 
 	if (managePrioritiesButton) {
 		managePrioritiesButton.addEventListener(

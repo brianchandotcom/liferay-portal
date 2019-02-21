@@ -78,7 +78,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	function <portlet:namespace />saveRuleGroupInstancesPriorities(event) {
 		event.preventDefault();
 
-		var ruleGroupsInstancesJSONElement = document.querySelector('#<portlet:namespace />ruleGroupsInstancesJSON');
+		var ruleGroupsInstancesJSONElement = document.getElementById('<portlet:namespace />ruleGroupsInstancesJSON');
 
 		if (ruleGroupsInstancesJSONElement) {
 			var ruleGroupInstanceNodes = document.querySelectorAll('#<portlet:namespace />ruleGroupInstancesPriorities [data-rule-group-instance-id]');

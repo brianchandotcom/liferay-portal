@@ -77,13 +77,17 @@ public class SchedulerEventMessageListenerWrapperTest {
 		schedulerEventMessageListenerWrapper.setMessageListener(
 			_testMessageListener);
 
-		FutureTask<Void> futureTask1 = _startThread(
-			schedulerEventMessageListenerWrapper, "Thread1", _testMessage1);
+		FutureTask<Void> futureTask1 = _createFutureTask(
+			schedulerEventMessageListenerWrapper, _testMessage1);
+
+		_startThread(futureTask1, "Thread1");
 
 		_testMessageListener.waitUntilBlock();
 
-		FutureTask<Void> futureTask2 = _startThread(
-			schedulerEventMessageListenerWrapper, "Thread2", _testMessage2);
+		FutureTask<Void> futureTask2 = _createFutureTask(
+			schedulerEventMessageListenerWrapper, _testMessage2);
+
+		_startThread(futureTask2, "Thread2");
 
 		try {
 			futureTask2.get(1000, TimeUnit.MICROSECONDS);
@@ -134,13 +138,17 @@ public class SchedulerEventMessageListenerWrapperTest {
 					return null;
 				}));
 
-		FutureTask<Void> futureTask1 = _startThread(
-			schedulerEventMessageListenerWrapper, "Thread1", _testMessage1);
+		FutureTask<Void> futureTask1 = _createFutureTask(
+			schedulerEventMessageListenerWrapper, _testMessage1);
+
+		_startThread(futureTask1, "Thread1");
 
 		_testMessageListener.waitUntilBlock();
 
-		FutureTask<Void> futureTask2 = _startThread(
-			schedulerEventMessageListenerWrapper, "Thread2", _testMessage2);
+		FutureTask<Void> futureTask2 = _createFutureTask(
+			schedulerEventMessageListenerWrapper, _testMessage2);
+
+		_startThread(futureTask2, "Thread2");
 
 		futureTask2.get();
 
@@ -171,23 +179,17 @@ public class SchedulerEventMessageListenerWrapperTest {
 		schedulerEventMessageListenerWrapper.setMessageListener(
 			_testMessageListener);
 
-		FutureTask<Void> futureTask1 = _startThread(
-			schedulerEventMessageListenerWrapper, "Thread1", _testMessage1);
+		FutureTask<Void> futureTask1 = _createFutureTask(
+			schedulerEventMessageListenerWrapper, _testMessage1);
+
+		_startThread(futureTask1, "Thread1");
 
 		_testMessageListener.waitUntilBlock();
 
-		FutureTask<Void> futureTask2 = new FutureTask<>(
-			() -> {
-				schedulerEventMessageListenerWrapper.receive(_testMessage2);
+		FutureTask<Void> futureTask2 = _createFutureTask(
+			schedulerEventMessageListenerWrapper, _testMessage1);
 
-				return null;
-			});
-
-		Thread thread2 = new Thread(
-			futureTask2,
-			"SchedulerEventMessageListenerWrapperTest_startThread_Thread2");
-
-		thread2.start();
+		Thread thread2 = _startThread(futureTask2, "Thread2");
 
 		while (thread2.getState() != Thread.State.TIMED_WAITING);
 
@@ -210,17 +212,21 @@ public class SchedulerEventMessageListenerWrapperTest {
 		Assert.assertNull(_testMessage2.getResponse());
 	}
 
-	private FutureTask<Void> _startThread(
+	private FutureTask<Void> _createFutureTask(
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper,
-		String threadName, Message message) {
+		Message message) {
 
-		FutureTask<Void> futureTask = new FutureTask<>(
+		return new FutureTask<>(
 			() -> {
 				schedulerEventMessageListenerWrapper.receive(message);
 
 				return null;
 			});
+	}
+
+	private Thread _startThread(
+		FutureTask<Void> futureTask, String threadName) {
 
 		Thread thread = new Thread(
 			futureTask,
@@ -229,7 +235,7 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 		thread.start();
 
-		return futureTask;
+		return thread;
 	}
 
 	private Message _testMessage1;

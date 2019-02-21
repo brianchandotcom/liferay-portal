@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,19 +47,9 @@ public class InjectionPoint {
 		return injectionPoints;
 	}
 
-	public Type getType() {
+	public Class<?> getType() {
 		ParameterizedType parameterizedType =
 			(ParameterizedType)_field.getGenericType();
-
-		if (parameterizedType.getActualTypeArguments()[0] instanceof
-				ParameterizedType) {
-
-			ParameterizedType first =
-				(ParameterizedType)
-					parameterizedType.getActualTypeArguments()[0];
-
-			return (Class<?>)first.getRawType();
-		}
 
 		return (Class<?>)parameterizedType.getActualTypeArguments()[0];
 	}

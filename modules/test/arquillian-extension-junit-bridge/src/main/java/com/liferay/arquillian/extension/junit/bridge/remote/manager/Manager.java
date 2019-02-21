@@ -19,7 +19,6 @@ import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridg
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import java.util.ArrayList;
@@ -165,24 +164,11 @@ public class Manager {
 		}
 	}
 
-	private Class<?> _getType(Type type) {
-		if (type instanceof Class<?>) {
-			return (Class<?>)type;
-		}
-		else if (type instanceof ParameterizedType) {
-			return _getType(
-				((ParameterizedType)type).getActualTypeArguments()[0]);
-		}
-
-		return null;
-	}
-
 	private void _inject(Object extension) throws ReflectiveOperationException {
 		for (InjectionPoint injectionPoint :
 				InjectionPoint.getInjections(extension)) {
 
-			injectionPoint.set(
-				new Instance<>(_getType(injectionPoint.getType()), this));
+			injectionPoint.set(new Instance<>(injectionPoint.getType(), this));
 		}
 	}
 

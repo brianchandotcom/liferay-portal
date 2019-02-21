@@ -14,8 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.resource;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,15 +24,22 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Cristina González
@@ -43,17 +48,22 @@ import org.osgi.service.component.annotations.Deactivate;
 public class EntityModelResourceRegistry {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, EntityModelResource.class,
-			"(&(osgi.jaxrs.resource=true)(component.name=*))",
-			(serviceReference, emitter) -> emitter.emit(
-				(String)serviceReference.getProperty("component.name")));
+	public void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_bundleContext = bundleContext;
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter("(osgi.jaxrs.resource=true)"),
+			new EntityModelResourceServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_serviceTrackerMap.close();
+		_serviceTracker.close();
 	}
 
 	public EntityModel getEntityModel(Message message) throws Exception {
@@ -61,21 +71,18 @@ public class EntityModelResourceRegistry {
 
 		Class<?> clazz = method.getDeclaringClass();
 
-		if (!ClassUtil.isSubclass(clazz, EntityModelResource.class)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Class ", clazz.getName(), " does not implement ",
-						EntityModelResource.class.getName()));
-			}
-
-			return null;
-		}
-
-		EntityModelResource entityModelResource = _serviceTrackerMap.getService(
+		EntityModelResource entityModelResource = _entityModelResourceMap.get(
 			clazz.getCanonicalName());
 
 		if (entityModelResource == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Class ", clazz.getName(),
+						" does not have a registered EntityModelResource ",
+						EntityModelResource.class.getName()));
+			}
+
 			return null;
 		}
 
@@ -89,6 +96,56 @@ public class EntityModelResourceRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EntityModelResourceRegistry.class);
 
-	private ServiceTrackerMap<String, EntityModelResource> _serviceTrackerMap;
+	private BundleContext _bundleContext;
+	private final Map<String, EntityModelResource> _entityModelResourceMap =
+		new HashMap<>();
+	private ServiceTracker<Object, EntityModelResource> _serviceTracker;
+
+	private class EntityModelResourceServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, EntityModelResource> {
+
+		@Override
+		public EntityModelResource addingService(
+			ServiceReference<Object> serviceReference) {
+
+			Object object = _bundleContext.getService(serviceReference);
+
+			Class<?> clazz = object.getClass();
+
+			if (!ClassUtil.isSubclass(clazz, EntityModelResource.class)) {
+				return null;
+			}
+
+			EntityModelResource entityModelResource =
+				(EntityModelResource)object;
+
+			_entityModelResourceMap.put(
+				clazz.getCanonicalName(), entityModelResource);
+
+			return entityModelResource;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference,
+			EntityModelResource entityModelResource) {
+
+			removedService(serviceReference, entityModelResource);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference,
+			EntityModelResource entityModelResource) {
+
+			Class<? extends EntityModelResource> clazz =
+				entityModelResource.getClass();
+
+			_entityModelResourceMap.remove(clazz.getCanonicalName());
+		}
+
+	}
 
 }

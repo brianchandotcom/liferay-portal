@@ -22,37 +22,29 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventPoint;
-import org.jboss.arquillian.core.spi.Extension;
-import org.jboss.arquillian.core.spi.InjectionPoint;
-import org.jboss.arquillian.core.spi.ObserverMethod;
 
 /**
  * @author Matthew Tambara
  */
-public class ExtensionImpl implements Extension {
+public class Extension {
 
-	public ExtensionImpl(Object target) {
+	public Extension(Object target) {
 		_injectionPoints = _injections(target);
 		_observers = _observers(target);
 	}
 
-	@Override
 	public List<EventPoint> getEventPoints() {
 		return Collections.<EventPoint>emptyList();
 	}
 
-	@Override
 	public List<InjectionPoint> getInjectionPoints() {
 		return Collections.unmodifiableList(_injectionPoints);
 	}
 
-	@Override
-	public List<ObserverMethod> getObservers() {
+	public List<Observer> getObservers() {
 		return Collections.unmodifiableList(_observers);
 	}
 
@@ -66,7 +58,7 @@ public class ExtensionImpl implements Extension {
 				if (_isInjectionPoint(field)) {
 					field.setAccessible(true);
 
-					injectionPoints.add(new InjectionPointImpl(target, field));
+					injectionPoints.add(new InjectionPoint(target, field));
 				}
 			}
 
@@ -80,9 +72,7 @@ public class ExtensionImpl implements Extension {
 		if (field.isAnnotationPresent(Inject.class)) {
 			Class<?> type = field.getType();
 
-			if (type.equals(Instance.class) ||
-				type.equals(InstanceProducer.class)) {
-
+			if (type.equals(Instance.class)) {
 				return true;
 			}
 		}
@@ -108,8 +98,8 @@ public class ExtensionImpl implements Extension {
 		return false;
 	}
 
-	private static List<ObserverMethod> _observers(Object target) {
-		List<ObserverMethod> observerMethods = new ArrayList<>();
+	private static List<Observer> _observers(Object target) {
+		List<Observer> observers = new ArrayList<>();
 
 		Class<?> clazz = target.getClass();
 
@@ -118,17 +108,17 @@ public class ExtensionImpl implements Extension {
 				if (_isObserverMethod(method)) {
 					method.setAccessible(true);
 
-					observerMethods.add(new ObserverImpl(target, method));
+					observers.add(new Observer(target, method));
 				}
 			}
 
 			clazz = clazz.getSuperclass();
 		}
 
-		return observerMethods;
+		return observers;
 	}
 
 	private final List<InjectionPoint> _injectionPoints;
-	private final List<ObserverMethod> _observers;
+	private final List<Observer> _observers;
 
 }

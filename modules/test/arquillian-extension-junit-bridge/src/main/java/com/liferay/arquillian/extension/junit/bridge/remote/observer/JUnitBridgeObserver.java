@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.observer;
 
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
@@ -21,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -262,6 +263,6 @@ public class JUnitBridgeObserver {
 
 	@ApplicationScoped
 	@Inject
-	private InstanceProducer<TestResult> _testResultInstanceProducer;
+	private Instance<TestResult> _testResultInstanceProducer;
 
 }

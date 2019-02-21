@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.event.controller;
 
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDescriptionUtil;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
 
 import java.io.InputStream;
 
@@ -37,7 +38,6 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -127,7 +127,7 @@ public class ContainerEventController {
 
 	@ApplicationScoped
 	@Inject
-	private InstanceProducer<MBeanServerConnection>
+	private Instance<MBeanServerConnection>
 		_mBeanServerConnectionInstanceProducer;
 
 }

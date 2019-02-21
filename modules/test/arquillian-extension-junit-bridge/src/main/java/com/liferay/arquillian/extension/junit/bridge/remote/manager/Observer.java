@@ -19,22 +19,20 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import org.jboss.arquillian.core.spi.InvocationException;
-import org.jboss.arquillian.core.spi.Manager;
-import org.jboss.arquillian.core.spi.ObserverMethod;
 
 /**
  * @author Matthew Tambara
  */
-public class ObserverImpl implements ObserverMethod {
+public class Observer implements Comparable<Observer> {
 
-	public ObserverImpl(Object target, Method method) {
+	public Observer(Object target, Method method) {
 		_target = target;
 		_method = method;
 	}
 
 	@Override
-	public int compareTo(ObserverMethod observerMethod) {
-		if (observerMethod == null) {
+	public int compareTo(Observer observer) {
+		if (observer == null) {
 			return 1;
 		}
 
@@ -42,22 +40,19 @@ public class ObserverImpl implements ObserverMethod {
 
 		String methodName = method.getName();
 
-		method = observerMethod.getMethod();
+		method = observer.getMethod();
 
 		return methodName.compareTo(method.getName());
 	}
 
-	@Override
 	public Method getMethod() {
 		return _method;
 	}
 
-	@Override
 	public Type getType() {
 		return _method.getGenericParameterTypes()[0];
 	}
 
-	@Override
 	public boolean invoke(Manager manager, Object event) {
 		try {
 			Object[] arguments = _resolveArguments(manager, event);

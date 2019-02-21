@@ -14,7 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.manager.ManagerImpl;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Manager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -30,9 +31,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
@@ -105,7 +104,7 @@ public class Arquillian extends Runner implements Filterable {
 
 		if (manager == null) {
 			try {
-				manager = new ManagerImpl();
+				manager = new Manager();
 
 				manager.start();
 

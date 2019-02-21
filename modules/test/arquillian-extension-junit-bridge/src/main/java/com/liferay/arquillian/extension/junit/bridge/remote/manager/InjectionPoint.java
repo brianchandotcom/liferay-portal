@@ -19,27 +19,23 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
-import org.jboss.arquillian.core.spi.InjectionPoint;
 import org.jboss.arquillian.core.spi.InvocationException;
 
 /**
  * @author Matthew Tambara
  */
-public class InjectionPointImpl implements InjectionPoint {
+public class InjectionPoint {
 
-	public InjectionPointImpl(Object target, Field field) {
+	public InjectionPoint(Object target, Field field) {
 		_target = target;
 		_field = field;
 	}
 
-	@Override
 	public Class<? extends Annotation> getScope() {
 		return ApplicationScoped.class;
 	}
 
-	@Override
 	public Type getType() {
 		ParameterizedType parameterizedType =
 			(ParameterizedType)_field.getGenericType();
@@ -57,7 +53,6 @@ public class InjectionPointImpl implements InjectionPoint {
 		return (Class<?>)parameterizedType.getActualTypeArguments()[0];
 	}
 
-	@Override
 	public void set(Instance<?> instance) throws InvocationException {
 		try {
 			_field.set(_target, instance);

@@ -16,26 +16,23 @@ package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
 import java.lang.annotation.Annotation;
 
-import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.core.spi.Manager;
-
 /**
  * @author Matthew Tambara
  */
-public class InstanceImpl<T> implements InstanceProducer<T> {
+public class Instance<T> {
 
-	public static <T> InstanceImpl<T> of(
-		Class<T> type, Class<? extends Annotation> scope, ManagerImpl manager) {
+	public Instance(
+		Class<T> type, Class<? extends Annotation> scope, Manager manager) {
 
-		return new InstanceImpl<>(type, scope, manager);
+		_type = type;
+		_scope = scope;
+		_manager = manager;
 	}
 
-	@Override
 	public T get() {
 		return _manager.resolve(_type);
 	}
 
-	@Override
 	public void set(T value) {
 		if (_scope == null) {
 			throw new IllegalStateException(
@@ -46,14 +43,6 @@ public class InstanceImpl<T> implements InstanceProducer<T> {
 		_manager.bind(_scope, _type, value);
 
 		_manager.fire(value);
-	}
-
-	private InstanceImpl(
-		Class<T> type, Class<? extends Annotation> scope, ManagerImpl manager) {
-
-		_type = type;
-		_scope = scope;
-		_manager = manager;
 	}
 
 	private final Manager _manager;

@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 
 import java.io.InputStream;
@@ -26,8 +27,6 @@ import javax.management.MBeanServerInvocationHandler;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -93,6 +92,6 @@ public class JMXMethodExecutor {
 
 	@ApplicationScoped
 	@Inject
-	private InstanceProducer<TestResult> _testResultInstanceProducer;
+	private Instance<TestResult> _testResultInstanceProducer;
 
 }

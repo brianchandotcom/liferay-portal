@@ -29,13 +29,9 @@ import java.util.Stack;
 import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.event.ManagerStarted;
 import org.jboss.arquillian.core.api.event.ManagerStopping;
-import org.jboss.arquillian.core.spi.Extension;
 import org.jboss.arquillian.core.spi.HashObjectStore;
-import org.jboss.arquillian.core.spi.InjectionPoint;
 import org.jboss.arquillian.core.spi.InvocationException;
-import org.jboss.arquillian.core.spi.Manager;
 import org.jboss.arquillian.core.spi.NonManagedObserver;
-import org.jboss.arquillian.core.spi.ObserverMethod;
 import org.jboss.arquillian.core.spi.context.AbstractContext;
 import org.jboss.arquillian.core.spi.context.ApplicationContext;
 import org.jboss.arquillian.core.spi.context.ObjectStore;
@@ -43,9 +39,9 @@ import org.jboss.arquillian.core.spi.context.ObjectStore;
 /**
  * @author Matthew Tambara
  */
-public class ManagerImpl implements Manager {
+public class Manager {
 
-	public ManagerImpl() {
+	public Manager() {
 		_applicationContext = new ApplicationContextImpl();
 
 		_extensions.addAll(
@@ -55,7 +51,6 @@ public class ManagerImpl implements Manager {
 		_applicationContext.activate();
 	}
 
-	@Override
 	public <T> void bind(
 		Class<? extends Annotation> scope, Class<T> type, T instance) {
 
@@ -64,25 +59,23 @@ public class ManagerImpl implements Manager {
 		objectStore.add(type, instance);
 	}
 
-	@Override
 	public void fire(Object event) {
 		fire(event, null);
 	}
 
-	@Override
 	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
-		List<ObserverMethod> observers = new ArrayList<>();
+		List<Observer> observers = new ArrayList<>();
 
 		Class<?> eventClass = event.getClass();
 
 		for (Extension extension : _extensions) {
-			for (ObserverMethod observerMethod : extension.getObservers()) {
-				Type type = observerMethod.getType();
+			for (Observer observer : extension.getObservers()) {
+				Type type = observer.getType();
 
 				Class<?> clazz = (Class<?>)type;
 
 				if (clazz.isAssignableFrom(eventClass)) {
-					observers.add(observerMethod);
+					observers.add(observer);
 				}
 			}
 		}
@@ -112,7 +105,6 @@ public class ManagerImpl implements Manager {
 		}
 	}
 
-	@Override
 	public <T> T getContext(Class<T> type) {
 		if (type.equals(ApplicationContext.class)) {
 			return type.cast(_applicationContext);
@@ -121,12 +113,10 @@ public class ManagerImpl implements Manager {
 		return null;
 	}
 
-	@Override
 	public void inject(Object obj) {
-		_inject(new ExtensionImpl(obj));
+		_inject(new Extension(obj));
 	}
 
-	@Override
 	public <T> T resolve(Class<T> type) {
 		if (!_applicationContext.isActive()) {
 			return null;
@@ -143,7 +133,6 @@ public class ManagerImpl implements Manager {
 		return null;
 	}
 
-	@Override
 	public void shutdown() {
 		fire(new ManagerStopping());
 
@@ -158,7 +147,6 @@ public class ManagerImpl implements Manager {
 		}
 	}
 
-	@Override
 	public void start() {
 		fire(new ManagerStarted());
 
@@ -178,7 +166,7 @@ public class ManagerImpl implements Manager {
 		List<Extension> created = new ArrayList<>();
 
 		for (Class<?> extensionClass : extensionClasses) {
-			Extension extension = new ExtensionImpl(
+			Extension extension = new Extension(
 				_createInstance(extensionClass));
 
 			_inject(extension);
@@ -217,17 +205,17 @@ public class ManagerImpl implements Manager {
 	private void _inject(Extension extension) {
 		for (InjectionPoint injectionPoint : extension.getInjectionPoints()) {
 			injectionPoint.set(
-				new InstanceImpl<>(
+				new Instance<>(
 					_getType(injectionPoint.getType()),
 					injectionPoint.getScope(), this));
 		}
 	}
 
 	private <T> void _proceed(
-		List<ObserverMethod> observers,
-		NonManagedObserver<T> nonManagedObserver, T event) {
+		List<Observer> observers, NonManagedObserver<T> nonManagedObserver,
+		T event) {
 
-		for (ObserverMethod observer : observers) {
+		for (Observer observer : observers) {
 			observer.invoke(this, event);
 		}
 

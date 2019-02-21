@@ -17,6 +17,8 @@ package com.liferay.headless.document.library.resource.v1_0.test;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.document.library.dto.v1_0.Folder;
@@ -104,7 +106,9 @@ public abstract class BaseFolderResourceTestCase {
 
 			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/folders", contentSpaceId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return 	_outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<FolderImpl>>() {});
 	}
 
 	protected Http.Response invokeGetContentSpaceFoldersPageResponse(

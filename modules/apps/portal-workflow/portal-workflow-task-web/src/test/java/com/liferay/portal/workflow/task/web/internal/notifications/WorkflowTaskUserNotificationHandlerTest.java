@@ -86,6 +86,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	public void setUp() throws Exception {
 		_serviceContext = new ServiceContext() {
 
+			@Override
 			public ThemeDisplay getThemeDisplay() {
 				ThemeDisplay themeDisplay = new ThemeDisplay();
 

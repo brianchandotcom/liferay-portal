@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.test.util.query;
+package com.liferay.portal.search.test.util.legacy.query;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;

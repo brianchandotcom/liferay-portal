@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.remote.observer;
+package com.liferay.arquillian.extension.junit.bridge.listener;
 
+import com.liferay.arquillian.extension.junit.bridge.event.Event;
+import com.liferay.arquillian.extension.junit.bridge.event.TestEvent;
 import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunnerMBean;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
@@ -28,28 +30,30 @@ import javax.management.MBeanServerInvocationHandler;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
-import org.jboss.arquillian.test.spi.event.suite.Test;
 
 /**
  * @author Matthew Tambara
  */
-public class ClientExecutorObserver {
+public class ClientExecutorEventListener implements EventListener {
 
-	public ClientExecutorObserver(Registry registry) {
+	public ClientExecutorEventListener(Registry registry) {
 		_registry = registry;
 	}
 
-	public void invoke(@Observes Test test) {
-		TestMethodExecutor testMethodExecutor = test.getTestMethodExecutor();
+	@Override
+	public void handleEvent(Event event) {
+		if (event instanceof TestEvent) {
+			_handleTestEvent((TestEvent)event);
+		}
+	}
 
-		Object instance = testMethodExecutor.getInstance();
+	private void _handleTestEvent(TestEvent testEvent) {
+		Object target = testEvent.getTarget();
 
-		Class<?> testClass = instance.getClass();
+		Class<?> testClass = target.getClass();
 
-		Method method = testMethodExecutor.getMethod();
+		Method method = testEvent.getMethod();
 
 		JMXTestRunnerMBean jmxTestRunnerMBean =
 			MBeanServerInvocationHandler.newProxyInstance(

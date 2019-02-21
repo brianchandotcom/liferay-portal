@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.remote.observer;
+package com.liferay.arquillian.extension.junit.bridge.listener;
 
+import com.liferay.arquillian.extension.junit.bridge.event.Event;
+import com.liferay.arquillian.extension.junit.bridge.event.TestEvent;
+import com.liferay.arquillian.extension.junit.bridge.junit.State;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 
 import java.lang.annotation.Annotation;
@@ -23,11 +26,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
-import org.jboss.arquillian.test.spi.event.suite.Test;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,6 +35,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.internal.runners.statements.InvokeMethod;
 import org.junit.internal.runners.statements.RunAfters;
 import org.junit.internal.runners.statements.RunBefores;
@@ -44,111 +44,26 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
+import org.junit.runners.model.TestClass;
 
 /**
  * @author Shuyang Zhou
  */
-public class ServerExecutorObserver {
+public class ServerExecutorEventListener implements EventListener {
 
-	public ServerExecutorObserver(Registry registry) {
+	public ServerExecutorEventListener(Registry registry) {
 		_registry = registry;
 	}
 
-	public void aroundTest(@Observes Test test) throws Throwable {
-		Statement statement = new InvokeMethod(null, test.getTestInstance()) {
-
-			@Override
-			public void evaluate() {
-				TestResult testResult = TestResult.passed();
-
-				TestMethodExecutor testMethodExecutor =
-					test.getTestMethodExecutor();
-
-				Thread currentThread = Thread.currentThread();
-
-				ClassLoader classLoader = currentThread.getContextClassLoader();
-
-				Class<?> clazz = test.getClass();
-
-				currentThread.setContextClassLoader(clazz.getClassLoader());
-
-				try {
-					testMethodExecutor.invoke();
-				}
-				catch (Throwable t) {
-					testResult = TestResult.failed(t);
-				}
-				finally {
-					testResult.setEnd(System.currentTimeMillis());
-
-					currentThread.setContextClassLoader(classLoader);
-				}
-
-				_registry.set(TestResult.class, testResult);
-			}
-
-		};
-
-		TestClass arquillianTestClass = test.getTestClass();
-
-		Class<?> clazz = arquillianTestClass.getJavaClass();
-
-		org.junit.runners.model.TestClass junitTestClass =
-			new org.junit.runners.model.TestClass(clazz);
-
-		Object target = test.getTestInstance();
-
-		statement = withBefores(
-			statement, Before.class, junitTestClass, target);
-
-		statement = withAfters(statement, After.class, junitTestClass, target);
-
-		Method method = test.getTestMethod();
-
-		statement = withRules(
-			statement, Rule.class, junitTestClass, target,
-			Description.createTestDescription(
-				clazz, method.getName(), method.getAnnotations()));
-
-		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-			junitTestClass.getAnnotatedMethods(org.junit.Test.class));
-
-		frameworkMethods.removeAll(
-			junitTestClass.getAnnotatedMethods(Ignore.class));
-
-		frameworkMethods.sort(Comparator.comparing(FrameworkMethod::getName));
-
-		FrameworkMethod firstFrameworkMethod = frameworkMethods.get(0);
-
-		boolean firstMethod = false;
-
-		if (method.equals(firstFrameworkMethod.getMethod())) {
-			firstMethod = true;
-
-			statement = withBefores(
-				statement, BeforeClass.class, junitTestClass, null);
+	@Override
+	public void handleEvent(Event event) throws Throwable {
+		if (event instanceof TestEvent) {
+			_handleTestEvent((TestEvent)event);
 		}
-
-		FrameworkMethod lastFrameworkMethod = frameworkMethods.get(
-			frameworkMethods.size() - 1);
-
-		boolean lastMethod = false;
-
-		if (method.equals(lastFrameworkMethod.getMethod())) {
-			lastMethod = true;
-
-			statement = withAfters(
-				statement, AfterClass.class, junitTestClass, null);
-		}
-
-		evaluateWithClassRule(
-			statement, junitTestClass, target,
-			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
 	}
 
 	protected void evaluateWithClassRule(
-			Statement statement,
-			org.junit.runners.model.TestClass junitTestClass, Object target,
+			Statement statement, TestClass junitTestClass, Object target,
 			Description description, boolean firstMethod, boolean lastMethod)
 		throws Throwable {
 
@@ -218,7 +133,7 @@ public class ServerExecutorObserver {
 
 	protected Statement withAfters(
 		Statement statement, Class<? extends Annotation> afterClass,
-		org.junit.runners.model.TestClass junitTestClass, Object target) {
+		TestClass junitTestClass, Object target) {
 
 		List<FrameworkMethod> frameworkMethods =
 			junitTestClass.getAnnotatedMethods(afterClass);
@@ -232,7 +147,7 @@ public class ServerExecutorObserver {
 
 	protected Statement withBefores(
 		Statement statement, Class<? extends Annotation> beforeClass,
-		org.junit.runners.model.TestClass junitTestClass, Object target) {
+		TestClass junitTestClass, Object target) {
 
 		List<FrameworkMethod> frameworkMethods =
 			junitTestClass.getAnnotatedMethods(beforeClass);
@@ -246,8 +161,7 @@ public class ServerExecutorObserver {
 
 	protected Statement withRules(
 		Statement statement, Class<? extends Annotation> ruleClass,
-		org.junit.runners.model.TestClass junitTestClass, Object target,
-		Description description) {
+		TestClass junitTestClass, Object target, Description description) {
 
 		List<TestRule> testRules = junitTestClass.getAnnotatedMethodValues(
 			target, ruleClass, TestRule.class);
@@ -261,6 +175,89 @@ public class ServerExecutorObserver {
 		}
 
 		return statement;
+	}
+
+	private void _handleTestEvent(TestEvent testEvent) throws Throwable {
+		Object target = testEvent.getTarget();
+		Method method = testEvent.getMethod();
+
+		Class<?> clazz = target.getClass();
+
+		Statement statement = new InvokeMethod(null, target) {
+
+			@Override
+			public void evaluate() {
+				TestResult testResult = TestResult.passed();
+
+				Thread currentThread = Thread.currentThread();
+
+				ClassLoader classLoader = currentThread.getContextClassLoader();
+
+				currentThread.setContextClassLoader(clazz.getClassLoader());
+
+				try {
+					testEvent.invoke();
+				}
+				catch (Throwable t) {
+					State.caughtTestException(t);
+
+					testResult = TestResult.failed(t);
+				}
+				finally {
+					testResult.setEnd(System.currentTimeMillis());
+
+					currentThread.setContextClassLoader(classLoader);
+				}
+
+				_registry.set(TestResult.class, testResult);
+			}
+
+		};
+
+		TestClass testClass = new TestClass(clazz);
+
+		statement = withBefores(statement, Before.class, testClass, target);
+
+		statement = withAfters(statement, After.class, testClass, target);
+
+		statement = withRules(
+			statement, Rule.class, testClass, target,
+			Description.createTestDescription(
+				clazz, method.getName(), method.getAnnotations()));
+
+		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+			testClass.getAnnotatedMethods(Test.class));
+
+		frameworkMethods.removeAll(testClass.getAnnotatedMethods(Ignore.class));
+
+		frameworkMethods.sort(Comparator.comparing(FrameworkMethod::getName));
+
+		FrameworkMethod firstFrameworkMethod = frameworkMethods.get(0);
+
+		boolean firstMethod = false;
+
+		if (method.equals(firstFrameworkMethod.getMethod())) {
+			firstMethod = true;
+
+			statement = withBefores(
+				statement, BeforeClass.class, testClass, null);
+		}
+
+		FrameworkMethod lastFrameworkMethod = frameworkMethods.get(
+			frameworkMethods.size() - 1);
+
+		boolean lastMethod = false;
+
+		if (method.equals(lastFrameworkMethod.getMethod())) {
+			lastMethod = true;
+
+			statement = withAfters(
+				statement, AfterClass.class, testClass, null);
+		}
+
+		evaluateWithClassRule(
+			statement, testClass, target,
+			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
 	}
 
 	private final Registry _registry;

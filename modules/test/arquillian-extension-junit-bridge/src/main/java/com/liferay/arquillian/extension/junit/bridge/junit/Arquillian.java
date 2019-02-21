@@ -14,13 +14,15 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
+import com.liferay.arquillian.extension.junit.bridge.event.AfterClassEvent;
+import com.liferay.arquillian.extension.junit.bridge.event.BeforeClassEvent;
+import com.liferay.arquillian.extension.junit.bridge.event.TestEvent;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Manager;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -29,10 +31,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
-import org.jboss.arquillian.test.spi.event.suite.AfterClass;
-import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.arquillian.test.spi.execution.SkippedTestExecutionException;
 
 import org.junit.AssumptionViolatedException;
@@ -170,7 +169,7 @@ public class Arquillian extends Runner implements Filterable {
 					Throwable throwable = null;
 
 					try {
-						manager.fire(new BeforeClass(_clazz));
+						manager.fire(new BeforeClassEvent(_clazz));
 
 						statement.evaluate();
 					}
@@ -179,7 +178,7 @@ public class Arquillian extends Runner implements Filterable {
 					}
 
 					try {
-						manager.fire(new AfterClass(_clazz));
+						manager.fire(new AfterClassEvent());
 					}
 					catch (Throwable t) {
 						if (throwable != null) {
@@ -287,39 +286,8 @@ public class Arquillian extends Runner implements Filterable {
 
 			@Override
 			public void evaluate() throws Throwable {
-				TestMethodExecutor testMethodExecutor =
-					new TestMethodExecutor() {
-
-						@Override
-						public Object getInstance() {
-							return testObject;
-						}
-
-						@Override
-						public Method getMethod() {
-							return frameworkMethod.getMethod();
-						}
-
-						@Override
-						public void invoke(Object... parameters)
-							throws Throwable {
-
-							try {
-								frameworkMethod.invokeExplosively(
-									testObject, parameters);
-							}
-							catch (Throwable t) {
-								State.caughtTestException(t);
-
-								throw t;
-							}
-						}
-
-					};
-
 				manager.fire(
-					new org.jboss.arquillian.test.spi.event.suite.Test(
-						testMethodExecutor));
+					new TestEvent(testObject, frameworkMethod.getMethod()));
 
 				Registry registry = manager.getRegistry();
 

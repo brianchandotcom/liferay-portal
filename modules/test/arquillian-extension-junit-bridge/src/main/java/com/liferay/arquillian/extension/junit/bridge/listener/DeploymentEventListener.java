@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.remote.observer;
+package com.liferay.arquillian.extension.junit.bridge.listener;
 
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDescriptionUtil;
+import com.liferay.arquillian.extension.junit.bridge.event.AfterClassEvent;
+import com.liferay.arquillian.extension.junit.bridge.event.BeforeClassEvent;
+import com.liferay.arquillian.extension.junit.bridge.event.Event;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -38,9 +42,6 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.test.spi.event.suite.AfterClass;
-import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 
@@ -49,17 +50,29 @@ import org.osgi.jmx.framework.FrameworkMBean;
 /**
  * @author Matthew Tambara
  */
-public class DeploymentObserver {
+public class DeploymentEventListener implements EventListener {
 
-	public DeploymentObserver(Registry registry) {
+	public DeploymentEventListener(Registry registry) {
 		_registry = registry;
 	}
 
-	public void execute(@Observes AfterClass afterClass) throws Exception {
+	@Override
+	public void handleEvent(Event event) throws Exception {
+		if (event instanceof AfterClassEvent) {
+			_handleAfterClassEvent();
+		}
+		else if (event instanceof BeforeClassEvent) {
+			_handleBeforeClassEvent((BeforeClassEvent)event);
+		}
+	}
+
+	private void _handleAfterClassEvent() throws IOException {
 		_frameworkMBean.uninstallBundle(_bundleId);
 	}
 
-	public void execute(@Observes BeforeClass beforeClass) throws Exception {
+	private void _handleBeforeClassEvent(BeforeClassEvent beforeClassEvent)
+		throws Exception {
+
 		JMXConnector jmxConnector = JMXConnectorFactory.connect(
 			_liferayJMXServiceURL, _liferayEnv);
 
@@ -78,7 +91,8 @@ public class DeploymentObserver {
 			false);
 
 		_bundleId = _installBundle(
-			BndDeploymentDescriptionUtil.create(beforeClass.getTestClass()));
+			BndDeploymentDescriptionUtil.create(
+				beforeClassEvent.getTestClass()));
 
 		_frameworkMBean.startBundle(_bundleId);
 	}

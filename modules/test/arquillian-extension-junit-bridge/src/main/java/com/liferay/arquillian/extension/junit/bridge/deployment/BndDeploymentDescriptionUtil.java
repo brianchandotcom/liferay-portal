@@ -44,7 +44,6 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -59,7 +58,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
  */
 public class BndDeploymentDescriptionUtil {
 
-	public static Archive<?> create(TestClass testClass) {
+	public static Archive<?> create(Class<?> testClass) {
 		try (Workspace workspace = new Workspace(_buildDir);
 			Project project = new Project(workspace, _buildDir);
 
@@ -104,14 +103,12 @@ public class BndDeploymentDescriptionUtil {
 	}
 
 	private static void _addTestClass(
-		JavaArchive javaArchive, TestClass testClass) {
+		JavaArchive javaArchive, Class<?> testClass) {
 
-		Class<?> javaClass = testClass.getJavaClass();
+		while (testClass != Object.class) {
+			javaArchive.addClass(testClass);
 
-		while (javaClass != Object.class) {
-			javaArchive.addClass(javaClass);
-
-			javaClass = javaClass.getSuperclass();
+			testClass = testClass.getSuperclass();
 		}
 	}
 
@@ -190,7 +187,7 @@ public class BndDeploymentDescriptionUtil {
 		}
 	}
 
-	private static void _process(JavaArchive javaArchive, TestClass testClass) {
+	private static void _process(JavaArchive javaArchive, Class<?> testClass) {
 		try {
 			_addTestClass(javaArchive, testClass);
 
@@ -198,7 +195,9 @@ public class BndDeploymentDescriptionUtil {
 
 			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
 			javaArchive.addPackages(
-				true, "com.liferay.arquillian.extension.junit.bridge.remote");
+				true, "com.liferay.arquillian.extension.junit.bridge.remote",
+				"com.liferay.arquillian.extension.junit.bridge.event",
+				"com.liferay.arquillian.extension.junit.bridge.listener");
 
 			Package pkg = Arquillian.class.getPackage();
 

@@ -14,11 +14,11 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.observer.ClientExecutorObserver;
-import com.liferay.arquillian.extension.junit.bridge.remote.observer.DeploymentObserver;
-import com.liferay.arquillian.extension.junit.bridge.remote.observer.ServerExecutorObserver;
-
-import java.lang.reflect.InvocationTargetException;
+import com.liferay.arquillian.extension.junit.bridge.event.Event;
+import com.liferay.arquillian.extension.junit.bridge.listener.ClientExecutorEventListener;
+import com.liferay.arquillian.extension.junit.bridge.listener.DeploymentEventListener;
+import com.liferay.arquillian.extension.junit.bridge.listener.EventListener;
+import com.liferay.arquillian.extension.junit.bridge.listener.ServerExecutorEventListener;
 
 import java.net.URL;
 
@@ -34,33 +34,17 @@ public class Manager {
 		URL url = Manager.class.getResource("/arquillian.remote.marker");
 
 		if (url == null) {
-			_observers = new ArrayList<>();
-
-			_observers.addAll(
-				Observer.getObservers(
-					new DeploymentObserver(_registry), _registry));
-			_observers.addAll(
-				Observer.getObservers(
-					new ClientExecutorObserver(_registry), _registry));
+			_eventListeners.add(new DeploymentEventListener(_registry));
+			_eventListeners.add(new ClientExecutorEventListener(_registry));
 		}
 		else {
-			_observers = Observer.getObservers(
-				new ServerExecutorObserver(_registry), _registry);
+			_eventListeners.add(new ServerExecutorEventListener(_registry));
 		}
 	}
 
-	public <T> void fire(T event) throws Throwable {
-		for (Observer observer : _observers) {
-			Class<?> clazz = observer.getType();
-
-			if (clazz.isInstance(event)) {
-				try {
-					observer.invoke(event);
-				}
-				catch (InvocationTargetException ite) {
-					throw ite.getCause();
-				}
-			}
+	public void fire(Event event) throws Throwable {
+		for (EventListener eventListener : _eventListeners) {
+			eventListener.handleEvent(event);
 		}
 	}
 
@@ -68,7 +52,7 @@ public class Manager {
 		return _registry;
 	}
 
-	private final List<Observer> _observers;
+	private final List<EventListener> _eventListeners = new ArrayList<>();
 	private final Registry _registry = new Registry();
 
 }

@@ -407,7 +407,8 @@ public class CTManagerImpl implements CTManager {
 
 		List<CTEntry> relatedCTEntries = ctEntryBag.getRelatedCTEntries();
 
-		Stream<CTEntry> relatedCTEntriesStream = relatedCTEntries.stream();
+		Stream<CTEntry> relatedCTEntriesStream =
+			relatedCTEntries.parallelStream();
 
 		if (relatedCTEntriesStream.anyMatch(
 				ctEntry -> ctEntry.getResourcePrimKey() == resourcePrimKey)) {

@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.remote.manager.Instance;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Manager;
 
 import java.lang.annotation.Annotation;
@@ -29,10 +28,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.core.spi.NonManagedObserver;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 import org.jboss.arquillian.test.spi.event.suite.AfterClass;
@@ -329,9 +325,6 @@ public class Arquillian extends Runner implements Filterable {
 
 			@Override
 			public void evaluate() throws Throwable {
-				AtomicReference<TestResult> testResultReference =
-					new AtomicReference<>();
-
 				TestMethodExecutor testMethodExecutor =
 					new TestMethodExecutor() {
 
@@ -364,24 +357,9 @@ public class Arquillian extends Runner implements Filterable {
 
 				manager.fire(
 					new org.jboss.arquillian.test.spi.event.suite.Test(
-						testMethodExecutor),
-					new NonManagedObserver
-						<org.jboss.arquillian.test.spi.event.suite.Test>() {
+						testMethodExecutor));
 
-						@Override
-						public void fired(
-							org.jboss.arquillian.test.spi.event.suite.Test
-								test) {
-
-							testResultReference.set(_testResult.get());
-						}
-
-						@Inject
-						private Instance<TestResult> _testResult;
-
-					});
-
-				TestResult testResult = testResultReference.get();
+				TestResult testResult = manager.resolve(TestResult.class);
 
 				Throwable throwable = testResult.getThrowable();
 

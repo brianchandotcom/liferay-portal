@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.jboss.arquillian.core.api.event.ManagerStarted;
-
 /**
  * @author Matthew Tambara
  */
@@ -92,8 +90,6 @@ public class Manager {
 
 			_extensions.add(extension);
 		}
-
-		fire(new ManagerStarted());
 	}
 
 	private static List<Class<?>> _getObservers() {

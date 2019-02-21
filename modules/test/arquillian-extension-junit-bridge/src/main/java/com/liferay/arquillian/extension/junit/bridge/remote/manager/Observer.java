@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +47,8 @@ public class Observer {
 		return observers;
 	}
 
-	public Type getType() {
-		return _method.getGenericParameterTypes()[0];
+	public Class<?> getType() {
+		return (Class<?>)_method.getGenericParameterTypes()[0];
 	}
 
 	public void invoke(Manager manager, Object event)

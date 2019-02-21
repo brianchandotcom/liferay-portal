@@ -20,7 +20,6 @@ import com.liferay.arquillian.extension.junit.bridge.remote.observer.JUnitBridge
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
 
 import java.net.URL;
 
@@ -41,15 +40,11 @@ public class Manager {
 	}
 
 	public <T> void fire(T event) {
-		Class<?> eventClass = event.getClass();
-
 		for (Object extension : _extensions) {
 			for (Observer observer : Observer.getObservers(extension)) {
-				Type type = observer.getType();
+				Class<?> clazz = observer.getType();
 
-				Class<?> clazz = (Class<?>)type;
-
-				if (clazz.isAssignableFrom(eventClass)) {
+				if (clazz.isInstance(event)) {
 					try {
 						observer.invoke(this, event);
 					}

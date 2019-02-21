@@ -85,7 +85,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${stringUtil.replaceLast(arguments, ",pagination", "")}));
+			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
 				options.setPost(true);
@@ -120,7 +120,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${stringUtil.replaceLast(arguments, ",pagination", "")}));
+			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
 				options.setPost(true);
@@ -197,8 +197,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object... values) {
-		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
+	private String _toPath(String template, Object value) {
+		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

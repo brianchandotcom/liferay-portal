@@ -32,8 +32,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"de.data.definition.rule.function.name=" + DEDataDefinitionRuleConstants.EMPTY_RULE,
-		"de.data.definition.rule.function.type=" + DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE},
+	property = {
+		"de.data.definition.rule.function.name=" + DEDataDefinitionRuleConstants.EMPTY_RULE,
+		"de.data.definition.rule.function.type=" + DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE
+	},
 	service = DEDataDefinitionRuleFunction.class
 )
 public class DEEmptyRuleFunction implements DEDataDefinitionRuleFunction {

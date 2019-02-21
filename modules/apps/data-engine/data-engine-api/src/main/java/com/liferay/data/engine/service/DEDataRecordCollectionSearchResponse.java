@@ -19,22 +19,41 @@ import com.liferay.data.engine.model.DEDataRecordCollection;
 import java.util.List;
 
 /**
+ * Response class used as return value for the data collection search operation
+ *
  * @author Marcelo Mello
  */
 public class DEDataRecordCollectionSearchResponse {
 
+	/**
+	 * Returns a list of data collection
+	 * @return list of {@link DEDataRecordCollection}
+	 */
 	public List<DEDataRecordCollection> getDeDataRecordCollections() {
 		return _deDataRecordCollections;
 	}
 
+	/**
+	 * Inner builder that assembles the response
+	 */
 	public static final class Builder {
 
+		/**
+		 * Instantiate the builder providing a deDataRecordCollections
+		 * @param deDataRecordCollections
+		 * @return the builder
+		 */
 		public static Builder newBuilder(
 			List<DEDataRecordCollection> deDataRecordCollections) {
 
 			return new Builder(deDataRecordCollections);
 		}
 
+		/**
+		 * Build a response directly from {@link DEDataRecordCollection}
+		 * @param deDataRecordCollections
+		 * @return the response object
+		 */
 		public static DEDataRecordCollectionSearchResponse of(
 			List<DEDataRecordCollection> deDataRecordCollections) {
 
@@ -43,6 +62,10 @@ public class DEDataRecordCollectionSearchResponse {
 			).build();
 		}
 
+		/**
+		 * Builds the response and returns the {@link DEDataDefinitionSearchResponse}
+		 * @return the response object
+		 */
 		public DEDataRecordCollectionSearchResponse build() {
 			return _deDataRecordCollectionSearchResponse;
 		}

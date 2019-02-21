@@ -171,6 +171,14 @@ public interface DEDataRecordCollectionService {
 			DEDataRecordCollectionSaveRequest deDataRecordCollectionSaveRequest)
 		throws DEDataRecordCollectionException;
 
+	/**
+	 * Execute the Search Request to get a list of data collection filtered by
+	 * keywords and a range for pagination
+	 *
+	 * @param deDataRecordCollectionSearchRequest
+	 * @return {@link DEDataDefinitionSearchResponse}
+	 * @throws DEDataRecordCollectionException
+	 */
 	public DEDataRecordCollectionSearchResponse execute(
 			DEDataRecordCollectionSearchRequest
 				deDataRecordCollectionSearchRequest)

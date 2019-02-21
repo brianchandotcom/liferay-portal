@@ -4,6 +4,20 @@
 		margin-right: 5px;
 	}
 
+	.localized-input-wrapper {
+		margin-bottom: 1.5rem;
+
+		.control-label {
+			color: #272833;
+			display: inline-block;
+			font-size: 0.875rem;
+			font-weight: 600;
+			margin-bottom: 0.25rem;
+			max-width: 100%;
+			word-wrap: break-word;
+		}
+	}
+
 	.short-input-text input {
 		width: 25px;
 	}

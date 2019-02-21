@@ -146,8 +146,15 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
-		Serializable defaultValue = getValue(
-			actionRequest, "defaultValue", type);
+		Serializable defaultValue = null;
+
+		if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			defaultValue = (Serializable)LocalizationUtil.getLocalizationMap(
+				actionRequest, "defaultValueLocalized");
+		}
+		else {
+			defaultValue = getValue(actionRequest, "defaultValue", type);
+		}
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
@@ -316,10 +323,6 @@ public class ExpandoPortlet extends MVCPortlet {
 			}
 
 			value = StringUtil.split(paramValue, delimiter);
-		}
-		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
-			value = (Serializable)LocalizationUtil.getLocalizationMap(
-				portletRequest, name);
 		}
 		else {
 			value = ParamUtil.getString(portletRequest, name);

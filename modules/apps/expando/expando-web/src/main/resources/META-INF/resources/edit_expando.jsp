@@ -209,26 +209,31 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 						<c:when test="<%= type == ExpandoColumnConstants.STRING_ARRAY %>">
 							<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
 						</c:when>
-						<c:when test="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>">
-
+						<c:otherwise>
 							<%
 							String xml = StringPool.BLANK;
 
-							if (defaultValue != null) {
+							if (type == ExpandoColumnConstants.STRING_LOCALIZED && defaultValue != null) {
 								xml = LocalizationUtil.updateLocalization((Map<Locale, String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
 							}
 							%>
 
-							<aui:field-wrapper label="starting-value">
-								<liferay-ui:input-localized
-									cssClass="lfr-input-text-container"
-									name="defaultValue"
-									xml="<%= xml %>"
-								/>
-							</aui:field-wrapper>
-						</c:when>
-						<c:otherwise>
-							<aui:input cssClass="lfr-input-text-container" label="starting-value" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />
+							<div class="<%= type == ExpandoColumnConstants.STRING_LOCALIZED ? "" : "hide" %>" id="<portlet:namespace />textLocalizedField">
+								<aui:field-wrapper cssClass="localized-input-wrapper" label="starting-value">
+									<liferay-ui:input-localized
+										name="defaultValueLocalized"
+										xml="<%= xml %>"
+									/>
+								</aui:field-wrapper>
+							</div>
+
+							<div class="<%= type != ExpandoColumnConstants.STRING_LOCALIZED ? "" : "hide" %>" id="<portlet:namespace />textField">
+								<aui:input label="starting-value" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />
+							</div>
+
+							<c:if test="<%= type == ExpandoColumnConstants.STRING || type == ExpandoColumnConstants.STRING_LOCALIZED && column != null %>">
+								<aui:input label="make-field-localizable" name="Property--localize-field--" onChange='<%= renderResponse.getNamespace() + "onLocalizeFieldChange(event);" %>' type="checkbox" value="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>" />
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 				</c:if>
@@ -326,4 +331,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((column
 
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace />searchable', '<portlet:namespace />propertyIndexType');
+
+	Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textField', true);
+	Liferay.Util.toggleBoxes('<portlet:namespace />localize-field', '<portlet:namespace />textLocalizedField');
+
+	function <portlet:namespace />onLocalizeFieldChange(event) {
+		var form = document.querySelector('#<portlet:namespace />fm');
+
+		if (form) {
+			var checked = event.target.checked;
+
+			form.querySelector('#<portlet:namespace />type').value = checked ? '<%= ExpandoColumnConstants.STRING_LOCALIZED %>' : '<%= ExpandoColumnConstants.STRING %>';
+		}
+	}
 </aui:script>

@@ -41,12 +41,6 @@
 
 				var hash = document.location.hash.replace('#', '');
 
-				// LPS-33951
-
-				if (!A.UA.gecko) {
-					hash = A.QueryString.unescape(hash);
-				}
-
 				var hashObj = A.QueryString.parse(hash);
 
 				hash = hashObj['<portlet:namespace />'];
@@ -140,9 +134,7 @@
 					restore.attr('href', restoreHREF + '#' + hash);
 				}
 
-				// LPS-33951
-
-				location.hash = A.QueryString.escape(hash);
+				location.hash = hash;
 			},
 			['aui-base', 'querystring']
 		);

@@ -114,7 +114,8 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 		if (!Objects.isNull(folder.getDateCreated()) &&
 			!Objects.isNull(folder.getDateModified()) &&
-			!Objects.isNull(folder.getId())) {
+			!Objects.isNull(folder.getId()) &&
+			Objects.equals(folder.getRepositoryId(), testGroup.getGroupId())) {
 
 			valid = true;
 		}

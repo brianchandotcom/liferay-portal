@@ -16,12 +16,9 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * @author Jorge Ferrer
@@ -43,25 +40,21 @@ public class ConfigurationCategoryDisplay {
 	}
 
 	public String getCategoryLabel(Locale locale) {
-		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					_configurationCategory.getBundleSymbolicName());
-
-		resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader,
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return LanguageUtil.get(
-			resourceBundle,
-			"category." + _configurationCategory.getCategoryKey());
+		return _getMessage(
+			locale, "category." + _configurationCategory.getCategoryKey());
 	}
 
-	public String getCategorySection() {
-		return _configurationCategory.getCategorySection();
+	public String getSectionLabel(Locale locale) {
+		return _getMessage(
+			locale,
+			"category-section." + _configurationCategory.getCategorySection());
+	}
+
+	private String _getMessage(Locale locale, String key) {
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(
+				locale, _configurationCategory.getClass()),
+			key);
 	}
 
 	private final ConfigurationCategory _configurationCategory;

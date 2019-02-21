@@ -111,13 +111,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 				String category = null;
 
 				if (configurationCategory != null) {
-					categorySection = LanguageUtil.get(request, "category-section." + configurationCategory.getCategorySection());
-
 					ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = configurationEntryRetriever.getConfigurationCategoryMenuDisplay(configurationCategory.getCategoryKey(), themeDisplay.getLanguageId());
 
 					ConfigurationCategoryDisplay configurationCategoryDisplay = configurationCategoryMenuDisplay.getConfigurationCategoryDisplay();
 
 					category = HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale));
+
+					categorySection = configurationCategoryDisplay.getSectionLabel(locale);
 				}
 				else {
 					categorySection = LanguageUtil.get(request, "other");

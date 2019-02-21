@@ -26,7 +26,6 @@ import com.liferay.headless.foundation.internal.dto.v1_0.ParentVocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.CategoryResource;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -201,9 +200,6 @@ public class CategoryResourceImpl
 
 		List<AssetCategory> assetCategories = new ArrayList<>();
 
-		ClassName className = _classNameService.fetchClassName(
-			AssetCategory.class.getName());
-
 		Hits hits = SearchUtil.getHits(
 			filter, _indexerRegistry.nullSafeGetIndexer(AssetCategory.class),
 			pagination, booleanQueryConsumer,
@@ -211,9 +207,6 @@ public class CategoryResourceImpl
 				queryConfig.setSelectedFieldNames(Field.ASSET_CATEGORY_ID);
 			},
 			searchContext -> {
-				searchContext.setAttribute(
-					Field.CLASS_NAME_ID, className.getClassNameId());
-				searchContext.setAttribute("head", Boolean.TRUE);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			_searchResultPermissionFilterFactory, sorts);

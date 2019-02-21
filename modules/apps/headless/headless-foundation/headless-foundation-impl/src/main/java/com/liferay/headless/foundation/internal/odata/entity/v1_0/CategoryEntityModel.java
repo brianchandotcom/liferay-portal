@@ -15,6 +15,8 @@
 package com.liferay.headless.foundation.internal.odata.entity.v1_0;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -45,7 +47,9 @@ public class CategoryEntityModel implements EntityModel {
 			new StringEntityField(
 				"name",
 				locale -> Field.getSortableFieldName(
-					"localized_title_".concat(LocaleUtil.toLanguageId(locale))))
+					StringBundler.concat(
+						Field.TITLE, StringPool.UNDERLINE,
+						LocaleUtil.toLanguageId(locale))))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

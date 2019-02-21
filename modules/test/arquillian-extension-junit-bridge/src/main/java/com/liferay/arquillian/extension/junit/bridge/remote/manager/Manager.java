@@ -24,26 +24,22 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Matthew Tambara
  */
 public class Manager {
 
-	public <T> void bind(Class<T> type, T instance) {
-		_context.put(type, instance);
-	}
-
 	public <T> void fire(T event) {
 		for (Object extension : _extensions) {
-			for (Observer observer : Observer.getObservers(extension)) {
+			for (Observer observer :
+					Observer.getObservers(extension, _registry)) {
+
 				Class<?> clazz = observer.getType();
 
 				if (clazz.isInstance(event)) {
 					try {
-						observer.invoke(this, event);
+						observer.invoke(event);
 					}
 					catch (ReflectiveOperationException roe) {
 						if (roe instanceof InvocationTargetException) {
@@ -58,20 +54,14 @@ public class Manager {
 		}
 	}
 
-	public <T> T resolve(Class<T> type) {
-		Object object = _context.get(type);
-
-		if (object != null) {
-			return type.cast(object);
-		}
-
-		return null;
+	public Registry getRegistry() {
+		return _registry;
 	}
 
 	public void start() throws ReflectiveOperationException {
 		for (Object extension : _getExtensions()) {
 			for (InjectionPoint injectionPoint :
-					InjectionPoint.getInjections(extension)) {
+					InjectionPoint.getInjections(extension, _registry)) {
 
 				injectionPoint.set(this);
 			}
@@ -99,7 +89,7 @@ public class Manager {
 		throw (E)throwable;
 	}
 
-	private final Map<Class<?>, Object> _context = new ConcurrentHashMap<>();
 	private final List<Object> _extensions = new ArrayList<>();
+	private final Registry _registry = new Registry();
 
 }

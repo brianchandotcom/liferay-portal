@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Manager;
+import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -322,7 +323,9 @@ public class Arquillian extends Runner implements Filterable {
 					new org.jboss.arquillian.test.spi.event.suite.Test(
 						testMethodExecutor));
 
-				TestResult testResult = manager.resolve(TestResult.class);
+				Registry registry = manager.getRegistry();
+
+				TestResult testResult = registry.get(TestResult.class);
 
 				Throwable throwable = testResult.getThrowable();
 

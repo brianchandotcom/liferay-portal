@@ -27,7 +27,9 @@ import org.jboss.arquillian.core.api.annotation.Observes;
  */
 public class Observer {
 
-	public static List<Observer> getObservers(Object target) {
+	public static List<Observer> getObservers(
+		Object target, Registry registry) {
+
 		List<Observer> observers = new ArrayList<>();
 
 		Class<?> clazz = target.getClass();
@@ -37,7 +39,7 @@ public class Observer {
 				if (_isObserverMethod(method)) {
 					method.setAccessible(true);
 
-					observers.add(new Observer(target, method));
+					observers.add(new Observer(target, method, registry));
 				}
 			}
 
@@ -51,10 +53,8 @@ public class Observer {
 		return (Class<?>)_method.getGenericParameterTypes()[0];
 	}
 
-	public void invoke(Manager manager, Object event)
-		throws ReflectiveOperationException {
-
-		Object[] arguments = _resolveArguments(manager, event);
+	public void invoke(Object event) throws ReflectiveOperationException {
+		Object[] arguments = _resolveArguments(event);
 
 		if (arguments == null) {
 			return;
@@ -81,12 +81,13 @@ public class Observer {
 		return false;
 	}
 
-	private Observer(Object target, Method method) {
+	private Observer(Object target, Method method, Registry registry) {
 		_target = target;
 		_method = method;
+		_registry = registry;
 	}
 
-	private Object[] _resolveArguments(Manager manager, Object event) {
+	private Object[] _resolveArguments(Object event) {
 		Class<?>[] argumentTypes = _method.getParameterTypes();
 
 		int numberOfArguments = argumentTypes.length;
@@ -98,7 +99,7 @@ public class Observer {
 		for (int i = 1; i < numberOfArguments; i++) {
 			Class<?> argumentType = argumentTypes[i];
 
-			arguments[i] = manager.resolve(argumentType);
+			arguments[i] = _registry.get(argumentType);
 
 			if (arguments[i] == null) {
 				return null;
@@ -109,6 +110,7 @@ public class Observer {
 	}
 
 	private final Method _method;
+	private final Registry _registry;
 	private final Object _target;
 
 }

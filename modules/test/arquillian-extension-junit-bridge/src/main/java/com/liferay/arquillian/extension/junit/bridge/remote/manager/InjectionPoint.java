@@ -27,7 +27,9 @@ import org.jboss.arquillian.core.api.annotation.Inject;
  */
 public class InjectionPoint {
 
-	public static List<InjectionPoint> getInjections(Object target) {
+	public static List<InjectionPoint> getInjections(
+		Object target, Registry registry) {
+
 		List<InjectionPoint> injectionPoints = new ArrayList<>();
 
 		Class<?> clazz = target.getClass();
@@ -37,7 +39,8 @@ public class InjectionPoint {
 				if (_isInjectionPoint(field)) {
 					field.setAccessible(true);
 
-					injectionPoints.add(new InjectionPoint(target, field));
+					injectionPoints.add(
+						new InjectionPoint(target, field, registry));
 				}
 			}
 
@@ -55,7 +58,7 @@ public class InjectionPoint {
 			_target,
 			new Instance<>(
 				(Class<?>)parameterizedType.getActualTypeArguments()[0],
-				manager));
+				_registry));
 	}
 
 	private static boolean _isInjectionPoint(Field field) {
@@ -70,12 +73,14 @@ public class InjectionPoint {
 		return false;
 	}
 
-	private InjectionPoint(Object target, Field field) {
+	private InjectionPoint(Object target, Field field, Registry registry) {
 		_target = target;
 		_field = field;
+		_registry = registry;
 	}
 
 	private final Field _field;
+	private final Registry _registry;
 	private final Object _target;
 
 }

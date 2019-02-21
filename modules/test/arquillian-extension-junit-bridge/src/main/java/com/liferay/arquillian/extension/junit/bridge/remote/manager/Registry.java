@@ -14,25 +14,22 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * @author Matthew Tambara
+ * @author Shuyang Zhou
  */
-public class Instance<T> {
+public class Registry {
 
-	public Instance(Class<T> clazz, Registry registry) {
-		_clazz = clazz;
-		_registry = registry;
+	public <T> T get(Class<T> clazz) {
+		return clazz.cast(_objects.get(clazz));
 	}
 
-	public T get() {
-		return _registry.get(_clazz);
+	public <T> void set(Class<T> clazz, T t) {
+		_objects.put(clazz, clazz.cast(t));
 	}
 
-	public void set(T value) {
-		_registry.set(_clazz, value);
-	}
-
-	private final Class<T> _clazz;
-	private final Registry _registry;
+	private final Map<Class<?>, Object> _objects = new ConcurrentHashMap<>();
 
 }

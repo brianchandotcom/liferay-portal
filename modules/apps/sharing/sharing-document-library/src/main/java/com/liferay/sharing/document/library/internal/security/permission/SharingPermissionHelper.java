@@ -17,7 +17,6 @@ package com.liferay.sharing.document.library.internal.security.permission;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -38,15 +37,21 @@ import org.osgi.service.component.annotations.Reference;
 public class SharingPermissionHelper {
 
 	public boolean isShareable(
-			PermissionChecker permissionChecker, long fileEntryId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long fileEntryId) {
 
-		if (_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId) == null) {
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			fileEntryId);
+
+		if (dlFileEntry == null) {
 			return false;
 		}
 
-		if (_dlFileEntryModelResourcePermission.contains(
-				permissionChecker, fileEntryId, ActionKeys.VIEW)) {
+		if (permissionChecker.isOmniadmin() ||
+			permissionChecker.isCompanyAdmin() ||
+			permissionChecker.isGroupAdmin(dlFileEntry.getGroupId()) ||
+			permissionChecker.hasOwnerPermission(
+				dlFileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
+				fileEntryId, dlFileEntry.getUserId(), ActionKeys.VIEW)) {
 
 			return true;
 		}

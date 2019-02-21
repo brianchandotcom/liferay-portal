@@ -138,13 +138,14 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var form = AUI.$(document.<portlet:namespace />fm);
+<portlet:actionURL name="editUserGroupAssignments" var="editUserGroupAssignmentsURL"/>
+<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/select_user_group_users.jsp" />
+	<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
+</portlet:renderURL>
 
-	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_user_group_users.jsp" />
-		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
-	</portlet:renderURL>
+<aui:script use="liferay-item-selector-dialog">
+	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />addUsers(event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -155,9 +156,15 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 						var selectedItem = event.newVal;
 
 						if (selectedItem) {
-							form.fm('addUserIds').val(selectedItem);
-
-							submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
+							Liferay.Util.postForm(
+								document.<portlet:namespace />fm,
+								{
+									data: {
+										addUserIds: selectedItem
+									},
+									url: '<%= editUserGroupAssignmentsURL %>'
+								}
+							);
 						}
 					}
 				},
@@ -170,10 +177,16 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	}
 
 	function <portlet:namespace />removeUsers() {
-		form.fm('redirect').val('<%= portletURL.toString() %>');
-		form.fm('removeUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					redirect: '<%= portletURL.toString() %>',
+					removeUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
+				},
+				url: '<%= editUserGroupAssignmentsURL %>'
+			}
+		);
 	}
 
 	Liferay.componentReady('editUserGroupAssignmentsManagementToolbar').then(

@@ -95,6 +95,11 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	<%@ include file="/view_flat_user_groups.jspf" %>
 </aui:form>
 
+<portlet:actionURL name="deleteUserGroups" var="deleteUserGroupsURL"/>
+<portlet:renderURL var="userGroupsRenderURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+</portlet:renderURL>
+
 <aui:script>
 	function <portlet:namespace />deleteUserGroups() {
 		<portlet:namespace />doDeleteUserGroup(
@@ -153,31 +158,39 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	}
 
 	function <portlet:namespace />doDeleteUserGroups(userGroupIds) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('deleteUserGroupIds').val(userGroupIds);
-		form.fm('redirect').val('<portlet:renderURL><portlet:param name="mvcPath" value="/view.jsp" /></portlet:renderURL>');
-
 		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
 
 		if (p_p_lifecycle) {
 			p_p_lifecycle.value = '1';
 		}
 
-		submitForm(form, '<portlet:actionURL name="deleteUserGroups" />');
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					deleteUserGroupIds: userGroupIds,
+					redirect: '<%= userGroupsRenderURL %>'
+				},
+				url: '<%= deleteUserGroupsURL %>'
+			}
+		);
 	}
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
-		AUI.$.ajax(
-			'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count',
+		fetch(
+			'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count' + '<portlet:namespace />className=className' + '<portlet:namespace />ids=ids' + '<portlet:namespace />status=status',
 			{
-				data: {
-					className: className,
-					ids: ids,
-					status: status
-				},
-				success: callback
+				credentials: 'include'
+			}
+		)
+		.then(
+			function(response) {
+				return response.text();
+			}
+		)
+		.then(
+			function(response) {
+				callback(response);
 			}
 		);
 	}

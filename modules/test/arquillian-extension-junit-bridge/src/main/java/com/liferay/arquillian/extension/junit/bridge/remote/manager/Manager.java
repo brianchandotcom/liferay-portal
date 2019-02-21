@@ -14,8 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.manager;
 
-import com.liferay.arquillian.extension.junit.bridge.event.controller.DeploymentObserver;
-import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.ClientExecutorObserver;
+import com.liferay.arquillian.extension.junit.bridge.remote.observer.ClientExecutorObserver;
+import com.liferay.arquillian.extension.junit.bridge.remote.observer.DeploymentObserver;
 import com.liferay.arquillian.extension.junit.bridge.remote.observer.ServerExecutorObserver;
 
 import java.lang.reflect.InvocationTargetException;

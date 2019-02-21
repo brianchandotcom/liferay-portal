@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.event.controller;
+package com.liferay.arquillian.extension.junit.bridge.remote.observer;
 
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentDescriptionUtil;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;

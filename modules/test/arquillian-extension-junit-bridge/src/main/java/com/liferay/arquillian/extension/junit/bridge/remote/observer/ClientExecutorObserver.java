@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
+package com.liferay.arquillian.extension.junit.bridge.remote.observer;
 
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunnerMBean;
 import com.liferay.arquillian.extension.junit.bridge.remote.manager.Registry;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 

@@ -122,8 +122,8 @@ public class PortletRegistryImpl implements PortletRegistry {
 
 		long plid = fragmentEntryLink.getClassPK();
 
-		if (fragmentEntryLink.getClassNameId() ==
-				_portal.getClassNameId(LayoutPageTemplateEntry.class)) {
+		if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
+				LayoutPageTemplateEntry.class)) {
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

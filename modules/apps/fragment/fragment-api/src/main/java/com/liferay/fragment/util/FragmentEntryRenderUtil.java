@@ -231,9 +231,9 @@ public class FragmentEntryRenderUtil {
 		return unsyncStringWriter.toString();
 	}
 
-	private static final ServiceTracker
-		<PortletRegistry, PortletRegistry> _portletRegistryServiceTracler =
-			ServiceTrackerFactory.open(PortletRegistry.class);
+	private static final ServiceTracker<PortletRegistry, PortletRegistry>
+		_portletRegistryServiceTracler = ServiceTrackerFactory.open(
+			PortletRegistry.class);
 	private static final ServiceTracker
 		<FragmentEntryProcessorRegistry, FragmentEntryProcessorRegistry>
 			_serviceTracker = ServiceTrackerFactory.open(

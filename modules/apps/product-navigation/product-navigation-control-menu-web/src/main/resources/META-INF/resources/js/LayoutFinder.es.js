@@ -7,13 +7,6 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './LayoutFinder.soy';
 
 /**
- * KeyBoardEvent enter key
- * @review
- * @type {!string}
- */
-const ENTER_KEY = 'Enter';
-
-/**
  * LayoutFinder
  * @review
  */
@@ -71,31 +64,54 @@ class LayoutFinder extends Component {
 	}
 
 	/**
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleFormSubmit(event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
+
+	/**
 	 * Handles keyUp event on the filter input to filter the layouts
 	 * @param {!KeyboardEvent} event
 	 * @private
 	 * @preview
 	 */
 	_handleSearchInputKeyUp(event) {
-		if (event.key === ENTER_KEY) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-		}
-
-		let formData = new FormData();
-
 		const keywords = event.delegateTarget.value;
 
 		if (keywords.length < 3) {
 			this.layouts = [];
 			this.totalCount = 0;
-
-			this._keywords = keywords;
+			this._keywords = '';
 		}
-		else {
+		else if (keywords !== this._keywords) {
+			this._keywords = keywords;
+
+			this._updatePageResults(this._keywords);
+		}
+	}
+
+	/**
+	 * Update page results with the given keywords
+	 * @param {string} keywords
+	 * @private
+	 * @return {Promise}
+	 * @review
+	 */
+	_updatePageResults(keywords) {
+		let promise = Promise.resolve();
+
+		if (!this._loading && (keywords.length >= 3)) {
+			this._loading = true;
+
+			const formData = new FormData();
+
 			formData.append(`${this.namespace}keywords`, keywords);
 
-			fetch(
+			promise = fetch(
 				this.findLayoutsURL,
 				{
 					body: formData,
@@ -103,31 +119,29 @@ class LayoutFinder extends Component {
 					method: 'post'
 				}
 			).then(
-				(response) => {
-					let json = {
-						layouts: [],
-						totalCount: 0
-					};
-
-					if (response.ok) {
-						json = response.json();
-					}
-
-					return json;
-
+				response => {
+					return response.ok ?
+						response.json() :
+						{
+							layouts: [],
+							totalCount: 0
+						};
 				}
 			).then(
-				(response) => {
+				response => {
 					this.layouts = response.layouts;
 					this.totalCount = response.totalCount;
+					this._loading = false;
+					this._viewInPageAdministrationURL = `${this.administrationPortletURL}&${this.administrationPortletNamespace}keywords=${keywords}`;
 
-					this._keywords = keywords;
-
-					this._viewInPageAdministrationURL = this.administrationPortletURL + `&${this.administrationPortletNamespace}keywords=${keywords}`;
+					if (this._showFinder && (keywords !== this._keywords)) {
+						this._updatePageResults(this._keywords);
+					}
 				}
 			);
-
 		}
+
+		return promise;
 	}
 
 	/**
@@ -265,6 +279,19 @@ LayoutFinder.STATE = {
 	_keywords: Config
 		.string()
 		.value(''),
+
+	/**
+	 * True when it's loading page results
+	 * @default false
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_loading: Config
+		.bool()
+		.value(false),
 
 	/**
 	 * Show layout finder dialog

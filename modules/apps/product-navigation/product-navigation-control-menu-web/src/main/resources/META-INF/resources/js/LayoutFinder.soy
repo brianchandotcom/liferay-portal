@@ -7,13 +7,15 @@
 	{@param layouts: list<[name: string, url: string]>}
 	{@param spritemap: string}
 	{@param totalCount: number}
-	{@param? namespace: string}
-	{@param _handleCloseDialogClick: any}
-	{@param _handleSearchInputKeyUp: any}
-	{@param _toggleDialog: any}
+	{@param? _handleCloseDialogClick: any}
+	{@param? _handleFormSubmit: any}
+	{@param? _handleSearchInputKeyUp: any}
 	{@param? _keywords: string}
+	{@param? _loading: bool}
 	{@param? _showFinder: bool}
+	{@param? _toggleDialog: any}
 	{@param? _viewInPageAdministrationURL: string}
+	{@param? namespace: string}
 
 	<div class="layout-finder">
 		<button
@@ -60,7 +62,7 @@
 						</header>
 
 						<section class="modal-body">
-							<form role="search">
+							<form data-onsubmit="{$_handleFormSubmit}" role="search">
 								<label class="sr-only" for="{$namespace}-layout-finder-page-input">
 									{msg desc=""}page-name{/msg}
 								</label>
@@ -72,7 +74,6 @@
 									id="{$namespace}-layout-finder-page-input"
 									placeholder="{msg desc=""}start-typing-to-find-a-page{/msg}..."
 									type="text"
-									value="{$_keywords ?: ''}"
 								/>
 							</form>
 
@@ -104,6 +105,16 @@
 										</a>
 									</div>
 								{/if}
+							{elseif $_loading}
+								<span aria-hidden="true" class="loading-animation"></span>
+							{elseif $_keywords and ($_keywords != '')}
+								<div class="taglib-empty-result-message">
+									<div class="taglib-empty-result-message-header"></div>
+
+									<div class="text-center text-muted">
+										{msg desc=""}page-not-found{/msg}
+									</div>
+								</div>
 							{/if}
 						</section>
 					</div>

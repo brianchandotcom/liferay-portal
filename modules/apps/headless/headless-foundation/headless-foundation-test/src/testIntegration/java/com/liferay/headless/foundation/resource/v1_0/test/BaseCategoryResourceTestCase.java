@@ -159,7 +159,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
 				options.setPut(true);
 
@@ -174,7 +174,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}", categoryId));
 
 				options.setPut(true);
 
@@ -213,7 +213,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId));
 
 				options.setPost(true);
 
@@ -228,7 +228,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId,category));
+			options.setLocation(_resourceURL + _toPath("/categories/{category-id}/categories", categoryId));
 
 				options.setPost(true);
 
@@ -267,7 +267,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,category));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId));
 
 				options.setPost(true);
 
@@ -282,7 +282,7 @@ public abstract class BaseCategoryResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(category), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId,category));
+			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}/categories", vocabularyId));
 
 				options.setPost(true);
 

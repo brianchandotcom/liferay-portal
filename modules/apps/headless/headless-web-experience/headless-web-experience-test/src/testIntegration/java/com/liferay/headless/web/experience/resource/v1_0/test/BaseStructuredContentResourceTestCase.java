@@ -163,7 +163,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId));
 
 				options.setPost(true);
 
@@ -178,7 +178,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/structured-contents", contentSpaceId));
 
 				options.setPost(true);
 
@@ -242,7 +242,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImpl.class);
 	}
@@ -253,7 +253,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 			HttpUtil.URLtoString(options);
 
@@ -267,7 +267,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 				options.setPut(true);
 
@@ -282,7 +282,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(structuredContent), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId,structuredContent));
+			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}", structuredContentId));
 
 				options.setPut(true);
 

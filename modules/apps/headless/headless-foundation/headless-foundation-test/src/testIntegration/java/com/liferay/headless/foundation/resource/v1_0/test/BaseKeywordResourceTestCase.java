@@ -122,7 +122,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId,keyword));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId));
 
 				options.setPost(true);
 
@@ -137,7 +137,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId,keyword));
+			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/keywords", contentSpaceId));
 
 				options.setPost(true);
 
@@ -203,7 +203,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId,keyword));
+			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
 
 				options.setPut(true);
 
@@ -218,7 +218,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(keyword), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId,keyword));
+			options.setLocation(_resourceURL + _toPath("/keywords/{keyword-id}", keywordId));
 
 				options.setPut(true);
 

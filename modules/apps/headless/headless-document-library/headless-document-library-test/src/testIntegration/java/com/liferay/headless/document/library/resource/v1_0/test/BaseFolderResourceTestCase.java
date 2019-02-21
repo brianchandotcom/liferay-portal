@@ -501,8 +501,8 @@ public abstract class BaseFolderResourceTestCase {
 		return options;
 	}
 
-	private String _toPath(String template, Object value) {
-		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
+	private String _toPath(String template, Object... values) {
+		return template.replaceAll("\\{.*\\}", String.valueOf(values[0]));
 	}
 
 	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {

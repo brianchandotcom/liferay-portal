@@ -257,7 +257,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(userAccount), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId,userAccount));
+			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId));
 
 				options.setPut(true);
 
@@ -272,7 +272,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 				options.setBody(_inputObjectMapper.writeValueAsString(userAccount), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId,userAccount));
+			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}", userAccountId));
 
 				options.setPut(true);
 

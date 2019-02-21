@@ -253,11 +253,15 @@ public class AssetListEntryAssetEntryRelServiceTest {
 					QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			assetListEntryRelList.get(0).getAssetEntryId(),
+			assetListEntryRelList.get(
+				0
+			).getAssetEntryId(),
 			assetEntry1.getEntryId());
 
 		Assert.assertEquals(
-			assetListEntryRelList.get(1).getAssetEntryId(),
+			assetListEntryRelList.get(
+				1
+			).getAssetEntryId(),
 			assetEntry2.getEntryId());
 	}
 

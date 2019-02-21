@@ -121,7 +121,8 @@ public class CommentResourceImpl
 
 		Discussion discussion = _commentManager.getDiscussion(
 			journalArticle.getUserId(), journalArticle.getGroupId(),
-			JournalArticle.class.getName(), structuredContentId, null);
+			JournalArticle.class.getName(), structuredContentId,
+			_createServiceContextFunction());
 
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();

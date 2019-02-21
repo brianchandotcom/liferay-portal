@@ -115,7 +115,8 @@ public class CommentResourceImpl
 
 		Discussion discussion = _commentManager.getDiscussion(
 			dlFileEntry.getUserId(), dlFileEntry.getGroupId(),
-			DLFileEntry.class.getName(), fileEntryId, null);
+			DLFileEntry.class.getName(), fileEntryId,
+			_createServiceContextFunction());
 
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();

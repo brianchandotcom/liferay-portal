@@ -39,6 +39,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -95,6 +96,18 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@RequiresScope("everything.read")
 	public Document getDocument(
 	@PathParam("document-id") Long documentId)
+			throws Exception {
+
+				return new DocumentImpl();
+	}
+	@Override
+	@Consumes("multipart/form-data")
+	@PUT
+	@Path("/documents/{document-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Document putDocument(
+	@PathParam("document-id") Long documentId,MultipartBody multipartBody)
 			throws Exception {
 
 				return new DocumentImpl();

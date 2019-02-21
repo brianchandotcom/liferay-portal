@@ -47,6 +47,9 @@ public interface DocumentResource {
 	public Document getDocument(
 				Long documentId)
 			throws Exception;
+	public Document putDocument(
+				Long documentId,MultipartBody multipartBody)
+			throws Exception;
 	public Page<Document> getFolderDocumentsPage(
 				Long folderId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;

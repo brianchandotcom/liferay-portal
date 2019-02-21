@@ -85,6 +85,10 @@ public abstract class BaseDocumentResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
+	public void testPutDocument() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testGetFolderDocumentsPage() throws Exception {
 			Assert.assertTrue(true);
 	}
@@ -192,6 +196,33 @@ public abstract class BaseDocumentResourceTestCase {
 			Http.Options options = _createHttpOptions();
 
 			options.setLocation(_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+			HttpUtil.URLtoString(options);
+
+			return options.getResponse();
+	}
+	protected Document invokePutDocument(
+				Long documentId,MultipartBody multipartBody)
+			throws Exception {
+
+			Http.Options options = _createHttpOptions();
+
+			options.setLocation(_resourceURL + _toPath("/documents/{document-id}", documentId,multipartBody));
+
+				options.setPut(true);
+
+				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), DocumentImpl.class);
+	}
+
+	protected Http.Response invokePutDocumentResponse(
+				Long documentId,MultipartBody multipartBody)
+			throws Exception {
+
+			Http.Options options = _createHttpOptions();
+
+			options.setLocation(_resourceURL + _toPath("/documents/{document-id}", documentId,multipartBody));
+
+				options.setPut(true);
 
 			HttpUtil.URLtoString(options);
 

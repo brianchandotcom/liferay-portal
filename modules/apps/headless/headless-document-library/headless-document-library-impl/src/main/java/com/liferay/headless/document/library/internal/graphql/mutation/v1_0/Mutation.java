@@ -54,6 +54,14 @@ public class Mutation {
 				return _getDocumentResource().deleteDocument(
 					documentId);
 	}
+	@GraphQLInvokeDetached
+	public Document putDocument(
+	@GraphQLName("document-id") Long documentId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
+			throws Exception {
+
+				return _getDocumentResource().putDocument(
+					documentId,multipartBody);
+	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Document postFolderDocument(

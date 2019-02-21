@@ -444,8 +444,7 @@ definition {
 		);
 
 		DMFolder.viewCP(
-			dmFolderName = "DM Folder Name Name",
-			specificNameFolder = "true"
+			dmFolderName = "DM Folder Name Name"
 		);
 	}
 

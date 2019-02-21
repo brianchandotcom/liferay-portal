@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.jboss.arquillian.core.api.event.ManagerStarted;
-import org.jboss.arquillian.core.spi.NonManagedObserver;
 
 /**
  * @author Matthew Tambara
@@ -55,11 +54,7 @@ public class Manager {
 		_context.put(type, instance);
 	}
 
-	public void fire(Object event) {
-		fire(event, null);
-	}
-
-	public <T> void fire(T event, NonManagedObserver<T> nonManagedObserver) {
+	public <T> void fire(T event) {
 		List<Observer> observers = new ArrayList<>();
 
 		Class<?> eventClass = event.getClass();
@@ -76,12 +71,12 @@ public class Manager {
 			}
 		}
 
-		if ((nonManagedObserver == null) && observers.isEmpty()) {
+		if (observers.isEmpty()) {
 			return;
 		}
 
 		try {
-			_proceed(observers, nonManagedObserver, event);
+			_proceed(observers, event);
 		}
 		catch (ReflectiveOperationException roe) {
 			if (roe instanceof InvocationTargetException) {
@@ -134,19 +129,11 @@ public class Manager {
 		}
 	}
 
-	private <T> void _proceed(
-			List<Observer> observers, NonManagedObserver<T> nonManagedObserver,
-			T event)
+	private <T> void _proceed(List<Observer> observers, T event)
 		throws ReflectiveOperationException {
 
 		for (Observer observer : observers) {
 			observer.invoke(this, event);
-		}
-
-		if (nonManagedObserver != null) {
-			_inject(nonManagedObserver);
-
-			nonManagedObserver.fired(event);
 		}
 	}
 

@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.headless.foundation.internal.jaxrs.message.body.v1_0;
+package com.liferay.headless.foundation.internal.jaxrs.context.resolver.v1_0;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -55,19 +57,9 @@ import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.WebUrlImpl;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,83 +72,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Foundation)",
-		"osgi.jaxrs.name=Liferay.Headless.Foundation.v1_0.JSONMessageBodyReader"
+		"osgi.jaxrs.name=Liferay.Headless.Foundation.v1_0.ObjectMapperContextResolver"
 	},
-	service = MessageBodyReader.class
+	service = ContextResolver.class
 )
-@Consumes(MediaType.APPLICATION_JSON)
 @Generated("")
 @Provider
-public class JSONMessageBodyReader implements MessageBodyReader<Object> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
-	@Override
-	public boolean isReadable(
-		Class<?> clazz, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
-			if (clazz.equals(Category.class)) {
-				return true;
-	}
-			if (clazz.equals(ContactInformation.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(Email.class)) {
-				return true;
-	}
-			if (clazz.equals(HoursAvailable.class)) {
-				return true;
-	}
-			if (clazz.equals(Keyword.class)) {
-				return true;
-	}
-			if (clazz.equals(Location.class)) {
-				return true;
-	}
-			if (clazz.equals(Organization.class)) {
-				return true;
-	}
-			if (clazz.equals(ParentCategory.class)) {
-				return true;
-	}
-			if (clazz.equals(ParentVocabulary.class)) {
-				return true;
-	}
-			if (clazz.equals(Phone.class)) {
-				return true;
-	}
-			if (clazz.equals(PostalAddress.class)) {
-				return true;
-	}
-			if (clazz.equals(Role.class)) {
-				return true;
-	}
-			if (clazz.equals(Services.class)) {
-				return true;
-	}
-			if (clazz.equals(UserAccount.class)) {
-				return true;
-	}
-			if (clazz.equals(Vocabulary.class)) {
-				return true;
-	}
-			if (clazz.equals(WebUrl.class)) {
-				return true;
-	}
-
-		return false;
-	}
-
-	@Override
-	public Object readFrom(
-			Class<Object> clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException, WebApplicationException {
-
-		return _objectMapper.readValue(inputStream, clazz);
+	public ObjectMapper getContext(Class<?> aClass) {
+		return _objectMapper;
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
@@ -167,28 +93,30 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(Category.class, CategoryImpl.class);
-										addMapping(ContactInformation.class, ContactInformationImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Email.class, EmailImpl.class);
-										addMapping(HoursAvailable.class, HoursAvailableImpl.class);
-										addMapping(Keyword.class, KeywordImpl.class);
-										addMapping(Location.class, LocationImpl.class);
-										addMapping(Organization.class, OrganizationImpl.class);
-										addMapping(ParentCategory.class, ParentCategoryImpl.class);
-										addMapping(ParentVocabulary.class, ParentVocabularyImpl.class);
-										addMapping(Phone.class, PhoneImpl.class);
-										addMapping(PostalAddress.class, PostalAddressImpl.class);
-										addMapping(Role.class, RoleImpl.class);
-										addMapping(Services.class, ServicesImpl.class);
-										addMapping(UserAccount.class, UserAccountImpl.class);
-										addMapping(Vocabulary.class, VocabularyImpl.class);
-										addMapping(WebUrl.class, WebUrlImpl.class);
+									addMapping(Category.class, CategoryImpl.class);
+									addMapping(ContactInformation.class, ContactInformationImpl.class);
+									addMapping(Creator.class, CreatorImpl.class);
+									addMapping(Email.class, EmailImpl.class);
+									addMapping(HoursAvailable.class, HoursAvailableImpl.class);
+									addMapping(Keyword.class, KeywordImpl.class);
+									addMapping(Location.class, LocationImpl.class);
+									addMapping(Organization.class, OrganizationImpl.class);
+									addMapping(ParentCategory.class, ParentCategoryImpl.class);
+									addMapping(ParentVocabulary.class, ParentVocabularyImpl.class);
+									addMapping(Phone.class, PhoneImpl.class);
+									addMapping(PostalAddress.class, PostalAddressImpl.class);
+									addMapping(Role.class, RoleImpl.class);
+									addMapping(Services.class, ServicesImpl.class);
+									addMapping(UserAccount.class, UserAccountImpl.class);
+									addMapping(Vocabulary.class, VocabularyImpl.class);
+									addMapping(WebUrl.class, WebUrlImpl.class);
 	}
 							});
 	}
 				});
 
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

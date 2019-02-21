@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.headless.web.experience.internal.jaxrs.message.body.v1_0;
+package com.liferay.headless.web.experience.internal.jaxrs.context.resolver.v1_0;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -49,19 +51,9 @@ import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentIm
 import com.liferay.headless.web.experience.internal.dto.v1_0.ValueImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ValuesImpl;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
@@ -74,74 +66,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Web.Experience)",
-		"osgi.jaxrs.name=Liferay.Headless.Web.Experience.v1_0.JSONMessageBodyReader"
+		"osgi.jaxrs.name=Liferay.Headless.Web.Experience.v1_0.ObjectMapperContextResolver"
 	},
-	service = MessageBodyReader.class
+	service = ContextResolver.class
 )
-@Consumes(MediaType.APPLICATION_JSON)
 @Generated("")
 @Provider
-public class JSONMessageBodyReader implements MessageBodyReader<Object> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
-	@Override
-	public boolean isReadable(
-		Class<?> clazz, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
-			if (clazz.equals(AggregateRating.class)) {
-				return true;
-	}
-			if (clazz.equals(Categories.class)) {
-				return true;
-	}
-			if (clazz.equals(Comment.class)) {
-				return true;
-	}
-			if (clazz.equals(ContentDocument.class)) {
-				return true;
-	}
-			if (clazz.equals(ContentStructure.class)) {
-				return true;
-	}
-			if (clazz.equals(Creator.class)) {
-				return true;
-	}
-			if (clazz.equals(Fields.class)) {
-				return true;
-	}
-			if (clazz.equals(Geo.class)) {
-				return true;
-	}
-			if (clazz.equals(Options.class)) {
-				return true;
-	}
-			if (clazz.equals(RenderedContentsByTemplate.class)) {
-				return true;
-	}
-			if (clazz.equals(StructuredContent.class)) {
-				return true;
-	}
-			if (clazz.equals(StructuredContentImage.class)) {
-				return true;
-	}
-			if (clazz.equals(Value.class)) {
-				return true;
-	}
-			if (clazz.equals(Values.class)) {
-				return true;
-	}
-
-		return false;
-	}
-
-	@Override
-	public Object readFrom(
-			Class<Object> clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException, WebApplicationException {
-
-		return _objectMapper.readValue(inputStream, clazz);
+	public ObjectMapper getContext(Class<?> aClass) {
+		return _objectMapper;
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
@@ -152,25 +87,27 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(AggregateRating.class, AggregateRatingImpl.class);
-										addMapping(Categories.class, CategoriesImpl.class);
-										addMapping(Comment.class, CommentImpl.class);
-										addMapping(ContentDocument.class, ContentDocumentImpl.class);
-										addMapping(ContentStructure.class, ContentStructureImpl.class);
-										addMapping(Creator.class, CreatorImpl.class);
-										addMapping(Fields.class, FieldsImpl.class);
-										addMapping(Geo.class, GeoImpl.class);
-										addMapping(Options.class, OptionsImpl.class);
-										addMapping(RenderedContentsByTemplate.class, RenderedContentsByTemplateImpl.class);
-										addMapping(StructuredContent.class, StructuredContentImpl.class);
-										addMapping(StructuredContentImage.class, StructuredContentImageImpl.class);
-										addMapping(Value.class, ValueImpl.class);
-										addMapping(Values.class, ValuesImpl.class);
+									addMapping(AggregateRating.class, AggregateRatingImpl.class);
+									addMapping(Categories.class, CategoriesImpl.class);
+									addMapping(Comment.class, CommentImpl.class);
+									addMapping(ContentDocument.class, ContentDocumentImpl.class);
+									addMapping(ContentStructure.class, ContentStructureImpl.class);
+									addMapping(Creator.class, CreatorImpl.class);
+									addMapping(Fields.class, FieldsImpl.class);
+									addMapping(Geo.class, GeoImpl.class);
+									addMapping(Options.class, OptionsImpl.class);
+									addMapping(RenderedContentsByTemplate.class, RenderedContentsByTemplateImpl.class);
+									addMapping(StructuredContent.class, StructuredContentImpl.class);
+									addMapping(StructuredContentImage.class, StructuredContentImageImpl.class);
+									addMapping(Value.class, ValueImpl.class);
+									addMapping(Values.class, ValuesImpl.class);
 	}
 							});
 	}
 				});
 
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

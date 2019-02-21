@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.headless.workflow.internal.jaxrs.message.body.v1_0;
+package com.liferay.headless.workflow.internal.jaxrs.context.resolver.v1_0;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -27,19 +29,9 @@ import com.liferay.headless.workflow.internal.dto.v1_0.ObjectReviewedImpl;
 import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowLogImpl;
 import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowTaskImpl;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,41 +44,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Workflow)",
-		"osgi.jaxrs.name=Liferay.Headless.Workflow.v1_0.JSONMessageBodyReader"
+		"osgi.jaxrs.name=Liferay.Headless.Workflow.v1_0.ObjectMapperContextResolver"
 	},
-	service = MessageBodyReader.class
+	service = ContextResolver.class
 )
-@Consumes(MediaType.APPLICATION_JSON)
 @Generated("")
 @Provider
-public class JSONMessageBodyReader implements MessageBodyReader<Object> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
-	@Override
-	public boolean isReadable(
-		Class<?> clazz, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
-			if (clazz.equals(ObjectReviewed.class)) {
-				return true;
-	}
-			if (clazz.equals(WorkflowLog.class)) {
-				return true;
-	}
-			if (clazz.equals(WorkflowTask.class)) {
-				return true;
-	}
-
-		return false;
-	}
-
-	@Override
-	public Object readFrom(
-			Class<Object> clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException, WebApplicationException {
-
-		return _objectMapper.readValue(inputStream, clazz);
+	public ObjectMapper getContext(Class<?> aClass) {
+		return _objectMapper;
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
@@ -97,14 +65,16 @@ public class JSONMessageBodyReader implements MessageBodyReader<Object> {
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(ObjectReviewed.class, ObjectReviewedImpl.class);
-										addMapping(WorkflowLog.class, WorkflowLogImpl.class);
-										addMapping(WorkflowTask.class, WorkflowTaskImpl.class);
+									addMapping(ObjectReviewed.class, ObjectReviewedImpl.class);
+									addMapping(WorkflowLog.class, WorkflowLogImpl.class);
+									addMapping(WorkflowTask.class, WorkflowTaskImpl.class);
 	}
 							});
 	}
 				});
 
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

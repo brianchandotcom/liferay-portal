@@ -18,6 +18,8 @@
 
 <blockquote><p>A navigation bar, navbar, is an horizontal bar that provides several access points to different parts of a system.</p></blockquote>
 
+<h3>NAVIGATION BARS USING DISPLAY CONTEXT</h3>
+
 <clay:navigation-bar
 	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
 />
@@ -27,7 +29,7 @@
 	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
 />
 
-<blockquote><p>The navigation bar attributes can also be specified using the service layer.</p></blockquote>
+<h3>NAVIGATION BAR USING CONTEXT CONTRIBUTOR</h3>
 
 <clay:navigation-bar
 	contributorName="SampleNavigationBar"

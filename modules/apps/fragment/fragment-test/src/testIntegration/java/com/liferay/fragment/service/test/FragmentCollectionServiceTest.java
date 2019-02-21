@@ -253,15 +253,14 @@ public class FragmentCollectionServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollections() throws Exception {
+	public void testGetFragmentCollectionsByGroupId() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		List<FragmentCollection> originalFragmentCollections =
 			FragmentCollectionServiceUtil.getFragmentCollections(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				_group.getGroupId());
 
 		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), "Fragment Collection 1", StringPool.BLANK,
@@ -273,8 +272,7 @@ public class FragmentCollectionServiceTest {
 
 		List<FragmentCollection> actualFragmentCollections =
 			FragmentCollectionServiceUtil.getFragmentCollections(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				_group.getGroupId());
 
 		Assert.assertEquals(
 			actualFragmentCollections.toString(),

@@ -38,25 +38,11 @@ import org.jboss.arquillian.core.api.event.ManagerStarted;
  */
 public class Manager {
 
-	public Manager() throws ReflectiveOperationException {
-		for (Class<?> observerClass : _getObservers()) {
-			Constructor<?> constructor = observerClass.getDeclaredConstructor();
-
-			Object extension = constructor.newInstance();
-
-			_inject(extension);
-
-			_extensions.add(extension);
-		}
-	}
-
 	public <T> void bind(Class<T> type, T instance) {
 		_context.put(type, instance);
 	}
 
 	public <T> void fire(T event) {
-		List<Observer> observers = new ArrayList<>();
-
 		Class<?> eventClass = event.getClass();
 
 		for (Object extension : _extensions) {
@@ -66,24 +52,18 @@ public class Manager {
 				Class<?> clazz = (Class<?>)type;
 
 				if (clazz.isAssignableFrom(eventClass)) {
-					observers.add(observer);
+					try {
+						observer.invoke(this, event);
+					}
+					catch (ReflectiveOperationException roe) {
+						if (roe instanceof InvocationTargetException) {
+							_throwException(roe.getCause());
+						}
+						else {
+							_throwException(roe);
+						}
+					}
 				}
-			}
-		}
-
-		if (observers.isEmpty()) {
-			return;
-		}
-
-		try {
-			_proceed(observers, event);
-		}
-		catch (ReflectiveOperationException roe) {
-			if (roe instanceof InvocationTargetException) {
-				_throwException(roe.getCause());
-			}
-			else {
-				_throwException(roe);
 			}
 		}
 	}
@@ -98,7 +78,21 @@ public class Manager {
 		return null;
 	}
 
-	public void start() {
+	public void start() throws ReflectiveOperationException {
+		for (Class<?> observerClass : _getObservers()) {
+			Constructor<?> constructor = observerClass.getDeclaredConstructor();
+
+			Object extension = constructor.newInstance();
+
+			for (InjectionPoint injectionPoint :
+					InjectionPoint.getInjections(extension)) {
+
+				injectionPoint.set(this);
+			}
+
+			_extensions.add(extension);
+		}
+
 		fire(new ManagerStarted());
 	}
 
@@ -119,22 +113,6 @@ public class Manager {
 		throws E {
 
 		throw (E)throwable;
-	}
-
-	private void _inject(Object extension) throws ReflectiveOperationException {
-		for (InjectionPoint injectionPoint :
-				InjectionPoint.getInjections(extension)) {
-
-			injectionPoint.set(this);
-		}
-	}
-
-	private <T> void _proceed(List<Observer> observers, T event)
-		throws ReflectiveOperationException {
-
-		for (Observer observer : observers) {
-			observer.invoke(this, event);
-		}
 	}
 
 	private final Map<Class<?>, Object> _context = new ConcurrentHashMap<>();

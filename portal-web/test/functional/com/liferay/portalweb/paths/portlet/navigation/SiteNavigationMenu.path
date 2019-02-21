@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TRANSLATIONS_CHECKBOX</td>
+	<td>//label[contains(.,'Use page translations')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'sidebar')]</td>
 	<td></td>

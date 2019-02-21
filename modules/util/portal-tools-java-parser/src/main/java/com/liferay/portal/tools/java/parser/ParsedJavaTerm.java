@@ -87,6 +87,8 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				 StringUtil.startsWith(
 					 precedingCommentToken.getText(), CharPool.SPACE))) {
 
+				// TODO
+
 				return NO_ACTION_REQUIRED;
 			}
 		}
@@ -102,6 +104,9 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				StringUtil.trim(_content), CharPool.CLOSE_CURLY_BRACE)) {
 
 			if (!_content.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+				// TODO
+
 				return NO_ACTION_REQUIRED;
 			}
 
@@ -146,6 +151,8 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		if (!_content.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 			trimmedNextJavaTermContent.startsWith(
 				StringPool.CLOSE_CURLY_BRACE)) {
+
+			// TODO
 
 			return NO_ACTION_REQUIRED;
 		}
@@ -199,6 +206,8 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				 CharPool.STAR)) ||
 			StringUtil.startsWith(
 				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+
+			// TODO
 
 			return NO_ACTION_REQUIRED;
 		}

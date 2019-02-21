@@ -654,9 +654,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		LexiconEntry.gotoEntryMenuItemNoWaitNoError(
-			menuItem = "Delete",
-			rowEntry = "${configurationName}"
+		LexiconTable.clickEllipsisItem(
+			item = "Delete",
+			tableEntry = "${configurationName}"
 		);
 
 		AssertConfirm.waitForConfirmation(
@@ -831,9 +831,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		LexiconEntry.gotoEntryMenuItemNoWait(
-			menuItem = "Apply",
-			rowEntry = "${configurationName}"
+		LexiconTable.clickEllipsisItem(
+			item = "Apply",
+			tableEntry = "${configurationName}"
 		);
 
 		Alert.viewSuccessMessage();

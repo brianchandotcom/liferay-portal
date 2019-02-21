@@ -219,9 +219,9 @@ definition {
 	}
 
 	macro gotoWCArticle {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Permissions",
-			rowEntry = "${webContentTitle}"
+		LexiconList.clickEllipsisItem(
+			item = "Permissions",
+			listEntry = "${webContentTitle}"
 		);
 
 		IFrame.selectPermissionsFrame();

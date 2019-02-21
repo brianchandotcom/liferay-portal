@@ -180,9 +180,9 @@ definition {
 			menuItem = "View History"
 		);
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Compare to...",
-			rowEntry = "WC WebContent Title"
+		LexiconTable.clickEllipsisItem(
+			item = "Compare to...",
+			tableEntry = "WC WebContent Title"
 		);
 
 		WebContent.viewCompareVersions(

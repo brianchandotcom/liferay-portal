@@ -549,9 +549,10 @@ definition {
 			value1 = "${siteName}"
 		);
 
-		LexiconEntry.openEntryMenu(rowEntry = "${siteName}");
-
-		MenuItem.clickNoError(menuItem = "Deactivate");
+		LexiconTable.clickEllipsisItem(
+			item = "Deactivate",
+			tableEntry = "${siteName}"
+		);
 
 		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 

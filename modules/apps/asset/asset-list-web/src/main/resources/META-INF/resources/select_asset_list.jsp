@@ -21,15 +21,7 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= selectAssetListDisplayContext.getAssetListEntryClearResultsURL() %>"
-	componentId="assetListEntriesEntriesManagementToolbar"
-	filterDropdownItems="<%= selectAssetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
-	itemsTotal="<%= selectAssetListDisplayContext.getAssetListEntryTotalItems() %>"
-	searchActionURL="<%= selectAssetListDisplayContext.getAssetListEntrySearchActionURL() %>"
-	searchContainerId="assetListEntries"
-	selectable="<%= false %>"
-	sortingOrder="<%= selectAssetListDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectAssetListDisplayContext.getSortingURL() %>"
+	displayContext="<%= new SelectAssetListManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectAssetListDisplayContext) %>"
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />assetLists">

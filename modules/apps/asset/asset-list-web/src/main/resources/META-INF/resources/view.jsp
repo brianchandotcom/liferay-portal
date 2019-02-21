@@ -17,17 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= assetListDisplayContext.getAssetListEntryActionItemsDropdownItems() %>"
-	clearResultsURL="<%= assetListDisplayContext.getAssetListEntryClearResultsURL() %>"
-	componentId="assetListEntriesEntriesManagementToolbar"
-	creationMenu="<%= assetListDisplayContext.isShowAddAssetListEntryAction() ? assetListDisplayContext.getCreationMenu() : null %>"
-	disabled="<%= assetListDisplayContext.getAssetListEntriesCount() <= 0 %>"
-	filterDropdownItems="<%= assetListDisplayContext.getAssetListEntryFilterItemsDropdownItems() %>"
-	itemsTotal="<%= assetListDisplayContext.getAssetListEntryTotalItems() %>"
-	searchActionURL="<%= assetListDisplayContext.getAssetListEntrySearchActionURL() %>"
-	searchContainerId="assetListEntries"
-	sortingOrder="<%= assetListDisplayContext.getOrderByType() %>"
-	sortingURL="<%= assetListDisplayContext.getSortingURL() %>"
+	displayContext="<%= new AssetListManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetListDisplayContext) %>"
 />
 
 <portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">

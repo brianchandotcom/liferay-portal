@@ -17,11 +17,7 @@ package com.liferay.asset.list.web.internal.display.context;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -31,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -49,45 +44,6 @@ public class SelectAssetListDisplayContext {
 
 		_request = request;
 		_renderResponse = renderResponse;
-	}
-
-	public String getAssetListEntryClearResultsURL() {
-		PortletURL clearResultsURL = _getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public List<DropdownItem> getAssetListEntryFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getAssetListEntryOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
-	}
-
-	public String getAssetListEntrySearchActionURL() {
-		PortletURL searchActionURL = _getPortletURL();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return searchActionURL.toString();
-	}
-
-	public int getAssetListEntryTotalItems() throws Exception {
-		SearchContainer assetListEntriesSearchContainer = getSearchContainer();
-
-		return assetListEntriesSearchContainer.getTotal();
 	}
 
 	public String getEventName() {
@@ -110,7 +66,7 @@ public class SelectAssetListDisplayContext {
 		return _orderByType;
 	}
 
-	public SearchContainer getSearchContainer() throws Exception {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -169,41 +125,6 @@ public class SelectAssetListDisplayContext {
 		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
 
 		return _assetListEntryId;
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = _getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	private List<DropdownItem> _getAssetListEntryOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "title"));
-						dropdownItem.setHref(
-							_getPortletURL(), "orderByCol", "title");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "title"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "create-date"));
-						dropdownItem.setHref(
-							_getPortletURL(), "orderByCol", "create-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
-					});
-			}
-		};
 	}
 
 	private String _getKeywords() {

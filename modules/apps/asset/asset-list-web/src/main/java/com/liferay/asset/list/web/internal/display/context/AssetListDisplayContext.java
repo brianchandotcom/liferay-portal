@@ -23,7 +23,6 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import javax.portlet.ActionRequest;
@@ -186,44 +184,6 @@ public class AssetListDisplayContext {
 		return _assetListEntry;
 	}
 
-	public List<DropdownItem> getAssetListEntryActionItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteSelectedAssetListEntries");
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
-	}
-
-	public String getAssetListEntryClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public List<DropdownItem> getAssetListEntryFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getAssetListEntryOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
-	}
-
 	public long getAssetListEntryId() {
 		if (_assetListEntryId != null) {
 			return _assetListEntryId;
@@ -232,15 +192,6 @@ public class AssetListDisplayContext {
 		_assetListEntryId = ParamUtil.getLong(_request, "assetListEntryId");
 
 		return _assetListEntryId;
-	}
-
-	public String getAssetListEntrySearchActionURL() {
-		PortletURL searchActionURL = _renderResponse.createRenderURL();
-
-		searchActionURL.setParameter("mvcPath", "/view.jsp");
-		searchActionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-
-		return searchActionURL.toString();
 	}
 
 	public String getAssetListEntryTitle() {
@@ -266,13 +217,6 @@ public class AssetListDisplayContext {
 		return LanguageUtil.get(_request, title);
 	}
 
-	public int getAssetListEntryTotalItems() {
-		SearchContainer assetListEntriesSearchContainer =
-			getAssetListEntriesSearchContainer();
-
-		return assetListEntriesSearchContainer.getTotal();
-	}
-
 	public int getAssetListEntryType() {
 		if (_assetListEntryType != null) {
 			return _assetListEntryType;
@@ -290,24 +234,6 @@ public class AssetListDisplayContext {
 		_assetListEntryType = assetListEntryType;
 
 		return _assetListEntryType;
-	}
-
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					_getAddAssetListEntryDropdownItem(
-						AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
-						"manual-selection",
-						AssetListEntryTypeConstants.TYPE_MANUAL));
-
-				addPrimaryDropdownItem(
-					_getAddAssetListEntryDropdownItem(
-						AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
-						"dynamic-selection",
-						AssetListEntryTypeConstants.TYPE_DYNAMIC));
-			}
-		};
 	}
 
 	public String getEmptyResultMessageDescription() {
@@ -391,16 +317,6 @@ public class AssetListDisplayContext {
 		return portletURL;
 	}
 
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
 	public boolean isShowAddAssetListEntryAction() {
 		return AssetListPermission.contains(
 			_themeDisplay.getPermissionChecker(),
@@ -433,32 +349,6 @@ public class AssetListDisplayContext {
 
 	private String _getAddAssetListTitle(String title) {
 		return LanguageUtil.format(_request, "add-x-asset-list", title, true);
-	}
-
-	private List<DropdownItem> _getAssetListEntryOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "title"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "title");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "title"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "create-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "create-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
-					});
-			}
-		};
 	}
 
 	private String _getKeywords() {

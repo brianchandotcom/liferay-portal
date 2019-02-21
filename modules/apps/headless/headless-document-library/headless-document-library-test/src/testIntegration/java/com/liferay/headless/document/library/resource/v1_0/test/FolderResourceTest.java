@@ -17,8 +17,13 @@ package com.liferay.headless.document.library.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,6 +43,42 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		assertResponseCode(200, invokeDeleteFolderResponse(postFolder.getId()));
 
 		assertResponseCode(404, invokeGetFolderResponse(postFolder.getId()));
+	}
+
+	@Test
+	public void testGetContentSpaceFoldersPage() throws Exception {
+		Folder randomFolder1 = randomFolder();
+		Folder randomFolder2 = randomFolder();
+
+		invokePostContentSpaceFolder(testGroup.getGroupId(), randomFolder1);
+
+		invokePostContentSpaceFolder(testGroup.getGroupId(), randomFolder2);
+
+		Page<Folder> page = invokeGetContentSpaceFoldersPage(
+			testGroup.getGroupId(), Pagination.of(2, 1));
+
+		assertValid(page);
+
+		List<Folder> folders = (List<Folder>)page.getItems();
+
+		List<Folder> randomFolders = new ArrayList<Folder>() {
+			{
+				add(randomFolder1);
+				add(randomFolder2);
+			}
+		};
+
+		for (Folder randomFolder : randomFolders) {
+			Stream<Folder> stream = folders.stream();
+
+			Folder folder = stream.filter(
+				aFolder -> Objects.equals(
+					randomFolder.getName(), aFolder.getName())
+			).findFirst(
+			).get();
+
+			assertEquals(randomFolder, folder);
+		}
 	}
 
 	@Test
@@ -113,6 +154,23 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		if ((folder.getDateCreated() != null) &&
 			(folder.getDateModified() != null) && (folder.getId() != null) &&
 			Objects.equals(folder.getRepositoryId(), testGroup.getGroupId())) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Page<Folder> page) {
+		boolean valid = false;
+
+		Collection<Folder> folders = page.getItems();
+
+		int size = folders.size();
+
+		if ((page.getItemsPerPage() > 0) && (page.getLastPageNumber() > 0) &&
+			(page.getPageNumber() > 0) && (page.getTotalCount() > 0) &&
+			(size > 0)) {
 
 			valid = true;
 		}

@@ -27,8 +27,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.util.comparator.CategoryModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.CategoryTitleComparator;
-import com.liferay.message.boards.util.comparator.MBObjectsModifiedDateComparator;
-import com.liferay.message.boards.util.comparator.MBObjectsTitleComparator;
+import com.liferay.message.boards.util.comparator.MBObjectsComparator;
 import com.liferay.message.boards.util.comparator.ThreadModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.ThreadTitleComparator;
 import com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission;
@@ -259,13 +258,18 @@ public class MBEntriesManagementToolbarDisplayContext {
 								LanguageUtil.get(
 									_request, "filter-by-navigation"));
 						}));
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
+
+				String entriesNavigation = _getEntriesNavigation();
+
+				if (!entriesNavigation.equals("all")) {
+					addGroup(
+						dropdownGroupItem -> {
+							dropdownGroupItem.setDropdownItems(
+								_getOrderByDropdownItems());
+							dropdownGroupItem.setLabel(
+								LanguageUtil.get(_request, "order-by"));
+						});
+				}
 			}
 		};
 	}
@@ -431,13 +435,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 		String entriesNavigation = _getEntriesNavigation();
 
 		if (entriesNavigation.equals("all")) {
-			if (orderByCol.equals("modified-date")) {
-				orderByComparator = new MBObjectsModifiedDateComparator(
-					orderByAsc);
-			}
-			else if (orderByCol.equals("title")) {
-				orderByComparator = new MBObjectsTitleComparator(orderByAsc);
-			}
+			orderByComparator = new MBObjectsComparator(orderByAsc);
 		}
 		else if (entriesNavigation.equals("threads")) {
 			if (orderByCol.equals("modified-date")) {

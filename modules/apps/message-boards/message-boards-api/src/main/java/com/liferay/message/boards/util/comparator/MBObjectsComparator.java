@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class MBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
+public class MBObjectsComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
 		"modelCategory ASC, priority DESC, modifiedDate DESC, name ASC, " +
@@ -38,11 +38,11 @@ public class MBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 		"modelCategory", "priority", "modifiedDate", "name", "modelId"
 	};
 
-	public MBObjectsModifiedDateComparator() {
+	public MBObjectsComparator() {
 		this(false);
 	}
 
-	public MBObjectsModifiedDateComparator(boolean ascending) {
+	public MBObjectsComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

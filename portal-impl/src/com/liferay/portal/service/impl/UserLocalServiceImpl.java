@@ -6123,6 +6123,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Check if password has expired
 
+		if (PasswordModificationThreadLocal.isPasswordModified()) {
+			return user;
+		}
+
 		if (isPasswordExpired(user)) {
 			int graceLoginCount = user.getGraceLoginCount();
 

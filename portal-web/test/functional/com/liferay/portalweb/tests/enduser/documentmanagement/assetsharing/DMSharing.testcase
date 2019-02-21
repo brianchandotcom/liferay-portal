@@ -82,7 +82,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
 
 		User.logoutPG();
 
@@ -166,7 +169,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = "userea2@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2"
+		);
 
 		User.logoutPG();
 
@@ -176,7 +182,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = "userea2@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2"
+		);
 
 		User.logoutPG();
 
@@ -231,7 +240,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
 
 		User.logoutPG();
 
@@ -332,7 +344,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = PropsUtil.get("email.address.3"));
+		DMDocument.sharePG(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userName = "userfn1 userln1"
+		);
 
 		User.logoutPG();
 
@@ -375,7 +390,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
 
 		User.logoutPG();
 
@@ -409,7 +427,10 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
 
 		User.logoutPG();
 
@@ -495,13 +516,19 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_2.docx");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
 
 		User.logoutPG();
 
@@ -553,7 +580,8 @@ definition {
 
 		DMDocument.sharePG(
 			shareable = "true",
-			userEmailAddress = "userea@liferay.com"
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
 		);
 
 		User.logoutPG();
@@ -572,7 +600,8 @@ definition {
 
 		DMDocument.sharePG(
 			shareable = "true",
-			userEmailAddress = "userea2@liferay.com"
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2"
 		);
 
 		User.logoutPG();
@@ -619,7 +648,19 @@ definition {
 
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.sharePG(userEmailAddress = "userea@liferay.com,userea2@liferay.com");
+		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2"
+		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

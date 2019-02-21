@@ -61,7 +61,11 @@ class LayoutFinder extends Component {
 	 * @review
 	 */
 	_handleDocumentClick(event) {
-		if (this._showFinder && !this.refs.dialog.contains(event.target)) {
+		if (
+			this._showFinder &&
+			this.refs.dialog &&
+			!this.refs.dialog.contains(event.target)
+		) {
 			this._handleCloseDialogClick();
 		}
 	}

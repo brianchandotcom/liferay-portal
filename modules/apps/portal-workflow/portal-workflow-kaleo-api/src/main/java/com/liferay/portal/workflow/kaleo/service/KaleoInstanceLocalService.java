@@ -306,6 +306,9 @@ public interface KaleoInstanceLocalService extends BaseLocalService,
 	public KaleoInstance updateKaleoInstance(KaleoInstance kaleoInstance);
 
 	public KaleoInstance updateKaleoInstance(long kaleoInstanceId,
+		long rootKaleoInstanceTokenId) throws PortalException;
+
+	public KaleoInstance updateKaleoInstance(long kaleoInstanceId,
 		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
 		throws PortalException;
 }

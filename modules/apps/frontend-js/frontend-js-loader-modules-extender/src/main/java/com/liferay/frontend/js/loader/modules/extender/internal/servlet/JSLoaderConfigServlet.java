@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.Details;
+import com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderConfigPortalWebResources;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 
@@ -41,7 +43,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderConfigServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSLoaderConfigServlet",
 		"osgi.http.whiteboard.servlet.pattern=/js_loader_config",
 		"service.ranking:Integer=" + Details.MAX_VALUE_LESS_1K
 	},

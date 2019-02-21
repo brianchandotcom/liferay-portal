@@ -27,26 +27,27 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -58,10 +59,21 @@ import org.powermock.api.mockito.PowerMockito;
  */
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
+	@BeforeClass
+	public static void setUpClass() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		setUpGroupLocalServiceUtil();
-		setUpWorkflowHandlerRegistryUtil();
+	}
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -244,7 +256,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 			@Override
 			public String getClassName() {
-				return null;
+				return _TEST_CONTEXT_ENTRY_CLASS_NAME;
 			}
 
 			@Override
@@ -259,19 +271,10 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 		};
 
-		Map<String, WorkflowHandler<?>> workflowHandlerMap =
-			new TreeMap<String, WorkflowHandler<?>>() {
+		Registry registry = RegistryUtil.getRegistry();
 
-				@Override
-				public WorkflowHandler<?> get(Object key) {
-					return workflowHandler;
-				}
-
-			};
-
-		ReflectionTestUtil.setFieldValue(
-			_workflowHandlerRegistryUtil, "_workflowHandlerMap",
-			workflowHandlerMap);
+		_serviceRegistration = registry.registerService(
+			WorkflowHandler.class, workflowHandler);
 	}
 
 	protected PermissionChecker mockCompanyAdminPermissionChecker() {
@@ -366,7 +369,9 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 			@Override
 			public Map<String, Serializable> getOptionalAttributes() {
-				return new HashMap<>();
+				return Collections.singletonMap(
+					WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
+					_TEST_CONTEXT_ENTRY_CLASS_NAME);
 			}
 
 			@Override
@@ -401,22 +406,10 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			});
 	}
 
-	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	private static final String _TEST_CONTEXT_ENTRY_CLASS_NAME =
+		"TEST_CONTEXT_ENTRY_CLASS_NAME";
 
-		Constructor<WorkflowHandlerRegistryUtil> constructor =
-			WorkflowHandlerRegistryUtil.class.getDeclaredConstructor();
-
-		constructor.setAccessible(true);
-
-		_workflowHandlerRegistryUtil = constructor.newInstance();
-
-		ReflectionTestUtil.setFieldValue(
-			WorkflowHandlerRegistryUtil.class, "_instance",
-			_workflowHandlerRegistryUtil);
-	}
-
-	private WorkflowHandlerRegistryUtil _workflowHandlerRegistryUtil;
+	private ServiceRegistration<WorkflowHandler> _serviceRegistration;
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();
 

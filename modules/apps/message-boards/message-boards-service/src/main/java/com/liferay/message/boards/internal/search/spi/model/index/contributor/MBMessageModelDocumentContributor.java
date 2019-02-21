@@ -68,6 +68,7 @@ public class MBMessageModelDocumentContributor
 				mbMessage.getSubject());
 		}
 
+		document.addKeyword("parentMessageId", mbMessage.getParentMessageId());
 		document.addKeyword(
 			Field.ROOT_ENTRY_CLASS_PK, mbMessage.getRootMessageId());
 

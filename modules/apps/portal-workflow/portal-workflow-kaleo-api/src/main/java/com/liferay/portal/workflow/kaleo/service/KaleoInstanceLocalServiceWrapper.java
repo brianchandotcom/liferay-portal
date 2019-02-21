@@ -347,45 +347,57 @@ public class KaleoInstanceLocalServiceWrapper
 		return _kaleoInstanceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
+	String, String, String, String, String, Boolean, int, int,
+	OrderByComparator, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> search(
-		Long userId, String assetType, String nodeName,
+		Long userId, String assetClassName, String nodeName,
 		String kaleoDefinitionName, Boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceLocalService.search(userId, assetType, nodeName,
-			kaleoDefinitionName, completed, start, end, orderByComparator,
-			serviceContext);
+		return _kaleoInstanceLocalService.search(userId, assetClassName,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator, serviceContext);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> search(
-		Long userId, String assetDescription, String assetTitle,
-		String assetType, String nodeName, String kaleoDefinitionName,
+		Long userId, String assetClassName, String assetTitle,
+		String assetDescription, String nodeName, String kaleoDefinitionName,
 		Boolean completed, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceLocalService.search(userId, assetDescription,
-			assetTitle, assetType, nodeName, kaleoDefinitionName, completed,
-			start, end, orderByComparator, serviceContext);
+		return _kaleoInstanceLocalService.search(userId, assetClassName,
+			assetTitle, assetDescription, nodeName, kaleoDefinitionName,
+			completed, start, end, orderByComparator, serviceContext);
 	}
 
+	/**
+	* @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
+	String, String, String, String, String, Boolean,
+	ServiceContext)}
+	*/
+	@Deprecated
 	@Override
-	public int searchCount(Long userId, String assetType, String nodeName,
+	public int searchCount(Long userId, String assetClassName, String nodeName,
 		String kaleoDefinitionName, Boolean completed,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceLocalService.searchCount(userId, assetType,
+		return _kaleoInstanceLocalService.searchCount(userId, assetClassName,
 			nodeName, kaleoDefinitionName, completed, serviceContext);
 	}
 
 	@Override
-	public int searchCount(Long userId, String assetDescription,
-		String assetTitle, String assetType, String nodeName,
+	public int searchCount(Long userId, String assetClassName,
+		String assetTitle, String assetDescription, String nodeName,
 		String kaleoDefinitionName, Boolean completed,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceLocalService.searchCount(userId, assetDescription,
-			assetTitle, assetType, nodeName, kaleoDefinitionName, completed,
-			serviceContext);
+		return _kaleoInstanceLocalService.searchCount(userId, assetClassName,
+			assetTitle, assetDescription, nodeName, kaleoDefinitionName,
+			completed, serviceContext);
 	}
 
 	/**
@@ -398,6 +410,14 @@ public class KaleoInstanceLocalServiceWrapper
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
 		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance) {
 		return _kaleoInstanceLocalService.updateKaleoInstance(kaleoInstance);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance updateKaleoInstance(
+		long kaleoInstanceId, long rootKaleoInstanceTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceLocalService.updateKaleoInstance(kaleoInstanceId,
+			rootKaleoInstanceTokenId);
 	}
 
 	@Override

@@ -48,6 +48,18 @@ public class KaleoInstanceTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken addKaleoInstanceToken(
+		long currentKaleoNodeId, long kaleoDefinitionVersionId,
+		long kaleoInstanceId, long parentKaleoInstanceTokenId,
+		java.util.Map<String, java.io.Serializable> workflowContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceTokenLocalService.addKaleoInstanceToken(currentKaleoNodeId,
+			kaleoDefinitionVersionId, kaleoInstanceId,
+			parentKaleoInstanceTokenId, workflowContext, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken addKaleoInstanceToken(
 		long parentKaleoInstanceTokenId,
 		java.util.Map<String, java.io.Serializable> workflowContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -326,6 +338,28 @@ public class KaleoInstanceTokenLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstanceTokenLocalService.getRootKaleoInstanceToken(kaleoInstanceId,
 			workflowContext, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(String assetClassName,
+		String assetTitle, String assetDescription,
+		String currentKaleoNodeName, String kaleoDefinitionName,
+		Boolean completed, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoInstanceTokenLocalService.search(assetClassName,
+			assetTitle, assetDescription, currentKaleoNodeName,
+			kaleoDefinitionName, completed, start, end, sorts, serviceContext);
+	}
+
+	@Override
+	public int searchCount(String assetClassName, String assetTitle,
+		String assetDescription, String currentKaleoNodeName,
+		String kaleoDefinitionName, Boolean completed,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoInstanceTokenLocalService.searchCount(assetClassName,
+			assetTitle, assetDescription, currentKaleoNodeName,
+			kaleoDefinitionName, completed, serviceContext);
 	}
 
 	/**

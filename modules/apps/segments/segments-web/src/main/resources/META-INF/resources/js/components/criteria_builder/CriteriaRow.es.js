@@ -223,7 +223,7 @@ class CriteriaRow extends Component {
 		value,
 		type
 	) => {
-		const parsedValue = (type === PROPERTY_TYPES.DATE ||  type === PROPERTY_TYPES.DATE_TIME) ?
+		const parsedValue = (type === PROPERTY_TYPES.DATE || type === PROPERTY_TYPES.DATE_TIME) ?
 			dateToInternationalHuman(value) :
 			value;
 

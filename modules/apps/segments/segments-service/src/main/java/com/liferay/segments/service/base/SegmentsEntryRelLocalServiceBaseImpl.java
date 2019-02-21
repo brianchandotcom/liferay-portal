@@ -46,6 +46,7 @@ import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
+import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 
 import java.io.Serializable;
 
@@ -396,6 +397,44 @@ public abstract class SegmentsEntryRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the segments experience local service.
+	 *
+	 * @return the segments experience local service
+	 */
+	public com.liferay.segments.service.SegmentsExperienceLocalService getSegmentsExperienceLocalService() {
+		return segmentsExperienceLocalService;
+	}
+
+	/**
+	 * Sets the segments experience local service.
+	 *
+	 * @param segmentsExperienceLocalService the segments experience local service
+	 */
+	public void setSegmentsExperienceLocalService(
+		com.liferay.segments.service.SegmentsExperienceLocalService segmentsExperienceLocalService) {
+		this.segmentsExperienceLocalService = segmentsExperienceLocalService;
+	}
+
+	/**
+	 * Returns the segments experience persistence.
+	 *
+	 * @return the segments experience persistence
+	 */
+	public SegmentsExperiencePersistence getSegmentsExperiencePersistence() {
+		return segmentsExperiencePersistence;
+	}
+
+	/**
+	 * Sets the segments experience persistence.
+	 *
+	 * @param segmentsExperiencePersistence the segments experience persistence
+	 */
+	public void setSegmentsExperiencePersistence(
+		SegmentsExperiencePersistence segmentsExperiencePersistence) {
+		this.segmentsExperiencePersistence = segmentsExperiencePersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -568,6 +607,10 @@ public abstract class SegmentsEntryRelLocalServiceBaseImpl
 	protected SegmentsEntryRelLocalService segmentsEntryRelLocalService;
 	@BeanReference(type = SegmentsEntryRelPersistence.class)
 	protected SegmentsEntryRelPersistence segmentsEntryRelPersistence;
+	@BeanReference(type = com.liferay.segments.service.SegmentsExperienceLocalService.class)
+	protected com.liferay.segments.service.SegmentsExperienceLocalService segmentsExperienceLocalService;
+	@BeanReference(type = SegmentsExperiencePersistence.class)
+	protected SegmentsExperiencePersistence segmentsExperiencePersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

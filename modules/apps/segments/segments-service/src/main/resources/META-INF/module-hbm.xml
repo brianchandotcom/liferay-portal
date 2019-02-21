@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.segments.model.SegmentsEntry" />
 	<import class="com.liferay.segments.model.SegmentsEntryRel" />
+	<import class="com.liferay.segments.model.SegmentsExperience" />
 	<class name="com.liferay.segments.model.impl.SegmentsEntryImpl" table="SegmentsEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="segmentsEntryId" type="long">
 			<generator class="assigned" />
@@ -35,5 +36,22 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="segmentsEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.segments.model.impl.SegmentsExperienceImpl" table="SegmentsExperience">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="segmentsExperienceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="segmentsEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 </hibernate-mapping>

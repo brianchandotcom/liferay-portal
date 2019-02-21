@@ -33,4 +33,19 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 	</model>
+	<model name="com.liferay.segments.model.SegmentsExperience">
+		<field name="segmentsExperienceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="segmentsEntryId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field name="priority" type="int" />
+		<field name="active" type="boolean" />
+	</model>
 </model-hints>

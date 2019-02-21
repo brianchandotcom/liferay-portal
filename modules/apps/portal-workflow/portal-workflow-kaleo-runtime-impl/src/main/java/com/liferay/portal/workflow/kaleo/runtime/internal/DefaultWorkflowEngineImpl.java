@@ -421,6 +421,12 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
+	 *             String, String, String, String, String, Boolean, int, int,
+	 *             OrderByComparator, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowInstance> search(
 			Long userId, String assetType, String nodeName,
@@ -460,6 +466,12 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
+	 *             String, String, String, String, String, Boolean,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 			Long userId, String assetType, String nodeName,

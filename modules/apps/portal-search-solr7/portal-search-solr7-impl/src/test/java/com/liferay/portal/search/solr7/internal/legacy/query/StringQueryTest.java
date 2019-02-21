@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.solr7.internal.query;
+package com.liferay.portal.search.solr7.internal.legacy.query;
 
 import com.liferay.portal.search.solr7.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.query.BaseStringQueryTestCase;
+import com.liferay.portal.search.test.util.legacy.query.BaseStringQueryTestCase;
 
 import java.util.Arrays;
 import java.util.Collections;

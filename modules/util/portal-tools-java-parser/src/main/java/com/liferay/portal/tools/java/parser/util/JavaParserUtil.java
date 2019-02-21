@@ -85,6 +85,16 @@ import java.util.List;
  */
 public class JavaParserUtil {
 
+	public static String getLastLine(String s) {
+		int x = s.lastIndexOf("\n");
+
+		if (x != -1) {
+			return s.substring(x + 1);
+		}
+
+		return s;
+	}
+
 	public static JavaTerm parseJavaTerm(DetailAST detailAST) {
 		JavaTerm javaTerm = null;
 

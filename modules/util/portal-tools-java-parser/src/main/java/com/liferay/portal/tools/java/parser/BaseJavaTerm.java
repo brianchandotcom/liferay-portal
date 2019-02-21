@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.portal.tools.java.parser.util.JavaParserUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -112,7 +113,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			}
 		}
 
-		String lastLine = _getLastLine(s);
+		String lastLine = JavaParserUtil.getLastLine(s);
 
 		String trimmedLastLine = StringUtil.trim(lastLine);
 
@@ -587,7 +588,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	protected String getLastLine(StringBundler sb) {
-		return _getLastLine(sb.toString());
+		return JavaParserUtil.getLastLine(sb.toString());
 	}
 
 	protected int getLineLength(String line) {
@@ -689,16 +690,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 		if (x != -1) {
 			return s.substring(0, x);
-		}
-
-		return s;
-	}
-
-	private String _getLastLine(String s) {
-		int x = s.lastIndexOf("\n");
-
-		if (x != -1) {
-			return s.substring(x + 1);
 		}
 
 		return s;

@@ -123,7 +123,7 @@ public class ManagerImpl implements Manager {
 
 	@Override
 	public void inject(Object obj) {
-		_inject(ExtensionImpl.of(obj));
+		_inject(new ExtensionImpl(obj));
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class ManagerImpl implements Manager {
 		List<Extension> created = new ArrayList<>();
 
 		for (Class<?> extensionClass : extensionClasses) {
-			Extension extension = ExtensionImpl.of(
+			Extension extension = new ExtensionImpl(
 				_createInstance(extensionClass));
 
 			_inject(extension);

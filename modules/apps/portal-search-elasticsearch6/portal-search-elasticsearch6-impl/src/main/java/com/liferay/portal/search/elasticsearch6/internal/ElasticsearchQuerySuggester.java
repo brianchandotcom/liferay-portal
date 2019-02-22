@@ -62,6 +62,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		SuggestSearchResponse suggestSearchResponse =
 			executeSuggestSearchRequest(suggester, searchContext);
 
+		if (suggestSearchResponse == null) {
+			return StringPool.BLANK;
+		}
+
 		SuggestSearchResult suggestSearchResult =
 			suggestSearchResponse.getSuggesterResult(_SPELL_CHECK_REQUEST_NAME);
 
@@ -83,6 +87,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 		SuggestSearchResponse suggestSearchResponse =
 			executeSuggestSearchRequest(suggester, searchContext);
+
+		if (suggestSearchResponse == null) {
+			return Collections.emptyMap();
+		}
 
 		SuggestSearchResult suggestSearchResult =
 			suggestSearchResponse.getSuggesterResult(_SPELL_CHECK_REQUEST_NAME);
@@ -111,7 +119,9 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 					suggestSearchResultEntryOption -> {
 						String word = suggestSearchResultEntryOption.getText();
 
-						wordsList.add(word);
+						if (!wordsList.contains(word)) {
+							wordsList.add(word);
+						}
 					});
 			});
 
@@ -125,6 +135,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		SuggestSearchResponse suggestSearchResponse =
 			executeSuggestSearchRequest(suggester, searchContext);
 
+		if (suggestSearchResponse == null) {
+			return new SuggesterResults();
+		}
+
 		return translate(suggestSearchResponse);
 	}
 
@@ -136,6 +150,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 		SuggestSearchResponse suggestSearchResponse =
 			executeSuggestSearchRequest(suggester, searchContext);
+
+		if (suggestSearchResponse == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
 
 		SuggestSearchResult suggestSearchResult =
 			suggestSearchResponse.getSuggesterResult(_KEY_WORD_REQUEST_NAME);
@@ -189,22 +207,48 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 		stopWatch.start();
 
-		SuggestSearchRequest suggestSearchRequest = new SuggestSearchRequest(
-			_indexNameBuilder.getIndexName(searchContext.getCompanyId()));
+		try {
+			SuggestSearchRequest suggestSearchRequest =
+				new SuggestSearchRequest(
+					_indexNameBuilder.getIndexName(
+						searchContext.getCompanyId()));
 
-		suggestSearchRequest.setSuggester(suggester);
+			suggestSearchRequest.setSuggester(suggester);
 
-		SuggestSearchResponse suggestSearchResponse =
-			_searchEngineAdapter.execute(suggestSearchRequest);
+			SuggestSearchResponse suggestSearchResponse =
+				_searchEngineAdapter.execute(suggestSearchRequest);
 
-		if (_log.isInfoEnabled()) {
-			stopWatch.stop();
-
-			_log.info(
-				"Spell checked keywords in " + stopWatch.getTime() + "ms");
+			return suggestSearchResponse;
 		}
+		catch (RuntimeException re) {
+			String message = re.getMessage();
 
-		return suggestSearchResponse;
+			if (!message.contains("no mapping found for field")) {
+				Throwable throwable = re.getCause();
+
+				if (throwable != null) {
+					message = throwable.getMessage();
+				}
+			}
+
+			if (message.contains("no mapping found for field")) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("No dictionary indexed", re);
+				}
+
+				return null;
+			}
+
+			throw re;
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				stopWatch.stop();
+
+				_log.info(
+					"Spell checked keywords in " + stopWatch.getTime() + "ms");
+			}
+		}
 	}
 
 	protected List<String> getHighestRankedSuggestResults(
@@ -221,10 +265,9 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 					suggestSearchResultEntryOptions =
 						suggestSearchResultEntry.getOptions();
 
-				if (!suggestSearchResultEntryOptions.isEmpty()) {
-					SuggestSearchResult.Entry.Option
-						suggestSearchResultEntryOption =
-							suggestSearchResultEntryOptions.get(0);
+				for (SuggestSearchResult.Entry.Option
+						suggestSearchResultEntryOption :
+							suggestSearchResultEntryOptions) {
 
 					texts.add(suggestSearchResultEntryOption.getText());
 				}

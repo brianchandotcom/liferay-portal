@@ -77,6 +77,8 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 			jsonObject.put("totalCount", 0);
 
 			ServletResponseUtil.write(response, jsonObject.toString());
+
+			return;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(

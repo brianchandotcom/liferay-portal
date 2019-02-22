@@ -774,7 +774,6 @@ public class DDLExporterTest {
 	protected void setUpPermissionChecker() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(
 			new SimplePermissionChecker() {
-
 				{
 					init(TestPropsValues.getUser());
 				}

@@ -66,7 +66,6 @@ public class WorkflowNavigationDisplayContext {
 
 		return new NavigationItemList() {
 			{
-
 				for (WorkflowPortletTab workflowPortletTab :
 						workflowPortletTabs) {
 

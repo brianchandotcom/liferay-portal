@@ -291,7 +291,6 @@ public class SharedWithMeViewDisplayContext {
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
-
 			{
 				String className = ParamUtil.getString(_request, "className");
 

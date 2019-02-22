@@ -159,7 +159,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 		return new CreationMenu() {
 			{
-
 				for (Menu menu : menus) {
 					List<URLMenuItem> urlMenuItems =
 						(List<URLMenuItem>)(List<?>)menu.getMenuItems();

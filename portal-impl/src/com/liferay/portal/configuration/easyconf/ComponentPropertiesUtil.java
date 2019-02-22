@@ -163,7 +163,6 @@ public class ComponentPropertiesUtil {
 	private static final Map<String, Character> _charPoolChars;
 
 	static {
-
 		Constructor<ComponentProperties> constructor = null;
 
 		try {

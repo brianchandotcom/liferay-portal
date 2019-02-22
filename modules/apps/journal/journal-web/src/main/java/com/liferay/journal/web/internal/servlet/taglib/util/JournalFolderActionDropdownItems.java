@@ -141,7 +141,6 @@ public class JournalFolderActionDropdownItems {
 
 		return new DropdownItemList() {
 			{
-
 				if (JournalPermission.contains(
 						_themeDisplay.getPermissionChecker(),
 						_themeDisplay.getScopeGroupId(),

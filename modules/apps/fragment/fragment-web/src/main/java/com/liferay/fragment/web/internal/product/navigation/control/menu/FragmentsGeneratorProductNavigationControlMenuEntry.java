@@ -49,7 +49,7 @@ public class FragmentsGeneratorProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/fragments_generator.jsp";
+		return "/entries/fragment_entries_generator.jsp";
 	}
 
 	@Override

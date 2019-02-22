@@ -71,9 +71,8 @@ import org.osgi.jmx.framework.FrameworkMBean;
  */
 public class DeploymentStatement extends Statement {
 
-	public DeploymentStatement(Statement statement, Class<?> testClass) {
+	public DeploymentStatement(Statement statement) {
 		_statement = statement;
-		_testClass = testClass;
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class DeploymentStatement extends Statement {
 		FrameworkMBean frameworkMBean = JMXProxyUtil.newProxy(
 			_frameworkObjectName, FrameworkMBean.class);
 
-		long bundleId = _installBundle(frameworkMBean, _create(_testClass));
+		long bundleId = _installBundle(frameworkMBean, _create());
 
 		frameworkMBean.startBundle(bundleId);
 
@@ -93,17 +92,7 @@ public class DeploymentStatement extends Statement {
 		}
 	}
 
-	private static void _addTestClass(
-		JavaArchive javaArchive, Class<?> testClass) {
-
-		while (testClass != Object.class) {
-			javaArchive.addClass(testClass);
-
-			testClass = testClass.getSuperclass();
-		}
-	}
-
-	private static Archive<?> _create(Class<?> testClass) {
+	private static Archive<?> _create() {
 		try (Workspace workspace = new Workspace(_buildDir);
 			Project project = new Project(workspace, _buildDir);
 
@@ -125,7 +114,7 @@ public class DeploymentStatement extends Statement {
 
 			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
 
-			_process(javaArchive, testClass);
+			_process(javaArchive);
 
 			return javaArchive;
 		}
@@ -209,10 +198,8 @@ public class DeploymentStatement extends Statement {
 		}
 	}
 
-	private static void _process(JavaArchive javaArchive, Class<?> testClass) {
+	private static void _process(JavaArchive javaArchive) {
 		try {
-			_addTestClass(javaArchive, testClass);
-
 			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
 
 			javaArchive.addPackages(
@@ -331,6 +318,5 @@ public class DeploymentStatement extends Statement {
 	}
 
 	private final Statement _statement;
-	private final Class<?> _testClass;
 
 }

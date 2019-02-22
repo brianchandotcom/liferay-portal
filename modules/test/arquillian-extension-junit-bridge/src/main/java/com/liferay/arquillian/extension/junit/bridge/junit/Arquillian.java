@@ -130,7 +130,7 @@ public class Arquillian extends Runner implements Filterable {
 		}
 
 		if (hasTestMethod && !_REMOTE) {
-			return new DeploymentStatement(statement, _clazz);
+			return new DeploymentStatement(statement);
 		}
 
 		return statement;

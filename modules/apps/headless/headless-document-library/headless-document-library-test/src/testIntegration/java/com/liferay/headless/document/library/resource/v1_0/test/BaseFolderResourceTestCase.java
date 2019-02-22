@@ -14,9 +14,11 @@
 
 package com.liferay.headless.document.library.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.document.library.dto.v1_0.Folder;
@@ -29,11 +31,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -104,7 +107,9 @@ public abstract class BaseFolderResourceTestCase {
 
 			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/folders", contentSpaceId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return 	_outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<FolderImpl>>() {});
 	}
 
 	protected Http.Response invokeGetContentSpaceFoldersPageResponse(
@@ -239,7 +244,9 @@ public abstract class BaseFolderResourceTestCase {
 
 			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}/folders", folderId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+			return _outputObjectMapper.readValue(
+				HttpUtil.URLtoString(options),
+				new TypeReference<Page<FolderImpl>>() {});
 	}
 
 	protected Http.Response invokeGetFolderFoldersPageResponse(
@@ -513,5 +520,56 @@ public abstract class BaseFolderResourceTestCase {
 	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
+
+	protected static class Page<T> {
+
+		public Collection<T> getItems() {
+			return new ArrayList<>(_items);
+		}
+
+		public int getItemsPerPage() {
+			return _itemsPerPage;
+		}
+
+		public int getLastPageNumber() {
+			return _lastPageNumber;
+		}
+
+		public int getPageNumber() {
+			return _pageNumber;
+		}
+
+		public int getTotalCount() {
+			return _totalCount;
+		}
+
+		@JsonCreator
+		private static <T> Page<T> _of(
+			@JsonProperty("items") Collection<T> items,
+			@JsonProperty("itemsPerPage") int itemsPerPage,
+			@JsonProperty("lastPageNumber") int lastPageNumber,
+			@JsonProperty("pageNumber") int pageNumber,
+			@JsonProperty("totalCount") int totalCount) {
+
+			return new Page<>(
+				items, itemsPerPage, lastPageNumber, pageNumber, totalCount);
+		}
+
+		private Page(
+			Collection<T> items, int itemsPerPage, int lastPageNumber,
+			int pageNumber, int totalCount) {
+			_items = items;
+			_itemsPerPage = itemsPerPage;
+			_lastPageNumber = lastPageNumber;
+			_pageNumber = pageNumber;
+			_totalCount = totalCount;
+		}
+
+		private final Collection<T> _items;
+		private final int _itemsPerPage;
+		private final int _lastPageNumber;
+		private final int _pageNumber;
+		private final int _totalCount;
+	}
 
 }

@@ -25,6 +25,8 @@ import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.io.Serializable;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = {MBThreadUADDisplay.class, UADDisplay.class}
 )
 public class MBThreadUADDisplay extends BaseMBThreadUADDisplay {
+
+	@Override
+	public String getName(MBThread mbThread, Locale locale) {
+		return mbThread.getTitle();
+	}
 
 	@Override
 	public Serializable getParentContainerId(MBThread mbThread) {

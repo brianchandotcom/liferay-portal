@@ -61,7 +61,9 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	}
 
 	@Override
-	public Map<String, Object> getFieldValues(T t, String[] fieldNames) {
+	public Map<String, Object> getFieldValues(
+		T t, String[] fieldNames, Locale locale) {
+
 		Map<String, Object> modelAttributes = t.getModelAttributes();
 
 		Set<String> modelAttributesKeySet = modelAttributes.keySet();

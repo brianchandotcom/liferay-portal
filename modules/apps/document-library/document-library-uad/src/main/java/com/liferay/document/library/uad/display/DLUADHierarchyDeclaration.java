@@ -33,7 +33,7 @@ public class DLUADHierarchyDeclaration implements UADHierarchyDeclaration {
 
 	@Override
 	public String[] getExtraColumnNames() {
-		return new String[] {"type"};
+		return new String[] {"description", "type"};
 	}
 
 	@Override

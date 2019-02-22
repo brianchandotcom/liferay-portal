@@ -31,6 +31,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -71,10 +72,10 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 
 	@Override
 	public Map<String, Object> getFieldValues(
-		DLFolder dlFolder, String[] fieldNames) {
+		DLFolder dlFolder, String[] fieldNames, Locale locale) {
 
 		Map<String, Object> fieldValues = super.getFieldValues(
-			dlFolder, fieldNames);
+			dlFolder, fieldNames, locale);
 
 		List<String> fieldNamesList = Arrays.asList(fieldNames);
 
@@ -83,6 +84,11 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 		}
 
 		return fieldValues;
+	}
+
+	@Override
+	public String getName(DLFolder dlFolder, Locale locale) {
+		return dlFolder.getName();
 	}
 
 	@Override

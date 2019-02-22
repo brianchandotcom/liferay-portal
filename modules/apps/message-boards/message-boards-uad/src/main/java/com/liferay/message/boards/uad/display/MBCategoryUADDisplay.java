@@ -30,6 +30,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -63,6 +64,11 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 			"mbCategoryId", String.valueOf(mbCategory.getCategoryId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public String getName(MBCategory mbCategory, Locale locale) {
+		return mbCategory.getName();
 	}
 
 	@Override

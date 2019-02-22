@@ -23,6 +23,8 @@ import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.io.Serializable;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -68,6 +70,11 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 			"messageId", String.valueOf(mbMessage.getMessageId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public String getName(MBMessage mbMessage, Locale locale) {
+		return mbMessage.getSubject();
 	}
 
 	@Override

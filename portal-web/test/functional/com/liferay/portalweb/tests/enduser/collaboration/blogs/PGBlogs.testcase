@@ -1866,7 +1866,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsEntry.removeViewPermissionsPG(roleTitle = "Guest");
+		BlogsEntry.removeViewPermissionsPG(
+			entryTitle = "Blogs Entry2 Title",
+			roleTitle = "Guest"
+		);
 
 		User.logoutPG();
 

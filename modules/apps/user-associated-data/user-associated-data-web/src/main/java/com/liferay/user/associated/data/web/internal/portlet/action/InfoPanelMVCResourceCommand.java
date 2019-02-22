@@ -17,10 +17,12 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
+import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
@@ -52,12 +54,29 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String[] rowIds = ParamUtil.getStringValues(resourceRequest, "rowIds");
 
+		UADDisplay uadDisplay = null;
 		List<UADEntity> uadEntities = new ArrayList<>();
 
 		String uadRegistryKey = ParamUtil.getString(
 			resourceRequest, "uadRegistryKey");
 
-		UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
+		// todo review: is there a reason we can't just make sure the registry
+		//  key is always there?
+
+		if (Validator.isNull(uadRegistryKey)) {
+			String applicationKey = ParamUtil.getString(
+				resourceRequest, "applicationKey");
+
+			UADHierarchyDisplay uadHierarchyDisplay =
+				_uadRegistry.getUADHierarchyDisplay(applicationKey);
+
+			UADDisplay<?>[] uadDisplays = uadHierarchyDisplay.getUADDisplays();
+
+			uadDisplay = uadDisplays[0];
+		}
+		else {
+			uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
+		}
 
 		resourceRequest.setAttribute(
 			UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
@@ -66,7 +85,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			Object entity = uadDisplay.get(rowId);
 
 			UADEntity uadEntity = new UADEntity(
-				entity, uadDisplay.getPrimaryKey(entity), null);
+				entity, uadDisplay.getPrimaryKey(entity), null, null);
 
 			uadEntities.add(uadEntity);
 		}

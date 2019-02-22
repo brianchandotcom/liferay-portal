@@ -122,43 +122,45 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="panel-group">
-				<div class="panel panel-secondary">
-					<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
-						<span class="panel-title">
+				<c:if test="<%= !viewUADEntitiesDisplay.isHierarchical() %>">
+					<div class="panel panel-secondary">
+						<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
+							<span class="panel-title">
 
-							<%
-							String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
-							%>
+								<%
+								String applicationName = UADLanguageUtil.getApplicationName(viewUADEntitiesDisplay.getApplicationKey(), locale);
+								%>
 
-							<%= StringUtil.toUpperCase(applicationName, locale) %>
-						</span>
+								<%= StringUtil.toUpperCase(applicationName, locale) %>
+							</span>
 
-						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+							<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
-						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-					</div>
+							<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+						</div>
 
-					<div class="collapse panel-collapse show" id="<portlet:namespace />entitiesTypePanelBody">
-						<div class="panel-body">
+						<div class="collapse panel-collapse show" id="<portlet:namespace />entitiesTypePanelBody">
+							<div class="panel-body">
 
-							<%
-							for (UADDisplay uadDisplay : uadDisplays) {
-							%>
+								<%
+								for (UADDisplay uadDisplay : uadDisplays) {
+								%>
 
-								<clay:radio
-									checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
-									label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.searchCount(selectedUser.getUserId(), groupIds, null)) %>"
-									name="uadRegistryKey"
-									value="<%= uadDisplay.getTypeClass().getName() %>"
-								/>
+									<clay:radio
+										checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
+										label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.searchCount(selectedUser.getUserId(), groupIds, null)) %>"
+										name="uadRegistryKey"
+										value="<%= uadDisplay.getTypeClass().getName() %>"
+									/>
 
-							<%
-							}
-							%>
+								<%
+								}
+								%>
 
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:if>
 			</div>
 		</div>
 
@@ -224,16 +226,18 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		}
 	);
 
-	registerClickHandler(
-		<portlet:namespace />entitiesTypePanelBody,
-		function(event) {
-			const url = new Uri(baseURL);
+	<c:if test="<%= !viewUADEntitiesDisplay.isHierarchical() %>">
+		registerClickHandler(
+			<portlet:namespace />entitiesTypePanelBody,
+			function(event) {
+				const url = new Uri(baseURL);
 
-			url.setParameterValue('<portlet:namespace />uadRegistryKey', event.target.value);
+				url.setParameterValue('<portlet:namespace />uadRegistryKey', event.target.value);
 
-			Liferay.Util.navigate(url.toString());
-		}
-	);
+				Liferay.Util.navigate(url.toString());
+			}
+		);
+	</c:if>
 
 	registerClickHandler(
 		<portlet:namespace />scopePanelBody,

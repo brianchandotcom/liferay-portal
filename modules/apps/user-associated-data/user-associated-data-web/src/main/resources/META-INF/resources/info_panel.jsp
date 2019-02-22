@@ -37,7 +37,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 
 			Serializable primaryKey = uadEntity.getPrimaryKey();
 
-			Map<String, Object> displayValues = uadDisplay.getFieldValues(uadEntity.getEntity(), uadDisplay.getDisplayFieldNames());
+			Map<String, Object> displayValues = uadDisplay.getFieldValues(uadEntity.getEntity(), uadDisplay.getDisplayFieldNames(), locale);
 
 			String identifierFieldName = uadDisplay.getDisplayFieldNames()[0];
 			%>

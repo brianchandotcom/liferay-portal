@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 /**
@@ -23,6 +24,10 @@ public class ViewUADEntitiesDisplay {
 
 	public String getApplicationKey() {
 		return _applicationKey;
+	}
+
+	public ResultRowSplitter getResultRowSplitter() {
+		return _resultRowSplitter;
 	}
 
 	public SearchContainer<UADEntity> getSearchContainer() {
@@ -37,8 +42,20 @@ public class ViewUADEntitiesDisplay {
 		return _uadRegistryKey;
 	}
 
+	public boolean isHierarchical() {
+		return _hierarchical;
+	}
+
 	public void setApplicationKey(String applicationKey) {
 		_applicationKey = applicationKey;
+	}
+
+	public void setHierarchical(boolean hierarchical) {
+		_hierarchical = hierarchical;
+	}
+
+	public void setResultRowSplitter(ResultRowSplitter resultRowSplitter) {
+		_resultRowSplitter = resultRowSplitter;
 	}
 
 	public void setSearchContainer(SearchContainer<UADEntity> searchContainer) {
@@ -54,6 +71,8 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	private String _applicationKey;
+	private boolean _hierarchical;
+	private ResultRowSplitter _resultRowSplitter;
 	private SearchContainer<UADEntity> _searchContainer;
 	private String _typeName;
 	private String _uadRegistryKey;

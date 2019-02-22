@@ -30,7 +30,7 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 			{
 				add(
 					navigationItem -> {
-						boolean active = servletPath.equals("/review_uad_data.jsp");
+						boolean active = servletPath.equals("/review_uad_data.jsp") || servletPath.equals("/view_uad_hierarchy.jsp");
 						String href = StringPool.BLANK;
 
 						if (!active) {

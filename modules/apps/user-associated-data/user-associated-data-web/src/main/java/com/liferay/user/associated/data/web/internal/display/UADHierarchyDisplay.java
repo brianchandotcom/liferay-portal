@@ -15,6 +15,8 @@
 package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -23,11 +25,17 @@ import com.liferay.user.associated.data.display.UADHierarchyDeclaration;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Drew Brokke
@@ -39,12 +47,28 @@ public class UADHierarchyDisplay {
 
 		_uadHierarchyDeclaration = uadHierarchyDeclaration;
 
+		UADDisplay<?>[] containerUADDisplays =
+			_uadHierarchyDeclaration.getContainerUADDisplays();
+
 		_uadDisplays = ArrayUtil.append(
-			_uadHierarchyDeclaration.getContainerUADDisplays(),
+			containerUADDisplays,
 			_uadHierarchyDeclaration.getNoncontainerUADDisplays());
 
 		for (UADDisplay<?> uadDisplay : _uadDisplays) {
 			_uadDisplayMap.put(uadDisplay.getTypeClass(), uadDisplay);
+		}
+
+		if (containerUADDisplays.length == 0) {
+			_containerTypeClasses = null;
+		}
+		else {
+			Stream<UADDisplay> stream = Arrays.stream(containerUADDisplays);
+
+			_containerTypeClasses = stream.map(
+				UADDisplay::getTypeClass
+			).toArray(
+				Class[]::new
+			);
 		}
 	}
 
@@ -58,46 +82,118 @@ public class UADHierarchyDisplay {
 		return count;
 	}
 
-	public <T> Map<String, Object> getFieldValues(
-		T object, String[] fieldNames) {
+	public String[] getColumnFieldNames() {
+		return ArrayUtil.append(
+			new String[] {"name", "count"},
+			_uadHierarchyDeclaration.getExtraColumnNames());
+	}
 
-		Map<String, Object> fieldValues = new HashMap<>();
+	public Class<?>[] getContainerTypeClasses() {
+		return _containerTypeClasses;
+	}
 
-		Class<?> clazz = object.getClass();
+	public <T> String getEditURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, T object)
+		throws Exception {
 
-		if (object instanceof ContainerDisplay) {
-			ContainerDisplay<T> containerDisplay = (ContainerDisplay)object;
+		T unwrappedObject = unwrap(object);
 
-			T containerObject = containerDisplay.getContainer();
+		UADDisplay uadDisplay = _getUADDisplay(unwrappedObject);
 
-			clazz = containerObject.getClass();
-		}
+		return uadDisplay.getEditURL(
+			unwrappedObject, liferayPortletRequest, liferayPortletResponse);
+	}
 
-		UADDisplay<T> uadDisplay = (UADDisplay<T>)_uadDisplayMap.get(clazz);
+	public <T> Map<String, Object> getFieldValues(T object, Locale locale) {
+		Map<String, Object> fieldValues = new LinkedHashMap<>();
+
+		UADDisplay<T> uadDisplay = _getUADDisplay(unwrap(object));
 
 		if (uadDisplay != null) {
-			String[] allFieldNames = ArrayUtil.append(
-				fieldNames, _uadHierarchyDeclaration.getExtraColumnNames());
-
 			if (object instanceof ContainerDisplay) {
 				ContainerDisplay<T> containerDisplay =
 					(ContainerDisplay<T>)object;
 
 				T containerObject = containerDisplay.getContainer();
 
-				fieldValues = uadDisplay.getFieldValues(
-					containerObject, allFieldNames);
+				fieldValues.put(
+					"name", uadDisplay.getName(containerObject, locale));
 
 				fieldValues.put("count", containerDisplay.getCount());
+
+				fieldValues.putAll(
+					uadDisplay.getFieldValues(
+						containerObject,
+						_uadHierarchyDeclaration.getExtraColumnNames(),
+						locale));
 			}
 			else {
-				fieldValues = uadDisplay.getFieldValues(object, allFieldNames);
+				fieldValues.put("name", uadDisplay.getName(object, locale));
 
 				fieldValues.put("count", "--");
+
+				fieldValues.putAll(
+					uadDisplay.getFieldValues(
+						object, _uadHierarchyDeclaration.getExtraColumnNames(),
+						locale));
 			}
 		}
 
 		return fieldValues;
+	}
+
+	public Class<?> getFirstContainerTypeClass() {
+		if (_containerTypeClasses.length == 0) {
+			return null;
+		}
+
+		return _containerTypeClasses[0];
+	}
+
+	public <T> Serializable getPrimaryKey(T object) {
+		T unwrappedObject = unwrap(object);
+
+		UADDisplay uadDisplay = _getUADDisplay(unwrappedObject);
+
+		return uadDisplay.getPrimaryKey(unwrappedObject);
+	}
+
+	public String[] getSortingFieldNames() {
+		return getColumnFieldNames();
+	}
+
+	public UADDisplay<?>[] getUADDisplays() {
+		return _uadDisplays;
+	}
+
+	public <T> String getViewURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String applicationKey, T object, long selectedUserId)
+		throws Exception {
+
+		T unwrappedObject = unwrap(object);
+
+		UADDisplay uadDisplay = _getUADDisplay(unwrappedObject);
+
+		Class<?> typeClass = uadDisplay.getTypeClass();
+
+		if (!ArrayUtil.contains(_containerTypeClasses, typeClass)) {
+			return null;
+		}
+
+		PortletURL renderURL = liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter("applicationKey", applicationKey);
+		renderURL.setParameter("mvcRenderCommandName", "/view_uad_hierarchy");
+		renderURL.setParameter("parentContainerClass", typeClass.getName());
+		renderURL.setParameter(
+			"parentContainerId",
+			String.valueOf(uadDisplay.getPrimaryKey(unwrappedObject)));
+		renderURL.setParameter("p_u_i_d", String.valueOf(selectedUserId));
+
+		return renderURL.toString();
 	}
 
 	public List<Object> search(
@@ -147,6 +243,16 @@ public class UADHierarchyDisplay {
 		}
 
 		return ListUtil.subList(searchResults, start, end);
+	}
+
+	public <T> T unwrap(Object object) {
+		if (object instanceof ContainerDisplay) {
+			ContainerDisplay<T> containerDisplay = (ContainerDisplay<T>)object;
+
+			return containerDisplay.getContainer();
+		}
+
+		return (T)object;
 	}
 
 	protected <T> Collection<ContainerDisplay<T>> getContainerDisplays(
@@ -199,6 +305,17 @@ public class UADHierarchyDisplay {
 		return topLevelCategories.values();
 	}
 
+	private <T> UADDisplay _getUADDisplay(T object) {
+		for (Class typeClass : _uadDisplayMap.keySet()) {
+			if (typeClass.isInstance(object)) {
+				return _uadDisplayMap.get(typeClass);
+			}
+		}
+
+		return null;
+	}
+
+	private final Class<?>[] _containerTypeClasses;
 	private Map<Class<?>, UADDisplay<?>> _uadDisplayMap = new HashMap<>();
 	private final UADDisplay<?>[] _uadDisplays;
 	private final UADHierarchyDeclaration _uadHierarchyDeclaration;

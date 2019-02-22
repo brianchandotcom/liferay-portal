@@ -216,6 +216,10 @@ definition {
 			url = "http://www.able.com:8080"
 		);
 
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "Show Full Content"
+		);
+
 		WebContent.viewPGViaAP(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title"

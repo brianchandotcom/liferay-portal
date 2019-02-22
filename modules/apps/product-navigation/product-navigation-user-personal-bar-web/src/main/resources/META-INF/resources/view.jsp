@@ -19,7 +19,9 @@
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
-			<a class="text-default" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
+			<liferay-util:buffer
+				var="userAvatar"
+			>
 				<c:if test="<%= themeDisplay.isImpersonated() %>">
 					<aui:icon image="asterisk" markupView="lexicon" />
 				</c:if>
@@ -32,7 +34,11 @@
 				<span class="user-full-name">
 					<%= HtmlUtil.escape(user.getFullName()) %>
 				</span>
-			</a>
+			</liferay-util:buffer>
+
+			<liferay-product-navigation:user-personal-menu
+				label="<%= userAvatar %>"
+			/>
 
 			<%
 			int notificationsCount = GetterUtil.getInteger(request.getAttribute(ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT));
@@ -49,17 +55,6 @@
 				</aui:a>
 			</c:if>
 		</span>
-
-		<aui:script sandbox="<%= true %>">
-			var sidenavUserToggle = $('#<portlet:namespace />sidenavUserToggle');
-
-			sidenavUserToggle.on(
-				'click',
-				function(event) {
-					Liferay.fire('ProductMenu:openUserMenu');
-				}
-			);
-		</aui:script>
 	</c:when>
 	<c:otherwise>
 

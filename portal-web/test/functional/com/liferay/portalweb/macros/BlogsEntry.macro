@@ -1065,7 +1065,7 @@ definition {
 		}
 		else {
 			var key_tagName = "${tagName}";
-			var tagName = StringUtil.lowerCase("${tagName}");
+			var tagName = StringUtil.upperCase("${tagName}");
 
 			AssertClick.assertTextClickCaseInsensitive(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 

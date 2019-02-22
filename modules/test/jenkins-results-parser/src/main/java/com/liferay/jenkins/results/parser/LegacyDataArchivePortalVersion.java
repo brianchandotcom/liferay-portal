@@ -15,8 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,22 +82,8 @@ public class LegacyDataArchivePortalVersion {
 	}
 
 	private List<String> _getDataArchiveTypes() {
-		Properties testProperties = new Properties();
-
-		File testPropertiesFile = new File(
-			_portalVersionTestDirectory, "test.properties");
-
-		try (FileInputStream fileInputStream = new FileInputStream(
-				testPropertiesFile)) {
-
-			testProperties.load(fileInputStream);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to load ", testPropertiesFile.getPath()),
-				ioe);
-		}
+		Properties testProperties = JenkinsResultsParserUtil.getProperties(
+			new File(_portalVersionTestDirectory, "test.properties"));
 
 		if (!testProperties.containsKey(
 				"test.case.available.property.values[data.archive.type]")) {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
@@ -34,13 +35,12 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -50,7 +50,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -105,13 +104,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		setUpWorkflowHandlerRegistryUtil();
 
 		_notificationMessage = RandomTestUtil.randomString();
-	}
-
-	@After
-	public void tearDown() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
 	}
 
 	@Test
@@ -271,10 +263,13 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
+		Map<String, WorkflowHandler<?>> workflowHandlerMap =
+			ReflectionTestUtil.getFieldValue(
+				WorkflowHandlerRegistryUtil.class, "_workflowHandlerMap");
 
-		_serviceRegistration = registry.registerService(
-			WorkflowHandler.class, mockWorkflowHandler());
+		WorkflowHandler<?> workflowHandler = mockWorkflowHandler();
+
+		workflowHandlerMap.put(workflowHandler.getClassName(), workflowHandler);
 	}
 
 	protected void setUpWorkflowTaskManagerUtil() throws PortalException {
@@ -342,7 +337,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private String _notificationMessage;
 	private ServiceContext _serviceContext;
-	private ServiceRegistration<WorkflowHandler> _serviceRegistration;
 	private final WorkflowTaskUserNotificationHandler
 		_workflowTaskUserNotificationHandler =
 			new WorkflowTaskUserNotificationHandler();

@@ -1,4 +1,6 @@
 (function() {
+	var IE9 = AUI.Env.UA.ie >= 9;
+
 	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
 
 	var TPL_AUDIO_SCRIPT = 'boundingBox: "#" + mediaId,' +
@@ -11,8 +13,6 @@
 		'poster: "{poster}",' +
 		'url: "{url}",' +
 		'width: {width}';
-
-	var IE9 = AUI.Env.UA.ie >= 9;
 
 	var defaultVideoHeight = 300;
 	var defaultVideoWidth = 400;

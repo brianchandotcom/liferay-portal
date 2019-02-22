@@ -6228,15 +6228,30 @@ information. Make sure to commit in all build services results.
 	<target name="subrepository-unit-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
-		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
-
 		<trycatch property="failure.property">
 			<try>
 				<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
 					<arg value="-Dportal.build=true" />
 				</gradle-execute>
 
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test" />
+				<if>
+					<equals arg1="${subrepository.validation}" arg2="true" />
+					<then>
+						<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+						<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test"/>
+					</then>
+					<else>
+						<antcall inheritAll="false" target="record-test-class-file-names">
+							<param name="test.class.groups.size" value="${test.batch.size}" />
+						</antcall>
+
+						<gradle-execute checktask="true" dir="modules" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test">
+							<arg value="-Dbuild.exclude.ant.plugin=true" />
+							<arg value="-Dtest.class.group.index=${axis.variable}" />
+						</gradle-execute>
+					</else>
+				</if>
 			</try>
 			<catch>
 				<echo message="${gradle.output.error}" />

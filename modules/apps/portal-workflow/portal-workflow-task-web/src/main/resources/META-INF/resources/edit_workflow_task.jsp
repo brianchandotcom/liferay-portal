@@ -181,22 +181,12 @@ renderResponse.setTitle(headerTitle);
 									</c:if>
 
 									<%
-									AssetRenderer lastApprovedAssetRenderer = assetRendererFactory.getAssetRenderer(assetRenderer.getClassPK(), AssetRendererFactory.TYPE_LATEST_APPROVED);
-
-									AssetEntry lastApprovedAssetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), lastApprovedAssetRenderer.getClassPK());
+									String viewUsagesURL = assetRenderer.getURLViewUsages(request);
 									%>
 
-									<c:if test="<%= lastApprovedAssetEntry != null %>">
-
-										<%
-										PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(request, AssetEntryUsage.class.getName(), PortletProvider.Action.VIEW);
-
-										viewUsagesURL.setParameter("assetEntryId", String.valueOf(lastApprovedAssetEntry.getEntryId()));
-										viewUsagesURL.setParameter("redirect", currentURL);
-										%>
-
+									<c:if test="<%= Validator.isNotNull(viewUsagesURL) %>">
 										<liferay-frontend:management-bar-button
-											href="<%= viewUsagesURL.toString() %>"
+											href="<%= viewUsagesURL %>"
 											icon="list"
 											label="view-usages"
 										/>

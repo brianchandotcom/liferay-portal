@@ -46,7 +46,7 @@ public class ValueImpl implements Value {
 	public void setData(
 			String data) {
 
-			this.data = data;
+			this.data = (String)data;
 	}
 
 	@JsonIgnore
@@ -56,7 +56,7 @@ public class ValueImpl implements Value {
 
 			try {
 				data =
-					dataUnsafeSupplier.get();
+					(String)dataUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -73,7 +73,7 @@ public class ValueImpl implements Value {
 	public void setDocument(
 			ContentDocument document) {
 
-			this.document = document;
+			this.document = (ContentDocumentImpl)document;
 	}
 
 	@JsonIgnore
@@ -83,7 +83,7 @@ public class ValueImpl implements Value {
 
 			try {
 				document =
-					documentUnsafeSupplier.get();
+					(ContentDocumentImpl)documentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -92,7 +92,7 @@ public class ValueImpl implements Value {
 
 	@GraphQLField
 	@JsonProperty
-	protected ContentDocument document;
+	protected ContentDocumentImpl document;
 	public Long getDocumentId() {
 			return documentId;
 	}
@@ -100,7 +100,7 @@ public class ValueImpl implements Value {
 	public void setDocumentId(
 			Long documentId) {
 
-			this.documentId = documentId;
+			this.documentId = (Long)documentId;
 	}
 
 	@JsonIgnore
@@ -110,7 +110,7 @@ public class ValueImpl implements Value {
 
 			try {
 				documentId =
-					documentIdUnsafeSupplier.get();
+					(Long)documentIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,7 +127,7 @@ public class ValueImpl implements Value {
 	public void setGeo(
 			Geo geo) {
 
-			this.geo = geo;
+			this.geo = (GeoImpl)geo;
 	}
 
 	@JsonIgnore
@@ -137,7 +137,7 @@ public class ValueImpl implements Value {
 
 			try {
 				geo =
-					geoUnsafeSupplier.get();
+					(GeoImpl)geoUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -146,7 +146,7 @@ public class ValueImpl implements Value {
 
 	@GraphQLField
 	@JsonProperty
-	protected Geo geo;
+	protected GeoImpl geo;
 	public String getLink() {
 			return link;
 	}
@@ -154,7 +154,7 @@ public class ValueImpl implements Value {
 	public void setLink(
 			String link) {
 
-			this.link = link;
+			this.link = (String)link;
 	}
 
 	@JsonIgnore
@@ -164,7 +164,7 @@ public class ValueImpl implements Value {
 
 			try {
 				link =
-					linkUnsafeSupplier.get();
+					(String)linkUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -181,7 +181,7 @@ public class ValueImpl implements Value {
 	public void setStructuredContent(
 			StructuredContent structuredContent) {
 
-			this.structuredContent = structuredContent;
+			this.structuredContent = (StructuredContentImpl)structuredContent;
 	}
 
 	@JsonIgnore
@@ -191,7 +191,7 @@ public class ValueImpl implements Value {
 
 			try {
 				structuredContent =
-					structuredContentUnsafeSupplier.get();
+					(StructuredContentImpl)structuredContentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -200,7 +200,7 @@ public class ValueImpl implements Value {
 
 	@GraphQLField
 	@JsonProperty
-	protected StructuredContent structuredContent;
+	protected StructuredContentImpl structuredContent;
 	public Long getStructuredContentId() {
 			return structuredContentId;
 	}
@@ -208,7 +208,7 @@ public class ValueImpl implements Value {
 	public void setStructuredContentId(
 			Long structuredContentId) {
 
-			this.structuredContentId = structuredContentId;
+			this.structuredContentId = (Long)structuredContentId;
 	}
 
 	@JsonIgnore
@@ -218,7 +218,7 @@ public class ValueImpl implements Value {
 
 			try {
 				structuredContentId =
-					structuredContentIdUnsafeSupplier.get();
+					(Long)structuredContentIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

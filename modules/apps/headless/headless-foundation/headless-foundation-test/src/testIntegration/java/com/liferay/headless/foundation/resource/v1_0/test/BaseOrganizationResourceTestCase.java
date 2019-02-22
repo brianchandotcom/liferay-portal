@@ -24,6 +24,11 @@ import com.liferay.headless.foundation.dto.v1_0.Location;
 import com.liferay.headless.foundation.dto.v1_0.Organization;
 import com.liferay.headless.foundation.dto.v1_0.Services;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
+import com.liferay.headless.foundation.internal.dto.v1_0.ContactInformationImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.LocationImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.OrganizationImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ServicesImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -226,7 +231,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setComment(String comment) {
-				this.comment = comment;
+				this.comment = (String)comment;
 	}
 
 	@JsonIgnore
@@ -234,7 +239,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
 
 				try {
-					comment = commentUnsafeSupplier.get();
+					comment =
+						(String)commentUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -248,7 +254,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
-				this.contactInformation = contactInformation;
+				this.contactInformation = (ContactInformationImpl)contactInformation;
 	}
 
 	@JsonIgnore
@@ -256,7 +262,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
 
 				try {
-					contactInformation = contactInformationUnsafeSupplier.get();
+					contactInformation =
+						(ContactInformationImpl)contactInformationUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -264,13 +271,13 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@JsonProperty
-	protected ContactInformation contactInformation;
+	protected ContactInformationImpl contactInformation;
 	public Long getId() {
 				return id;
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -278,7 +285,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -292,7 +300,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setLocation(Location location) {
-				this.location = location;
+				this.location = (LocationImpl)location;
 	}
 
 	@JsonIgnore
@@ -300,7 +308,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
 
 				try {
-					location = locationUnsafeSupplier.get();
+					location =
+						(LocationImpl)locationUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -308,13 +317,13 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Location location;
+	protected LocationImpl location;
 	public String getLogo() {
 				return logo;
 	}
 
 	public void setLogo(String logo) {
-				this.logo = logo;
+				this.logo = (String)logo;
 	}
 
 	@JsonIgnore
@@ -322,7 +331,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
 
 				try {
-					logo = logoUnsafeSupplier.get();
+					logo =
+						(String)logoUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -336,7 +346,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setMembers(UserAccount[] members) {
-				this.members = members;
+				this.members = (UserAccountImpl[])members;
 	}
 
 	@JsonIgnore
@@ -344,7 +354,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
 
 				try {
-					members = membersUnsafeSupplier.get();
+					members =
+						(UserAccountImpl[])membersUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -352,13 +363,13 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@JsonProperty
-	protected UserAccount[] members;
+	protected UserAccountImpl[] members;
 	public Long[] getMembersIds() {
 				return membersIds;
 	}
 
 	public void setMembersIds(Long[] membersIds) {
-				this.membersIds = membersIds;
+				this.membersIds = (Long[])membersIds;
 	}
 
 	@JsonIgnore
@@ -366,7 +377,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
 
 				try {
-					membersIds = membersIdsUnsafeSupplier.get();
+					membersIds =
+						(Long[])membersIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -380,7 +392,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -388,7 +400,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -402,7 +415,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setParentOrganization(Organization parentOrganization) {
-				this.parentOrganization = parentOrganization;
+				this.parentOrganization = (OrganizationImpl)parentOrganization;
 	}
 
 	@JsonIgnore
@@ -410,7 +423,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Organization, Throwable> parentOrganizationUnsafeSupplier) {
 
 				try {
-					parentOrganization = parentOrganizationUnsafeSupplier.get();
+					parentOrganization =
+						(OrganizationImpl)parentOrganizationUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -418,13 +432,13 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Organization parentOrganization;
+	protected OrganizationImpl parentOrganization;
 	public Long getParentOrganizationId() {
 				return parentOrganizationId;
 	}
 
 	public void setParentOrganizationId(Long parentOrganizationId) {
-				this.parentOrganizationId = parentOrganizationId;
+				this.parentOrganizationId = (Long)parentOrganizationId;
 	}
 
 	@JsonIgnore
@@ -432,7 +446,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
 
 				try {
-					parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
+					parentOrganizationId =
+						(Long)parentOrganizationIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -446,7 +461,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	public void setServices(Services[] services) {
-				this.services = services;
+				this.services = (ServicesImpl[])services;
 	}
 
 	@JsonIgnore
@@ -454,7 +469,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
 
 				try {
-					services = servicesUnsafeSupplier.get();
+					services =
+						(ServicesImpl[])servicesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -462,13 +478,13 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Services[] services;
+	protected ServicesImpl[] services;
 	public Organization[] getSubOrganization() {
 				return subOrganization;
 	}
 
 	public void setSubOrganization(Organization[] subOrganization) {
-				this.subOrganization = subOrganization;
+				this.subOrganization = (OrganizationImpl[])subOrganization;
 	}
 
 	@JsonIgnore
@@ -476,7 +492,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Organization[], Throwable> subOrganizationUnsafeSupplier) {
 
 				try {
-					subOrganization = subOrganizationUnsafeSupplier.get();
+					subOrganization =
+						(OrganizationImpl[])subOrganizationUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -484,13 +501,13 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Organization[] subOrganization;
+	protected OrganizationImpl[] subOrganization;
 	public Long[] getSubOrganizationIds() {
 				return subOrganizationIds;
 	}
 
 	public void setSubOrganizationIds(Long[] subOrganizationIds) {
-				this.subOrganizationIds = subOrganizationIds;
+				this.subOrganizationIds = (Long[])subOrganizationIds;
 	}
 
 	@JsonIgnore
@@ -498,7 +515,8 @@ public abstract class BaseOrganizationResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
 
 				try {
-					subOrganizationIds = subOrganizationIdsUnsafeSupplier.get();
+					subOrganizationIds =
+						(Long[])subOrganizationIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

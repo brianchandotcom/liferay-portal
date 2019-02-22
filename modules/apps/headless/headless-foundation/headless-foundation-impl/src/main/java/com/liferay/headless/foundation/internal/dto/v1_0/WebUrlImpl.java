@@ -43,7 +43,7 @@ public class WebUrlImpl implements WebUrl {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class WebUrlImpl implements WebUrl {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class WebUrlImpl implements WebUrl {
 	public void setUrl(
 			String url) {
 
-			this.url = url;
+			this.url = (String)url;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class WebUrlImpl implements WebUrl {
 
 			try {
 				url =
-					urlUnsafeSupplier.get();
+					(String)urlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class WebUrlImpl implements WebUrl {
 	public void setUrlType(
 			String urlType) {
 
-			this.urlType = urlType;
+			this.urlType = (String)urlType;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class WebUrlImpl implements WebUrl {
 
 			try {
 				urlType =
-					urlTypeUnsafeSupplier.get();
+					(String)urlTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

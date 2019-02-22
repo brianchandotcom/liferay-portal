@@ -44,7 +44,7 @@ public class FieldValuesImpl implements FieldValues {
 	public void setDocument(
 			FormDocument document) {
 
-			this.document = document;
+			this.document = (FormDocumentImpl)document;
 	}
 
 	@JsonIgnore
@@ -54,7 +54,7 @@ public class FieldValuesImpl implements FieldValues {
 
 			try {
 				document =
-					documentUnsafeSupplier.get();
+					(FormDocumentImpl)documentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -63,7 +63,7 @@ public class FieldValuesImpl implements FieldValues {
 
 	@GraphQLField
 	@JsonProperty
-	protected FormDocument document;
+	protected FormDocumentImpl document;
 	public Long getDocumentId() {
 			return documentId;
 	}
@@ -71,7 +71,7 @@ public class FieldValuesImpl implements FieldValues {
 	public void setDocumentId(
 			Long documentId) {
 
-			this.documentId = documentId;
+			this.documentId = (Long)documentId;
 	}
 
 	@JsonIgnore
@@ -81,7 +81,7 @@ public class FieldValuesImpl implements FieldValues {
 
 			try {
 				documentId =
-					documentIdUnsafeSupplier.get();
+					(Long)documentIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -98,7 +98,7 @@ public class FieldValuesImpl implements FieldValues {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -108,7 +108,7 @@ public class FieldValuesImpl implements FieldValues {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -125,7 +125,7 @@ public class FieldValuesImpl implements FieldValues {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -135,7 +135,7 @@ public class FieldValuesImpl implements FieldValues {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -152,7 +152,7 @@ public class FieldValuesImpl implements FieldValues {
 	public void setValue(
 			String value) {
 
-			this.value = value;
+			this.value = (String)value;
 	}
 
 	@JsonIgnore
@@ -162,7 +162,7 @@ public class FieldValuesImpl implements FieldValues {
 
 			try {
 				value =
-					valueUnsafeSupplier.get();
+					(String)valueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

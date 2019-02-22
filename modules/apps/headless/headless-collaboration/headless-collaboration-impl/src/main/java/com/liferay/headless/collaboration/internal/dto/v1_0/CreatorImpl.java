@@ -43,7 +43,7 @@ public class CreatorImpl implements Creator {
 	public void setAdditionalName(
 			String additionalName) {
 
-			this.additionalName = additionalName;
+			this.additionalName = (String)additionalName;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				additionalName =
-					additionalNameUnsafeSupplier.get();
+					(String)additionalNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class CreatorImpl implements Creator {
 	public void setFamilyName(
 			String familyName) {
 
-			this.familyName = familyName;
+			this.familyName = (String)familyName;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				familyName =
-					familyNameUnsafeSupplier.get();
+					(String)familyNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class CreatorImpl implements Creator {
 	public void setGivenName(
 			String givenName) {
 
-			this.givenName = givenName;
+			this.givenName = (String)givenName;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				givenName =
-					givenNameUnsafeSupplier.get();
+					(String)givenNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class CreatorImpl implements Creator {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -151,7 +151,7 @@ public class CreatorImpl implements Creator {
 	public void setImage(
 			String image) {
 
-			this.image = image;
+			this.image = (String)image;
 	}
 
 	@JsonIgnore
@@ -161,7 +161,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				image =
-					imageUnsafeSupplier.get();
+					(String)imageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -178,7 +178,7 @@ public class CreatorImpl implements Creator {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -188,7 +188,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -205,7 +205,7 @@ public class CreatorImpl implements Creator {
 	public void setProfileURL(
 			String profileURL) {
 
-			this.profileURL = profileURL;
+			this.profileURL = (String)profileURL;
 	}
 
 	@JsonIgnore
@@ -215,7 +215,7 @@ public class CreatorImpl implements Creator {
 
 			try {
 				profileURL =
-					profileURLUnsafeSupplier.get();
+					(String)profileURLUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

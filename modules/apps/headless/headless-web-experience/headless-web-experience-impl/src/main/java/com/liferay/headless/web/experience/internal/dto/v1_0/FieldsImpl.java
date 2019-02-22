@@ -44,7 +44,7 @@ public class FieldsImpl implements Fields {
 	public void setDataType(
 			String dataType) {
 
-			this.dataType = dataType;
+			this.dataType = (String)dataType;
 	}
 
 	@JsonIgnore
@@ -54,7 +54,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				dataType =
-					dataTypeUnsafeSupplier.get();
+					(String)dataTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -71,7 +71,7 @@ public class FieldsImpl implements Fields {
 	public void setLabel(
 			String label) {
 
-			this.label = label;
+			this.label = (String)label;
 	}
 
 	@JsonIgnore
@@ -81,7 +81,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				label =
-					labelUnsafeSupplier.get();
+					(String)labelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -98,7 +98,7 @@ public class FieldsImpl implements Fields {
 	public void setLocalizable(
 			Boolean localizable) {
 
-			this.localizable = localizable;
+			this.localizable = (Boolean)localizable;
 	}
 
 	@JsonIgnore
@@ -108,7 +108,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				localizable =
-					localizableUnsafeSupplier.get();
+					(Boolean)localizableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -125,7 +125,7 @@ public class FieldsImpl implements Fields {
 	public void setMultiple(
 			Boolean multiple) {
 
-			this.multiple = multiple;
+			this.multiple = (Boolean)multiple;
 	}
 
 	@JsonIgnore
@@ -135,7 +135,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				multiple =
-					multipleUnsafeSupplier.get();
+					(Boolean)multipleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -152,7 +152,7 @@ public class FieldsImpl implements Fields {
 	public void setInputControl(
 			String inputControl) {
 
-			this.inputControl = inputControl;
+			this.inputControl = (String)inputControl;
 	}
 
 	@JsonIgnore
@@ -162,7 +162,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				inputControl =
-					inputControlUnsafeSupplier.get();
+					(String)inputControlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -179,7 +179,7 @@ public class FieldsImpl implements Fields {
 	public void setPredefinedValue(
 			String predefinedValue) {
 
-			this.predefinedValue = predefinedValue;
+			this.predefinedValue = (String)predefinedValue;
 	}
 
 	@JsonIgnore
@@ -189,7 +189,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				predefinedValue =
-					predefinedValueUnsafeSupplier.get();
+					(String)predefinedValueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -206,7 +206,7 @@ public class FieldsImpl implements Fields {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -216,7 +216,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -233,7 +233,7 @@ public class FieldsImpl implements Fields {
 	public void setRepeatable(
 			Boolean repeatable) {
 
-			this.repeatable = repeatable;
+			this.repeatable = (Boolean)repeatable;
 	}
 
 	@JsonIgnore
@@ -243,7 +243,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				repeatable =
-					repeatableUnsafeSupplier.get();
+					(Boolean)repeatableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -260,7 +260,7 @@ public class FieldsImpl implements Fields {
 	public void setRequired(
 			Boolean required) {
 
-			this.required = required;
+			this.required = (Boolean)required;
 	}
 
 	@JsonIgnore
@@ -270,7 +270,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				required =
-					requiredUnsafeSupplier.get();
+					(Boolean)requiredUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -287,7 +287,7 @@ public class FieldsImpl implements Fields {
 	public void setShowLabel(
 			Boolean showLabel) {
 
-			this.showLabel = showLabel;
+			this.showLabel = (Boolean)showLabel;
 	}
 
 	@JsonIgnore
@@ -297,7 +297,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				showLabel =
-					showLabelUnsafeSupplier.get();
+					(Boolean)showLabelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -314,7 +314,7 @@ public class FieldsImpl implements Fields {
 	public void setOptions(
 			Options[] options) {
 
-			this.options = options;
+			this.options = (OptionsImpl[])options;
 	}
 
 	@JsonIgnore
@@ -324,7 +324,7 @@ public class FieldsImpl implements Fields {
 
 			try {
 				options =
-					optionsUnsafeSupplier.get();
+					(OptionsImpl[])optionsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -333,6 +333,6 @@ public class FieldsImpl implements Fields {
 
 	@GraphQLField
 	@JsonProperty
-	protected Options[] options;
+	protected OptionsImpl[] options;
 
 }

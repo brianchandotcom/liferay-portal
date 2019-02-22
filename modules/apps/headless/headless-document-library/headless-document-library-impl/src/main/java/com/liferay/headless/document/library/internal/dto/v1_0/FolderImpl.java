@@ -45,7 +45,7 @@ public class FolderImpl implements Folder {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -55,7 +55,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -72,7 +72,7 @@ public class FolderImpl implements Folder {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -82,7 +82,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -99,7 +99,7 @@ public class FolderImpl implements Folder {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -109,7 +109,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -126,7 +126,7 @@ public class FolderImpl implements Folder {
 	public void setHasDocuments(
 			Boolean hasDocuments) {
 
-			this.hasDocuments = hasDocuments;
+			this.hasDocuments = (Boolean)hasDocuments;
 	}
 
 	@JsonIgnore
@@ -136,7 +136,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				hasDocuments =
-					hasDocumentsUnsafeSupplier.get();
+					(Boolean)hasDocumentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -153,7 +153,7 @@ public class FolderImpl implements Folder {
 	public void setHasFolders(
 			Boolean hasFolders) {
 
-			this.hasFolders = hasFolders;
+			this.hasFolders = (Boolean)hasFolders;
 	}
 
 	@JsonIgnore
@@ -163,7 +163,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				hasFolders =
-					hasFoldersUnsafeSupplier.get();
+					(Boolean)hasFoldersUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -180,7 +180,7 @@ public class FolderImpl implements Folder {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -190,7 +190,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -207,7 +207,7 @@ public class FolderImpl implements Folder {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -217,7 +217,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -234,7 +234,7 @@ public class FolderImpl implements Folder {
 	public void setRepositoryId(
 			Long repositoryId) {
 
-			this.repositoryId = repositoryId;
+			this.repositoryId = (Long)repositoryId;
 	}
 
 	@JsonIgnore
@@ -244,7 +244,7 @@ public class FolderImpl implements Folder {
 
 			try {
 				repositoryId =
-					repositoryIdUnsafeSupplier.get();
+					(Long)repositoryIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

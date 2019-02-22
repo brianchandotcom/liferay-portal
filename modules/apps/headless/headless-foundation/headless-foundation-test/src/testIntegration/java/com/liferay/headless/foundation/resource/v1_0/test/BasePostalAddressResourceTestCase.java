@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
+import com.liferay.headless.foundation.internal.dto.v1_0.PostalAddressImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -145,7 +146,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setAddressCountry(String addressCountry) {
-				this.addressCountry = addressCountry;
+				this.addressCountry = (String)addressCountry;
 	}
 
 	@JsonIgnore
@@ -153,7 +154,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
 				try {
-					addressCountry = addressCountryUnsafeSupplier.get();
+					addressCountry =
+						(String)addressCountryUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -167,7 +169,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setAddressLocality(String addressLocality) {
-				this.addressLocality = addressLocality;
+				this.addressLocality = (String)addressLocality;
 	}
 
 	@JsonIgnore
@@ -175,7 +177,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
 
 				try {
-					addressLocality = addressLocalityUnsafeSupplier.get();
+					addressLocality =
+						(String)addressLocalityUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -189,7 +192,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setAddressRegion(String addressRegion) {
-				this.addressRegion = addressRegion;
+				this.addressRegion = (String)addressRegion;
 	}
 
 	@JsonIgnore
@@ -197,7 +200,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
 
 				try {
-					addressRegion = addressRegionUnsafeSupplier.get();
+					addressRegion =
+						(String)addressRegionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -211,7 +215,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setAddressType(String addressType) {
-				this.addressType = addressType;
+				this.addressType = (String)addressType;
 	}
 
 	@JsonIgnore
@@ -219,7 +223,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
 
 				try {
-					addressType = addressTypeUnsafeSupplier.get();
+					addressType =
+						(String)addressTypeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -233,7 +238,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -241,7 +246,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -255,7 +261,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setPostalCode(String postalCode) {
-				this.postalCode = postalCode;
+				this.postalCode = (String)postalCode;
 	}
 
 	@JsonIgnore
@@ -263,7 +269,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
 
 				try {
-					postalCode = postalCodeUnsafeSupplier.get();
+					postalCode =
+						(String)postalCodeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -277,7 +284,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setStreetAddressLine1(String streetAddressLine1) {
-				this.streetAddressLine1 = streetAddressLine1;
+				this.streetAddressLine1 = (String)streetAddressLine1;
 	}
 
 	@JsonIgnore
@@ -285,7 +292,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
 
 				try {
-					streetAddressLine1 = streetAddressLine1UnsafeSupplier.get();
+					streetAddressLine1 =
+						(String)streetAddressLine1UnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -299,7 +307,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setStreetAddressLine2(String streetAddressLine2) {
-				this.streetAddressLine2 = streetAddressLine2;
+				this.streetAddressLine2 = (String)streetAddressLine2;
 	}
 
 	@JsonIgnore
@@ -307,7 +315,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
 
 				try {
-					streetAddressLine2 = streetAddressLine2UnsafeSupplier.get();
+					streetAddressLine2 =
+						(String)streetAddressLine2UnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -321,7 +330,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	public void setStreetAddressLine3(String streetAddressLine3) {
-				this.streetAddressLine3 = streetAddressLine3;
+				this.streetAddressLine3 = (String)streetAddressLine3;
 	}
 
 	@JsonIgnore
@@ -329,7 +338,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
 
 				try {
-					streetAddressLine3 = streetAddressLine3UnsafeSupplier.get();
+					streetAddressLine3 =
+						(String)streetAddressLine3UnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

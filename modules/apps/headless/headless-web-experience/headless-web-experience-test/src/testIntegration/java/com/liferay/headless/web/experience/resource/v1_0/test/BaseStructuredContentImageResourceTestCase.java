@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.web.experience.dto.v1_0.Creator;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContentImage;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImageImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -177,7 +179,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setContentUrl(String contentUrl) {
-				this.contentUrl = contentUrl;
+				this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -185,7 +187,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
 				try {
-					contentUrl = contentUrlUnsafeSupplier.get();
+					contentUrl =
+						(String)contentUrlUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -199,7 +202,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -207,7 +210,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -215,13 +219,13 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -229,7 +233,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -243,7 +248,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -251,7 +256,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -265,7 +271,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-				this.encodingFormat = encodingFormat;
+				this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -273,7 +279,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 				try {
-					encodingFormat = encodingFormatUnsafeSupplier.get();
+					encodingFormat =
+						(String)encodingFormatUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -287,7 +294,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setFileExtension(String fileExtension) {
-				this.fileExtension = fileExtension;
+				this.fileExtension = (String)fileExtension;
 	}
 
 	@JsonIgnore
@@ -295,7 +302,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
 				try {
-					fileExtension = fileExtensionUnsafeSupplier.get();
+					fileExtension =
+						(String)fileExtensionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -309,7 +317,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -317,7 +325,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -331,7 +340,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-				this.sizeInBytes = sizeInBytes;
+				this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -339,7 +348,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
 				try {
-					sizeInBytes = sizeInBytesUnsafeSupplier.get();
+					sizeInBytes =
+						(Number)sizeInBytesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -353,7 +363,7 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	public void setTitle(String title) {
-				this.title = title;
+				this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -361,7 +371,8 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
 				try {
-					title = titleUnsafeSupplier.get();
+					title =
+						(String)titleUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

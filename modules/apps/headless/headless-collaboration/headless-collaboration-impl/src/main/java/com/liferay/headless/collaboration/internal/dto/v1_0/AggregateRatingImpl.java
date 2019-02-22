@@ -43,7 +43,7 @@ public class AggregateRatingImpl implements AggregateRating {
 	public void setBestRating(
 			Number bestRating) {
 
-			this.bestRating = bestRating;
+			this.bestRating = (Number)bestRating;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class AggregateRatingImpl implements AggregateRating {
 
 			try {
 				bestRating =
-					bestRatingUnsafeSupplier.get();
+					(Number)bestRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class AggregateRatingImpl implements AggregateRating {
 	public void setRatingCount(
 			Number ratingCount) {
 
-			this.ratingCount = ratingCount;
+			this.ratingCount = (Number)ratingCount;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class AggregateRatingImpl implements AggregateRating {
 
 			try {
 				ratingCount =
-					ratingCountUnsafeSupplier.get();
+					(Number)ratingCountUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class AggregateRatingImpl implements AggregateRating {
 	public void setRatingValue(
 			Number ratingValue) {
 
-			this.ratingValue = ratingValue;
+			this.ratingValue = (Number)ratingValue;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class AggregateRatingImpl implements AggregateRating {
 
 			try {
 				ratingValue =
-					ratingValueUnsafeSupplier.get();
+					(Number)ratingValueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class AggregateRatingImpl implements AggregateRating {
 	public void setWorstRating(
 			Number worstRating) {
 
-			this.worstRating = worstRating;
+			this.worstRating = (Number)worstRating;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class AggregateRatingImpl implements AggregateRating {
 
 			try {
 				worstRating =
-					worstRatingUnsafeSupplier.get();
+					(Number)worstRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

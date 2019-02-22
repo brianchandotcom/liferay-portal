@@ -43,7 +43,7 @@ public class ValidationImpl implements Validation {
 	public void setErrorMessage(
 			String errorMessage) {
 
-			this.errorMessage = errorMessage;
+			this.errorMessage = (String)errorMessage;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class ValidationImpl implements Validation {
 
 			try {
 				errorMessage =
-					errorMessageUnsafeSupplier.get();
+					(String)errorMessageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class ValidationImpl implements Validation {
 	public void setExpression(
 			String expression) {
 
-			this.expression = expression;
+			this.expression = (String)expression;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class ValidationImpl implements Validation {
 
 			try {
 				expression =
-					expressionUnsafeSupplier.get();
+					(String)expressionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class ValidationImpl implements Validation {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class ValidationImpl implements Validation {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImageImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -204,7 +205,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	public void setContentUrl(String contentUrl) {
-				this.contentUrl = contentUrl;
+				this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -212,7 +213,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
 				try {
-					contentUrl = contentUrlUnsafeSupplier.get();
+					contentUrl =
+						(String)contentUrlUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -226,7 +228,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-				this.encodingFormat = encodingFormat;
+				this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -234,7 +236,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 				try {
-					encodingFormat = encodingFormatUnsafeSupplier.get();
+					encodingFormat =
+						(String)encodingFormatUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -248,7 +251,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	public void setFileExtension(String fileExtension) {
-				this.fileExtension = fileExtension;
+				this.fileExtension = (String)fileExtension;
 	}
 
 	@JsonIgnore
@@ -256,7 +259,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
 				try {
-					fileExtension = fileExtensionUnsafeSupplier.get();
+					fileExtension =
+						(String)fileExtensionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -270,7 +274,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -278,7 +282,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -292,7 +297,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-				this.sizeInBytes = sizeInBytes;
+				this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -300,7 +305,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
 				try {
-					sizeInBytes = sizeInBytesUnsafeSupplier.get();
+					sizeInBytes =
+						(Number)sizeInBytesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -314,7 +320,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	public void setTitle(String title) {
-				this.title = title;
+				this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -322,7 +328,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
 				try {
-					title = titleUnsafeSupplier.get();
+					title =
+						(String)titleUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

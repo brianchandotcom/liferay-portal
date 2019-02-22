@@ -43,7 +43,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setAddressCountry(
 			String addressCountry) {
 
-			this.addressCountry = addressCountry;
+			this.addressCountry = (String)addressCountry;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				addressCountry =
-					addressCountryUnsafeSupplier.get();
+					(String)addressCountryUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setAddressLocality(
 			String addressLocality) {
 
-			this.addressLocality = addressLocality;
+			this.addressLocality = (String)addressLocality;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				addressLocality =
-					addressLocalityUnsafeSupplier.get();
+					(String)addressLocalityUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setAddressRegion(
 			String addressRegion) {
 
-			this.addressRegion = addressRegion;
+			this.addressRegion = (String)addressRegion;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				addressRegion =
-					addressRegionUnsafeSupplier.get();
+					(String)addressRegionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setAddressType(
 			String addressType) {
 
-			this.addressType = addressType;
+			this.addressType = (String)addressType;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				addressType =
-					addressTypeUnsafeSupplier.get();
+					(String)addressTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -151,7 +151,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -161,7 +161,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -178,7 +178,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setPostalCode(
 			String postalCode) {
 
-			this.postalCode = postalCode;
+			this.postalCode = (String)postalCode;
 	}
 
 	@JsonIgnore
@@ -188,7 +188,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				postalCode =
-					postalCodeUnsafeSupplier.get();
+					(String)postalCodeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -205,7 +205,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setStreetAddressLine1(
 			String streetAddressLine1) {
 
-			this.streetAddressLine1 = streetAddressLine1;
+			this.streetAddressLine1 = (String)streetAddressLine1;
 	}
 
 	@JsonIgnore
@@ -215,7 +215,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				streetAddressLine1 =
-					streetAddressLine1UnsafeSupplier.get();
+					(String)streetAddressLine1UnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -232,7 +232,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setStreetAddressLine2(
 			String streetAddressLine2) {
 
-			this.streetAddressLine2 = streetAddressLine2;
+			this.streetAddressLine2 = (String)streetAddressLine2;
 	}
 
 	@JsonIgnore
@@ -242,7 +242,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				streetAddressLine2 =
-					streetAddressLine2UnsafeSupplier.get();
+					(String)streetAddressLine2UnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -259,7 +259,7 @@ public class PostalAddressImpl implements PostalAddress {
 	public void setStreetAddressLine3(
 			String streetAddressLine3) {
 
-			this.streetAddressLine3 = streetAddressLine3;
+			this.streetAddressLine3 = (String)streetAddressLine3;
 	}
 
 	@JsonIgnore
@@ -269,7 +269,7 @@ public class PostalAddressImpl implements PostalAddress {
 
 			try {
 				streetAddressLine3 =
-					streetAddressLine3UnsafeSupplier.get();
+					(String)streetAddressLine3UnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

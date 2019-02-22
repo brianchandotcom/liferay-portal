@@ -43,7 +43,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 	public void setContentUrl(
 			String contentUrl) {
 
-			this.contentUrl = contentUrl;
+			this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 
 			try {
 				contentUrl =
-					contentUrlUnsafeSupplier.get();
+					(String)contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 	public void setEncodingFormat(
 			String encodingFormat) {
 
-			this.encodingFormat = encodingFormat;
+			this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 
 			try {
 				encodingFormat =
-					encodingFormatUnsafeSupplier.get();
+					(String)encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 	public void setFileExtension(
 			String fileExtension) {
 
-			this.fileExtension = fileExtension;
+			this.fileExtension = (String)fileExtension;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 
 			try {
 				fileExtension =
-					fileExtensionUnsafeSupplier.get();
+					(String)fileExtensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -151,7 +151,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 	public void setSizeInBytes(
 			Number sizeInBytes) {
 
-			this.sizeInBytes = sizeInBytes;
+			this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -161,7 +161,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 
 			try {
 				sizeInBytes =
-					sizeInBytesUnsafeSupplier.get();
+					(Number)sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -178,7 +178,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 	public void setTitle(
 			String title) {
 
-			this.title = title;
+			this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -188,7 +188,7 @@ public class BlogPostingImageImpl implements BlogPostingImage {
 
 			try {
 				title =
-					titleUnsafeSupplier.get();
+					(String)titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

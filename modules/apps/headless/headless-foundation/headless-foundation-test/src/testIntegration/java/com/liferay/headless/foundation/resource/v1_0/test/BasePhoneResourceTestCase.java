@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.Phone;
+import com.liferay.headless.foundation.internal.dto.v1_0.PhoneImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -140,7 +141,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	public void setExtension(String extension) {
-				this.extension = extension;
+				this.extension = (String)extension;
 	}
 
 	@JsonIgnore
@@ -148,7 +149,8 @@ public abstract class BasePhoneResourceTestCase {
 				UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
 
 				try {
-					extension = extensionUnsafeSupplier.get();
+					extension =
+						(String)extensionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -162,7 +164,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -170,7 +172,8 @@ public abstract class BasePhoneResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -184,7 +187,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-				this.phoneNumber = phoneNumber;
+				this.phoneNumber = (String)phoneNumber;
 	}
 
 	@JsonIgnore
@@ -192,7 +195,8 @@ public abstract class BasePhoneResourceTestCase {
 				UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
 
 				try {
-					phoneNumber = phoneNumberUnsafeSupplier.get();
+					phoneNumber =
+						(String)phoneNumberUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -206,7 +210,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	public void setPhoneType(String phoneType) {
-				this.phoneType = phoneType;
+				this.phoneType = (String)phoneType;
 	}
 
 	@JsonIgnore
@@ -214,7 +218,8 @@ public abstract class BasePhoneResourceTestCase {
 				UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
 
 				try {
-					phoneType = phoneTypeUnsafeSupplier.get();
+					phoneType =
+						(String)phoneTypeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

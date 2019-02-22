@@ -47,7 +47,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setCompleted(
 			Boolean completed) {
 
-			this.completed = completed;
+			this.completed = (Boolean)completed;
 	}
 
 	@JsonIgnore
@@ -57,7 +57,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				completed =
-					completedUnsafeSupplier.get();
+					(Boolean)completedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -74,7 +74,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setDateCompleted(
 			Date dateCompleted) {
 
-			this.dateCompleted = dateCompleted;
+			this.dateCompleted = (Date)dateCompleted;
 	}
 
 	@JsonIgnore
@@ -84,7 +84,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				dateCompleted =
-					dateCompletedUnsafeSupplier.get();
+					(Date)dateCompletedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -101,7 +101,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -111,7 +111,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -128,7 +128,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setDefinitionName(
 			String definitionName) {
 
-			this.definitionName = definitionName;
+			this.definitionName = (String)definitionName;
 	}
 
 	@JsonIgnore
@@ -138,7 +138,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				definitionName =
-					definitionNameUnsafeSupplier.get();
+					(String)definitionNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -155,7 +155,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -165,7 +165,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -182,7 +182,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setDueDate(
 			Date dueDate) {
 
-			this.dueDate = dueDate;
+			this.dueDate = (Date)dueDate;
 	}
 
 	@JsonIgnore
@@ -192,7 +192,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				dueDate =
-					dueDateUnsafeSupplier.get();
+					(Date)dueDateUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -209,7 +209,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -219,7 +219,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -263,7 +263,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setLogsIds(
 			Long[] logsIds) {
 
-			this.logsIds = logsIds;
+			this.logsIds = (Long[])logsIds;
 	}
 
 	@JsonIgnore
@@ -273,7 +273,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				logsIds =
-					logsIdsUnsafeSupplier.get();
+					(Long[])logsIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -290,7 +290,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -300,7 +300,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -344,7 +344,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setTransitions(
 			String[] transitions) {
 
-			this.transitions = transitions;
+			this.transitions = (String[])transitions;
 	}
 
 	@JsonIgnore
@@ -354,7 +354,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				transitions =
-					transitionsUnsafeSupplier.get();
+					(String[])transitionsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

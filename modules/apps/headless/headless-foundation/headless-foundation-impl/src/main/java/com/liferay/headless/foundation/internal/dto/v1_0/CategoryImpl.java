@@ -48,7 +48,7 @@ public class CategoryImpl implements Category {
 	public void setAvailableLanguages(
 			String[] availableLanguages) {
 
-			this.availableLanguages = availableLanguages;
+			this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -58,7 +58,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				availableLanguages =
-					availableLanguagesUnsafeSupplier.get();
+					(String[])availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -75,7 +75,7 @@ public class CategoryImpl implements Category {
 	public void setParentCategory(
 			ParentCategory parentCategory) {
 
-			this.parentCategory = parentCategory;
+			this.parentCategory = (ParentCategoryImpl)parentCategory;
 	}
 
 	@JsonIgnore
@@ -85,7 +85,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				parentCategory =
-					parentCategoryUnsafeSupplier.get();
+					(ParentCategoryImpl)parentCategoryUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -94,7 +94,7 @@ public class CategoryImpl implements Category {
 
 	@GraphQLField
 	@JsonProperty
-	protected ParentCategory parentCategory;
+	protected ParentCategoryImpl parentCategory;
 	public Creator getCreator() {
 			return creator;
 	}
@@ -102,7 +102,7 @@ public class CategoryImpl implements Category {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -112,7 +112,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -121,7 +121,7 @@ public class CategoryImpl implements Category {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Long getCreatorId() {
 			return creatorId;
 	}
@@ -129,7 +129,7 @@ public class CategoryImpl implements Category {
 	public void setCreatorId(
 			Long creatorId) {
 
-			this.creatorId = creatorId;
+			this.creatorId = (Long)creatorId;
 	}
 
 	@JsonIgnore
@@ -139,7 +139,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				creatorId =
-					creatorIdUnsafeSupplier.get();
+					(Long)creatorIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -156,7 +156,7 @@ public class CategoryImpl implements Category {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -166,7 +166,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -183,7 +183,7 @@ public class CategoryImpl implements Category {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -193,7 +193,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -210,7 +210,7 @@ public class CategoryImpl implements Category {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -220,7 +220,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -237,7 +237,7 @@ public class CategoryImpl implements Category {
 	public void setHasCategories(
 			Boolean hasCategories) {
 
-			this.hasCategories = hasCategories;
+			this.hasCategories = (Boolean)hasCategories;
 	}
 
 	@JsonIgnore
@@ -247,7 +247,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				hasCategories =
-					hasCategoriesUnsafeSupplier.get();
+					(Boolean)hasCategoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -264,7 +264,7 @@ public class CategoryImpl implements Category {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -274,7 +274,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -291,7 +291,7 @@ public class CategoryImpl implements Category {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -301,7 +301,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -318,7 +318,7 @@ public class CategoryImpl implements Category {
 	public void setParentVocabulary(
 			ParentVocabulary parentVocabulary) {
 
-			this.parentVocabulary = parentVocabulary;
+			this.parentVocabulary = (ParentVocabularyImpl)parentVocabulary;
 	}
 
 	@JsonIgnore
@@ -328,7 +328,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				parentVocabulary =
-					parentVocabularyUnsafeSupplier.get();
+					(ParentVocabularyImpl)parentVocabularyUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -337,7 +337,7 @@ public class CategoryImpl implements Category {
 
 	@GraphQLField
 	@JsonProperty
-	protected ParentVocabulary parentVocabulary;
+	protected ParentVocabularyImpl parentVocabulary;
 	public Long getParentVocabularyId() {
 			return parentVocabularyId;
 	}
@@ -345,7 +345,7 @@ public class CategoryImpl implements Category {
 	public void setParentVocabularyId(
 			Long parentVocabularyId) {
 
-			this.parentVocabularyId = parentVocabularyId;
+			this.parentVocabularyId = (Long)parentVocabularyId;
 	}
 
 	@JsonIgnore
@@ -355,7 +355,7 @@ public class CategoryImpl implements Category {
 
 			try {
 				parentVocabularyId =
-					parentVocabularyIdUnsafeSupplier.get();
+					(Long)parentVocabularyIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

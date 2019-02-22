@@ -48,7 +48,7 @@ public class FormImpl implements Form {
 	public void setAvailableLanguages(
 			String[] availableLanguages) {
 
-			this.availableLanguages = availableLanguages;
+			this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -58,7 +58,7 @@ public class FormImpl implements Form {
 
 			try {
 				availableLanguages =
-					availableLanguagesUnsafeSupplier.get();
+					(String[])availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -75,7 +75,7 @@ public class FormImpl implements Form {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -85,7 +85,7 @@ public class FormImpl implements Form {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -102,7 +102,7 @@ public class FormImpl implements Form {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -112,7 +112,7 @@ public class FormImpl implements Form {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -121,7 +121,7 @@ public class FormImpl implements Form {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -129,7 +129,7 @@ public class FormImpl implements Form {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -139,7 +139,7 @@ public class FormImpl implements Form {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -156,7 +156,7 @@ public class FormImpl implements Form {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -166,7 +166,7 @@ public class FormImpl implements Form {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -183,7 +183,7 @@ public class FormImpl implements Form {
 	public void setDatePublished(
 			Date datePublished) {
 
-			this.datePublished = datePublished;
+			this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -193,7 +193,7 @@ public class FormImpl implements Form {
 
 			try {
 				datePublished =
-					datePublishedUnsafeSupplier.get();
+					(Date)datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -210,7 +210,7 @@ public class FormImpl implements Form {
 	public void setDefaultLanguage(
 			String defaultLanguage) {
 
-			this.defaultLanguage = defaultLanguage;
+			this.defaultLanguage = (String)defaultLanguage;
 	}
 
 	@JsonIgnore
@@ -220,7 +220,7 @@ public class FormImpl implements Form {
 
 			try {
 				defaultLanguage =
-					defaultLanguageUnsafeSupplier.get();
+					(String)defaultLanguageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -237,7 +237,7 @@ public class FormImpl implements Form {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -247,7 +247,7 @@ public class FormImpl implements Form {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -264,7 +264,7 @@ public class FormImpl implements Form {
 	public void setFormRecords(
 			FormRecord[] formRecords) {
 
-			this.formRecords = formRecords;
+			this.formRecords = (FormRecordImpl[])formRecords;
 	}
 
 	@JsonIgnore
@@ -274,7 +274,7 @@ public class FormImpl implements Form {
 
 			try {
 				formRecords =
-					formRecordsUnsafeSupplier.get();
+					(FormRecordImpl[])formRecordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -283,7 +283,7 @@ public class FormImpl implements Form {
 
 	@GraphQLField
 	@JsonProperty
-	protected FormRecord[] formRecords;
+	protected FormRecordImpl[] formRecords;
 	public Long[] getFormRecordsIds() {
 			return formRecordsIds;
 	}
@@ -291,7 +291,7 @@ public class FormImpl implements Form {
 	public void setFormRecordsIds(
 			Long[] formRecordsIds) {
 
-			this.formRecordsIds = formRecordsIds;
+			this.formRecordsIds = (Long[])formRecordsIds;
 	}
 
 	@JsonIgnore
@@ -301,7 +301,7 @@ public class FormImpl implements Form {
 
 			try {
 				formRecordsIds =
-					formRecordsIdsUnsafeSupplier.get();
+					(Long[])formRecordsIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -318,7 +318,7 @@ public class FormImpl implements Form {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -328,7 +328,7 @@ public class FormImpl implements Form {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -345,7 +345,7 @@ public class FormImpl implements Form {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -355,7 +355,7 @@ public class FormImpl implements Form {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -372,7 +372,7 @@ public class FormImpl implements Form {
 	public void setStructure(
 			FormStructure structure) {
 
-			this.structure = structure;
+			this.structure = (FormStructureImpl)structure;
 	}
 
 	@JsonIgnore
@@ -382,7 +382,7 @@ public class FormImpl implements Form {
 
 			try {
 				structure =
-					structureUnsafeSupplier.get();
+					(FormStructureImpl)structureUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -391,7 +391,7 @@ public class FormImpl implements Form {
 
 	@GraphQLField
 	@JsonProperty
-	protected FormStructure structure;
+	protected FormStructureImpl structure;
 	public Long getStructureId() {
 			return structureId;
 	}
@@ -399,7 +399,7 @@ public class FormImpl implements Form {
 	public void setStructureId(
 			Long structureId) {
 
-			this.structureId = structureId;
+			this.structureId = (Long)structureId;
 	}
 
 	@JsonIgnore
@@ -409,7 +409,7 @@ public class FormImpl implements Form {
 
 			try {
 				structureId =
-					structureIdUnsafeSupplier.get();
+					(Long)structureIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

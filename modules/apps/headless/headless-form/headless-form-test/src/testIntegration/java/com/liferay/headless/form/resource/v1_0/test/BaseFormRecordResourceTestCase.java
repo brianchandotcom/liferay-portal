@@ -24,6 +24,10 @@ import com.liferay.headless.form.dto.v1_0.FieldValues;
 import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.Options;
+import com.liferay.headless.form.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.form.internal.dto.v1_0.FieldValuesImpl;
+import com.liferay.headless.form.internal.dto.v1_0.FormImpl;
+import com.liferay.headless.form.internal.dto.v1_0.FormRecordImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -220,7 +224,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -228,7 +232,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -236,13 +241,13 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -250,7 +255,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -264,7 +270,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -272,7 +278,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -286,7 +293,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	public void setDatePublished(Date datePublished) {
-				this.datePublished = datePublished;
+				this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -294,7 +301,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
 				try {
-					datePublished = datePublishedUnsafeSupplier.get();
+					datePublished =
+						(Date)datePublishedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -308,7 +316,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	public void setDraft(Boolean draft) {
-				this.draft = draft;
+				this.draft = (Boolean)draft;
 	}
 
 	@JsonIgnore
@@ -316,7 +324,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> draftUnsafeSupplier) {
 
 				try {
-					draft = draftUnsafeSupplier.get();
+					draft =
+						(Boolean)draftUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -330,7 +339,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	public void setFieldValues(FieldValues[] fieldValues) {
-				this.fieldValues = fieldValues;
+				this.fieldValues = (FieldValuesImpl[])fieldValues;
 	}
 
 	@JsonIgnore
@@ -338,7 +347,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<FieldValues[], Throwable> fieldValuesUnsafeSupplier) {
 
 				try {
-					fieldValues = fieldValuesUnsafeSupplier.get();
+					fieldValues =
+						(FieldValuesImpl[])fieldValuesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -346,13 +356,13 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@JsonProperty
-	protected FieldValues[] fieldValues;
+	protected FieldValuesImpl[] fieldValues;
 	public Form getForm() {
 				return form;
 	}
 
 	public void setForm(Form form) {
-				this.form = form;
+				this.form = (FormImpl)form;
 	}
 
 	@JsonIgnore
@@ -360,7 +370,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Form, Throwable> formUnsafeSupplier) {
 
 				try {
-					form = formUnsafeSupplier.get();
+					form =
+						(FormImpl)formUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -368,13 +379,13 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Form form;
+	protected FormImpl form;
 	public Long getFormId() {
 				return formId;
 	}
 
 	public void setFormId(Long formId) {
-				this.formId = formId;
+				this.formId = (Long)formId;
 	}
 
 	@JsonIgnore
@@ -382,7 +393,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Long, Throwable> formIdUnsafeSupplier) {
 
 				try {
-					formId = formIdUnsafeSupplier.get();
+					formId =
+						(Long)formIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -396,7 +408,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -404,7 +416,8 @@ public abstract class BaseFormRecordResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

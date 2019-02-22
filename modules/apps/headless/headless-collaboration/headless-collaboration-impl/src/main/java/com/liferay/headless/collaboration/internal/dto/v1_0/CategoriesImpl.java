@@ -43,7 +43,7 @@ public class CategoriesImpl implements Categories {
 	public void setCategoryId(
 			Long categoryId) {
 
-			this.categoryId = categoryId;
+			this.categoryId = (Long)categoryId;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class CategoriesImpl implements Categories {
 
 			try {
 				categoryId =
-					categoryIdUnsafeSupplier.get();
+					(Long)categoryIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class CategoriesImpl implements Categories {
 	public void setCategoryName(
 			String categoryName) {
 
-			this.categoryName = categoryName;
+			this.categoryName = (String)categoryName;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class CategoriesImpl implements Categories {
 
 			try {
 				categoryName =
-					categoryNameUnsafeSupplier.get();
+					(String)categoryNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

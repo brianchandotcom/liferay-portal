@@ -47,7 +47,7 @@ public class OrganizationImpl implements Organization {
 	public void setComment(
 			String comment) {
 
-			this.comment = comment;
+			this.comment = (String)comment;
 	}
 
 	@JsonIgnore
@@ -57,7 +57,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				comment =
-					commentUnsafeSupplier.get();
+					(String)commentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -74,7 +74,7 @@ public class OrganizationImpl implements Organization {
 	public void setContactInformation(
 			ContactInformation contactInformation) {
 
-			this.contactInformation = contactInformation;
+			this.contactInformation = (ContactInformationImpl)contactInformation;
 	}
 
 	@JsonIgnore
@@ -84,7 +84,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				contactInformation =
-					contactInformationUnsafeSupplier.get();
+					(ContactInformationImpl)contactInformationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -93,7 +93,7 @@ public class OrganizationImpl implements Organization {
 
 	@GraphQLField
 	@JsonProperty
-	protected ContactInformation contactInformation;
+	protected ContactInformationImpl contactInformation;
 	public Long getId() {
 			return id;
 	}
@@ -101,7 +101,7 @@ public class OrganizationImpl implements Organization {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -111,7 +111,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -128,7 +128,7 @@ public class OrganizationImpl implements Organization {
 	public void setLocation(
 			Location location) {
 
-			this.location = location;
+			this.location = (LocationImpl)location;
 	}
 
 	@JsonIgnore
@@ -138,7 +138,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				location =
-					locationUnsafeSupplier.get();
+					(LocationImpl)locationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -147,7 +147,7 @@ public class OrganizationImpl implements Organization {
 
 	@GraphQLField
 	@JsonProperty
-	protected Location location;
+	protected LocationImpl location;
 	public String getLogo() {
 			return logo;
 	}
@@ -155,7 +155,7 @@ public class OrganizationImpl implements Organization {
 	public void setLogo(
 			String logo) {
 
-			this.logo = logo;
+			this.logo = (String)logo;
 	}
 
 	@JsonIgnore
@@ -165,7 +165,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				logo =
-					logoUnsafeSupplier.get();
+					(String)logoUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -182,7 +182,7 @@ public class OrganizationImpl implements Organization {
 	public void setMembers(
 			UserAccount[] members) {
 
-			this.members = members;
+			this.members = (UserAccountImpl[])members;
 	}
 
 	@JsonIgnore
@@ -192,7 +192,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				members =
-					membersUnsafeSupplier.get();
+					(UserAccountImpl[])membersUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -201,7 +201,7 @@ public class OrganizationImpl implements Organization {
 
 	@GraphQLField
 	@JsonProperty
-	protected UserAccount[] members;
+	protected UserAccountImpl[] members;
 	public Long[] getMembersIds() {
 			return membersIds;
 	}
@@ -209,7 +209,7 @@ public class OrganizationImpl implements Organization {
 	public void setMembersIds(
 			Long[] membersIds) {
 
-			this.membersIds = membersIds;
+			this.membersIds = (Long[])membersIds;
 	}
 
 	@JsonIgnore
@@ -219,7 +219,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				membersIds =
-					membersIdsUnsafeSupplier.get();
+					(Long[])membersIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -236,7 +236,7 @@ public class OrganizationImpl implements Organization {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -246,7 +246,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -263,7 +263,7 @@ public class OrganizationImpl implements Organization {
 	public void setParentOrganization(
 			Organization parentOrganization) {
 
-			this.parentOrganization = parentOrganization;
+			this.parentOrganization = (OrganizationImpl)parentOrganization;
 	}
 
 	@JsonIgnore
@@ -273,7 +273,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				parentOrganization =
-					parentOrganizationUnsafeSupplier.get();
+					(OrganizationImpl)parentOrganizationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -282,7 +282,7 @@ public class OrganizationImpl implements Organization {
 
 	@GraphQLField
 	@JsonProperty
-	protected Organization parentOrganization;
+	protected OrganizationImpl parentOrganization;
 	public Long getParentOrganizationId() {
 			return parentOrganizationId;
 	}
@@ -290,7 +290,7 @@ public class OrganizationImpl implements Organization {
 	public void setParentOrganizationId(
 			Long parentOrganizationId) {
 
-			this.parentOrganizationId = parentOrganizationId;
+			this.parentOrganizationId = (Long)parentOrganizationId;
 	}
 
 	@JsonIgnore
@@ -300,7 +300,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				parentOrganizationId =
-					parentOrganizationIdUnsafeSupplier.get();
+					(Long)parentOrganizationIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -317,7 +317,7 @@ public class OrganizationImpl implements Organization {
 	public void setServices(
 			Services[] services) {
 
-			this.services = services;
+			this.services = (ServicesImpl[])services;
 	}
 
 	@JsonIgnore
@@ -327,7 +327,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				services =
-					servicesUnsafeSupplier.get();
+					(ServicesImpl[])servicesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -336,7 +336,7 @@ public class OrganizationImpl implements Organization {
 
 	@GraphQLField
 	@JsonProperty
-	protected Services[] services;
+	protected ServicesImpl[] services;
 	public Organization[] getSubOrganization() {
 			return subOrganization;
 	}
@@ -344,7 +344,7 @@ public class OrganizationImpl implements Organization {
 	public void setSubOrganization(
 			Organization[] subOrganization) {
 
-			this.subOrganization = subOrganization;
+			this.subOrganization = (OrganizationImpl[])subOrganization;
 	}
 
 	@JsonIgnore
@@ -354,7 +354,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				subOrganization =
-					subOrganizationUnsafeSupplier.get();
+					(OrganizationImpl[])subOrganizationUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -363,7 +363,7 @@ public class OrganizationImpl implements Organization {
 
 	@GraphQLField
 	@JsonProperty
-	protected Organization[] subOrganization;
+	protected OrganizationImpl[] subOrganization;
 	public Long[] getSubOrganizationIds() {
 			return subOrganizationIds;
 	}
@@ -371,7 +371,7 @@ public class OrganizationImpl implements Organization {
 	public void setSubOrganizationIds(
 			Long[] subOrganizationIds) {
 
-			this.subOrganizationIds = subOrganizationIds;
+			this.subOrganizationIds = (Long[])subOrganizationIds;
 	}
 
 	@JsonIgnore
@@ -381,7 +381,7 @@ public class OrganizationImpl implements Organization {
 
 			try {
 				subOrganizationIds =
-					subOrganizationIdsUnsafeSupplier.get();
+					(Long[])subOrganizationIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

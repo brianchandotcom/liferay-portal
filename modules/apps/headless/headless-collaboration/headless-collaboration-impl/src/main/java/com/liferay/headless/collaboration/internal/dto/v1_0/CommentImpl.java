@@ -46,7 +46,7 @@ public class CommentImpl implements Comment {
 	public void setComments(
 			Comment[] comments) {
 
-			this.comments = comments;
+			this.comments = (CommentImpl[])comments;
 	}
 
 	@JsonIgnore
@@ -56,7 +56,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				comments =
-					commentsUnsafeSupplier.get();
+					(CommentImpl[])commentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -65,7 +65,7 @@ public class CommentImpl implements Comment {
 
 	@GraphQLField
 	@JsonProperty
-	protected Comment[] comments;
+	protected CommentImpl[] comments;
 	public Creator getCreator() {
 			return creator;
 	}
@@ -73,7 +73,7 @@ public class CommentImpl implements Comment {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -83,7 +83,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -92,7 +92,7 @@ public class CommentImpl implements Comment {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -100,7 +100,7 @@ public class CommentImpl implements Comment {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -110,7 +110,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,7 +127,7 @@ public class CommentImpl implements Comment {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -137,7 +137,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -154,7 +154,7 @@ public class CommentImpl implements Comment {
 	public void setHasComments(
 			Boolean hasComments) {
 
-			this.hasComments = hasComments;
+			this.hasComments = (Boolean)hasComments;
 	}
 
 	@JsonIgnore
@@ -164,7 +164,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				hasComments =
-					hasCommentsUnsafeSupplier.get();
+					(Boolean)hasCommentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -181,7 +181,7 @@ public class CommentImpl implements Comment {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -191,7 +191,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -208,7 +208,7 @@ public class CommentImpl implements Comment {
 	public void setText(
 			String text) {
 
-			this.text = text;
+			this.text = (String)text;
 	}
 
 	@JsonIgnore
@@ -218,7 +218,7 @@ public class CommentImpl implements Comment {
 
 			try {
 				text =
-					textUnsafeSupplier.get();
+					(String)textUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

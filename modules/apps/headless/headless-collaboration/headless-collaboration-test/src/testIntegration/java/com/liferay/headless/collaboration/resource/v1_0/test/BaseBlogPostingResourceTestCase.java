@@ -24,6 +24,11 @@ import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
+import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CategoriesImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.ImageImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -288,7 +293,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
-				this.aggregateRating = aggregateRating;
+				this.aggregateRating = (AggregateRatingImpl)aggregateRating;
 	}
 
 	@JsonIgnore
@@ -296,7 +301,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
 
 				try {
-					aggregateRating = aggregateRatingUnsafeSupplier.get();
+					aggregateRating =
+						(AggregateRatingImpl)aggregateRatingUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -304,13 +310,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@JsonProperty
-	protected AggregateRating aggregateRating;
+	protected AggregateRatingImpl aggregateRating;
 	public String getAlternativeHeadline() {
 				return alternativeHeadline;
 	}
 
 	public void setAlternativeHeadline(String alternativeHeadline) {
-				this.alternativeHeadline = alternativeHeadline;
+				this.alternativeHeadline = (String)alternativeHeadline;
 	}
 
 	@JsonIgnore
@@ -318,7 +324,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> alternativeHeadlineUnsafeSupplier) {
 
 				try {
-					alternativeHeadline = alternativeHeadlineUnsafeSupplier.get();
+					alternativeHeadline =
+						(String)alternativeHeadlineUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -332,7 +339,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setArticleBody(String articleBody) {
-				this.articleBody = articleBody;
+				this.articleBody = (String)articleBody;
 	}
 
 	@JsonIgnore
@@ -340,7 +347,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> articleBodyUnsafeSupplier) {
 
 				try {
-					articleBody = articleBodyUnsafeSupplier.get();
+					articleBody =
+						(String)articleBodyUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -354,7 +362,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setCaption(String caption) {
-				this.caption = caption;
+				this.caption = (String)caption;
 	}
 
 	@JsonIgnore
@@ -362,7 +370,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> captionUnsafeSupplier) {
 
 				try {
-					caption = captionUnsafeSupplier.get();
+					caption =
+						(String)captionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -376,7 +385,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setCategories(Categories[] categories) {
-				this.categories = categories;
+				this.categories = (CategoriesImpl[])categories;
 	}
 
 	@JsonIgnore
@@ -384,7 +393,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
 
 				try {
-					categories = categoriesUnsafeSupplier.get();
+					categories =
+						(CategoriesImpl[])categoriesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -392,13 +402,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Categories[] categories;
+	protected CategoriesImpl[] categories;
 	public Long[] getCategoryIds() {
 				return categoryIds;
 	}
 
 	public void setCategoryIds(Long[] categoryIds) {
-				this.categoryIds = categoryIds;
+				this.categoryIds = (Long[])categoryIds;
 	}
 
 	@JsonIgnore
@@ -406,7 +416,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
 
 				try {
-					categoryIds = categoryIdsUnsafeSupplier.get();
+					categoryIds =
+						(Long[])categoryIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -420,7 +431,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = contentSpace;
+				this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -428,7 +439,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 				try {
-					contentSpace = contentSpaceUnsafeSupplier.get();
+					contentSpace =
+						(Long)contentSpaceUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -442,7 +454,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -450,7 +462,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -458,13 +471,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -472,7 +485,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -486,7 +500,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -494,7 +508,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -508,7 +523,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setDatePublished(Date datePublished) {
-				this.datePublished = datePublished;
+				this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -516,7 +531,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
 				try {
-					datePublished = datePublishedUnsafeSupplier.get();
+					datePublished =
+						(Date)datePublishedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -530,7 +546,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -538,7 +554,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -552,7 +569,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-				this.encodingFormat = encodingFormat;
+				this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -560,7 +577,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 				try {
-					encodingFormat = encodingFormatUnsafeSupplier.get();
+					encodingFormat =
+						(String)encodingFormatUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -574,7 +592,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setFriendlyUrlPath(String friendlyUrlPath) {
-				this.friendlyUrlPath = friendlyUrlPath;
+				this.friendlyUrlPath = (String)friendlyUrlPath;
 	}
 
 	@JsonIgnore
@@ -582,7 +600,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> friendlyUrlPathUnsafeSupplier) {
 
 				try {
-					friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
+					friendlyUrlPath =
+						(String)friendlyUrlPathUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -596,7 +615,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setHasComments(Boolean hasComments) {
-				this.hasComments = hasComments;
+				this.hasComments = (Boolean)hasComments;
 	}
 
 	@JsonIgnore
@@ -604,7 +623,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
 
 				try {
-					hasComments = hasCommentsUnsafeSupplier.get();
+					hasComments =
+						(Boolean)hasCommentsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -618,7 +638,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setHeadline(String headline) {
-				this.headline = headline;
+				this.headline = (String)headline;
 	}
 
 	@JsonIgnore
@@ -626,7 +646,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
 
 				try {
-					headline = headlineUnsafeSupplier.get();
+					headline =
+						(String)headlineUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -640,7 +661,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -648,7 +669,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -662,7 +684,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setImage(Image image) {
-				this.image = image;
+				this.image = (ImageImpl)image;
 	}
 
 	@JsonIgnore
@@ -670,7 +692,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Image, Throwable> imageUnsafeSupplier) {
 
 				try {
-					image = imageUnsafeSupplier.get();
+					image =
+						(ImageImpl)imageUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -678,13 +701,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Image image;
+	protected ImageImpl image;
 	public Long getImageId() {
 				return imageId;
 	}
 
 	public void setImageId(Long imageId) {
-				this.imageId = imageId;
+				this.imageId = (Long)imageId;
 	}
 
 	@JsonIgnore
@@ -692,7 +715,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
 
 				try {
-					imageId = imageIdUnsafeSupplier.get();
+					imageId =
+						(Long)imageIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -706,7 +730,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	public void setKeywords(String[] keywords) {
-				this.keywords = keywords;
+				this.keywords = (String[])keywords;
 	}
 
 	@JsonIgnore
@@ -714,7 +738,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
 				try {
-					keywords = keywordsUnsafeSupplier.get();
+					keywords =
+						(String[])keywordsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

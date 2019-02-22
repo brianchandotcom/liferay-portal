@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.Creator;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -251,7 +253,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
+				this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -259,7 +261,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
+					availableLanguages =
+						(String[])availableLanguagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -273,7 +276,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = contentSpace;
+				this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -281,7 +284,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 				try {
-					contentSpace = contentSpaceUnsafeSupplier.get();
+					contentSpace =
+						(Long)contentSpaceUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -295,7 +299,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -303,7 +307,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -311,13 +316,13 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -325,7 +330,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -339,7 +345,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -347,7 +353,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -361,7 +368,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -369,7 +376,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -383,7 +391,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setHasCategories(Boolean hasCategories) {
-				this.hasCategories = hasCategories;
+				this.hasCategories = (Boolean)hasCategories;
 	}
 
 	@JsonIgnore
@@ -391,7 +399,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
 
 				try {
-					hasCategories = hasCategoriesUnsafeSupplier.get();
+					hasCategories =
+						(Boolean)hasCategoriesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -405,7 +414,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -413,7 +422,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -427,7 +437,7 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -435,7 +445,8 @@ public abstract class BaseVocabularyResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

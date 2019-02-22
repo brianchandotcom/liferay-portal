@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.Email;
+import com.liferay.headless.foundation.internal.dto.v1_0.EmailImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -139,7 +140,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	public void setEmail(String email) {
-				this.email = email;
+				this.email = (String)email;
 	}
 
 	@JsonIgnore
@@ -147,7 +148,8 @@ public abstract class BaseEmailResourceTestCase {
 				UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
 				try {
-					email = emailUnsafeSupplier.get();
+					email =
+						(String)emailUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -161,7 +163,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -169,7 +171,8 @@ public abstract class BaseEmailResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -183,7 +186,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	public void setType(String type) {
-				this.type = type;
+				this.type = (String)type;
 	}
 
 	@JsonIgnore
@@ -191,7 +194,8 @@ public abstract class BaseEmailResourceTestCase {
 				UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
 
 				try {
-					type = typeUnsafeSupplier.get();
+					type =
+						(String)typeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

@@ -47,7 +47,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setAvailableLanguages(
 			String[] availableLanguages) {
 
-			this.availableLanguages = availableLanguages;
+			this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -57,7 +57,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				availableLanguages =
-					availableLanguagesUnsafeSupplier.get();
+					(String[])availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -74,7 +74,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -84,7 +84,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -101,7 +101,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -111,7 +111,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -120,7 +120,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -128,7 +128,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -138,7 +138,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -155,7 +155,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -165,7 +165,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -182,7 +182,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -192,7 +192,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -209,7 +209,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setFields(
 			Fields[] fields) {
 
-			this.fields = fields;
+			this.fields = (FieldsImpl[])fields;
 	}
 
 	@JsonIgnore
@@ -219,7 +219,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				fields =
-					fieldsUnsafeSupplier.get();
+					(FieldsImpl[])fieldsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -228,7 +228,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 	@GraphQLField
 	@JsonProperty
-	protected Fields[] fields;
+	protected FieldsImpl[] fields;
 	public Long getId() {
 			return id;
 	}
@@ -236,7 +236,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -246,7 +246,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -263,7 +263,7 @@ public class ContentStructureImpl implements ContentStructure {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -273,7 +273,7 @@ public class ContentStructureImpl implements ContentStructure {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

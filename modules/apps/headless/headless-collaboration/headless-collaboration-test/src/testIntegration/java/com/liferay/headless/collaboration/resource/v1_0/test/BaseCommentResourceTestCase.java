@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.headless.collaboration.dto.v1_0.Creator;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CommentImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CreatorImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -309,7 +311,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	public void setComments(Comment[] comments) {
-				this.comments = comments;
+				this.comments = (CommentImpl[])comments;
 	}
 
 	@JsonIgnore
@@ -317,7 +319,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 
 				try {
-					comments = commentsUnsafeSupplier.get();
+					comments =
+						(CommentImpl[])commentsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -325,13 +328,13 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Comment[] comments;
+	protected CommentImpl[] comments;
 	public Creator getCreator() {
 				return creator;
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -339,7 +342,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -347,13 +351,13 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -361,7 +365,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -375,7 +380,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -383,7 +388,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -397,7 +403,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	public void setHasComments(Boolean hasComments) {
-				this.hasComments = hasComments;
+				this.hasComments = (Boolean)hasComments;
 	}
 
 	@JsonIgnore
@@ -405,7 +411,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
 
 				try {
-					hasComments = hasCommentsUnsafeSupplier.get();
+					hasComments =
+						(Boolean)hasCommentsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -419,7 +426,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -427,7 +434,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -441,7 +449,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	public void setText(String text) {
-				this.text = text;
+				this.text = (String)text;
 	}
 
 	@JsonIgnore
@@ -449,7 +457,8 @@ public abstract class BaseCommentResourceTestCase {
 				UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 
 				try {
-					text = textUnsafeSupplier.get();
+					text =
+						(String)textUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

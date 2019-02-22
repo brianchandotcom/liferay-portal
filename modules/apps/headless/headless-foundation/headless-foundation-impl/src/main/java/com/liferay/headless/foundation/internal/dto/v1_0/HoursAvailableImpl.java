@@ -43,7 +43,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 	public void setCloses(
 			String closes) {
 
-			this.closes = closes;
+			this.closes = (String)closes;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 
 			try {
 				closes =
-					closesUnsafeSupplier.get();
+					(String)closesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 	public void setDayOfWeek(
 			String dayOfWeek) {
 
-			this.dayOfWeek = dayOfWeek;
+			this.dayOfWeek = (String)dayOfWeek;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 
 			try {
 				dayOfWeek =
-					dayOfWeekUnsafeSupplier.get();
+					(String)dayOfWeekUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 	public void setOpens(
 			String opens) {
 
-			this.opens = opens;
+			this.opens = (String)opens;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class HoursAvailableImpl implements HoursAvailable {
 
 			try {
 				opens =
-					opensUnsafeSupplier.get();
+					(String)opensUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

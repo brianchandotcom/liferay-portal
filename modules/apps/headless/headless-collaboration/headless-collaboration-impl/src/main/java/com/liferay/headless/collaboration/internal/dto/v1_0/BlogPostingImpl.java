@@ -49,7 +49,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setAggregateRating(
 			AggregateRating aggregateRating) {
 
-			this.aggregateRating = aggregateRating;
+			this.aggregateRating = (AggregateRatingImpl)aggregateRating;
 	}
 
 	@JsonIgnore
@@ -59,7 +59,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				aggregateRating =
-					aggregateRatingUnsafeSupplier.get();
+					(AggregateRatingImpl)aggregateRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -68,7 +68,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 	@GraphQLField
 	@JsonProperty
-	protected AggregateRating aggregateRating;
+	protected AggregateRatingImpl aggregateRating;
 	public String getAlternativeHeadline() {
 			return alternativeHeadline;
 	}
@@ -76,7 +76,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setAlternativeHeadline(
 			String alternativeHeadline) {
 
-			this.alternativeHeadline = alternativeHeadline;
+			this.alternativeHeadline = (String)alternativeHeadline;
 	}
 
 	@JsonIgnore
@@ -86,7 +86,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				alternativeHeadline =
-					alternativeHeadlineUnsafeSupplier.get();
+					(String)alternativeHeadlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,7 +103,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setArticleBody(
 			String articleBody) {
 
-			this.articleBody = articleBody;
+			this.articleBody = (String)articleBody;
 	}
 
 	@JsonIgnore
@@ -113,7 +113,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				articleBody =
-					articleBodyUnsafeSupplier.get();
+					(String)articleBodyUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -130,7 +130,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setCaption(
 			String caption) {
 
-			this.caption = caption;
+			this.caption = (String)caption;
 	}
 
 	@JsonIgnore
@@ -140,7 +140,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				caption =
-					captionUnsafeSupplier.get();
+					(String)captionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -157,7 +157,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setCategories(
 			Categories[] categories) {
 
-			this.categories = categories;
+			this.categories = (CategoriesImpl[])categories;
 	}
 
 	@JsonIgnore
@@ -167,7 +167,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				categories =
-					categoriesUnsafeSupplier.get();
+					(CategoriesImpl[])categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -176,7 +176,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 	@GraphQLField
 	@JsonProperty
-	protected Categories[] categories;
+	protected CategoriesImpl[] categories;
 	public Long[] getCategoryIds() {
 			return categoryIds;
 	}
@@ -184,7 +184,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setCategoryIds(
 			Long[] categoryIds) {
 
-			this.categoryIds = categoryIds;
+			this.categoryIds = (Long[])categoryIds;
 	}
 
 	@JsonIgnore
@@ -194,7 +194,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				categoryIds =
-					categoryIdsUnsafeSupplier.get();
+					(Long[])categoryIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -211,7 +211,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -221,7 +221,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -238,7 +238,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -248,7 +248,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -257,7 +257,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -265,7 +265,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -275,7 +275,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -292,7 +292,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -302,7 +302,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -319,7 +319,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setDatePublished(
 			Date datePublished) {
 
-			this.datePublished = datePublished;
+			this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -329,7 +329,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				datePublished =
-					datePublishedUnsafeSupplier.get();
+					(Date)datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -346,7 +346,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -356,7 +356,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -373,7 +373,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setEncodingFormat(
 			String encodingFormat) {
 
-			this.encodingFormat = encodingFormat;
+			this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -383,7 +383,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				encodingFormat =
-					encodingFormatUnsafeSupplier.get();
+					(String)encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -400,7 +400,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setFriendlyUrlPath(
 			String friendlyUrlPath) {
 
-			this.friendlyUrlPath = friendlyUrlPath;
+			this.friendlyUrlPath = (String)friendlyUrlPath;
 	}
 
 	@JsonIgnore
@@ -410,7 +410,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				friendlyUrlPath =
-					friendlyUrlPathUnsafeSupplier.get();
+					(String)friendlyUrlPathUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -427,7 +427,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setHasComments(
 			Boolean hasComments) {
 
-			this.hasComments = hasComments;
+			this.hasComments = (Boolean)hasComments;
 	}
 
 	@JsonIgnore
@@ -437,7 +437,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				hasComments =
-					hasCommentsUnsafeSupplier.get();
+					(Boolean)hasCommentsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -454,7 +454,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setHeadline(
 			String headline) {
 
-			this.headline = headline;
+			this.headline = (String)headline;
 	}
 
 	@JsonIgnore
@@ -464,7 +464,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				headline =
-					headlineUnsafeSupplier.get();
+					(String)headlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -481,7 +481,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -491,7 +491,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -508,7 +508,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setImage(
 			Image image) {
 
-			this.image = image;
+			this.image = (ImageImpl)image;
 	}
 
 	@JsonIgnore
@@ -518,7 +518,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				image =
-					imageUnsafeSupplier.get();
+					(ImageImpl)imageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -527,7 +527,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 	@GraphQLField
 	@JsonProperty
-	protected Image image;
+	protected ImageImpl image;
 	public Long getImageId() {
 			return imageId;
 	}
@@ -535,7 +535,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setImageId(
 			Long imageId) {
 
-			this.imageId = imageId;
+			this.imageId = (Long)imageId;
 	}
 
 	@JsonIgnore
@@ -545,7 +545,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				imageId =
-					imageIdUnsafeSupplier.get();
+					(Long)imageIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -562,7 +562,7 @@ public class BlogPostingImpl implements BlogPosting {
 	public void setKeywords(
 			String[] keywords) {
 
-			this.keywords = keywords;
+			this.keywords = (String[])keywords;
 	}
 
 	@JsonIgnore
@@ -572,7 +572,7 @@ public class BlogPostingImpl implements BlogPosting {
 
 			try {
 				keywords =
-					keywordsUnsafeSupplier.get();
+					(String[])keywordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

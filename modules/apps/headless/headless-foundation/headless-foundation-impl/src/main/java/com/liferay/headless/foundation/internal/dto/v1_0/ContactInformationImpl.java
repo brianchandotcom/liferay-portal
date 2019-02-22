@@ -47,7 +47,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setAddress(
 			PostalAddress[] address) {
 
-			this.address = address;
+			this.address = (PostalAddressImpl[])address;
 	}
 
 	@JsonIgnore
@@ -57,7 +57,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				address =
-					addressUnsafeSupplier.get();
+					(PostalAddressImpl[])addressUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -66,7 +66,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 	@GraphQLField
 	@JsonProperty
-	protected PostalAddress[] address;
+	protected PostalAddressImpl[] address;
 	public Long[] getAddressIds() {
 			return addressIds;
 	}
@@ -74,7 +74,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setAddressIds(
 			Long[] addressIds) {
 
-			this.addressIds = addressIds;
+			this.addressIds = (Long[])addressIds;
 	}
 
 	@JsonIgnore
@@ -84,7 +84,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				addressIds =
-					addressIdsUnsafeSupplier.get();
+					(Long[])addressIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -101,7 +101,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setEmail(
 			Email[] email) {
 
-			this.email = email;
+			this.email = (EmailImpl[])email;
 	}
 
 	@JsonIgnore
@@ -111,7 +111,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				email =
-					emailUnsafeSupplier.get();
+					(EmailImpl[])emailUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -120,7 +120,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 	@GraphQLField
 	@JsonProperty
-	protected Email[] email;
+	protected EmailImpl[] email;
 	public Long[] getEmailIds() {
 			return emailIds;
 	}
@@ -128,7 +128,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setEmailIds(
 			Long[] emailIds) {
 
-			this.emailIds = emailIds;
+			this.emailIds = (Long[])emailIds;
 	}
 
 	@JsonIgnore
@@ -138,7 +138,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				emailIds =
-					emailIdsUnsafeSupplier.get();
+					(Long[])emailIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -155,7 +155,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setFacebook(
 			String facebook) {
 
-			this.facebook = facebook;
+			this.facebook = (String)facebook;
 	}
 
 	@JsonIgnore
@@ -165,7 +165,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				facebook =
-					facebookUnsafeSupplier.get();
+					(String)facebookUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -182,7 +182,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -192,7 +192,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -209,7 +209,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setJabber(
 			String jabber) {
 
-			this.jabber = jabber;
+			this.jabber = (String)jabber;
 	}
 
 	@JsonIgnore
@@ -219,7 +219,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				jabber =
-					jabberUnsafeSupplier.get();
+					(String)jabberUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -236,7 +236,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setSkype(
 			String skype) {
 
-			this.skype = skype;
+			this.skype = (String)skype;
 	}
 
 	@JsonIgnore
@@ -246,7 +246,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				skype =
-					skypeUnsafeSupplier.get();
+					(String)skypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -263,7 +263,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setSms(
 			String sms) {
 
-			this.sms = sms;
+			this.sms = (String)sms;
 	}
 
 	@JsonIgnore
@@ -273,7 +273,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				sms =
-					smsUnsafeSupplier.get();
+					(String)smsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -290,7 +290,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setTelephone(
 			Phone[] telephone) {
 
-			this.telephone = telephone;
+			this.telephone = (PhoneImpl[])telephone;
 	}
 
 	@JsonIgnore
@@ -300,7 +300,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				telephone =
-					telephoneUnsafeSupplier.get();
+					(PhoneImpl[])telephoneUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -309,7 +309,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 	@GraphQLField
 	@JsonProperty
-	protected Phone[] telephone;
+	protected PhoneImpl[] telephone;
 	public Long[] getTelephoneIds() {
 			return telephoneIds;
 	}
@@ -317,7 +317,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setTelephoneIds(
 			Long[] telephoneIds) {
 
-			this.telephoneIds = telephoneIds;
+			this.telephoneIds = (Long[])telephoneIds;
 	}
 
 	@JsonIgnore
@@ -327,7 +327,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				telephoneIds =
-					telephoneIdsUnsafeSupplier.get();
+					(Long[])telephoneIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -344,7 +344,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setTwitter(
 			String twitter) {
 
-			this.twitter = twitter;
+			this.twitter = (String)twitter;
 	}
 
 	@JsonIgnore
@@ -354,7 +354,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				twitter =
-					twitterUnsafeSupplier.get();
+					(String)twitterUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -371,7 +371,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setWebUrl(
 			WebUrl[] webUrl) {
 
-			this.webUrl = webUrl;
+			this.webUrl = (WebUrlImpl[])webUrl;
 	}
 
 	@JsonIgnore
@@ -381,7 +381,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				webUrl =
-					webUrlUnsafeSupplier.get();
+					(WebUrlImpl[])webUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -390,7 +390,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 	@GraphQLField
 	@JsonProperty
-	protected WebUrl[] webUrl;
+	protected WebUrlImpl[] webUrl;
 	public Long[] getWebUrlIds() {
 			return webUrlIds;
 	}
@@ -398,7 +398,7 @@ public class ContactInformationImpl implements ContactInformation {
 	public void setWebUrlIds(
 			Long[] webUrlIds) {
 
-			this.webUrlIds = webUrlIds;
+			this.webUrlIds = (Long[])webUrlIds;
 	}
 
 	@JsonIgnore
@@ -408,7 +408,7 @@ public class ContactInformationImpl implements ContactInformation {
 
 			try {
 				webUrlIds =
-					webUrlIdsUnsafeSupplier.get();
+					(Long[])webUrlIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -18,8 +18,6 @@ import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowLogImpl;
 import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowTaskImpl;
 import com.liferay.headless.workflow.internal.resource.v1_0.WorkflowLogResourceImpl;
 import com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl;
-import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
-import com.liferay.headless.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -46,12 +44,12 @@ public class Query {
 	@GraphQLName("workflow-log-id") Long workflowLogId)
 			throws Exception {
 
-				WorkflowLogResource workflowLogResource = _getWorkflowLogResource();
+				WorkflowLogResourceImpl workflowLogResourceImpl = _getWorkflowLogResourceImpl();
 
-				workflowLogResource.setContextCompany(
+				workflowLogResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return (WorkflowLogImpl)workflowLogResource.getWorkflowLog(
+				return (WorkflowLogImpl)workflowLogResourceImpl.getWorkflowLog(
 					workflowLogId);
 	}
 
@@ -61,12 +59,12 @@ public class Query {
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				WorkflowLogResource workflowLogResource = _getWorkflowLogResource();
+				WorkflowLogResourceImpl workflowLogResourceImpl = _getWorkflowLogResourceImpl();
 
-				workflowLogResource.setContextCompany(
+				workflowLogResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = workflowLogResource.getWorkflowTaskWorkflowLogsPage(
+				Page paginationPage = workflowLogResourceImpl.getWorkflowTaskWorkflowLogsPage(
 					workflowTaskId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -78,12 +76,12 @@ public class Query {
 	@GraphQLName("role-id") Long roleId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				WorkflowTaskResource workflowTaskResource = _getWorkflowTaskResource();
+				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResourceImpl();
 
-				workflowTaskResource.setContextCompany(
+				workflowTaskResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = workflowTaskResource.getRoleWorkflowTasksPage(
+				Page paginationPage = workflowTaskResourceImpl.getRoleWorkflowTasksPage(
 					roleId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -95,12 +93,12 @@ public class Query {
 	@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				WorkflowTaskResource workflowTaskResource = _getWorkflowTaskResource();
+				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResourceImpl();
 
-				workflowTaskResource.setContextCompany(
+				workflowTaskResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = workflowTaskResource.getWorkflowTasksPage(
+				Page paginationPage = workflowTaskResourceImpl.getWorkflowTasksPage(
 					Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -112,21 +110,20 @@ public class Query {
 	@GraphQLName("workflow-task-id") Long workflowTaskId)
 			throws Exception {
 
-				WorkflowTaskResource workflowTaskResource = _getWorkflowTaskResource();
+				WorkflowTaskResourceImpl workflowTaskResourceImpl = _getWorkflowTaskResourceImpl();
 
-				workflowTaskResource.setContextCompany(
+				workflowTaskResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return (WorkflowTaskImpl)workflowTaskResource.getWorkflowTask(
+				return (WorkflowTaskImpl)workflowTaskResourceImpl.getWorkflowTask(
 					workflowTaskId);
 	}
 
-	private static WorkflowLogResourceImpl _getWorkflowLogResource() {
-		return new WorkflowLogResourceImpl();
+	private static WorkflowLogResourceImpl _getWorkflowLogResourceImpl() {
+			return new WorkflowLogResourceImpl();
 	}
-
-	private static WorkflowTaskResourceImpl _getWorkflowTaskResource() {
-		return new WorkflowTaskResourceImpl();
+	private static WorkflowTaskResourceImpl _getWorkflowTaskResourceImpl() {
+			return new WorkflowTaskResourceImpl();
 	}
 
 }

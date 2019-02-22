@@ -44,7 +44,7 @@ public class ServicesImpl implements Services {
 	public void setHoursAvailable(
 			HoursAvailable[] hoursAvailable) {
 
-			this.hoursAvailable = hoursAvailable;
+			this.hoursAvailable = (HoursAvailableImpl[])hoursAvailable;
 	}
 
 	@JsonIgnore
@@ -54,7 +54,7 @@ public class ServicesImpl implements Services {
 
 			try {
 				hoursAvailable =
-					hoursAvailableUnsafeSupplier.get();
+					(HoursAvailableImpl[])hoursAvailableUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -63,7 +63,7 @@ public class ServicesImpl implements Services {
 
 	@GraphQLField
 	@JsonProperty
-	protected HoursAvailable[] hoursAvailable;
+	protected HoursAvailableImpl[] hoursAvailable;
 	public Long getId() {
 			return id;
 	}
@@ -71,7 +71,7 @@ public class ServicesImpl implements Services {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -81,7 +81,7 @@ public class ServicesImpl implements Services {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -98,7 +98,7 @@ public class ServicesImpl implements Services {
 	public void setServiceType(
 			String serviceType) {
 
-			this.serviceType = serviceType;
+			this.serviceType = (String)serviceType;
 	}
 
 	@JsonIgnore
@@ -108,7 +108,7 @@ public class ServicesImpl implements Services {
 
 			try {
 				serviceType =
-					serviceTypeUnsafeSupplier.get();
+					(String)serviceTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

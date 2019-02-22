@@ -84,6 +84,8 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		List<Layout> layouts = new ArrayList<>();
 
 		layouts.addAll(
@@ -103,22 +105,6 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 					LayoutConstants.LAYOUT_TYPE_CONTENT
 				},
 				0, 10, null));
-
-		int totalCount = _layoutLocalService.getLayoutsCount(
-			themeDisplay.getScopeGroup(), false, keywords,
-			new String[] {
-				LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.LAYOUT_TYPE_CONTENT
-			});
-
-		totalCount += _layoutLocalService.getLayoutsCount(
-			themeDisplay.getScopeGroup(), true, keywords,
-			new String[] {
-				LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.LAYOUT_TYPE_CONTENT
-			});
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Layout layout : layouts) {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
@@ -147,6 +133,21 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		jsonObject.put("layouts", jsonArray);
+
+		int totalCount = _layoutLocalService.getLayoutsCount(
+			themeDisplay.getScopeGroup(), false, keywords,
+			new String[] {
+				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.LAYOUT_TYPE_CONTENT
+			});
+
+		totalCount += _layoutLocalService.getLayoutsCount(
+			themeDisplay.getScopeGroup(), true, keywords,
+			new String[] {
+				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.LAYOUT_TYPE_CONTENT
+			});
+
 		jsonObject.put("totalCount", totalCount);
 
 		ServletResponseUtil.write(response, jsonObject.toString());

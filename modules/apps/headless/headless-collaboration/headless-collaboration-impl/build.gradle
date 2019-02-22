@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:headless:headless-collaboration:headless-collaboration-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
+	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")

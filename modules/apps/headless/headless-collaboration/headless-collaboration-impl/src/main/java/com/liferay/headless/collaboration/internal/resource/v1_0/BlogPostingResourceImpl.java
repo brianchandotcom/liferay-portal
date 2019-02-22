@@ -32,9 +32,15 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.CategoriesImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.ImageImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.collaboration.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,20 +48,26 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,9 +78,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/blog-posting.properties",
-	scope = ServiceScope.PROTOTYPE, service = BlogPostingResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {BlogPostingResource.class, EntityModelResource.class}
 )
-public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
+public class BlogPostingResourceImpl
+	extends BaseBlogPostingResourceImpl implements EntityModelResource {
 
 	@Override
 	public boolean deleteBlogPosting(Long blogPostingId) throws Exception {
@@ -86,18 +100,42 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-		Long contentSpaceId, Filter filter, Pagination pagination,
-		Sort[] sorts) {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		List<BlogsEntry> blogEntries = new ArrayList<>();
+
+		Hits hits = SearchUtil.getHits(
+			filter, _indexerRegistry.nullSafeGetIndexer(BlogsEntry.class),
+			pagination,
+			booleanQuery -> {
+			},
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
+			},
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			_searchResultPermissionFilterFactory, sorts);
+
+		for (Document document : hits.getDocs()) {
+			BlogsEntry blogsEntry = _blogsEntryService.getEntry(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+			blogEntries.add(blogsEntry);
+		}
 
 		return Page.of(
-			transform(
-				_blogsEntryService.getGroupEntries(
-					contentSpaceId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				this::_toBlogPosting),
-			pagination,
-			_blogsEntryService.getGroupEntriesCount(
-				contentSpaceId, WorkflowConstants.STATUS_APPROVED));
+			transform(blogEntries, this::_toBlogPosting), pagination,
+			blogEntries.size());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _blogPostingEntityModel;
 	}
 
 	@Override
@@ -282,6 +320,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		};
 	}
 
+	private static final BlogPostingEntityModel _blogPostingEntityModel =
+		new BlogPostingEntityModel();
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -301,10 +342,17 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

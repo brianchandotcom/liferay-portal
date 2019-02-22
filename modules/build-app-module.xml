@@ -4,7 +4,7 @@
 <project name="build-app-module">
 	<import file="build-common.xml" />
 
-	<pathconvert property="releng.module.dir">
+	<pathconvert property="releng.module.dir.general">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
 			<replacestring from="modules${file.separator}private${file.separator}apps" to="modules${file.separator}.releng${file.separator}private${file.separator}apps" />
@@ -14,6 +14,20 @@
 			<pathelement location="${basedir}" />
 		</path>
 	</pathconvert>
+
+	<pathconvert property="releng.module.dir.subrepo">
+		<filtermapper>
+			<replaceregex pattern="(.+)${file.separator}(.+)" replace="\1${file.separator}.releng${file.separator}\2" />
+		</filtermapper>
+
+		<path>
+			<pathelement location="${basedir}" />
+		</path>
+	</pathconvert>
+
+	<condition else="${releng.module.dir.general}" property="releng.module.dir" value="${releng.module.dir.subrepo}">
+		<available file="${releng.module.dir.subrepo}" />
+	</condition>
 
 	<condition property="artifact.bnd">
 		<available file="bnd.bnd" />

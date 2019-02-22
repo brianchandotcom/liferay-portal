@@ -6081,7 +6081,15 @@ go</echo>
 
 				<local name="osgi.module.pattern" />
 
-				<property name="osgi.module.pattern" value="**/apps/**" />
+				<if>
+					<equals arg1="${osgi.modules.includes}" arg2="revert-schema-version" />
+					<then>
+						<property name="osgi.module.pattern" value="**/test/**" />
+					</then>
+					<else>
+						<property name="osgi.module.pattern" value="**/apps/**" />
+					</else>
+				</if>
 
 				<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
 					<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
@@ -10314,6 +10322,76 @@ if (ppstate.equals("normal")) {
 		/>
 
 		<echo>Writing ${project.dir}/${report.csv.file.name}</echo>
+	</target>
+
+	<target name="redeploy-osgi-modules">
+		<get-testcase-property property.name="osgi.modules.includes" />
+
+		<if>
+			<isset property="update.properties" />
+			<then>
+				<replace
+					file="${project.dir}/${module.base.dir}/${osgi.modules.includes}/bnd.bnd"
+					token="${update.properties.original}"
+					value="${update.properties}"
+				/>
+			</then>
+		</if>
+
+		<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
+
+		<local name="osgi.module.pattern" />
+
+		<if>
+			<equals arg1="${osgi.modules.includes}" arg2="revert-schema-version" />
+			<then>
+				<property name="osgi.module.pattern" value="**/test/**" />
+			</then>
+			<else>
+				<property name="osgi.module.pattern" value="**/apps/**" />
+			</else>
+		</if>
+
+		<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
+			<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
+		</antelope:stringutil>
+
+		<pathconvert pathsep="," property="osgi.modules.paths">
+			<dirset
+				dir="modules"
+				includes="${osgi.modules.includes.pattern}"
+			>
+				<or>
+					<present targetdir="modules">
+						<mapper
+							from="*"
+							to="*/build.gradle"
+							type="glob"
+						/>
+					</present>
+					<present targetdir="modules">
+						<mapper
+							from="*"
+							to="*/build.xml"
+							type="glob"
+						/>
+					</present>
+				</or>
+			</dirset>
+		</pathconvert>
+
+		<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
+			<sequential>
+				<local name="module.base.dir" />
+				<local name="osgi.module.command.prefix" />
+
+				<dirname file="@{osgi.module.path}" property="module.base.dir" />
+
+				<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="remove-plugin">

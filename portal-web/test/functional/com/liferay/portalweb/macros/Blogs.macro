@@ -551,6 +551,12 @@ definition {
 		AssertTextEquals(locator1 = "Button#ANY", value1 = "RSS");
 	}
 
+	macro viewEntryPresent {
+		LexiconCard.viewCardPresent(
+			card = "${entryTitle}"
+		);
+	}
+
 	macro viewNoEntryCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

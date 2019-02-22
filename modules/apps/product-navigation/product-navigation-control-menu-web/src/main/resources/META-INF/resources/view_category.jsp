@@ -163,11 +163,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 									data.remove("draggable");
 									%>
 
-									<a
-										class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %> sr-only sr-only-focusable'
-										href="javascript:;"
-										<%= AUIUtil.buildData(data) %>
-									>
+									<a class="add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %> sr-only sr-only-focusable" href="javascript:;" <%= AUIUtil.buildData(data) %>>
 										<liferay-ui:message key="add" />
 
 										<span class="sr-only"><%= PortalUtil.getPortletTitle(portlet, application, locale) %></span>

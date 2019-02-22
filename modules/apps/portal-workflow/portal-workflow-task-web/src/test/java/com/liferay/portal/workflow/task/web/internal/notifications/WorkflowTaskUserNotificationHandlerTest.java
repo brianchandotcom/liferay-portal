@@ -48,7 +48,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -58,12 +57,9 @@ import org.junit.Test;
 public class WorkflowTaskUserNotificationHandlerTest {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
 
-	@Before
-	public void setUp() throws Exception {
 		_serviceContext = new ServiceContext() {
 
 			@Override
@@ -144,6 +140,128 @@ public class WorkflowTaskUserNotificationHandlerTest {
 				_serviceContext));
 	}
 
+	protected static WorkflowHandler mockWorkflowHandler() {
+		return new BaseWorkflowHandler() {
+
+			@Override
+			public String getClassName() {
+				return _VALID_ENTRY_CLASS_NAME;
+			}
+
+			@Override
+			public String getType(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public String getURLEditWorkflowTask(
+				long workflowTaskId, ServiceContext serviceContext) {
+
+				if (_serviceContext == serviceContext) {
+					return _VALID_LINK;
+				}
+
+				return null;
+			}
+
+			@Override
+			public Object updateStatus(int status, Map workflowContext) {
+				return null;
+			}
+
+		};
+	}
+
+	protected static void setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(
+			new HtmlImpl() {
+
+				@Override
+				public String escape(String text) {
+					return text;
+				}
+
+			});
+	}
+
+	protected static void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	protected static void setUpUserNotificationEventLocalService()
+		throws Exception {
+
+		_workflowTaskUserNotificationHandler.
+			setUserNotificationEventLocalService(
+				ProxyFactory.newDummyInstance(
+					UserNotificationEventLocalService.class));
+	}
+
+	protected static void setUpWorkflowHandlerRegistryUtil() throws Exception {
+		Map<String, WorkflowHandler<?>> workflowHandlerMap =
+			ReflectionTestUtil.getFieldValue(
+				WorkflowHandlerRegistryUtil.class, "_workflowHandlerMap");
+
+		WorkflowHandler<?> workflowHandler = mockWorkflowHandler();
+
+		workflowHandlerMap.put(workflowHandler.getClassName(), workflowHandler);
+	}
+
+	protected static void setUpWorkflowTaskManagerUtil()
+		throws PortalException {
+
+		WorkflowTaskManagerUtil workflowTaskManagerUtil =
+			new WorkflowTaskManagerUtil();
+
+		workflowTaskManagerUtil.setWorkflowTaskManager(
+			new WorkflowTaskManagerProxyBean() {
+
+				@Override
+				public WorkflowTask fetchWorkflowTask(
+					long companyId, long workflowTaskId) {
+
+					if (workflowTaskId == _VALID_WORKFLOW_TASK_ID) {
+						return new DefaultWorkflowTask() {
+
+							@Override
+							public Map<String, Serializable>
+								getOptionalAttributes() {
+
+								return Collections.emptyMap();
+							}
+
+						};
+					}
+
+					return null;
+				}
+
+			});
+	}
+
+	protected static void setUpWorkflowTaskPermissionChecker()
+		throws Exception {
+
+		ReflectionTestUtil.setFieldValue(
+			_workflowTaskUserNotificationHandler,
+			"_workflowTaskPermissionChecker",
+			new WorkflowTaskPermissionChecker() {
+
+				@Override
+				public boolean hasPermission(
+					long groupId, WorkflowTask workflowTask,
+					PermissionChecker permissionChecker) {
+
+					return true;
+				}
+
+			});
+	}
+
 	protected UserNotificationEvent mockUserNotificationEvent(
 		long workflowTaskId) {
 
@@ -177,122 +295,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		return userNotificationEvent;
 	}
 
-	protected WorkflowHandler mockWorkflowHandler() {
-		return new BaseWorkflowHandler() {
-
-			@Override
-			public String getClassName() {
-				return _VALID_ENTRY_CLASS_NAME;
-			}
-
-			@Override
-			public String getType(Locale locale) {
-				return null;
-			}
-
-			@Override
-			public String getURLEditWorkflowTask(
-				long workflowTaskId, ServiceContext serviceContext) {
-
-				if (_serviceContext == serviceContext) {
-					return _VALID_LINK;
-				}
-
-				return null;
-			}
-
-			@Override
-			public Object updateStatus(int status, Map workflowContext) {
-				return null;
-			}
-
-		};
-	}
-
-	protected void setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(
-			new HtmlImpl() {
-
-				@Override
-				public String escape(String text) {
-					return text;
-				}
-
-			});
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
-	protected void setUpUserNotificationEventLocalService() throws Exception {
-		_workflowTaskUserNotificationHandler.
-			setUserNotificationEventLocalService(
-				ProxyFactory.newDummyInstance(
-					UserNotificationEventLocalService.class));
-	}
-
-	protected void setUpWorkflowHandlerRegistryUtil() throws Exception {
-		Map<String, WorkflowHandler<?>> workflowHandlerMap =
-			ReflectionTestUtil.getFieldValue(
-				WorkflowHandlerRegistryUtil.class, "_workflowHandlerMap");
-
-		WorkflowHandler<?> workflowHandler = mockWorkflowHandler();
-
-		workflowHandlerMap.put(workflowHandler.getClassName(), workflowHandler);
-	}
-
-	protected void setUpWorkflowTaskManagerUtil() throws PortalException {
-		WorkflowTaskManagerUtil workflowTaskManagerUtil =
-			new WorkflowTaskManagerUtil();
-
-		workflowTaskManagerUtil.setWorkflowTaskManager(
-			new WorkflowTaskManagerProxyBean() {
-
-				@Override
-				public WorkflowTask fetchWorkflowTask(
-					long companyId, long workflowTaskId) {
-
-					if (workflowTaskId == _VALID_WORKFLOW_TASK_ID) {
-						return new DefaultWorkflowTask() {
-
-							@Override
-							public Map<String, Serializable>
-								getOptionalAttributes() {
-
-								return Collections.emptyMap();
-							}
-
-						};
-					}
-
-					return null;
-				}
-
-			});
-	}
-
-	protected void setUpWorkflowTaskPermissionChecker() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_workflowTaskUserNotificationHandler,
-			"_workflowTaskPermissionChecker",
-			new WorkflowTaskPermissionChecker() {
-
-				@Override
-				public boolean hasPermission(
-					long groupId, WorkflowTask workflowTask,
-					PermissionChecker permissionChecker) {
-
-					return true;
-				}
-
-			});
-	}
-
 	private static final Long _INVALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
 
@@ -304,9 +306,9 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
 
-	private String _notificationMessage;
-	private ServiceContext _serviceContext;
-	private final WorkflowTaskUserNotificationHandler
+	private static String _notificationMessage;
+	private static ServiceContext _serviceContext;
+	private static final WorkflowTaskUserNotificationHandler
 		_workflowTaskUserNotificationHandler =
 			new WorkflowTaskUserNotificationHandler();
 

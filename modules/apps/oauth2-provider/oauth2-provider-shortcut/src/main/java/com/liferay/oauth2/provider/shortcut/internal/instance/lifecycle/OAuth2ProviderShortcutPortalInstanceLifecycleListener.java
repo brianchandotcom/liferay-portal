@@ -18,7 +18,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -53,6 +56,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -60,15 +64,44 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(
+	immediate = true,
+	property = {
+		"osgi.jaxrs.name=liferay-json-web-services-analytics",
+		"sap.scope.finder=true"
+	},
+	service = {
+		ApplicationDescriptor.class, PortalInstanceLifecycleListener.class,
+		ScopeFinder.class
+	}
+)
 public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+	extends BasePortalInstanceLifecycleListener
+	implements ApplicationDescriptor, ScopeFinder {
+
+	@Override
+	public String describeApplication(Locale locale) {
+		return GetterUtil.getString(
+			ResourceBundleUtil.getString(
+				ResourceBundleUtil.getBundle(
+					locale,
+					OAuth2ProviderShortcutPortalInstanceLifecycleListener.
+						class),
+				"liferay-json-web-services-analytics-name"),
+			"liferay-json-web-services-analytics-name");
+	}
+
+	@Override
+	public Collection<String> findScopes() {
+		return _scopeAliasesList;
+	}
 
 	@Override
 	public void portalInstancePreunregistered(Company company)
@@ -88,15 +121,6 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 
 		_addSAPEntries(company.getCompanyId(), user.getUserId());
 
-		Stream<String[]> stream = Arrays.stream(_SAP_ENTRY_OBJECT_ARRAYS);
-
-		List<String> scopeAliasesList = stream.map(
-			sapEntryObjectArray -> StringUtil.replaceFirst(
-				sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK)
-		).collect(
-			Collectors.toList()
-		);
-
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.addOAuth2Application(
 				company.getCompanyId(), user.getUserId(), user.getScreenName(),
@@ -112,7 +136,7 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 				"https://analytics.liferay.com", 0, _APPLICATION_NAME, null,
 				Collections.singletonList(
 					"https://analytics.liferay.com/oauth/receive"),
-				scopeAliasesList, new ServiceContext());
+				_scopeAliasesList, new ServiceContext());
 
 		Class<?> clazz = getClass();
 
@@ -121,6 +145,18 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 
 		_oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
+	}
+
+	@Activate
+	protected void activate() {
+		Stream<String[]> stream = Arrays.stream(_SAP_ENTRY_OBJECT_ARRAYS);
+
+		_scopeAliasesList = stream.map(
+			sapEntryObjectArray -> StringUtil.replaceFirst(
+				sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private void _addSAPEntries(long companyId, long userId)
@@ -234,6 +270,8 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
+
+	private List<String> _scopeAliasesList;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -33,6 +33,6 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = {"**/*.yml"};
+	private static final String[] _INCLUDES = {"**/*.yaml", "**/*.yml"};
 
 }

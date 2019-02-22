@@ -107,8 +107,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, companyId, title, description, " +
-					"defaultLanguageId from JournalArticle");
+				"select id_, companyId, defaultLanguageId, title, " +
+					"description from JournalArticle");
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, sb.toString());
@@ -117,35 +117,14 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			while (rs.next()) {
 				long articleId = rs.getLong(1);
 				long companyId = rs.getLong(2);
-				String title = rs.getString(3);
-				String description = rs.getString(4);
-				String defaultLanguageId = rs.getString(5);
 
-				Map<Locale, String> titleMap = null;
+				String defaultLanguageId = rs.getString(3);
 
-				if (!Validator.isXml(title)) {
-					titleMap = new HashMap<>();
+				Map<Locale, String> titleMap = _getLocalizationMap(
+					rs.getString(4), defaultLanguageId);
 
-					titleMap.put(
-						LocaleUtil.fromLanguageId(defaultLanguageId), title);
-				}
-				else {
-					titleMap = LocalizationUtil.getLocalizationMap(title);
-				}
-
-				Map<Locale, String> descriptionMap = null;
-
-				if (!Validator.isXml(description)) {
-					descriptionMap = new HashMap<>();
-
-					descriptionMap.put(
-						LocaleUtil.fromLanguageId(defaultLanguageId),
-						description);
-				}
-				else {
-					descriptionMap = LocalizationUtil.getLocalizationMap(
-						description);
-				}
+				Map<Locale, String> descriptionMap = _getLocalizationMap(
+					rs.getString(5), defaultLanguageId);
 
 				Set<Locale> localeSet = new HashSet<>();
 
@@ -201,6 +180,21 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false, false);
+	}
+
+	private static Map<Locale, String> _getLocalizationMap(
+		String value, String defaultLanguageId) {
+
+		if (Validator.isXml(value)) {
+			return LocalizationUtil.getLocalizationMap(value);
+		}
+
+		Map<Locale, String> localizationMap = new HashMap<>();
+
+		localizationMap.put(
+			LocaleUtil.fromLanguageId(defaultLanguageId), value);
+
+		return localizationMap;
 	}
 
 	private static long _increment() {

@@ -60,27 +60,12 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	public static void setUpClass() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		_serviceContext = new ServiceContext() {
-
-			@Override
-			public ThemeDisplay getThemeDisplay() {
-				ThemeDisplay themeDisplay = new ThemeDisplay();
-
-				themeDisplay.setSiteGroupId(RandomTestUtil.randomLong());
-
-				return themeDisplay;
-			}
-
-		};
-
-		setUpHtmlUtil();
-		setUpJSONFactoryUtil();
-		setUpUserNotificationEventLocalService();
-		setUpWorkflowTaskManagerUtil();
-		setUpWorkflowTaskPermissionChecker();
-		setUpWorkflowHandlerRegistryUtil();
-
-		_notificationMessage = RandomTestUtil.randomString();
+		_setUpHtmlUtil();
+		_setUpJSONFactoryUtil();
+		_setUpUserNotificationEventLocalService();
+		_setUpWorkflowTaskManagerUtil();
+		_setUpWorkflowTaskPermissionChecker();
+		_setUpWorkflowHandlerRegistryUtil();
 	}
 
 	@Test
@@ -116,7 +101,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	@Test
 	public void testNullWorkflowTaskIdShouldReturnBody() throws Exception {
 		Assert.assertEquals(
-			_notificationMessage,
+			_NOTIFICATION_MESSAGE,
 			_workflowTaskUserNotificationHandler.getBody(
 				mockUserNotificationEvent(0), _serviceContext));
 	}
@@ -124,7 +109,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	@Test
 	public void testValidWorkflowTaskIdShouldReturnBody() throws Exception {
 		Assert.assertEquals(
-			_notificationMessage,
+			_NOTIFICATION_MESSAGE,
 			_workflowTaskUserNotificationHandler.getBody(
 				mockUserNotificationEvent(_VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
@@ -172,7 +157,40 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		};
 	}
 
-	protected static void setUpHtmlUtil() {
+	protected UserNotificationEvent mockUserNotificationEvent(
+		long workflowTaskId) {
+
+		return mockUserNotificationEvent(null, workflowTaskId);
+	}
+
+	protected UserNotificationEvent mockUserNotificationEvent(
+		String entryClassName, Long workflowTaskId) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("entryClassName", entryClassName);
+		jsonObject.put("notificationMessage", _NOTIFICATION_MESSAGE);
+		jsonObject.put("workflowTaskId", workflowTaskId);
+
+		UserNotificationEvent userNotificationEvent =
+			new UserNotificationEventWrapper(null) {
+
+				@Override
+				public String getPayload() {
+					return jsonObject.toJSONString();
+				}
+
+				@Override
+				public long getUserNotificationEventId() {
+					return 0;
+				}
+
+			};
+
+		return userNotificationEvent;
+	}
+
+	private static void _setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(
@@ -186,13 +204,13 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			});
 	}
 
-	protected static void setUpJSONFactoryUtil() {
+	private static void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	protected static void setUpUserNotificationEventLocalService()
+	private static void _setUpUserNotificationEventLocalService()
 		throws Exception {
 
 		_workflowTaskUserNotificationHandler.
@@ -201,7 +219,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 					UserNotificationEventLocalService.class));
 	}
 
-	protected static void setUpWorkflowHandlerRegistryUtil() throws Exception {
+	private static void _setUpWorkflowHandlerRegistryUtil() throws Exception {
 		Map<String, WorkflowHandler<?>> workflowHandlerMap =
 			ReflectionTestUtil.getFieldValue(
 				WorkflowHandlerRegistryUtil.class, "_workflowHandlerMap");
@@ -211,9 +229,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		workflowHandlerMap.put(workflowHandler.getClassName(), workflowHandler);
 	}
 
-	protected static void setUpWorkflowTaskManagerUtil()
-		throws PortalException {
-
+	private static void _setUpWorkflowTaskManagerUtil() throws PortalException {
 		WorkflowTaskManagerUtil workflowTaskManagerUtil =
 			new WorkflowTaskManagerUtil();
 
@@ -243,9 +259,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			});
 	}
 
-	protected static void setUpWorkflowTaskPermissionChecker()
-		throws Exception {
-
+	private static void _setUpWorkflowTaskPermissionChecker() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_workflowTaskUserNotificationHandler,
 			"_workflowTaskPermissionChecker",
@@ -262,41 +276,11 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			});
 	}
 
-	protected UserNotificationEvent mockUserNotificationEvent(
-		long workflowTaskId) {
-
-		return mockUserNotificationEvent(null, workflowTaskId);
-	}
-
-	protected UserNotificationEvent mockUserNotificationEvent(
-		String entryClassName, Long workflowTaskId) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("entryClassName", entryClassName);
-		jsonObject.put("notificationMessage", _notificationMessage);
-		jsonObject.put("workflowTaskId", workflowTaskId);
-
-		UserNotificationEvent userNotificationEvent =
-			new UserNotificationEventWrapper(null) {
-
-				@Override
-				public String getPayload() {
-					return jsonObject.toJSONString();
-				}
-
-				@Override
-				public long getUserNotificationEventId() {
-					return 0;
-				}
-
-			};
-
-		return userNotificationEvent;
-	}
-
 	private static final Long _INVALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
+
+	private static final String _NOTIFICATION_MESSAGE =
+		RandomTestUtil.randomString();
 
 	private static final String _VALID_ENTRY_CLASS_NAME =
 		RandomTestUtil.randomString();
@@ -306,8 +290,19 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
 
-	private static String _notificationMessage;
-	private static ServiceContext _serviceContext;
+	private static final ServiceContext _serviceContext = new ServiceContext() {
+
+		@Override
+		public ThemeDisplay getThemeDisplay() {
+			ThemeDisplay themeDisplay = new ThemeDisplay();
+
+			themeDisplay.setSiteGroupId(RandomTestUtil.randomLong());
+
+			return themeDisplay;
+		}
+
+	};
+
 	private static final WorkflowTaskUserNotificationHandler
 		_workflowTaskUserNotificationHandler =
 			new WorkflowTaskUserNotificationHandler();

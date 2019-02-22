@@ -95,7 +95,9 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	<%@ include file="/view_flat_user_groups.jspf" %>
 </aui:form>
 
-<aui:script>
+<aui:script require="metal-uri/src/Uri">
+	const Uri = metalUriSrcUri.default;
+
 	function <portlet:namespace />deleteUserGroups() {
 		<portlet:namespace />doDeleteUserGroup(
 			'<%= UserGroup.class.getName() %>',
@@ -103,7 +105,7 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 		);
 	}
 
-	function <portlet:namespace />doDeleteUserGroup(className, ids) {
+	window.<portlet:namespace />doDeleteUserGroup = function(className, ids) {
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>;
 
 		<portlet:namespace />getUsersCount(
@@ -150,7 +152,7 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 				}
 			}
 		);
-	}
+	};
 
 	function <portlet:namespace />doDeleteUserGroups(userGroupIds) {
 		var form = document.<portlet:namespace />fm;
@@ -177,9 +179,17 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 		);
 	}
 
+	<liferay-portlet:resourceURL id="/users_admin/get_users_count" portletName="<%= UsersAdminPortletKeys.USERS_ADMIN %>" var="getUsersCountResourceURL" />
+
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
+		const url = new Uri('<%= getUsersCountResourceURL %>');
+
+		url.setParameterValue('className', className);
+		url.setParameterValue('ids', ids);
+		url.setParameterValue('status', status);
+
 		fetch(
-			'<%= themeDisplay.getPathMain() %>/user_groups_admin/get_users_count' + '<portlet:namespace />className=className' + '<portlet:namespace />ids=ids' + '<portlet:namespace />status=status',
+			url.toString(),
 			{
 				credentials: 'include'
 			}

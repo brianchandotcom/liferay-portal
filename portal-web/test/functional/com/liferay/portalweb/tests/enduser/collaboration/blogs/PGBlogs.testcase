@@ -1540,7 +1540,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			entryTitle = "Blogs Entry Title",

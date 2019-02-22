@@ -756,7 +756,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -793,7 +793,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -854,7 +854,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -877,7 +877,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -1005,7 +1005,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -1035,7 +1035,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -1180,7 +1180,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -1212,7 +1212,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
@@ -1272,7 +1272,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Team.definePermissionPG(
 			permissionDefinitionKey = "_ACTION_DELETE",
@@ -1304,7 +1304,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Team.removePermissionPG(
 			permissionDefinitionKey = "_ACTION_DELETE",
@@ -1365,7 +1365,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_UPDATE_CHECKBOX",
@@ -1391,7 +1391,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_UPDATE_CHECKBOX",
@@ -1661,7 +1661,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
@@ -1684,7 +1684,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsNavigator.gotoBlogsEntryPermissionsPG();
+		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",

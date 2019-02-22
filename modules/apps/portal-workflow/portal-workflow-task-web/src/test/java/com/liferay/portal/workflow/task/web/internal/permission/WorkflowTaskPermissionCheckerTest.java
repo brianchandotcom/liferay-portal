@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -222,17 +223,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	}
 
 	protected void mockAssetRendererHasViewPermission(
-			boolean hasAssetViewPermission)
-		throws PortalException {
-
-		AssetRenderer assetRenderer = mock(AssetRenderer.class);
-
-		when(
-			assetRenderer.hasViewPermission(
-				Matchers.any(PermissionChecker.class))
-		).thenReturn(
-			hasAssetViewPermission
-		);
+		boolean hasAssetViewPermission) {
 
 		Map<String, WorkflowHandler<?>> workflowHandlerMap =
 			ReflectionTestUtil.getFieldValue(
@@ -243,8 +234,17 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			new BaseWorkflowHandler<Object>() {
 
 				@Override
-				public AssetRenderer getAssetRenderer(long classPK) {
-					return assetRenderer;
+				public AssetRenderer<Object> getAssetRenderer(long classPK) {
+					return (AssetRenderer<Object>)ProxyUtil.newProxyInstance(
+						AssetRenderer.class.getClassLoader(),
+						new Class<?>[] {AssetRenderer.class},
+						(proxy, method, args) -> {
+							if ("hasViewPermission".equals(method.getName())) {
+								return hasAssetViewPermission;
+							}
+
+							return method.getDefaultValue();
+						});
 				}
 
 				@Override
@@ -258,7 +258,9 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 				}
 
 				@Override
-				public Object updateStatus(int status, Map workflowContext) {
+				public Object updateStatus(
+					int status, Map<String, Serializable> workflowContext) {
+
 					return null;
 				}
 

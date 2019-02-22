@@ -13,7 +13,7 @@
 		}
 	},
 	"dependencies": {
-		"alloyeditor": "2.0.0-alpha.4"
+		"alloyeditor": "2.0.0-beta.1"
 	},
 	"devDependencies": {
 		"liferay-npm-scripts": "1.2.0"

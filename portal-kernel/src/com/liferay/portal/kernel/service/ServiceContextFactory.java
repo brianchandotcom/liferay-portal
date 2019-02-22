@@ -323,9 +323,10 @@ public class ServiceContextFactory {
 		serviceContext.setAssetPriority(
 			ParamUtil.getDouble(request, "assetPriority"));
 
-		String[] assetTagNames = request.getParameterValues("assetTagNames");
+		String[] assetTagNames = ParamUtil.getStringValues(
+			request, "assetTagNames");
 
-		if (assetTagNames != null) {
+		if (!ArrayUtil.isEmpty(assetTagNames)) {
 			serviceContext.setAssetTagNames(assetTagNames);
 		}
 
@@ -482,9 +483,10 @@ public class ServiceContextFactory {
 		serviceContext.setAssetPriority(
 			ParamUtil.getDouble(request, "assetPriority"));
 
-		String[] assetTagNames = request.getParameterValues("assetTagNames");
+		String[] assetTagNames = ParamUtil.getStringValues(
+			request, "assetTagNames");
 
-		if (assetTagNames != null) {
+		if (!ArrayUtil.isEmpty(assetTagNames)) {
 			serviceContext.setAssetTagNames(assetTagNames);
 		}
 

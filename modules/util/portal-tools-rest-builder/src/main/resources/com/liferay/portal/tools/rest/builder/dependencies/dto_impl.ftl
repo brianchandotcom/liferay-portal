@@ -34,10 +34,12 @@ public class ${schemaName}Impl implements ${schemaName} {
 			return ${javaParameter.parameterName};
 		}
 
+		<#assign implementationType = freeMarkerTool.getImplementationType(javaParameter.parameterType, allSchemas?keys) />
+
 		public void set${javaParameter.parameterName?cap_first}(
 			${javaParameter.parameterType} ${javaParameter.parameterName}) {
 
-			this.${javaParameter.parameterName} = ${javaParameter.parameterName};
+			this.${javaParameter.parameterName} = (${implementationType})${javaParameter.parameterName};
 		}
 
 		@JsonIgnore
@@ -47,7 +49,7 @@ public class ${schemaName}Impl implements ${schemaName} {
 
 			try {
 				${javaParameter.parameterName} =
-					${javaParameter.parameterName}UnsafeSupplier.get();
+					(${implementationType})${javaParameter.parameterName}UnsafeSupplier.get();
 			}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -56,7 +58,7 @@ public class ${schemaName}Impl implements ${schemaName} {
 
 		@GraphQLField
 		@JsonProperty
-		protected ${javaParameter.parameterType} ${javaParameter.parameterName};
+		protected ${implementationType} ${javaParameter.parameterName};
 	</#list>
 
 }

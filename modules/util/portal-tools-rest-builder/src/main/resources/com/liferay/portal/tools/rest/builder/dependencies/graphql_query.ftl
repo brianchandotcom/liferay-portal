@@ -2,8 +2,8 @@ package ${configYAML.apiPackagePath}.internal.graphql.query.${versionDirName};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
-		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
+		import ${configYAML.apiPackagePath}.internal.dto.${versionDirName}.${schemaName}Impl;
+		import ${configYAML.apiPackagePath}.internal.resource.${versionDirName}.${schemaName}ResourceImpl;
 	</#list>
 </#compress>
 
@@ -38,14 +38,14 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Query {
 
-	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, openAPIYAML, "query", false) />
+	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "query", openAPIYAML, false) />
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		<#assign schemaName = javaMethodSignature.schemaName />
 
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(
-				${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaParameters, true)})
+				${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaParameters, openAPIYAML, true)})
 			throws Exception {
 
 			<#if stringUtil.equals(javaMethodSignature.returnType, "Response")>
@@ -53,24 +53,24 @@ public class Query {
 
 				return responseBuilder.build();
 			<#elseif javaMethodSignature.returnType?contains("Collection<")>
-				${schemaName}Resource ${schemaName?uncap_first}Resource = _get${schemaName}Resource();
+				${schemaName}ResourceImpl ${schemaName?uncap_first}ResourceImpl = _get${schemaName}ResourceImpl();
 
-				${schemaName?uncap_first}Resource.setContextCompany(
+				${schemaName?uncap_first}ResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
 				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters) />
 
-				Page paginationPage = ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+				Page paginationPage = ${schemaName?uncap_first}ResourceImpl.${javaMethodSignature.methodName}(
 					${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
 				return paginationPage.getItems();
 			<#else>
-				${schemaName}Resource ${schemaName?uncap_first}Resource = _get${schemaName}Resource();
+				${schemaName}ResourceImpl ${schemaName?uncap_first}ResourceImpl = _get${schemaName}ResourceImpl();
 
-				${schemaName?uncap_first}Resource.setContextCompany(
+				${schemaName?uncap_first}ResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(
+				return (${javaMethodSignature.returnType})${schemaName?uncap_first}ResourceImpl.${javaMethodSignature.methodName}(
 					${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters)});
 			</#if>
 		}
@@ -79,31 +79,9 @@ public class Query {
 	<#assign schemaNames = freeMarkerTool.getGraphQLSchemaNames(javaMethodSignatures) />
 
 	<#list schemaNames as schemaName>
-		private static ${schemaName}Resource _get${schemaName}Resource() {
-			return _${schemaName?uncap_first}ResourceServiceTracker.getService();
+		private static ${schemaName}ResourceImpl _get${schemaName}ResourceImpl() {
+			return new ${schemaName}ResourceImpl();
 		}
-
-		private static final ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
-			_${schemaName?uncap_first}ResourceServiceTracker;
 	</#list>
-
-	<#if schemaNames?size != 0>
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-			<#list schemaNames as schemaName>
-				ServiceTracker<${schemaName}Resource, ${schemaName}Resource>
-					${schemaName?uncap_first}ResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							${schemaName}Resource.class, null);
-
-				${schemaName?uncap_first}ResourceServiceTracker.open();
-
-				_${schemaName?uncap_first}ResourceServiceTracker =
-					${schemaName?uncap_first}ResourceServiceTracker;
-			</#list>
-		}
-	</#if>
 
 }

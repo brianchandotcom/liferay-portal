@@ -3,6 +3,7 @@ package ${configYAML.apiPackagePath}.resource.${versionDirName}.test;
 <#compress>
 	<#list allSchemas?keys as schemaName>
 		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
+		import ${configYAML.apiPackagePath}.internal.dto.${versionDirName}.${schemaName}Impl;
 	</#list>
 </#compress>
 
@@ -159,8 +160,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 				return ${javaParameter.parameterName};
 			}
 
+			<#assign implementationType = freeMarkerTool.getImplementationType(javaParameter.parameterType, allSchemas?keys) />
+
 			public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-				this.${javaParameter.parameterName} = ${javaParameter.parameterName};
+				this.${javaParameter.parameterName} = (${implementationType})${javaParameter.parameterName};
 			}
 
 			@JsonIgnore
@@ -168,7 +171,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 				UnsafeSupplier<${javaParameter.parameterType}, Throwable> ${javaParameter.parameterName}UnsafeSupplier) {
 
 				try {
-					${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
+					${javaParameter.parameterName} =
+						(${implementationType})${javaParameter.parameterName}UnsafeSupplier.get();
 				}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -176,7 +180,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			@JsonProperty
-			protected ${javaParameter.parameterType} ${javaParameter.parameterName};
+			protected ${implementationType} ${javaParameter.parameterName};
 		</#list>
 
 	}

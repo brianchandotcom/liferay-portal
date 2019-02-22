@@ -29,12 +29,11 @@ import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -44,7 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -67,13 +65,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		setUpGroupLocalServiceUtil();
-	}
-
-	@After
-	public void tearDown() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
 	}
 
 	@Test
@@ -247,34 +238,35 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			hasAssetViewPermission
 		);
 
-		WorkflowHandler workflowHandler = new BaseWorkflowHandler() {
+		Map<String, WorkflowHandler<?>> workflowHandlerMap =
+			ReflectionTestUtil.getFieldValue(
+				WorkflowHandlerRegistryUtil.class, "_workflowHandlerMap");
 
-			@Override
-			public AssetRenderer getAssetRenderer(long classPK) {
-				return assetRenderer;
-			}
+		workflowHandlerMap.put(
+			_TEST_CONTEXT_ENTRY_CLASS_NAME,
+			new BaseWorkflowHandler<Object>() {
 
-			@Override
-			public String getClassName() {
-				return _TEST_CONTEXT_ENTRY_CLASS_NAME;
-			}
+				@Override
+				public AssetRenderer getAssetRenderer(long classPK) {
+					return assetRenderer;
+				}
 
-			@Override
-			public String getType(Locale locale) {
-				return null;
-			}
+				@Override
+				public String getClassName() {
+					return _TEST_CONTEXT_ENTRY_CLASS_NAME;
+				}
 
-			@Override
-			public Object updateStatus(int status, Map workflowContext) {
-				return null;
-			}
+				@Override
+				public String getType(Locale locale) {
+					return null;
+				}
 
-		};
+				@Override
+				public Object updateStatus(int status, Map workflowContext) {
+					return null;
+				}
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistration = registry.registerService(
-			WorkflowHandler.class, workflowHandler);
+			});
 	}
 
 	protected PermissionChecker mockCompanyAdminPermissionChecker() {
@@ -407,7 +399,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	private static final String _TEST_CONTEXT_ENTRY_CLASS_NAME =
 		"TEST_CONTEXT_ENTRY_CLASS_NAME";
 
-	private ServiceRegistration<WorkflowHandler> _serviceRegistration;
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();
 

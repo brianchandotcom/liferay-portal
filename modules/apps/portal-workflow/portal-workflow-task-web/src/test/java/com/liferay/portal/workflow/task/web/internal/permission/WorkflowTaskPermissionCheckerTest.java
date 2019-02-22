@@ -44,7 +44,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -58,13 +57,10 @@ import org.powermock.api.mockito.PowerMockito;
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws PortalException {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
 
-	@Before
-	public void setUp() throws Exception {
-		setUpGroupLocalServiceUtil();
+		_setUpGroupLocalServiceUtil();
 	}
 
 	@Test
@@ -383,7 +379,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		return new long[] {RandomTestUtil.randomLong()};
 	}
 
-	protected void setUpGroupLocalServiceUtil() throws PortalException {
+	private static void _setUpGroupLocalServiceUtil() throws PortalException {
 		ReflectionTestUtil.setFieldValue(
 			GroupLocalServiceUtil.class, "_service",
 			new GroupLocalServiceWrapper(null) {

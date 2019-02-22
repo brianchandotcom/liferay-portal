@@ -138,16 +138,6 @@ definition {
 		AlloyEditor.typeEditor(content = "${entrySubtitle}", editor = "subtitle");
 	}
 
-	macro addTag {
-		var key_tagName = "${tagName}";
-
-		Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
-
-		AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
-
-		AssertTextEquals(locator1 = "AssetCategorization#TAG", value1 = "${tagName}");
-	}
-
 	macro addTitle {
 		AlloyEditor.addTitle(title = "${entryTitle}");
 	}

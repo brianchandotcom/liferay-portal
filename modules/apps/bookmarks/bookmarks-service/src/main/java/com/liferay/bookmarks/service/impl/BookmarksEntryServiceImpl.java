@@ -17,13 +17,14 @@ package com.liferay.bookmarks.service.impl;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.bookmarks.service.base.BookmarksEntryServiceBaseImpl;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -33,10 +34,22 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Levente Hudák
  */
+@Component(
+	property = {
+		"json.web.service.context.name=bookmarks",
+		"json.web.service.context.path=BookmarksEntry"
+	},
+	service = AopService.class
+)
 public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
@@ -149,7 +162,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 				new EntryModifiedDateComparator());
 		}
 
-		List<Long> folderIds = bookmarksFolderService.getFolderIds(
+		List<Long> folderIds = _bookmarksFolderService.getFolderIds(
 			groupId, rootFolderId);
 
 		if (folderIds.isEmpty()) {
@@ -196,7 +209,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 				groupId, userId, WorkflowConstants.STATUS_IN_TRASH);
 		}
 
-		List<Long> folderIds = bookmarksFolderService.getFolderIds(
+		List<Long> folderIds = _bookmarksFolderService.getFolderIds(
 			groupId, rootFolderId);
 
 		if (folderIds.isEmpty()) {
@@ -311,16 +324,23 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 			serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<BookmarksEntry>
-		_bookmarksEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				BookmarksEntryServiceImpl.class,
-				"_bookmarksEntryModelResourcePermission", BookmarksEntry.class);
-	private static volatile ModelResourcePermission<BookmarksFolder>
-		_bookmarksFolderModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				BookmarksEntryServiceImpl.class,
-				"_bookmarksFolderModelResourcePermission",
-				BookmarksFolder.class);
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
+	private volatile ModelResourcePermission<BookmarksEntry>
+		_bookmarksEntryModelResourcePermission;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private volatile ModelResourcePermission<BookmarksFolder>
+		_bookmarksFolderModelResourcePermission;
+
+	@Reference
+	private BookmarksFolderService _bookmarksFolderService;
 
 }

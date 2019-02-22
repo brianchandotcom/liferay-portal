@@ -22,15 +22,18 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author     Brian Wing Shun Chan
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Component(service = BookmarksEntryFinder.class)
 @Deprecated
 public class BookmarksEntryFinderImpl
 	extends BookmarksEntryFinderBaseImpl implements BookmarksEntryFinder {
@@ -53,7 +56,7 @@ public class BookmarksEntryFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(BookmarksEntry.class));
+			qPos.add(_portal.getClassNameId(BookmarksEntry.class));
 
 			return q.list(true);
 		}
@@ -65,7 +68,10 @@ public class BookmarksEntryFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -106,6 +106,10 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		expandoBridge.addAttribute(name, type);
 
+		Serializable defaultValue = getDefaultValue(actionRequest, type);
+
+		expandoBridge.setAttributeDefault(name, defaultValue);
+
 		updateProperties(actionRequest, expandoBridge, name);
 	}
 
@@ -146,15 +150,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
-		Serializable defaultValue = null;
-
-		if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
-			defaultValue = (Serializable)LocalizationUtil.getLocalizationMap(
-				actionRequest, "defaultValueLocalized");
-		}
-		else {
-			defaultValue = getValue(actionRequest, "defaultValue", type);
-		}
+		Serializable defaultValue = getDefaultValue(actionRequest, type);
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
@@ -190,6 +186,23 @@ public class ExpandoPortlet extends MVCPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected Serializable getDefaultValue(
+			ActionRequest actionRequest, int type)
+		throws Exception {
+
+		Serializable defaultValue = null;
+
+		if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			defaultValue = (Serializable)LocalizationUtil.getLocalizationMap(
+				actionRequest, "defaultValueLocalized");
+		}
+		else {
+			defaultValue = getValue(actionRequest, "defaultValue", type);
+		}
+
+		return defaultValue;
 	}
 
 	protected Serializable getValue(

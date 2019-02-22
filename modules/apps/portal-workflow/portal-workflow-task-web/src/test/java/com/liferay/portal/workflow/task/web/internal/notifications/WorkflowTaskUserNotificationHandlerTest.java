@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.task.web.internal.notifications;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,8 +42,6 @@ import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -280,7 +277,9 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	protected void setUpWorkflowTaskPermissionChecker() throws Exception {
-		WorkflowTaskPermissionChecker workflowTaskPermissionChecker =
+		ReflectionTestUtil.setFieldValue(
+			_workflowTaskUserNotificationHandler,
+			"_workflowTaskPermissionChecker",
 			new WorkflowTaskPermissionChecker() {
 
 				@Override
@@ -291,15 +290,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 					return true;
 				}
 
-			};
-
-		Field field = ReflectionUtil.getDeclaredField(
-			_workflowTaskUserNotificationHandler.getClass(),
-			"_workflowTaskPermissionChecker");
-
-		field.set(
-			_workflowTaskUserNotificationHandler,
-			workflowTaskPermissionChecker);
+			});
 	}
 
 	private static final Long _INVALID_WORKFLOW_TASK_ID =

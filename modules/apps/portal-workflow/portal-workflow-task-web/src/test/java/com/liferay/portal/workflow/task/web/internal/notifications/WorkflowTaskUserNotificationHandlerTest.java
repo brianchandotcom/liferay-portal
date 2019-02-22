@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
@@ -57,9 +57,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -231,22 +228,15 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	protected void setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
-		htmlUtil.setHtml(_html);
-
-		when(
-			_html.escape(Matchers.anyString())
-		).then(
-			new Answer<String>() {
+		htmlUtil.setHtml(
+			new HtmlImpl() {
 
 				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return invocationOnMock.getArgumentAt(0, String.class);
+				public String escape(String text) {
+					return text;
 				}
 
-			}
-		);
+			});
 	}
 
 	protected void setUpJSONFactoryUtil() {
@@ -330,9 +320,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
-
-	@Mock
-	private Html _html;
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private String _notificationMessage;

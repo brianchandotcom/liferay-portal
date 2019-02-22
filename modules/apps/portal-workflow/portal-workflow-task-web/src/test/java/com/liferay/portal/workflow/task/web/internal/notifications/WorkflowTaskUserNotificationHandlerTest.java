@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.portal.workflow.WorkflowTaskManagerProxyBean;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
@@ -53,24 +54,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Inácio Nery
  */
-@PrepareForTest(WorkflowTaskManagerUtil.class)
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil"
-)
-public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
+public class WorkflowTaskUserNotificationHandlerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -262,28 +250,33 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected void setUpWorkflowTaskManagerUtil() throws PortalException {
-		mockStatic(WorkflowTaskManagerUtil.class);
+		WorkflowTaskManagerUtil workflowTaskManagerUtil =
+			new WorkflowTaskManagerUtil();
 
-		when(
-			WorkflowTaskManagerUtil.fetchWorkflowTask(
-				Matchers.anyLong(), Matchers.eq(_INVALID_WORKFLOW_TASK_ID))
-		).thenReturn(
-			null
-		);
-
-		when(
-			WorkflowTaskManagerUtil.fetchWorkflowTask(
-				Matchers.anyLong(), Matchers.eq(_VALID_WORKFLOW_TASK_ID))
-		).thenReturn(
-			new DefaultWorkflowTask() {
+		workflowTaskManagerUtil.setWorkflowTaskManager(
+			new WorkflowTaskManagerProxyBean() {
 
 				@Override
-				public Map<String, Serializable> getOptionalAttributes() {
-					return Collections.emptyMap();
+				public WorkflowTask fetchWorkflowTask(
+					long companyId, long workflowTaskId) {
+
+					if (workflowTaskId == _VALID_WORKFLOW_TASK_ID) {
+						return new DefaultWorkflowTask() {
+
+							@Override
+							public Map<String, Serializable>
+								getOptionalAttributes() {
+
+								return Collections.emptyMap();
+							}
+
+						};
+					}
+
+					return null;
 				}
 
-			}
-		);
+			});
 	}
 
 	protected void setUpWorkflowTaskPermissionChecker() throws Exception {

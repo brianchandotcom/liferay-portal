@@ -41,7 +41,9 @@ import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsURL;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
+import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentDocumentImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.GeoImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.RenderedContentsURLImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
@@ -589,13 +591,14 @@ public class StructuredContentResourceImpl
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					journalArticle.getAvailableLanguageIds());
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						JournalArticle.class.getName(),
-						journalArticle.getResourcePrimKey()));
+				aggregateRating =
+					(AggregateRatingImpl)AggregateRatingUtil.toAggregateRating(
+						_ratingsStatsLocalService.fetchStats(
+							JournalArticle.class.getName(),
+							journalArticle.getResourcePrimKey()));
 				contentSpace = journalArticle.getGroupId();
 				contentStructureId = ddmStructure.getStructureId();
-				creator = CreatorUtil.toCreator(
+				creator = (CreatorImpl)CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(journalArticle.getUserId()));
 				dateCreated = journalArticle.getCreateDate();
@@ -605,11 +608,12 @@ public class StructuredContentResourceImpl
 					contextAcceptLanguage.getPreferredLocale());
 				id = journalArticle.getResourcePrimKey();
 				lastReviewed = journalArticle.getReviewDate();
-				renderedContentsURL = _getRenderedContentsURLs(
-					ddmStructure, journalArticle);
+				renderedContentsURL =
+					(RenderedContentsURLImpl[])_getRenderedContentsURLs(
+						ddmStructure, journalArticle);
 				title = journalArticle.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-				values = _toValues(journalArticle);
+				values = (ValuesImpl[])_toValues(journalArticle);
 			}
 		};
 	}
@@ -642,7 +646,7 @@ public class StructuredContentResourceImpl
 				{
 					document = new ContentDocumentImpl() {
 						{
-							creator = CreatorUtil.toCreator(
+							creator = (CreatorImpl)CreatorUtil.toCreator(
 								_portal,
 								_userLocalService.getUser(
 									fileEntry.getUserId()));
@@ -699,7 +703,9 @@ public class StructuredContentResourceImpl
 
 			return new ValueImpl() {
 				{
-					structuredContent = _toStructuredContent(journalArticle);
+					structuredContent =
+						(StructuredContentImpl)_toStructuredContent(
+							journalArticle);
 				}
 			};
 		}
@@ -762,7 +768,7 @@ public class StructuredContentResourceImpl
 						inputControl = ContentStructureUtil.toInputControl(
 							ddmFormField);
 						name = ddmField.getName();
-						value = _toValue(
+						value = (ValueImpl)_toValue(
 							contextAcceptLanguage.getPreferredLocale(),
 							ddmField);
 					}

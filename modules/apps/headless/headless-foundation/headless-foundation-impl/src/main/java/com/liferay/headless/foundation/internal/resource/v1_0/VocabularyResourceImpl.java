@@ -17,6 +17,7 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
@@ -165,7 +166,7 @@ public class VocabularyResourceImpl
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					assetVocabulary.getAvailableLanguageIds());
 				contentSpace = assetVocabulary.getGroupId();
-				creator = CreatorUtil.toCreator(
+				creator = (CreatorImpl)CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUser(assetVocabulary.getUserId()));
 				dateCreated = assetVocabulary.getCreateDate();

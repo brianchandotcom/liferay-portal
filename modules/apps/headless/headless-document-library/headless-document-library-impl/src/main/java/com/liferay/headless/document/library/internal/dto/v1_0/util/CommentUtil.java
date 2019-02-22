@@ -16,6 +16,7 @@ package com.liferay.headless.document.library.internal.dto.v1_0.util;
 
 import com.liferay.headless.document.library.dto.v1_0.Comment;
 import com.liferay.headless.document.library.internal.dto.v1_0.CommentImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.CreatorImpl;
 import com.liferay.portal.kernel.util.Portal;
 
 /**
@@ -33,7 +34,8 @@ public class CommentUtil {
 
 		return new CommentImpl() {
 			{
-				creator = CreatorUtil.toCreator(portal, comment.getUser());
+				creator = (CreatorImpl)CreatorUtil.toCreator(
+					portal, comment.getUser());
 				dateCreated = comment.getCreateDate();
 				dateModified = comment.getModifiedDate();
 				id = comment.getCommentId();

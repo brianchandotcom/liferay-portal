@@ -23,6 +23,7 @@ import com.liferay.headless.web.experience.dto.v1_0.ContentStructure;
 import com.liferay.headless.web.experience.dto.v1_0.Fields;
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.internal.dto.v1_0.ContentStructureImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.FieldsImpl;
 import com.liferay.headless.web.experience.internal.dto.v1_0.OptionsImpl;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -55,7 +56,7 @@ public class ContentStructureUtil {
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					ddmStructure.getAvailableLanguageIds());
 				contentSpace = ddmStructure.getGroupId();
-				creator = CreatorUtil.toCreator(
+				creator = (CreatorImpl)CreatorUtil.toCreator(
 					portal,
 					userLocalService.getUserById(ddmStructure.getUserId()));
 				dateCreated = ddmStructure.getCreateDate();

@@ -33,6 +33,7 @@ import com.liferay.headless.document.library.dto.v1_0.Categories;
 import com.liferay.headless.document.library.dto.v1_0.Document;
 import com.liferay.headless.document.library.internal.dto.v1_0.AdaptedImagesImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.CategoriesImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
 import com.liferay.headless.document.library.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.document.library.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -267,11 +268,12 @@ public class DocumentResourceImpl
 
 		return new DocumentImpl() {
 			{
-				adaptedImages = _getAdaptiveMedias(fileEntry);
-				categories = _getCategories(fileEntry);
+				adaptedImages = (AdaptedImagesImpl[])_getAdaptiveMedias(
+					fileEntry);
+				categories = (CategoriesImpl[])_getCategories(fileEntry);
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
-				creator = CreatorUtil.toCreator(_portal, user);
+				creator = (CreatorImpl)CreatorUtil.toCreator(_portal, user);
 				dateCreated = fileEntry.getCreateDate();
 				dateModified = fileEntry.getModifiedDate();
 				description = fileEntry.getDescription();

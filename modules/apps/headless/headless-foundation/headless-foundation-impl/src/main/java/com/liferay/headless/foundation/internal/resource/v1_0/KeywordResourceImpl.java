@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -177,9 +176,6 @@ public class KeywordResourceImpl
 
 	@Reference
 	private AssetTagService _assetTagService;
-
-	@Reference
-	private ClassNameService _classNameService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

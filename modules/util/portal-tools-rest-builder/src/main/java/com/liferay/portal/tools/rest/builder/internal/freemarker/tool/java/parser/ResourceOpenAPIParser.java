@@ -170,9 +170,7 @@ public class ResourceOpenAPIParser {
 		return new JavaParameter(operation, parameterName, parameterType);
 	}
 
-	private static List<JavaParameter> _getJavaParameters(
-		Operation operation) {
-
+	private static List<JavaParameter> _getJavaParameters(Operation operation) {
 		if ((operation == null) || (operation.getParameters() == null)) {
 			return Collections.emptyList();
 		}

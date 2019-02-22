@@ -15,37 +15,24 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.PathUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
-import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
-import com.liferay.portal.vulcan.yaml.openapi.Parameter;
-import com.liferay.portal.vulcan.yaml.openapi.PathItem;
-import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
-import com.liferay.portal.vulcan.yaml.openapi.Response;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -152,6 +139,32 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
+	public static String getSimpleClassName(String type) {
+		if (type.endsWith("[]")) {
+			return type.substring(0, type.length() - 2);
+		}
+
+		if (type.endsWith(">")) {
+			return type.substring(0, type.indexOf("<"));
+		}
+
+		return type;
+	}
+
+	public static boolean hasHTTPMethod(
+		JavaMethodSignature javaMethodSignature, String... httpMethods) {
+
+		Operation operation = javaMethodSignature.getOperation();
+
+		for (String httpMethod : httpMethods) {
+			if (Objects.equals(httpMethod, getHTTPMethod(operation))) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static String merge(Collection<String> c, Character delimiter) {
 		StringBuilder sb = new StringBuilder();
 
@@ -244,6 +257,21 @@ public class OpenAPIParserUtil {
 		}
 
 		return reference.substring(index + 1);
+	}
+
+	public static boolean isSchemaParameter(
+		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+
+		String simpleClassName = getSimpleClassName(
+			javaParameter.getParameterType());
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+
+		if (schemas.containsKey(simpleClassName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static String _getJavaDataType(

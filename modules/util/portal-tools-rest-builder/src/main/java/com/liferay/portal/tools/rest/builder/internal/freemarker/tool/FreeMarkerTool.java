@@ -14,21 +14,18 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -57,15 +54,15 @@ public class FreeMarkerTool {
 	}
 
 	public String getGraphQLArguments(List<JavaParameter> javaParameters) {
-		return GraphQLOpenAPIParser.getArguments(javaParameters);
+		return OpenAPIParserUtil.getArguments(javaParameters);
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String type,
+		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
 		boolean fullyQualifiedNames) {
 
 		return GraphQLOpenAPIParser.getJavaMethodSignatures(
-			configYAML, openAPIYAML, type, fullyQualifiedNames);
+			configYAML, graphQLType, openAPIYAML, fullyQualifiedNames);
 	}
 
 	public String getGraphQLMethodAnnotations(
@@ -83,15 +80,15 @@ public class FreeMarkerTool {
 	public Set<String> getGraphQLSchemaNames(
 		List<JavaMethodSignature> javaMethodSignatures) {
 
-		return GraphQLOpenAPIParser.getSchemaNames(javaMethodSignatures);
+		return OpenAPIParserUtil.getSchemaNames(javaMethodSignatures);
 	}
 
 	public String getHTTPMethod(Operation operation) {
-		return _getHTTPMethod(operation);
+		return OpenAPIParserUtil.getHTTPMethod(operation);
 	}
 
 	public String getResourceArguments(List<JavaParameter> javaParameters) {
-		return ResourceOpenAPIParser.getArguments(javaParameters);
+		return OpenAPIParserUtil.getArguments(javaParameters);
 	}
 
 	public List<JavaMethodSignature> getResourceJavaMethodSignatures(
@@ -117,63 +114,17 @@ public class FreeMarkerTool {
 	public boolean hasHTTPMethod(
 		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 
-		return _hasHTTPMethod(javaMethodSignature, httpMethods);
+		return OpenAPIParserUtil.hasHTTPMethod(
+			javaMethodSignature, httpMethods);
 	}
 
 	public boolean isSchemaParameter(
 		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
 
-		return _isSchemaParameter(javaParameter, openAPIYAML);
+		return OpenAPIParserUtil.isSchemaParameter(javaParameter, openAPIYAML);
 	}
 
 	private FreeMarkerTool() {
-	}
-
-	private String _getHTTPMethod(Operation operation) {
-		Class<? extends Operation> clazz = operation.getClass();
-
-		return StringUtil.lowerCase(clazz.getSimpleName());
-	}
-
-	private String _getSimpleClassName(String type) {
-		if (type.endsWith("[]")) {
-			return type.substring(0, type.length() - 2);
-		}
-
-		if (type.endsWith(">")) {
-			return type.substring(0, type.indexOf("<"));
-		}
-
-		return type;
-	}
-
-	private boolean _hasHTTPMethod(
-		JavaMethodSignature javaMethodSignature, String... httpMethods) {
-
-		Operation operation = javaMethodSignature.getOperation();
-
-		for (String httpMethod : httpMethods) {
-			if (Objects.equals(httpMethod, _getHTTPMethod(operation))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _isSchemaParameter(
-		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
-
-		String simpleClassName = _getSimpleClassName(
-			javaParameter.getParameterType());
-
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
-
-		if (schemas.containsKey(simpleClassName)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static FreeMarkerTool _instance = new FreeMarkerTool();

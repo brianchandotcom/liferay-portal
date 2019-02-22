@@ -16,13 +16,13 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
-import com.liferay.portal.vulcan.yaml.openapi.PathItem;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
@@ -35,10 +35,10 @@ import java.util.TreeSet;
 /**
  * @author Peter Shin
  */
-public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
+public class GraphQLOpenAPIParser {
 
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String type,
+		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
 		boolean fullyQualifiedNames) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
@@ -49,14 +49,16 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 
 		for (String schemaName : schemas.keySet()) {
 			javaMethodSignatures.addAll(
-				_getJavaMethodSignatures(openAPIYAML, schemaName, type));
+				_getJavaMethodSignatures(
+					configYAML, graphQLType, openAPIYAML, schemaName,
+					fullyQualifiedNames));
 		}
 
 		if (!fullyQualifiedNames) {
 			return javaMethodSignatures;
 		}
 
-		return toFullyQualifiedJavaMethodSignatures(
+		return OpenAPIParserUtil.toFullyQualifiedJavaMethodSignatures(
 			configYAML, javaMethodSignatures, openAPIYAML);
 	}
 
@@ -67,7 +69,8 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 
 		methodAnnotations.add("@GraphQLInvokeDetached");
 
-		String httpMethod = getHTTPMethod(javaMethodSignature.getOperation());
+		String httpMethod = OpenAPIParserUtil.getHTTPMethod(
+			javaMethodSignature.getOperation());
 
 		if (Objects.equals(httpMethod, "get") ||
 			Objects.equals(httpMethod, "post")) {
@@ -75,7 +78,7 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 			methodAnnotations.add("@GraphQLField");
 		}
 
-		return merge(methodAnnotations, '\n');
+		return OpenAPIParserUtil.merge(methodAnnotations, '\n');
 	}
 
 	public static String getParameters(
@@ -90,7 +93,11 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 				parameterAnnotation = _getParameterAnnotation(javaParameter);
 			}
 
-			sb.append(getParameter(javaParameter, parameterAnnotation));
+			String parameter = OpenAPIParserUtil.getParameter(
+				javaParameter, parameterAnnotation);
+
+			sb.append(parameter);
+
 			sb.append(',');
 		}
 
@@ -102,60 +109,62 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 	}
 
 	private static List<JavaMethodSignature> _getJavaMethodSignatures(
-		OpenAPIYAML openAPIYAML, String schemaName, String type) {
+		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
+		String schemaName, boolean fullyQualifiedNames) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+		List<JavaMethodSignature> resourceJavaMethodSignatures =
+			ResourceOpenAPIParser.getJavaMethodSignatures(
+				configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
 
-		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
-			String path = entry.getKey();
-			PathItem pathItem = entry.getValue();
+		for (JavaMethodSignature resourceJavaMethodSignature :
+				resourceJavaMethodSignatures) {
 
-			visitOperations(
-				pathItem,
-				operation -> {
-					if (!_isTypeMethod(operation, type)) {
-						return;
-					}
+			Operation operation = resourceJavaMethodSignature.getOperation();
 
-					String returnType = getReturnType(openAPIYAML, operation);
-					List<String> tags = operation.getTags();
+			if (!_isGraphQLMethod(graphQLType, operation)) {
+				continue;
+			}
 
-					if (!isSchemaMethod(schemaName, tags, returnType)) {
-						return;
-					}
+			String returnType = resourceJavaMethodSignature.getReturnType();
 
-					String methodName = getMethodName(
-						operation, path, returnType, schemaName);
+			if (returnType.startsWith("Page<")) {
+				returnType = "Collection<".concat(returnType.substring(5));
+			}
 
-					if (returnType.startsWith("Page<")) {
-						returnType = "Collection<".concat(
-							returnType.substring(5));
-					}
+			List<JavaParameter> javaParameters = _getJavaParameters(
+				resourceJavaMethodSignature);
 
-					javaMethodSignatures.add(
-						new JavaMethodSignature(
-							path, pathItem, operation, schemaName,
-							_getJavaParameters(operation), methodName,
-							returnType));
-				});
+			javaMethodSignatures.add(
+				new JavaMethodSignature(
+					resourceJavaMethodSignature.getPath(),
+					resourceJavaMethodSignature.getPathItem(), operation,
+					resourceJavaMethodSignature.getSchemaName(), javaParameters,
+					resourceJavaMethodSignature.getMethodName(), returnType));
 		}
 
 		return javaMethodSignatures;
 	}
 
-	private static List<JavaParameter> _getJavaParameters(Operation operation) {
+	private static List<JavaParameter> _getJavaParameters(
+		JavaMethodSignature resourceJavaMethodSignature) {
+
 		List<JavaParameter> javaParameters = new ArrayList<>();
 
-		for (JavaParameter javaParameter : getJavaParameters(operation)) {
+		for (JavaParameter javaParameter :
+				resourceJavaMethodSignature.getJavaParameters()) {
+
 			String parameterType = javaParameter.getParameterType();
 
 			if (Objects.equals(parameterType, "Pagination")) {
 				javaParameters.add(
-					new JavaParameter(operation, "pageSize", "int"));
+					new JavaParameter(
+						javaParameter.getOperation(), "pageSize", "int"));
 
-				javaParameters.add(new JavaParameter(operation, "page", "int"));
+				javaParameters.add(
+					new JavaParameter(
+						javaParameter.getOperation(), "page", "int"));
 			}
 			else {
 				javaParameters.add(javaParameter);
@@ -200,16 +209,18 @@ public class GraphQLOpenAPIParser extends BaseOpenAPIParser {
 		return sb.toString();
 	}
 
-	private static boolean _isTypeMethod(Operation operation, String type) {
-		String httpMethod = getHTTPMethod(operation);
+	private static boolean _isGraphQLMethod(
+		String graphQLType, Operation operation) {
 
-		if (Objects.equals(type, "mutation") &&
+		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
+
+		if (Objects.equals(graphQLType, "mutation") &&
 			!Objects.equals(httpMethod, "get")) {
 
 			return true;
 		}
 
-		if (Objects.equals(type, "query") &&
+		if (Objects.equals(graphQLType, "query") &&
 			Objects.equals(httpMethod, "get")) {
 
 			return true;

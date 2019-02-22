@@ -19,8 +19,11 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
+import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
+import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -61,6 +64,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -79,12 +84,20 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {
 		ApplicationDescriptor.class, PortalInstanceLifecycleListener.class,
-		ScopeFinder.class
+		PrefixHandlerFactory.class, ScopeFinder.class, ScopeMapper.class
 	}
 )
 public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener
-	implements ApplicationDescriptor, ScopeFinder {
+	implements ApplicationDescriptor, PrefixHandlerFactory, ScopeMapper,
+			   ScopeFinder {
+
+	@Override
+	public PrefixHandler create(
+		Function<String, Object> propertyAccessorFunction) {
+
+		return PrefixHandler.PASS_THROUGH_PREFIX_HANDLER;
+	}
 
 	@Override
 	public String describeApplication(Locale locale) {
@@ -101,6 +114,11 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 	@Override
 	public Collection<String> findScopes() {
 		return _scopeAliasesList;
+	}
+
+	@Override
+	public Set<String> map(String scope) {
+		return Collections.singleton(scope);
 	}
 
 	@Override
@@ -256,6 +274,9 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 			CompanyService.class.getName() + "#updatePreferences"
 		}
 	};
+
+	private static final PrefixHandler _prefixHandler =
+		input -> "liferay-json-web-services-analytics." + input;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -236,6 +237,9 @@ public class CategoryResourceImpl
 				dateModified = assetCategory.getModifiedDate();
 				description = assetCategory.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
+				hasCategories = !ListUtil.isEmpty(
+					_assetCategoryService.getChildCategories(
+						assetCategory.getCategoryId()));
 				id = assetCategory.getCategoryId();
 				name = assetCategory.getTitle(
 					contextAcceptLanguage.getPreferredLocale());

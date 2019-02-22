@@ -52,6 +52,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -2211,7 +2212,9 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		try {
-			validate(nameMap, ddmForm.getDefaultLocale());
+			if (!ExportImportThreadLocal.isImportInProcess()) {
+				validate(nameMap, ddmForm.getDefaultLocale());
+			}
 
 			validate(ddmForm);
 

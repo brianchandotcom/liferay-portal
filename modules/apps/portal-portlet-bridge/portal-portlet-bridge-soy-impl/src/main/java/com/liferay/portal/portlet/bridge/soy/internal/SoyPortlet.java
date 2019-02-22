@@ -181,21 +181,24 @@ public class SoyPortlet extends MVCPortlet {
 				return;
 			}
 
-			if (callResourceMethod(resourceRequest, resourceResponse)) {
+			if (_isRoutedRequest(resourceRequest)) {
+				_callRender(resourceRequest, resourceResponse, _getPortlet());
+
+				_prepareTemplate(resourceRequest, resourceResponse);
+
+				httpServletResponse.setContentType(
+					ContentTypes.APPLICATION_JSON);
+
+				Template template = getTemplate(resourceRequest);
+
+				ServletResponseUtil.write(
+					httpServletResponse,
+					_soyPortletHelper.serializeTemplate(template));
+
 				return;
 			}
 
-			_callRender(resourceRequest, resourceResponse, _getPortlet());
-
-			_prepareTemplate(resourceRequest, resourceResponse);
-
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-			Template template = getTemplate(resourceRequest);
-
-			ServletResponseUtil.write(
-				httpServletResponse,
-				_soyPortletHelper.serializeTemplate(template));
+			callResourceMethod(resourceRequest, resourceResponse);
 		}
 		catch (Exception e) {
 			_log.error("Error on the Serve Resource Phase", e);
@@ -529,6 +532,11 @@ public class SoyPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	private boolean _isRoutedRequest(PortletRequest portletRequest) {
+		return Validator.isNotNull(
+			portletRequest.getParameter("original_p_p_lifecycle"));
 	}
 
 	private void _prepareSessionMessages(

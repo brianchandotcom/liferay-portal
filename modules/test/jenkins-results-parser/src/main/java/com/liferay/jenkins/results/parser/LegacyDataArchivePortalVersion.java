@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.dom4j.Element;
-
 /**
  * @author Michael Hashimoto
  */
@@ -151,36 +149,6 @@ public class LegacyDataArchivePortalVersion {
 		}
 
 		return legacyDataArchiveTypes;
-	}
-
-	private Set<String> _getPoshiPropertyValues(
-		Element element, String targetPoshiPropertyName) {
-
-		Set<String> poshiPropertyValues = new HashSet<>();
-
-		List<Element> childElements = element.elements();
-
-		if (childElements.isEmpty()) {
-			return poshiPropertyValues;
-		}
-
-		for (Element childElement : childElements) {
-			String childElementName = childElement.getName();
-
-			if (childElementName.equals("property")) {
-				String poshiPropertyName = childElement.attributeValue("name");
-
-				if (poshiPropertyName.equals(targetPoshiPropertyName)) {
-					poshiPropertyValues.add(
-						childElement.attributeValue("value"));
-				}
-			}
-
-			poshiPropertyValues.addAll(
-				_getPoshiPropertyValues(childElement, targetPoshiPropertyName));
-		}
-
-		return poshiPropertyValues;
 	}
 
 	private final List<String> _dataArchiveTypes;

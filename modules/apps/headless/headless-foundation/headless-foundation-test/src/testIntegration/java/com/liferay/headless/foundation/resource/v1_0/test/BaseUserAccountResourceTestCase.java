@@ -23,6 +23,10 @@ import com.liferay.headless.foundation.dto.v1_0.ContactInformation;
 import com.liferay.headless.foundation.dto.v1_0.Organization;
 import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
+import com.liferay.headless.foundation.internal.dto.v1_0.ContactInformationImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.OrganizationImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.RoleImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.UserAccountImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -335,7 +339,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setAdditionalName(String additionalName) {
-				this.additionalName = additionalName;
+				this.additionalName = (String)additionalName;
 	}
 
 	@JsonIgnore
@@ -343,7 +347,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> additionalNameUnsafeSupplier) {
 
 				try {
-					additionalName = additionalNameUnsafeSupplier.get();
+					additionalName =
+						(String)additionalNameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -357,7 +362,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setAlternateName(String alternateName) {
-				this.alternateName = alternateName;
+				this.alternateName = (String)alternateName;
 	}
 
 	@JsonIgnore
@@ -365,7 +370,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> alternateNameUnsafeSupplier) {
 
 				try {
-					alternateName = alternateNameUnsafeSupplier.get();
+					alternateName =
+						(String)alternateNameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -379,7 +385,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setBirthDate(Date birthDate) {
-				this.birthDate = birthDate;
+				this.birthDate = (Date)birthDate;
 	}
 
 	@JsonIgnore
@@ -387,7 +393,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<Date, Throwable> birthDateUnsafeSupplier) {
 
 				try {
-					birthDate = birthDateUnsafeSupplier.get();
+					birthDate =
+						(Date)birthDateUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -401,7 +408,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setContactInformation(ContactInformation contactInformation) {
-				this.contactInformation = contactInformation;
+				this.contactInformation = (ContactInformationImpl)contactInformation;
 	}
 
 	@JsonIgnore
@@ -409,7 +416,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
 
 				try {
-					contactInformation = contactInformationUnsafeSupplier.get();
+					contactInformation =
+						(ContactInformationImpl)contactInformationUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -417,13 +425,13 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@JsonProperty
-	protected ContactInformation contactInformation;
+	protected ContactInformationImpl contactInformation;
 	public String getDashboardURL() {
 				return dashboardURL;
 	}
 
 	public void setDashboardURL(String dashboardURL) {
-				this.dashboardURL = dashboardURL;
+				this.dashboardURL = (String)dashboardURL;
 	}
 
 	@JsonIgnore
@@ -431,7 +439,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> dashboardURLUnsafeSupplier) {
 
 				try {
-					dashboardURL = dashboardURLUnsafeSupplier.get();
+					dashboardURL =
+						(String)dashboardURLUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -445,7 +454,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setEmail(String email) {
-				this.email = email;
+				this.email = (String)email;
 	}
 
 	@JsonIgnore
@@ -453,7 +462,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
 				try {
-					email = emailUnsafeSupplier.get();
+					email =
+						(String)emailUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -467,7 +477,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setFamilyName(String familyName) {
-				this.familyName = familyName;
+				this.familyName = (String)familyName;
 	}
 
 	@JsonIgnore
@@ -475,7 +485,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> familyNameUnsafeSupplier) {
 
 				try {
-					familyName = familyNameUnsafeSupplier.get();
+					familyName =
+						(String)familyNameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -489,7 +500,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setGivenName(String givenName) {
-				this.givenName = givenName;
+				this.givenName = (String)givenName;
 	}
 
 	@JsonIgnore
@@ -497,7 +508,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> givenNameUnsafeSupplier) {
 
 				try {
-					givenName = givenNameUnsafeSupplier.get();
+					givenName =
+						(String)givenNameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -511,7 +523,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setHonorificPrefix(String honorificPrefix) {
-				this.honorificPrefix = honorificPrefix;
+				this.honorificPrefix = (String)honorificPrefix;
 	}
 
 	@JsonIgnore
@@ -519,7 +531,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> honorificPrefixUnsafeSupplier) {
 
 				try {
-					honorificPrefix = honorificPrefixUnsafeSupplier.get();
+					honorificPrefix =
+						(String)honorificPrefixUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -533,7 +546,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setHonorificSuffix(String honorificSuffix) {
-				this.honorificSuffix = honorificSuffix;
+				this.honorificSuffix = (String)honorificSuffix;
 	}
 
 	@JsonIgnore
@@ -541,7 +554,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> honorificSuffixUnsafeSupplier) {
 
 				try {
-					honorificSuffix = honorificSuffixUnsafeSupplier.get();
+					honorificSuffix =
+						(String)honorificSuffixUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -555,7 +569,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -563,7 +577,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -577,7 +592,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setImage(String image) {
-				this.image = image;
+				this.image = (String)image;
 	}
 
 	@JsonIgnore
@@ -585,7 +600,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> imageUnsafeSupplier) {
 
 				try {
-					image = imageUnsafeSupplier.get();
+					image =
+						(String)imageUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -599,7 +615,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setJobTitle(String jobTitle) {
-				this.jobTitle = jobTitle;
+				this.jobTitle = (String)jobTitle;
 	}
 
 	@JsonIgnore
@@ -607,7 +623,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> jobTitleUnsafeSupplier) {
 
 				try {
-					jobTitle = jobTitleUnsafeSupplier.get();
+					jobTitle =
+						(String)jobTitleUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -621,7 +638,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setMyOrganizations(Organization[] myOrganizations) {
-				this.myOrganizations = myOrganizations;
+				this.myOrganizations = (OrganizationImpl[])myOrganizations;
 	}
 
 	@JsonIgnore
@@ -629,7 +646,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<Organization[], Throwable> myOrganizationsUnsafeSupplier) {
 
 				try {
-					myOrganizations = myOrganizationsUnsafeSupplier.get();
+					myOrganizations =
+						(OrganizationImpl[])myOrganizationsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -637,13 +655,13 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Organization[] myOrganizations;
+	protected OrganizationImpl[] myOrganizations;
 	public Long[] getMyOrganizationsIds() {
 				return myOrganizationsIds;
 	}
 
 	public void setMyOrganizationsIds(Long[] myOrganizationsIds) {
-				this.myOrganizationsIds = myOrganizationsIds;
+				this.myOrganizationsIds = (Long[])myOrganizationsIds;
 	}
 
 	@JsonIgnore
@@ -651,7 +669,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> myOrganizationsIdsUnsafeSupplier) {
 
 				try {
-					myOrganizationsIds = myOrganizationsIdsUnsafeSupplier.get();
+					myOrganizationsIds =
+						(Long[])myOrganizationsIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -665,7 +684,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -673,7 +692,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -687,7 +707,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setProfileURL(String profileURL) {
-				this.profileURL = profileURL;
+				this.profileURL = (String)profileURL;
 	}
 
 	@JsonIgnore
@@ -695,7 +715,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String, Throwable> profileURLUnsafeSupplier) {
 
 				try {
-					profileURL = profileURLUnsafeSupplier.get();
+					profileURL =
+						(String)profileURLUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -709,7 +730,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setRoles(Role[] roles) {
-				this.roles = roles;
+				this.roles = (RoleImpl[])roles;
 	}
 
 	@JsonIgnore
@@ -717,7 +738,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<Role[], Throwable> rolesUnsafeSupplier) {
 
 				try {
-					roles = rolesUnsafeSupplier.get();
+					roles =
+						(RoleImpl[])rolesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -725,13 +747,13 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Role[] roles;
+	protected RoleImpl[] roles;
 	public Long[] getRolesIds() {
 				return rolesIds;
 	}
 
 	public void setRolesIds(Long[] rolesIds) {
-				this.rolesIds = rolesIds;
+				this.rolesIds = (Long[])rolesIds;
 	}
 
 	@JsonIgnore
@@ -739,7 +761,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> rolesIdsUnsafeSupplier) {
 
 				try {
-					rolesIds = rolesIdsUnsafeSupplier.get();
+					rolesIds =
+						(Long[])rolesIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -753,7 +776,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setTasksAssignedToMe(String[] tasksAssignedToMe) {
-				this.tasksAssignedToMe = tasksAssignedToMe;
+				this.tasksAssignedToMe = (String[])tasksAssignedToMe;
 	}
 
 	@JsonIgnore
@@ -761,7 +784,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String[], Throwable> tasksAssignedToMeUnsafeSupplier) {
 
 				try {
-					tasksAssignedToMe = tasksAssignedToMeUnsafeSupplier.get();
+					tasksAssignedToMe =
+						(String[])tasksAssignedToMeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -775,7 +799,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	public void setTasksAssignedToMyRoles(String[] tasksAssignedToMyRoles) {
-				this.tasksAssignedToMyRoles = tasksAssignedToMyRoles;
+				this.tasksAssignedToMyRoles = (String[])tasksAssignedToMyRoles;
 	}
 
 	@JsonIgnore
@@ -783,7 +807,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				UnsafeSupplier<String[], Throwable> tasksAssignedToMyRolesUnsafeSupplier) {
 
 				try {
-					tasksAssignedToMyRoles = tasksAssignedToMyRolesUnsafeSupplier.get();
+					tasksAssignedToMyRoles =
+						(String[])tasksAssignedToMyRolesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

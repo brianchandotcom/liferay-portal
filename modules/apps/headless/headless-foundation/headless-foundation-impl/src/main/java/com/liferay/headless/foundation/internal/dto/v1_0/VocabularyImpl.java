@@ -46,7 +46,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setAvailableLanguages(
 			String[] availableLanguages) {
 
-			this.availableLanguages = availableLanguages;
+			this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -56,7 +56,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				availableLanguages =
-					availableLanguagesUnsafeSupplier.get();
+					(String[])availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -73,7 +73,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -83,7 +83,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -100,7 +100,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -110,7 +110,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -119,7 +119,7 @@ public class VocabularyImpl implements Vocabulary {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -127,7 +127,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -137,7 +137,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -154,7 +154,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -164,7 +164,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -181,7 +181,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -191,7 +191,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -208,7 +208,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setHasCategories(
 			Boolean hasCategories) {
 
-			this.hasCategories = hasCategories;
+			this.hasCategories = (Boolean)hasCategories;
 	}
 
 	@JsonIgnore
@@ -218,7 +218,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				hasCategories =
-					hasCategoriesUnsafeSupplier.get();
+					(Boolean)hasCategoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -235,7 +235,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -245,7 +245,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -262,7 +262,7 @@ public class VocabularyImpl implements Vocabulary {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -272,7 +272,7 @@ public class VocabularyImpl implements Vocabulary {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

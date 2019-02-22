@@ -23,6 +23,10 @@ import com.liferay.headless.foundation.dto.v1_0.Category;
 import com.liferay.headless.foundation.dto.v1_0.Creator;
 import com.liferay.headless.foundation.dto.v1_0.ParentCategory;
 import com.liferay.headless.foundation.dto.v1_0.ParentVocabulary;
+import com.liferay.headless.foundation.internal.dto.v1_0.CategoryImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ParentCategoryImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.ParentVocabularyImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -316,7 +320,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
+				this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -324,7 +328,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
+					availableLanguages =
+						(String[])availableLanguagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -338,7 +343,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setParentCategory(ParentCategory parentCategory) {
-				this.parentCategory = parentCategory;
+				this.parentCategory = (ParentCategoryImpl)parentCategory;
 	}
 
 	@JsonIgnore
@@ -346,7 +351,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<ParentCategory, Throwable> parentCategoryUnsafeSupplier) {
 
 				try {
-					parentCategory = parentCategoryUnsafeSupplier.get();
+					parentCategory =
+						(ParentCategoryImpl)parentCategoryUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -354,13 +360,13 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@JsonProperty
-	protected ParentCategory parentCategory;
+	protected ParentCategoryImpl parentCategory;
 	public Creator getCreator() {
 				return creator;
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -368,7 +374,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -376,13 +383,13 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Long getCreatorId() {
 				return creatorId;
 	}
 
 	public void setCreatorId(Long creatorId) {
-				this.creatorId = creatorId;
+				this.creatorId = (Long)creatorId;
 	}
 
 	@JsonIgnore
@@ -390,7 +397,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
 
 				try {
-					creatorId = creatorIdUnsafeSupplier.get();
+					creatorId =
+						(Long)creatorIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -404,7 +412,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -412,7 +420,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -426,7 +435,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -434,7 +443,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -448,7 +458,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -456,7 +466,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -470,7 +481,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setHasCategories(Boolean hasCategories) {
-				this.hasCategories = hasCategories;
+				this.hasCategories = (Boolean)hasCategories;
 	}
 
 	@JsonIgnore
@@ -478,7 +489,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
 
 				try {
-					hasCategories = hasCategoriesUnsafeSupplier.get();
+					hasCategories =
+						(Boolean)hasCategoriesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -492,7 +504,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -500,7 +512,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -514,7 +527,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -522,7 +535,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -536,7 +550,7 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
-				this.parentVocabulary = parentVocabulary;
+				this.parentVocabulary = (ParentVocabularyImpl)parentVocabulary;
 	}
 
 	@JsonIgnore
@@ -544,7 +558,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<ParentVocabulary, Throwable> parentVocabularyUnsafeSupplier) {
 
 				try {
-					parentVocabulary = parentVocabularyUnsafeSupplier.get();
+					parentVocabulary =
+						(ParentVocabularyImpl)parentVocabularyUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -552,13 +567,13 @@ public abstract class BaseCategoryResourceTestCase {
 	}
 
 	@JsonProperty
-	protected ParentVocabulary parentVocabulary;
+	protected ParentVocabularyImpl parentVocabulary;
 	public Long getParentVocabularyId() {
 				return parentVocabularyId;
 	}
 
 	public void setParentVocabularyId(Long parentVocabularyId) {
-				this.parentVocabularyId = parentVocabularyId;
+				this.parentVocabularyId = (Long)parentVocabularyId;
 	}
 
 	@JsonIgnore
@@ -566,7 +581,8 @@ public abstract class BaseCategoryResourceTestCase {
 				UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
 
 				try {
-					parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
+					parentVocabularyId =
+						(Long)parentVocabularyIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

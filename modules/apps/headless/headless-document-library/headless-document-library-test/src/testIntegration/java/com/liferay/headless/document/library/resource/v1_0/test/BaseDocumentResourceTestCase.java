@@ -24,6 +24,11 @@ import com.liferay.headless.document.library.dto.v1_0.AggregateRating;
 import com.liferay.headless.document.library.dto.v1_0.Categories;
 import com.liferay.headless.document.library.dto.v1_0.Creator;
 import com.liferay.headless.document.library.dto.v1_0.Document;
+import com.liferay.headless.document.library.internal.dto.v1_0.AdaptedImagesImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.AggregateRatingImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.CategoriesImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.document.library.internal.dto.v1_0.DocumentImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -274,7 +279,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setAdaptedImages(AdaptedImages[] adaptedImages) {
-				this.adaptedImages = adaptedImages;
+				this.adaptedImages = (AdaptedImagesImpl[])adaptedImages;
 	}
 
 	@JsonIgnore
@@ -282,7 +287,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<AdaptedImages[], Throwable> adaptedImagesUnsafeSupplier) {
 
 				try {
-					adaptedImages = adaptedImagesUnsafeSupplier.get();
+					adaptedImages =
+						(AdaptedImagesImpl[])adaptedImagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -290,13 +296,13 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected AdaptedImages[] adaptedImages;
+	protected AdaptedImagesImpl[] adaptedImages;
 	public AggregateRating getAggregateRating() {
 				return aggregateRating;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
-				this.aggregateRating = aggregateRating;
+				this.aggregateRating = (AggregateRatingImpl)aggregateRating;
 	}
 
 	@JsonIgnore
@@ -304,7 +310,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
 
 				try {
-					aggregateRating = aggregateRatingUnsafeSupplier.get();
+					aggregateRating =
+						(AggregateRatingImpl)aggregateRatingUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -312,13 +319,13 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected AggregateRating aggregateRating;
+	protected AggregateRatingImpl aggregateRating;
 	public Categories[] getCategories() {
 				return categories;
 	}
 
 	public void setCategories(Categories[] categories) {
-				this.categories = categories;
+				this.categories = (CategoriesImpl[])categories;
 	}
 
 	@JsonIgnore
@@ -326,7 +333,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
 
 				try {
-					categories = categoriesUnsafeSupplier.get();
+					categories =
+						(CategoriesImpl[])categoriesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -334,13 +342,13 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Categories[] categories;
+	protected CategoriesImpl[] categories;
 	public Long[] getCategoryIds() {
 				return categoryIds;
 	}
 
 	public void setCategoryIds(Long[] categoryIds) {
-				this.categoryIds = categoryIds;
+				this.categoryIds = (Long[])categoryIds;
 	}
 
 	@JsonIgnore
@@ -348,7 +356,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> categoryIdsUnsafeSupplier) {
 
 				try {
-					categoryIds = categoryIdsUnsafeSupplier.get();
+					categoryIds =
+						(Long[])categoryIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -362,7 +371,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setContentUrl(String contentUrl) {
-				this.contentUrl = contentUrl;
+				this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -370,7 +379,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
 				try {
-					contentUrl = contentUrlUnsafeSupplier.get();
+					contentUrl =
+						(String)contentUrlUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -384,7 +394,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -392,7 +402,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -400,13 +411,13 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -414,7 +425,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -428,7 +440,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -436,7 +448,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -450,7 +463,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -458,7 +471,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -472,7 +486,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
-				this.encodingFormat = encodingFormat;
+				this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -480,7 +494,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
 				try {
-					encodingFormat = encodingFormatUnsafeSupplier.get();
+					encodingFormat =
+						(String)encodingFormatUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -494,7 +509,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setFileExtension(String fileExtension) {
-				this.fileExtension = fileExtension;
+				this.fileExtension = (String)fileExtension;
 	}
 
 	@JsonIgnore
@@ -502,7 +517,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
 				try {
-					fileExtension = fileExtensionUnsafeSupplier.get();
+					fileExtension =
+						(String)fileExtensionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -516,7 +532,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setFolderId(Long folderId) {
-				this.folderId = folderId;
+				this.folderId = (Long)folderId;
 	}
 
 	@JsonIgnore
@@ -524,7 +540,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Long, Throwable> folderIdUnsafeSupplier) {
 
 				try {
-					folderId = folderIdUnsafeSupplier.get();
+					folderId =
+						(Long)folderIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -538,7 +555,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -546,7 +563,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -560,7 +578,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setKeywords(String[] keywords) {
-				this.keywords = keywords;
+				this.keywords = (String[])keywords;
 	}
 
 	@JsonIgnore
@@ -568,7 +586,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
 				try {
-					keywords = keywordsUnsafeSupplier.get();
+					keywords =
+						(String[])keywordsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -582,7 +601,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setSizeInBytes(Number sizeInBytes) {
-				this.sizeInBytes = sizeInBytes;
+				this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -590,7 +609,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
 				try {
-					sizeInBytes = sizeInBytesUnsafeSupplier.get();
+					sizeInBytes =
+						(Number)sizeInBytesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -604,7 +624,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	public void setTitle(String title) {
-				this.title = title;
+				this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -612,7 +632,8 @@ public abstract class BaseDocumentResourceTestCase {
 				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
 				try {
-					title = titleUnsafeSupplier.get();
+					title =
+						(String)titleUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

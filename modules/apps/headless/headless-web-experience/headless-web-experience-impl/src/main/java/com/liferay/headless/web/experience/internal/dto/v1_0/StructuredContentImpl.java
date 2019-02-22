@@ -51,7 +51,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setAggregateRating(
 			AggregateRating aggregateRating) {
 
-			this.aggregateRating = aggregateRating;
+			this.aggregateRating = (AggregateRatingImpl)aggregateRating;
 	}
 
 	@JsonIgnore
@@ -61,7 +61,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				aggregateRating =
-					aggregateRatingUnsafeSupplier.get();
+					(AggregateRatingImpl)aggregateRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected AggregateRating aggregateRating;
+	protected AggregateRatingImpl aggregateRating;
 	public String[] getAvailableLanguages() {
 			return availableLanguages;
 	}
@@ -78,7 +78,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setAvailableLanguages(
 			String[] availableLanguages) {
 
-			this.availableLanguages = availableLanguages;
+			this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -88,7 +88,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				availableLanguages =
-					availableLanguagesUnsafeSupplier.get();
+					(String[])availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -105,7 +105,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setCategories(
 			Categories[] categories) {
 
-			this.categories = categories;
+			this.categories = (CategoriesImpl[])categories;
 	}
 
 	@JsonIgnore
@@ -115,7 +115,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				categories =
-					categoriesUnsafeSupplier.get();
+					(CategoriesImpl[])categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected Categories[] categories;
+	protected CategoriesImpl[] categories;
 	public Comment[] getComment() {
 			return comment;
 	}
@@ -132,7 +132,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setComment(
 			Comment[] comment) {
 
-			this.comment = comment;
+			this.comment = (CommentImpl[])comment;
 	}
 
 	@JsonIgnore
@@ -142,7 +142,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				comment =
-					commentUnsafeSupplier.get();
+					(CommentImpl[])commentUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -151,7 +151,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected Comment[] comment;
+	protected CommentImpl[] comment;
 	public Long getContentSpace() {
 			return contentSpace;
 	}
@@ -159,7 +159,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -169,7 +169,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -186,7 +186,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setContentStructureId(
 			Long contentStructureId) {
 
-			this.contentStructureId = contentStructureId;
+			this.contentStructureId = (Long)contentStructureId;
 	}
 
 	@JsonIgnore
@@ -196,7 +196,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				contentStructureId =
-					contentStructureIdUnsafeSupplier.get();
+					(Long)contentStructureIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -213,7 +213,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -223,7 +223,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -232,7 +232,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -240,7 +240,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -250,7 +250,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -267,7 +267,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -277,7 +277,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -294,7 +294,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setDatePublished(
 			Date datePublished) {
 
-			this.datePublished = datePublished;
+			this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -304,7 +304,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				datePublished =
-					datePublishedUnsafeSupplier.get();
+					(Date)datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -321,7 +321,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -331,7 +331,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -348,7 +348,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -358,7 +358,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -375,7 +375,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setKeywords(
 			String[] keywords) {
 
-			this.keywords = keywords;
+			this.keywords = (String[])keywords;
 	}
 
 	@JsonIgnore
@@ -385,7 +385,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				keywords =
-					keywordsUnsafeSupplier.get();
+					(String[])keywordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -402,7 +402,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setLastReviewed(
 			Date lastReviewed) {
 
-			this.lastReviewed = lastReviewed;
+			this.lastReviewed = (Date)lastReviewed;
 	}
 
 	@JsonIgnore
@@ -412,7 +412,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				lastReviewed =
-					lastReviewedUnsafeSupplier.get();
+					(Date)lastReviewedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -429,7 +429,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setRenderedContentsURL(
 			RenderedContentsURL[] renderedContentsURL) {
 
-			this.renderedContentsURL = renderedContentsURL;
+			this.renderedContentsURL = (RenderedContentsURLImpl[])renderedContentsURL;
 	}
 
 	@JsonIgnore
@@ -439,7 +439,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				renderedContentsURL =
-					renderedContentsURLUnsafeSupplier.get();
+					(RenderedContentsURLImpl[])renderedContentsURLUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -448,7 +448,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected RenderedContentsURL[] renderedContentsURL;
+	protected RenderedContentsURLImpl[] renderedContentsURL;
 	public String getTitle() {
 			return title;
 	}
@@ -456,7 +456,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setTitle(
 			String title) {
 
-			this.title = title;
+			this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -466,7 +466,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				title =
-					titleUnsafeSupplier.get();
+					(String)titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -483,7 +483,7 @@ public class StructuredContentImpl implements StructuredContent {
 	public void setValues(
 			Values[] values) {
 
-			this.values = values;
+			this.values = (ValuesImpl[])values;
 	}
 
 	@JsonIgnore
@@ -493,7 +493,7 @@ public class StructuredContentImpl implements StructuredContent {
 
 			try {
 				values =
-					valuesUnsafeSupplier.get();
+					(ValuesImpl[])valuesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -502,6 +502,6 @@ public class StructuredContentImpl implements StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected Values[] values;
+	protected ValuesImpl[] values;
 
 }

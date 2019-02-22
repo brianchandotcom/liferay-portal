@@ -48,7 +48,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -58,7 +58,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -67,7 +67,7 @@ public class FormRecordImpl implements FormRecord {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -75,7 +75,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -85,7 +85,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -102,7 +102,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -112,7 +112,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -129,7 +129,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setDatePublished(
 			Date datePublished) {
 
-			this.datePublished = datePublished;
+			this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -139,7 +139,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				datePublished =
-					datePublishedUnsafeSupplier.get();
+					(Date)datePublishedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -156,7 +156,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setDraft(
 			Boolean draft) {
 
-			this.draft = draft;
+			this.draft = (Boolean)draft;
 	}
 
 	@JsonIgnore
@@ -166,7 +166,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				draft =
-					draftUnsafeSupplier.get();
+					(Boolean)draftUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -183,7 +183,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setFieldValues(
 			FieldValues[] fieldValues) {
 
-			this.fieldValues = fieldValues;
+			this.fieldValues = (FieldValuesImpl[])fieldValues;
 	}
 
 	@JsonIgnore
@@ -193,7 +193,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				fieldValues =
-					fieldValuesUnsafeSupplier.get();
+					(FieldValuesImpl[])fieldValuesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -202,7 +202,7 @@ public class FormRecordImpl implements FormRecord {
 
 	@GraphQLField
 	@JsonProperty
-	protected FieldValues[] fieldValues;
+	protected FieldValuesImpl[] fieldValues;
 	public Form getForm() {
 			return form;
 	}
@@ -210,7 +210,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setForm(
 			Form form) {
 
-			this.form = form;
+			this.form = (FormImpl)form;
 	}
 
 	@JsonIgnore
@@ -220,7 +220,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				form =
-					formUnsafeSupplier.get();
+					(FormImpl)formUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -229,7 +229,7 @@ public class FormRecordImpl implements FormRecord {
 
 	@GraphQLField
 	@JsonProperty
-	protected Form form;
+	protected FormImpl form;
 	public Long getFormId() {
 			return formId;
 	}
@@ -237,7 +237,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setFormId(
 			Long formId) {
 
-			this.formId = formId;
+			this.formId = (Long)formId;
 	}
 
 	@JsonIgnore
@@ -247,7 +247,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				formId =
-					formIdUnsafeSupplier.get();
+					(Long)formIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -264,7 +264,7 @@ public class FormRecordImpl implements FormRecord {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -274,7 +274,7 @@ public class FormRecordImpl implements FormRecord {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

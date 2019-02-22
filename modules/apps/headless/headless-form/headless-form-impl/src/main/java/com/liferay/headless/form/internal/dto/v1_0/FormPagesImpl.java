@@ -44,7 +44,7 @@ public class FormPagesImpl implements FormPages {
 	public void setFields(
 			Fields[] fields) {
 
-			this.fields = fields;
+			this.fields = (FieldsImpl[])fields;
 	}
 
 	@JsonIgnore
@@ -54,7 +54,7 @@ public class FormPagesImpl implements FormPages {
 
 			try {
 				fields =
-					fieldsUnsafeSupplier.get();
+					(FieldsImpl[])fieldsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -63,7 +63,7 @@ public class FormPagesImpl implements FormPages {
 
 	@GraphQLField
 	@JsonProperty
-	protected Fields[] fields;
+	protected FieldsImpl[] fields;
 	public String getHeadline() {
 			return headline;
 	}
@@ -71,7 +71,7 @@ public class FormPagesImpl implements FormPages {
 	public void setHeadline(
 			String headline) {
 
-			this.headline = headline;
+			this.headline = (String)headline;
 	}
 
 	@JsonIgnore
@@ -81,7 +81,7 @@ public class FormPagesImpl implements FormPages {
 
 			try {
 				headline =
-					headlineUnsafeSupplier.get();
+					(String)headlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -98,7 +98,7 @@ public class FormPagesImpl implements FormPages {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -108,7 +108,7 @@ public class FormPagesImpl implements FormPages {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -125,7 +125,7 @@ public class FormPagesImpl implements FormPages {
 	public void setText(
 			String text) {
 
-			this.text = text;
+			this.text = (String)text;
 	}
 
 	@JsonIgnore
@@ -135,7 +135,7 @@ public class FormPagesImpl implements FormPages {
 
 			try {
 				text =
-					textUnsafeSupplier.get();
+					(String)textUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

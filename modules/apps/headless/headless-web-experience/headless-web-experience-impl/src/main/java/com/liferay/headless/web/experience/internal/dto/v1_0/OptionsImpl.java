@@ -43,7 +43,7 @@ public class OptionsImpl implements Options {
 	public void setLabel(
 			String label) {
 
-			this.label = label;
+			this.label = (String)label;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class OptionsImpl implements Options {
 
 			try {
 				label =
-					labelUnsafeSupplier.get();
+					(String)labelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class OptionsImpl implements Options {
 	public void setValue(
 			String value) {
 
-			this.value = value;
+			this.value = (String)value;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class OptionsImpl implements Options {
 
 			try {
 				value =
-					valueUnsafeSupplier.get();
+					(String)valueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

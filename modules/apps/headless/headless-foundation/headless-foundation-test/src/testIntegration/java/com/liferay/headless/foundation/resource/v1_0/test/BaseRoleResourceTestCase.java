@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.Creator;
 import com.liferay.headless.foundation.dto.v1_0.Role;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.RoleImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -199,7 +201,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
+				this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -207,7 +209,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
+					availableLanguages =
+						(String[])availableLanguagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -221,7 +224,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -229,7 +232,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -237,13 +241,13 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -251,7 +255,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -265,7 +270,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -273,7 +278,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -287,7 +293,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -295,7 +301,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -309,7 +316,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -317,7 +324,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -331,7 +339,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -339,7 +347,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -353,7 +362,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	public void setRoleType(String roleType) {
-				this.roleType = roleType;
+				this.roleType = (String)roleType;
 	}
 
 	@JsonIgnore
@@ -361,7 +370,8 @@ public abstract class BaseRoleResourceTestCase {
 				UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
 
 				try {
-					roleType = roleTypeUnsafeSupplier.get();
+					roleType =
+						(String)roleTypeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

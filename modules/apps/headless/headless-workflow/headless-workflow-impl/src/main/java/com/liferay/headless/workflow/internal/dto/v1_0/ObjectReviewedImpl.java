@@ -43,7 +43,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 	public void setIdentifier(
 			String identifier) {
 
-			this.identifier = identifier;
+			this.identifier = (String)identifier;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 
 			try {
 				identifier =
-					identifierUnsafeSupplier.get();
+					(String)identifierUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 	public void setResourceType(
 			String resourceType) {
 
-			this.resourceType = resourceType;
+			this.resourceType = (String)resourceType;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class ObjectReviewedImpl implements ObjectReviewed {
 
 			try {
 				resourceType =
-					resourceTypeUnsafeSupplier.get();
+					(String)resourceTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

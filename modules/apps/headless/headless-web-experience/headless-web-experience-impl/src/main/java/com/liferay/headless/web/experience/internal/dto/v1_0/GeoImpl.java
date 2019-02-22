@@ -43,7 +43,7 @@ public class GeoImpl implements Geo {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class GeoImpl implements Geo {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class GeoImpl implements Geo {
 	public void setLatitude(
 			Number latitude) {
 
-			this.latitude = latitude;
+			this.latitude = (Number)latitude;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class GeoImpl implements Geo {
 
 			try {
 				latitude =
-					latitudeUnsafeSupplier.get();
+					(Number)latitudeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class GeoImpl implements Geo {
 	public void setLongitude(
 			Number longitude) {
 
-			this.longitude = longitude;
+			this.longitude = (Number)longitude;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class GeoImpl implements Geo {
 
 			try {
 				longitude =
-					longitudeUnsafeSupplier.get();
+					(Number)longitudeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

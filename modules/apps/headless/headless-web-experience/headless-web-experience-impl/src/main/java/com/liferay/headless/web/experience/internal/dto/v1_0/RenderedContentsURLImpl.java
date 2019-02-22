@@ -43,7 +43,7 @@ public class RenderedContentsURLImpl implements RenderedContentsURL {
 	public void setRenderedContentURL(
 			String renderedContentURL) {
 
-			this.renderedContentURL = renderedContentURL;
+			this.renderedContentURL = (String)renderedContentURL;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class RenderedContentsURLImpl implements RenderedContentsURL {
 
 			try {
 				renderedContentURL =
-					renderedContentURLUnsafeSupplier.get();
+					(String)renderedContentURLUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class RenderedContentsURLImpl implements RenderedContentsURL {
 	public void setTemplateName(
 			String templateName) {
 
-			this.templateName = templateName;
+			this.templateName = (String)templateName;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class RenderedContentsURLImpl implements RenderedContentsURL {
 
 			try {
 				templateName =
-					templateNameUnsafeSupplier.get();
+					(String)templateNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

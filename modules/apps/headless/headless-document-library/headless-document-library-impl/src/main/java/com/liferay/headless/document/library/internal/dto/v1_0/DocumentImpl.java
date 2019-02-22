@@ -49,7 +49,7 @@ public class DocumentImpl implements Document {
 	public void setAdaptedImages(
 			AdaptedImages[] adaptedImages) {
 
-			this.adaptedImages = adaptedImages;
+			this.adaptedImages = (AdaptedImagesImpl[])adaptedImages;
 	}
 
 	@JsonIgnore
@@ -59,7 +59,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				adaptedImages =
-					adaptedImagesUnsafeSupplier.get();
+					(AdaptedImagesImpl[])adaptedImagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -68,7 +68,7 @@ public class DocumentImpl implements Document {
 
 	@GraphQLField
 	@JsonProperty
-	protected AdaptedImages[] adaptedImages;
+	protected AdaptedImagesImpl[] adaptedImages;
 	public AggregateRating getAggregateRating() {
 			return aggregateRating;
 	}
@@ -76,7 +76,7 @@ public class DocumentImpl implements Document {
 	public void setAggregateRating(
 			AggregateRating aggregateRating) {
 
-			this.aggregateRating = aggregateRating;
+			this.aggregateRating = (AggregateRatingImpl)aggregateRating;
 	}
 
 	@JsonIgnore
@@ -86,7 +86,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				aggregateRating =
-					aggregateRatingUnsafeSupplier.get();
+					(AggregateRatingImpl)aggregateRatingUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -95,7 +95,7 @@ public class DocumentImpl implements Document {
 
 	@GraphQLField
 	@JsonProperty
-	protected AggregateRating aggregateRating;
+	protected AggregateRatingImpl aggregateRating;
 	public Categories[] getCategories() {
 			return categories;
 	}
@@ -103,7 +103,7 @@ public class DocumentImpl implements Document {
 	public void setCategories(
 			Categories[] categories) {
 
-			this.categories = categories;
+			this.categories = (CategoriesImpl[])categories;
 	}
 
 	@JsonIgnore
@@ -113,7 +113,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				categories =
-					categoriesUnsafeSupplier.get();
+					(CategoriesImpl[])categoriesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -122,7 +122,7 @@ public class DocumentImpl implements Document {
 
 	@GraphQLField
 	@JsonProperty
-	protected Categories[] categories;
+	protected CategoriesImpl[] categories;
 	public Long[] getCategoryIds() {
 			return categoryIds;
 	}
@@ -130,7 +130,7 @@ public class DocumentImpl implements Document {
 	public void setCategoryIds(
 			Long[] categoryIds) {
 
-			this.categoryIds = categoryIds;
+			this.categoryIds = (Long[])categoryIds;
 	}
 
 	@JsonIgnore
@@ -140,7 +140,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				categoryIds =
-					categoryIdsUnsafeSupplier.get();
+					(Long[])categoryIdsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -157,7 +157,7 @@ public class DocumentImpl implements Document {
 	public void setContentUrl(
 			String contentUrl) {
 
-			this.contentUrl = contentUrl;
+			this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -167,7 +167,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				contentUrl =
-					contentUrlUnsafeSupplier.get();
+					(String)contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -184,7 +184,7 @@ public class DocumentImpl implements Document {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -194,7 +194,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -203,7 +203,7 @@ public class DocumentImpl implements Document {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -211,7 +211,7 @@ public class DocumentImpl implements Document {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -221,7 +221,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -238,7 +238,7 @@ public class DocumentImpl implements Document {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -248,7 +248,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -265,7 +265,7 @@ public class DocumentImpl implements Document {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -275,7 +275,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -292,7 +292,7 @@ public class DocumentImpl implements Document {
 	public void setEncodingFormat(
 			String encodingFormat) {
 
-			this.encodingFormat = encodingFormat;
+			this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -302,7 +302,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				encodingFormat =
-					encodingFormatUnsafeSupplier.get();
+					(String)encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -319,7 +319,7 @@ public class DocumentImpl implements Document {
 	public void setFileExtension(
 			String fileExtension) {
 
-			this.fileExtension = fileExtension;
+			this.fileExtension = (String)fileExtension;
 	}
 
 	@JsonIgnore
@@ -329,7 +329,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				fileExtension =
-					fileExtensionUnsafeSupplier.get();
+					(String)fileExtensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -346,7 +346,7 @@ public class DocumentImpl implements Document {
 	public void setFolderId(
 			Long folderId) {
 
-			this.folderId = folderId;
+			this.folderId = (Long)folderId;
 	}
 
 	@JsonIgnore
@@ -356,7 +356,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				folderId =
-					folderIdUnsafeSupplier.get();
+					(Long)folderIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -373,7 +373,7 @@ public class DocumentImpl implements Document {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -383,7 +383,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -400,7 +400,7 @@ public class DocumentImpl implements Document {
 	public void setKeywords(
 			String[] keywords) {
 
-			this.keywords = keywords;
+			this.keywords = (String[])keywords;
 	}
 
 	@JsonIgnore
@@ -410,7 +410,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				keywords =
-					keywordsUnsafeSupplier.get();
+					(String[])keywordsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -427,7 +427,7 @@ public class DocumentImpl implements Document {
 	public void setSizeInBytes(
 			Number sizeInBytes) {
 
-			this.sizeInBytes = sizeInBytes;
+			this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -437,7 +437,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				sizeInBytes =
-					sizeInBytesUnsafeSupplier.get();
+					(Number)sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -454,7 +454,7 @@ public class DocumentImpl implements Document {
 	public void setTitle(
 			String title) {
 
-			this.title = title;
+			this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -464,7 +464,7 @@ public class DocumentImpl implements Document {
 
 			try {
 				title =
-					titleUnsafeSupplier.get();
+					(String)titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

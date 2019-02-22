@@ -24,6 +24,10 @@ import com.liferay.headless.form.dto.v1_0.FormPages;
 import com.liferay.headless.form.dto.v1_0.FormStructure;
 import com.liferay.headless.form.dto.v1_0.Options;
 import com.liferay.headless.form.dto.v1_0.SuccessPage;
+import com.liferay.headless.form.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.form.internal.dto.v1_0.FormPagesImpl;
+import com.liferay.headless.form.internal.dto.v1_0.FormStructureImpl;
+import com.liferay.headless.form.internal.dto.v1_0.SuccessPageImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -148,7 +152,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
+				this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -156,7 +160,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
+					availableLanguages =
+						(String[])availableLanguagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -170,7 +175,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = contentSpace;
+				this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -178,7 +183,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 				try {
-					contentSpace = contentSpaceUnsafeSupplier.get();
+					contentSpace =
+						(Long)contentSpaceUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -192,7 +198,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -200,7 +206,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -208,13 +215,13 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -222,7 +229,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -236,7 +244,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -244,7 +252,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -258,7 +267,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -266,7 +275,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -280,7 +290,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setFormPages(FormPages[] formPages) {
-				this.formPages = formPages;
+				this.formPages = (FormPagesImpl[])formPages;
 	}
 
 	@JsonIgnore
@@ -288,7 +298,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<FormPages[], Throwable> formPagesUnsafeSupplier) {
 
 				try {
-					formPages = formPagesUnsafeSupplier.get();
+					formPages =
+						(FormPagesImpl[])formPagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -296,13 +307,13 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	@JsonProperty
-	protected FormPages[] formPages;
+	protected FormPagesImpl[] formPages;
 	public Long getId() {
 				return id;
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -310,7 +321,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -324,7 +336,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -332,7 +344,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -346,7 +359,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	public void setSuccessPage(SuccessPage successPage) {
-				this.successPage = successPage;
+				this.successPage = (SuccessPageImpl)successPage;
 	}
 
 	@JsonIgnore
@@ -354,7 +367,8 @@ public abstract class BaseFormStructureResourceTestCase {
 				UnsafeSupplier<SuccessPage, Throwable> successPageUnsafeSupplier) {
 
 				try {
-					successPage = successPageUnsafeSupplier.get();
+					successPage =
+						(SuccessPageImpl)successPageUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -362,7 +376,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	@JsonProperty
-	protected SuccessPage successPage;
+	protected SuccessPageImpl successPage;
 
 	}
 

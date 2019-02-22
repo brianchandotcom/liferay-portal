@@ -46,7 +46,7 @@ public class KeywordImpl implements Keyword {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -56,7 +56,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -73,7 +73,7 @@ public class KeywordImpl implements Keyword {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -83,7 +83,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -92,7 +92,7 @@ public class KeywordImpl implements Keyword {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -100,7 +100,7 @@ public class KeywordImpl implements Keyword {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -110,7 +110,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,7 +127,7 @@ public class KeywordImpl implements Keyword {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -137,7 +137,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -154,7 +154,7 @@ public class KeywordImpl implements Keyword {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -164,7 +164,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -181,7 +181,7 @@ public class KeywordImpl implements Keyword {
 	public void setKeywordUsageCount(
 			Number keywordUsageCount) {
 
-			this.keywordUsageCount = keywordUsageCount;
+			this.keywordUsageCount = (Number)keywordUsageCount;
 	}
 
 	@JsonIgnore
@@ -191,7 +191,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				keywordUsageCount =
-					keywordUsageCountUnsafeSupplier.get();
+					(Number)keywordUsageCountUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -208,7 +208,7 @@ public class KeywordImpl implements Keyword {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -218,7 +218,7 @@ public class KeywordImpl implements Keyword {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -48,7 +48,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setAvailableLanguages(
 			String[] availableLanguages) {
 
-			this.availableLanguages = availableLanguages;
+			this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -58,7 +58,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				availableLanguages =
-					availableLanguagesUnsafeSupplier.get();
+					(String[])availableLanguagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -75,7 +75,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setContentSpace(
 			Long contentSpace) {
 
-			this.contentSpace = contentSpace;
+			this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -85,7 +85,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				contentSpace =
-					contentSpaceUnsafeSupplier.get();
+					(Long)contentSpaceUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -102,7 +102,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -112,7 +112,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -121,7 +121,7 @@ public class FormStructureImpl implements FormStructure {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -129,7 +129,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -139,7 +139,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -156,7 +156,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -166,7 +166,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -183,7 +183,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -193,7 +193,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -210,7 +210,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setFormPages(
 			FormPages[] formPages) {
 
-			this.formPages = formPages;
+			this.formPages = (FormPagesImpl[])formPages;
 	}
 
 	@JsonIgnore
@@ -220,7 +220,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				formPages =
-					formPagesUnsafeSupplier.get();
+					(FormPagesImpl[])formPagesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -229,7 +229,7 @@ public class FormStructureImpl implements FormStructure {
 
 	@GraphQLField
 	@JsonProperty
-	protected FormPages[] formPages;
+	protected FormPagesImpl[] formPages;
 	public Long getId() {
 			return id;
 	}
@@ -237,7 +237,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -247,7 +247,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -264,7 +264,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -274,7 +274,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -291,7 +291,7 @@ public class FormStructureImpl implements FormStructure {
 	public void setSuccessPage(
 			SuccessPage successPage) {
 
-			this.successPage = successPage;
+			this.successPage = (SuccessPageImpl)successPage;
 	}
 
 	@JsonIgnore
@@ -301,7 +301,7 @@ public class FormStructureImpl implements FormStructure {
 
 			try {
 				successPage =
-					successPageUnsafeSupplier.get();
+					(SuccessPageImpl)successPageUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -310,6 +310,6 @@ public class FormStructureImpl implements FormStructure {
 
 	@GraphQLField
 	@JsonProperty
-	protected SuccessPage successPage;
+	protected SuccessPageImpl successPage;
 
 }

@@ -36,7 +36,7 @@ public class Mutation {
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("WorkflowTask") WorkflowTaskImpl workflowTaskImpl)
 			throws Exception {
 
-				return (WorkflowTaskImpl)_getWorkflowTaskResource().postWorkflowTaskAssignToMe(
+				return (WorkflowTaskImpl)_getWorkflowTaskResourceImpl().postWorkflowTaskAssignToMe(
 					workflowTaskId,workflowTaskImpl);
 	}
 	@GraphQLField
@@ -45,7 +45,7 @@ public class Mutation {
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("WorkflowTask") WorkflowTaskImpl workflowTaskImpl)
 			throws Exception {
 
-				return (WorkflowTaskImpl)_getWorkflowTaskResource().postWorkflowTaskAssignToUser(
+				return (WorkflowTaskImpl)_getWorkflowTaskResourceImpl().postWorkflowTaskAssignToUser(
 					workflowTaskId,workflowTaskImpl);
 	}
 	@GraphQLField
@@ -54,7 +54,7 @@ public class Mutation {
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("WorkflowTask") WorkflowTaskImpl workflowTaskImpl)
 			throws Exception {
 
-				return (WorkflowTaskImpl)_getWorkflowTaskResource().postWorkflowTaskChangeTransition(
+				return (WorkflowTaskImpl)_getWorkflowTaskResourceImpl().postWorkflowTaskChangeTransition(
 					workflowTaskId,workflowTaskImpl);
 	}
 	@GraphQLField
@@ -63,11 +63,11 @@ public class Mutation {
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("WorkflowTask") WorkflowTaskImpl workflowTaskImpl)
 			throws Exception {
 
-				return (WorkflowTaskImpl)_getWorkflowTaskResource().postWorkflowTaskUpdateDueDate(
+				return (WorkflowTaskImpl)_getWorkflowTaskResourceImpl().postWorkflowTaskUpdateDueDate(
 					workflowTaskId,workflowTaskImpl);
 	}
 
-	private static WorkflowTaskResourceImpl _getWorkflowTaskResource() {
+	private static WorkflowTaskResourceImpl _getWorkflowTaskResourceImpl() {
 			return new WorkflowTaskResourceImpl();
 	}
 

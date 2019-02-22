@@ -43,7 +43,7 @@ public class EmailImpl implements Email {
 	public void setEmail(
 			String email) {
 
-			this.email = email;
+			this.email = (String)email;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class EmailImpl implements Email {
 
 			try {
 				email =
-					emailUnsafeSupplier.get();
+					(String)emailUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class EmailImpl implements Email {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class EmailImpl implements Email {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class EmailImpl implements Email {
 	public void setType(
 			String type) {
 
-			this.type = type;
+			this.type = (String)type;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class EmailImpl implements Email {
 
 			try {
 				type =
-					typeUnsafeSupplier.get();
+					(String)typeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

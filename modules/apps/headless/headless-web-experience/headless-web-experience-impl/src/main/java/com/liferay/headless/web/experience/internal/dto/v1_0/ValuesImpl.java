@@ -44,7 +44,7 @@ public class ValuesImpl implements Values {
 	public void setDataType(
 			String dataType) {
 
-			this.dataType = dataType;
+			this.dataType = (String)dataType;
 	}
 
 	@JsonIgnore
@@ -54,7 +54,7 @@ public class ValuesImpl implements Values {
 
 			try {
 				dataType =
-					dataTypeUnsafeSupplier.get();
+					(String)dataTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -71,7 +71,7 @@ public class ValuesImpl implements Values {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -81,7 +81,7 @@ public class ValuesImpl implements Values {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -98,7 +98,7 @@ public class ValuesImpl implements Values {
 	public void setInputControl(
 			String inputControl) {
 
-			this.inputControl = inputControl;
+			this.inputControl = (String)inputControl;
 	}
 
 	@JsonIgnore
@@ -108,7 +108,7 @@ public class ValuesImpl implements Values {
 
 			try {
 				inputControl =
-					inputControlUnsafeSupplier.get();
+					(String)inputControlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -125,7 +125,7 @@ public class ValuesImpl implements Values {
 	public void setLabel(
 			String label) {
 
-			this.label = label;
+			this.label = (String)label;
 	}
 
 	@JsonIgnore
@@ -135,7 +135,7 @@ public class ValuesImpl implements Values {
 
 			try {
 				label =
-					labelUnsafeSupplier.get();
+					(String)labelUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -152,7 +152,7 @@ public class ValuesImpl implements Values {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -162,7 +162,7 @@ public class ValuesImpl implements Values {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -179,7 +179,7 @@ public class ValuesImpl implements Values {
 	public void setValue(
 			Value value) {
 
-			this.value = value;
+			this.value = (ValueImpl)value;
 	}
 
 	@JsonIgnore
@@ -189,7 +189,7 @@ public class ValuesImpl implements Values {
 
 			try {
 				value =
-					valueUnsafeSupplier.get();
+					(ValueImpl)valueUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -198,6 +198,6 @@ public class ValuesImpl implements Values {
 
 	@GraphQLField
 	@JsonProperty
-	protected Value value;
+	protected ValueImpl value;
 
 }

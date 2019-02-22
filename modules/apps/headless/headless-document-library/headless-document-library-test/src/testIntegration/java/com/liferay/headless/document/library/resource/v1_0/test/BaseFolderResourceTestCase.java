@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.headless.document.library.internal.dto.v1_0.FolderImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -311,7 +312,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -319,7 +320,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -333,7 +335,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -341,7 +343,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -355,7 +358,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -363,7 +366,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -377,7 +381,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setHasDocuments(Boolean hasDocuments) {
-				this.hasDocuments = hasDocuments;
+				this.hasDocuments = (Boolean)hasDocuments;
 	}
 
 	@JsonIgnore
@@ -385,7 +389,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> hasDocumentsUnsafeSupplier) {
 
 				try {
-					hasDocuments = hasDocumentsUnsafeSupplier.get();
+					hasDocuments =
+						(Boolean)hasDocumentsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -399,7 +404,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setHasFolders(Boolean hasFolders) {
-				this.hasFolders = hasFolders;
+				this.hasFolders = (Boolean)hasFolders;
 	}
 
 	@JsonIgnore
@@ -407,7 +412,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> hasFoldersUnsafeSupplier) {
 
 				try {
-					hasFolders = hasFoldersUnsafeSupplier.get();
+					hasFolders =
+						(Boolean)hasFoldersUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -421,7 +427,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -429,7 +435,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -443,7 +450,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -451,7 +458,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -465,7 +473,7 @@ public abstract class BaseFolderResourceTestCase {
 	}
 
 	public void setRepositoryId(Long repositoryId) {
-				this.repositoryId = repositoryId;
+				this.repositoryId = (Long)repositoryId;
 	}
 
 	@JsonIgnore
@@ -473,7 +481,8 @@ public abstract class BaseFolderResourceTestCase {
 				UnsafeSupplier<Long, Throwable> repositoryIdUnsafeSupplier) {
 
 				try {
-					repositoryId = repositoryIdUnsafeSupplier.get();
+					repositoryId =
+						(Long)repositoryIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

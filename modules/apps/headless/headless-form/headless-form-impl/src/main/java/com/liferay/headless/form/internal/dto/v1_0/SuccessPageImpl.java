@@ -43,7 +43,7 @@ public class SuccessPageImpl implements SuccessPage {
 	public void setDescription(
 			String description) {
 
-			this.description = description;
+			this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class SuccessPageImpl implements SuccessPage {
 
 			try {
 				description =
-					descriptionUnsafeSupplier.get();
+					(String)descriptionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class SuccessPageImpl implements SuccessPage {
 	public void setHeadline(
 			String headline) {
 
-			this.headline = headline;
+			this.headline = (String)headline;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class SuccessPageImpl implements SuccessPage {
 
 			try {
 				headline =
-					headlineUnsafeSupplier.get();
+					(String)headlineUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class SuccessPageImpl implements SuccessPage {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class SuccessPageImpl implements SuccessPage {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

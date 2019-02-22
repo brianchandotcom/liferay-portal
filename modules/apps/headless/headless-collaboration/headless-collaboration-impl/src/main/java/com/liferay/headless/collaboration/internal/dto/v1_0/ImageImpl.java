@@ -43,7 +43,7 @@ public class ImageImpl implements Image {
 	public void setContentUrl(
 			String contentUrl) {
 
-			this.contentUrl = contentUrl;
+			this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class ImageImpl implements Image {
 
 			try {
 				contentUrl =
-					contentUrlUnsafeSupplier.get();
+					(String)contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class ImageImpl implements Image {
 	public void setImageId(
 			Long imageId) {
 
-			this.imageId = imageId;
+			this.imageId = (Long)imageId;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class ImageImpl implements Image {
 
 			try {
 				imageId =
-					imageIdUnsafeSupplier.get();
+					(Long)imageIdUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class ImageImpl implements Image {
 	public void setName(
 			String name) {
 
-			this.name = name;
+			this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class ImageImpl implements Image {
 
 			try {
 				name =
-					nameUnsafeSupplier.get();
+					(String)nameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

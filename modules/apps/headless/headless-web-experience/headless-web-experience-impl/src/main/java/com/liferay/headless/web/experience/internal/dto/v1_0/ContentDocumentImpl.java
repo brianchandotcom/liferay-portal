@@ -46,7 +46,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setContentUrl(
 			String contentUrl) {
 
-			this.contentUrl = contentUrl;
+			this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -56,7 +56,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				contentUrl =
-					contentUrlUnsafeSupplier.get();
+					(String)contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -73,7 +73,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setCreator(
 			Creator creator) {
 
-			this.creator = creator;
+			this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -83,7 +83,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				creator =
-					creatorUnsafeSupplier.get();
+					(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -92,7 +92,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 	@GraphQLField
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 			return dateCreated;
 	}
@@ -100,7 +100,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setDateCreated(
 			Date dateCreated) {
 
-			this.dateCreated = dateCreated;
+			this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -110,7 +110,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				dateCreated =
-					dateCreatedUnsafeSupplier.get();
+					(Date)dateCreatedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -127,7 +127,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setDateModified(
 			Date dateModified) {
 
-			this.dateModified = dateModified;
+			this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -137,7 +137,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				dateModified =
-					dateModifiedUnsafeSupplier.get();
+					(Date)dateModifiedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -154,7 +154,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setEncodingFormat(
 			String encodingFormat) {
 
-			this.encodingFormat = encodingFormat;
+			this.encodingFormat = (String)encodingFormat;
 	}
 
 	@JsonIgnore
@@ -164,7 +164,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				encodingFormat =
-					encodingFormatUnsafeSupplier.get();
+					(String)encodingFormatUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -181,7 +181,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setFileExtension(
 			String fileExtension) {
 
-			this.fileExtension = fileExtension;
+			this.fileExtension = (String)fileExtension;
 	}
 
 	@JsonIgnore
@@ -191,7 +191,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				fileExtension =
-					fileExtensionUnsafeSupplier.get();
+					(String)fileExtensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -208,7 +208,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -218,7 +218,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -235,7 +235,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setSizeInBytes(
 			Number sizeInBytes) {
 
-			this.sizeInBytes = sizeInBytes;
+			this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -245,7 +245,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				sizeInBytes =
-					sizeInBytesUnsafeSupplier.get();
+					(Number)sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -262,7 +262,7 @@ public class ContentDocumentImpl implements ContentDocument {
 	public void setTitle(
 			String title) {
 
-			this.title = title;
+			this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -272,7 +272,7 @@ public class ContentDocumentImpl implements ContentDocument {
 
 			try {
 				title =
-					titleUnsafeSupplier.get();
+					(String)titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

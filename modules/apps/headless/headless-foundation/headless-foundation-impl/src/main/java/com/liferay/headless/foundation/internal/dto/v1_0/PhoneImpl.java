@@ -43,7 +43,7 @@ public class PhoneImpl implements Phone {
 	public void setExtension(
 			String extension) {
 
-			this.extension = extension;
+			this.extension = (String)extension;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class PhoneImpl implements Phone {
 
 			try {
 				extension =
-					extensionUnsafeSupplier.get();
+					(String)extensionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class PhoneImpl implements Phone {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class PhoneImpl implements Phone {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class PhoneImpl implements Phone {
 	public void setPhoneNumber(
 			String phoneNumber) {
 
-			this.phoneNumber = phoneNumber;
+			this.phoneNumber = (String)phoneNumber;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class PhoneImpl implements Phone {
 
 			try {
 				phoneNumber =
-					phoneNumberUnsafeSupplier.get();
+					(String)phoneNumberUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class PhoneImpl implements Phone {
 	public void setPhoneType(
 			String phoneType) {
 
-			this.phoneType = phoneType;
+			this.phoneType = (String)phoneType;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class PhoneImpl implements Phone {
 
 			try {
 				phoneType =
-					phoneTypeUnsafeSupplier.get();
+					(String)phoneTypeUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

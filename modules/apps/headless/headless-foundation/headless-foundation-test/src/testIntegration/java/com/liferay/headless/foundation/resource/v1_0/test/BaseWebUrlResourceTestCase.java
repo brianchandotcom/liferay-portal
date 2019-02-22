@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
+import com.liferay.headless.foundation.internal.dto.v1_0.WebUrlImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -139,7 +140,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -147,7 +148,8 @@ public abstract class BaseWebUrlResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -161,7 +163,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	public void setUrl(String url) {
-				this.url = url;
+				this.url = (String)url;
 	}
 
 	@JsonIgnore
@@ -169,7 +171,8 @@ public abstract class BaseWebUrlResourceTestCase {
 				UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
 
 				try {
-					url = urlUnsafeSupplier.get();
+					url =
+						(String)urlUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -183,7 +186,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	public void setUrlType(String urlType) {
-				this.urlType = urlType;
+				this.urlType = (String)urlType;
 	}
 
 	@JsonIgnore
@@ -191,7 +194,8 @@ public abstract class BaseWebUrlResourceTestCase {
 				UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
 
 				try {
-					urlType = urlTypeUnsafeSupplier.get();
+					urlType =
+						(String)urlTypeUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

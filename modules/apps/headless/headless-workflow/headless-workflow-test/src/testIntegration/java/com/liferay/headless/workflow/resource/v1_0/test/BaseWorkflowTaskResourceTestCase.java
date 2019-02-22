@@ -22,6 +22,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
+import com.liferay.headless.workflow.internal.dto.v1_0.ObjectReviewedImpl;
+import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowLogImpl;
+import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowTaskImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -317,7 +320,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setCompleted(Boolean completed) {
-				this.completed = completed;
+				this.completed = (Boolean)completed;
 	}
 
 	@JsonIgnore
@@ -325,7 +328,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier) {
 
 				try {
-					completed = completedUnsafeSupplier.get();
+					completed =
+						(Boolean)completedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -339,7 +343,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setDateCompleted(Date dateCompleted) {
-				this.dateCompleted = dateCompleted;
+				this.dateCompleted = (Date)dateCompleted;
 	}
 
 	@JsonIgnore
@@ -347,7 +351,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier) {
 
 				try {
-					dateCompleted = dateCompletedUnsafeSupplier.get();
+					dateCompleted =
+						(Date)dateCompletedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -361,7 +366,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -369,7 +374,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -383,7 +389,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setDefinitionName(String definitionName) {
-				this.definitionName = definitionName;
+				this.definitionName = (String)definitionName;
 	}
 
 	@JsonIgnore
@@ -391,7 +397,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier) {
 
 				try {
-					definitionName = definitionNameUnsafeSupplier.get();
+					definitionName =
+						(String)definitionNameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -405,7 +412,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -413,7 +420,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -427,7 +435,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setDueDate(Date dueDate) {
-				this.dueDate = dueDate;
+				this.dueDate = (Date)dueDate;
 	}
 
 	@JsonIgnore
@@ -435,7 +443,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier) {
 
 				try {
-					dueDate = dueDateUnsafeSupplier.get();
+					dueDate =
+						(Date)dueDateUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -449,7 +458,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -457,7 +466,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -471,7 +481,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setLogs(WorkflowLog[] logs) {
-				this.logs = logs;
+				this.logs = (WorkflowLogImpl[])logs;
 	}
 
 	@JsonIgnore
@@ -479,7 +489,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier) {
 
 				try {
-					logs = logsUnsafeSupplier.get();
+					logs =
+						(WorkflowLogImpl[])logsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -487,13 +498,13 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@JsonProperty
-	protected WorkflowLog[] logs;
+	protected WorkflowLogImpl[] logs;
 	public Long[] getLogsIds() {
 				return logsIds;
 	}
 
 	public void setLogsIds(Long[] logsIds) {
-				this.logsIds = logsIds;
+				this.logsIds = (Long[])logsIds;
 	}
 
 	@JsonIgnore
@@ -501,7 +512,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier) {
 
 				try {
-					logsIds = logsIdsUnsafeSupplier.get();
+					logsIds =
+						(Long[])logsIdsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -515,7 +527,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setName(String name) {
-				this.name = name;
+				this.name = (String)name;
 	}
 
 	@JsonIgnore
@@ -523,7 +535,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
 				try {
-					name = nameUnsafeSupplier.get();
+					name =
+						(String)nameUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -537,7 +550,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	public void setObjectReviewed(ObjectReviewed objectReviewed) {
-				this.objectReviewed = objectReviewed;
+				this.objectReviewed = (ObjectReviewedImpl)objectReviewed;
 	}
 
 	@JsonIgnore
@@ -545,7 +558,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier) {
 
 				try {
-					objectReviewed = objectReviewedUnsafeSupplier.get();
+					objectReviewed =
+						(ObjectReviewedImpl)objectReviewedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -553,13 +567,13 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@JsonProperty
-	protected ObjectReviewed objectReviewed;
+	protected ObjectReviewedImpl objectReviewed;
 	public String[] getTransitions() {
 				return transitions;
 	}
 
 	public void setTransitions(String[] transitions) {
-				this.transitions = transitions;
+				this.transitions = (String[])transitions;
 	}
 
 	@JsonIgnore
@@ -567,7 +581,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier) {
 
 				try {
-					transitions = transitionsUnsafeSupplier.get();
+					transitions =
+						(String[])transitionsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);

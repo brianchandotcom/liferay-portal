@@ -43,7 +43,7 @@ public class LocationImpl implements Location {
 	public void setAddressCountry(
 			String addressCountry) {
 
-			this.addressCountry = addressCountry;
+			this.addressCountry = (String)addressCountry;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class LocationImpl implements Location {
 
 			try {
 				addressCountry =
-					addressCountryUnsafeSupplier.get();
+					(String)addressCountryUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class LocationImpl implements Location {
 	public void setAddressRegion(
 			String addressRegion) {
 
-			this.addressRegion = addressRegion;
+			this.addressRegion = (String)addressRegion;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class LocationImpl implements Location {
 
 			try {
 				addressRegion =
-					addressRegionUnsafeSupplier.get();
+					(String)addressRegionUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class LocationImpl implements Location {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class LocationImpl implements Location {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

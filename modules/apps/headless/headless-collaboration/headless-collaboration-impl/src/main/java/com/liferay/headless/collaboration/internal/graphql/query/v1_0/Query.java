@@ -14,12 +14,12 @@
 
 package com.liferay.headless.collaboration.internal.graphql.query.v1_0;
 
-import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
-import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
-import com.liferay.headless.collaboration.dto.v1_0.Comment;
-import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
-import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
-import com.liferay.headless.collaboration.resource.v1_0.CommentResource;
+import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImageImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CommentImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingImageResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.BlogPostingResourceImpl;
+import com.liferay.headless.collaboration.internal.resource.v1_0.CommentResourceImpl;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -33,10 +33,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Javier Gamarra
  * @generated
@@ -46,31 +42,31 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPosting getBlogPosting(
+	public BlogPostingImpl getBlogPosting(
 	@GraphQLName("blog-posting-id") Long blogPostingId)
 			throws Exception {
 
-				BlogPostingResource blogPostingResource = _getBlogPostingResource();
+				BlogPostingResourceImpl blogPostingResourceImpl = _getBlogPostingResourceImpl();
 
-				blogPostingResource.setContextCompany(
+				blogPostingResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return blogPostingResource.getBlogPosting(
+				return (BlogPostingImpl)blogPostingResourceImpl.getBlogPosting(
 					blogPostingId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPosting> getContentSpaceBlogPostingsPage(
+	public Collection<BlogPostingImpl> getContentSpaceBlogPostingsPage(
 	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				BlogPostingResource blogPostingResource = _getBlogPostingResource();
+				BlogPostingResourceImpl blogPostingResourceImpl = _getBlogPostingResourceImpl();
 
-				blogPostingResource.setContextCompany(
+				blogPostingResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = blogPostingResource.getContentSpaceBlogPostingsPage(
+				Page paginationPage = blogPostingResourceImpl.getContentSpaceBlogPostingsPage(
 					contentSpaceId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -78,16 +74,16 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getBlogPostingCommentsPage(
+	public Collection<CommentImpl> getBlogPostingCommentsPage(
 	@GraphQLName("blog-posting-id") Long blogPostingId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				CommentResource commentResource = _getCommentResource();
+				CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
 
-				commentResource.setContextCompany(
+				commentResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = commentResource.getBlogPostingCommentsPage(
+				Page paginationPage = commentResourceImpl.getBlogPostingCommentsPage(
 					blogPostingId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -95,31 +91,31 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Comment getComment(
+	public CommentImpl getComment(
 	@GraphQLName("comment-id") Long commentId)
 			throws Exception {
 
-				CommentResource commentResource = _getCommentResource();
+				CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
 
-				commentResource.setContextCompany(
+				commentResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return commentResource.getComment(
+				return (CommentImpl)commentResourceImpl.getComment(
 					commentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Comment> getCommentCommentsPage(
+	public Collection<CommentImpl> getCommentCommentsPage(
 	@GraphQLName("comment-id") Long commentId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				CommentResource commentResource = _getCommentResource();
+				CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
 
-				commentResource.setContextCompany(
+				commentResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = commentResource.getCommentCommentsPage(
+				Page paginationPage = commentResourceImpl.getCommentCommentsPage(
 					commentId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -127,16 +123,16 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
+	public Collection<BlogPostingImageImpl> getContentSpaceBlogPostingImagesPage(
 	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
-				BlogPostingImageResource blogPostingImageResource = _getBlogPostingImageResource();
+				BlogPostingImageResourceImpl blogPostingImageResourceImpl = _getBlogPostingImageResourceImpl();
 
-				blogPostingImageResource.setContextCompany(
+				blogPostingImageResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = blogPostingImageResource.getContentSpaceBlogPostingImagesPage(
+				Page paginationPage = blogPostingImageResourceImpl.getContentSpaceBlogPostingImagesPage(
 					contentSpaceId,Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
@@ -144,71 +140,27 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BlogPostingImage getImageObject(
+	public BlogPostingImageImpl getImageObject(
 	@GraphQLName("image-object-id") Long imageObjectId)
 			throws Exception {
 
-				BlogPostingImageResource blogPostingImageResource = _getBlogPostingImageResource();
+				BlogPostingImageResourceImpl blogPostingImageResourceImpl = _getBlogPostingImageResourceImpl();
 
-				blogPostingImageResource.setContextCompany(
+				blogPostingImageResourceImpl.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return blogPostingImageResource.getImageObject(
+				return (BlogPostingImageImpl)blogPostingImageResourceImpl.getImageObject(
 					imageObjectId);
 	}
 
-	private static BlogPostingResource _getBlogPostingResource() {
-			return _blogPostingResourceServiceTracker.getService();
+	private static BlogPostingResourceImpl _getBlogPostingResourceImpl() {
+			return new BlogPostingResourceImpl();
 	}
-
-	private static final ServiceTracker<BlogPostingResource, BlogPostingResource>
-			_blogPostingResourceServiceTracker;
-	private static BlogPostingImageResource _getBlogPostingImageResource() {
-			return _blogPostingImageResourceServiceTracker.getService();
+	private static BlogPostingImageResourceImpl _getBlogPostingImageResourceImpl() {
+			return new BlogPostingImageResourceImpl();
 	}
-
-	private static final ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
-			_blogPostingImageResourceServiceTracker;
-	private static CommentResource _getCommentResource() {
-			return _commentResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<CommentResource, CommentResource>
-			_commentResourceServiceTracker;
-
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-				ServiceTracker<BlogPostingResource, BlogPostingResource>
-					blogPostingResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							BlogPostingResource.class, null);
-
-				blogPostingResourceServiceTracker.open();
-
-				_blogPostingResourceServiceTracker =
-					blogPostingResourceServiceTracker;
-				ServiceTracker<BlogPostingImageResource, BlogPostingImageResource>
-					blogPostingImageResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							BlogPostingImageResource.class, null);
-
-				blogPostingImageResourceServiceTracker.open();
-
-				_blogPostingImageResourceServiceTracker =
-					blogPostingImageResourceServiceTracker;
-				ServiceTracker<CommentResource, CommentResource>
-					commentResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							CommentResource.class, null);
-
-				commentResourceServiceTracker.open();
-
-				_commentResourceServiceTracker =
-					commentResourceServiceTracker;
+	private static CommentResourceImpl _getCommentResourceImpl() {
+			return new CommentResourceImpl();
 	}
 
 }

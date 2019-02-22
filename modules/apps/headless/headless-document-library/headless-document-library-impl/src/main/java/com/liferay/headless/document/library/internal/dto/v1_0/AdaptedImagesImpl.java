@@ -43,7 +43,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 	public void setContentUrl(
 			String contentUrl) {
 
-			this.contentUrl = contentUrl;
+			this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
@@ -53,7 +53,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 
 			try {
 				contentUrl =
-					contentUrlUnsafeSupplier.get();
+					(String)contentUrlUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -70,7 +70,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 	public void setHeight(
 			Number height) {
 
-			this.height = height;
+			this.height = (Number)height;
 	}
 
 	@JsonIgnore
@@ -80,7 +80,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 
 			try {
 				height =
-					heightUnsafeSupplier.get();
+					(Number)heightUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -97,7 +97,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 	public void setId(
 			Long id) {
 
-			this.id = id;
+			this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -107,7 +107,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 
 			try {
 				id =
-					idUnsafeSupplier.get();
+					(Long)idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,7 +124,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 	public void setResolutionName(
 			String resolutionName) {
 
-			this.resolutionName = resolutionName;
+			this.resolutionName = (String)resolutionName;
 	}
 
 	@JsonIgnore
@@ -134,7 +134,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 
 			try {
 				resolutionName =
-					resolutionNameUnsafeSupplier.get();
+					(String)resolutionNameUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -151,7 +151,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 	public void setSizeInBytes(
 			Number sizeInBytes) {
 
-			this.sizeInBytes = sizeInBytes;
+			this.sizeInBytes = (Number)sizeInBytes;
 	}
 
 	@JsonIgnore
@@ -161,7 +161,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 
 			try {
 				sizeInBytes =
-					sizeInBytesUnsafeSupplier.get();
+					(Number)sizeInBytesUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -178,7 +178,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 	public void setWidth(
 			Number width) {
 
-			this.width = width;
+			this.width = (Number)width;
 	}
 
 	@JsonIgnore
@@ -188,7 +188,7 @@ public class AdaptedImagesImpl implements AdaptedImages {
 
 			try {
 				width =
-					widthUnsafeSupplier.get();
+					(Number)widthUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -27,6 +27,13 @@ import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsURL;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.Values;
+import com.liferay.headless.web.experience.internal.dto.v1_0.AggregateRatingImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CategoriesImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CommentImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.CreatorImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.RenderedContentsURLImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.StructuredContentImpl;
+import com.liferay.headless.web.experience.internal.dto.v1_0.ValuesImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
@@ -340,7 +347,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
-				this.aggregateRating = aggregateRating;
+				this.aggregateRating = (AggregateRatingImpl)aggregateRating;
 	}
 
 	@JsonIgnore
@@ -348,7 +355,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<AggregateRating, Throwable> aggregateRatingUnsafeSupplier) {
 
 				try {
-					aggregateRating = aggregateRatingUnsafeSupplier.get();
+					aggregateRating =
+						(AggregateRatingImpl)aggregateRatingUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -356,13 +364,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected AggregateRating aggregateRating;
+	protected AggregateRatingImpl aggregateRating;
 	public String[] getAvailableLanguages() {
 				return availableLanguages;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = availableLanguages;
+				this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
@@ -370,7 +378,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
 				try {
-					availableLanguages = availableLanguagesUnsafeSupplier.get();
+					availableLanguages =
+						(String[])availableLanguagesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -384,7 +393,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setCategories(Categories[] categories) {
-				this.categories = categories;
+				this.categories = (CategoriesImpl[])categories;
 	}
 
 	@JsonIgnore
@@ -392,7 +401,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Categories[], Throwable> categoriesUnsafeSupplier) {
 
 				try {
-					categories = categoriesUnsafeSupplier.get();
+					categories =
+						(CategoriesImpl[])categoriesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -400,13 +410,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Categories[] categories;
+	protected CategoriesImpl[] categories;
 	public Comment[] getComment() {
 				return comment;
 	}
 
 	public void setComment(Comment[] comment) {
-				this.comment = comment;
+				this.comment = (CommentImpl[])comment;
 	}
 
 	@JsonIgnore
@@ -414,7 +424,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Comment[], Throwable> commentUnsafeSupplier) {
 
 				try {
-					comment = commentUnsafeSupplier.get();
+					comment =
+						(CommentImpl[])commentUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -422,13 +433,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Comment[] comment;
+	protected CommentImpl[] comment;
 	public Long getContentSpace() {
 				return contentSpace;
 	}
 
 	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = contentSpace;
+				this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
@@ -436,7 +447,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
 				try {
-					contentSpace = contentSpaceUnsafeSupplier.get();
+					contentSpace =
+						(Long)contentSpaceUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -450,7 +462,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setContentStructureId(Long contentStructureId) {
-				this.contentStructureId = contentStructureId;
+				this.contentStructureId = (Long)contentStructureId;
 	}
 
 	@JsonIgnore
@@ -458,7 +470,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Long, Throwable> contentStructureIdUnsafeSupplier) {
 
 				try {
-					contentStructureId = contentStructureIdUnsafeSupplier.get();
+					contentStructureId =
+						(Long)contentStructureIdUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -472,7 +485,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setCreator(Creator creator) {
-				this.creator = creator;
+				this.creator = (CreatorImpl)creator;
 	}
 
 	@JsonIgnore
@@ -480,7 +493,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
 				try {
-					creator = creatorUnsafeSupplier.get();
+					creator =
+						(CreatorImpl)creatorUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -488,13 +502,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Creator creator;
+	protected CreatorImpl creator;
 	public Date getDateCreated() {
 				return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = dateCreated;
+				this.dateCreated = (Date)dateCreated;
 	}
 
 	@JsonIgnore
@@ -502,7 +516,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
 				try {
-					dateCreated = dateCreatedUnsafeSupplier.get();
+					dateCreated =
+						(Date)dateCreatedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -516,7 +531,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setDateModified(Date dateModified) {
-				this.dateModified = dateModified;
+				this.dateModified = (Date)dateModified;
 	}
 
 	@JsonIgnore
@@ -524,7 +539,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
 				try {
-					dateModified = dateModifiedUnsafeSupplier.get();
+					dateModified =
+						(Date)dateModifiedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -538,7 +554,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setDatePublished(Date datePublished) {
-				this.datePublished = datePublished;
+				this.datePublished = (Date)datePublished;
 	}
 
 	@JsonIgnore
@@ -546,7 +562,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
 
 				try {
-					datePublished = datePublishedUnsafeSupplier.get();
+					datePublished =
+						(Date)datePublishedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -560,7 +577,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setDescription(String description) {
-				this.description = description;
+				this.description = (String)description;
 	}
 
 	@JsonIgnore
@@ -568,7 +585,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
 				try {
-					description = descriptionUnsafeSupplier.get();
+					description =
+						(String)descriptionUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -582,7 +600,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setId(Long id) {
-				this.id = id;
+				this.id = (Long)id;
 	}
 
 	@JsonIgnore
@@ -590,7 +608,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
 
 				try {
-					id = idUnsafeSupplier.get();
+					id =
+						(Long)idUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -604,7 +623,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setKeywords(String[] keywords) {
-				this.keywords = keywords;
+				this.keywords = (String[])keywords;
 	}
 
 	@JsonIgnore
@@ -612,7 +631,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<String[], Throwable> keywordsUnsafeSupplier) {
 
 				try {
-					keywords = keywordsUnsafeSupplier.get();
+					keywords =
+						(String[])keywordsUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -626,7 +646,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setLastReviewed(Date lastReviewed) {
-				this.lastReviewed = lastReviewed;
+				this.lastReviewed = (Date)lastReviewed;
 	}
 
 	@JsonIgnore
@@ -634,7 +654,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Date, Throwable> lastReviewedUnsafeSupplier) {
 
 				try {
-					lastReviewed = lastReviewedUnsafeSupplier.get();
+					lastReviewed =
+						(Date)lastReviewedUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -648,7 +669,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setRenderedContentsURL(RenderedContentsURL[] renderedContentsURL) {
-				this.renderedContentsURL = renderedContentsURL;
+				this.renderedContentsURL = (RenderedContentsURLImpl[])renderedContentsURL;
 	}
 
 	@JsonIgnore
@@ -656,7 +677,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<RenderedContentsURL[], Throwable> renderedContentsURLUnsafeSupplier) {
 
 				try {
-					renderedContentsURL = renderedContentsURLUnsafeSupplier.get();
+					renderedContentsURL =
+						(RenderedContentsURLImpl[])renderedContentsURLUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -664,13 +686,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected RenderedContentsURL[] renderedContentsURL;
+	protected RenderedContentsURLImpl[] renderedContentsURL;
 	public String getTitle() {
 				return title;
 	}
 
 	public void setTitle(String title) {
-				this.title = title;
+				this.title = (String)title;
 	}
 
 	@JsonIgnore
@@ -678,7 +700,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
 				try {
-					title = titleUnsafeSupplier.get();
+					title =
+						(String)titleUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -692,7 +715,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	public void setValues(Values[] values) {
-				this.values = values;
+				this.values = (ValuesImpl[])values;
 	}
 
 	@JsonIgnore
@@ -700,7 +723,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				UnsafeSupplier<Values[], Throwable> valuesUnsafeSupplier) {
 
 				try {
-					values = valuesUnsafeSupplier.get();
+					values =
+						(ValuesImpl[])valuesUnsafeSupplier.get();
 	}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -708,7 +732,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@JsonProperty
-	protected Values[] values;
+	protected ValuesImpl[] values;
 
 	}
 

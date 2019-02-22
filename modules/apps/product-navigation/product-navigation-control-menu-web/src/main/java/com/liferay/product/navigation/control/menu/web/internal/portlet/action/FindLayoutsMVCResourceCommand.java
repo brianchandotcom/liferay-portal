@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuPortletKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ResourceRequest;
@@ -86,25 +85,13 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layouts = new ArrayList<>();
-
-		layouts.addAll(
-			_layoutLocalService.getLayouts(
-				themeDisplay.getScopeGroupId(), false, keywords,
-				new String[] {
-					LayoutConstants.TYPE_PORTLET,
-					LayoutConstants.LAYOUT_TYPE_CONTENT
-				},
-				0, 10, null));
-
-		layouts.addAll(
-			_layoutLocalService.getLayouts(
-				themeDisplay.getScopeGroupId(), true, keywords,
-				new String[] {
-					LayoutConstants.TYPE_PORTLET,
-					LayoutConstants.LAYOUT_TYPE_CONTENT
-				},
-				0, 10, null));
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			themeDisplay.getScopeGroupId(), keywords,
+			new String[] {
+				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.LAYOUT_TYPE_CONTENT
+			},
+			0, 10, null);
 
 		for (Layout layout : layouts) {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
@@ -135,14 +122,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		jsonObject.put("layouts", jsonArray);
 
 		int totalCount = _layoutLocalService.getLayoutsCount(
-			themeDisplay.getScopeGroup(), false, keywords,
-			new String[] {
-				LayoutConstants.TYPE_PORTLET,
-				LayoutConstants.LAYOUT_TYPE_CONTENT
-			});
-
-		totalCount += _layoutLocalService.getLayoutsCount(
-			themeDisplay.getScopeGroup(), true, keywords,
+			themeDisplay.getScopeGroupId(), keywords,
 			new String[] {
 				LayoutConstants.TYPE_PORTLET,
 				LayoutConstants.LAYOUT_TYPE_CONTENT

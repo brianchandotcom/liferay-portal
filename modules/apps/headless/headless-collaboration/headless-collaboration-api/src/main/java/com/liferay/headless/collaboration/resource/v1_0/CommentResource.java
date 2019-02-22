@@ -16,6 +16,8 @@ package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.Comment;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,7 +35,7 @@ import javax.annotation.Generated;
 public interface CommentResource {
 
 	public Page<Comment> getBlogPostingCommentsPage(
-				Long blogPostingId,Pagination pagination)
+				Long blogPostingId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
 	public Comment postBlogPostingComment(
 				Long blogPostingId,Comment comment)
@@ -48,7 +50,7 @@ public interface CommentResource {
 				Long commentId,Comment comment)
 			throws Exception;
 	public Page<Comment> getCommentCommentsPage(
-				Long commentId,Pagination pagination)
+				Long commentId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
 	public Comment postCommentComment(
 				Long commentId,Comment comment)

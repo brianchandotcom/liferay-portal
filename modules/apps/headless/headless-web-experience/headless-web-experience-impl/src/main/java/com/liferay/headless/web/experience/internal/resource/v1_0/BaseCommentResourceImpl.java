@@ -20,6 +20,8 @@ import com.liferay.headless.web.experience.resource.v1_0.CommentResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -92,7 +94,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getCommentCommentsPage(
-	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
+	@PathParam("comment-id") Long commentId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
@@ -115,7 +117,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getStructuredContentCommentsPage(
-	@PathParam("structured-content-id") Long structuredContentId,@Context Pagination pagination)
+	@PathParam("structured-content-id") Long structuredContentId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());

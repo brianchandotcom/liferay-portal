@@ -96,7 +96,7 @@ public class BookmarksEntryLocalServiceTreeTest {
 			BookmarksEntryLocalServiceUtil.updateBookmarksEntry(entry);
 		}
 
-		BookmarksEntryLocalServiceUtil.rebuildTree(
+		BookmarksFolderLocalServiceUtil.rebuildTree(
 			TestPropsValues.getCompanyId());
 
 		for (BookmarksEntry entry : entries) {

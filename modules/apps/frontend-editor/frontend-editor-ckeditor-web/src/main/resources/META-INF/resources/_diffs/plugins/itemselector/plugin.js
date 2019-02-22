@@ -1,5 +1,5 @@
 (function() {
-	var IE9AndUp = AUI.Env.UA.ie >= 9;
+	var IE9AndLater = AUI.Env.UA.ie >= 9;
 
 	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
 
@@ -365,7 +365,7 @@
 
 				var ranges = selection.getRanges();
 
-				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE9AndUp));
+				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE9AndLater));
 			},
 
 			_onSelectedAudioChange: function(editor, callback, event) {
@@ -409,7 +409,7 @@
 									editor.insertHtml(elementOuterHtml);
 
 									if (instance._isEmptySelection(editor)) {
-										if (IE9AndUp) {
+										if (IE9AndLater) {
 											var emptySelectionMarkup = '<br />';
 
 											var usingAlloyEditor = typeof AlloyEditor == 'undefined';

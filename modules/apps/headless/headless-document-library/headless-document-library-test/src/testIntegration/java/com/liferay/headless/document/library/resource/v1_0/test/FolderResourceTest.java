@@ -93,6 +93,47 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGetFolderFoldersPage() throws Exception {
+		Folder postContentSpaceRandomFolder = randomFolder();
+
+		Folder postContentSpaceFolder = invokePostContentSpaceFolder(
+			testGroup.getGroupId(), postContentSpaceRandomFolder);
+
+		Folder randomFolder1 = randomFolder();
+		Folder randomFolder2 = randomFolder();
+
+		invokePostFolderFolder(postContentSpaceFolder.getId(), randomFolder1);
+
+		invokePostFolderFolder(postContentSpaceFolder.getId(), randomFolder2);
+
+		Page<Folder> page = invokeGetFolderFoldersPage(
+			postContentSpaceFolder.getId(), Pagination.of(2, 1));
+
+		assertValid(page);
+
+		List<Folder> folders = (List<Folder>)page.getItems();
+
+		List<Folder> randomFolders = new ArrayList<Folder>() {
+			{
+				add(randomFolder1);
+				add(randomFolder2);
+			}
+		};
+
+		for (Folder randomFolder : randomFolders) {
+			Stream<Folder> stream = folders.stream();
+
+			Folder folder = stream.filter(
+				aFolder -> Objects.equals(
+					randomFolder.getName(), aFolder.getName())
+			).findFirst(
+			).get();
+
+			assertEquals(randomFolder, folder);
+		}
+	}
+
+	@Test
 	public void testPostContentSpaceFolder() throws Exception {
 		Folder randomFolder = randomFolder();
 

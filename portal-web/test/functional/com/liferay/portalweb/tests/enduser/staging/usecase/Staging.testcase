@@ -434,7 +434,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		BlogsEntry.addTag(tagName = "stagingtag");
+		AssetCategorization.addTag(tagName = "stagingtag");
 
 		PortletEntry.publish();
 

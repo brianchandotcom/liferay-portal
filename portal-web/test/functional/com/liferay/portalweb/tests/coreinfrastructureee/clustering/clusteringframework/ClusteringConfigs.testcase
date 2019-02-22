@@ -33,13 +33,11 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Accepted view");
 		AssertConsoleTextPresent(value1 = "channelName: liferay-channel-control");
-		AssertConsoleTextPresent(value1 = "cluster=liferay-channel-control");
+		AssertConsoleTextPresent(value1 = "JDBC_PING");
 
 		var log2 = Clustering.getLogFileSpecificServer(bundleIndex = "1");
 
-		if ((contains("${fileContent}", "Accepted view")) && \
-			(contains("${fileContent}", "cluster=liferay-channel-control")) && \
-			(contains("${fileContent}", "cluster=liferay-channel-control"))) {
+		if ((contains("${log2}", "Accepted view")) && (contains("${log2}", "channelName: liferay-channel-control")) && (contains("${log2}", "JDBC_PING"))) {
 			echo("Second node started successfully with JDBC_PING configuration");
 		}
 		else {

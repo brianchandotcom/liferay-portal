@@ -165,7 +165,9 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 			String lastLine = StringUtil.trim(
 				JavaParserUtil.getLastLine(_content));
 
-			if (lastLine.startsWith("new ") || lastLine.contains(" new ")) {
+			if (lastLine.startsWith("new ") ||
+				_containsUnquoted(lastLine, " new ")) {
+
 				return SINGLE_LINE_BREAK_REQUIRED;
 			}
 
@@ -181,7 +183,9 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 			int x = lastLine.lastIndexOf(" new ");
 
-			if ((x != -1) && (ToolsUtil.getLevel(lastLine.substring(x)) == 0)) {
+			if ((x != -1) && !ToolsUtil.isInsideQuotes(lastLine, x) &&
+				(ToolsUtil.getLevel(lastLine.substring(x)) == 0)) {
+
 				return DOUBLE_LINE_BREAK_REQUIRED;
 			}
 
@@ -296,6 +300,22 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	protected static final int NO_ACTION_REQUIRED = 1;
 
 	protected static final int SINGLE_LINE_BREAK_REQUIRED = 2;
+
+	private boolean _containsUnquoted(String s, String text) {
+		int x = -1;
+
+		while (true) {
+			x = s.indexOf(text, x + 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(s, x)) {
+				return true;
+			}
+		}
+	}
 
 	private String _getIndent(String s, int lineNumber) {
 		int x = -1;

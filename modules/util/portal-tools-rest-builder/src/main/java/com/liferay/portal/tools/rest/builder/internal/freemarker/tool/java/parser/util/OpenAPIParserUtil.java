@@ -79,115 +79,13 @@ public class OpenAPIParserUtil {
 		return schemaNames;
 	}
 
-	protected static String getHTTPMethod(Operation operation) {
+	public static String getHTTPMethod(Operation operation) {
 		Class<? extends Operation> clazz = operation.getClass();
 
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	protected static List<JavaParameter> getJavaParameters(
-		Operation operation) {
-
-		if ((operation == null) || (operation.getParameters() == null)) {
-			return Collections.emptyList();
-		}
-
-		List<JavaParameter> javaParameters = new ArrayList<>();
-
-		List<Parameter> parameters = operation.getParameters();
-
-		Set<String> parameterNames = new HashSet<>();
-
-		for (Parameter parameter : parameters) {
-			parameterNames.add(parameter.getName());
-		}
-
-		for (Parameter parameter : parameters) {
-			String parameterName = parameter.getName();
-
-			if (StringUtil.equals(parameterName, "Accept-Language") ||
-				StringUtil.equals(parameterName, "filter") ||
-				StringUtil.equals(parameterName, "sort")) {
-
-				continue;
-			}
-
-			if (StringUtil.equals(parameterName, "page") ||
-				StringUtil.equals(parameterName, "pageSize")) {
-
-				if (parameterNames.contains("page") &&
-					parameterNames.contains("pageSize")) {
-
-					continue;
-				}
-			}
-
-			javaParameters.add(_getJavaParameter(operation, parameter));
-		}
-
-		if (parameterNames.contains("filter")) {
-			JavaParameter javaParameter = new JavaParameter(
-				operation, "filter", "Filter");
-
-			javaParameters.add(javaParameter);
-		}
-
-		if (parameterNames.contains("page") &&
-			parameterNames.contains("pageSize")) {
-
-			JavaParameter javaParameter = new JavaParameter(
-				operation, "pagination", "Pagination");
-
-			javaParameters.add(javaParameter);
-		}
-
-		if (parameterNames.contains("sort")) {
-			JavaParameter javaParameter = new JavaParameter(
-				operation, "sorts", "Sort[]");
-
-			javaParameters.add(javaParameter);
-		}
-
-		RequestBody requestBody = operation.getRequestBody();
-
-		if (requestBody != null) {
-			JavaParameter multipartBodyJavaParameter = null;
-
-			Map<String, Content> contents = requestBody.getContent();
-
-			for (Map.Entry<String, Content> entry : contents.entrySet()) {
-				if (Objects.equals(entry.getKey(), "multipart/form-data")) {
-					multipartBodyJavaParameter = new JavaParameter(
-						operation, "multipartBody", "MultipartBody");
-				}
-			}
-
-			if (multipartBodyJavaParameter == null) {
-				for (Content content : contents.values()) {
-					String schemaName = getJavaParameterType(
-						null, content.getSchema());
-
-					String parameterName = StringUtil.lowerCaseFirstLetter(
-						schemaName);
-
-					if (StringUtil.equals(schemaName, "Long")) {
-						parameterName = "referenceId";
-					}
-
-					javaParameters.add(
-						new JavaParameter(
-							operation, parameterName, schemaName));
-				}
-			}
-			else {
-				javaParameters.add(multipartBodyJavaParameter);
-			}
-		}
-
-		return javaParameters;
-	}
-
-	protected static String getJavaParameterType(
+	public static String getJavaParameterType(
 		String propertySchemaName, Schema schema) {
 
 		Items items = schema.getItems();
@@ -205,7 +103,7 @@ public class OpenAPIParserUtil {
 			}
 
 			if (items.getReference() != null) {
-				return _getComponentType(items.getReference()) + "[]";
+				return getComponentType(items.getReference()) + "[]";
 			}
 
 			if (items.getPropertySchemas() != null) {
@@ -223,7 +121,7 @@ public class OpenAPIParserUtil {
 		if (allOfSchemas != null) {
 			for (Schema allOfSchema : allOfSchemas) {
 				if (Validator.isNotNull(allOfSchema.getReference())) {
-					return _getComponentType(allOfSchema.getReference());
+					return getComponentType(allOfSchema.getReference());
 				}
 			}
 		}
@@ -234,48 +132,10 @@ public class OpenAPIParserUtil {
 			return "Object";
 		}
 
-		return _getComponentType(schema.getReference());
+		return getComponentType(schema.getReference());
 	}
 
-	protected static String getMethodName(
-		Operation operation, String path, String returnType,
-		String schemaName) {
-
-		List<String> urls = new ArrayList<>();
-
-		String httpMethod = getHTTPMethod(operation);
-
-		urls.add(httpMethod);
-
-		List<Parameter> parameters = _getPathParameters(
-			operation.getParameters());
-
-		for (Parameter parameter : parameters) {
-			String name = parameter.getName();
-
-			urls.add(CamelCaseUtil.toCamelCase(name.replace("-id", ""), true));
-
-			urls.add("");
-		}
-
-		if (returnType.startsWith("Page<" + schemaName)) {
-			urls.add(TextFormatter.formatPlural(schemaName));
-		}
-
-		if (_isPostToSameSchema(httpMethod, path, schemaName, urls.size())) {
-			urls.add(schemaName);
-		}
-
-		urls.add(PathUtil.getLastSegment(path, urls.size()));
-
-		if (StringUtil.startsWith(returnType, "Page<")) {
-			urls.add("Page");
-		}
-
-		return String.join("", urls);
-	}
-
-	protected static String getParameter(
+	public static String getParameter(
 		JavaParameter javaParameter, String parameterAnnotation) {
 
 		StringBuilder sb = new StringBuilder();
@@ -292,77 +152,7 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
-	protected static String getReturnType(
-		OpenAPIYAML openAPIYAML, Operation operation) {
-
-		Map<String, Response> responses = operation.getResponses();
-
-		if (responses.isEmpty()) {
-			return "boolean";
-		}
-
-		for (Response response : responses.values()) {
-			Map<String, Content> contents = response.getContent();
-
-			if ((contents == null) || (contents.values() == null)) {
-				continue;
-			}
-
-			for (Content content : contents.values()) {
-				Schema schema = content.getSchema();
-
-				if (schema == null) {
-					continue;
-				}
-
-				String javaParameterType = getJavaParameterType(null, schema);
-
-				if (javaParameterType.endsWith("[]")) {
-					String s = javaParameterType.substring(
-						0, javaParameterType.length() - 2);
-
-					return "Page<" + s + ">";
-				}
-
-				Schema componentSchema = _getComponentSchema(
-					openAPIYAML, schema.getReference());
-
-				if (componentSchema != null) {
-					return _getComponentType(schema.getReference());
-				}
-			}
-		}
-
-		if (Objects.equals(getHTTPMethod(operation), "get")) {
-			return "String";
-		}
-
-		return "boolean";
-	}
-
-	protected static boolean isSchemaMethod(
-		String schemaName, List<String> tags, String returnType) {
-
-		if (!tags.isEmpty()) {
-			if (tags.contains(schemaName)) {
-				return true;
-			}
-
-			return false;
-		}
-
-		if (returnType.equals(schemaName) ||
-			((returnType.length() == schemaName.length() + 6) &&
-			 returnType.startsWith("Page<") && returnType.endsWith(">") &&
-			 returnType.regionMatches(5, schemaName, 0, schemaName.length()))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected static String merge(Collection<String> c, Character delimiter) {
+	public static String merge(Collection<String> c, Character delimiter) {
 		StringBuilder sb = new StringBuilder();
 
 		for (String s : c) {
@@ -377,7 +167,7 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
-	protected static List<JavaMethodSignature>
+	public static List<JavaMethodSignature>
 		toFullyQualifiedJavaMethodSignatures(
 			ConfigYAML configYAML,
 			List<JavaMethodSignature> javaMethodSignatures,
@@ -408,7 +198,7 @@ public class OpenAPIParserUtil {
 		return newJavaMethodSignatures;
 	}
 
-	protected static List<JavaParameter> toFullyQualifiedJavaParameters(
+	public static List<JavaParameter> toFullyQualifiedJavaParameters(
 		ConfigYAML configYAML, List<JavaParameter> javaParameters,
 		OpenAPIYAML openAPIYAML) {
 
@@ -430,39 +220,7 @@ public class OpenAPIParserUtil {
 		return newJavaParameters;
 	}
 
-	protected static void visitOperations(
-		PathItem pathItem, Consumer<Operation> consumer) {
-
-		if (pathItem.getDelete() != null) {
-			consumer.accept(pathItem.getDelete());
-		}
-
-		if (pathItem.getGet() != null) {
-			consumer.accept(pathItem.getGet());
-		}
-
-		if (pathItem.getHead() != null) {
-			consumer.accept(pathItem.getHead());
-		}
-
-		if (pathItem.getOptions() != null) {
-			consumer.accept(pathItem.getOptions());
-		}
-
-		if (pathItem.getPatch() != null) {
-			consumer.accept(pathItem.getPatch());
-		}
-
-		if (pathItem.getPost() != null) {
-			consumer.accept(pathItem.getPost());
-		}
-
-		if (pathItem.getPut() != null) {
-			consumer.accept(pathItem.getPut());
-		}
-	}
-
-	private static Schema _getComponentSchema(
+	public static Schema getComponentSchema(
 		OpenAPIYAML openAPIYAML, String reference) {
 
 		if ((reference == null) ||
@@ -475,10 +233,10 @@ public class OpenAPIParserUtil {
 
 		Map<String, Schema> schemas = components.getSchemas();
 
-		return schemas.get(_getComponentType(reference));
+		return schemas.get(getComponentType(reference));
 	}
 
-	private static String _getComponentType(String reference) {
+	public static String getComponentType(String reference) {
 		int index = reference.lastIndexOf('/');
 
 		if (index == -1) {
@@ -510,43 +268,6 @@ public class OpenAPIParserUtil {
 		}
 
 		return StringUtil.upperCaseFirstLetter(type);
-	}
-
-	private static JavaParameter _getJavaParameter(
-		Operation operation, Parameter parameter) {
-
-		String parameterName = CamelCaseUtil.toCamelCase(
-			parameter.getName(), false);
-		String parameterType = getJavaParameterType(
-			null, parameter.getSchema());
-
-		return new JavaParameter(operation, parameterName, parameterType);
-	}
-
-	private static List<Parameter> _getPathParameters(
-		List<Parameter> parameters) {
-
-		Stream<Parameter> stream = parameters.stream();
-
-		return stream.filter(
-			parameter -> StringUtil.equals(parameter.getIn(), "path")
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private static boolean _isPostToSameSchema(
-		String httpMethod, String path, String schemaName, int segmentNumber) {
-
-		String lastSegment = PathUtil.getLastSegment(path, segmentNumber);
-
-		if (httpMethod.equals("post") &&
-			lastSegment.startsWith(TextFormatter.formatPlural(schemaName))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static String _toFullyQualifiedClassName(

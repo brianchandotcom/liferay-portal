@@ -657,10 +657,14 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+
 						var inputNode = instance.getInputNode();
 
 						if (inputNode) {
-							inputNode.attr('disabled', instance.get('readOnly'));
+							inputNode.attr('disabled', readOnly);
 						}
 
 						var container = instance.get('container');
@@ -669,13 +673,13 @@ AUI.add(
 							var selectorInput = container.one('.selector-input');
 
 							if (selectorInput) {
-								selectorInput.attr('disabled', instance.get('readOnly'));
+								selectorInput.attr('disabled', readOnly);
 							}
 
 							var checkboxInput = container.one('input[type="checkbox"]');
 
 							if (checkboxInput) {
-								checkboxInput.attr('disabled', instance.get('readOnly'));
+								checkboxInput.attr('disabled', readOnly);
 							}
 
 							var disableCheckboxInput = container.one('input[type="checkbox"][name$="disable"]');
@@ -1240,20 +1244,24 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+
 						var container = instance.get('container');
 
 						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
 
-						selectButtonNode.attr('disabled', instance.get('readOnly'));
+						selectButtonNode.attr('disabled', readOnly);
 
 						var clearButtonNode = container.one('#' + instance.getInputName() + 'ClearButton');
 
-						clearButtonNode.attr('disabled', instance.get('readOnly'));
+						clearButtonNode.attr('disabled', readOnly);
 
 						var altNode = container.one('#' + instance.getInputName() + 'Alt');
 
 						if (altNode) {
-							altNode.set('readOnly', instance.get('readOnly'));
+							altNode.set('readOnly', readOnly);
 						}
 					},
 
@@ -1417,15 +1425,19 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+
 						var container = instance.get('container');
 
 						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
 
-						selectButtonNode.attr('disabled', instance.get('readOnly'));
+						selectButtonNode.attr('disabled', readOnly);
 
 						var clearButtonNode = container.one('#' + instance.getInputName() + 'ClearButton');
 
-						clearButtonNode.attr('disabled', instance.get('readOnly'));
+						clearButtonNode.attr('disabled', readOnly);
 					},
 
 					_handleButtonsClick: function(event) {
@@ -1622,15 +1634,19 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+
 						var container = instance.get('container');
 
 						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
 
-						selectButtonNode.attr('disabled', instance.get('readOnly'));
+						selectButtonNode.attr('disabled', readOnly);
 
 						var clearButtonNode = container.one('#' + instance.getInputName() + 'ClearButton');
 
-						clearButtonNode.attr('disabled', instance.get('readOnly'));
+						clearButtonNode.attr('disabled', readOnly);
 					},
 
 					_addBreadcrumbElement: function(label, layoutId, groupId, privateLayout) {
@@ -2818,7 +2834,9 @@ AUI.add(
 						instance.readOnlyLabel.html(instance.getLabelNode().getHTML());
 						instance.readOnlyText.html('<p>' + instance.getValue() + '</p>');
 
-						var readOnly = instance.get('readOnly');
+						var form = instance.getForm();
+
+						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
 
 						instance.readOnlyLabel.toggle(readOnly);
 						instance.readOnlyText.toggle(readOnly);
@@ -2912,9 +2930,13 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+
 						var radioNodes = instance.getRadioNodes();
 
-						radioNodes.attr('disabled', instance.get('readOnly'));
+						radioNodes.attr('disabled', readOnly);
 					}
 				}
 			}

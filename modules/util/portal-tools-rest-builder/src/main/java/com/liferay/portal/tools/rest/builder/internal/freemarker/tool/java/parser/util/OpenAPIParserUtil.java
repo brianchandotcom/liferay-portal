@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
+package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -50,7 +50,7 @@ import java.util.stream.Stream;
 /**
  * @author Peter Shin
  */
-public class BaseOpenAPIParser {
+public class OpenAPIParserUtil {
 
 	public static String getArguments(List<JavaParameter> javaParameters) {
 		StringBuilder sb = new StringBuilder();

@@ -33,26 +33,29 @@ import javax.annotation.Generated;
 public interface WorkflowTaskResource {
 
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-				Long roleId,Pagination pagination)
-			throws Exception;
-	public Page<WorkflowTask> getWorkflowTasksPage(
-				Pagination pagination)
-			throws Exception;
-	public WorkflowTask getWorkflowTask(
-				Long workflowTaskId)
-			throws Exception;
+			Long roleId, Pagination pagination)
+		throws Exception;
+
+	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+
+	public Page<WorkflowTask> getWorkflowTasksPage(Pagination pagination)
+		throws Exception;
+
 	public WorkflowTask postWorkflowTaskAssignToMe(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception;
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception;
+
 	public WorkflowTask postWorkflowTaskAssignToUser(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception;
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception;
+
 	public WorkflowTask postWorkflowTaskChangeTransition(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception;
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception;
+
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-				Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception;
+			Long workflowTaskId, WorkflowTask workflowTask)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

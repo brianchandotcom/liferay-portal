@@ -27,51 +27,42 @@ public interface BlogPostingImage {
 
 	public String getContentUrl();
 
-	public void setContentUrl(
-			String contentUrl);
-
-	public void setContentUrl(
-			UnsafeSupplier<String, Throwable>
-				contentUrlUnsafeSupplier);
 	public String getEncodingFormat();
 
-	public void setEncodingFormat(
-			String encodingFormat);
-
-	public void setEncodingFormat(
-			UnsafeSupplier<String, Throwable>
-				encodingFormatUnsafeSupplier);
 	public String getFileExtension();
 
-	public void setFileExtension(
-			String fileExtension);
-
-	public void setFileExtension(
-			UnsafeSupplier<String, Throwable>
-				fileExtensionUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public Number getSizeInBytes();
 
-	public void setSizeInBytes(
-			Number sizeInBytes);
-
-	public void setSizeInBytes(
-			UnsafeSupplier<Number, Throwable>
-				sizeInBytesUnsafeSupplier);
 	public String getTitle();
 
-	public void setTitle(
-			String title);
+	public void setContentUrl(String contentUrl);
 
-	public void setTitle(
-			UnsafeSupplier<String, Throwable>
-				titleUnsafeSupplier);
+	public void setContentUrl(
+		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
+
+	public void setEncodingFormat(String encodingFormat);
+
+	public void setEncodingFormat(
+		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
+
+	public void setFileExtension(String fileExtension);
+
+	public void setFileExtension(
+		UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setSizeInBytes(Number sizeInBytes);
+
+	public void setSizeInBytes(
+		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
+
+	public void setTitle(String title);
+
+	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
 
 }

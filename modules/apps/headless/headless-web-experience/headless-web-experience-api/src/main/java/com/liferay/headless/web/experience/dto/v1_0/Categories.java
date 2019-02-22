@@ -27,19 +27,16 @@ public interface Categories {
 
 	public Long getCategoryId();
 
-	public void setCategoryId(
-			Long categoryId);
-
-	public void setCategoryId(
-			UnsafeSupplier<Long, Throwable>
-				categoryIdUnsafeSupplier);
 	public String getCategoryName();
 
-	public void setCategoryName(
-			String categoryName);
+	public void setCategoryId(Long categoryId);
+
+	public void setCategoryId(
+		UnsafeSupplier<Long, Throwable> categoryIdUnsafeSupplier);
+
+	public void setCategoryName(String categoryName);
 
 	public void setCategoryName(
-			UnsafeSupplier<String, Throwable>
-				categoryNameUnsafeSupplier);
+		UnsafeSupplier<String, Throwable> categoryNameUnsafeSupplier);
 
 }

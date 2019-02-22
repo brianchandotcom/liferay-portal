@@ -37,82 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RowsImpl implements Rows {
 
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
+	public String getLabel() {
+		return label;
+	}
 
-			this.id = (Long)id;
+	public String getValue() {
+		return value;
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
 
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
+	public void setLabel(String label) {
+		this.label = (String)label;
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+
+		try {
+			label = (String)labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
+
+	public void setValue(String value) {
+		this.value = (String)value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
+
+		try {
+			value = (String)valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getLabel() {
-			return label;
-	}
-
-	public void setLabel(
-			String label) {
-
-			this.label = (String)label;
-	}
-
-	@JsonIgnore
-	public void setLabel(
-			UnsafeSupplier<String, Throwable>
-				labelUnsafeSupplier) {
-
-			try {
-				label =
-					(String)labelUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String label;
-	public String getValue() {
-			return value;
-	}
-
-	public void setValue(
-			String value) {
-
-			this.value = (String)value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-			UnsafeSupplier<String, Throwable>
-				valueUnsafeSupplier) {
-
-			try {
-				value =
-					(String)valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

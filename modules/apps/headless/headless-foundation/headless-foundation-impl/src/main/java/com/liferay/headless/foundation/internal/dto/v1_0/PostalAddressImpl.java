@@ -37,244 +37,214 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PostalAddressImpl implements PostalAddress {
 
 	public String getAddressCountry() {
-			return addressCountry;
+		return addressCountry;
 	}
 
-	public void setAddressCountry(
-			String addressCountry) {
+	public String getAddressLocality() {
+		return addressLocality;
+	}
 
-			this.addressCountry = (String)addressCountry;
+	public String getAddressRegion() {
+		return addressRegion;
+	}
+
+	public String getAddressType() {
+		return addressType;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public String getStreetAddressLine1() {
+		return streetAddressLine1;
+	}
+
+	public String getStreetAddressLine2() {
+		return streetAddressLine2;
+	}
+
+	public String getStreetAddressLine3() {
+		return streetAddressLine3;
+	}
+
+	public void setAddressCountry(String addressCountry) {
+		this.addressCountry = (String)addressCountry;
 	}
 
 	@JsonIgnore
 	public void setAddressCountry(
-			UnsafeSupplier<String, Throwable>
-				addressCountryUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
-			try {
-				addressCountry =
-					(String)addressCountryUnsafeSupplier.get();
+		try {
+			addressCountry = (String)addressCountryUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setAddressLocality(String addressLocality) {
+		this.addressLocality = (String)addressLocality;
 	}
+
+	@JsonIgnore
+	public void setAddressLocality(
+		UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier) {
+
+		try {
+			addressLocality = (String)addressLocalityUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setAddressRegion(String addressRegion) {
+		this.addressRegion = (String)addressRegion;
+	}
+
+	@JsonIgnore
+	public void setAddressRegion(
+		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
+
+		try {
+			addressRegion = (String)addressRegionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setAddressType(String addressType) {
+		this.addressType = (String)addressType;
+	}
+
+	@JsonIgnore
+	public void setAddressType(
+		UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier) {
+
+		try {
+			addressType = (String)addressTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = (String)postalCode;
+	}
+
+	@JsonIgnore
+	public void setPostalCode(
+		UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier) {
+
+		try {
+			postalCode = (String)postalCodeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setStreetAddressLine1(String streetAddressLine1) {
+		this.streetAddressLine1 = (String)streetAddressLine1;
+	}
+
+	@JsonIgnore
+	public void setStreetAddressLine1(
+		UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier) {
+
+		try {
+			streetAddressLine1 = (String)streetAddressLine1UnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setStreetAddressLine2(String streetAddressLine2) {
+		this.streetAddressLine2 = (String)streetAddressLine2;
+	}
+
+	@JsonIgnore
+	public void setStreetAddressLine2(
+		UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier) {
+
+		try {
+			streetAddressLine2 = (String)streetAddressLine2UnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setStreetAddressLine3(String streetAddressLine3) {
+		this.streetAddressLine3 = (String)streetAddressLine3;
+	}
+
+	@JsonIgnore
+	public void setStreetAddressLine3(
+		UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier) {
+
+		try {
+			streetAddressLine3 = (String)streetAddressLine3UnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressCountry;
-	public String getAddressLocality() {
-			return addressLocality;
-	}
-
-	public void setAddressLocality(
-			String addressLocality) {
-
-			this.addressLocality = (String)addressLocality;
-	}
-
-	@JsonIgnore
-	public void setAddressLocality(
-			UnsafeSupplier<String, Throwable>
-				addressLocalityUnsafeSupplier) {
-
-			try {
-				addressLocality =
-					(String)addressLocalityUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressLocality;
-	public String getAddressRegion() {
-			return addressRegion;
-	}
-
-	public void setAddressRegion(
-			String addressRegion) {
-
-			this.addressRegion = (String)addressRegion;
-	}
-
-	@JsonIgnore
-	public void setAddressRegion(
-			UnsafeSupplier<String, Throwable>
-				addressRegionUnsafeSupplier) {
-
-			try {
-				addressRegion =
-					(String)addressRegionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressRegion;
-	public String getAddressType() {
-			return addressType;
-	}
-
-	public void setAddressType(
-			String addressType) {
-
-			this.addressType = (String)addressType;
-	}
-
-	@JsonIgnore
-	public void setAddressType(
-			UnsafeSupplier<String, Throwable>
-				addressTypeUnsafeSupplier) {
-
-			try {
-				addressType =
-					(String)addressTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressType;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getPostalCode() {
-			return postalCode;
-	}
-
-	public void setPostalCode(
-			String postalCode) {
-
-			this.postalCode = (String)postalCode;
-	}
-
-	@JsonIgnore
-	public void setPostalCode(
-			UnsafeSupplier<String, Throwable>
-				postalCodeUnsafeSupplier) {
-
-			try {
-				postalCode =
-					(String)postalCodeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String postalCode;
-	public String getStreetAddressLine1() {
-			return streetAddressLine1;
-	}
-
-	public void setStreetAddressLine1(
-			String streetAddressLine1) {
-
-			this.streetAddressLine1 = (String)streetAddressLine1;
-	}
-
-	@JsonIgnore
-	public void setStreetAddressLine1(
-			UnsafeSupplier<String, Throwable>
-				streetAddressLine1UnsafeSupplier) {
-
-			try {
-				streetAddressLine1 =
-					(String)streetAddressLine1UnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String streetAddressLine1;
-	public String getStreetAddressLine2() {
-			return streetAddressLine2;
-	}
-
-	public void setStreetAddressLine2(
-			String streetAddressLine2) {
-
-			this.streetAddressLine2 = (String)streetAddressLine2;
-	}
-
-	@JsonIgnore
-	public void setStreetAddressLine2(
-			UnsafeSupplier<String, Throwable>
-				streetAddressLine2UnsafeSupplier) {
-
-			try {
-				streetAddressLine2 =
-					(String)streetAddressLine2UnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String streetAddressLine2;
-	public String getStreetAddressLine3() {
-			return streetAddressLine3;
-	}
-
-	public void setStreetAddressLine3(
-			String streetAddressLine3) {
-
-			this.streetAddressLine3 = (String)streetAddressLine3;
-	}
-
-	@JsonIgnore
-	public void setStreetAddressLine3(
-			UnsafeSupplier<String, Throwable>
-				streetAddressLine3UnsafeSupplier) {
-
-			try {
-				streetAddressLine3 =
-					(String)streetAddressLine3UnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

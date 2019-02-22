@@ -27,35 +27,29 @@ public interface Phone {
 
 	public String getExtension();
 
-	public void setExtension(
-			String extension);
-
-	public void setExtension(
-			UnsafeSupplier<String, Throwable>
-				extensionUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public String getPhoneNumber();
 
-	public void setPhoneNumber(
-			String phoneNumber);
-
-	public void setPhoneNumber(
-			UnsafeSupplier<String, Throwable>
-				phoneNumberUnsafeSupplier);
 	public String getPhoneType();
 
-	public void setPhoneType(
-			String phoneType);
+	public void setExtension(String extension);
+
+	public void setExtension(
+		UnsafeSupplier<String, Throwable> extensionUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setPhoneNumber(String phoneNumber);
+
+	public void setPhoneNumber(
+		UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier);
+
+	public void setPhoneType(String phoneType);
 
 	public void setPhoneType(
-			UnsafeSupplier<String, Throwable>
-				phoneTypeUnsafeSupplier);
+		UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier);
 
 }

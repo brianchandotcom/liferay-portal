@@ -50,7 +50,8 @@ import org.osgi.service.component.annotations.Component;
 )
 @Generated("")
 @Provider
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
 		return _objectMapper;
@@ -61,20 +62,29 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			registerModule(
-				new SimpleModule("Liferay.Headless.Workflow", Version.unknownVersion()) {
+				new SimpleModule(
+					"Liferay.Headless.Workflow", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-									addMapping(ObjectReviewed.class, ObjectReviewedImpl.class);
-									addMapping(WorkflowLog.class, WorkflowLogImpl.class);
-									addMapping(WorkflowTask.class, WorkflowTaskImpl.class);
-	}
+									addMapping(
+										ObjectReviewed.class,
+										ObjectReviewedImpl.class);
+									addMapping(
+										WorkflowLog.class,
+										WorkflowLogImpl.class);
+									addMapping(
+										WorkflowTask.class,
+										WorkflowTaskImpl.class);
+								}
 							});
-	}
+					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

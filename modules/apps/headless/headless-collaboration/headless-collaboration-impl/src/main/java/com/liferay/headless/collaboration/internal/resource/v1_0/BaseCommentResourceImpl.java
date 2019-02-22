@@ -52,85 +52,91 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
+	@DELETE
 	@Override
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteComment(@PathParam("comment-id") Long commentId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/blog-postings/{blog-posting-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getBlogPostingCommentsPage(
-	@PathParam("blog-posting-id") Long blogPostingId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("blog-posting-id") Long blogPostingId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/blog-postings/{blog-posting-id}/comments")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Comment postBlogPostingComment(
-	@PathParam("blog-posting-id") Long blogPostingId,Comment comment)
-			throws Exception {
 
-				return new CommentImpl();
-	}
-	@Override
-	@DELETE
-	@Path("/comments/{comment-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public boolean deleteComment(
-	@PathParam("comment-id") Long commentId)
-			throws Exception {
-
-				return false;
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment getComment(
-	@PathParam("comment-id") Long commentId)
-			throws Exception {
+	public Comment getComment(@PathParam("comment-id") Long commentId)
+		throws Exception {
 
-				return new CommentImpl();
+		return new CommentImpl();
 	}
-	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/comments/{comment-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Comment putComment(
-	@PathParam("comment-id") Long commentId,Comment comment)
-			throws Exception {
 
-				return new CommentImpl();
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getCommentCommentsPage(
-	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("comment-id") Long commentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@Consumes("application/json")
+	@Override
+	@Path("/blog-postings/{blog-posting-id}/comments")
 	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Comment postBlogPostingComment(
+			@PathParam("blog-posting-id") Long blogPostingId, Comment comment)
+		throws Exception {
+
+		return new CommentImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/comments/{comment-id}/comments")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Comment postCommentComment(
-	@PathParam("comment-id") Long commentId,Comment comment)
-			throws Exception {
+			@PathParam("comment-id") Long commentId, Comment comment)
+		throws Exception {
 
-				return new CommentImpl();
+		return new CommentImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/comments/{comment-id}")
+	@Produces("application/json")
+	@PUT
+	@RequiresScope("everything.read")
+	public Comment putComment(
+			@PathParam("comment-id") Long commentId, Comment comment)
+		throws Exception {
+
+		return new CommentImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -150,10 +156,13 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

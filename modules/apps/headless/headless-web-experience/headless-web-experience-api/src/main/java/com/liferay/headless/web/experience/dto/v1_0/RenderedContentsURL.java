@@ -27,19 +27,16 @@ public interface RenderedContentsURL {
 
 	public String getRenderedContentURL();
 
-	public void setRenderedContentURL(
-			String renderedContentURL);
-
-	public void setRenderedContentURL(
-			UnsafeSupplier<String, Throwable>
-				renderedContentURLUnsafeSupplier);
 	public String getTemplateName();
 
-	public void setTemplateName(
-			String templateName);
+	public void setRenderedContentURL(String renderedContentURL);
+
+	public void setRenderedContentURL(
+		UnsafeSupplier<String, Throwable> renderedContentURLUnsafeSupplier);
+
+	public void setTemplateName(String templateName);
 
 	public void setTemplateName(
-			UnsafeSupplier<String, Throwable>
-				templateNameUnsafeSupplier);
+		UnsafeSupplier<String, Throwable> templateNameUnsafeSupplier);
 
 }

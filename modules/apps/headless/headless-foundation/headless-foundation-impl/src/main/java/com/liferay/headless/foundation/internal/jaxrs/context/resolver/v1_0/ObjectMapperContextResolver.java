@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Component;
 )
 @Generated("")
 @Provider
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
 		return _objectMapper;
@@ -89,34 +90,57 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			registerModule(
-				new SimpleModule("Liferay.Headless.Foundation", Version.unknownVersion()) {
+				new SimpleModule(
+					"Liferay.Headless.Foundation", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-									addMapping(Category.class, CategoryImpl.class);
-									addMapping(ContactInformation.class, ContactInformationImpl.class);
-									addMapping(Creator.class, CreatorImpl.class);
+									addMapping(
+										Category.class, CategoryImpl.class);
+									addMapping(
+										ContactInformation.class,
+										ContactInformationImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
 									addMapping(Email.class, EmailImpl.class);
-									addMapping(HoursAvailable.class, HoursAvailableImpl.class);
-									addMapping(Keyword.class, KeywordImpl.class);
-									addMapping(Location.class, LocationImpl.class);
-									addMapping(Organization.class, OrganizationImpl.class);
-									addMapping(ParentCategory.class, ParentCategoryImpl.class);
-									addMapping(ParentVocabulary.class, ParentVocabularyImpl.class);
+									addMapping(
+										HoursAvailable.class,
+										HoursAvailableImpl.class);
+									addMapping(
+										Keyword.class, KeywordImpl.class);
+									addMapping(
+										Location.class, LocationImpl.class);
+									addMapping(
+										Organization.class,
+										OrganizationImpl.class);
+									addMapping(
+										ParentCategory.class,
+										ParentCategoryImpl.class);
+									addMapping(
+										ParentVocabulary.class,
+										ParentVocabularyImpl.class);
 									addMapping(Phone.class, PhoneImpl.class);
-									addMapping(PostalAddress.class, PostalAddressImpl.class);
+									addMapping(
+										PostalAddress.class,
+										PostalAddressImpl.class);
 									addMapping(Role.class, RoleImpl.class);
-									addMapping(Services.class, ServicesImpl.class);
-									addMapping(UserAccount.class, UserAccountImpl.class);
-									addMapping(Vocabulary.class, VocabularyImpl.class);
+									addMapping(
+										Services.class, ServicesImpl.class);
+									addMapping(
+										UserAccount.class,
+										UserAccountImpl.class);
+									addMapping(
+										Vocabulary.class, VocabularyImpl.class);
 									addMapping(WebUrl.class, WebUrlImpl.class);
-	}
+								}
 							});
-	}
+					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

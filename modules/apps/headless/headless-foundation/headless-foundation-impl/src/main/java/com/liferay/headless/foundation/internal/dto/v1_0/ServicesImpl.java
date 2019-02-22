@@ -38,82 +38,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ServicesImpl implements Services {
 
 	public HoursAvailable[] getHoursAvailable() {
-			return hoursAvailable;
+		return hoursAvailable;
 	}
 
-	public void setHoursAvailable(
-			HoursAvailable[] hoursAvailable) {
+	public Long getId() {
+		return id;
+	}
 
-			this.hoursAvailable = (HoursAvailableImpl[])hoursAvailable;
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setHoursAvailable(HoursAvailable[] hoursAvailable) {
+		this.hoursAvailable = (HoursAvailableImpl[])hoursAvailable;
 	}
 
 	@JsonIgnore
 	public void setHoursAvailable(
-			UnsafeSupplier<HoursAvailable[], Throwable>
-				hoursAvailableUnsafeSupplier) {
+		UnsafeSupplier<HoursAvailable[], Throwable>
+			hoursAvailableUnsafeSupplier) {
 
-			try {
-				hoursAvailable =
-					(HoursAvailableImpl[])hoursAvailableUnsafeSupplier.get();
+		try {
+			hoursAvailable =
+				(HoursAvailableImpl[])hoursAvailableUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = (String)serviceType;
+	}
+
+	@JsonIgnore
+	public void setServiceType(
+		UnsafeSupplier<String, Throwable> serviceTypeUnsafeSupplier) {
+
+		try {
+			serviceType = (String)serviceTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected HoursAvailableImpl[] hoursAvailable;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getServiceType() {
-			return serviceType;
-	}
-
-	public void setServiceType(
-			String serviceType) {
-
-			this.serviceType = (String)serviceType;
-	}
-
-	@JsonIgnore
-	public void setServiceType(
-			UnsafeSupplier<String, Throwable>
-				serviceTypeUnsafeSupplier) {
-
-			try {
-				serviceType =
-					(String)serviceTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

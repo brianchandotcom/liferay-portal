@@ -27,27 +27,22 @@ public interface Geo {
 
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public Number getLatitude();
 
-	public void setLatitude(
-			Number latitude);
-
-	public void setLatitude(
-			UnsafeSupplier<Number, Throwable>
-				latitudeUnsafeSupplier);
 	public Number getLongitude();
 
-	public void setLongitude(
-			Number longitude);
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setLatitude(Number latitude);
+
+	public void setLatitude(
+		UnsafeSupplier<Number, Throwable> latitudeUnsafeSupplier);
+
+	public void setLongitude(Number longitude);
 
 	public void setLongitude(
-			UnsafeSupplier<Number, Throwable>
-				longitudeUnsafeSupplier);
+		UnsafeSupplier<Number, Throwable> longitudeUnsafeSupplier);
 
 }

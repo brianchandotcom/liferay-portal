@@ -61,73 +61,78 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetGenericParentEmailsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testGetEmail() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetGenericParentEmailsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected Email invokeGetEmail(Long emailId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/emails/{email-id}", emailId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), EmailImpl.class);
+	}
+
+	protected Http.Response invokeGetEmailResponse(Long emailId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/emails/{email-id}", emailId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<Email> invokeGetGenericParentEmailsPage(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/emails", genericParentId));
+		options.setLocation(_resourceURL + _toPath("/emails", genericParentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetGenericParentEmailsPageResponse(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/emails", genericParentId));
+		options.setLocation(_resourceURL + _toPath("/emails", genericParentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected Email invokeGetEmail(
-				Long emailId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/emails/{email-id}", emailId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), EmailImpl.class);
-	}
-
-	protected Http.Response invokeGetEmailResponse(
-				Long emailId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/emails/{email-id}", emailId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Email randomEmail() {
 		return new EmailImpl() {
 			{
 
-						email = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						type = RandomTestUtil.randomString();
-	}
+				email = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				type = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -135,75 +140,72 @@ public abstract class BaseEmailResourceTestCase {
 
 	protected static class EmailImpl implements Email {
 
-	public String getEmail() {
-				return email;
-	}
+		public String getEmail() {
+			return email;
+		}
 
-	public void setEmail(String email) {
-				this.email = (String)email;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonIgnore
-	public void setEmail(
-				UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
+		public String getType() {
+			return type;
+		}
 
-				try {
-					email =
-						(String)emailUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setEmail(String email) {
+			this.email = (String)email;
+		}
 
-	@JsonProperty
-	protected String email;
-	public Long getId() {
-				return id;
-	}
+		@JsonIgnore
+		public void setEmail(
+			UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+			try {
+				email = (String)emailUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getType() {
-				return type;
-	}
+		public void setType(String type) {
+			this.type = (String)type;
+		}
 
-	public void setType(String type) {
-				this.type = (String)type;
-	}
+		@JsonIgnore
+		public void setType(
+			UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setType(
-				UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+			try {
+				type = (String)typeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					type =
-						(String)typeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String email;
 
-	@JsonProperty
-	protected String type;
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String type;
 
 	}
 
@@ -214,9 +216,11 @@ public abstract class BaseEmailResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -227,12 +231,12 @@ public abstract class BaseEmailResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

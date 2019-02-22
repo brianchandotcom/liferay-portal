@@ -40,298 +40,260 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WorkflowLogImpl implements WorkflowLog {
 
 	public String getAuditPerson() {
-			return auditPerson;
+		return auditPerson;
 	}
 
-	public void setAuditPerson(
-			String auditPerson) {
+	public String getCommentLog() {
+		return commentLog;
+	}
 
-			this.auditPerson = (String)auditPerson;
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getPerson() {
+		return person;
+	}
+
+	public String getPreviousPerson() {
+		return previousPerson;
+	}
+
+	public String getPreviousState() {
+		return previousState;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public WorkflowTask getTask() {
+		return task;
+	}
+
+	public Long getTaskId() {
+		return taskId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setAuditPerson(String auditPerson) {
+		this.auditPerson = (String)auditPerson;
 	}
 
 	@JsonIgnore
 	public void setAuditPerson(
-			UnsafeSupplier<String, Throwable>
-				auditPersonUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier) {
 
-			try {
-				auditPerson =
-					(String)auditPersonUnsafeSupplier.get();
+		try {
+			auditPerson = (String)auditPersonUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setCommentLog(String commentLog) {
+		this.commentLog = (String)commentLog;
 	}
+
+	@JsonIgnore
+	public void setCommentLog(
+		UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier) {
+
+		try {
+			commentLog = (String)commentLogUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = (Date)dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setPerson(String person) {
+		this.person = (String)person;
+	}
+
+	@JsonIgnore
+	public void setPerson(
+		UnsafeSupplier<String, Throwable> personUnsafeSupplier) {
+
+		try {
+			person = (String)personUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setPreviousPerson(String previousPerson) {
+		this.previousPerson = (String)previousPerson;
+	}
+
+	@JsonIgnore
+	public void setPreviousPerson(
+		UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier) {
+
+		try {
+			previousPerson = (String)previousPersonUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setPreviousState(String previousState) {
+		this.previousState = (String)previousState;
+	}
+
+	@JsonIgnore
+	public void setPreviousState(
+		UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier) {
+
+		try {
+			previousState = (String)previousStateUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setState(String state) {
+		this.state = (String)state;
+	}
+
+	@JsonIgnore
+	public void setState(
+		UnsafeSupplier<String, Throwable> stateUnsafeSupplier) {
+
+		try {
+			state = (String)stateUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	@JsonIgnore
+	public void setTask(
+		UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier) {
+
+		try {
+			task = (WorkflowTaskImpl)taskUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setTask(WorkflowTask task) {
+		this.task = (WorkflowTaskImpl)task;
+	}
+
+	public void setTaskId(Long taskId) {
+		this.taskId = (Long)taskId;
+	}
+
+	@JsonIgnore
+	public void setTaskId(
+		UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier) {
+
+		try {
+			taskId = (Long)taskIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setType(String type) {
+		this.type = (String)type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+		try {
+			type = (String)typeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String auditPerson;
-	public String getCommentLog() {
-			return commentLog;
-	}
-
-	public void setCommentLog(
-			String commentLog) {
-
-			this.commentLog = (String)commentLog;
-	}
-
-	@JsonIgnore
-	public void setCommentLog(
-			UnsafeSupplier<String, Throwable>
-				commentLogUnsafeSupplier) {
-
-			try {
-				commentLog =
-					(String)commentLogUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String commentLog;
-	public Date getDateCreated() {
-			return dateCreated;
-	}
-
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = (Date)dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
-
-			try {
-				dateCreated =
-					(Date)dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getPerson() {
-			return person;
-	}
-
-	public void setPerson(
-			String person) {
-
-			this.person = (String)person;
-	}
-
-	@JsonIgnore
-	public void setPerson(
-			UnsafeSupplier<String, Throwable>
-				personUnsafeSupplier) {
-
-			try {
-				person =
-					(String)personUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String person;
-	public String getPreviousPerson() {
-			return previousPerson;
-	}
-
-	public void setPreviousPerson(
-			String previousPerson) {
-
-			this.previousPerson = (String)previousPerson;
-	}
-
-	@JsonIgnore
-	public void setPreviousPerson(
-			UnsafeSupplier<String, Throwable>
-				previousPersonUnsafeSupplier) {
-
-			try {
-				previousPerson =
-					(String)previousPersonUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String previousPerson;
-	public String getPreviousState() {
-			return previousState;
-	}
-
-	public void setPreviousState(
-			String previousState) {
-
-			this.previousState = (String)previousState;
-	}
-
-	@JsonIgnore
-	public void setPreviousState(
-			UnsafeSupplier<String, Throwable>
-				previousStateUnsafeSupplier) {
-
-			try {
-				previousState =
-					(String)previousStateUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String previousState;
-	public String getState() {
-			return state;
-	}
-
-	public void setState(
-			String state) {
-
-			this.state = (String)state;
-	}
-
-	@JsonIgnore
-	public void setState(
-			UnsafeSupplier<String, Throwable>
-				stateUnsafeSupplier) {
-
-			try {
-				state =
-					(String)stateUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String state;
-	public WorkflowTask getTask() {
-			return task;
-	}
-
-	public void setTask(
-			WorkflowTask task) {
-
-			this.task = (WorkflowTaskImpl)task;
-	}
-
-	@JsonIgnore
-	public void setTask(
-			UnsafeSupplier<WorkflowTask, Throwable>
-				taskUnsafeSupplier) {
-
-			try {
-				task =
-					(WorkflowTaskImpl)taskUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected WorkflowTaskImpl task;
-	public Long getTaskId() {
-			return taskId;
-	}
-
-	public void setTaskId(
-			Long taskId) {
-
-			this.taskId = (Long)taskId;
-	}
-
-	@JsonIgnore
-	public void setTaskId(
-			UnsafeSupplier<Long, Throwable>
-				taskIdUnsafeSupplier) {
-
-			try {
-				taskId =
-					(Long)taskIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long taskId;
-	public String getType() {
-			return type;
-	}
-
-	public void setType(
-			String type) {
-
-			this.type = (String)type;
-	}
-
-	@JsonIgnore
-	public void setType(
-			UnsafeSupplier<String, Throwable>
-				typeUnsafeSupplier) {
-
-			try {
-				type =
-					(String)typeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

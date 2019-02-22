@@ -27,107 +27,93 @@ public interface Organization {
 
 	public String getComment();
 
-	public void setComment(
-			String comment);
-
-	public void setComment(
-			UnsafeSupplier<String, Throwable>
-				commentUnsafeSupplier);
 	public ContactInformation getContactInformation();
 
-	public void setContactInformation(
-			ContactInformation contactInformation);
-
-	public void setContactInformation(
-			UnsafeSupplier<ContactInformation, Throwable>
-				contactInformationUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public Location getLocation();
 
-	public void setLocation(
-			Location location);
-
-	public void setLocation(
-			UnsafeSupplier<Location, Throwable>
-				locationUnsafeSupplier);
 	public String getLogo();
 
-	public void setLogo(
-			String logo);
-
-	public void setLogo(
-			UnsafeSupplier<String, Throwable>
-				logoUnsafeSupplier);
 	public UserAccount[] getMembers();
 
-	public void setMembers(
-			UserAccount[] members);
-
-	public void setMembers(
-			UnsafeSupplier<UserAccount[], Throwable>
-				membersUnsafeSupplier);
 	public Long[] getMembersIds();
 
-	public void setMembersIds(
-			Long[] membersIds);
-
-	public void setMembersIds(
-			UnsafeSupplier<Long[], Throwable>
-				membersIdsUnsafeSupplier);
 	public String getName();
 
-	public void setName(
-			String name);
-
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
 	public Organization getParentOrganization();
 
-	public void setParentOrganization(
-			Organization parentOrganization);
-
-	public void setParentOrganization(
-			UnsafeSupplier<Organization, Throwable>
-				parentOrganizationUnsafeSupplier);
 	public Long getParentOrganizationId();
 
-	public void setParentOrganizationId(
-			Long parentOrganizationId);
-
-	public void setParentOrganizationId(
-			UnsafeSupplier<Long, Throwable>
-				parentOrganizationIdUnsafeSupplier);
 	public Services[] getServices();
 
-	public void setServices(
-			Services[] services);
-
-	public void setServices(
-			UnsafeSupplier<Services[], Throwable>
-				servicesUnsafeSupplier);
 	public Organization[] getSubOrganization();
 
-	public void setSubOrganization(
-			Organization[] subOrganization);
-
-	public void setSubOrganization(
-			UnsafeSupplier<Organization[], Throwable>
-				subOrganizationUnsafeSupplier);
 	public Long[] getSubOrganizationIds();
 
-	public void setSubOrganizationIds(
-			Long[] subOrganizationIds);
+	public void setComment(String comment);
+
+	public void setComment(
+		UnsafeSupplier<String, Throwable> commentUnsafeSupplier);
+
+	public void setContactInformation(ContactInformation contactInformation);
+
+	public void setContactInformation(
+		UnsafeSupplier<ContactInformation, Throwable>
+			contactInformationUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setLocation(Location location);
+
+	public void setLocation(
+		UnsafeSupplier<Location, Throwable> locationUnsafeSupplier);
+
+	public void setLogo(String logo);
+
+	public void setLogo(UnsafeSupplier<String, Throwable> logoUnsafeSupplier);
+
+	public void setMembers(
+		UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier);
+
+	public void setMembers(UserAccount[] members);
+
+	public void setMembersIds(Long[] membersIds);
+
+	public void setMembersIds(
+		UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier);
+
+	public void setName(String name);
+
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+
+	public void setParentOrganization(Organization parentOrganization);
+
+	public void setParentOrganization(
+		UnsafeSupplier<Organization, Throwable>
+			parentOrganizationUnsafeSupplier);
+
+	public void setParentOrganizationId(Long parentOrganizationId);
+
+	public void setParentOrganizationId(
+		UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier);
+
+	public void setServices(Services[] services);
+
+	public void setServices(
+		UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier);
+
+	public void setSubOrganization(Organization[] subOrganization);
+
+	public void setSubOrganization(
+		UnsafeSupplier<Organization[], Throwable>
+			subOrganizationUnsafeSupplier);
+
+	public void setSubOrganizationIds(Long[] subOrganizationIds);
 
 	public void setSubOrganizationIds(
-			UnsafeSupplier<Long[], Throwable>
-				subOrganizationIdsUnsafeSupplier);
+		UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier);
 
 }

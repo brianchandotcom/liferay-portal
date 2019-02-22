@@ -62,72 +62,79 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	@Test
 	public void testGetGenericParentWebUrlsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetWebUrl() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetWebUrl() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<WebUrl> invokeGetGenericParentWebUrlsPage(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/web-urls", genericParentId));
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls", genericParentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetGenericParentWebUrlsPageResponse(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/web-urls", genericParentId));
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls", genericParentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected WebUrl invokeGetWebUrl(
-				Long webUrlId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), WebUrlImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetWebUrlResponse(
-				Long webUrlId)
-			throws Exception {
+	protected WebUrl invokeGetWebUrl(Long webUrlId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId));
 
-			options.setLocation(_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId));
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), WebUrlImpl.class);
+	}
 
-			HttpUtil.URLtoString(options);
+	protected Http.Response invokeGetWebUrlResponse(Long webUrlId)
+		throws Exception {
 
-			return options.getResponse();
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/web-urls/{web-url-id}", webUrlId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected WebUrl randomWebUrl() {
 		return new WebUrlImpl() {
 			{
 
-						id = RandomTestUtil.randomLong();
-						url = RandomTestUtil.randomString();
-						urlType = RandomTestUtil.randomString();
-	}
+				id = RandomTestUtil.randomLong();
+				url = RandomTestUtil.randomString();
+				urlType = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -135,75 +142,72 @@ public abstract class BaseWebUrlResourceTestCase {
 
 	protected static class WebUrlImpl implements WebUrl {
 
-	public Long getId() {
-				return id;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		public String getUrl() {
+			return url;
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public String getUrlType() {
+			return urlType;
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getUrl() {
-				return url;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setUrl(String url) {
-				this.url = (String)url;
-	}
+		public void setUrl(String url) {
+			this.url = (String)url;
+		}
 
-	@JsonIgnore
-	public void setUrl(
-				UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
+		@JsonIgnore
+		public void setUrl(
+			UnsafeSupplier<String, Throwable> urlUnsafeSupplier) {
 
-				try {
-					url =
-						(String)urlUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				url = (String)urlUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String url;
-	public String getUrlType() {
-				return urlType;
-	}
+		public void setUrlType(String urlType) {
+			this.urlType = (String)urlType;
+		}
 
-	public void setUrlType(String urlType) {
-				this.urlType = (String)urlType;
-	}
+		@JsonIgnore
+		public void setUrlType(
+			UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setUrlType(
-				UnsafeSupplier<String, Throwable> urlTypeUnsafeSupplier) {
+			try {
+				urlType = (String)urlTypeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					urlType =
-						(String)urlTypeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected Long id;
 
-	@JsonProperty
-	protected String urlType;
+		@JsonProperty
+		protected String url;
+
+		@JsonProperty
+		protected String urlType;
 
 	}
 
@@ -214,9 +218,11 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -227,12 +233,12 @@ public abstract class BaseWebUrlResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

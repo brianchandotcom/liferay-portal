@@ -37,55 +37,44 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ParentCategoryImpl implements ParentCategory {
 
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
+	public String getName() {
+		return name;
+	}
 
-			this.id = (Long)id;
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
 
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
+	public void setName(String name) {
+		this.name = (String)name;
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

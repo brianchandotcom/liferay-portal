@@ -38,136 +38,116 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FieldValuesImpl implements FieldValues {
 
 	public FormDocument getDocument() {
-			return document;
+		return document;
 	}
 
-	public void setDocument(
-			FormDocument document) {
+	public Long getDocumentId() {
+		return documentId;
+	}
 
-			this.document = (FormDocumentImpl)document;
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setDocument(FormDocument document) {
+		this.document = (FormDocumentImpl)document;
 	}
 
 	@JsonIgnore
 	public void setDocument(
-			UnsafeSupplier<FormDocument, Throwable>
-				documentUnsafeSupplier) {
+		UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier) {
 
-			try {
-				document =
-					(FormDocumentImpl)documentUnsafeSupplier.get();
+		try {
+			document = (FormDocumentImpl)documentUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setDocumentId(Long documentId) {
+		this.documentId = (Long)documentId;
 	}
+
+	@JsonIgnore
+	public void setDocumentId(
+		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier) {
+
+		try {
+			documentId = (Long)documentIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setValue(String value) {
+		this.value = (String)value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Throwable> valueUnsafeSupplier) {
+
+		try {
+			value = (String)valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected FormDocumentImpl document;
-	public Long getDocumentId() {
-			return documentId;
-	}
-
-	public void setDocumentId(
-			Long documentId) {
-
-			this.documentId = (Long)documentId;
-	}
-
-	@JsonIgnore
-	public void setDocumentId(
-			UnsafeSupplier<Long, Throwable>
-				documentIdUnsafeSupplier) {
-
-			try {
-				documentId =
-					(Long)documentIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long documentId;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public String getValue() {
-			return value;
-	}
-
-	public void setValue(
-			String value) {
-
-			this.value = (String)value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-			UnsafeSupplier<String, Throwable>
-				valueUnsafeSupplier) {
-
-			try {
-				value =
-					(String)valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

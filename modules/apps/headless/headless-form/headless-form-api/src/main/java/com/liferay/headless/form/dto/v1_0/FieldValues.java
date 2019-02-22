@@ -27,43 +27,34 @@ public interface FieldValues {
 
 	public FormDocument getDocument();
 
-	public void setDocument(
-			FormDocument document);
-
-	public void setDocument(
-			UnsafeSupplier<FormDocument, Throwable>
-				documentUnsafeSupplier);
 	public Long getDocumentId();
 
-	public void setDocumentId(
-			Long documentId);
-
-	public void setDocumentId(
-			UnsafeSupplier<Long, Throwable>
-				documentIdUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public String getName();
 
-	public void setName(
-			String name);
-
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
 	public String getValue();
 
-	public void setValue(
-			String value);
+	public void setDocument(FormDocument document);
 
-	public void setValue(
-			UnsafeSupplier<String, Throwable>
-				valueUnsafeSupplier);
+	public void setDocument(
+		UnsafeSupplier<FormDocument, Throwable> documentUnsafeSupplier);
+
+	public void setDocumentId(Long documentId);
+
+	public void setDocumentId(
+		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setName(String name);
+
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+
+	public void setValue(String value);
+
+	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier);
 
 }

@@ -40,190 +40,164 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CommentImpl implements Comment {
 
 	public Comment[] getComments() {
-			return comments;
+		return comments;
 	}
 
-	public void setComments(
-			Comment[] comments) {
+	public Creator getCreator() {
+		return creator;
+	}
 
-			this.comments = (CommentImpl[])comments;
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Boolean getHasComments() {
+		return hasComments;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setComments(Comment[] comments) {
+		this.comments = (CommentImpl[])comments;
 	}
 
 	@JsonIgnore
 	public void setComments(
-			UnsafeSupplier<Comment[], Throwable>
-				commentsUnsafeSupplier) {
+		UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 
-			try {
-				comments =
-					(CommentImpl[])commentsUnsafeSupplier.get();
+		try {
+			comments = (CommentImpl[])commentsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setCreator(Creator creator) {
+		this.creator = (CreatorImpl)creator;
 	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
+		try {
+			creator = (CreatorImpl)creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = (Date)dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = (Date)dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = (Date)dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setHasComments(Boolean hasComments) {
+		this.hasComments = (Boolean)hasComments;
+	}
+
+	@JsonIgnore
+	public void setHasComments(
+		UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+
+		try {
+			hasComments = (Boolean)hasCommentsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setText(String text) {
+		this.text = (String)text;
+	}
+
+	@JsonIgnore
+	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+		try {
+			text = (String)textUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected CommentImpl[] comments;
-	public Creator getCreator() {
-			return creator;
-	}
-
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = (CreatorImpl)creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
-
-			try {
-				creator =
-					(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected CreatorImpl creator;
-	public Date getDateCreated() {
-			return dateCreated;
-	}
-
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = (Date)dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
-
-			try {
-				dateCreated =
-					(Date)dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
-	public Date getDateModified() {
-			return dateModified;
-	}
-
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = (Date)dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
-
-			try {
-				dateModified =
-					(Date)dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
-	public Boolean getHasComments() {
-			return hasComments;
-	}
-
-	public void setHasComments(
-			Boolean hasComments) {
-
-			this.hasComments = (Boolean)hasComments;
-	}
-
-	@JsonIgnore
-	public void setHasComments(
-			UnsafeSupplier<Boolean, Throwable>
-				hasCommentsUnsafeSupplier) {
-
-			try {
-				hasComments =
-					(Boolean)hasCommentsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Boolean hasComments;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getText() {
-			return text;
-	}
-
-	public void setText(
-			String text) {
-
-			this.text = (String)text;
-	}
-
-	@JsonIgnore
-	public void setText(
-			UnsafeSupplier<String, Throwable>
-				textUnsafeSupplier) {
-
-			try {
-				text =
-					(String)textUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

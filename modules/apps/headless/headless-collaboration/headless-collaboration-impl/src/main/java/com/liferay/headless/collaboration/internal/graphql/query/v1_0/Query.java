@@ -45,124 +45,149 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPostingImpl getBlogPosting(
-	@GraphQLName("blog-posting-id") Long blogPostingId)
-			throws Exception {
+			@GraphQLName("blog-posting-id") Long blogPostingId)
+		throws Exception {
 
-				BlogPostingResourceImpl blogPostingResourceImpl = _getBlogPostingResourceImpl();
+		BlogPostingResourceImpl blogPostingResourceImpl =
+			_getBlogPostingResourceImpl();
 
-				blogPostingResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		blogPostingResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				return (BlogPostingImpl)blogPostingResourceImpl.getBlogPosting(
-					blogPostingId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<BlogPostingImpl> getContentSpaceBlogPostingsPage(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("filter") Filter filter,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page,@GraphQLName("Sort[]") Sort[] sorts)
-			throws Exception {
-
-				BlogPostingResourceImpl blogPostingResourceImpl = _getBlogPostingResourceImpl();
-
-				blogPostingResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				Page paginationPage = blogPostingResourceImpl.getContentSpaceBlogPostingsPage(
-					contentSpaceId,filter,Pagination.of(pageSize, page),sorts);
-
-				return paginationPage.getItems();
+		return (BlogPostingImpl)blogPostingResourceImpl.getBlogPosting(
+			blogPostingId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<CommentImpl> getBlogPostingCommentsPage(
-	@GraphQLName("blog-posting-id") Long blogPostingId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
+			@GraphQLName("blog-posting-id") Long blogPostingId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-				CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
+		CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
 
-				commentResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		commentResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = commentResourceImpl.getBlogPostingCommentsPage(
-					blogPostingId,Pagination.of(pageSize, page));
+		Page paginationPage = commentResourceImpl.getBlogPostingCommentsPage(
+			blogPostingId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public CommentImpl getComment(
-	@GraphQLName("comment-id") Long commentId)
-			throws Exception {
+	public CommentImpl getComment(@GraphQLName("comment-id") Long commentId)
+		throws Exception {
 
-				CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
+		CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
 
-				commentResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		commentResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				return (CommentImpl)commentResourceImpl.getComment(
-					commentId);
+		return (CommentImpl)commentResourceImpl.getComment(commentId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<CommentImpl> getCommentCommentsPage(
-	@GraphQLName("comment-id") Long commentId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
+			@GraphQLName("comment-id") Long commentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-				CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
+		CommentResourceImpl commentResourceImpl = _getCommentResourceImpl();
 
-				commentResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		commentResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = commentResourceImpl.getCommentCommentsPage(
-					commentId,Pagination.of(pageSize, page));
+		Page paginationPage = commentResourceImpl.getCommentCommentsPage(
+			commentId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<BlogPostingImageImpl> getContentSpaceBlogPostingImagesPage(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
+	public Collection<BlogPostingImageImpl>
+			getContentSpaceBlogPostingImagesPage(
+				@GraphQLName("content-space-id") Long contentSpaceId,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
 
-				BlogPostingImageResourceImpl blogPostingImageResourceImpl = _getBlogPostingImageResourceImpl();
+		BlogPostingImageResourceImpl blogPostingImageResourceImpl =
+			_getBlogPostingImageResourceImpl();
 
-				blogPostingImageResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		blogPostingImageResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = blogPostingImageResourceImpl.getContentSpaceBlogPostingImagesPage(
-					contentSpaceId,Pagination.of(pageSize, page));
+		Page paginationPage =
+			blogPostingImageResourceImpl.getContentSpaceBlogPostingImagesPage(
+				contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<BlogPostingImpl> getContentSpaceBlogPostingsPage(
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		BlogPostingResourceImpl blogPostingResourceImpl =
+			_getBlogPostingResourceImpl();
+
+		blogPostingResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			blogPostingResourceImpl.getContentSpaceBlogPostingsPage(
+				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public BlogPostingImageImpl getImageObject(
-	@GraphQLName("image-object-id") Long imageObjectId)
-			throws Exception {
+			@GraphQLName("image-object-id") Long imageObjectId)
+		throws Exception {
 
-				BlogPostingImageResourceImpl blogPostingImageResourceImpl = _getBlogPostingImageResourceImpl();
+		BlogPostingImageResourceImpl blogPostingImageResourceImpl =
+			_getBlogPostingImageResourceImpl();
 
-				blogPostingImageResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		blogPostingImageResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				return (BlogPostingImageImpl)blogPostingImageResourceImpl.getImageObject(
-					imageObjectId);
+		return (BlogPostingImageImpl)
+			blogPostingImageResourceImpl.getImageObject(imageObjectId);
+	}
+
+	private static BlogPostingImageResourceImpl
+		_getBlogPostingImageResourceImpl() {
+
+		return new BlogPostingImageResourceImpl();
 	}
 
 	private static BlogPostingResourceImpl _getBlogPostingResourceImpl() {
-			return new BlogPostingResourceImpl();
+		return new BlogPostingResourceImpl();
 	}
-	private static BlogPostingImageResourceImpl _getBlogPostingImageResourceImpl() {
-			return new BlogPostingImageResourceImpl();
-	}
+
 	private static CommentResourceImpl _getCommentResourceImpl() {
-			return new CommentResourceImpl();
+		return new CommentResourceImpl();
 	}
 
 }

@@ -70,155 +70,199 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGetMyUserAccountOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetOrganization() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetOrganizationOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetUserAccountOrganizationsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetOrganization() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetOrganizationsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetUserAccountOrganizationsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<Organization> invokeGetMyUserAccountOrganizationsPage(
-				Long myUserAccountId,Pagination pagination)
-			throws Exception {
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/my-user-accounts/{my-user-account-id}/organizations", myUserAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}/organizations",
+					myUserAccountId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetMyUserAccountOrganizationsPageResponse(
-				Long myUserAccountId,Pagination pagination)
-			throws Exception {
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/my-user-accounts/{my-user-account-id}/organizations", myUserAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}/organizations",
+					myUserAccountId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected Page<Organization> invokeGetOrganizationsPage(
-				Pagination pagination)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/organizations", pagination));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetOrganizationsPageResponse(
-				Pagination pagination)
-			throws Exception {
+	protected Organization invokeGetOrganization(Long organizationId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/organizations", pagination));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/organizations/{organization-id}", organizationId));
 
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected Organization invokeGetOrganization(
-				Long organizationId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/organizations/{organization-id}", organizationId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), OrganizationImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), OrganizationImpl.class);
 	}
 
-	protected Http.Response invokeGetOrganizationResponse(
-				Long organizationId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/organizations/{organization-id}", organizationId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
 	protected Page<Organization> invokeGetOrganizationOrganizationsPage(
-				Long organizationId,Pagination pagination)
-			throws Exception {
+			Long organizationId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/organizations/{organization-id}/organizations", organizationId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/organizations/{organization-id}/organizations",
+					organizationId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetOrganizationOrganizationsPageResponse(
-				Long organizationId,Pagination pagination)
-			throws Exception {
+			Long organizationId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/organizations/{organization-id}/organizations", organizationId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/organizations/{organization-id}/organizations",
+					organizationId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
+	protected Http.Response invokeGetOrganizationResponse(Long organizationId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/organizations/{organization-id}", organizationId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<Organization> invokeGetOrganizationsPage(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/organizations", pagination));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response invokeGetOrganizationsPageResponse(
+			Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/organizations", pagination));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Page<Organization> invokeGetUserAccountOrganizationsPage(
-				Long userAccountId,Pagination pagination)
-			throws Exception {
+			Long userAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}/organizations", userAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/organizations",
+					userAccountId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetUserAccountOrganizationsPageResponse(
-				Long userAccountId,Pagination pagination)
-			throws Exception {
+			Long userAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}/organizations", userAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/organizations",
+					userAccountId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Organization randomOrganization() {
 		return new OrganizationImpl() {
 			{
 
-						comment = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						logo = RandomTestUtil.randomString();
-						name = RandomTestUtil.randomString();
-						parentOrganizationId = RandomTestUtil.randomLong();
-	}
+				comment = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				logo = RandomTestUtil.randomString();
+				name = RandomTestUtil.randomString();
+				parentOrganizationId = RandomTestUtil.randomLong();
+			}
 		};
 	}
 
@@ -226,305 +270,316 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	protected static class OrganizationImpl implements Organization {
 
-	public String getComment() {
-				return comment;
-	}
+		public String getComment() {
+			return comment;
+		}
 
-	public void setComment(String comment) {
-				this.comment = (String)comment;
-	}
+		public ContactInformation getContactInformation() {
+			return contactInformation;
+		}
 
-	@JsonIgnore
-	public void setComment(
-				UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
+		public Long getId() {
+			return id;
+		}
 
-				try {
-					comment =
-						(String)commentUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Location getLocation() {
+			return location;
+		}
 
-	@JsonProperty
-	protected String comment;
-	public ContactInformation getContactInformation() {
-				return contactInformation;
-	}
+		public String getLogo() {
+			return logo;
+		}
 
-	public void setContactInformation(ContactInformation contactInformation) {
-				this.contactInformation = (ContactInformationImpl)contactInformation;
-	}
+		public UserAccount[] getMembers() {
+			return members;
+		}
 
-	@JsonIgnore
-	public void setContactInformation(
-				UnsafeSupplier<ContactInformation, Throwable> contactInformationUnsafeSupplier) {
+		public Long[] getMembersIds() {
+			return membersIds;
+		}
 
-				try {
-					contactInformation =
-						(ContactInformationImpl)contactInformationUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public String getName() {
+			return name;
+		}
 
-	@JsonProperty
-	protected ContactInformationImpl contactInformation;
-	public Long getId() {
-				return id;
-	}
+		public Organization getParentOrganization() {
+			return parentOrganization;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		public Long getParentOrganizationId() {
+			return parentOrganizationId;
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public Services[] getServices() {
+			return services;
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Organization[] getSubOrganization() {
+			return subOrganization;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public Location getLocation() {
-				return location;
-	}
+		public Long[] getSubOrganizationIds() {
+			return subOrganizationIds;
+		}
 
-	public void setLocation(Location location) {
-				this.location = (LocationImpl)location;
-	}
+		public void setComment(String comment) {
+			this.comment = (String)comment;
+		}
 
-	@JsonIgnore
-	public void setLocation(
-				UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
+		@JsonIgnore
+		public void setComment(
+			UnsafeSupplier<String, Throwable> commentUnsafeSupplier) {
 
-				try {
-					location =
-						(LocationImpl)locationUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				comment = (String)commentUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected LocationImpl location;
-	public String getLogo() {
-				return logo;
-	}
+		public void setContactInformation(
+			ContactInformation contactInformation) {
 
-	public void setLogo(String logo) {
-				this.logo = (String)logo;
-	}
+			this.contactInformation =
+				(ContactInformationImpl)contactInformation;
+		}
 
-	@JsonIgnore
-	public void setLogo(
-				UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
+		@JsonIgnore
+		public void setContactInformation(
+			UnsafeSupplier<ContactInformation, Throwable>
+				contactInformationUnsafeSupplier) {
 
-				try {
-					logo =
-						(String)logoUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				contactInformation =
+					(ContactInformationImpl)
+						contactInformationUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String logo;
-	public UserAccount[] getMembers() {
-				return members;
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	public void setMembers(UserAccount[] members) {
-				this.members = (UserAccountImpl[])members;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setMembers(
-				UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
+		public void setLocation(Location location) {
+			this.location = (LocationImpl)location;
+		}
 
-				try {
-					members =
-						(UserAccountImpl[])membersUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setLocation(
+			UnsafeSupplier<Location, Throwable> locationUnsafeSupplier) {
 
-	@JsonProperty
-	protected UserAccountImpl[] members;
-	public Long[] getMembersIds() {
-				return membersIds;
-	}
+			try {
+				location = (LocationImpl)locationUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setMembersIds(Long[] membersIds) {
-				this.membersIds = (Long[])membersIds;
-	}
+		public void setLogo(String logo) {
+			this.logo = (String)logo;
+		}
 
-	@JsonIgnore
-	public void setMembersIds(
-				UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
+		@JsonIgnore
+		public void setLogo(
+			UnsafeSupplier<String, Throwable> logoUnsafeSupplier) {
 
-				try {
-					membersIds =
-						(Long[])membersIdsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				logo = (String)logoUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long[] membersIds;
-	public String getName() {
-				return name;
-	}
+		@JsonIgnore
+		public void setMembers(
+			UnsafeSupplier<UserAccount[], Throwable> membersUnsafeSupplier) {
 
-	public void setName(String name) {
-				this.name = (String)name;
-	}
+			try {
+				members = (UserAccountImpl[])membersUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		public void setMembers(UserAccount[] members) {
+			this.members = (UserAccountImpl[])members;
+		}
 
-				try {
-					name =
-						(String)nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setMembersIds(Long[] membersIds) {
+			this.membersIds = (Long[])membersIds;
+		}
 
-	@JsonProperty
-	protected String name;
-	public Organization getParentOrganization() {
-				return parentOrganization;
-	}
+		@JsonIgnore
+		public void setMembersIds(
+			UnsafeSupplier<Long[], Throwable> membersIdsUnsafeSupplier) {
 
-	public void setParentOrganization(Organization parentOrganization) {
-				this.parentOrganization = (OrganizationImpl)parentOrganization;
-	}
+			try {
+				membersIds = (Long[])membersIdsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setParentOrganization(
-				UnsafeSupplier<Organization, Throwable> parentOrganizationUnsafeSupplier) {
+		public void setName(String name) {
+			this.name = (String)name;
+		}
 
-				try {
-					parentOrganization =
-						(OrganizationImpl)parentOrganizationUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
-	@JsonProperty
-	protected OrganizationImpl parentOrganization;
-	public Long getParentOrganizationId() {
-				return parentOrganizationId;
-	}
+			try {
+				name = (String)nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setParentOrganizationId(Long parentOrganizationId) {
-				this.parentOrganizationId = (Long)parentOrganizationId;
-	}
+		public void setParentOrganization(Organization parentOrganization) {
+			this.parentOrganization = (OrganizationImpl)parentOrganization;
+		}
 
-	@JsonIgnore
-	public void setParentOrganizationId(
-				UnsafeSupplier<Long, Throwable> parentOrganizationIdUnsafeSupplier) {
+		@JsonIgnore
+		public void setParentOrganization(
+			UnsafeSupplier<Organization, Throwable>
+				parentOrganizationUnsafeSupplier) {
 
-				try {
-					parentOrganizationId =
-						(Long)parentOrganizationIdUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				parentOrganization =
+					(OrganizationImpl)parentOrganizationUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long parentOrganizationId;
-	public Services[] getServices() {
-				return services;
-	}
+		public void setParentOrganizationId(Long parentOrganizationId) {
+			this.parentOrganizationId = (Long)parentOrganizationId;
+		}
 
-	public void setServices(Services[] services) {
-				this.services = (ServicesImpl[])services;
-	}
+		@JsonIgnore
+		public void setParentOrganizationId(
+			UnsafeSupplier<Long, Throwable>
+				parentOrganizationIdUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setServices(
-				UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
+			try {
+				parentOrganizationId =
+					(Long)parentOrganizationIdUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					services =
-						(ServicesImpl[])servicesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setServices(Services[] services) {
+			this.services = (ServicesImpl[])services;
+		}
 
-	@JsonProperty
-	protected ServicesImpl[] services;
-	public Organization[] getSubOrganization() {
-				return subOrganization;
-	}
+		@JsonIgnore
+		public void setServices(
+			UnsafeSupplier<Services[], Throwable> servicesUnsafeSupplier) {
 
-	public void setSubOrganization(Organization[] subOrganization) {
-				this.subOrganization = (OrganizationImpl[])subOrganization;
-	}
+			try {
+				services = (ServicesImpl[])servicesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setSubOrganization(
-				UnsafeSupplier<Organization[], Throwable> subOrganizationUnsafeSupplier) {
+		public void setSubOrganization(Organization[] subOrganization) {
+			this.subOrganization = (OrganizationImpl[])subOrganization;
+		}
 
-				try {
-					subOrganization =
-						(OrganizationImpl[])subOrganizationUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setSubOrganization(
+			UnsafeSupplier<Organization[], Throwable>
+				subOrganizationUnsafeSupplier) {
 
-	@JsonProperty
-	protected OrganizationImpl[] subOrganization;
-	public Long[] getSubOrganizationIds() {
-				return subOrganizationIds;
-	}
+			try {
+				subOrganization =
+					(OrganizationImpl[])subOrganizationUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setSubOrganizationIds(Long[] subOrganizationIds) {
-				this.subOrganizationIds = (Long[])subOrganizationIds;
-	}
+		public void setSubOrganizationIds(Long[] subOrganizationIds) {
+			this.subOrganizationIds = (Long[])subOrganizationIds;
+		}
 
-	@JsonIgnore
-	public void setSubOrganizationIds(
-				UnsafeSupplier<Long[], Throwable> subOrganizationIdsUnsafeSupplier) {
+		@JsonIgnore
+		public void setSubOrganizationIds(
+			UnsafeSupplier<Long[], Throwable>
+				subOrganizationIdsUnsafeSupplier) {
 
-				try {
-					subOrganizationIds =
-						(Long[])subOrganizationIdsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				subOrganizationIds =
+					(Long[])subOrganizationIdsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long[] subOrganizationIds;
+		@JsonProperty
+		protected String comment;
+
+		@JsonProperty
+		protected ContactInformationImpl contactInformation;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected LocationImpl location;
+
+		@JsonProperty
+		protected String logo;
+
+		@JsonProperty
+		protected UserAccountImpl[] members;
+
+		@JsonProperty
+		protected Long[] membersIds;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected OrganizationImpl parentOrganization;
+
+		@JsonProperty
+		protected Long parentOrganizationId;
+
+		@JsonProperty
+		protected ServicesImpl[] services;
+
+		@JsonProperty
+		protected OrganizationImpl[] subOrganization;
+
+		@JsonProperty
+		protected Long[] subOrganizationIds;
 
 	}
 
@@ -535,9 +590,11 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -548,12 +605,12 @@ public abstract class BaseOrganizationResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

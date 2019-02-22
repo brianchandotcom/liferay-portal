@@ -42,379 +42,333 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FormImpl implements Form {
 
 	public String[] getAvailableLanguages() {
-			return availableLanguages;
+		return availableLanguages;
 	}
 
-	public void setAvailableLanguages(
-			String[] availableLanguages) {
+	public Long getContentSpace() {
+		return contentSpace;
+	}
 
-			this.availableLanguages = (String[])availableLanguages;
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
+	public String getDefaultLanguage() {
+		return defaultLanguage;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public FormRecord[] getFormRecords() {
+		return formRecords;
+	}
+
+	public Long[] getFormRecordsIds() {
+		return formRecordsIds;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public FormStructure getStructure() {
+		return structure;
+	}
+
+	public Long getStructureId() {
+		return structureId;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
 	public void setAvailableLanguages(
-			UnsafeSupplier<String[], Throwable>
-				availableLanguagesUnsafeSupplier) {
+		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-			try {
-				availableLanguages =
-					(String[])availableLanguagesUnsafeSupplier.get();
+		try {
+			availableLanguages =
+				(String[])availableLanguagesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setContentSpace(Long contentSpace) {
+		this.contentSpace = (Long)contentSpace;
 	}
+
+	@JsonIgnore
+	public void setContentSpace(
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+
+		try {
+			contentSpace = (Long)contentSpaceUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = (CreatorImpl)creator;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
+		try {
+			creator = (CreatorImpl)creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = (Date)dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = (Date)dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = (Date)dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDatePublished(Date datePublished) {
+		this.datePublished = (Date)datePublished;
+	}
+
+	@JsonIgnore
+	public void setDatePublished(
+		UnsafeSupplier<Date, Throwable> datePublishedUnsafeSupplier) {
+
+		try {
+			datePublished = (Date)datePublishedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDefaultLanguage(String defaultLanguage) {
+		this.defaultLanguage = (String)defaultLanguage;
+	}
+
+	@JsonIgnore
+	public void setDefaultLanguage(
+		UnsafeSupplier<String, Throwable> defaultLanguageUnsafeSupplier) {
+
+		try {
+			defaultLanguage = (String)defaultLanguageUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDescription(String description) {
+		this.description = (String)description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
+		try {
+			description = (String)descriptionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setFormRecords(FormRecord[] formRecords) {
+		this.formRecords = (FormRecordImpl[])formRecords;
+	}
+
+	@JsonIgnore
+	public void setFormRecords(
+		UnsafeSupplier<FormRecord[], Throwable> formRecordsUnsafeSupplier) {
+
+		try {
+			formRecords = (FormRecordImpl[])formRecordsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setFormRecordsIds(Long[] formRecordsIds) {
+		this.formRecordsIds = (Long[])formRecordsIds;
+	}
+
+	@JsonIgnore
+	public void setFormRecordsIds(
+		UnsafeSupplier<Long[], Throwable> formRecordsIdsUnsafeSupplier) {
+
+		try {
+			formRecordsIds = (Long[])formRecordsIdsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setStructure(FormStructure structure) {
+		this.structure = (FormStructureImpl)structure;
+	}
+
+	@JsonIgnore
+	public void setStructure(
+		UnsafeSupplier<FormStructure, Throwable> structureUnsafeSupplier) {
+
+		try {
+			structure = (FormStructureImpl)structureUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setStructureId(Long structureId) {
+		this.structureId = (Long)structureId;
+	}
+
+	@JsonIgnore
+	public void setStructureId(
+		UnsafeSupplier<Long, Throwable> structureIdUnsafeSupplier) {
+
+		try {
+			structureId = (Long)structureIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String[] availableLanguages;
-	public Long getContentSpace() {
-			return contentSpace;
-	}
-
-	public void setContentSpace(
-			Long contentSpace) {
-
-			this.contentSpace = (Long)contentSpace;
-	}
-
-	@JsonIgnore
-	public void setContentSpace(
-			UnsafeSupplier<Long, Throwable>
-				contentSpaceUnsafeSupplier) {
-
-			try {
-				contentSpace =
-					(Long)contentSpaceUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long contentSpace;
-	public Creator getCreator() {
-			return creator;
-	}
-
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = (CreatorImpl)creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
-
-			try {
-				creator =
-					(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected CreatorImpl creator;
-	public Date getDateCreated() {
-			return dateCreated;
-	}
-
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = (Date)dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
-
-			try {
-				dateCreated =
-					(Date)dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
-	public Date getDateModified() {
-			return dateModified;
-	}
-
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = (Date)dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
-
-			try {
-				dateModified =
-					(Date)dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
-	public Date getDatePublished() {
-			return datePublished;
-	}
-
-	public void setDatePublished(
-			Date datePublished) {
-
-			this.datePublished = (Date)datePublished;
-	}
-
-	@JsonIgnore
-	public void setDatePublished(
-			UnsafeSupplier<Date, Throwable>
-				datePublishedUnsafeSupplier) {
-
-			try {
-				datePublished =
-					(Date)datePublishedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date datePublished;
-	public String getDefaultLanguage() {
-			return defaultLanguage;
-	}
-
-	public void setDefaultLanguage(
-			String defaultLanguage) {
-
-			this.defaultLanguage = (String)defaultLanguage;
-	}
-
-	@JsonIgnore
-	public void setDefaultLanguage(
-			UnsafeSupplier<String, Throwable>
-				defaultLanguageUnsafeSupplier) {
-
-			try {
-				defaultLanguage =
-					(String)defaultLanguageUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String defaultLanguage;
-	public String getDescription() {
-			return description;
-	}
-
-	public void setDescription(
-			String description) {
-
-			this.description = (String)description;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier) {
-
-			try {
-				description =
-					(String)descriptionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String description;
-	public FormRecord[] getFormRecords() {
-			return formRecords;
-	}
-
-	public void setFormRecords(
-			FormRecord[] formRecords) {
-
-			this.formRecords = (FormRecordImpl[])formRecords;
-	}
-
-	@JsonIgnore
-	public void setFormRecords(
-			UnsafeSupplier<FormRecord[], Throwable>
-				formRecordsUnsafeSupplier) {
-
-			try {
-				formRecords =
-					(FormRecordImpl[])formRecordsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected FormRecordImpl[] formRecords;
-	public Long[] getFormRecordsIds() {
-			return formRecordsIds;
-	}
-
-	public void setFormRecordsIds(
-			Long[] formRecordsIds) {
-
-			this.formRecordsIds = (Long[])formRecordsIds;
-	}
-
-	@JsonIgnore
-	public void setFormRecordsIds(
-			UnsafeSupplier<Long[], Throwable>
-				formRecordsIdsUnsafeSupplier) {
-
-			try {
-				formRecordsIds =
-					(Long[])formRecordsIdsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long[] formRecordsIds;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public FormStructure getStructure() {
-			return structure;
-	}
-
-	public void setStructure(
-			FormStructure structure) {
-
-			this.structure = (FormStructureImpl)structure;
-	}
-
-	@JsonIgnore
-	public void setStructure(
-			UnsafeSupplier<FormStructure, Throwable>
-				structureUnsafeSupplier) {
-
-			try {
-				structure =
-					(FormStructureImpl)structureUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected FormStructureImpl structure;
-	public Long getStructureId() {
-			return structureId;
-	}
-
-	public void setStructureId(
-			Long structureId) {
-
-			this.structureId = (Long)structureId;
-	}
-
-	@JsonIgnore
-	public void setStructureId(
-			UnsafeSupplier<Long, Throwable>
-				structureIdUnsafeSupplier) {
-
-			try {
-				structureId =
-					(Long)structureIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

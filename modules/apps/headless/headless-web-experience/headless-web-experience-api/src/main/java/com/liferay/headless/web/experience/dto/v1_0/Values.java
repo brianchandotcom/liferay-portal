@@ -27,51 +27,40 @@ public interface Values {
 
 	public String getDataType();
 
-	public void setDataType(
-			String dataType);
-
-	public void setDataType(
-			UnsafeSupplier<String, Throwable>
-				dataTypeUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public String getInputControl();
 
-	public void setInputControl(
-			String inputControl);
-
-	public void setInputControl(
-			UnsafeSupplier<String, Throwable>
-				inputControlUnsafeSupplier);
 	public String getLabel();
 
-	public void setLabel(
-			String label);
-
-	public void setLabel(
-			UnsafeSupplier<String, Throwable>
-				labelUnsafeSupplier);
 	public String getName();
 
-	public void setName(
-			String name);
-
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
 	public Value getValue();
 
-	public void setValue(
-			Value value);
+	public void setDataType(String dataType);
 
-	public void setValue(
-			UnsafeSupplier<Value, Throwable>
-				valueUnsafeSupplier);
+	public void setDataType(
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setInputControl(String inputControl);
+
+	public void setInputControl(
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier);
+
+	public void setLabel(String label);
+
+	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
+
+	public void setName(String name);
+
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+
+	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier);
+
+	public void setValue(Value value);
 
 }

@@ -51,51 +51,55 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 
-	@Override
 	@GET
-	@Path("/form-records/{form-record-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public FormRecord getFormRecord(
-	@PathParam("form-record-id") Long formRecordId)
-			throws Exception {
-
-				return new FormRecordImpl();
-	}
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/form-records/{form-record-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public FormRecord putFormRecord(
-	@PathParam("form-record-id") Long formRecordId,FormRecord formRecord)
-			throws Exception {
-
-				return new FormRecordImpl();
-	}
-	@Override
-	@GET
 	@Path("/forms/{form-id}/form-records")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<FormRecord> getFormFormRecordsPage(
-	@PathParam("form-id") Long formId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("form-id") Long formId, @Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
+
+	@GET
 	@Override
+	@Path("/form-records/{form-record-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public FormRecord getFormRecord(
+			@PathParam("form-record-id") Long formRecordId)
+		throws Exception {
+
+		return new FormRecordImpl();
+	}
+
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/forms/{form-id}/form-records")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public FormRecord postFormFormRecord(
-	@PathParam("form-id") Long formId,FormRecord formRecord)
-			throws Exception {
+			@PathParam("form-id") Long formId, FormRecord formRecord)
+		throws Exception {
 
-				return new FormRecordImpl();
+		return new FormRecordImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/form-records/{form-record-id}")
+	@Produces("application/json")
+	@PUT
+	@RequiresScope("everything.read")
+	public FormRecord putFormRecord(
+			@PathParam("form-record-id") Long formRecordId,
+			FormRecord formRecord)
+		throws Exception {
+
+		return new FormRecordImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -115,10 +119,13 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -29,75 +29,63 @@ public interface ContentDocument {
 
 	public String getContentUrl();
 
-	public void setContentUrl(
-			String contentUrl);
-
-	public void setContentUrl(
-			UnsafeSupplier<String, Throwable>
-				contentUrlUnsafeSupplier);
 	public Creator getCreator();
 
-	public void setCreator(
-			Creator creator);
-
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier);
 	public Date getDateCreated();
 
-	public void setDateCreated(
-			Date dateCreated);
-
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier);
 	public Date getDateModified();
 
-	public void setDateModified(
-			Date dateModified);
-
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier);
 	public String getEncodingFormat();
 
-	public void setEncodingFormat(
-			String encodingFormat);
-
-	public void setEncodingFormat(
-			UnsafeSupplier<String, Throwable>
-				encodingFormatUnsafeSupplier);
 	public String getFileExtension();
 
-	public void setFileExtension(
-			String fileExtension);
-
-	public void setFileExtension(
-			UnsafeSupplier<String, Throwable>
-				fileExtensionUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public Number getSizeInBytes();
 
-	public void setSizeInBytes(
-			Number sizeInBytes);
-
-	public void setSizeInBytes(
-			UnsafeSupplier<Number, Throwable>
-				sizeInBytesUnsafeSupplier);
 	public String getTitle();
 
-	public void setTitle(
-			String title);
+	public void setContentUrl(String contentUrl);
 
-	public void setTitle(
-			UnsafeSupplier<String, Throwable>
-				titleUnsafeSupplier);
+	public void setContentUrl(
+		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier);
+
+	public void setCreator(Creator creator);
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
+
+	public void setDateCreated(Date dateCreated);
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+
+	public void setDateModified(Date dateModified);
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
+
+	public void setEncodingFormat(String encodingFormat);
+
+	public void setEncodingFormat(
+		UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier);
+
+	public void setFileExtension(String fileExtension);
+
+	public void setFileExtension(
+		UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setSizeInBytes(Number sizeInBytes);
+
+	public void setSizeInBytes(
+		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier);
+
+	public void setTitle(String title);
+
+	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
 
 }

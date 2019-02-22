@@ -62,137 +62,174 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostContentSpaceBlogPostingImage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteImageObject() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetImageObject() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetContentSpaceBlogPostingImagesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetImageObject() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostContentSpaceBlogPostingImage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteImageObject(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteImageObjectResponse(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<BlogPostingImage> invokeGetContentSpaceBlogPostingImagesPage(
-				Long contentSpaceId,Pagination pagination)
-			throws Exception {
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-posting-images",
+					contentSpaceId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetContentSpaceBlogPostingImagesPageResponse(
-				Long contentSpaceId,Pagination pagination)
-			throws Exception {
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-posting-images",
+					contentSpaceId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
+	protected BlogPostingImage invokeGetImageObject(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImageImpl.class);
+	}
+
+	protected Http.Response invokeGetImageObjectResponse(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected BlogPostingImage invokePostContentSpaceBlogPostingImage(
-				Long contentSpaceId,MultipartBody multipartBody)
-			throws Exception {
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-posting-images",
+					contentSpaceId));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), BlogPostingImageImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImageImpl.class);
 	}
 
 	protected Http.Response invokePostContentSpaceBlogPostingImageResponse(
-				Long contentSpaceId,MultipartBody multipartBody)
-			throws Exception {
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/blog-posting-images", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/blog-posting-images",
+					contentSpaceId));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected boolean invokeDeleteImageObject(
-				Long imageObjectId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/blog-posting-images/{image-object-id}", imageObjectId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
-	}
-
-	protected Http.Response invokeDeleteImageObjectResponse(
-				Long imageObjectId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/blog-posting-images/{image-object-id}", imageObjectId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected BlogPostingImage invokeGetImageObject(
-				Long imageObjectId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/blog-posting-images/{image-object-id}", imageObjectId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), BlogPostingImageImpl.class);
-	}
-
-	protected Http.Response invokeGetImageObjectResponse(
-				Long imageObjectId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/blog-posting-images/{image-object-id}", imageObjectId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected BlogPostingImage randomBlogPostingImage() {
 		return new BlogPostingImageImpl() {
 			{
 
-						contentUrl = RandomTestUtil.randomString();
-						encodingFormat = RandomTestUtil.randomString();
-						fileExtension = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						title = RandomTestUtil.randomString();
-	}
+				contentUrl = RandomTestUtil.randomString();
+				encodingFormat = RandomTestUtil.randomString();
+				fileExtension = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				title = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -200,144 +237,141 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 	protected static class BlogPostingImageImpl implements BlogPostingImage {
 
-	public String getContentUrl() {
-				return contentUrl;
-	}
+		public String getContentUrl() {
+			return contentUrl;
+		}
 
-	public void setContentUrl(String contentUrl) {
-				this.contentUrl = (String)contentUrl;
-	}
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
 
-	@JsonIgnore
-	public void setContentUrl(
-				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+		public String getFileExtension() {
+			return fileExtension;
+		}
 
-				try {
-					contentUrl =
-						(String)contentUrlUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonProperty
-	protected String contentUrl;
-	public String getEncodingFormat() {
-				return encodingFormat;
-	}
+		public Number getSizeInBytes() {
+			return sizeInBytes;
+		}
 
-	public void setEncodingFormat(String encodingFormat) {
-				this.encodingFormat = (String)encodingFormat;
-	}
+		public String getTitle() {
+			return title;
+		}
 
-	@JsonIgnore
-	public void setEncodingFormat(
-				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+		public void setContentUrl(String contentUrl) {
+			this.contentUrl = (String)contentUrl;
+		}
 
-				try {
-					encodingFormat =
-						(String)encodingFormatUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setContentUrl(
+			UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
-	@JsonProperty
-	protected String encodingFormat;
-	public String getFileExtension() {
-				return fileExtension;
-	}
+			try {
+				contentUrl = (String)contentUrlUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setFileExtension(String fileExtension) {
-				this.fileExtension = (String)fileExtension;
-	}
+		public void setEncodingFormat(String encodingFormat) {
+			this.encodingFormat = (String)encodingFormat;
+		}
 
-	@JsonIgnore
-	public void setFileExtension(
-				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+		@JsonIgnore
+		public void setEncodingFormat(
+			UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
-				try {
-					fileExtension =
-						(String)fileExtensionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				encodingFormat = (String)encodingFormatUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String fileExtension;
-	public Long getId() {
-				return id;
-	}
+		public void setFileExtension(String fileExtension) {
+			this.fileExtension = (String)fileExtension;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		@JsonIgnore
+		public void setFileExtension(
+			UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				fileExtension = (String)fileExtensionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public Number getSizeInBytes() {
-				return sizeInBytes;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setSizeInBytes(Number sizeInBytes) {
-				this.sizeInBytes = (Number)sizeInBytes;
-	}
+		public void setSizeInBytes(Number sizeInBytes) {
+			this.sizeInBytes = (Number)sizeInBytes;
+		}
 
-	@JsonIgnore
-	public void setSizeInBytes(
-				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+		@JsonIgnore
+		public void setSizeInBytes(
+			UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
-				try {
-					sizeInBytes =
-						(Number)sizeInBytesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				sizeInBytes = (Number)sizeInBytesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Number sizeInBytes;
-	public String getTitle() {
-				return title;
-	}
+		public void setTitle(String title) {
+			this.title = (String)title;
+		}
 
-	public void setTitle(String title) {
-				this.title = (String)title;
-	}
+		@JsonIgnore
+		public void setTitle(
+			UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setTitle(
-				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+			try {
+				title = (String)titleUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					title =
-						(String)titleUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String contentUrl;
 
-	@JsonProperty
-	protected String title;
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String fileExtension;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Number sizeInBytes;
+
+		@JsonProperty
+		protected String title;
 
 	}
 
@@ -348,9 +382,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -361,12 +397,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

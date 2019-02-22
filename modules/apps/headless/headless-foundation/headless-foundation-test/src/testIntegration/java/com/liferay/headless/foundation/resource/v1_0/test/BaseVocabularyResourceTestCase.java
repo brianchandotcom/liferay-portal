@@ -24,6 +24,7 @@ import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.VocabularyImpl;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -69,178 +69,228 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceVocabulariesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostContentSpaceVocabulary() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteVocabulary() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetVocabulary() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPutVocabulary() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetContentSpaceVocabulariesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetVocabulary() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostContentSpaceVocabulary() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPutVocabulary() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteVocabulary(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteVocabularyResponse(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<Vocabulary> invokeGetContentSpaceVocabulariesPage(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetContentSpaceVocabulariesPageResponse(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception {
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
+	protected Vocabulary invokeGetVocabulary(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), VocabularyImpl.class);
+	}
+
+	protected Http.Response invokeGetVocabularyResponse(Long vocabularyId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Vocabulary invokePostContentSpaceVocabulary(
-				Long contentSpaceId,Vocabulary vocabulary)
-			throws Exception {
+			Long contentSpaceId, Vocabulary vocabulary)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId));
 
-				options.setPost(true);
+		options.setPost(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), VocabularyImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), VocabularyImpl.class);
 	}
 
 	protected Http.Response invokePostContentSpaceVocabularyResponse(
-				Long contentSpaceId,Vocabulary vocabulary)
-			throws Exception {
+			Long contentSpaceId, Vocabulary vocabulary)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/vocabularies", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/vocabularies",
+					contentSpaceId));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected boolean invokeDeleteVocabulary(
-				Long vocabularyId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeDeleteVocabularyResponse(
-				Long vocabularyId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected Vocabulary invokeGetVocabulary(
-				Long vocabularyId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), VocabularyImpl.class);
-	}
-
-	protected Http.Response invokeGetVocabularyResponse(
-				Long vocabularyId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
 	protected Vocabulary invokePutVocabulary(
-				Long vocabularyId,Vocabulary vocabulary)
-			throws Exception {
+			Long vocabularyId, Vocabulary vocabulary)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
 
-				options.setPut(true);
+		options.setPut(true);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), VocabularyImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), VocabularyImpl.class);
 	}
 
 	protected Http.Response invokePutVocabularyResponse(
-				Long vocabularyId,Vocabulary vocabulary)
-			throws Exception {
+			Long vocabularyId, Vocabulary vocabulary)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(vocabulary), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(vocabulary),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/vocabularies/{vocabulary-id}", vocabularyId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/vocabularies/{vocabulary-id}", vocabularyId));
 
-				options.setPut(true);
+		options.setPut(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Vocabulary randomVocabulary() {
 		return new VocabularyImpl() {
 			{
 
-						contentSpace = RandomTestUtil.randomLong();
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = RandomTestUtil.randomString();
-						hasCategories = RandomTestUtil.randomBoolean();
-						id = RandomTestUtil.randomLong();
-						name = RandomTestUtil.randomString();
-	}
+				contentSpace = RandomTestUtil.randomLong();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				hasCategories = RandomTestUtil.randomBoolean();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -248,213 +298,212 @@ public abstract class BaseVocabularyResourceTestCase {
 
 	protected static class VocabularyImpl implements Vocabulary {
 
-	public String[] getAvailableLanguages() {
-				return availableLanguages;
-	}
+		public String[] getAvailableLanguages() {
+			return availableLanguages;
+		}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = (String[])availableLanguages;
-	}
+		public Long getContentSpace() {
+			return contentSpace;
+		}
 
-	@JsonIgnore
-	public void setAvailableLanguages(
-				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+		public Creator getCreator() {
+			return creator;
+		}
 
-				try {
-					availableLanguages =
-						(String[])availableLanguagesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-	@JsonProperty
-	protected String[] availableLanguages;
-	public Long getContentSpace() {
-				return contentSpace;
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = (Long)contentSpace;
-	}
+		public String getDescription() {
+			return description;
+		}
 
-	@JsonIgnore
-	public void setContentSpace(
-				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+		public Boolean getHasCategories() {
+			return hasCategories;
+		}
 
-				try {
-					contentSpace =
-						(Long)contentSpaceUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonProperty
-	protected Long contentSpace;
-	public Creator getCreator() {
-				return creator;
-	}
+		public String getName() {
+			return name;
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = (CreatorImpl)creator;
-	}
+		public void setAvailableLanguages(String[] availableLanguages) {
+			this.availableLanguages = (String[])availableLanguages;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		@JsonIgnore
+		public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
 
-				try {
-					creator =
-						(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				availableLanguages =
+					(String[])availableLanguagesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected CreatorImpl creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+		public void setContentSpace(Long contentSpace) {
+			this.contentSpace = (Long)contentSpace;
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = (Date)dateCreated;
-	}
+		@JsonIgnore
+		public void setContentSpace(
+			UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+			try {
+				contentSpace = (Long)contentSpaceUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					dateCreated =
-						(Date)dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setCreator(Creator creator) {
+			this.creator = (CreatorImpl)creator;
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = (Date)dateModified;
-	}
+			try {
+				creator = (CreatorImpl)creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = (Date)dateCreated;
+		}
 
-				try {
-					dateModified =
-						(Date)dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	@JsonProperty
-	protected Date dateModified;
-	public String getDescription() {
-				return description;
-	}
+			try {
+				dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDescription(String description) {
-				this.description = (String)description;
-	}
+		public void setDateModified(Date dateModified) {
+			this.dateModified = (Date)dateModified;
+		}
 
-	@JsonIgnore
-	public void setDescription(
-				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-				try {
-					description =
-						(String)descriptionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				dateModified = (Date)dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String description;
-	public Boolean getHasCategories() {
-				return hasCategories;
-	}
+		public void setDescription(String description) {
+			this.description = (String)description;
+		}
 
-	public void setHasCategories(Boolean hasCategories) {
-				this.hasCategories = (Boolean)hasCategories;
-	}
+		@JsonIgnore
+		public void setDescription(
+			UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setHasCategories(
-				UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+			try {
+				description = (String)descriptionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					hasCategories =
-						(Boolean)hasCategoriesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setHasCategories(Boolean hasCategories) {
+			this.hasCategories = (Boolean)hasCategories;
+		}
 
-	@JsonProperty
-	protected Boolean hasCategories;
-	public Long getId() {
-				return id;
-	}
+		@JsonIgnore
+		public void setHasCategories(
+			UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+			try {
+				hasCategories = (Boolean)hasCategoriesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getName() {
-				return name;
-	}
+		public void setName(String name) {
+			this.name = (String)name;
+		}
 
-	public void setName(String name) {
-				this.name = (String)name;
-	}
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+			try {
+				name = (String)nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					name =
-						(String)nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String[] availableLanguages;
 
-	@JsonProperty
-	protected String name;
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected CreatorImpl creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Boolean hasCategories;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String name;
 
 	}
 
@@ -465,9 +514,11 @@ public abstract class BaseVocabularyResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -478,12 +529,12 @@ public abstract class BaseVocabularyResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

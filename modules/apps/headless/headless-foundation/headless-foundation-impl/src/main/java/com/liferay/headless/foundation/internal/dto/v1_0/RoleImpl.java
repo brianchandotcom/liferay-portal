@@ -40,217 +40,189 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RoleImpl implements Role {
 
 	public String[] getAvailableLanguages() {
-			return availableLanguages;
+		return availableLanguages;
 	}
 
-	public void setAvailableLanguages(
-			String[] availableLanguages) {
+	public Creator getCreator() {
+		return creator;
+	}
 
-			this.availableLanguages = (String[])availableLanguages;
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
 	public void setAvailableLanguages(
-			UnsafeSupplier<String[], Throwable>
-				availableLanguagesUnsafeSupplier) {
+		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-			try {
-				availableLanguages =
-					(String[])availableLanguagesUnsafeSupplier.get();
+		try {
+			availableLanguages =
+				(String[])availableLanguagesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setCreator(Creator creator) {
+		this.creator = (CreatorImpl)creator;
 	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
+		try {
+			creator = (CreatorImpl)creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = (Date)dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = (Date)dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = (Date)dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDescription(String description) {
+		this.description = (String)description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
+		try {
+			description = (String)descriptionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = (String)roleType;
+	}
+
+	@JsonIgnore
+	public void setRoleType(
+		UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
+
+		try {
+			roleType = (String)roleTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String[] availableLanguages;
-	public Creator getCreator() {
-			return creator;
-	}
-
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = (CreatorImpl)creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
-
-			try {
-				creator =
-					(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected CreatorImpl creator;
-	public Date getDateCreated() {
-			return dateCreated;
-	}
-
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = (Date)dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
-
-			try {
-				dateCreated =
-					(Date)dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
-	public Date getDateModified() {
-			return dateModified;
-	}
-
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = (Date)dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
-
-			try {
-				dateModified =
-					(Date)dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
-	public String getDescription() {
-			return description;
-	}
-
-	public void setDescription(
-			String description) {
-
-			this.description = (String)description;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier) {
-
-			try {
-				description =
-					(String)descriptionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String description;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public String getRoleType() {
-			return roleType;
-	}
-
-	public void setRoleType(
-			String roleType) {
-
-			this.roleType = (String)roleType;
-	}
-
-	@JsonIgnore
-	public void setRoleType(
-			UnsafeSupplier<String, Throwable>
-				roleTypeUnsafeSupplier) {
-
-			try {
-				roleType =
-					(String)roleTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

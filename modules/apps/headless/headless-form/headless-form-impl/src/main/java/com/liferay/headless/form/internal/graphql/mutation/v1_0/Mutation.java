@@ -33,58 +33,68 @@ import javax.annotation.Generated;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteFormDocument(
+			@GraphQLName("form-document-id") Long formDocumentId)
+		throws Exception {
+
+		return (boolean)_getFormDocumentResourceImpl().deleteFormDocument(
+			formDocumentId);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormImpl postFormEvaluateContext(
-	@GraphQLName("form-id") Long formId,@GraphQLName("Form") FormImpl formImpl)
-			throws Exception {
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("Form") FormImpl formImpl)
+		throws Exception {
 
-				return (FormImpl)_getFormResourceImpl().postFormEvaluateContext(
-					formId,formImpl);
+		return (FormImpl)_getFormResourceImpl().postFormEvaluateContext(
+			formId, formImpl);
 	}
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormImpl postFormUploadFile(
-	@GraphQLName("form-id") Long formId,@GraphQLName("Form") FormImpl formImpl)
-			throws Exception {
 
-				return (FormImpl)_getFormResourceImpl().postFormUploadFile(
-					formId,formImpl);
-	}
-	@GraphQLInvokeDetached
-	public boolean deleteFormDocument(
-	@GraphQLName("form-document-id") Long formDocumentId)
-			throws Exception {
-
-				return (boolean)_getFormDocumentResourceImpl().deleteFormDocument(
-					formDocumentId);
-	}
-	@GraphQLInvokeDetached
-	public FormRecordImpl putFormRecord(
-	@GraphQLName("form-record-id") Long formRecordId,@GraphQLName("FormRecord") FormRecordImpl formRecordImpl)
-			throws Exception {
-
-				return (FormRecordImpl)_getFormRecordResourceImpl().putFormRecord(
-					formRecordId,formRecordImpl);
-	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecordImpl postFormFormRecord(
-	@GraphQLName("form-id") Long formId,@GraphQLName("FormRecord") FormRecordImpl formRecordImpl)
-			throws Exception {
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("FormRecord") FormRecordImpl formRecordImpl)
+		throws Exception {
 
-				return (FormRecordImpl)_getFormRecordResourceImpl().postFormFormRecord(
-					formId,formRecordImpl);
+		return (FormRecordImpl)_getFormRecordResourceImpl().postFormFormRecord(
+			formId, formRecordImpl);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormImpl postFormUploadFile(
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("Form") FormImpl formImpl)
+		throws Exception {
+
+		return (FormImpl)_getFormResourceImpl().postFormUploadFile(
+			formId, formImpl);
+	}
+
+	@GraphQLInvokeDetached
+	public FormRecordImpl putFormRecord(
+			@GraphQLName("form-record-id") Long formRecordId,
+			@GraphQLName("FormRecord") FormRecordImpl formRecordImpl)
+		throws Exception {
+
+		return (FormRecordImpl)_getFormRecordResourceImpl().putFormRecord(
+			formRecordId, formRecordImpl);
+	}
+
+	private static FormDocumentResourceImpl _getFormDocumentResourceImpl() {
+		return new FormDocumentResourceImpl();
+	}
+
+	private static FormRecordResourceImpl _getFormRecordResourceImpl() {
+		return new FormRecordResourceImpl();
 	}
 
 	private static FormResourceImpl _getFormResourceImpl() {
-			return new FormResourceImpl();
-	}
-	private static FormDocumentResourceImpl _getFormDocumentResourceImpl() {
-			return new FormDocumentResourceImpl();
-	}
-	private static FormRecordResourceImpl _getFormRecordResourceImpl() {
-			return new FormRecordResourceImpl();
+		return new FormResourceImpl();
 	}
 
 }

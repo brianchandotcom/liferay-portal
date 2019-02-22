@@ -27,27 +27,22 @@ public interface Validation {
 
 	public String getErrorMessage();
 
-	public void setErrorMessage(
-			String errorMessage);
-
-	public void setErrorMessage(
-			UnsafeSupplier<String, Throwable>
-				errorMessageUnsafeSupplier);
 	public String getExpression();
 
-	public void setExpression(
-			String expression);
-
-	public void setExpression(
-			UnsafeSupplier<String, Throwable>
-				expressionUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
+	public void setErrorMessage(String errorMessage);
 
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
+	public void setErrorMessage(
+		UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier);
+
+	public void setExpression(String expression);
+
+	public void setExpression(
+		UnsafeSupplier<String, Throwable> expressionUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 
 }

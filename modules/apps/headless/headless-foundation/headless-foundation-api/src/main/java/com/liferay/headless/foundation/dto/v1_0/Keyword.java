@@ -29,59 +29,49 @@ public interface Keyword {
 
 	public Long getContentSpace();
 
-	public void setContentSpace(
-			Long contentSpace);
-
-	public void setContentSpace(
-			UnsafeSupplier<Long, Throwable>
-				contentSpaceUnsafeSupplier);
 	public Creator getCreator();
 
-	public void setCreator(
-			Creator creator);
-
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier);
 	public Date getDateCreated();
 
-	public void setDateCreated(
-			Date dateCreated);
-
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier);
 	public Date getDateModified();
 
-	public void setDateModified(
-			Date dateModified);
-
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public Number getKeywordUsageCount();
 
-	public void setKeywordUsageCount(
-			Number keywordUsageCount);
-
-	public void setKeywordUsageCount(
-			UnsafeSupplier<Number, Throwable>
-				keywordUsageCountUnsafeSupplier);
 	public String getName();
 
-	public void setName(
-			String name);
+	public void setContentSpace(Long contentSpace);
 
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
+	public void setContentSpace(
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier);
+
+	public void setCreator(Creator creator);
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier);
+
+	public void setDateCreated(Date dateCreated);
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+
+	public void setDateModified(Date dateModified);
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setKeywordUsageCount(Number keywordUsageCount);
+
+	public void setKeywordUsageCount(
+		UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier);
+
+	public void setName(String name);
+
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
 
 }

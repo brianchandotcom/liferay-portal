@@ -27,27 +27,22 @@ public interface Location {
 
 	public String getAddressCountry();
 
-	public void setAddressCountry(
-			String addressCountry);
-
-	public void setAddressCountry(
-			UnsafeSupplier<String, Throwable>
-				addressCountryUnsafeSupplier);
 	public String getAddressRegion();
 
-	public void setAddressRegion(
-			String addressRegion);
-
-	public void setAddressRegion(
-			UnsafeSupplier<String, Throwable>
-				addressRegionUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
+	public void setAddressCountry(String addressCountry);
 
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
+	public void setAddressCountry(
+		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier);
+
+	public void setAddressRegion(String addressRegion);
+
+	public void setAddressRegion(
+		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
 
 }

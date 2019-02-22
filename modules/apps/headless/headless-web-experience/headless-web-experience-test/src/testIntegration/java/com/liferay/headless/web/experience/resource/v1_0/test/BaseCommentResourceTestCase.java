@@ -67,101 +67,121 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testGetComment() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetCommentCommentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetStructuredContentCommentsPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected Comment invokeGetComment(
-				Long commentId)
-			throws Exception {
+	protected Comment invokeGetComment(Long commentId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CommentImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CommentImpl.class);
 	}
 
-	protected Http.Response invokeGetCommentResponse(
-				Long commentId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
 	protected Page<Comment> invokeGetCommentCommentsPage(
-				Long commentId,Pagination pagination)
-			throws Exception {
+			Long commentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/comments/{comment-id}/comments", commentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetCommentCommentsPageResponse(
-				Long commentId,Pagination pagination)
-			throws Exception {
+			Long commentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/comments/{comment-id}/comments", commentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
+	protected Http.Response invokeGetCommentResponse(Long commentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Page<Comment> invokeGetStructuredContentCommentsPage(
-				Long structuredContentId,Pagination pagination)
-			throws Exception {
+			Long structuredContentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/comments", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/comments",
+					structuredContentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetStructuredContentCommentsPageResponse(
-				Long structuredContentId,Pagination pagination)
-			throws Exception {
+			Long structuredContentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/comments", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/comments",
+					structuredContentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Comment randomComment() {
 		return new CommentImpl() {
 			{
 
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						hasComments = RandomTestUtil.randomBoolean();
-						id = RandomTestUtil.randomLong();
-						text = RandomTestUtil.randomString();
-	}
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				hasComments = RandomTestUtil.randomBoolean();
+				id = RandomTestUtil.randomLong();
+				text = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -169,167 +189,164 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected static class CommentImpl implements Comment {
 
-	public Comment[] getComments() {
-				return comments;
-	}
+		public Comment[] getComments() {
+			return comments;
+		}
 
-	public void setComments(Comment[] comments) {
-				this.comments = (CommentImpl[])comments;
-	}
+		public Creator getCreator() {
+			return creator;
+		}
 
-	@JsonIgnore
-	public void setComments(
-				UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					comments =
-						(CommentImpl[])commentsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	@JsonProperty
-	protected CommentImpl[] comments;
-	public Creator getCreator() {
-				return creator;
-	}
+		public Boolean getHasComments() {
+			return hasComments;
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = (CreatorImpl)creator;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public String getText() {
+			return text;
+		}
 
-				try {
-					creator =
-						(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setComments(Comment[] comments) {
+			this.comments = (CommentImpl[])comments;
+		}
 
-	@JsonProperty
-	protected CreatorImpl creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+		@JsonIgnore
+		public void setComments(
+			UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = (Date)dateCreated;
-	}
+			try {
+				comments = (CommentImpl[])commentsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		public void setCreator(Creator creator) {
+			this.creator = (CreatorImpl)creator;
+		}
 
-				try {
-					dateCreated =
-						(Date)dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+			try {
+				creator = (CreatorImpl)creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = (Date)dateModified;
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = (Date)dateCreated;
+		}
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-				try {
-					dateModified =
-						(Date)dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Date dateModified;
-	public Boolean getHasComments() {
-				return hasComments;
-	}
+		public void setDateModified(Date dateModified) {
+			this.dateModified = (Date)dateModified;
+		}
 
-	public void setHasComments(Boolean hasComments) {
-				this.hasComments = (Boolean)hasComments;
-	}
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setHasComments(
-				UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+			try {
+				dateModified = (Date)dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					hasComments =
-						(Boolean)hasCommentsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setHasComments(Boolean hasComments) {
+			this.hasComments = (Boolean)hasComments;
+		}
 
-	@JsonProperty
-	protected Boolean hasComments;
-	public Long getId() {
-				return id;
-	}
+		@JsonIgnore
+		public void setHasComments(
+			UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+			try {
+				hasComments = (Boolean)hasCommentsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getText() {
-				return text;
-	}
+		public void setText(String text) {
+			this.text = (String)text;
+		}
 
-	public void setText(String text) {
-				this.text = (String)text;
-	}
+		@JsonIgnore
+		public void setText(
+			UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setText(
-				UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+			try {
+				text = (String)textUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					text =
-						(String)textUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected CommentImpl[] comments;
 
-	@JsonProperty
-	protected String text;
+		@JsonProperty
+		protected CreatorImpl creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Boolean hasComments;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String text;
 
 	}
 
@@ -340,9 +357,11 @@ public abstract class BaseCommentResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -353,12 +372,12 @@ public abstract class BaseCommentResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

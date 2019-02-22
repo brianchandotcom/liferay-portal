@@ -29,99 +29,84 @@ public interface WorkflowTask {
 
 	public Boolean getCompleted();
 
-	public void setCompleted(
-			Boolean completed);
-
-	public void setCompleted(
-			UnsafeSupplier<Boolean, Throwable>
-				completedUnsafeSupplier);
 	public Date getDateCompleted();
 
-	public void setDateCompleted(
-			Date dateCompleted);
-
-	public void setDateCompleted(
-			UnsafeSupplier<Date, Throwable>
-				dateCompletedUnsafeSupplier);
 	public Date getDateCreated();
 
-	public void setDateCreated(
-			Date dateCreated);
-
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier);
 	public String getDefinitionName();
 
-	public void setDefinitionName(
-			String definitionName);
-
-	public void setDefinitionName(
-			UnsafeSupplier<String, Throwable>
-				definitionNameUnsafeSupplier);
 	public String getDescription();
 
-	public void setDescription(
-			String description);
-
-	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier);
 	public Date getDueDate();
 
-	public void setDueDate(
-			Date dueDate);
-
-	public void setDueDate(
-			UnsafeSupplier<Date, Throwable>
-				dueDateUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public WorkflowLog[] getLogs();
 
-	public void setLogs(
-			WorkflowLog[] logs);
-
-	public void setLogs(
-			UnsafeSupplier<WorkflowLog[], Throwable>
-				logsUnsafeSupplier);
 	public Long[] getLogsIds();
 
-	public void setLogsIds(
-			Long[] logsIds);
-
-	public void setLogsIds(
-			UnsafeSupplier<Long[], Throwable>
-				logsIdsUnsafeSupplier);
 	public String getName();
 
-	public void setName(
-			String name);
-
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
 	public ObjectReviewed getObjectReviewed();
 
-	public void setObjectReviewed(
-			ObjectReviewed objectReviewed);
-
-	public void setObjectReviewed(
-			UnsafeSupplier<ObjectReviewed, Throwable>
-				objectReviewedUnsafeSupplier);
 	public String[] getTransitions();
 
-	public void setTransitions(
-			String[] transitions);
+	public void setCompleted(Boolean completed);
+
+	public void setCompleted(
+		UnsafeSupplier<Boolean, Throwable> completedUnsafeSupplier);
+
+	public void setDateCompleted(Date dateCompleted);
+
+	public void setDateCompleted(
+		UnsafeSupplier<Date, Throwable> dateCompletedUnsafeSupplier);
+
+	public void setDateCreated(Date dateCreated);
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+
+	public void setDefinitionName(String definitionName);
+
+	public void setDefinitionName(
+		UnsafeSupplier<String, Throwable> definitionNameUnsafeSupplier);
+
+	public void setDescription(String description);
+
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier);
+
+	public void setDueDate(Date dueDate);
+
+	public void setDueDate(
+		UnsafeSupplier<Date, Throwable> dueDateUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setLogs(
+		UnsafeSupplier<WorkflowLog[], Throwable> logsUnsafeSupplier);
+
+	public void setLogs(WorkflowLog[] logs);
+
+	public void setLogsIds(Long[] logsIds);
+
+	public void setLogsIds(
+		UnsafeSupplier<Long[], Throwable> logsIdsUnsafeSupplier);
+
+	public void setName(String name);
+
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+
+	public void setObjectReviewed(ObjectReviewed objectReviewed);
+
+	public void setObjectReviewed(
+		UnsafeSupplier<ObjectReviewed, Throwable> objectReviewedUnsafeSupplier);
+
+	public void setTransitions(String[] transitions);
 
 	public void setTransitions(
-			UnsafeSupplier<String[], Throwable>
-				transitionsUnsafeSupplier);
+		UnsafeSupplier<String[], Throwable> transitionsUnsafeSupplier);
 
 }

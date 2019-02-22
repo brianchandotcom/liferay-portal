@@ -37,82 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ValidationImpl implements Validation {
 
 	public String getErrorMessage() {
-			return errorMessage;
+		return errorMessage;
 	}
 
-	public void setErrorMessage(
-			String errorMessage) {
+	public String getExpression() {
+		return expression;
+	}
 
-			this.errorMessage = (String)errorMessage;
+	public Long getId() {
+		return id;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = (String)errorMessage;
 	}
 
 	@JsonIgnore
 	public void setErrorMessage(
-			UnsafeSupplier<String, Throwable>
-				errorMessageUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> errorMessageUnsafeSupplier) {
 
-			try {
-				errorMessage =
-					(String)errorMessageUnsafeSupplier.get();
+		try {
+			errorMessage = (String)errorMessageUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setExpression(String expression) {
+		this.expression = (String)expression;
 	}
+
+	@JsonIgnore
+	public void setExpression(
+		UnsafeSupplier<String, Throwable> expressionUnsafeSupplier) {
+
+		try {
+			expression = (String)expressionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String errorMessage;
-	public String getExpression() {
-			return expression;
-	}
-
-	public void setExpression(
-			String expression) {
-
-			this.expression = (String)expression;
-	}
-
-	@JsonIgnore
-	public void setExpression(
-			UnsafeSupplier<String, Throwable>
-				expressionUnsafeSupplier) {
-
-			try {
-				expression =
-					(String)expressionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String expression;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

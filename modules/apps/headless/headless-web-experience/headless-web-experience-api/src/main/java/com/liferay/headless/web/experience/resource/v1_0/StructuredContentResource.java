@@ -34,30 +34,38 @@ import javax.annotation.Generated;
 @Generated("")
 public interface StructuredContentResource {
 
-	public Page<StructuredContent> getContentSpaceContentStructureStructuredContentsPage(
-				Long contentSpaceId,Long contentStructureId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception;
+	public boolean deleteStructuredContent(Long structuredContentId)
+		throws Exception;
+
+	public Page<StructuredContent>
+			getContentSpaceContentStructureStructuredContentsPage(
+				Long contentSpaceId, Long contentStructureId, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception;
-	public StructuredContent postContentSpaceStructuredContent(
-				Long contentSpaceId,StructuredContent structuredContent)
-			throws Exception;
-	public boolean deleteStructuredContent(
-				Long structuredContentId)
-			throws Exception;
-	public StructuredContent getStructuredContent(
-				Long structuredContentId)
-			throws Exception;
-	public StructuredContent patchStructuredContent(
-				Long structuredContentId,StructuredContent structuredContent)
-			throws Exception;
-	public StructuredContent putStructuredContent(
-				Long structuredContentId,StructuredContent structuredContent)
-			throws Exception;
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public StructuredContent getStructuredContent(Long structuredContentId)
+		throws Exception;
+
 	public String getStructuredContentTemplate(
-				Long structuredContentId,Long templateId)
-			throws Exception;
+			Long structuredContentId, Long templateId)
+		throws Exception;
+
+	public StructuredContent patchStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception;
+
+	public StructuredContent postContentSpaceStructuredContent(
+			Long contentSpaceId, StructuredContent structuredContent)
+		throws Exception;
+
+	public StructuredContent putStructuredContent(
+			Long structuredContentId, StructuredContent structuredContent)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

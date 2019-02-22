@@ -27,27 +27,20 @@ public interface Options {
 
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public String getLabel();
 
-	public void setLabel(
-			String label);
-
-	public void setLabel(
-			UnsafeSupplier<String, Throwable>
-				labelUnsafeSupplier);
 	public String getValue();
 
-	public void setValue(
-			String value);
+	public void setId(Long id);
 
-	public void setValue(
-			UnsafeSupplier<String, Throwable>
-				valueUnsafeSupplier);
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setLabel(String label);
+
+	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
+
+	public void setValue(String value);
+
+	public void setValue(UnsafeSupplier<String, Throwable> valueUnsafeSupplier);
 
 }

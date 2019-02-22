@@ -46,62 +46,70 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseOrganizationResourceImpl implements OrganizationResource {
+public abstract class BaseOrganizationResourceImpl
+	implements OrganizationResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-	@PathParam("my-user-account-id") Long myUserAccountId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("my-user-account-id") Long myUserAccountId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
-	@GET
-	@Path("/organizations")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<Organization> getOrganizationsPage(
-	@Context Pagination pagination)
-			throws Exception {
 
-				return Page.of(Collections.emptyList());
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/organizations/{organization-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Organization getOrganization(
-	@PathParam("organization-id") Long organizationId)
-			throws Exception {
+			@PathParam("organization-id") Long organizationId)
+		throws Exception {
 
-				return new OrganizationImpl();
+		return new OrganizationImpl();
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/organizations/{organization-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Organization> getOrganizationOrganizationsPage(
-	@PathParam("organization-id") Long organizationId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("organization-id") Long organizationId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@GET
+	@Override
+	@Path("/organizations")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<Organization> getOrganizationsPage(
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Override
 	@Path("/user-accounts/{user-account-id}/organizations")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Organization> getUserAccountOrganizationsPage(
-	@PathParam("user-account-id") Long userAccountId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -121,10 +129,13 @@ public abstract class BaseOrganizationResourceImpl implements OrganizationResour
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

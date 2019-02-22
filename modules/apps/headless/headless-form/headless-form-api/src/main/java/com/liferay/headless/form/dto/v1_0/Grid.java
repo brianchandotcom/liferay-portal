@@ -27,27 +27,21 @@ public interface Grid {
 
 	public Columns[] getColumns();
 
-	public void setColumns(
-			Columns[] columns);
-
-	public void setColumns(
-			UnsafeSupplier<Columns[], Throwable>
-				columnsUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public Rows[] getRows();
 
-	public void setRows(
-			Rows[] rows);
+	public void setColumns(Columns[] columns);
 
-	public void setRows(
-			UnsafeSupplier<Rows[], Throwable>
-				rowsUnsafeSupplier);
+	public void setColumns(
+		UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setRows(Rows[] rows);
+
+	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier);
 
 }

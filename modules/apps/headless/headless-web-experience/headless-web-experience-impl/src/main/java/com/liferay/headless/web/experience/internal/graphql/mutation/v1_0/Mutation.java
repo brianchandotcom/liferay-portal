@@ -31,53 +31,76 @@ import javax.annotation.Generated;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId)
+		throws Exception {
+
+		return (boolean)
+			_getStructuredContentResourceImpl().deleteStructuredContent(
+				structuredContentId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteStructuredContentContentDocument(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("content-document-id") Long contentDocumentId)
+		throws Exception {
+
+		return (boolean)
+			_getStructuredContentImageResourceImpl().
+				deleteStructuredContentContentDocument(
+					structuredContentId, contentDocumentId);
+	}
+
+	@GraphQLInvokeDetached
+	public StructuredContentImpl patchStructuredContent(
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContentImpl
+				structuredContentImpl)
+		throws Exception {
+
+		return (StructuredContentImpl)
+			_getStructuredContentResourceImpl().patchStructuredContent(
+				structuredContentId, structuredContentImpl);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public StructuredContentImpl postContentSpaceStructuredContent(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("StructuredContent") StructuredContentImpl structuredContentImpl)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("StructuredContent") StructuredContentImpl
+				structuredContentImpl)
+		throws Exception {
 
-				return (StructuredContentImpl)_getStructuredContentResourceImpl().postContentSpaceStructuredContent(
-					contentSpaceId,structuredContentImpl);
+		return (StructuredContentImpl)
+			_getStructuredContentResourceImpl().
+				postContentSpaceStructuredContent(
+					contentSpaceId, structuredContentImpl);
 	}
-	@GraphQLInvokeDetached
-	public boolean deleteStructuredContent(
-	@GraphQLName("structured-content-id") Long structuredContentId)
-			throws Exception {
 
-				return (boolean)_getStructuredContentResourceImpl().deleteStructuredContent(
-					structuredContentId);
-	}
-	@GraphQLInvokeDetached
-	public StructuredContentImpl patchStructuredContent(
-	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("StructuredContent") StructuredContentImpl structuredContentImpl)
-			throws Exception {
-
-				return (StructuredContentImpl)_getStructuredContentResourceImpl().patchStructuredContent(
-					structuredContentId,structuredContentImpl);
-	}
 	@GraphQLInvokeDetached
 	public StructuredContentImpl putStructuredContent(
-	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("StructuredContent") StructuredContentImpl structuredContentImpl)
-			throws Exception {
+			@GraphQLName("structured-content-id") Long structuredContentId,
+			@GraphQLName("StructuredContent") StructuredContentImpl
+				structuredContentImpl)
+		throws Exception {
 
-				return (StructuredContentImpl)_getStructuredContentResourceImpl().putStructuredContent(
-					structuredContentId,structuredContentImpl);
-	}
-	@GraphQLInvokeDetached
-	public boolean deleteStructuredContentContentDocument(
-	@GraphQLName("structured-content-id") Long structuredContentId,@GraphQLName("content-document-id") Long contentDocumentId)
-			throws Exception {
-
-				return (boolean)_getStructuredContentImageResourceImpl().deleteStructuredContentContentDocument(
-					structuredContentId,contentDocumentId);
+		return (StructuredContentImpl)
+			_getStructuredContentResourceImpl().putStructuredContent(
+				structuredContentId, structuredContentImpl);
 	}
 
-	private static StructuredContentResourceImpl _getStructuredContentResourceImpl() {
-			return new StructuredContentResourceImpl();
+	private static StructuredContentImageResourceImpl
+		_getStructuredContentImageResourceImpl() {
+
+		return new StructuredContentImageResourceImpl();
 	}
-	private static StructuredContentImageResourceImpl _getStructuredContentImageResourceImpl() {
-			return new StructuredContentImageResourceImpl();
+
+	private static StructuredContentResourceImpl
+		_getStructuredContentResourceImpl() {
+
+		return new StructuredContentResourceImpl();
 	}
 
 }

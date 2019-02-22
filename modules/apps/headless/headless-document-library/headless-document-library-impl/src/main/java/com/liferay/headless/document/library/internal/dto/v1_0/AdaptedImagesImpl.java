@@ -37,163 +37,142 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AdaptedImagesImpl implements AdaptedImages {
 
 	public String getContentUrl() {
-			return contentUrl;
+		return contentUrl;
 	}
 
-	public void setContentUrl(
-			String contentUrl) {
+	public Number getHeight() {
+		return height;
+	}
 
-			this.contentUrl = (String)contentUrl;
+	public Long getId() {
+		return id;
+	}
+
+	public String getResolutionName() {
+		return resolutionName;
+	}
+
+	public Number getSizeInBytes() {
+		return sizeInBytes;
+	}
+
+	public Number getWidth() {
+		return width;
+	}
+
+	public void setContentUrl(String contentUrl) {
+		this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
 	public void setContentUrl(
-			UnsafeSupplier<String, Throwable>
-				contentUrlUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
-			try {
-				contentUrl =
-					(String)contentUrlUnsafeSupplier.get();
+		try {
+			contentUrl = (String)contentUrlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setHeight(Number height) {
+		this.height = (Number)height;
 	}
+
+	@JsonIgnore
+	public void setHeight(
+		UnsafeSupplier<Number, Throwable> heightUnsafeSupplier) {
+
+		try {
+			height = (Number)heightUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setResolutionName(String resolutionName) {
+		this.resolutionName = (String)resolutionName;
+	}
+
+	@JsonIgnore
+	public void setResolutionName(
+		UnsafeSupplier<String, Throwable> resolutionNameUnsafeSupplier) {
+
+		try {
+			resolutionName = (String)resolutionNameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setSizeInBytes(Number sizeInBytes) {
+		this.sizeInBytes = (Number)sizeInBytes;
+	}
+
+	@JsonIgnore
+	public void setSizeInBytes(
+		UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+
+		try {
+			sizeInBytes = (Number)sizeInBytesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setWidth(Number width) {
+		this.width = (Number)width;
+	}
+
+	@JsonIgnore
+	public void setWidth(
+		UnsafeSupplier<Number, Throwable> widthUnsafeSupplier) {
+
+		try {
+			width = (Number)widthUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String contentUrl;
-	public Number getHeight() {
-			return height;
-	}
-
-	public void setHeight(
-			Number height) {
-
-			this.height = (Number)height;
-	}
-
-	@JsonIgnore
-	public void setHeight(
-			UnsafeSupplier<Number, Throwable>
-				heightUnsafeSupplier) {
-
-			try {
-				height =
-					(Number)heightUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number height;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getResolutionName() {
-			return resolutionName;
-	}
-
-	public void setResolutionName(
-			String resolutionName) {
-
-			this.resolutionName = (String)resolutionName;
-	}
-
-	@JsonIgnore
-	public void setResolutionName(
-			UnsafeSupplier<String, Throwable>
-				resolutionNameUnsafeSupplier) {
-
-			try {
-				resolutionName =
-					(String)resolutionNameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String resolutionName;
-	public Number getSizeInBytes() {
-			return sizeInBytes;
-	}
-
-	public void setSizeInBytes(
-			Number sizeInBytes) {
-
-			this.sizeInBytes = (Number)sizeInBytes;
-	}
-
-	@JsonIgnore
-	public void setSizeInBytes(
-			UnsafeSupplier<Number, Throwable>
-				sizeInBytesUnsafeSupplier) {
-
-			try {
-				sizeInBytes =
-					(Number)sizeInBytesUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number sizeInBytes;
-	public Number getWidth() {
-			return width;
-	}
-
-	public void setWidth(
-			Number width) {
-
-			this.width = (Number)width;
-	}
-
-	@JsonIgnore
-	public void setWidth(
-			UnsafeSupplier<Number, Throwable>
-				widthUnsafeSupplier) {
-
-			try {
-				width =
-					(Number)widthUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

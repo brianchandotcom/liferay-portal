@@ -48,29 +48,33 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseContentStructureResourceImpl implements ContentStructureResource {
+public abstract class BaseContentStructureResourceImpl
+	implements ContentStructureResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/content-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<ContentStructure> getContentSpaceContentStructuresPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/content-structures/{content-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public ContentStructure getContentStructure(
-	@PathParam("content-structure-id") Long contentStructureId)
-			throws Exception {
+			@PathParam("content-structure-id") Long contentStructureId)
+		throws Exception {
 
-				return new ContentStructureImpl();
+		return new ContentStructureImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -90,10 +94,13 @@ public abstract class BaseContentStructureResourceImpl implements ContentStructu
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -37,82 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ObjectReviewedImpl implements ObjectReviewed {
 
 	public Long getId() {
-			return id;
+		return id;
 	}
 
-	public void setId(
-			Long id) {
+	public String getIdentifier() {
+		return identifier;
+	}
 
-			this.id = (Long)id;
+	public String getResourceType() {
+		return resourceType;
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
 
 	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
 
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
+	public void setIdentifier(String identifier) {
+		this.identifier = (String)identifier;
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	@JsonIgnore
+	public void setIdentifier(
+		UnsafeSupplier<String, Throwable> identifierUnsafeSupplier) {
+
+		try {
+			identifier = (String)identifierUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
+
+	public void setResourceType(String resourceType) {
+		this.resourceType = (String)resourceType;
+	}
+
+	@JsonIgnore
+	public void setResourceType(
+		UnsafeSupplier<String, Throwable> resourceTypeUnsafeSupplier) {
+
+		try {
+			resourceType = (String)resourceTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getIdentifier() {
-			return identifier;
-	}
-
-	public void setIdentifier(
-			String identifier) {
-
-			this.identifier = (String)identifier;
-	}
-
-	@JsonIgnore
-	public void setIdentifier(
-			UnsafeSupplier<String, Throwable>
-				identifierUnsafeSupplier) {
-
-			try {
-				identifier =
-					(String)identifierUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String identifier;
-	public String getResourceType() {
-			return resourceType;
-	}
-
-	public void setResourceType(
-			String resourceType) {
-
-			this.resourceType = (String)resourceType;
-	}
-
-	@JsonIgnore
-	public void setResourceType(
-			UnsafeSupplier<String, Throwable>
-				resourceTypeUnsafeSupplier) {
-
-			try {
-				resourceType =
-					(String)resourceTypeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

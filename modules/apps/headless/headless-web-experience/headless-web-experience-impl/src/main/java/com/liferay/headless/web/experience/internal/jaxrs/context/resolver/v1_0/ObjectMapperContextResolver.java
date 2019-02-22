@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Component;
 )
 @Generated("")
 @Provider
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
 		return _objectMapper;
@@ -83,31 +84,51 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			registerModule(
-				new SimpleModule("Liferay.Headless.Web.Experience", Version.unknownVersion()) {
+				new SimpleModule(
+					"Liferay.Headless.Web.Experience",
+					Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-									addMapping(AggregateRating.class, AggregateRatingImpl.class);
-									addMapping(Categories.class, CategoriesImpl.class);
-									addMapping(Comment.class, CommentImpl.class);
-									addMapping(ContentDocument.class, ContentDocumentImpl.class);
-									addMapping(ContentStructure.class, ContentStructureImpl.class);
-									addMapping(Creator.class, CreatorImpl.class);
+									addMapping(
+										AggregateRating.class,
+										AggregateRatingImpl.class);
+									addMapping(
+										Categories.class, CategoriesImpl.class);
+									addMapping(
+										Comment.class, CommentImpl.class);
+									addMapping(
+										ContentDocument.class,
+										ContentDocumentImpl.class);
+									addMapping(
+										ContentStructure.class,
+										ContentStructureImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
 									addMapping(Fields.class, FieldsImpl.class);
 									addMapping(Geo.class, GeoImpl.class);
-									addMapping(Options.class, OptionsImpl.class);
-									addMapping(RenderedContentsURL.class, RenderedContentsURLImpl.class);
-									addMapping(StructuredContent.class, StructuredContentImpl.class);
-									addMapping(StructuredContentImage.class, StructuredContentImageImpl.class);
+									addMapping(
+										Options.class, OptionsImpl.class);
+									addMapping(
+										RenderedContentsURL.class,
+										RenderedContentsURLImpl.class);
+									addMapping(
+										StructuredContent.class,
+										StructuredContentImpl.class);
+									addMapping(
+										StructuredContentImage.class,
+										StructuredContentImageImpl.class);
 									addMapping(Value.class, ValueImpl.class);
 									addMapping(Values.class, ValuesImpl.class);
-	}
+								}
 							});
-	}
+					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

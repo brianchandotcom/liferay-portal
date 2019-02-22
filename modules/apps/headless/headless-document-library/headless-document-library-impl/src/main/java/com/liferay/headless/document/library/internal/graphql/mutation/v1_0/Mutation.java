@@ -33,72 +33,81 @@ import javax.annotation.Generated;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteDocument(@GraphQLName("document-id") Long documentId)
+		throws Exception {
+
+		return (boolean)_getDocumentResourceImpl().deleteDocument(documentId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteFolder(@GraphQLName("folder-id") Long folderId)
+		throws Exception {
+
+		return (boolean)_getFolderResourceImpl().deleteFolder(folderId);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public DocumentImpl postContentSpaceDocument(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
 
-				return (DocumentImpl)_getDocumentResourceImpl().postContentSpaceDocument(
-					contentSpaceId,multipartBody);
+		return (DocumentImpl)
+			_getDocumentResourceImpl().postContentSpaceDocument(
+				contentSpaceId, multipartBody);
 	}
-	@GraphQLInvokeDetached
-	public boolean deleteDocument(
-	@GraphQLName("document-id") Long documentId)
-			throws Exception {
 
-				return (boolean)_getDocumentResourceImpl().deleteDocument(
-					documentId);
-	}
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public DocumentImpl postFolderDocument(
-	@GraphQLName("folder-id") Long folderId,@GraphQLName("MultipartBody") MultipartBody multipartBody)
-			throws Exception {
-
-				return (DocumentImpl)_getDocumentResourceImpl().postFolderDocument(
-					folderId,multipartBody);
-	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FolderImpl postContentSpaceFolder(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("Folder") FolderImpl folderImpl)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Folder") FolderImpl folderImpl)
+		throws Exception {
 
-				return (FolderImpl)_getFolderResourceImpl().postContentSpaceFolder(
-					contentSpaceId,folderImpl);
+		return (FolderImpl)_getFolderResourceImpl().postContentSpaceFolder(
+			contentSpaceId, folderImpl);
 	}
+
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean deleteFolder(
-	@GraphQLName("folder-id") Long folderId)
-			throws Exception {
+	public DocumentImpl postFolderDocument(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
 
-				return (boolean)_getFolderResourceImpl().deleteFolder(
-					folderId);
+		return (DocumentImpl)_getDocumentResourceImpl().postFolderDocument(
+			folderId, multipartBody);
 	}
-	@GraphQLInvokeDetached
-	public FolderImpl putFolder(
-	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") FolderImpl folderImpl)
-			throws Exception {
 
-				return (FolderImpl)_getFolderResourceImpl().putFolder(
-					folderId,folderImpl);
-	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FolderImpl postFolderFolder(
-	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") FolderImpl folderImpl)
-			throws Exception {
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") FolderImpl folderImpl)
+		throws Exception {
 
-				return (FolderImpl)_getFolderResourceImpl().postFolderFolder(
-					folderId,folderImpl);
+		return (FolderImpl)_getFolderResourceImpl().postFolderFolder(
+			folderId, folderImpl);
+	}
+
+	@GraphQLInvokeDetached
+	public FolderImpl putFolder(
+			@GraphQLName("folder-id") Long folderId,
+			@GraphQLName("Folder") FolderImpl folderImpl)
+		throws Exception {
+
+		return (FolderImpl)_getFolderResourceImpl().putFolder(
+			folderId, folderImpl);
 	}
 
 	private static DocumentResourceImpl _getDocumentResourceImpl() {
-			return new DocumentResourceImpl();
+		return new DocumentResourceImpl();
 	}
+
 	private static FolderResourceImpl _getFolderResourceImpl() {
-			return new FolderResourceImpl();
+		return new FolderResourceImpl();
 	}
 
 }

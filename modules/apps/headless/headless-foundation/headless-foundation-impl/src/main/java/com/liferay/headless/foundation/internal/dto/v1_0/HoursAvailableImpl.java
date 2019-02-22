@@ -37,109 +37,94 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HoursAvailableImpl implements HoursAvailable {
 
 	public String getCloses() {
-			return closes;
+		return closes;
 	}
 
-	public void setCloses(
-			String closes) {
+	public String getDayOfWeek() {
+		return dayOfWeek;
+	}
 
-			this.closes = (String)closes;
+	public Long getId() {
+		return id;
+	}
+
+	public String getOpens() {
+		return opens;
+	}
+
+	public void setCloses(String closes) {
+		this.closes = (String)closes;
 	}
 
 	@JsonIgnore
 	public void setCloses(
-			UnsafeSupplier<String, Throwable>
-				closesUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> closesUnsafeSupplier) {
 
-			try {
-				closes =
-					(String)closesUnsafeSupplier.get();
+		try {
+			closes = (String)closesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = (String)dayOfWeek;
 	}
+
+	@JsonIgnore
+	public void setDayOfWeek(
+		UnsafeSupplier<String, Throwable> dayOfWeekUnsafeSupplier) {
+
+		try {
+			dayOfWeek = (String)dayOfWeekUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setOpens(String opens) {
+		this.opens = (String)opens;
+	}
+
+	@JsonIgnore
+	public void setOpens(
+		UnsafeSupplier<String, Throwable> opensUnsafeSupplier) {
+
+		try {
+			opens = (String)opensUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String closes;
-	public String getDayOfWeek() {
-			return dayOfWeek;
-	}
-
-	public void setDayOfWeek(
-			String dayOfWeek) {
-
-			this.dayOfWeek = (String)dayOfWeek;
-	}
-
-	@JsonIgnore
-	public void setDayOfWeek(
-			UnsafeSupplier<String, Throwable>
-				dayOfWeekUnsafeSupplier) {
-
-			try {
-				dayOfWeek =
-					(String)dayOfWeekUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String dayOfWeek;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getOpens() {
-			return opens;
-	}
-
-	public void setOpens(
-			String opens) {
-
-			this.opens = (String)opens;
-	}
-
-	@JsonIgnore
-	public void setOpens(
-			UnsafeSupplier<String, Throwable>
-				opensUnsafeSupplier) {
-
-			try {
-				opens =
-					(String)opensUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

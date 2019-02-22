@@ -48,49 +48,50 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl implements RoleResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/my-user-accounts/{my-user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Role> getMyUserAccountRolesPage(
-	@PathParam("my-user-account-id") Long myUserAccountId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("my-user-account-id") Long myUserAccountId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
-	@GET
-	@Path("/roles")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<Role> getRolesPage(
-	@Context Pagination pagination)
-			throws Exception {
 
-				return Page.of(Collections.emptyList());
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/roles/{role-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Role getRole(
-	@PathParam("role-id") Long roleId)
-			throws Exception {
-
-				return new RoleImpl();
+	public Role getRole(@PathParam("role-id") Long roleId) throws Exception {
+		return new RoleImpl();
 	}
-	@Override
+
 	@GET
+	@Override
+	@Path("/roles")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<Role> getRolesPage(@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Override
 	@Path("/user-accounts/{user-account-id}/roles")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Role> getUserAccountRolesPage(
-	@PathParam("user-account-id") Long userAccountId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("user-account-id") Long userAccountId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -110,10 +111,13 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

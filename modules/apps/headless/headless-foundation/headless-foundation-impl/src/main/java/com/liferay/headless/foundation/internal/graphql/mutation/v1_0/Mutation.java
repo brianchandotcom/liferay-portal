@@ -37,126 +37,146 @@ import javax.annotation.Generated;
 public class Mutation {
 
 	@GraphQLInvokeDetached
-	public boolean deleteCategory(
-	@GraphQLName("category-id") Long categoryId)
-			throws Exception {
+	public boolean deleteCategory(@GraphQLName("category-id") Long categoryId)
+		throws Exception {
 
-				return (boolean)_getCategoryResourceImpl().deleteCategory(
-					categoryId);
+		return (boolean)_getCategoryResourceImpl().deleteCategory(categoryId);
 	}
+
 	@GraphQLInvokeDetached
-	public CategoryImpl putCategory(
-	@GraphQLName("category-id") Long categoryId,@GraphQLName("Category") CategoryImpl categoryImpl)
-			throws Exception {
+	public boolean deleteKeyword(@GraphQLName("keyword-id") Long keywordId)
+		throws Exception {
 
-				return (CategoryImpl)_getCategoryResourceImpl().putCategory(
-					categoryId,categoryImpl);
+		return (boolean)_getKeywordResourceImpl().deleteKeyword(keywordId);
 	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId)
+		throws Exception {
+
+		return (boolean)_getUserAccountResourceImpl().deleteUserAccount(
+			userAccountId);
+	}
+
+	@GraphQLInvokeDetached
+	public boolean deleteVocabulary(
+			@GraphQLName("vocabulary-id") Long vocabularyId)
+		throws Exception {
+
+		return (boolean)_getVocabularyResourceImpl().deleteVocabulary(
+			vocabularyId);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public CategoryImpl postCategoryCategory(
-	@GraphQLName("category-id") Long categoryId,@GraphQLName("Category") CategoryImpl categoryImpl)
-			throws Exception {
+			@GraphQLName("category-id") Long categoryId,
+			@GraphQLName("Category") CategoryImpl categoryImpl)
+		throws Exception {
 
-				return (CategoryImpl)_getCategoryResourceImpl().postCategoryCategory(
-					categoryId,categoryImpl);
+		return (CategoryImpl)_getCategoryResourceImpl().postCategoryCategory(
+			categoryId, categoryImpl);
 	}
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public CategoryImpl postVocabularyCategory(
-	@GraphQLName("vocabulary-id") Long vocabularyId,@GraphQLName("Category") CategoryImpl categoryImpl)
-			throws Exception {
 
-				return (CategoryImpl)_getCategoryResourceImpl().postVocabularyCategory(
-					vocabularyId,categoryImpl);
-	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public KeywordImpl postContentSpaceKeyword(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("Keyword") KeywordImpl keywordImpl)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Keyword") KeywordImpl keywordImpl)
+		throws Exception {
 
-				return (KeywordImpl)_getKeywordResourceImpl().postContentSpaceKeyword(
-					contentSpaceId,keywordImpl);
+		return (KeywordImpl)_getKeywordResourceImpl().postContentSpaceKeyword(
+			contentSpaceId, keywordImpl);
 	}
-	@GraphQLInvokeDetached
-	public boolean deleteKeyword(
-	@GraphQLName("keyword-id") Long keywordId)
-			throws Exception {
 
-				return (boolean)_getKeywordResourceImpl().deleteKeyword(
-					keywordId);
-	}
-	@GraphQLInvokeDetached
-	public KeywordImpl putKeyword(
-	@GraphQLName("keyword-id") Long keywordId,@GraphQLName("Keyword") KeywordImpl keywordImpl)
-			throws Exception {
-
-				return (KeywordImpl)_getKeywordResourceImpl().putKeyword(
-					keywordId,keywordImpl);
-	}
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public UserAccountImpl postUserAccount(
-	@GraphQLName("UserAccount") UserAccountImpl userAccountImpl)
-			throws Exception {
-
-				return (UserAccountImpl)_getUserAccountResourceImpl().postUserAccount(
-					userAccountImpl);
-	}
-	@GraphQLInvokeDetached
-	public boolean deleteUserAccount(
-	@GraphQLName("user-account-id") Long userAccountId)
-			throws Exception {
-
-				return (boolean)_getUserAccountResourceImpl().deleteUserAccount(
-					userAccountId);
-	}
-	@GraphQLInvokeDetached
-	public UserAccountImpl putUserAccount(
-	@GraphQLName("user-account-id") Long userAccountId,@GraphQLName("UserAccount") UserAccountImpl userAccountImpl)
-			throws Exception {
-
-				return (UserAccountImpl)_getUserAccountResourceImpl().putUserAccount(
-					userAccountId,userAccountImpl);
-	}
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public VocabularyImpl postContentSpaceVocabulary(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("Vocabulary") VocabularyImpl vocabularyImpl)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("Vocabulary") VocabularyImpl vocabularyImpl)
+		throws Exception {
 
-				return (VocabularyImpl)_getVocabularyResourceImpl().postContentSpaceVocabulary(
-					contentSpaceId,vocabularyImpl);
+		return (VocabularyImpl)
+			_getVocabularyResourceImpl().postContentSpaceVocabulary(
+				contentSpaceId, vocabularyImpl);
 	}
+
+	@GraphQLField
 	@GraphQLInvokeDetached
-	public boolean deleteVocabulary(
-	@GraphQLName("vocabulary-id") Long vocabularyId)
-			throws Exception {
+	public UserAccountImpl postUserAccount(
+			@GraphQLName("UserAccount") UserAccountImpl userAccountImpl)
+		throws Exception {
 
-				return (boolean)_getVocabularyResourceImpl().deleteVocabulary(
-					vocabularyId);
+		return (UserAccountImpl)_getUserAccountResourceImpl().postUserAccount(
+			userAccountImpl);
 	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public CategoryImpl postVocabularyCategory(
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("Category") CategoryImpl categoryImpl)
+		throws Exception {
+
+		return (CategoryImpl)_getCategoryResourceImpl().postVocabularyCategory(
+			vocabularyId, categoryImpl);
+	}
+
+	@GraphQLInvokeDetached
+	public CategoryImpl putCategory(
+			@GraphQLName("category-id") Long categoryId,
+			@GraphQLName("Category") CategoryImpl categoryImpl)
+		throws Exception {
+
+		return (CategoryImpl)_getCategoryResourceImpl().putCategory(
+			categoryId, categoryImpl);
+	}
+
+	@GraphQLInvokeDetached
+	public KeywordImpl putKeyword(
+			@GraphQLName("keyword-id") Long keywordId,
+			@GraphQLName("Keyword") KeywordImpl keywordImpl)
+		throws Exception {
+
+		return (KeywordImpl)_getKeywordResourceImpl().putKeyword(
+			keywordId, keywordImpl);
+	}
+
+	@GraphQLInvokeDetached
+	public UserAccountImpl putUserAccount(
+			@GraphQLName("user-account-id") Long userAccountId,
+			@GraphQLName("UserAccount") UserAccountImpl userAccountImpl)
+		throws Exception {
+
+		return (UserAccountImpl)_getUserAccountResourceImpl().putUserAccount(
+			userAccountId, userAccountImpl);
+	}
+
 	@GraphQLInvokeDetached
 	public VocabularyImpl putVocabulary(
-	@GraphQLName("vocabulary-id") Long vocabularyId,@GraphQLName("Vocabulary") VocabularyImpl vocabularyImpl)
-			throws Exception {
+			@GraphQLName("vocabulary-id") Long vocabularyId,
+			@GraphQLName("Vocabulary") VocabularyImpl vocabularyImpl)
+		throws Exception {
 
-				return (VocabularyImpl)_getVocabularyResourceImpl().putVocabulary(
-					vocabularyId,vocabularyImpl);
+		return (VocabularyImpl)_getVocabularyResourceImpl().putVocabulary(
+			vocabularyId, vocabularyImpl);
 	}
 
 	private static CategoryResourceImpl _getCategoryResourceImpl() {
-			return new CategoryResourceImpl();
+		return new CategoryResourceImpl();
 	}
+
 	private static KeywordResourceImpl _getKeywordResourceImpl() {
-			return new KeywordResourceImpl();
+		return new KeywordResourceImpl();
 	}
+
 	private static UserAccountResourceImpl _getUserAccountResourceImpl() {
-			return new UserAccountResourceImpl();
+		return new UserAccountResourceImpl();
 	}
+
 	private static VocabularyResourceImpl _getVocabularyResourceImpl() {
-			return new VocabularyResourceImpl();
+		return new VocabularyResourceImpl();
 	}
 
 }

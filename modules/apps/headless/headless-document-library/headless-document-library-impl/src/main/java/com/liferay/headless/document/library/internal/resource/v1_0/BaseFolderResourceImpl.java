@@ -52,85 +52,91 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseFolderResourceImpl implements FolderResource {
 
+	@DELETE
 	@Override
+	@Path("/folders/{folder-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteFolder(@PathParam("folder-id") Long folderId)
+		throws Exception {
+
+		return false;
+	}
+
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Folder> getContentSpaceFoldersPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/folders")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Folder postContentSpaceFolder(
-	@PathParam("content-space-id") Long contentSpaceId,Folder folder)
-			throws Exception {
 
-				return new FolderImpl();
-	}
-	@Override
-	@DELETE
-	@Path("/folders/{folder-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public boolean deleteFolder(
-	@PathParam("folder-id") Long folderId)
-			throws Exception {
-
-				return false;
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/folders/{folder-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Folder getFolder(
-	@PathParam("folder-id") Long folderId)
-			throws Exception {
+	public Folder getFolder(@PathParam("folder-id") Long folderId)
+		throws Exception {
 
-				return new FolderImpl();
+		return new FolderImpl();
 	}
-	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/folders/{folder-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Folder putFolder(
-	@PathParam("folder-id") Long folderId,Folder folder)
-			throws Exception {
 
-				return new FolderImpl();
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/folders/{folder-id}/folders")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Folder> getFolderFoldersPage(
-	@PathParam("folder-id") Long folderId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("folder-id") Long folderId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@Consumes("application/json")
+	@Override
+	@Path("/content-spaces/{content-space-id}/folders")
 	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Folder postContentSpaceFolder(
+			@PathParam("content-space-id") Long contentSpaceId, Folder folder)
+		throws Exception {
+
+		return new FolderImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/folders/{folder-id}/folders")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Folder postFolderFolder(
-	@PathParam("folder-id") Long folderId,Folder folder)
-			throws Exception {
+			@PathParam("folder-id") Long folderId, Folder folder)
+		throws Exception {
 
-				return new FolderImpl();
+		return new FolderImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/folders/{folder-id}")
+	@Produces("application/json")
+	@PUT
+	@RequiresScope("everything.read")
+	public Folder putFolder(
+			@PathParam("folder-id") Long folderId, Folder folder)
+		throws Exception {
+
+		return new FolderImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -150,10 +156,13 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -27,91 +27,77 @@ public interface Fields {
 
 	public String getDataType();
 
-	public void setDataType(
-			String dataType);
-
-	public void setDataType(
-			UnsafeSupplier<String, Throwable>
-				dataTypeUnsafeSupplier);
-	public String getLabel();
-
-	public void setLabel(
-			String label);
-
-	public void setLabel(
-			UnsafeSupplier<String, Throwable>
-				labelUnsafeSupplier);
-	public Boolean getLocalizable();
-
-	public void setLocalizable(
-			Boolean localizable);
-
-	public void setLocalizable(
-			UnsafeSupplier<Boolean, Throwable>
-				localizableUnsafeSupplier);
-	public Boolean getMultiple();
-
-	public void setMultiple(
-			Boolean multiple);
-
-	public void setMultiple(
-			UnsafeSupplier<Boolean, Throwable>
-				multipleUnsafeSupplier);
 	public String getInputControl();
 
-	public void setInputControl(
-			String inputControl);
+	public String getLabel();
 
-	public void setInputControl(
-			UnsafeSupplier<String, Throwable>
-				inputControlUnsafeSupplier);
-	public String getPredefinedValue();
+	public Boolean getLocalizable();
 
-	public void setPredefinedValue(
-			String predefinedValue);
+	public Boolean getMultiple();
 
-	public void setPredefinedValue(
-			UnsafeSupplier<String, Throwable>
-				predefinedValueUnsafeSupplier);
 	public String getName();
 
-	public void setName(
-			String name);
-
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
-	public Boolean getRepeatable();
-
-	public void setRepeatable(
-			Boolean repeatable);
-
-	public void setRepeatable(
-			UnsafeSupplier<Boolean, Throwable>
-				repeatableUnsafeSupplier);
-	public Boolean getRequired();
-
-	public void setRequired(
-			Boolean required);
-
-	public void setRequired(
-			UnsafeSupplier<Boolean, Throwable>
-				requiredUnsafeSupplier);
-	public Boolean getShowLabel();
-
-	public void setShowLabel(
-			Boolean showLabel);
-
-	public void setShowLabel(
-			UnsafeSupplier<Boolean, Throwable>
-				showLabelUnsafeSupplier);
 	public Options[] getOptions();
 
-	public void setOptions(
-			Options[] options);
+	public String getPredefinedValue();
+
+	public Boolean getRepeatable();
+
+	public Boolean getRequired();
+
+	public Boolean getShowLabel();
+
+	public void setDataType(String dataType);
+
+	public void setDataType(
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier);
+
+	public void setInputControl(String inputControl);
+
+	public void setInputControl(
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier);
+
+	public void setLabel(String label);
+
+	public void setLabel(UnsafeSupplier<String, Throwable> labelUnsafeSupplier);
+
+	public void setLocalizable(Boolean localizable);
+
+	public void setLocalizable(
+		UnsafeSupplier<Boolean, Throwable> localizableUnsafeSupplier);
+
+	public void setMultiple(Boolean multiple);
+
+	public void setMultiple(
+		UnsafeSupplier<Boolean, Throwable> multipleUnsafeSupplier);
+
+	public void setName(String name);
+
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier);
+
+	public void setOptions(Options[] options);
 
 	public void setOptions(
-			UnsafeSupplier<Options[], Throwable>
-				optionsUnsafeSupplier);
+		UnsafeSupplier<Options[], Throwable> optionsUnsafeSupplier);
+
+	public void setPredefinedValue(String predefinedValue);
+
+	public void setPredefinedValue(
+		UnsafeSupplier<String, Throwable> predefinedValueUnsafeSupplier);
+
+	public void setRepeatable(Boolean repeatable);
+
+	public void setRepeatable(
+		UnsafeSupplier<Boolean, Throwable> repeatableUnsafeSupplier);
+
+	public void setRequired(Boolean required);
+
+	public void setRequired(
+		UnsafeSupplier<Boolean, Throwable> requiredUnsafeSupplier);
+
+	public void setShowLabel(Boolean showLabel);
+
+	public void setShowLabel(
+		UnsafeSupplier<Boolean, Throwable> showLabelUnsafeSupplier);
 
 }

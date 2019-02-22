@@ -48,27 +48,28 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BasePhoneResourceImpl implements PhoneResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/phones")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Phone> getGenericParentPhonesPage(
-	@PathParam("generic-parent-id") Object genericParentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("generic-parent-id") Object genericParentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/phones/{phone-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Phone getPhone(
-	@PathParam("phone-id") Long phoneId)
-			throws Exception {
+	public Phone getPhone(@PathParam("phone-id") Long phoneId)
+		throws Exception {
 
-				return new PhoneImpl();
+		return new PhoneImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -88,10 +89,13 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

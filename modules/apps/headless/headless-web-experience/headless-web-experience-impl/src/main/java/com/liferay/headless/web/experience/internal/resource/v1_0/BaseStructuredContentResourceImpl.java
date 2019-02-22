@@ -55,134 +55,175 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseStructuredContentResourceImpl implements StructuredContentResource {
+public abstract class BaseStructuredContentResourceImpl
+	implements StructuredContentResource {
 
-	@Override
-	@GET
-	@Path("/content-structures/{content-structure-id}/structured-contents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<StructuredContent> getContentSpaceContentStructureStructuredContentsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@PathParam("content-structure-id") Long contentStructureId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
-
-				return Page.of(Collections.emptyList());
-	}
-	@Override
-	@GET
-	@Path("/content-spaces/{content-space-id}/structured-contents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
-
-				return Page.of(Collections.emptyList());
-	}
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/content-spaces/{content-space-id}/structured-contents")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public StructuredContent postContentSpaceStructuredContent(
-	@PathParam("content-space-id") Long contentSpaceId,StructuredContent structuredContent)
-			throws Exception {
-
-				return new StructuredContentImpl();
-	}
-	@Override
 	@DELETE
+	@Override
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public boolean deleteStructuredContent(
-	@PathParam("structured-content-id") Long structuredContentId)
-			throws Exception {
+			@PathParam("structured-content-id") Long structuredContentId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
-	@Override
+
 	@GET
+	@Override
+	@Path("/content-structures/{content-structure-id}/structured-contents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<StructuredContent>
+			getContentSpaceContentStructureStructuredContentsPage(
+				@PathParam("content-space-id") Long contentSpaceId,
+				@PathParam("content-structure-id") Long contentStructureId,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Override
+	@Path("/content-spaces/{content-space-id}/structured-contents")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	@GET
+	@Override
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public StructuredContent getStructuredContent(
-	@PathParam("structured-content-id") Long structuredContentId)
-			throws Exception {
+			@PathParam("structured-content-id") Long structuredContentId)
+		throws Exception {
 
-				return new StructuredContentImpl();
+		return new StructuredContentImpl();
 	}
+
+	@GET
 	@Override
+	@Path(
+		"/structured-contents/{structured-content-id}/rendered-content/{template-id}"
+	)
+	@Produces("text/html")
+	@RequiresScope("everything.read")
+	public String getStructuredContentTemplate(
+			@PathParam("structured-content-id") Long structuredContentId,
+			@PathParam("template-id") Long templateId)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
 	@Consumes("application/json")
+	@Override
 	@PATCH
 	@Path("/structured-contents/{structured-content-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public StructuredContent patchStructuredContent(
-	@PathParam("structured-content-id") Long structuredContentId,StructuredContent structuredContent)
-			throws Exception {
+			@PathParam("structured-content-id") Long structuredContentId,
+			StructuredContent structuredContent)
+		throws Exception {
 
-				StructuredContent existingStructuredContent = getStructuredContent(structuredContentId);
+		StructuredContent existingStructuredContent = getStructuredContent(
+			structuredContentId);
 
-						if (Validator.isNotNull(structuredContent.getAvailableLanguages())) {
-							existingStructuredContent.setAvailableLanguages(structuredContent.getAvailableLanguages());
-	}
-						if (Validator.isNotNull(structuredContent.getContentSpace())) {
-							existingStructuredContent.setContentSpace(structuredContent.getContentSpace());
-	}
-						if (Validator.isNotNull(structuredContent.getContentStructureId())) {
-							existingStructuredContent.setContentStructureId(structuredContent.getContentStructureId());
-	}
-						if (Validator.isNotNull(structuredContent.getDateCreated())) {
-							existingStructuredContent.setDateCreated(structuredContent.getDateCreated());
-	}
-						if (Validator.isNotNull(structuredContent.getDateModified())) {
-							existingStructuredContent.setDateModified(structuredContent.getDateModified());
-	}
-						if (Validator.isNotNull(structuredContent.getDatePublished())) {
-							existingStructuredContent.setDatePublished(structuredContent.getDatePublished());
-	}
-						if (Validator.isNotNull(structuredContent.getDescription())) {
-							existingStructuredContent.setDescription(structuredContent.getDescription());
-	}
-						if (Validator.isNotNull(structuredContent.getId())) {
-							existingStructuredContent.setId(structuredContent.getId());
-	}
-						if (Validator.isNotNull(structuredContent.getKeywords())) {
-							existingStructuredContent.setKeywords(structuredContent.getKeywords());
-	}
-						if (Validator.isNotNull(structuredContent.getLastReviewed())) {
-							existingStructuredContent.setLastReviewed(structuredContent.getLastReviewed());
-	}
-						if (Validator.isNotNull(structuredContent.getTitle())) {
-							existingStructuredContent.setTitle(structuredContent.getTitle());
+		if (Validator.isNotNull(structuredContent.getAvailableLanguages())) {
+			existingStructuredContent.setAvailableLanguages(
+				structuredContent.getAvailableLanguages());
+		}
+
+		if (Validator.isNotNull(structuredContent.getContentSpace())) {
+			existingStructuredContent.setContentSpace(
+				structuredContent.getContentSpace());
+		}
+
+		if (Validator.isNotNull(structuredContent.getContentStructureId())) {
+			existingStructuredContent.setContentStructureId(
+				structuredContent.getContentStructureId());
+		}
+
+		if (Validator.isNotNull(structuredContent.getDateCreated())) {
+			existingStructuredContent.setDateCreated(
+				structuredContent.getDateCreated());
+		}
+
+		if (Validator.isNotNull(structuredContent.getDateModified())) {
+			existingStructuredContent.setDateModified(
+				structuredContent.getDateModified());
+		}
+
+		if (Validator.isNotNull(structuredContent.getDatePublished())) {
+			existingStructuredContent.setDatePublished(
+				structuredContent.getDatePublished());
+		}
+
+		if (Validator.isNotNull(structuredContent.getDescription())) {
+			existingStructuredContent.setDescription(
+				structuredContent.getDescription());
+		}
+
+		if (Validator.isNotNull(structuredContent.getId())) {
+			existingStructuredContent.setId(structuredContent.getId());
+		}
+
+		if (Validator.isNotNull(structuredContent.getKeywords())) {
+			existingStructuredContent.setKeywords(
+				structuredContent.getKeywords());
+		}
+
+		if (Validator.isNotNull(structuredContent.getLastReviewed())) {
+			existingStructuredContent.setLastReviewed(
+				structuredContent.getLastReviewed());
+		}
+
+		if (Validator.isNotNull(structuredContent.getTitle())) {
+			existingStructuredContent.setTitle(structuredContent.getTitle());
+		}
+
+		return putStructuredContent(
+			structuredContentId, existingStructuredContent);
 	}
 
-				return putStructuredContent(structuredContentId, existingStructuredContent);
-	}
-	@Override
 	@Consumes("application/json")
-	@PUT
-	@Path("/structured-contents/{structured-content-id}")
+	@Override
+	@Path("/content-spaces/{content-space-id}/structured-contents")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public StructuredContent putStructuredContent(
-	@PathParam("structured-content-id") Long structuredContentId,StructuredContent structuredContent)
-			throws Exception {
+	public StructuredContent postContentSpaceStructuredContent(
+			@PathParam("content-space-id") Long contentSpaceId,
+			StructuredContent structuredContent)
+		throws Exception {
 
-				return new StructuredContentImpl();
+		return new StructuredContentImpl();
 	}
-	@Override
-	@GET
-	@Path("/structured-contents/{structured-content-id}/rendered-content/{template-id}")
-	@Produces("text/html")
-	@RequiresScope("everything.read")
-	public String getStructuredContentTemplate(
-	@PathParam("structured-content-id") Long structuredContentId,@PathParam("template-id") Long templateId)
-			throws Exception {
 
-				return StringPool.BLANK;
+	@Consumes("application/json")
+	@Override
+	@Path("/structured-contents/{structured-content-id}")
+	@Produces("application/json")
+	@PUT
+	@RequiresScope("everything.read")
+	public StructuredContent putStructuredContent(
+			@PathParam("structured-content-id") Long structuredContentId,
+			StructuredContent structuredContent)
+		throws Exception {
+
+		return new StructuredContentImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -202,10 +243,13 @@ public abstract class BaseStructuredContentResourceImpl implements StructuredCon
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

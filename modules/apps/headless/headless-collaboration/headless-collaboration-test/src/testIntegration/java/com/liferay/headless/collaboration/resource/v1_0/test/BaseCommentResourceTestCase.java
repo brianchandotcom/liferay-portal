@@ -24,6 +24,7 @@ import com.liferay.headless.collaboration.dto.v1_0.Creator;
 import com.liferay.headless.collaboration.internal.dto.v1_0.CommentImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.CreatorImpl;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -67,238 +67,292 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
-	public void testGetBlogPostingCommentsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostBlogPostingComment() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteComment() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetComment() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPutComment() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetCommentCommentsPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testPostCommentComment() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetBlogPostingCommentsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetComment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetCommentCommentsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostBlogPostingComment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostCommentComment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPutComment() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
+	}
+
+	protected boolean invokeDeleteComment(Long commentId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
+	}
+
+	protected Http.Response invokeDeleteCommentResponse(Long commentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setDelete(true);
+
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Page<Comment> invokeGetBlogPostingCommentsPage(
-				Long blogPostingId,Pagination pagination)
-			throws Exception {
+			Long blogPostingId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/comments",
+					blogPostingId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetBlogPostingCommentsPageResponse(
-				Long blogPostingId,Pagination pagination)
-			throws Exception {
+			Long blogPostingId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/comments",
+					blogPostingId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected Comment invokePostBlogPostingComment(
-				Long blogPostingId,Comment comment)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
-
-				options.setPost(true);
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CommentImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokePostBlogPostingCommentResponse(
-				Long blogPostingId,Comment comment)
-			throws Exception {
+	protected Comment invokeGetComment(Long commentId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
 
-				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-			options.setLocation(_resourceURL + _toPath("/blog-postings/{blog-posting-id}/comments", blogPostingId));
-
-				options.setPost(true);
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected boolean invokeDeleteComment(
-				Long commentId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CommentImpl.class);
 	}
 
-	protected Http.Response invokeDeleteCommentResponse(
-				Long commentId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setDelete(true);
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected Comment invokeGetComment(
-				Long commentId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CommentImpl.class);
-	}
-
-	protected Http.Response invokeGetCommentResponse(
-				Long commentId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected Comment invokePutComment(
-				Long commentId,Comment comment)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-				options.setPut(true);
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CommentImpl.class);
-	}
-
-	protected Http.Response invokePutCommentResponse(
-				Long commentId,Comment comment)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}", commentId));
-
-				options.setPut(true);
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
 	protected Page<Comment> invokeGetCommentCommentsPage(
-				Long commentId,Pagination pagination)
-			throws Exception {
+			Long commentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/comments/{comment-id}/comments", commentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetCommentCommentsPageResponse(
-				Long commentId,Pagination pagination)
-			throws Exception {
+			Long commentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/comments/{comment-id}/comments", commentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
-	protected Comment invokePostCommentComment(
-				Long commentId,Comment comment)
-			throws Exception {
 
-			Http.Options options = _createHttpOptions();
+	protected Http.Response invokeGetCommentResponse(Long commentId)
+		throws Exception {
 
-				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
 
-				options.setPost(true);
+		HttpUtil.URLtoString(options);
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), CommentImpl.class);
+		return options.getResponse();
+	}
+
+	protected Comment invokePostBlogPostingComment(
+			Long blogPostingId, Comment comment)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(comment),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/comments",
+					blogPostingId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CommentImpl.class);
+	}
+
+	protected Http.Response invokePostBlogPostingCommentResponse(
+			Long blogPostingId, Comment comment)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(comment),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-postings/{blog-posting-id}/comments",
+					blogPostingId));
+
+		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Comment invokePostCommentComment(Long commentId, Comment comment)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(comment),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL +
+				_toPath("/comments/{comment-id}/comments", commentId));
+
+		options.setPost(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CommentImpl.class);
 	}
 
 	protected Http.Response invokePostCommentCommentResponse(
-				Long commentId,Comment comment)
-			throws Exception {
+			Long commentId, Comment comment)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setBody(_inputObjectMapper.writeValueAsString(comment), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(comment),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-			options.setLocation(_resourceURL + _toPath("/comments/{comment-id}/comments", commentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath("/comments/{comment-id}/comments", commentId));
 
-				options.setPost(true);
+		options.setPost(true);
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
+	}
+
+	protected Comment invokePutComment(Long commentId, Comment comment)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(comment),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), CommentImpl.class);
+	}
+
+	protected Http.Response invokePutCommentResponse(
+			Long commentId, Comment comment)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			_inputObjectMapper.writeValueAsString(comment),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			_resourceURL + _toPath("/comments/{comment-id}", commentId));
+
+		options.setPut(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Comment randomComment() {
 		return new CommentImpl() {
 			{
 
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						hasComments = RandomTestUtil.randomBoolean();
-						id = RandomTestUtil.randomLong();
-						text = RandomTestUtil.randomString();
-	}
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				hasComments = RandomTestUtil.randomBoolean();
+				id = RandomTestUtil.randomLong();
+				text = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -306,167 +360,164 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected static class CommentImpl implements Comment {
 
-	public Comment[] getComments() {
-				return comments;
-	}
+		public Comment[] getComments() {
+			return comments;
+		}
 
-	public void setComments(Comment[] comments) {
-				this.comments = (CommentImpl[])comments;
-	}
+		public Creator getCreator() {
+			return creator;
+		}
 
-	@JsonIgnore
-	public void setComments(
-				UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					comments =
-						(CommentImpl[])commentsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	@JsonProperty
-	protected CommentImpl[] comments;
-	public Creator getCreator() {
-				return creator;
-	}
+		public Boolean getHasComments() {
+			return hasComments;
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = (CreatorImpl)creator;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public String getText() {
+			return text;
+		}
 
-				try {
-					creator =
-						(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setComments(Comment[] comments) {
+			this.comments = (CommentImpl[])comments;
+		}
 
-	@JsonProperty
-	protected CreatorImpl creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+		@JsonIgnore
+		public void setComments(
+			UnsafeSupplier<Comment[], Throwable> commentsUnsafeSupplier) {
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = (Date)dateCreated;
-	}
+			try {
+				comments = (CommentImpl[])commentsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		public void setCreator(Creator creator) {
+			this.creator = (CreatorImpl)creator;
+		}
 
-				try {
-					dateCreated =
-						(Date)dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+			try {
+				creator = (CreatorImpl)creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = (Date)dateModified;
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = (Date)dateCreated;
+		}
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-				try {
-					dateModified =
-						(Date)dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Date dateModified;
-	public Boolean getHasComments() {
-				return hasComments;
-	}
+		public void setDateModified(Date dateModified) {
+			this.dateModified = (Date)dateModified;
+		}
 
-	public void setHasComments(Boolean hasComments) {
-				this.hasComments = (Boolean)hasComments;
-	}
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setHasComments(
-				UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
+			try {
+				dateModified = (Date)dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					hasComments =
-						(Boolean)hasCommentsUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setHasComments(Boolean hasComments) {
+			this.hasComments = (Boolean)hasComments;
+		}
 
-	@JsonProperty
-	protected Boolean hasComments;
-	public Long getId() {
-				return id;
-	}
+		@JsonIgnore
+		public void setHasComments(
+			UnsafeSupplier<Boolean, Throwable> hasCommentsUnsafeSupplier) {
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+			try {
+				hasComments = (Boolean)hasCommentsUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getText() {
-				return text;
-	}
+		public void setText(String text) {
+			this.text = (String)text;
+		}
 
-	public void setText(String text) {
-				this.text = (String)text;
-	}
+		@JsonIgnore
+		public void setText(
+			UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setText(
-				UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+			try {
+				text = (String)textUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					text =
-						(String)textUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected CommentImpl[] comments;
 
-	@JsonProperty
-	protected String text;
+		@JsonProperty
+		protected CreatorImpl creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected Boolean hasComments;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String text;
 
 	}
 
@@ -477,9 +528,11 @@ public abstract class BaseCommentResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -490,12 +543,12 @@ public abstract class BaseCommentResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

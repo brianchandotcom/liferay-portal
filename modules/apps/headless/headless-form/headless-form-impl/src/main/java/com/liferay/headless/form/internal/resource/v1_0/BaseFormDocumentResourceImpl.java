@@ -44,29 +44,31 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFormDocumentResourceImpl implements FormDocumentResource {
+public abstract class BaseFormDocumentResourceImpl
+	implements FormDocumentResource {
 
-	@Override
 	@DELETE
+	@Override
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public boolean deleteFormDocument(
-	@PathParam("form-document-id") Long formDocumentId)
-			throws Exception {
+			@PathParam("form-document-id") Long formDocumentId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/form-documents/{form-document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public FormDocument getFormDocument(
-	@PathParam("form-document-id") Long formDocumentId)
-			throws Exception {
+			@PathParam("form-document-id") Long formDocumentId)
+		throws Exception {
 
-				return new FormDocumentImpl();
+		return new FormDocumentImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -86,10 +88,13 @@ public abstract class BaseFormDocumentResourceImpl implements FormDocumentResour
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

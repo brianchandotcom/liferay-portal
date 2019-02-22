@@ -37,82 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class LocationImpl implements Location {
 
 	public String getAddressCountry() {
-			return addressCountry;
+		return addressCountry;
 	}
 
-	public void setAddressCountry(
-			String addressCountry) {
+	public String getAddressRegion() {
+		return addressRegion;
+	}
 
-			this.addressCountry = (String)addressCountry;
+	public Long getId() {
+		return id;
+	}
+
+	public void setAddressCountry(String addressCountry) {
+		this.addressCountry = (String)addressCountry;
 	}
 
 	@JsonIgnore
 	public void setAddressCountry(
-			UnsafeSupplier<String, Throwable>
-				addressCountryUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier) {
 
-			try {
-				addressCountry =
-					(String)addressCountryUnsafeSupplier.get();
+		try {
+			addressCountry = (String)addressCountryUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setAddressRegion(String addressRegion) {
+		this.addressRegion = (String)addressRegion;
 	}
+
+	@JsonIgnore
+	public void setAddressRegion(
+		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier) {
+
+		try {
+			addressRegion = (String)addressRegionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressCountry;
-	public String getAddressRegion() {
-			return addressRegion;
-	}
-
-	public void setAddressRegion(
-			String addressRegion) {
-
-			this.addressRegion = (String)addressRegion;
-	}
-
-	@JsonIgnore
-	public void setAddressRegion(
-			UnsafeSupplier<String, Throwable>
-				addressRegionUnsafeSupplier) {
-
-			try {
-				addressRegion =
-					(String)addressRegionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String addressRegion;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

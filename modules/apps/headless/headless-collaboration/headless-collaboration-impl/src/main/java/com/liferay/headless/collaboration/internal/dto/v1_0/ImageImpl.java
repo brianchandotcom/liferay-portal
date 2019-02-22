@@ -37,82 +37,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ImageImpl implements Image {
 
 	public String getContentUrl() {
-			return contentUrl;
+		return contentUrl;
 	}
 
-	public void setContentUrl(
-			String contentUrl) {
+	public Long getImageId() {
+		return imageId;
+	}
 
-			this.contentUrl = (String)contentUrl;
+	public String getName() {
+		return name;
+	}
+
+	public void setContentUrl(String contentUrl) {
+		this.contentUrl = (String)contentUrl;
 	}
 
 	@JsonIgnore
 	public void setContentUrl(
-			UnsafeSupplier<String, Throwable>
-				contentUrlUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
-			try {
-				contentUrl =
-					(String)contentUrlUnsafeSupplier.get();
+		try {
+			contentUrl = (String)contentUrlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setImageId(Long imageId) {
+		this.imageId = (Long)imageId;
 	}
+
+	@JsonIgnore
+	public void setImageId(
+		UnsafeSupplier<Long, Throwable> imageIdUnsafeSupplier) {
+
+		try {
+			imageId = (Long)imageIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String contentUrl;
-	public Long getImageId() {
-			return imageId;
-	}
-
-	public void setImageId(
-			Long imageId) {
-
-			this.imageId = (Long)imageId;
-	}
-
-	@JsonIgnore
-	public void setImageId(
-			UnsafeSupplier<Long, Throwable>
-				imageIdUnsafeSupplier) {
-
-			try {
-				imageId =
-					(Long)imageIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long imageId;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

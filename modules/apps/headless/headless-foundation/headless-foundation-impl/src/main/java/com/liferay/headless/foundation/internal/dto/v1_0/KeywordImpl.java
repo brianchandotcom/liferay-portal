@@ -40,190 +40,164 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class KeywordImpl implements Keyword {
 
 	public Long getContentSpace() {
-			return contentSpace;
+		return contentSpace;
 	}
 
-	public void setContentSpace(
-			Long contentSpace) {
+	public Creator getCreator() {
+		return creator;
+	}
 
-			this.contentSpace = (Long)contentSpace;
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Number getKeywordUsageCount() {
+		return keywordUsageCount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setContentSpace(Long contentSpace) {
+		this.contentSpace = (Long)contentSpace;
 	}
 
 	@JsonIgnore
 	public void setContentSpace(
-			UnsafeSupplier<Long, Throwable>
-				contentSpaceUnsafeSupplier) {
+		UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-			try {
-				contentSpace =
-					(Long)contentSpaceUnsafeSupplier.get();
+		try {
+			contentSpace = (Long)contentSpaceUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setCreator(Creator creator) {
+		this.creator = (CreatorImpl)creator;
 	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
+		try {
+			creator = (CreatorImpl)creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = (Date)dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = (Date)dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = (Date)dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setKeywordUsageCount(Number keywordUsageCount) {
+		this.keywordUsageCount = (Number)keywordUsageCount;
+	}
+
+	@JsonIgnore
+	public void setKeywordUsageCount(
+		UnsafeSupplier<Number, Throwable> keywordUsageCountUnsafeSupplier) {
+
+		try {
+			keywordUsageCount = (Number)keywordUsageCountUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long contentSpace;
-	public Creator getCreator() {
-			return creator;
-	}
-
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = (CreatorImpl)creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
-
-			try {
-				creator =
-					(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected CreatorImpl creator;
-	public Date getDateCreated() {
-			return dateCreated;
-	}
-
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = (Date)dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
-
-			try {
-				dateCreated =
-					(Date)dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
-	public Date getDateModified() {
-			return dateModified;
-	}
-
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = (Date)dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
-
-			try {
-				dateModified =
-					(Date)dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public Number getKeywordUsageCount() {
-			return keywordUsageCount;
-	}
-
-	public void setKeywordUsageCount(
-			Number keywordUsageCount) {
-
-			this.keywordUsageCount = (Number)keywordUsageCount;
-	}
-
-	@JsonIgnore
-	public void setKeywordUsageCount(
-			UnsafeSupplier<Number, Throwable>
-				keywordUsageCountUnsafeSupplier) {
-
-			try {
-				keywordUsageCount =
-					(Number)keywordUsageCountUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Number keywordUsageCount;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

@@ -65,322 +65,359 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetStructuredContentStructuredContentImagesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
 	public void testDeleteStructuredContentContentDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
+
 	@Test
 	public void testGetStructuredContentContentDocument() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetStructuredContentStructuredContentImagesPage()
+		throws Exception {
+
+		Assert.assertTrue(true);
 	}
 
-	protected Page<StructuredContentImage> invokeGetStructuredContentStructuredContentImagesPage(
-				Long structuredContentId)
-			throws Exception {
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
 
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images", structuredContentId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected Http.Response invokeGetStructuredContentStructuredContentImagesPageResponse(
-				Long structuredContentId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images", structuredContentId));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
 	protected boolean invokeDeleteStructuredContentContentDocument(
-				Long structuredContentId,Long contentDocumentId)
-			throws Exception {
+			Long structuredContentId, Long contentDocumentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setDelete(true);
+		options.setDelete(true);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+					structuredContentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokeDeleteStructuredContentContentDocumentResponse(
-				Long structuredContentId,Long contentDocumentId)
-			throws Exception {
+	protected Http.Response
+			invokeDeleteStructuredContentContentDocumentResponse(
+				Long structuredContentId, Long contentDocumentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-				options.setDelete(true);
+		options.setDelete(true);
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+					structuredContentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
 	protected StructuredContentImage invokeGetStructuredContentContentDocument(
-				Long structuredContentId,Long contentDocumentId)
-			throws Exception {
+			Long structuredContentId, Long contentDocumentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+					structuredContentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), StructuredContentImageImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), StructuredContentImageImpl.class);
 	}
 
 	protected Http.Response invokeGetStructuredContentContentDocumentResponse(
-				Long structuredContentId,Long contentDocumentId)
-			throws Exception {
+			Long structuredContentId, Long contentDocumentId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}", structuredContentId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images/{content-document-id}",
+					structuredContentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
+	}
+
+	protected Page<StructuredContentImage>
+			invokeGetStructuredContentStructuredContentImagesPage(
+				Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images",
+					structuredContentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response
+			invokeGetStructuredContentStructuredContentImagesPageResponse(
+				Long structuredContentId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/structured-contents/{structured-content-id}/structured-content-images",
+					structuredContentId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected StructuredContentImage randomStructuredContentImage() {
 		return new StructuredContentImageImpl() {
 			{
 
-						contentUrl = RandomTestUtil.randomString();
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						encodingFormat = RandomTestUtil.randomString();
-						fileExtension = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						title = RandomTestUtil.randomString();
-	}
+				contentUrl = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				encodingFormat = RandomTestUtil.randomString();
+				fileExtension = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				title = RandomTestUtil.randomString();
+			}
 		};
 	}
 
 	protected Group testGroup;
 
-	protected static class StructuredContentImageImpl implements StructuredContentImage {
+	protected static class StructuredContentImageImpl
+		implements StructuredContentImage {
 
-	public String getContentUrl() {
-				return contentUrl;
-	}
+		public String getContentUrl() {
+			return contentUrl;
+		}
 
-	public void setContentUrl(String contentUrl) {
-				this.contentUrl = (String)contentUrl;
-	}
+		public Creator getCreator() {
+			return creator;
+		}
 
-	@JsonIgnore
-	public void setContentUrl(
-				UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					contentUrl =
-						(String)contentUrlUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	@JsonProperty
-	protected String contentUrl;
-	public Creator getCreator() {
-				return creator;
-	}
+		public String getEncodingFormat() {
+			return encodingFormat;
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = (CreatorImpl)creator;
-	}
+		public String getFileExtension() {
+			return fileExtension;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public Long getId() {
+			return id;
+		}
 
-				try {
-					creator =
-						(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Number getSizeInBytes() {
+			return sizeInBytes;
+		}
 
-	@JsonProperty
-	protected CreatorImpl creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+		public String getTitle() {
+			return title;
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = (Date)dateCreated;
-	}
+		public void setContentUrl(String contentUrl) {
+			this.contentUrl = (String)contentUrl;
+		}
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		@JsonIgnore
+		public void setContentUrl(
+			UnsafeSupplier<String, Throwable> contentUrlUnsafeSupplier) {
 
-				try {
-					dateCreated =
-						(Date)dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				contentUrl = (String)contentUrlUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+		public void setCreator(Creator creator) {
+			this.creator = (CreatorImpl)creator;
+		}
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = (Date)dateModified;
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+			try {
+				creator = (CreatorImpl)creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					dateModified =
-						(Date)dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = (Date)dateCreated;
+		}
 
-	@JsonProperty
-	protected Date dateModified;
-	public String getEncodingFormat() {
-				return encodingFormat;
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	public void setEncodingFormat(String encodingFormat) {
-				this.encodingFormat = (String)encodingFormat;
-	}
+			try {
+				dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setEncodingFormat(
-				UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
+		public void setDateModified(Date dateModified) {
+			this.dateModified = (Date)dateModified;
+		}
 
-				try {
-					encodingFormat =
-						(String)encodingFormatUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-	@JsonProperty
-	protected String encodingFormat;
-	public String getFileExtension() {
-				return fileExtension;
-	}
+			try {
+				dateModified = (Date)dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setFileExtension(String fileExtension) {
-				this.fileExtension = (String)fileExtension;
-	}
+		public void setEncodingFormat(String encodingFormat) {
+			this.encodingFormat = (String)encodingFormat;
+		}
 
-	@JsonIgnore
-	public void setFileExtension(
-				UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
+		@JsonIgnore
+		public void setEncodingFormat(
+			UnsafeSupplier<String, Throwable> encodingFormatUnsafeSupplier) {
 
-				try {
-					fileExtension =
-						(String)fileExtensionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				encodingFormat = (String)encodingFormatUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String fileExtension;
-	public Long getId() {
-				return id;
-	}
+		public void setFileExtension(String fileExtension) {
+			this.fileExtension = (String)fileExtension;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		@JsonIgnore
+		public void setFileExtension(
+			UnsafeSupplier<String, Throwable> fileExtensionUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				fileExtension = (String)fileExtensionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public Number getSizeInBytes() {
-				return sizeInBytes;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setSizeInBytes(Number sizeInBytes) {
-				this.sizeInBytes = (Number)sizeInBytes;
-	}
+		public void setSizeInBytes(Number sizeInBytes) {
+			this.sizeInBytes = (Number)sizeInBytes;
+		}
 
-	@JsonIgnore
-	public void setSizeInBytes(
-				UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
+		@JsonIgnore
+		public void setSizeInBytes(
+			UnsafeSupplier<Number, Throwable> sizeInBytesUnsafeSupplier) {
 
-				try {
-					sizeInBytes =
-						(Number)sizeInBytesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				sizeInBytes = (Number)sizeInBytesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Number sizeInBytes;
-	public String getTitle() {
-				return title;
-	}
+		public void setTitle(String title) {
+			this.title = (String)title;
+		}
 
-	public void setTitle(String title) {
-				this.title = (String)title;
-	}
+		@JsonIgnore
+		public void setTitle(
+			UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setTitle(
-				UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+			try {
+				title = (String)titleUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					title =
-						(String)titleUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String contentUrl;
 
-	@JsonProperty
-	protected String title;
+		@JsonProperty
+		protected CreatorImpl creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String encodingFormat;
+
+		@JsonProperty
+		protected String fileExtension;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected Number sizeInBytes;
+
+		@JsonProperty
+		protected String title;
 
 	}
 
@@ -391,9 +428,11 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -404,12 +443,12 @@ public abstract class BaseStructuredContentImageResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

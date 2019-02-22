@@ -46,29 +46,32 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseFormStructureResourceImpl implements FormStructureResource {
+public abstract class BaseFormStructureResourceImpl
+	implements FormStructureResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/content-spaces/{content-space-id}/form-structures")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<FormStructure> getContentSpaceFormStructuresPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/form-structures/{form-structure-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public FormStructure getFormStructure(
-	@PathParam("form-structure-id") Long formStructureId)
-			throws Exception {
+			@PathParam("form-structure-id") Long formStructureId)
+		throws Exception {
 
-				return new FormStructureImpl();
+		return new FormStructureImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -88,10 +91,13 @@ public abstract class BaseFormStructureResourceImpl implements FormStructureReso
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

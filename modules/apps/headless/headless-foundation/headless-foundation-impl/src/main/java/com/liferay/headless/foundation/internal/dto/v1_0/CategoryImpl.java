@@ -42,325 +42,289 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CategoryImpl implements Category {
 
 	public String[] getAvailableLanguages() {
-			return availableLanguages;
+		return availableLanguages;
 	}
 
-	public void setAvailableLanguages(
-			String[] availableLanguages) {
+	public Creator getCreator() {
+		return creator;
+	}
 
-			this.availableLanguages = (String[])availableLanguages;
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Boolean getHasCategories() {
+		return hasCategories;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public ParentCategory getParentCategory() {
+		return parentCategory;
+	}
+
+	public ParentVocabulary getParentVocabulary() {
+		return parentVocabulary;
+	}
+
+	public Long getParentVocabularyId() {
+		return parentVocabularyId;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		this.availableLanguages = (String[])availableLanguages;
 	}
 
 	@JsonIgnore
 	public void setAvailableLanguages(
-			UnsafeSupplier<String[], Throwable>
-				availableLanguagesUnsafeSupplier) {
+		UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
 
-			try {
-				availableLanguages =
-					(String[])availableLanguagesUnsafeSupplier.get();
+		try {
+			availableLanguages =
+				(String[])availableLanguagesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setCreator(Creator creator) {
+		this.creator = (CreatorImpl)creator;
 	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+
+		try {
+			creator = (CreatorImpl)creatorUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = (Long)creatorId;
+	}
+
+	@JsonIgnore
+	public void setCreatorId(
+		UnsafeSupplier<Long, Throwable> creatorIdUnsafeSupplier) {
+
+		try {
+			creatorId = (Long)creatorIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = (Date)dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = (Date)dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = (Date)dateModifiedUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setDescription(String description) {
+		this.description = (String)description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+
+		try {
+			description = (String)descriptionUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setHasCategories(Boolean hasCategories) {
+		this.hasCategories = (Boolean)hasCategories;
+	}
+
+	@JsonIgnore
+	public void setHasCategories(
+		UnsafeSupplier<Boolean, Throwable> hasCategoriesUnsafeSupplier) {
+
+		try {
+			hasCategories = (Boolean)hasCategoriesUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setParentCategory(ParentCategory parentCategory) {
+		this.parentCategory = (ParentCategoryImpl)parentCategory;
+	}
+
+	@JsonIgnore
+	public void setParentCategory(
+		UnsafeSupplier<ParentCategory, Throwable>
+			parentCategoryUnsafeSupplier) {
+
+		try {
+			parentCategory =
+				(ParentCategoryImpl)parentCategoryUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setParentVocabulary(ParentVocabulary parentVocabulary) {
+		this.parentVocabulary = (ParentVocabularyImpl)parentVocabulary;
+	}
+
+	@JsonIgnore
+	public void setParentVocabulary(
+		UnsafeSupplier<ParentVocabulary, Throwable>
+			parentVocabularyUnsafeSupplier) {
+
+		try {
+			parentVocabulary =
+				(ParentVocabularyImpl)parentVocabularyUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setParentVocabularyId(Long parentVocabularyId) {
+		this.parentVocabularyId = (Long)parentVocabularyId;
+	}
+
+	@JsonIgnore
+	public void setParentVocabularyId(
+		UnsafeSupplier<Long, Throwable> parentVocabularyIdUnsafeSupplier) {
+
+		try {
+			parentVocabularyId = (Long)parentVocabularyIdUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String[] availableLanguages;
-	public ParentCategory getParentCategory() {
-			return parentCategory;
-	}
-
-	public void setParentCategory(
-			ParentCategory parentCategory) {
-
-			this.parentCategory = (ParentCategoryImpl)parentCategory;
-	}
-
-	@JsonIgnore
-	public void setParentCategory(
-			UnsafeSupplier<ParentCategory, Throwable>
-				parentCategoryUnsafeSupplier) {
-
-			try {
-				parentCategory =
-					(ParentCategoryImpl)parentCategoryUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
-
-	@GraphQLField
-	@JsonProperty
-	protected ParentCategoryImpl parentCategory;
-	public Creator getCreator() {
-			return creator;
-	}
-
-	public void setCreator(
-			Creator creator) {
-
-			this.creator = (CreatorImpl)creator;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-			UnsafeSupplier<Creator, Throwable>
-				creatorUnsafeSupplier) {
-
-			try {
-				creator =
-					(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected CreatorImpl creator;
-	public Long getCreatorId() {
-			return creatorId;
-	}
-
-	public void setCreatorId(
-			Long creatorId) {
-
-			this.creatorId = (Long)creatorId;
-	}
-
-	@JsonIgnore
-	public void setCreatorId(
-			UnsafeSupplier<Long, Throwable>
-				creatorIdUnsafeSupplier) {
-
-			try {
-				creatorId =
-					(Long)creatorIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long creatorId;
-	public Date getDateCreated() {
-			return dateCreated;
-	}
-
-	public void setDateCreated(
-			Date dateCreated) {
-
-			this.dateCreated = (Date)dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier) {
-
-			try {
-				dateCreated =
-					(Date)dateCreatedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateCreated;
-	public Date getDateModified() {
-			return dateModified;
-	}
-
-	public void setDateModified(
-			Date dateModified) {
-
-			this.dateModified = (Date)dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-			UnsafeSupplier<Date, Throwable>
-				dateModifiedUnsafeSupplier) {
-
-			try {
-				dateModified =
-					(Date)dateModifiedUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Date dateModified;
-	public String getDescription() {
-			return description;
-	}
-
-	public void setDescription(
-			String description) {
-
-			this.description = (String)description;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier) {
-
-			try {
-				description =
-					(String)descriptionUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String description;
-	public Boolean getHasCategories() {
-			return hasCategories;
-	}
-
-	public void setHasCategories(
-			Boolean hasCategories) {
-
-			this.hasCategories = (Boolean)hasCategories;
-	}
-
-	@JsonIgnore
-	public void setHasCategories(
-			UnsafeSupplier<Boolean, Throwable>
-				hasCategoriesUnsafeSupplier) {
-
-			try {
-				hasCategories =
-					(Boolean)hasCategoriesUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Boolean hasCategories;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public ParentVocabulary getParentVocabulary() {
-			return parentVocabulary;
-	}
 
-	public void setParentVocabulary(
-			ParentVocabulary parentVocabulary) {
-
-			this.parentVocabulary = (ParentVocabularyImpl)parentVocabulary;
-	}
-
-	@JsonIgnore
-	public void setParentVocabulary(
-			UnsafeSupplier<ParentVocabulary, Throwable>
-				parentVocabularyUnsafeSupplier) {
-
-			try {
-				parentVocabulary =
-					(ParentVocabularyImpl)parentVocabularyUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
+	@GraphQLField
+	@JsonProperty
+	protected ParentCategoryImpl parentCategory;
 
 	@GraphQLField
 	@JsonProperty
 	protected ParentVocabularyImpl parentVocabulary;
-	public Long getParentVocabularyId() {
-			return parentVocabularyId;
-	}
-
-	public void setParentVocabularyId(
-			Long parentVocabularyId) {
-
-			this.parentVocabularyId = (Long)parentVocabularyId;
-	}
-
-	@JsonIgnore
-	public void setParentVocabularyId(
-			UnsafeSupplier<Long, Throwable>
-				parentVocabularyIdUnsafeSupplier) {
-
-			try {
-				parentVocabularyId =
-					(Long)parentVocabularyIdUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

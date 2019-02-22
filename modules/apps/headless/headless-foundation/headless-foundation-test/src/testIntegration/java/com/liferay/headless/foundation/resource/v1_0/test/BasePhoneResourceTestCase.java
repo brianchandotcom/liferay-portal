@@ -62,73 +62,78 @@ public abstract class BasePhoneResourceTestCase {
 
 	@Test
 	public void testGetGenericParentPhonesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetPhone() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetPhone() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<Phone> invokeGetGenericParentPhonesPage(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/phones", genericParentId));
+		options.setLocation(_resourceURL + _toPath("/phones", genericParentId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetGenericParentPhonesPageResponse(
-				Object genericParentId,Pagination pagination)
-			throws Exception {
+			Object genericParentId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/phones", genericParentId));
+		options.setLocation(_resourceURL + _toPath("/phones", genericParentId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected Phone invokeGetPhone(
-				Long phoneId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/phones/{phone-id}", phoneId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), PhoneImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetPhoneResponse(
-				Long phoneId)
-			throws Exception {
+	protected Phone invokeGetPhone(Long phoneId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(
+			_resourceURL + _toPath("/phones/{phone-id}", phoneId));
 
-			options.setLocation(_resourceURL + _toPath("/phones/{phone-id}", phoneId));
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), PhoneImpl.class);
+	}
 
-			HttpUtil.URLtoString(options);
+	protected Http.Response invokeGetPhoneResponse(Long phoneId)
+		throws Exception {
 
-			return options.getResponse();
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/phones/{phone-id}", phoneId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected Phone randomPhone() {
 		return new PhoneImpl() {
 			{
 
-						extension = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						phoneNumber = RandomTestUtil.randomString();
-						phoneType = RandomTestUtil.randomString();
-	}
+				extension = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				phoneNumber = RandomTestUtil.randomString();
+				phoneType = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -136,98 +141,95 @@ public abstract class BasePhoneResourceTestCase {
 
 	protected static class PhoneImpl implements Phone {
 
-	public String getExtension() {
-				return extension;
-	}
+		public String getExtension() {
+			return extension;
+		}
 
-	public void setExtension(String extension) {
-				this.extension = (String)extension;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonIgnore
-	public void setExtension(
-				UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
+		public String getPhoneNumber() {
+			return phoneNumber;
+		}
 
-				try {
-					extension =
-						(String)extensionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public String getPhoneType() {
+			return phoneType;
+		}
 
-	@JsonProperty
-	protected String extension;
-	public Long getId() {
-				return id;
-	}
+		public void setExtension(String extension) {
+			this.extension = (String)extension;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		@JsonIgnore
+		public void setExtension(
+			UnsafeSupplier<String, Throwable> extensionUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				extension = (String)extensionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getPhoneNumber() {
-				return phoneNumber;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setPhoneNumber(String phoneNumber) {
-				this.phoneNumber = (String)phoneNumber;
-	}
+		public void setPhoneNumber(String phoneNumber) {
+			this.phoneNumber = (String)phoneNumber;
+		}
 
-	@JsonIgnore
-	public void setPhoneNumber(
-				UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
+		@JsonIgnore
+		public void setPhoneNumber(
+			UnsafeSupplier<String, Throwable> phoneNumberUnsafeSupplier) {
 
-				try {
-					phoneNumber =
-						(String)phoneNumberUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				phoneNumber = (String)phoneNumberUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String phoneNumber;
-	public String getPhoneType() {
-				return phoneType;
-	}
+		public void setPhoneType(String phoneType) {
+			this.phoneType = (String)phoneType;
+		}
 
-	public void setPhoneType(String phoneType) {
-				this.phoneType = (String)phoneType;
-	}
+		@JsonIgnore
+		public void setPhoneType(
+			UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setPhoneType(
-				UnsafeSupplier<String, Throwable> phoneTypeUnsafeSupplier) {
+			try {
+				phoneType = (String)phoneTypeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					phoneType =
-						(String)phoneTypeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String extension;
 
-	@JsonProperty
-	protected String phoneType;
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String phoneNumber;
+
+		@JsonProperty
+		protected String phoneType;
 
 	}
 
@@ -238,9 +240,11 @@ public abstract class BasePhoneResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -251,12 +255,12 @@ public abstract class BasePhoneResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

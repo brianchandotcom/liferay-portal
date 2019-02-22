@@ -37,82 +37,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EmailImpl implements Email {
 
 	public String getEmail() {
-			return email;
+		return email;
 	}
 
-	public void setEmail(
-			String email) {
+	public Long getId() {
+		return id;
+	}
 
-			this.email = (String)email;
+	public String getType() {
+		return type;
+	}
+
+	public void setEmail(String email) {
+		this.email = (String)email;
 	}
 
 	@JsonIgnore
 	public void setEmail(
-			UnsafeSupplier<String, Throwable>
-				emailUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> emailUnsafeSupplier) {
 
-			try {
-				email =
-					(String)emailUnsafeSupplier.get();
+		try {
+			email = (String)emailUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setType(String type) {
+		this.type = (String)type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier) {
+		try {
+			type = (String)typeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String email;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getType() {
-			return type;
-	}
-
-	public void setType(
-			String type) {
-
-			this.type = (String)type;
-	}
-
-	@JsonIgnore
-	public void setType(
-			UnsafeSupplier<String, Throwable>
-				typeUnsafeSupplier) {
-
-			try {
-				type =
-					(String)typeUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

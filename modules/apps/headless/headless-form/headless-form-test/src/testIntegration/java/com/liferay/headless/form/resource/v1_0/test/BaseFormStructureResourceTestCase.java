@@ -60,8 +60,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		_resourceURL = new URL(
-			"http://localhost:8080/o/headless-form/v1.0");
+		_resourceURL = new URL("http://localhost:8080/o/headless-form/v1.0");
 	}
 
 	@After
@@ -71,75 +70,94 @@ public abstract class BaseFormStructureResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceFormStructuresPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetFormStructure() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetFormStructure() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<FormStructure> invokeGetContentSpaceFormStructuresPage(
-				Long contentSpaceId,Pagination pagination)
-			throws Exception {
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/form-structures", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/form-structures",
+					contentSpaceId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetContentSpaceFormStructuresPageResponse(
-				Long contentSpaceId,Pagination pagination)
-			throws Exception {
+			Long contentSpaceId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/content-spaces/{content-space-id}/form-structures", contentSpaceId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/content-spaces/{content-space-id}/form-structures",
+					contentSpaceId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected FormStructure invokeGetFormStructure(
-				Long formStructureId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/form-structures/{form-structure-id}", formStructureId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), FormStructureImpl.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetFormStructureResponse(
-				Long formStructureId)
-			throws Exception {
+	protected FormStructure invokeGetFormStructure(Long formStructureId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/form-structures/{form-structure-id}", formStructureId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/form-structures/{form-structure-id}", formStructureId));
 
-			HttpUtil.URLtoString(options);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), FormStructureImpl.class);
+	}
 
-			return options.getResponse();
+	protected Http.Response invokeGetFormStructureResponse(Long formStructureId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/form-structures/{form-structure-id}", formStructureId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
 	}
 
 	protected FormStructure randomFormStructure() {
 		return new FormStructureImpl() {
 			{
 
-						contentSpace = RandomTestUtil.randomLong();
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						name = RandomTestUtil.randomString();
-	}
+				contentSpace = RandomTestUtil.randomLong();
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -147,236 +165,235 @@ public abstract class BaseFormStructureResourceTestCase {
 
 	protected static class FormStructureImpl implements FormStructure {
 
-	public String[] getAvailableLanguages() {
-				return availableLanguages;
-	}
+		public String[] getAvailableLanguages() {
+			return availableLanguages;
+		}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = (String[])availableLanguages;
-	}
+		public Long getContentSpace() {
+			return contentSpace;
+		}
 
-	@JsonIgnore
-	public void setAvailableLanguages(
-				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+		public Creator getCreator() {
+			return creator;
+		}
 
-				try {
-					availableLanguages =
-						(String[])availableLanguagesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-	@JsonProperty
-	protected String[] availableLanguages;
-	public Long getContentSpace() {
-				return contentSpace;
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	public void setContentSpace(Long contentSpace) {
-				this.contentSpace = (Long)contentSpace;
-	}
+		public String getDescription() {
+			return description;
+		}
 
-	@JsonIgnore
-	public void setContentSpace(
-				UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
+		public FormPages[] getFormPages() {
+			return formPages;
+		}
 
-				try {
-					contentSpace =
-						(Long)contentSpaceUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonProperty
-	protected Long contentSpace;
-	public Creator getCreator() {
-				return creator;
-	}
+		public String getName() {
+			return name;
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = (CreatorImpl)creator;
-	}
+		public SuccessPage getSuccessPage() {
+			return successPage;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public void setAvailableLanguages(String[] availableLanguages) {
+			this.availableLanguages = (String[])availableLanguages;
+		}
 
-				try {
-					creator =
-						(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
 
-	@JsonProperty
-	protected CreatorImpl creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+			try {
+				availableLanguages =
+					(String[])availableLanguagesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = (Date)dateCreated;
-	}
+		public void setContentSpace(Long contentSpace) {
+			this.contentSpace = (Long)contentSpace;
+		}
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+		@JsonIgnore
+		public void setContentSpace(
+			UnsafeSupplier<Long, Throwable> contentSpaceUnsafeSupplier) {
 
-				try {
-					dateCreated =
-						(Date)dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				contentSpace = (Long)contentSpaceUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+		public void setCreator(Creator creator) {
+			this.creator = (CreatorImpl)creator;
+		}
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = (Date)dateModified;
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+			try {
+				creator = (CreatorImpl)creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					dateModified =
-						(Date)dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = (Date)dateCreated;
+		}
 
-	@JsonProperty
-	protected Date dateModified;
-	public String getDescription() {
-				return description;
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	public void setDescription(String description) {
-				this.description = (String)description;
-	}
+			try {
+				dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDescription(
-				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+		public void setDateModified(Date dateModified) {
+			this.dateModified = (Date)dateModified;
+		}
 
-				try {
-					description =
-						(String)descriptionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-	@JsonProperty
-	protected String description;
-	public FormPages[] getFormPages() {
-				return formPages;
-	}
+			try {
+				dateModified = (Date)dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setFormPages(FormPages[] formPages) {
-				this.formPages = (FormPagesImpl[])formPages;
-	}
+		public void setDescription(String description) {
+			this.description = (String)description;
+		}
 
-	@JsonIgnore
-	public void setFormPages(
-				UnsafeSupplier<FormPages[], Throwable> formPagesUnsafeSupplier) {
+		@JsonIgnore
+		public void setDescription(
+			UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-				try {
-					formPages =
-						(FormPagesImpl[])formPagesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				description = (String)descriptionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected FormPagesImpl[] formPages;
-	public Long getId() {
-				return id;
-	}
+		public void setFormPages(FormPages[] formPages) {
+			this.formPages = (FormPagesImpl[])formPages;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		@JsonIgnore
+		public void setFormPages(
+			UnsafeSupplier<FormPages[], Throwable> formPagesUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				formPages = (FormPagesImpl[])formPagesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getName() {
-				return name;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setName(String name) {
-				this.name = (String)name;
-	}
+		public void setName(String name) {
+			this.name = (String)name;
+		}
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
-				try {
-					name =
-						(String)nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				name = (String)nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String name;
-	public SuccessPage getSuccessPage() {
-				return successPage;
-	}
+		public void setSuccessPage(SuccessPage successPage) {
+			this.successPage = (SuccessPageImpl)successPage;
+		}
 
-	public void setSuccessPage(SuccessPage successPage) {
-				this.successPage = (SuccessPageImpl)successPage;
-	}
+		@JsonIgnore
+		public void setSuccessPage(
+			UnsafeSupplier<SuccessPage, Throwable> successPageUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setSuccessPage(
-				UnsafeSupplier<SuccessPage, Throwable> successPageUnsafeSupplier) {
+			try {
+				successPage = (SuccessPageImpl)successPageUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					successPage =
-						(SuccessPageImpl)successPageUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String[] availableLanguages;
 
-	@JsonProperty
-	protected SuccessPageImpl successPage;
+		@JsonProperty
+		protected Long contentSpace;
+
+		@JsonProperty
+		protected CreatorImpl creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected FormPagesImpl[] formPages;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected SuccessPageImpl successPage;
 
 	}
 
@@ -387,9 +404,11 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -400,12 +419,12 @@ public abstract class BaseFormStructureResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

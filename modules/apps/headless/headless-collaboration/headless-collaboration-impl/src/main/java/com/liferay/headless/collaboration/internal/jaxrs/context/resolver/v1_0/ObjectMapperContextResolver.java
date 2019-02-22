@@ -58,7 +58,8 @@ import org.osgi.service.component.annotations.Component;
 )
 @Generated("")
 @Provider
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
 		return _objectMapper;
@@ -69,24 +70,37 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			registerModule(
-				new SimpleModule("Liferay.Headless.Collaboration", Version.unknownVersion()) {
+				new SimpleModule(
+					"Liferay.Headless.Collaboration",
+					Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-									addMapping(AggregateRating.class, AggregateRatingImpl.class);
-									addMapping(BlogPosting.class, BlogPostingImpl.class);
-									addMapping(BlogPostingImage.class, BlogPostingImageImpl.class);
-									addMapping(Categories.class, CategoriesImpl.class);
-									addMapping(Comment.class, CommentImpl.class);
-									addMapping(Creator.class, CreatorImpl.class);
+									addMapping(
+										AggregateRating.class,
+										AggregateRatingImpl.class);
+									addMapping(
+										BlogPosting.class,
+										BlogPostingImpl.class);
+									addMapping(
+										BlogPostingImage.class,
+										BlogPostingImageImpl.class);
+									addMapping(
+										Categories.class, CategoriesImpl.class);
+									addMapping(
+										Comment.class, CommentImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
 									addMapping(Image.class, ImageImpl.class);
-	}
+								}
 							});
-	}
+					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

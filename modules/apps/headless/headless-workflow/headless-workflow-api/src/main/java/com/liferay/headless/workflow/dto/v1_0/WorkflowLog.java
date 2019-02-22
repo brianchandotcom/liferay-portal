@@ -29,91 +29,75 @@ public interface WorkflowLog {
 
 	public String getAuditPerson();
 
-	public void setAuditPerson(
-			String auditPerson);
-
-	public void setAuditPerson(
-			UnsafeSupplier<String, Throwable>
-				auditPersonUnsafeSupplier);
 	public String getCommentLog();
 
-	public void setCommentLog(
-			String commentLog);
-
-	public void setCommentLog(
-			UnsafeSupplier<String, Throwable>
-				commentLogUnsafeSupplier);
 	public Date getDateCreated();
 
-	public void setDateCreated(
-			Date dateCreated);
-
-	public void setDateCreated(
-			UnsafeSupplier<Date, Throwable>
-				dateCreatedUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public String getPerson();
 
-	public void setPerson(
-			String person);
-
-	public void setPerson(
-			UnsafeSupplier<String, Throwable>
-				personUnsafeSupplier);
 	public String getPreviousPerson();
 
-	public void setPreviousPerson(
-			String previousPerson);
-
-	public void setPreviousPerson(
-			UnsafeSupplier<String, Throwable>
-				previousPersonUnsafeSupplier);
 	public String getPreviousState();
 
-	public void setPreviousState(
-			String previousState);
-
-	public void setPreviousState(
-			UnsafeSupplier<String, Throwable>
-				previousStateUnsafeSupplier);
 	public String getState();
 
-	public void setState(
-			String state);
-
-	public void setState(
-			UnsafeSupplier<String, Throwable>
-				stateUnsafeSupplier);
 	public WorkflowTask getTask();
 
-	public void setTask(
-			WorkflowTask task);
-
-	public void setTask(
-			UnsafeSupplier<WorkflowTask, Throwable>
-				taskUnsafeSupplier);
 	public Long getTaskId();
 
-	public void setTaskId(
-			Long taskId);
-
-	public void setTaskId(
-			UnsafeSupplier<Long, Throwable>
-				taskIdUnsafeSupplier);
 	public String getType();
 
-	public void setType(
-			String type);
+	public void setAuditPerson(String auditPerson);
 
-	public void setType(
-			UnsafeSupplier<String, Throwable>
-				typeUnsafeSupplier);
+	public void setAuditPerson(
+		UnsafeSupplier<String, Throwable> auditPersonUnsafeSupplier);
+
+	public void setCommentLog(String commentLog);
+
+	public void setCommentLog(
+		UnsafeSupplier<String, Throwable> commentLogUnsafeSupplier);
+
+	public void setDateCreated(Date dateCreated);
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setPerson(String person);
+
+	public void setPerson(
+		UnsafeSupplier<String, Throwable> personUnsafeSupplier);
+
+	public void setPreviousPerson(String previousPerson);
+
+	public void setPreviousPerson(
+		UnsafeSupplier<String, Throwable> previousPersonUnsafeSupplier);
+
+	public void setPreviousState(String previousState);
+
+	public void setPreviousState(
+		UnsafeSupplier<String, Throwable> previousStateUnsafeSupplier);
+
+	public void setState(String state);
+
+	public void setState(UnsafeSupplier<String, Throwable> stateUnsafeSupplier);
+
+	public void setTask(
+		UnsafeSupplier<WorkflowTask, Throwable> taskUnsafeSupplier);
+
+	public void setTask(WorkflowTask task);
+
+	public void setTaskId(Long taskId);
+
+	public void setTaskId(UnsafeSupplier<Long, Throwable> taskIdUnsafeSupplier);
+
+	public void setType(String type);
+
+	public void setType(UnsafeSupplier<String, Throwable> typeUnsafeSupplier);
 
 }

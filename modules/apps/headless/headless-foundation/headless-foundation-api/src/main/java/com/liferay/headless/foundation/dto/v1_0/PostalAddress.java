@@ -27,75 +27,64 @@ public interface PostalAddress {
 
 	public String getAddressCountry();
 
-	public void setAddressCountry(
-			String addressCountry);
-
-	public void setAddressCountry(
-			UnsafeSupplier<String, Throwable>
-				addressCountryUnsafeSupplier);
 	public String getAddressLocality();
 
-	public void setAddressLocality(
-			String addressLocality);
-
-	public void setAddressLocality(
-			UnsafeSupplier<String, Throwable>
-				addressLocalityUnsafeSupplier);
 	public String getAddressRegion();
 
-	public void setAddressRegion(
-			String addressRegion);
-
-	public void setAddressRegion(
-			UnsafeSupplier<String, Throwable>
-				addressRegionUnsafeSupplier);
 	public String getAddressType();
 
-	public void setAddressType(
-			String addressType);
-
-	public void setAddressType(
-			UnsafeSupplier<String, Throwable>
-				addressTypeUnsafeSupplier);
 	public Long getId();
 
-	public void setId(
-			Long id);
-
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
 	public String getPostalCode();
 
-	public void setPostalCode(
-			String postalCode);
-
-	public void setPostalCode(
-			UnsafeSupplier<String, Throwable>
-				postalCodeUnsafeSupplier);
 	public String getStreetAddressLine1();
 
-	public void setStreetAddressLine1(
-			String streetAddressLine1);
-
-	public void setStreetAddressLine1(
-			UnsafeSupplier<String, Throwable>
-				streetAddressLine1UnsafeSupplier);
 	public String getStreetAddressLine2();
 
-	public void setStreetAddressLine2(
-			String streetAddressLine2);
-
-	public void setStreetAddressLine2(
-			UnsafeSupplier<String, Throwable>
-				streetAddressLine2UnsafeSupplier);
 	public String getStreetAddressLine3();
 
-	public void setStreetAddressLine3(
-			String streetAddressLine3);
+	public void setAddressCountry(String addressCountry);
+
+	public void setAddressCountry(
+		UnsafeSupplier<String, Throwable> addressCountryUnsafeSupplier);
+
+	public void setAddressLocality(String addressLocality);
+
+	public void setAddressLocality(
+		UnsafeSupplier<String, Throwable> addressLocalityUnsafeSupplier);
+
+	public void setAddressRegion(String addressRegion);
+
+	public void setAddressRegion(
+		UnsafeSupplier<String, Throwable> addressRegionUnsafeSupplier);
+
+	public void setAddressType(String addressType);
+
+	public void setAddressType(
+		UnsafeSupplier<String, Throwable> addressTypeUnsafeSupplier);
+
+	public void setId(Long id);
+
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+
+	public void setPostalCode(String postalCode);
+
+	public void setPostalCode(
+		UnsafeSupplier<String, Throwable> postalCodeUnsafeSupplier);
+
+	public void setStreetAddressLine1(String streetAddressLine1);
+
+	public void setStreetAddressLine1(
+		UnsafeSupplier<String, Throwable> streetAddressLine1UnsafeSupplier);
+
+	public void setStreetAddressLine2(String streetAddressLine2);
+
+	public void setStreetAddressLine2(
+		UnsafeSupplier<String, Throwable> streetAddressLine2UnsafeSupplier);
+
+	public void setStreetAddressLine3(String streetAddressLine3);
 
 	public void setStreetAddressLine3(
-			UnsafeSupplier<String, Throwable>
-				streetAddressLine3UnsafeSupplier);
+		UnsafeSupplier<String, Throwable> streetAddressLine3UnsafeSupplier);
 
 }

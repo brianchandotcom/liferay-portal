@@ -38,109 +38,92 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FormPagesImpl implements FormPages {
 
 	public Fields[] getFields() {
-			return fields;
+		return fields;
 	}
 
-	public void setFields(
-			Fields[] fields) {
+	public String getHeadline() {
+		return headline;
+	}
 
-			this.fields = (FieldsImpl[])fields;
+	public Long getId() {
+		return id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setFields(Fields[] fields) {
+		this.fields = (FieldsImpl[])fields;
 	}
 
 	@JsonIgnore
 	public void setFields(
-			UnsafeSupplier<Fields[], Throwable>
-				fieldsUnsafeSupplier) {
+		UnsafeSupplier<Fields[], Throwable> fieldsUnsafeSupplier) {
 
-			try {
-				fields =
-					(FieldsImpl[])fieldsUnsafeSupplier.get();
+		try {
+			fields = (FieldsImpl[])fieldsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setHeadline(String headline) {
+		this.headline = (String)headline;
 	}
+
+	@JsonIgnore
+	public void setHeadline(
+		UnsafeSupplier<String, Throwable> headlineUnsafeSupplier) {
+
+		try {
+			headline = (String)headlineUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setId(Long id) {
+		this.id = (Long)id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setText(String text) {
+		this.text = (String)text;
+	}
+
+	@JsonIgnore
+	public void setText(UnsafeSupplier<String, Throwable> textUnsafeSupplier) {
+		try {
+			text = (String)textUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected FieldsImpl[] fields;
-	public String getHeadline() {
-			return headline;
-	}
-
-	public void setHeadline(
-			String headline) {
-
-			this.headline = (String)headline;
-	}
-
-	@JsonIgnore
-	public void setHeadline(
-			UnsafeSupplier<String, Throwable>
-				headlineUnsafeSupplier) {
-
-			try {
-				headline =
-					(String)headlineUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String headline;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getText() {
-			return text;
-	}
-
-	public void setText(
-			String text) {
-
-			this.text = (String)text;
-	}
-
-	@JsonIgnore
-	public void setText(
-			UnsafeSupplier<String, Throwable>
-				textUnsafeSupplier) {
-
-			try {
-				text =
-					(String)textUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

@@ -34,21 +34,19 @@ import javax.annotation.Generated;
 @Generated("")
 public interface KeywordResource {
 
+	public boolean deleteKeyword(Long keywordId) throws Exception;
+
 	public Page<Keyword> getContentSpaceKeywordsPage(
-				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
-			throws Exception;
-	public Keyword postContentSpaceKeyword(
-				Long contentSpaceId,Keyword keyword)
-			throws Exception;
-	public boolean deleteKeyword(
-				Long keywordId)
-			throws Exception;
-	public Keyword getKeyword(
-				Long keywordId)
-			throws Exception;
-	public Keyword putKeyword(
-				Long keywordId,Keyword keyword)
-			throws Exception;
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public Keyword getKeyword(Long keywordId) throws Exception;
+
+	public Keyword postContentSpaceKeyword(Long contentSpaceId, Keyword keyword)
+		throws Exception;
+
+	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

@@ -27,59 +27,49 @@ public interface Value {
 
 	public String getData();
 
-	public void setData(
-			String data);
-
-	public void setData(
-			UnsafeSupplier<String, Throwable>
-				dataUnsafeSupplier);
 	public ContentDocument getDocument();
 
-	public void setDocument(
-			ContentDocument document);
-
-	public void setDocument(
-			UnsafeSupplier<ContentDocument, Throwable>
-				documentUnsafeSupplier);
 	public Long getDocumentId();
 
-	public void setDocumentId(
-			Long documentId);
-
-	public void setDocumentId(
-			UnsafeSupplier<Long, Throwable>
-				documentIdUnsafeSupplier);
 	public Geo getGeo();
 
-	public void setGeo(
-			Geo geo);
-
-	public void setGeo(
-			UnsafeSupplier<Geo, Throwable>
-				geoUnsafeSupplier);
 	public String getLink();
 
-	public void setLink(
-			String link);
-
-	public void setLink(
-			UnsafeSupplier<String, Throwable>
-				linkUnsafeSupplier);
 	public StructuredContent getStructuredContent();
 
-	public void setStructuredContent(
-			StructuredContent structuredContent);
-
-	public void setStructuredContent(
-			UnsafeSupplier<StructuredContent, Throwable>
-				structuredContentUnsafeSupplier);
 	public Long getStructuredContentId();
 
-	public void setStructuredContentId(
-			Long structuredContentId);
+	public void setData(String data);
+
+	public void setData(UnsafeSupplier<String, Throwable> dataUnsafeSupplier);
+
+	public void setDocument(ContentDocument document);
+
+	public void setDocument(
+		UnsafeSupplier<ContentDocument, Throwable> documentUnsafeSupplier);
+
+	public void setDocumentId(Long documentId);
+
+	public void setDocumentId(
+		UnsafeSupplier<Long, Throwable> documentIdUnsafeSupplier);
+
+	public void setGeo(Geo geo);
+
+	public void setGeo(UnsafeSupplier<Geo, Throwable> geoUnsafeSupplier);
+
+	public void setLink(String link);
+
+	public void setLink(UnsafeSupplier<String, Throwable> linkUnsafeSupplier);
+
+	public void setStructuredContent(StructuredContent structuredContent);
+
+	public void setStructuredContent(
+		UnsafeSupplier<StructuredContent, Throwable>
+			structuredContentUnsafeSupplier);
+
+	public void setStructuredContentId(Long structuredContentId);
 
 	public void setStructuredContentId(
-			UnsafeSupplier<Long, Throwable>
-				structuredContentIdUnsafeSupplier);
+		UnsafeSupplier<Long, Throwable> structuredContentIdUnsafeSupplier);
 
 }

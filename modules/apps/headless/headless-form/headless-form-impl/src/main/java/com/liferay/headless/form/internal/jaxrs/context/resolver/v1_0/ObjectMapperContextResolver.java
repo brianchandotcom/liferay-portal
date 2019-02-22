@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Component;
 )
 @Generated("")
 @Provider
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
 		return _objectMapper;
@@ -83,31 +84,48 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			registerModule(
-				new SimpleModule("Liferay.Headless.Form", Version.unknownVersion()) {
+				new SimpleModule(
+					"Liferay.Headless.Form", Version.unknownVersion()) {
+
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-									addMapping(Columns.class, ColumnsImpl.class);
-									addMapping(Creator.class, CreatorImpl.class);
-									addMapping(FieldValues.class, FieldValuesImpl.class);
+									addMapping(
+										Columns.class, ColumnsImpl.class);
+									addMapping(
+										Creator.class, CreatorImpl.class);
+									addMapping(
+										FieldValues.class,
+										FieldValuesImpl.class);
 									addMapping(Fields.class, FieldsImpl.class);
 									addMapping(Form.class, FormImpl.class);
-									addMapping(FormDocument.class, FormDocumentImpl.class);
-									addMapping(FormPages.class, FormPagesImpl.class);
-									addMapping(FormRecord.class, FormRecordImpl.class);
-									addMapping(FormStructure.class, FormStructureImpl.class);
+									addMapping(
+										FormDocument.class,
+										FormDocumentImpl.class);
+									addMapping(
+										FormPages.class, FormPagesImpl.class);
+									addMapping(
+										FormRecord.class, FormRecordImpl.class);
+									addMapping(
+										FormStructure.class,
+										FormStructureImpl.class);
 									addMapping(Grid.class, GridImpl.class);
-									addMapping(Options.class, OptionsImpl.class);
+									addMapping(
+										Options.class, OptionsImpl.class);
 									addMapping(Rows.class, RowsImpl.class);
-									addMapping(SuccessPage.class, SuccessPageImpl.class);
-									addMapping(Validation.class, ValidationImpl.class);
-	}
+									addMapping(
+										SuccessPage.class,
+										SuccessPageImpl.class);
+									addMapping(
+										Validation.class, ValidationImpl.class);
+								}
 							});
-	}
+					}
+
 				});
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

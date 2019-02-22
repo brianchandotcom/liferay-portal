@@ -66,129 +66,150 @@ public abstract class BaseRoleResourceTestCase {
 
 	@Test
 	public void testGetMyUserAccountRolesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetRolesPage() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetRole() throws Exception {
-			Assert.assertTrue(true);
-	}
-	@Test
-	public void testGetUserAccountRolesPage() throws Exception {
-			Assert.assertTrue(true);
+		Assert.assertTrue(true);
 	}
 
-	protected void assertResponseCode(int expectedResponseCode, Http.Response actualResponse) {
-		Assert.assertEquals(expectedResponseCode, actualResponse.getResponseCode());
+	@Test
+	public void testGetRole() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetRolesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetUserAccountRolesPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertResponseCode(
+		int expectedResponseCode, Http.Response actualResponse) {
+
+		Assert.assertEquals(
+			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
 	protected Page<Role> invokeGetMyUserAccountRolesPage(
-				Long myUserAccountId,Pagination pagination)
-			throws Exception {
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/my-user-accounts/{my-user-account-id}/roles", myUserAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}/roles",
+					myUserAccountId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetMyUserAccountRolesPageResponse(
-				Long myUserAccountId,Pagination pagination)
-			throws Exception {
+			Long myUserAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/my-user-accounts/{my-user-account-id}/roles", myUserAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/my-user-accounts/{my-user-account-id}/roles",
+					myUserAccountId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
-	}
-	protected Page<Role> invokeGetRolesPage(
-				Pagination pagination)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/roles", pagination));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return options.getResponse();
 	}
 
-	protected Http.Response invokeGetRolesPageResponse(
-				Pagination pagination)
-			throws Exception {
+	protected Role invokeGetRole(Long roleId) throws Exception {
+		Http.Options options = _createHttpOptions();
 
-			Http.Options options = _createHttpOptions();
+		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
 
-			options.setLocation(_resourceURL + _toPath("/roles", pagination));
-
-			HttpUtil.URLtoString(options);
-
-			return options.getResponse();
-	}
-	protected Role invokeGetRole(
-				Long roleId)
-			throws Exception {
-
-			Http.Options options = _createHttpOptions();
-
-			options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
-
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), RoleImpl.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), RoleImpl.class);
 	}
 
-	protected Http.Response invokeGetRoleResponse(
-				Long roleId)
-			throws Exception {
+	protected Http.Response invokeGetRoleResponse(Long roleId)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
+		options.setLocation(_resourceURL + _toPath("/roles/{role-id}", roleId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
+
+	protected Page<Role> invokeGetRolesPage(Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles", pagination));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
+	}
+
+	protected Http.Response invokeGetRolesPageResponse(Pagination pagination)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(_resourceURL + _toPath("/roles", pagination));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	protected Page<Role> invokeGetUserAccountRolesPage(
-				Long userAccountId,Pagination pagination)
-			throws Exception {
+			Long userAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}/roles", userAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/roles", userAccountId));
 
-				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Page.class);
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Page.class);
 	}
 
 	protected Http.Response invokeGetUserAccountRolesPageResponse(
-				Long userAccountId,Pagination pagination)
-			throws Exception {
+			Long userAccountId, Pagination pagination)
+		throws Exception {
 
-			Http.Options options = _createHttpOptions();
+		Http.Options options = _createHttpOptions();
 
-			options.setLocation(_resourceURL + _toPath("/user-accounts/{user-account-id}/roles", userAccountId));
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{user-account-id}/roles", userAccountId));
 
-			HttpUtil.URLtoString(options);
+		HttpUtil.URLtoString(options);
 
-			return options.getResponse();
+		return options.getResponse();
 	}
 
 	protected Role randomRole() {
 		return new RoleImpl() {
 			{
 
-						dateCreated = RandomTestUtil.nextDate();
-						dateModified = RandomTestUtil.nextDate();
-						description = RandomTestUtil.randomString();
-						id = RandomTestUtil.randomLong();
-						name = RandomTestUtil.randomString();
-						roleType = RandomTestUtil.randomString();
-	}
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				id = RandomTestUtil.randomLong();
+				name = RandomTestUtil.randomString();
+				roleType = RandomTestUtil.randomString();
+			}
 		};
 	}
 
@@ -196,190 +217,189 @@ public abstract class BaseRoleResourceTestCase {
 
 	protected static class RoleImpl implements Role {
 
-	public String[] getAvailableLanguages() {
-				return availableLanguages;
-	}
+		public String[] getAvailableLanguages() {
+			return availableLanguages;
+		}
 
-	public void setAvailableLanguages(String[] availableLanguages) {
-				this.availableLanguages = (String[])availableLanguages;
-	}
+		public Creator getCreator() {
+			return creator;
+		}
 
-	@JsonIgnore
-	public void setAvailableLanguages(
-				UnsafeSupplier<String[], Throwable> availableLanguagesUnsafeSupplier) {
+		public Date getDateCreated() {
+			return dateCreated;
+		}
 
-				try {
-					availableLanguages =
-						(String[])availableLanguagesUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public Date getDateModified() {
+			return dateModified;
+		}
 
-	@JsonProperty
-	protected String[] availableLanguages;
-	public Creator getCreator() {
-				return creator;
-	}
+		public String getDescription() {
+			return description;
+		}
 
-	public void setCreator(Creator creator) {
-				this.creator = (CreatorImpl)creator;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	@JsonIgnore
-	public void setCreator(
-				UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
+		public String getName() {
+			return name;
+		}
 
-				try {
-					creator =
-						(CreatorImpl)creatorUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public String getRoleType() {
+			return roleType;
+		}
 
-	@JsonProperty
-	protected CreatorImpl creator;
-	public Date getDateCreated() {
-				return dateCreated;
-	}
+		public void setAvailableLanguages(String[] availableLanguages) {
+			this.availableLanguages = (String[])availableLanguages;
+		}
 
-	public void setDateCreated(Date dateCreated) {
-				this.dateCreated = (Date)dateCreated;
-	}
+		@JsonIgnore
+		public void setAvailableLanguages(
+			UnsafeSupplier<String[], Throwable>
+				availableLanguagesUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setDateCreated(
-				UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
+			try {
+				availableLanguages =
+					(String[])availableLanguagesUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					dateCreated =
-						(Date)dateCreatedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setCreator(Creator creator) {
+			this.creator = (CreatorImpl)creator;
+		}
 
-	@JsonProperty
-	protected Date dateCreated;
-	public Date getDateModified() {
-				return dateModified;
-	}
+		@JsonIgnore
+		public void setCreator(
+			UnsafeSupplier<Creator, Throwable> creatorUnsafeSupplier) {
 
-	public void setDateModified(Date dateModified) {
-				this.dateModified = (Date)dateModified;
-	}
+			try {
+				creator = (CreatorImpl)creatorUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonIgnore
-	public void setDateModified(
-				UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
+		public void setDateCreated(Date dateCreated) {
+			this.dateCreated = (Date)dateCreated;
+		}
 
-				try {
-					dateModified =
-						(Date)dateModifiedUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonIgnore
+		public void setDateCreated(
+			UnsafeSupplier<Date, Throwable> dateCreatedUnsafeSupplier) {
 
-	@JsonProperty
-	protected Date dateModified;
-	public String getDescription() {
-				return description;
-	}
+			try {
+				dateCreated = (Date)dateCreatedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setDescription(String description) {
-				this.description = (String)description;
-	}
+		public void setDateModified(Date dateModified) {
+			this.dateModified = (Date)dateModified;
+		}
 
-	@JsonIgnore
-	public void setDescription(
-				UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
+		@JsonIgnore
+		public void setDateModified(
+			UnsafeSupplier<Date, Throwable> dateModifiedUnsafeSupplier) {
 
-				try {
-					description =
-						(String)descriptionUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				dateModified = (Date)dateModifiedUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String description;
-	public Long getId() {
-				return id;
-	}
+		public void setDescription(String description) {
+			this.description = (String)description;
+		}
 
-	public void setId(Long id) {
-				this.id = (Long)id;
-	}
+		@JsonIgnore
+		public void setDescription(
+			UnsafeSupplier<String, Throwable> descriptionUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setId(
-				UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				description = (String)descriptionUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					id =
-						(Long)idUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		public void setId(Long id) {
+			this.id = (Long)id;
+		}
 
-	@JsonProperty
-	protected Long id;
-	public String getName() {
-				return name;
-	}
+		@JsonIgnore
+		public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+			try {
+				id = (Long)idUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	public void setName(String name) {
-				this.name = (String)name;
-	}
+		public void setName(String name) {
+			this.name = (String)name;
+		}
 
-	@JsonIgnore
-	public void setName(
-				UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		@JsonIgnore
+		public void setName(
+			UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
 
-				try {
-					name =
-						(String)nameUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+			try {
+				name = (String)nameUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-	@JsonProperty
-	protected String name;
-	public String getRoleType() {
-				return roleType;
-	}
+		public void setRoleType(String roleType) {
+			this.roleType = (String)roleType;
+		}
 
-	public void setRoleType(String roleType) {
-				this.roleType = (String)roleType;
-	}
+		@JsonIgnore
+		public void setRoleType(
+			UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
 
-	@JsonIgnore
-	public void setRoleType(
-				UnsafeSupplier<String, Throwable> roleTypeUnsafeSupplier) {
+			try {
+				roleType = (String)roleTypeUnsafeSupplier.get();
+			}
+			catch (Throwable t) {
+				throw new RuntimeException(t);
+			}
+		}
 
-				try {
-					roleType =
-						(String)roleTypeUnsafeSupplier.get();
-	}
-				catch (Throwable t) {
-					throw new RuntimeException(t);
-	}
-	}
+		@JsonProperty
+		protected String[] availableLanguages;
 
-	@JsonProperty
-	protected String roleType;
+		@JsonProperty
+		protected CreatorImpl creator;
+
+		@JsonProperty
+		protected Date dateCreated;
+
+		@JsonProperty
+		protected Date dateModified;
+
+		@JsonProperty
+		protected String description;
+
+		@JsonProperty
+		protected Long id;
+
+		@JsonProperty
+		protected String name;
+
+		@JsonProperty
+		protected String roleType;
 
 	}
 
@@ -390,9 +410,11 @@ public abstract class BaseRoleResourceTestCase {
 
 		String userNameAndPassword = "test@liferay.com:test";
 
-		String encodedUserNameAndPassword = Base64.encode(userNameAndPassword.getBytes());
+		String encodedUserNameAndPassword = Base64.encode(
+			userNameAndPassword.getBytes());
 
-		options.addHeader("Authorization", "Basic " + encodedUserNameAndPassword);
+		options.addHeader(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
 
 		options.addHeader("Content-Type", "application/json");
 
@@ -403,12 +425,12 @@ public abstract class BaseRoleResourceTestCase {
 		return template.replaceFirst("\\{.*\\}", String.valueOf(value));
 	}
 
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _inputObjectMapper = new ObjectMapper() {
 		{
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-	}
+		}
 	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper();
+	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
 	private URL _resourceURL;
 

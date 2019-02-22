@@ -39,82 +39,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GridImpl implements Grid {
 
 	public Columns[] getColumns() {
-			return columns;
+		return columns;
 	}
 
-	public void setColumns(
-			Columns[] columns) {
+	public Long getId() {
+		return id;
+	}
 
-			this.columns = (ColumnsImpl[])columns;
+	public Rows[] getRows() {
+		return rows;
+	}
+
+	public void setColumns(Columns[] columns) {
+		this.columns = (ColumnsImpl[])columns;
 	}
 
 	@JsonIgnore
 	public void setColumns(
-			UnsafeSupplier<Columns[], Throwable>
-				columnsUnsafeSupplier) {
+		UnsafeSupplier<Columns[], Throwable> columnsUnsafeSupplier) {
 
-			try {
-				columns =
-					(ColumnsImpl[])columnsUnsafeSupplier.get();
+		try {
+			columns = (ColumnsImpl[])columnsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setRows(Rows[] rows) {
+		this.rows = (RowsImpl[])rows;
+	}
+
+	@JsonIgnore
+	public void setRows(UnsafeSupplier<Rows[], Throwable> rowsUnsafeSupplier) {
+		try {
+			rows = (RowsImpl[])rowsUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected ColumnsImpl[] columns;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public Rows[] getRows() {
-			return rows;
-	}
-
-	public void setRows(
-			Rows[] rows) {
-
-			this.rows = (RowsImpl[])rows;
-	}
-
-	@JsonIgnore
-	public void setRows(
-			UnsafeSupplier<Rows[], Throwable>
-				rowsUnsafeSupplier) {
-
-			try {
-				rows =
-					(RowsImpl[])rowsUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

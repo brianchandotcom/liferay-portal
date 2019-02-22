@@ -54,85 +54,92 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCategoryResourceImpl implements CategoryResource {
 
-	@Override
 	@DELETE
+	@Override
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public boolean deleteCategory(
-	@PathParam("category-id") Long categoryId)
-			throws Exception {
+	public boolean deleteCategory(@PathParam("category-id") Long categoryId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/categories/{category-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Category getCategory(
-	@PathParam("category-id") Long categoryId)
-			throws Exception {
+	public Category getCategory(@PathParam("category-id") Long categoryId)
+		throws Exception {
 
-				return new CategoryImpl();
+		return new CategoryImpl();
 	}
-	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/categories/{category-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Category putCategory(
-	@PathParam("category-id") Long categoryId,Category category)
-			throws Exception {
 
-				return new CategoryImpl();
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/categories/{category-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Category> getCategoryCategoriesPage(
-	@PathParam("category-id") Long categoryId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
+			@PathParam("category-id") Long categoryId, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/categories/{category-id}/categories")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Category postCategoryCategory(
-	@PathParam("category-id") Long categoryId,Category category)
-			throws Exception {
 
-				return new CategoryImpl();
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/vocabularies/{vocabulary-id}/categories")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Category> getVocabularyCategoriesPage(
-	@PathParam("vocabulary-id") Long vocabularyId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
-			throws Exception {
+			@PathParam("vocabulary-id") Long vocabularyId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@Consumes("application/json")
+	@Override
+	@Path("/categories/{category-id}/categories")
 	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Category postCategoryCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
+
+		return new CategoryImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
 	@Path("/vocabularies/{vocabulary-id}/categories")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Category postVocabularyCategory(
-	@PathParam("vocabulary-id") Long vocabularyId,Category category)
-			throws Exception {
+			@PathParam("vocabulary-id") Long vocabularyId, Category category)
+		throws Exception {
 
-				return new CategoryImpl();
+		return new CategoryImpl();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/categories/{category-id}")
+	@Produces("application/json")
+	@PUT
+	@RequiresScope("everything.read")
+	public Category putCategory(
+			@PathParam("category-id") Long categoryId, Category category)
+		throws Exception {
+
+		return new CategoryImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -152,10 +159,13 @@ public abstract class BaseCategoryResourceImpl implements CategoryResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

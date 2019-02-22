@@ -38,163 +38,138 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ValuesImpl implements Values {
 
 	public String getDataType() {
-			return dataType;
+		return dataType;
 	}
 
-	public void setDataType(
-			String dataType) {
+	public Long getId() {
+		return id;
+	}
 
-			this.dataType = (String)dataType;
+	public String getInputControl() {
+		return inputControl;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Value getValue() {
+		return value;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = (String)dataType;
 	}
 
 	@JsonIgnore
 	public void setDataType(
-			UnsafeSupplier<String, Throwable>
-				dataTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Throwable> dataTypeUnsafeSupplier) {
 
-			try {
-				dataType =
-					(String)dataTypeUnsafeSupplier.get();
+		try {
+			dataType = (String)dataTypeUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
 	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
+
+	public void setId(Long id) {
+		this.id = (Long)id;
 	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+		try {
+			id = (Long)idUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setInputControl(String inputControl) {
+		this.inputControl = (String)inputControl;
+	}
+
+	@JsonIgnore
+	public void setInputControl(
+		UnsafeSupplier<String, Throwable> inputControlUnsafeSupplier) {
+
+		try {
+			inputControl = (String)inputControlUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setLabel(String label) {
+		this.label = (String)label;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<String, Throwable> labelUnsafeSupplier) {
+
+		try {
+			label = (String)labelUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = (String)name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Throwable> nameUnsafeSupplier) {
+		try {
+			name = (String)nameUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	@JsonIgnore
+	public void setValue(UnsafeSupplier<Value, Throwable> valueUnsafeSupplier) {
+		try {
+			value = (ValueImpl)valueUnsafeSupplier.get();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
+	public void setValue(Value value) {
+		this.value = (ValueImpl)value;
 	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String dataType;
-	public Long getId() {
-			return id;
-	}
-
-	public void setId(
-			Long id) {
-
-			this.id = (Long)id;
-	}
-
-	@JsonIgnore
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier) {
-
-			try {
-				id =
-					(Long)idUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected Long id;
-	public String getInputControl() {
-			return inputControl;
-	}
-
-	public void setInputControl(
-			String inputControl) {
-
-			this.inputControl = (String)inputControl;
-	}
-
-	@JsonIgnore
-	public void setInputControl(
-			UnsafeSupplier<String, Throwable>
-				inputControlUnsafeSupplier) {
-
-			try {
-				inputControl =
-					(String)inputControlUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String inputControl;
-	public String getLabel() {
-			return label;
-	}
-
-	public void setLabel(
-			String label) {
-
-			this.label = (String)label;
-	}
-
-	@JsonIgnore
-	public void setLabel(
-			UnsafeSupplier<String, Throwable>
-				labelUnsafeSupplier) {
-
-			try {
-				label =
-					(String)labelUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String label;
-	public String getName() {
-			return name;
-	}
-
-	public void setName(
-			String name) {
-
-			this.name = (String)name;
-	}
-
-	@JsonIgnore
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier) {
-
-			try {
-				name =
-					(String)nameUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-	public Value getValue() {
-			return value;
-	}
-
-	public void setValue(
-			Value value) {
-
-			this.value = (ValueImpl)value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-			UnsafeSupplier<Value, Throwable>
-				valueUnsafeSupplier) {
-
-			try {
-				value =
-					(ValueImpl)valueUnsafeSupplier.get();
-	}
-			catch (Throwable t) {
-				throw new RuntimeException(t);
-	}
-	}
 
 	@GraphQLField
 	@JsonProperty

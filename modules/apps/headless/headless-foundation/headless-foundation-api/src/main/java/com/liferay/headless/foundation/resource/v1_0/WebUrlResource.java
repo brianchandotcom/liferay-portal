@@ -33,11 +33,10 @@ import javax.annotation.Generated;
 public interface WebUrlResource {
 
 	public Page<WebUrl> getGenericParentWebUrlsPage(
-				Object genericParentId,Pagination pagination)
-			throws Exception;
-	public WebUrl getWebUrl(
-				Long webUrlId)
-			throws Exception;
+			Object genericParentId, Pagination pagination)
+		throws Exception;
+
+	public WebUrl getWebUrl(Long webUrlId) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

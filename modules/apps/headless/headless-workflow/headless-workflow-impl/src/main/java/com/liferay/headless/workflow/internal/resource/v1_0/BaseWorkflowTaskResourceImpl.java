@@ -48,88 +48,99 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResource {
+public abstract class BaseWorkflowTaskResourceImpl
+	implements WorkflowTaskResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/roles/{role-id}/workflow-tasks")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-	@PathParam("role-id") Long roleId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("role-id") Long roleId, @Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
-	@GET
-	@Path("/workflow-tasks")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<WorkflowTask> getWorkflowTasksPage(
-	@Context Pagination pagination)
-			throws Exception {
 
-				return Page.of(Collections.emptyList());
-	}
-	@Override
 	@GET
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public WorkflowTask getWorkflowTask(
-	@PathParam("workflow-task-id") Long workflowTaskId)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
+
+	@GET
 	@Override
+	@Path("/workflow-tasks")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Page<WorkflowTask> getWorkflowTasksPage(
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-me")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskAssignToMe(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
-	@Override
+
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/assign-to-user")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskAssignToUser(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
-	@Override
+
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/change-transition")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskChangeTransition(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
-	@Override
+
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Path("/workflow-tasks/{workflow-task-id}/update-due-date")
+	@POST
 	@Produces("application/json")
 	@RequiresScope("everything.write")
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-	@PathParam("workflow-task-id") Long workflowTaskId,WorkflowTask workflowTask)
-			throws Exception {
+			@PathParam("workflow-task-id") Long workflowTaskId,
+			WorkflowTask workflowTask)
+		throws Exception {
 
-				return new WorkflowTaskImpl();
+		return new WorkflowTaskImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -149,10 +160,13 @@ public abstract class BaseWorkflowTaskResourceImpl implements WorkflowTaskResour
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

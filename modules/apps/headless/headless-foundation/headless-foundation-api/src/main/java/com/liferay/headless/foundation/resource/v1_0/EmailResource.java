@@ -32,12 +32,11 @@ import javax.annotation.Generated;
 @Generated("")
 public interface EmailResource {
 
+	public Email getEmail(Long emailId) throws Exception;
+
 	public Page<Email> getGenericParentEmailsPage(
-				Object genericParentId,Pagination pagination)
-			throws Exception;
-	public Email getEmail(
-				Long emailId)
-			throws Exception;
+			Object genericParentId, Pagination pagination)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

@@ -45,140 +45,159 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormImpl> getContentSpaceFormsPage(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-				FormResourceImpl formResourceImpl = _getFormResourceImpl();
+		FormResourceImpl formResourceImpl = _getFormResourceImpl();
 
-				formResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		formResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = formResourceImpl.getContentSpaceFormsPage(
-					contentSpaceId,Pagination.of(pageSize, page));
+		Page paginationPage = formResourceImpl.getContentSpaceFormsPage(
+			contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormImpl getForm(
-	@GraphQLName("form-id") Long formId)
-			throws Exception {
-
-				FormResourceImpl formResourceImpl = _getFormResourceImpl();
-
-				formResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				return (FormImpl)formResourceImpl.getForm(
-					formId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormImpl getFormFetchLatestDraft(
-	@GraphQLName("form-id") Long formId)
-			throws Exception {
-
-				FormResourceImpl formResourceImpl = _getFormResourceImpl();
-
-				formResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				return (FormImpl)formResourceImpl.getFormFetchLatestDraft(
-					formId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormDocumentImpl getFormDocument(
-	@GraphQLName("form-document-id") Long formDocumentId)
-			throws Exception {
-
-				FormDocumentResourceImpl formDocumentResourceImpl = _getFormDocumentResourceImpl();
-
-				formDocumentResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				return (FormDocumentImpl)formDocumentResourceImpl.getFormDocument(
-					formDocumentId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormRecordImpl getFormRecord(
-	@GraphQLName("form-record-id") Long formRecordId)
-			throws Exception {
-
-				FormRecordResourceImpl formRecordResourceImpl = _getFormRecordResourceImpl();
-
-				formRecordResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				return (FormRecordImpl)formRecordResourceImpl.getFormRecord(
-					formRecordId);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<FormRecordImpl> getFormFormRecordsPage(
-	@GraphQLName("form-id") Long formId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
-
-				FormRecordResourceImpl formRecordResourceImpl = _getFormRecordResourceImpl();
-
-				formRecordResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				Page paginationPage = formRecordResourceImpl.getFormFormRecordsPage(
-					formId,Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<FormStructureImpl> getContentSpaceFormStructuresPage(
-	@GraphQLName("content-space-id") Long contentSpaceId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
+			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-				FormStructureResourceImpl formStructureResourceImpl = _getFormStructureResourceImpl();
+		FormStructureResourceImpl formStructureResourceImpl =
+			_getFormStructureResourceImpl();
 
-				formStructureResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		formStructureResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = formStructureResourceImpl.getContentSpaceFormStructuresPage(
-					contentSpaceId,Pagination.of(pageSize, page));
+		Page paginationPage =
+			formStructureResourceImpl.getContentSpaceFormStructuresPage(
+				contentSpaceId, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormImpl getForm(@GraphQLName("form-id") Long formId)
+		throws Exception {
+
+		FormResourceImpl formResourceImpl = _getFormResourceImpl();
+
+		formResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return (FormImpl)formResourceImpl.getForm(formId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormDocumentImpl getFormDocument(
+			@GraphQLName("form-document-id") Long formDocumentId)
+		throws Exception {
+
+		FormDocumentResourceImpl formDocumentResourceImpl =
+			_getFormDocumentResourceImpl();
+
+		formDocumentResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return (FormDocumentImpl)formDocumentResourceImpl.getFormDocument(
+			formDocumentId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormImpl getFormFetchLatestDraft(@GraphQLName("form-id") Long formId)
+		throws Exception {
+
+		FormResourceImpl formResourceImpl = _getFormResourceImpl();
+
+		formResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return (FormImpl)formResourceImpl.getFormFetchLatestDraft(formId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<FormRecordImpl> getFormFormRecordsPage(
+			@GraphQLName("form-id") Long formId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		FormRecordResourceImpl formRecordResourceImpl =
+			_getFormRecordResourceImpl();
+
+		formRecordResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = formRecordResourceImpl.getFormFormRecordsPage(
+			formId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormRecordImpl getFormRecord(
+			@GraphQLName("form-record-id") Long formRecordId)
+		throws Exception {
+
+		FormRecordResourceImpl formRecordResourceImpl =
+			_getFormRecordResourceImpl();
+
+		formRecordResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return (FormRecordImpl)formRecordResourceImpl.getFormRecord(
+			formRecordId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormStructureImpl getFormStructure(
-	@GraphQLName("form-structure-id") Long formStructureId)
-			throws Exception {
+			@GraphQLName("form-structure-id") Long formStructureId)
+		throws Exception {
 
-				FormStructureResourceImpl formStructureResourceImpl = _getFormStructureResourceImpl();
+		FormStructureResourceImpl formStructureResourceImpl =
+			_getFormStructureResourceImpl();
 
-				formStructureResourceImpl.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		formStructureResourceImpl.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				return (FormStructureImpl)formStructureResourceImpl.getFormStructure(
-					formStructureId);
+		return (FormStructureImpl)formStructureResourceImpl.getFormStructure(
+			formStructureId);
+	}
+
+	private static FormDocumentResourceImpl _getFormDocumentResourceImpl() {
+		return new FormDocumentResourceImpl();
+	}
+
+	private static FormRecordResourceImpl _getFormRecordResourceImpl() {
+		return new FormRecordResourceImpl();
 	}
 
 	private static FormResourceImpl _getFormResourceImpl() {
-			return new FormResourceImpl();
+		return new FormResourceImpl();
 	}
-	private static FormDocumentResourceImpl _getFormDocumentResourceImpl() {
-			return new FormDocumentResourceImpl();
-	}
-	private static FormRecordResourceImpl _getFormRecordResourceImpl() {
-			return new FormRecordResourceImpl();
-	}
+
 	private static FormStructureResourceImpl _getFormStructureResourceImpl() {
-			return new FormStructureResourceImpl();
+		return new FormStructureResourceImpl();
 	}
 
 }

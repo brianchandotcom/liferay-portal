@@ -48,38 +48,41 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseCommentResourceImpl implements CommentResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/comments/{comment-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Comment getComment(
-	@PathParam("comment-id") Long commentId)
-			throws Exception {
+	public Comment getComment(@PathParam("comment-id") Long commentId)
+		throws Exception {
 
-				return new CommentImpl();
+		return new CommentImpl();
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/comments/{comment-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getCommentCommentsPage(
-	@PathParam("comment-id") Long commentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("comment-id") Long commentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/structured-contents/{structured-content-id}/comments")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Comment> getStructuredContentCommentsPage(
-	@PathParam("structured-content-id") Long structuredContentId,@Context Pagination pagination)
-			throws Exception {
+			@PathParam("structured-content-id") Long structuredContentId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -99,10 +102,13 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

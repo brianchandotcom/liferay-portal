@@ -32,6 +32,8 @@ public class Context {
 
 	public static final String BROWSER = "browser";
 
+	public static final String COOKIES = "cookies";
+
 	public static final String DEVICE_BRAND = "deviceBrand";
 
 	public static final String DEVICE_MODEL = "deviceModel";

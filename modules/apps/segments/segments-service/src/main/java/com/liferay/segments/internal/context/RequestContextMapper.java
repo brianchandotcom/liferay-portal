@@ -32,7 +32,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import java.util.Date;
+import java.util.stream.Stream;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,6 +53,8 @@ public class RequestContextMapper {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		context.put(Context.COOKIES, _getCookies(request));
 
 		Device device = themeDisplay.getDevice();
 
@@ -104,6 +108,22 @@ public class RequestContextMapper {
 		context.put(Context.USER_AGENT, userAgent);
 
 		return context;
+	}
+
+	private String[] _getCookies(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies == null) {
+			return new String[0];
+		}
+
+		return Stream.of(
+			cookies
+		).map(
+			c -> c.getName() + "=" + c.getValue()
+		).toArray(
+			String[]::new
+		);
 	}
 
 	@Reference

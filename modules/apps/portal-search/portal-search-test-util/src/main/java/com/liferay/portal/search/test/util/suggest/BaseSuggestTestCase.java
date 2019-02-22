@@ -53,13 +53,20 @@ public abstract class BaseSuggestTestCase extends BaseIndexingTestCase {
 	protected void assertSuggest(String expectedSuggestions, String keywords)
 		throws Exception {
 
+		assertSuggest(expectedSuggestions, keywords, 1);
+	}
+
+	protected void assertSuggest(
+			String expectedSuggestions, String keywords, int max)
+		throws Exception {
+
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-				Assert.assertEquals(
-					expectedSuggestions,
-					String.valueOf(
-						Arrays.asList(suggestKeywordQueries(keywords))));
+				String actualSuggestions = String.valueOf(
+					Arrays.asList(suggestKeywordQueries(keywords, max)));
+
+				Assert.assertEquals(expectedSuggestions, actualSuggestions);
 
 				return null;
 			});
@@ -81,17 +88,13 @@ public abstract class BaseSuggestTestCase extends BaseIndexingTestCase {
 			SuggestionConstants.TYPE_QUERY_SUGGESTION);
 	}
 
-	protected String[] suggestKeywordQueries(
-			SearchContext searchContext, int max)
+	protected String[] suggestKeywordQueries(String keywords, int max)
 		throws Exception {
 
 		QuerySuggester querySuggester = getIndexSearcher();
 
-		return querySuggester.suggestKeywordQueries(searchContext, max);
-	}
-
-	protected String[] suggestKeywordQueries(String keywords) throws Exception {
-		return suggestKeywordQueries(createSearchContext(keywords), 1);
+		return querySuggester.suggestKeywordQueries(
+			createSearchContext(keywords), max);
 	}
 
 }

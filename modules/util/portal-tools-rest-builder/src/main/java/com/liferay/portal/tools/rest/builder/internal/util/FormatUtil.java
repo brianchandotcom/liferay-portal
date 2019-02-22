@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.SourceFormatter;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
@@ -71,6 +72,10 @@ public class FormatUtil {
 	}
 
 	public static String format(File file) throws Exception {
+		if (StringUtil.endsWith(file.getName(), ".java")) {
+			JavaParser.parse(file, 80);
+		}
+
 		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
 		sourceFormatterArgs.setFileNames(

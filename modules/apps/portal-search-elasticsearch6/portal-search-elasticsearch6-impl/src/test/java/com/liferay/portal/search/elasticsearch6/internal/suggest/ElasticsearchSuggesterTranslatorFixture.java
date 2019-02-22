@@ -23,9 +23,6 @@ public class ElasticsearchSuggesterTranslatorFixture {
 		_elasticsearchSuggesterTranslator =
 			new ElasticsearchSuggesterTranslator() {
 				{
-					setAggregateSuggesterTranslator(
-						new AggregateSuggesterTranslatorImpl());
-
 					setCompletionSuggesterTranslator(
 						new CompletionSuggesterTranslatorImpl());
 

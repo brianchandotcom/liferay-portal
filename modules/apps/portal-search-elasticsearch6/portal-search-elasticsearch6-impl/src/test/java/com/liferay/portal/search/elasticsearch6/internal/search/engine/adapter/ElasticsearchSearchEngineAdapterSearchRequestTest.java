@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -36,7 +37,9 @@ import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
@@ -122,31 +125,79 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		Suggester suggester = new CompletionSuggester(
 			"completion", "keywordSuggestion", "sear");
 
-		suggestSearchRequest.setSuggester(suggester);
+		suggestSearchRequest.addSuggester(suggester);
+
+		Suggester suggester2 = new CompletionSuggester(
+			"completion2", "keywordSuggestion", "messa");
+
+		suggestSearchRequest.addSuggester(suggester2);
 
 		SuggestSearchResponse suggestSearchResponse =
 			_searchEngineAdapter.execute(suggestSearchRequest);
 
-		SuggestSearchResult suggestSearchResult =
-			suggestSearchResponse.getSuggesterResult("completion");
+		Map<String, SuggestSearchResult> suggestSearchResultMap =
+			suggestSearchResponse.getSuggestSearchResultMap();
 
-		assertSuggestion(suggestSearchResult, "search");
+		assertSuggestion(
+			suggestSearchResultMap, "completion|[search]",
+			"completion2|[message]");
+	}
 
-		SuggestSearchRequest suggestSearchRequest2 = new SuggestSearchRequest(
+	@Test
+	public void testGlobalText() throws IOException {
+		indexSuggestKeyword("search");
+
+		SuggestSearchRequest suggestSearchRequest = new SuggestSearchRequest(
 			_INDEX_NAME);
 
-		Suggester suggester2 = new CompletionSuggester(
+		suggestSearchRequest.setGlobalText("sear");
+
+		Suggester completionSuggester = new CompletionSuggester(
+			"completion", "keywordSuggestion", null);
+
+		Suggester termSuggester = new TermSuggester(
+			"term", _LOCALIZED_FIELD_NAME);
+
+		suggestSearchRequest.addSuggester(completionSuggester);
+		suggestSearchRequest.addSuggester(termSuggester);
+
+		SuggestSearchResponse suggestSearchResponse =
+			_searchEngineAdapter.execute(suggestSearchRequest);
+
+		Map<String, SuggestSearchResult> suggestSearchResultMap =
+			suggestSearchResponse.getSuggestSearchResultMap();
+
+		assertSuggestion(
+			suggestSearchResultMap, "completion|[search]", "term|[search]");
+	}
+
+	@Test
+	public void testGlobalTextOverride() throws IOException {
+		indexSuggestKeyword("message");
+		indexSuggestKeyword("search");
+
+		SuggestSearchRequest suggestSearchRequest = new SuggestSearchRequest(
+			_INDEX_NAME);
+
+		suggestSearchRequest.setGlobalText("sear");
+
+		Suggester completionSuggester = new CompletionSuggester(
 			"completion", "keywordSuggestion", "messa");
 
-		suggestSearchRequest2.setSuggester(suggester2);
+		Suggester termSuggester = new TermSuggester(
+			"term", _LOCALIZED_FIELD_NAME);
 
-		SuggestSearchResponse suggestSearchResponse2 =
-			_searchEngineAdapter.execute(suggestSearchRequest2);
+		suggestSearchRequest.addSuggester(completionSuggester);
+		suggestSearchRequest.addSuggester(termSuggester);
 
-		SuggestSearchResult suggestSearchResult2 =
-			suggestSearchResponse2.getSuggesterResult("completion");
+		SuggestSearchResponse suggestSearchResponse =
+			_searchEngineAdapter.execute(suggestSearchRequest);
 
-		assertSuggestion(suggestSearchResult2, "message");
+		Map<String, SuggestSearchResult> suggestSearchResultMap =
+			suggestSearchResponse.getSuggestSearchResultMap();
+
+		assertSuggestion(
+			suggestSearchResultMap, "completion|[message]", "term|[search]");
 	}
 
 	@Test
@@ -156,22 +207,25 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		SuggestSearchRequest suggestSearchRequest = new SuggestSearchRequest(
 			_INDEX_NAME);
 
-		Suggester suggester = new PhraseSuggester(
+		PhraseSuggester phraseSuggester = new PhraseSuggester(
 			"phrase", _LOCALIZED_FIELD_NAME, "indexef   this   phrasd");
 
-		suggestSearchRequest.setSuggester(suggester);
+		phraseSuggester.setSize(2);
+
+		suggestSearchRequest.addSuggester(phraseSuggester);
 
 		SuggestSearchResponse suggestSearchResponse =
 			_searchEngineAdapter.execute(suggestSearchRequest);
 
-		SuggestSearchResult suggestSearchResult =
-			suggestSearchResponse.getSuggesterResult("phrase");
+		Map<String, SuggestSearchResult> suggestSearchResultMap =
+			suggestSearchResponse.getSuggestSearchResultMap();
 
-		assertSuggestion(suggestSearchResult, "indexed this phrase");
+		assertSuggestion(
+			suggestSearchResultMap, 2, "phrase|[indexef phrase, index phrasd]");
 	}
 
 	@Test
-	public void testTermSuggest() throws IOException {
+	public void testTermSuggester() throws IOException {
 		indexSuggestKeyword("message");
 		indexSuggestKeyword("search");
 
@@ -181,42 +235,61 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		Suggester suggester = new TermSuggester(
 			"termSuggestion", _LOCALIZED_FIELD_NAME, "searc");
 
-		suggestSearchRequest.setSuggester(suggester);
+		suggestSearchRequest.addSuggester(suggester);
 
 		SuggestSearchResponse suggestSearchResponse =
 			_searchEngineAdapter.execute(suggestSearchRequest);
 
-		SuggestSearchResult suggestSearchResult =
-			suggestSearchResponse.getSuggesterResult("termSuggestion");
+		Map<String, SuggestSearchResult> suggestSearchResultMap =
+			suggestSearchResponse.getSuggestSearchResultMap();
 
-		assertSuggestion(suggestSearchResult, "search");
+		assertSuggestion(suggestSearchResultMap, "termSuggestion|[search]");
 	}
 
 	protected void assertSuggestion(
-		SuggestSearchResult suggestSearchResult, String expectedSuggestion) {
+		Map<String, SuggestSearchResult> suggestSearchResultMap, int size,
+		String... expectedSuggestionsString) {
 
-		List<SuggestSearchResult.Entry> suggestSearchResultEntries =
-			suggestSearchResult.getEntries();
+		for (String expectedSuggestionString : expectedSuggestionsString) {
+			List<String> expectedSuggestionParts = StringUtil.split(
+				expectedSuggestionString, '|');
 
-		Assert.assertEquals(
-			"Expected 1 SuggestSearchResult.Entry", 1,
-			suggestSearchResultEntries.size());
+			String suggesterName = expectedSuggestionParts.get(0);
+			String expectedSuggestions = expectedSuggestionParts.get(1);
 
-		SuggestSearchResult.Entry suggestSearchResultEntry =
-			suggestSearchResultEntries.get(0);
+			SuggestSearchResult suggestSearchResult =
+				suggestSearchResultMap.get(suggesterName);
 
-		List<SuggestSearchResult.Entry.Option> suggestSearchResultEntryOptions =
-			suggestSearchResultEntry.getOptions();
+			List<SuggestSearchResult.Entry> suggestSearchResultEntries =
+				suggestSearchResult.getEntries();
 
-		Assert.assertEquals(
-			"Expected 1 SuggestSearchResult.Entry.Option", 1,
-			suggestSearchResultEntryOptions.size());
+			Assert.assertEquals(
+				"Expected 1 SuggestSearchResult.Entry", 1,
+				suggestSearchResultEntries.size());
 
-		SuggestSearchResult.Entry.Option suggestSearchResultEntryOption =
-			suggestSearchResultEntryOptions.get(0);
+			SuggestSearchResult.Entry suggestSearchResultEntry =
+				suggestSearchResultEntries.get(0);
 
-		Assert.assertEquals(
-			expectedSuggestion, suggestSearchResultEntryOption.getText());
+			List<SuggestSearchResult.Entry.Option>
+				suggestSearchResultEntryOptions =
+					suggestSearchResultEntry.getOptions();
+
+			Assert.assertEquals(
+				"Expected " + size + " SuggestSearchResult.Entry.Option", size,
+				suggestSearchResultEntryOptions.size());
+
+			String actualSuggestions = String.valueOf(
+				toList(suggestSearchResultEntryOptions));
+
+			Assert.assertEquals(expectedSuggestions, actualSuggestions);
+		}
+	}
+
+	protected void assertSuggestion(
+		Map<String, SuggestSearchResult> suggestSearchResultsMap,
+		String... expectedSuggestionsString) {
+
+		assertSuggestion(suggestSearchResultsMap, 1, expectedSuggestionsString);
 	}
 
 	protected void createIndex() {
@@ -232,8 +305,7 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
 				setSearchRequestExecutor(
-					createSearchRequestExecutor(
-						elasticsearchClientResolver));
+					createSearchRequestExecutor(elasticsearchClientResolver));
 			}
 		};
 	}
@@ -330,6 +402,21 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		putMappingRequestBuilder.setType(mappingName);
 
 		putMappingRequestBuilder.get();
+	}
+
+	protected List<String> toList(
+		List<SuggestSearchResult.Entry.Option>
+			suggestSearchResultEntryOptions) {
+
+		List<String> options = new ArrayList<>();
+
+		for (SuggestSearchResult.Entry.Option suggestSearchResultEntryOption :
+				suggestSearchResultEntryOptions) {
+
+			options.add(suggestSearchResultEntryOption.getText());
+		}
+
+		return options;
 	}
 
 	private static final long _DEFAULT_COMPANY_ID = 12345;

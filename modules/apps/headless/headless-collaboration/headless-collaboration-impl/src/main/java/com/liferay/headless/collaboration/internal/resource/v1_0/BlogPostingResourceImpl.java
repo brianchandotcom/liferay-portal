@@ -35,6 +35,8 @@ import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -84,17 +86,18 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 	@Override
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-		Long parentId, Pagination pagination) {
+		Long contentSpaceId, Filter filter, Pagination pagination,
+		Sort[] sorts) {
 
 		return Page.of(
 			transform(
 				_blogsEntryService.getGroupEntries(
-					parentId, WorkflowConstants.STATUS_APPROVED,
+					contentSpaceId, WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				this::_toBlogPosting),
 			pagination,
 			_blogsEntryService.getGroupEntriesCount(
-				parentId, WorkflowConstants.STATUS_APPROVED));
+				contentSpaceId, WorkflowConstants.STATUS_APPROVED));
 	}
 
 	@Override

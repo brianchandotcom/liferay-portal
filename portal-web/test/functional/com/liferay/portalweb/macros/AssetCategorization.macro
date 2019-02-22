@@ -10,8 +10,9 @@ definition {
 				key_tagName = "${tagName}"
 			);
 		}
-
-		KeyPress(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "\RETURN");
+		else {
+			KeyPress(locator1 = "AssetCategorization#TAGS_FIELD", value1 = ",");
+		}
 	}
 
 	macro addCategory {

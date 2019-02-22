@@ -75,7 +75,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(_INVALID_WORKFLOW_TASK_ID),
+				mockUserNotificationEvent(null, _INVALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
@@ -94,7 +94,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
-				mockUserNotificationEvent(_VALID_ENTRY_CLASS_NAME, 0L),
+				mockUserNotificationEvent(_VALID_ENTRY_CLASS_NAME, 0),
 				_serviceContext));
 	}
 
@@ -103,7 +103,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Assert.assertEquals(
 			_NOTIFICATION_MESSAGE,
 			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(0), _serviceContext));
+				mockUserNotificationEvent(null, 0), _serviceContext));
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Assert.assertEquals(
 			_NOTIFICATION_MESSAGE,
 			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(_VALID_WORKFLOW_TASK_ID),
+				mockUserNotificationEvent(null, _VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
@@ -126,13 +126,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	protected UserNotificationEvent mockUserNotificationEvent(
-		long workflowTaskId) {
-
-		return mockUserNotificationEvent(null, workflowTaskId);
-	}
-
-	protected UserNotificationEvent mockUserNotificationEvent(
-		String entryClassName, Long workflowTaskId) {
+		String entryClassName, long workflowTaskId) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

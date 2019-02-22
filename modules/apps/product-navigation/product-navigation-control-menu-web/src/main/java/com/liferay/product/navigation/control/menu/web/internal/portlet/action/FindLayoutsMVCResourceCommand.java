@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.control.menu.web.internal.portlet.action;
 
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -86,20 +87,34 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		layouts.addAll(
 			_layoutLocalService.getLayouts(
 				themeDisplay.getScopeGroupId(), false, keywords,
-				new String[] {"portlet", "content"}, 0, 10, null));
+				new String[] {
+					LayoutConstants.TYPE_PORTLET,
+					LayoutConstants.LAYOUT_TYPE_CONTENT
+				},
+				0, 10, null));
 
 		layouts.addAll(
 			_layoutLocalService.getLayouts(
 				themeDisplay.getScopeGroupId(), true, keywords,
-				new String[] {"portlet", "content"}, 0, 10, null));
+				new String[] {
+					LayoutConstants.TYPE_PORTLET,
+					LayoutConstants.LAYOUT_TYPE_CONTENT
+				},
+				0, 10, null));
 
 		int totalCount = _layoutLocalService.getLayoutsCount(
 			themeDisplay.getScopeGroup(), false, keywords,
-			new String[] {"portlet", "content"});
+			new String[] {
+				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.LAYOUT_TYPE_CONTENT
+			});
 
 		totalCount += _layoutLocalService.getLayoutsCount(
 			themeDisplay.getScopeGroup(), true, keywords,
-			new String[] {"portlet", "content"});
+			new String[] {
+				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.LAYOUT_TYPE_CONTENT
+			});
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

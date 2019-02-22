@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -281,9 +280,6 @@ public class CategoryResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
-
-	@Reference
-	private ClassNameService _classNameService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

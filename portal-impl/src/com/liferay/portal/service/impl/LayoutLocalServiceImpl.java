@@ -1726,6 +1726,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layouts;
 	}
 
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  start the lower bound of the range of layouts
+	 * @param  end the upper bound of the range of layouts (not inclusive)
+	 * @param  obc the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 *         found
+	 */
+	@Override
+	public List<Layout> getLayouts(
+		long groupId, int start, int end, OrderByComparator<Layout> obc) {
+
+		return layoutPersistence.findByGroupId(groupId, start, end, obc);
+	}
+
 	@Override
 	public List<Layout> getLayouts(
 		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
@@ -1755,6 +1772,48 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return layoutReferences.toArray(
 			new LayoutReference[layoutReferences.size()]);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  keywords keywords
+	 * @param  types layout types
+	 * @param  start the lower bound of the range of layouts
+	 * @param  end the upper bound of the range of layouts (not inclusive)
+	 * @param  obc the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 *         found
+	 */
+	@Override
+	public List<Layout> getLayouts(
+			long groupId, String keywords, String[] types, int start, int end,
+			OrderByComparator<Layout> obc)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return getLayouts(groupId, start, end, obc);
+		}
+
+		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
+			Layout.class.getName());
+
+		Hits hits = indexer.search(
+			_buildSearchContext(
+				groupId, null, keywords, types, start, end, obc));
+
+		List<Document> documents = hits.toList();
+
+		List<Layout> layouts = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			layouts.add(
+				getLayout(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+		}
+
+		return layouts;
 	}
 
 	@Override
@@ -1869,11 +1928,35 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getLayoutsCount(long groupId) {
+		return layoutPersistence.countByGroupId(groupId);
+	}
+
+	@Override
 	public int getLayoutsCount(
 		long groupId, long leftPlid, long rightPlid, boolean privateLayout) {
 
 		return layoutPersistence.countByG_P_GtLP_LtRP(
 			groupId, leftPlid, rightPlid, privateLayout);
+	}
+
+	@Override
+	public int getLayoutsCount(long groupId, String keywords, String[] types)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return getLayoutsCount(groupId);
+		}
+
+		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
+			Layout.class.getName());
+
+		Hits hits = indexer.search(
+			_buildSearchContext(
+				groupId, null, keywords, types, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null));
+
+		return hits.getLength();
 	}
 
 	@Override
@@ -3693,7 +3776,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	private SearchContext _buildSearchContext(
-			long groupId, boolean privateLayout, String keywords,
+			long groupId, Boolean privateLayout, String keywords,
 			String[] types, int start, int end, OrderByComparator<Layout> obc)
 		throws PortalException {
 
@@ -3702,8 +3785,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		searchContext.setAttribute(Field.TITLE, keywords);
 		searchContext.setAttribute(Field.TYPE, types);
 		searchContext.setAttribute("paginationType", "more");
-		searchContext.setAttribute(
-			"privateLayout", String.valueOf(privateLayout));
+
+		if (privateLayout != null) {
+			searchContext.setAttribute(
+				"privateLayout", String.valueOf(privateLayout));
+		}
 
 		Group group = groupLocalService.getGroup(groupId);
 

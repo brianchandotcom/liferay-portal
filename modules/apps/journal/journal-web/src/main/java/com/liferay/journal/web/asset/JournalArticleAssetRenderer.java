@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -30,6 +31,7 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +42,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -416,6 +420,33 @@ public class JournalArticleAssetRenderer
 		}
 
 		return hitLayoutURL;
+	}
+
+	@Override
+	public String getURLViewUsages(HttpServletRequest request)
+		throws Exception {
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(), _article.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(
+			request, AssetEntryUsage.class.getName(),
+			PortletProvider.Action.VIEW);
+
+		viewUsagesURL.setParameter(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		viewUsagesURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		return viewUsagesURL.toString();
 	}
 
 	@Override

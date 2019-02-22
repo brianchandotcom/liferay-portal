@@ -15,12 +15,12 @@ definition {
 			value1 = "${dmDocumentTitle}"
 		);
 
+		DMDocument.expandInfo();
+
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY",
 			value1 = "Test Test"
 		);
-
-		Click(locator1 = "Icon#INFO");
 
 		ClickNoError(locator1 = "DocumentsAndMediaDocument#DETAILS_URL");
 

@@ -29,8 +29,10 @@ import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -64,6 +66,22 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 			"mbCategoryId", String.valueOf(mbCategory.getCategoryId()));
 
 		return portletURL.toString();
+	}
+
+	@Override
+	public Map<String, Object> getFieldValues(
+		MBCategory mbCategory, String[] fieldNames, Locale locale) {
+
+		Map<String, Object> fieldValues = super.getFieldValues(
+			mbCategory, fieldNames, locale);
+
+		List<String> fieldNamesList = Arrays.asList(fieldNames);
+
+		if (fieldNamesList.contains("content")) {
+			fieldValues.put("content", mbCategory.getDescription());
+		}
+
+		return fieldValues;
 	}
 
 	@Override

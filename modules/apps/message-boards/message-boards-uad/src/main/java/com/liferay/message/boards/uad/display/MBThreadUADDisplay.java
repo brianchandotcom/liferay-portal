@@ -25,7 +25,10 @@ import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +40,22 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = {MBThreadUADDisplay.class, UADDisplay.class}
 )
 public class MBThreadUADDisplay extends BaseMBThreadUADDisplay {
+
+	@Override
+	public Map<String, Object> getFieldValues(
+		MBThread mbThread, String[] fieldNames, Locale locale) {
+
+		Map<String, Object> fieldValues = super.getFieldValues(
+			mbThread, fieldNames, locale);
+
+		List<String> fieldNamesList = Arrays.asList(fieldNames);
+
+		if (fieldNamesList.contains("content")) {
+			fieldValues.put("content", "--");
+		}
+
+		return fieldValues;
+	}
 
 	@Override
 	public String getName(MBThread mbThread, Locale locale) {

@@ -32,6 +32,11 @@ public class MBUADHierarchyDeclaration implements UADHierarchyDeclaration {
 	}
 
 	@Override
+	public String[] getExtraColumnNames() {
+		return new String[] {"content"};
+	}
+
+	@Override
 	public UADDisplay<?>[] getNoncontainerUADDisplays() {
 		return new UADDisplay<?>[] {_mbMessageUADDisplay};
 	}

@@ -30,21 +30,39 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 <c:if test="<%= ListUtil.isNotEmpty(ddmStructure.getTemplates()) %>">
 	<div class="article-template">
-		<liferay-ui:message key="template" />:
+		<span class="text-secondary"><liferay-ui:message key="this-template-will-be-used-when-showing-the-content-within-a-widget" /></span>
+			<div class="input-group mt-4">
+				<aui:input disabled="<%= true %>" label="" name="ddmTemplateName" value='<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>' wrapperCssClass="input-group-item mb-0" />
 
-		<span id="<portlet:namespace />templateNameLabel">
-			<c:if test="<%= (ddmTemplate != null) && ddmTemplate.isSmallImage() %>">
-				<img alt="" class="article-template-image" id="<portlet:namespace />templateImage" src="<%= HtmlUtil.escapeAttribute(ddmTemplate.getTemplateImageURL(themeDisplay)) %>" />
-			</c:if>
+				<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
+					<liferay-ui:icon
+						cssClass="btn btn-default btn-sm input-group-item input-group-item-shrink pt-2"
+						icon="pencil"
+						id="editDDMTemplate"
+						markupView="lexicon"
+						url="javascript:;"
+					/>
+				</c:if>
 
-			<c:choose>
-				<c:when test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-					<aui:a href="javascript:;" id="editDDMTemplate" label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" />
-				</c:when>
-				<c:otherwise>
-					<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>
-				</c:otherwise>
-			</c:choose>
+				<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
+					<portlet:renderURL var="previewArticleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
+						<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+						<portlet:param name="articleId" value="<%= String.valueOf(article.getArticleId()) %>" />
+						<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						cssClass="btn btn-default btn-sm input-group-item input-group-item-shrink pt-2"
+						icon="view"
+						id="previewWithTemplate"
+						markupView="lexicon"
+						message="preview"
+						url="<%= previewArticleURL %>"
+						useDialog="<%= true %>"
+					/>
+				</c:if>
+			</div>
 		</span>
 
 		<div class="button-holder">

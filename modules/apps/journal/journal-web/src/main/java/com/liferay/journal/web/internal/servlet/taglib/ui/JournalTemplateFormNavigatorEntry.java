@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=80",
 	service = FormNavigatorEntry.class
 )
-public class JournalStructureTemplateFormNavigatorEntry
+public class JournalTemplateFormNavigatorEntry
 	extends BaseJournalFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return "structure-and-template";
+		return "default-template";
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class JournalStructureTemplateFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/article/structure_template.jsp";
+		return "/article/template.jsp";
 	}
 
 }

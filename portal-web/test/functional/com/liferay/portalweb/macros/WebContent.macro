@@ -673,15 +673,8 @@ definition {
 		Panel.expandPanel(panel = "Metadata");
 
 		for (var tagName : list "${tagNameList}") {
-			Click(locator1 = "Button#ADD_TAGS");
-
-			Type.clickAtType(
-				locator1 = "AssetCategorization#TAGS_FIELD",
-				value1 = "${tagName}"
-			);
+			AssetCategorization.addTag(tagName = "${tagName}");
 		}
-
-		Click(locator1 = "Button#ADD_TAGS");
 
 		PortletEntry.publish();
 	}

@@ -106,12 +106,8 @@ definition {
 			Panel.expandPanel(panel = "Categorization");
 
 			for (var tagName : list "${tagNameList}") {
-				Click.clickAt(locator1 = "Button#ADD_TAGS", value1 = "Add");
-
-				Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
+				AssetCategorization.addTag(tagName = "${tagName}");
 			}
-
-			Click.clickAt(locator1 = "Button#ADD_TAGS", value1 = "Add");
 		}
 
 		if (isSet(vocabularyName)) {

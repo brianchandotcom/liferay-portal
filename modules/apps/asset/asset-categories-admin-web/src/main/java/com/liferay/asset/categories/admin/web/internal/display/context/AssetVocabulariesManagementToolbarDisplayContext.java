@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -74,18 +73,14 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
-		AssetVocabulary vocabulary) {
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
+	public String getAvailableActions(AssetVocabulary vocabulary) {
 		if (_assetCategoriesDisplayContext.hasPermission(
 				vocabulary, ActionKeys.UPDATE)) {
 
-			availableActionDropdownItems.add("deleteSelectedVocabularies");
+			return "deleteSelectedVocabularies";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

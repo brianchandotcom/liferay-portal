@@ -79,7 +79,7 @@ Role role = usersDisplayContext.getRole();
 
 					Map<String, Object> rowData = new HashMap<>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, usersManagementToolbarDisplayContext.getAvailableActionDropdownItems(user2)));
+					rowData.put("actions", usersManagementToolbarDisplayContext.getAvailableActions(user2));
 
 					row.setData(rowData);
 					%>

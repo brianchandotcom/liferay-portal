@@ -71,7 +71,7 @@ if (ddmStructure != null) {
 
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, journalDDMTemplateManagementToolbarDisplayContext.getAvailableActionDropdownItems(ddmTemplate)));
+			rowData.put("actions", journalDDMTemplateManagementToolbarDisplayContext.getAvailableActions(ddmTemplate));
 
 			row.setData(rowData);
 			%>

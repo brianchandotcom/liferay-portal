@@ -42,7 +42,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 			<%
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, siteNavigationAdminManagementToolbarDisplayContext.getAvailableActionDropdownItems(siteNavigationMenu)));
+			rowData.put("actions", siteNavigationAdminManagementToolbarDisplayContext.getAvailableActions(siteNavigationMenu));
 
 			row.setData(rowData);
 			%>

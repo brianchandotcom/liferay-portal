@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -70,21 +69,17 @@ public class SiteTeamsManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(Team team)
-		throws PortalException {
-
+	public String getAvailableActions(Team team) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		if (TeamPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), team, ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteSelectedTeams");
+			return "deleteSelectedTeams";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

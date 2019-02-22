@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -74,23 +73,20 @@ public class AssetListManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
-			AssetListEntry assetListEntry)
+	public String getAvailableActions(AssetListEntry assetListEntry)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
 		if (AssetListEntryPermission.contains(
 				themeDisplay.getPermissionChecker(), assetListEntry,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteSelectedAssetListEntries");
+			return "deleteSelectedAssetListEntries";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

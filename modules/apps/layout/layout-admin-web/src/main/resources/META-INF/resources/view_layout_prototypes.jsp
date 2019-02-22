@@ -54,7 +54,7 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, layoutPrototypeManagementToolbarDisplayContext.getAvailableActionDropdownItems(layoutPrototype)));
+			rowData.put("actions", layoutPrototypeManagementToolbarDisplayContext.getAvailableActions(layoutPrototype));
 
 			row.setData(rowData);
 			%>

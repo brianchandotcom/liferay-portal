@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -157,13 +156,9 @@ public class UsersManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(User user)
-		throws PortalException {
-
+	public String getAvailableActions(User user) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
@@ -175,10 +170,10 @@ public class UsersManagementToolbarDisplayContext
 			!SiteMembershipPolicyUtil.isMembershipRequired(
 				user.getUserId(), themeDisplay.getScopeGroupId())) {
 
-			availableActionDropdownItems.add("deleteSelectedUsers");
+			return "deleteSelectedUsers";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

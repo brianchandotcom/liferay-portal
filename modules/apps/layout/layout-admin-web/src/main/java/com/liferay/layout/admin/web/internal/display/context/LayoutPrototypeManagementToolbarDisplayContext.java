@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -74,22 +73,18 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
-		LayoutPrototype layoutPrototype) {
-
+	public String getAvailableActions(LayoutPrototype layoutPrototype) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		if (LayoutPrototypePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteSelectedLayoutPrototypes");
+			return "deleteSelectedLayoutPrototypes";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

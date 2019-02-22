@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -76,23 +75,20 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
-			DDMStructure ddmStructure)
+	public String getAvailableActions(DDMStructure ddmStructure)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
 		if (DDMStructurePermission.contains(
 				themeDisplay.getPermissionChecker(), ddmStructure,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteDDMStructures");
+			return "deleteDDMStructures";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

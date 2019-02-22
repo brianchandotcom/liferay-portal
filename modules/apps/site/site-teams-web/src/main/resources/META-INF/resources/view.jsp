@@ -54,7 +54,7 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, siteTeamsManagementToolbarDisplayContext.getAvailableActionDropdownItems(team)));
+			rowData.put("actions", siteTeamsManagementToolbarDisplayContext.getAvailableActions(team));
 
 			row.setData(rowData);
 			%>

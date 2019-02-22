@@ -136,7 +136,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 
 					Map<String, Object> rowData = new HashMap<>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, trashManagementToolbarDisplayContext.getAvailableActionDropdownItems(trashEntry)));
+					rowData.put("actions", trashManagementToolbarDisplayContext.getAvailableActions(trashEntry));
 
 					row.setData(rowData);
 					%>

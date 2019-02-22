@@ -51,7 +51,7 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 			<%
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, assetVocabulariesManagementToolbarDisplayContext.getAvailableActionDropdownItems(vocabulary)));
+			rowData.put("actions", assetVocabulariesManagementToolbarDisplayContext.getAvailableActions(vocabulary));
 
 			row.setData(rowData);
 			%>

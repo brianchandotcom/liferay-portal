@@ -34,7 +34,7 @@
 
 		Map<String, Object> rowData = new HashMap<>();
 
-		rowData.put("actions", String.join(StringPool.COMMA, siteAdminManagementToolbarDisplayContext.getAvailableActionDropdownItems(curGroup)));
+		rowData.put("actions", siteAdminManagementToolbarDisplayContext.getAvailableActions(curGroup));
 
 		row.setData(rowData);
 		%>

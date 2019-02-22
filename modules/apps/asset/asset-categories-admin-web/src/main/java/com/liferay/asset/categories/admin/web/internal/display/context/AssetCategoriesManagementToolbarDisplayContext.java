@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,18 +78,16 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(AssetCategory category)
+	public String getAvailableActions(AssetCategory category)
 		throws PortalException {
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		if (_assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.UPDATE)) {
 
-			availableActionDropdownItems.add("deleteSelectedCategories");
+			return "deleteSelectedCategories";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

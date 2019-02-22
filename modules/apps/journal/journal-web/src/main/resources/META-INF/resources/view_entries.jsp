@@ -51,7 +51,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, journalManagementToolbarlDisplayContext.getAvailableActionDropdownItems(curArticle)));
+				rowData.put("actions", journalManagementToolbarlDisplayContext.getAvailableActions(curArticle));
 				rowData.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
 
 				String title = curArticle.getTitle(locale);
@@ -231,7 +231,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", String.join(StringPool.COMMA, journalManagementToolbarlDisplayContext.getAvailableActionDropdownItems(curFolder)));
+				rowData.put("actions", journalManagementToolbarlDisplayContext.getAvailableActions(curFolder));
 				rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
 				rowData.put("folder", true);
 				rowData.put("folder-id", curFolder.getFolderId());

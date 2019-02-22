@@ -56,7 +56,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 
 					Map<String, Object> rowData = new HashMap<>();
 
-					rowData.put("actions", String.join(StringPool.COMMA, assetListManagementToolbarDisplayContext.getAvailableActionDropdownItems(assetListEntry)));
+					rowData.put("actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry));
 
 					row.setData(rowData);
 					%>

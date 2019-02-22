@@ -58,7 +58,7 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, assetCategoriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(curCategory)));
+			rowData.put("actions", assetCategoriesManagementToolbarDisplayContext.getAvailableActions(curCategory));
 
 			row.setData(rowData);
 			%>

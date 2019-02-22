@@ -31,7 +31,6 @@ import com.liferay.site.navigation.admin.web.internal.security.permission.resour
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -75,24 +74,20 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
-			SiteNavigationMenu siteNavigationMenu)
+	public String getAvailableActions(SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
 		if (SiteNavigationMenuPermission.contains(
 				themeDisplay.getPermissionChecker(), siteNavigationMenu,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add(
-				"deleteSelectedSiteNavigationMenus");
+			return "deleteSelectedSiteNavigationMenus";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

@@ -56,7 +56,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, displayPageManagementToolbarDisplayContext.getAvailableActionDropdownItems(layoutPageTemplateEntry)));
+			rowData.put("actions", displayPageManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry));
 
 			row.setData(rowData);
 			%>

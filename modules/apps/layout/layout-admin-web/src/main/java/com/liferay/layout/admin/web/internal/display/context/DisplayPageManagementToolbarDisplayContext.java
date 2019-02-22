@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -77,20 +76,18 @@ public class DisplayPageManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(
+	public String getAvailableActions(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
 
 		if (LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), layoutPageTemplateEntry,
 				ActionKeys.DELETE)) {
 
-			availableActionDropdownItems.add("deleteSelectedDisplayPages");
+			return "deleteSelectedDisplayPages";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

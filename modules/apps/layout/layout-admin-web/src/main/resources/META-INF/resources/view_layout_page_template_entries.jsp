@@ -48,7 +48,7 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 
 			Map<String, Object> rowData = new HashMap<>();
 
-			rowData.put("actions", String.join(StringPool.COMMA, layoutPageTemplateManagementToolbarDisplayContext.getAvailableActionDropdownItems(layoutPageTemplateEntry)));
+			rowData.put("actions", layoutPageTemplateManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry));
 
 			row.setData(rowData);
 			%>

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.model.TrashEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,14 +72,12 @@ public class TrashManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(TrashEntry trashEntry) {
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
+	public String getAvailableActions(TrashEntry trashEntry) {
 		if (_isDeletable(trashEntry)) {
-			availableActionDropdownItems.add("deleteSelectedEntries");
+			return "deleteSelectedEntries";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

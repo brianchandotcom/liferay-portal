@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -74,16 +73,12 @@ public class SiteAdminManagementToolbarDisplayContext
 		};
 	}
 
-	public List<String> getAvailableActionDropdownItems(Group group)
-		throws PortalException {
-
-		List<String> availableActionDropdownItems = new ArrayList<>();
-
+	public String getAvailableActions(Group group) throws PortalException {
 		if (_hasDeleteGroupPermission(group)) {
-			availableActionDropdownItems.add("deleteSites");
+			return "deleteSites";
 		}
 
-		return availableActionDropdownItems;
+		return StringPool.BLANK;
 	}
 
 	@Override

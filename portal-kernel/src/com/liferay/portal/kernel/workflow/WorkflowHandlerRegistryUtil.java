@@ -55,15 +55,15 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class WorkflowHandlerRegistryUtil {
 
 	public static List<WorkflowHandler<?>> getScopeableWorkflowHandlers() {
-		return _instance._getScopeableWorkflowHandlers();
+		return ListUtil.fromMapValues(_scopeableWorkflowHandlerMap);
 	}
 
 	public static <T> WorkflowHandler<T> getWorkflowHandler(String className) {
-		return (WorkflowHandler<T>)_instance._getWorkflowHandler(className);
+		return (WorkflowHandler<T>)_workflowHandlerMap.get(className);
 	}
 
 	public static List<WorkflowHandler<?>> getWorkflowHandlers() {
-		return _instance._getWorkflowHandlers();
+		return ListUtil.fromMapValues(_workflowHandlerMap);
 	}
 
 	public static void register(List<WorkflowHandler<?>> workflowHandlers) {
@@ -73,7 +73,14 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static void register(WorkflowHandler<?> workflowHandler) {
-		_instance._register(workflowHandler);
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
+			registry.registerService(
+				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
+				workflowHandler);
+
+		_serviceRegistrations.put(workflowHandler, serviceRegistration);
 	}
 
 	public static <T> void startWorkflowInstance(
@@ -119,9 +126,8 @@ public class WorkflowHandlerRegistryUtil {
 			return model;
 		}
 
-		boolean hasWorkflowInstanceInProgress =
-			_instance._hasWorkflowInstanceInProgress(
-				companyId, groupId, className, classPK);
+		boolean hasWorkflowInstanceInProgress = _hasWorkflowInstanceInProgress(
+			companyId, groupId, className, classPK);
 
 		if (hasWorkflowInstanceInProgress) {
 			if (_log.isWarnEnabled()) {
@@ -183,7 +189,7 @@ public class WorkflowHandlerRegistryUtil {
 					@Override
 					public Void call() throws Exception {
 						boolean hasWorkflowInstanceInProgress =
-							_instance._hasWorkflowInstanceInProgress(
+							_hasWorkflowInstanceInProgress(
 								companyId, groupId, className, classPK);
 
 						if (!hasWorkflowInstanceInProgress) {
@@ -237,7 +243,12 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static void unregister(WorkflowHandler<?> workflowHandler) {
-		_instance._unregister(workflowHandler);
+		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
+			_serviceRegistrations.remove(workflowHandler);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	public static <T> T updateStatus(
@@ -256,29 +267,7 @@ public class WorkflowHandlerRegistryUtil {
 		return null;
 	}
 
-	private WorkflowHandlerRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
-			new WorkflowHandlerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	private List<WorkflowHandler<?>> _getScopeableWorkflowHandlers() {
-		return ListUtil.fromMapValues(_scopeableWorkflowHandlerMap);
-	}
-
-	private WorkflowHandler<?> _getWorkflowHandler(String className) {
-		return _workflowHandlerMap.get(className);
-	}
-
-	private List<WorkflowHandler<?>> _getWorkflowHandlers() {
-		return ListUtil.fromMapValues(_workflowHandlerMap);
-	}
-
-	private boolean _hasWorkflowInstanceInProgress(
+	private static boolean _hasWorkflowInstanceInProgress(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
 
@@ -301,42 +290,19 @@ public class WorkflowHandlerRegistryUtil {
 		return false;
 	}
 
-	private void _register(WorkflowHandler<?> workflowHandler) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
-			registry.registerService(
-				(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
-				workflowHandler);
-
-		_serviceRegistrations.put(workflowHandler, serviceRegistration);
-	}
-
-	private void _unregister(WorkflowHandler<?> workflowHandler) {
-		ServiceRegistration<WorkflowHandler<?>> serviceRegistration =
-			_serviceRegistrations.remove(workflowHandler);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
 
-	private static final WorkflowHandlerRegistryUtil _instance =
-		new WorkflowHandlerRegistryUtil();
-
-	private final Map<String, WorkflowHandler<?>> _scopeableWorkflowHandlerMap =
-		new ConcurrentSkipListMap<>();
-	private final ServiceRegistrationMap<WorkflowHandler<?>>
+	private static final Map<String, WorkflowHandler<?>>
+		_scopeableWorkflowHandlerMap = new ConcurrentSkipListMap<>();
+	private static final ServiceRegistrationMap<WorkflowHandler<?>>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<WorkflowHandler<?>, WorkflowHandler<?>>
+	private static final ServiceTracker<WorkflowHandler<?>, WorkflowHandler<?>>
 		_serviceTracker;
-	private final Map<String, WorkflowHandler<?>> _workflowHandlerMap =
+	private static final Map<String, WorkflowHandler<?>> _workflowHandlerMap =
 		new TreeMap<>();
 
-	private class WorkflowHandlerServiceTrackerCustomizer
+	private static class WorkflowHandlerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<WorkflowHandler<?>, WorkflowHandler<?>> {
 
@@ -383,6 +349,16 @@ public class WorkflowHandlerRegistryUtil {
 			}
 		}
 
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			(Class<WorkflowHandler<?>>)(Class<?>)WorkflowHandler.class,
+			new WorkflowHandlerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 }

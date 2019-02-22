@@ -16,6 +16,8 @@ package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -45,7 +47,7 @@ public interface BlogPostingResource {
 				Long blogPostingId,BlogPosting blogPosting)
 			throws Exception;
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-				Long contentSpaceId,Pagination pagination)
+				Long contentSpaceId,Filter filter,Pagination pagination,Sort[] sorts)
 			throws Exception;
 	public BlogPosting postContentSpaceBlogPosting(
 				Long contentSpaceId,BlogPosting blogPosting)

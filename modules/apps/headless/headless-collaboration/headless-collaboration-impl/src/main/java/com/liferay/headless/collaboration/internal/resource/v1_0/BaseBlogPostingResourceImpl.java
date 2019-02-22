@@ -20,6 +20,8 @@ import com.liferay.headless.collaboration.resource.v1_0.BlogPostingResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -157,7 +159,7 @@ public abstract class BaseBlogPostingResourceImpl implements BlogPostingResource
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<BlogPosting> getContentSpaceBlogPostingsPage(
-	@PathParam("content-space-id") Long contentSpaceId,@Context Pagination pagination)
+	@PathParam("content-space-id") Long contentSpaceId,@Context Filter filter,@Context Pagination pagination,@Context Sort[] sorts)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());

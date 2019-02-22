@@ -152,12 +152,9 @@ public class GitWorkingDirectory {
 			timeout++;
 
 			if (timeout >= 59) {
-				LocalGitBranch currentLocalGitBranch =
-					getCurrentLocalGitBranch();
+				String currentBranchName = getCurrentBranchName();
 
-				if ((currentLocalGitBranch != null) &&
-					branchName.equals(currentLocalGitBranch.getName())) {
-
+				if (Objects.equals(branchName, currentBranchName)) {
 					return;
 				}
 
@@ -1021,7 +1018,7 @@ public class GitWorkingDirectory {
 	}
 
 	public LocalGitBranch getLocalGitBranch(String branchName) {
-		if (!hasLocalGitBranch(branchName)) {
+		if (!localGitBranchExists(branchName)) {
 			return null;
 		}
 
@@ -1203,13 +1200,7 @@ public class GitWorkingDirectory {
 		String senderRemoteURL, String senderSHA, String upstreamBranchName,
 		String upstreamBranchSHA) {
 
-		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
-
-		String currentBranchName = null;
-
-		if (currentLocalGitBranch != null) {
-			currentBranchName = currentLocalGitBranch.getName();
-		}
+		String currentBranchName = getCurrentBranchName();
 
 		LocalGitBranch tempLocalGitBranch = null;
 
@@ -1443,7 +1434,7 @@ public class GitWorkingDirectory {
 	public LocalGitBranch getUpstreamLocalGitBranch() {
 		String upstreamBranchName = getUpstreamBranchName();
 
-		if (hasLocalGitBranch(upstreamBranchName)) {
+		if (localGitBranchExists(upstreamBranchName)) {
 			return getLocalGitBranch(upstreamBranchName);
 		}
 
@@ -1483,26 +1474,6 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public boolean hasLocalGitBranch(String branchName) {
-		waitForIndexLock();
-
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-			"git branch | grep [\\s\\*]*" + branchName + "$");
-
-		if (executionResult.getExitValue() == 0) {
-			String standardOut = executionResult.getStandardOut();
-
-			if (standardOut.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isRemoteGitRepositoryAlive(String remoteURL) {
 		String command = JenkinsResultsParserUtil.combine(
 			"git ls-remote -h ", remoteURL, " HEAD");
@@ -1522,7 +1493,19 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean localGitBranchExists(String branchName) {
-		if (getLocalGitBranch(branchName) != null) {
+		waitForIndexLock();
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
+			"git branch | grep [\\s\\*]*" + branchName + "$");
+
+		if (executionResult.getExitValue() == 0) {
+			String standardOut = executionResult.getStandardOut();
+
+			if (standardOut.isEmpty()) {
+				return false;
+			}
+
 			return true;
 		}
 

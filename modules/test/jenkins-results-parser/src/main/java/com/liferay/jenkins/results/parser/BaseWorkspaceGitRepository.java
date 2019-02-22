@@ -329,8 +329,7 @@ public abstract class BaseWorkspaceGitRepository
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		LocalGitBranch upstreamLocalGitBranch =
-			gitWorkingDirectory.getLocalGitBranch(
-				gitWorkingDirectory.getUpstreamBranchName());
+			gitWorkingDirectory.getUpstreamLocalGitBranch();
 
 		System.out.println();
 		System.out.println("##");

@@ -954,8 +954,7 @@ public class GitHubDevSyncUtil {
 
 		if (currentLocalGitBranch == null) {
 			LocalGitBranch localUpstreamGitBranch =
-				gitWorkingDirectory.getLocalGitBranch(
-					gitWorkingDirectory.getUpstreamBranchName());
+				gitWorkingDirectory.getUpstreamLocalGitBranch();
 
 			gitWorkingDirectory.checkoutLocalGitBranch(localUpstreamGitBranch);
 
@@ -1181,8 +1180,7 @@ public class GitHubDevSyncUtil {
 
 		if (originalCheckedOutLocalGitBranch == null) {
 			originalCheckedOutLocalGitBranch =
-				gitWorkingDirectory.getLocalGitBranch(
-					gitWorkingDirectory.getUpstreamBranchName(), true);
+				gitWorkingDirectory.getUpstreamLocalGitBranch();
 		}
 
 		LocalGitBranch newTimestampLocalGitBranch =
@@ -1227,7 +1225,7 @@ public class GitHubDevSyncUtil {
 				true);
 
 		LocalGitBranch upstreamLocalGitBranch =
-			gitWorkingDirectory.getLocalGitBranch(upstreamBranchName);
+			gitWorkingDirectory.getUpstreamLocalGitBranch();
 
 		if (upstreamLocalGitBranch == null) {
 			upstreamLocalGitBranch = gitWorkingDirectory.createLocalGitBranch(

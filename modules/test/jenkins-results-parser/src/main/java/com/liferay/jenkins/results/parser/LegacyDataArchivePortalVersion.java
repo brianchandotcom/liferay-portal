@@ -101,6 +101,12 @@ public class LegacyDataArchivePortalVersion {
 				ioe);
 		}
 
+		if (!testProperties.containsKey(
+				"test.case.available.property.values[data.archive.type]")) {
+
+			return Collections.emptyList();
+		}
+
 		String dataArchiveTypeString = testProperties.getProperty(
 			"test.case.available.property.values[data.archive.type]");
 

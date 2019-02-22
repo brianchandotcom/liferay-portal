@@ -185,6 +185,22 @@ AUI.add(
 				return root || instance;
 			},
 
+			getReadOnly: function() {
+				var instance = this;
+
+				if (instance.get('readOnly')) {
+					return true;
+				}
+
+				var form = instance.getForm();
+
+				if (!instance.get('localizable') && form.getDefaultLocale() != instance.get('displayLocale')) {
+					return true;
+				}
+
+				return false;
+			},
+
 			_getField: function(fieldNode) {
 				var instance = this;
 
@@ -657,9 +673,7 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
-						var form = instance.getForm();
-
-						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+						var readOnly = instance.getReadOnly();
 
 						var inputNode = instance.getInputNode();
 
@@ -1244,9 +1258,7 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
-						var form = instance.getForm();
-
-						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+						var readOnly = instance.getReadOnly();
 
 						var container = instance.get('container');
 
@@ -1425,9 +1437,7 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
-						var form = instance.getForm();
-
-						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+						var readOnly = instance.getReadOnly();
 
 						var container = instance.get('container');
 
@@ -1634,9 +1644,7 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
-						var form = instance.getForm();
-
-						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+						var readOnly = instance.getReadOnly();
 
 						var container = instance.get('container');
 
@@ -2834,9 +2842,7 @@ AUI.add(
 						instance.readOnlyLabel.html(instance.getLabelNode().getHTML());
 						instance.readOnlyText.html('<p>' + instance.getValue() + '</p>');
 
-						var form = instance.getForm();
-
-						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+						var readOnly = instance.getReadOnly();
 
 						instance.readOnlyLabel.toggle(readOnly);
 						instance.readOnlyText.toggle(readOnly);
@@ -2930,9 +2936,7 @@ AUI.add(
 					syncReadOnlyUI: function() {
 						var instance = this;
 
-						var form = instance.getForm();
-
-						var readOnly = instance.get('readOnly') || (!instance.get('localizable') && instance.get('displayLocale') != form.getDefaultLocale());
+						var readOnly = instance.getReadOnly();
 
 						var radioNodes = instance.getRadioNodes();
 

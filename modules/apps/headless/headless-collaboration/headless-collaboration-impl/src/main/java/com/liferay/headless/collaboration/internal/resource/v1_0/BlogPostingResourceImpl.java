@@ -27,8 +27,10 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPosting;
 import com.liferay.headless.collaboration.dto.v1_0.Categories;
 import com.liferay.headless.collaboration.dto.v1_0.Image;
+import com.liferay.headless.collaboration.internal.dto.v1_0.AggregateRatingImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.BlogPostingImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.CategoriesImpl;
+import com.liferay.headless.collaboration.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.ImageImpl;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.collaboration.internal.dto.v1_0.util.CreatorUtil;
@@ -294,15 +296,17 @@ public class BlogPostingResourceImpl
 		return new BlogPostingImpl() {
 			{
 				alternativeHeadline = blogsEntry.getSubtitle();
-				aggregateRating = AggregateRatingUtil.toAggregateRating(
-					_ratingsStatsLocalService.fetchStats(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				aggregateRating =
+					(AggregateRatingImpl)AggregateRatingUtil.toAggregateRating(
+						_ratingsStatsLocalService.fetchStats(
+							BlogsEntry.class.getName(),
+							blogsEntry.getEntryId()));
 				articleBody = blogsEntry.getContent();
 				caption = blogsEntry.getCoverImageCaption();
-				categories = _getCategories(blogsEntry);
+				categories = (CategoriesImpl[])_getCategories(blogsEntry);
 				categoryIds = _getCategoryIds(blogsEntry);
 				contentSpace = blogsEntry.getGroupId();
-				creator = CreatorUtil.toCreator(
+				creator = (CreatorImpl)CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
 				dateCreated = blogsEntry.getCreateDate();
 				dateModified = blogsEntry.getModifiedDate();
@@ -313,7 +317,7 @@ public class BlogPostingResourceImpl
 				hasComments = _hasComments(blogsEntry);
 				headline = blogsEntry.getTitle();
 				id = blogsEntry.getEntryId();
-				image = _getImage(blogsEntry);
+				image = (ImageImpl)_getImage(blogsEntry);
 				imageId = blogsEntry.getCoverImageFileEntryId();
 				keywords = _getAssetTagNames(blogsEntry);
 			}

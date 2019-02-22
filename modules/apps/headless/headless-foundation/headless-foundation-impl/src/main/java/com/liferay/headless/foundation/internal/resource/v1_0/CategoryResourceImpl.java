@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Category;
 import com.liferay.headless.foundation.dto.v1_0.ParentCategory;
 import com.liferay.headless.foundation.internal.dto.v1_0.CategoryImpl;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.ParentCategoryImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.ParentVocabularyImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
@@ -228,7 +229,7 @@ public class CategoryResourceImpl
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					assetCategory.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
+				creator = (CreatorImpl)CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(assetCategory.getUserId()));
 				creatorId = assetCategory.getUserId();
@@ -248,7 +249,7 @@ public class CategoryResourceImpl
 					contextAcceptLanguage.getPreferredLocale());
 
 				if (assetCategory.getParentCategory() != null) {
-					parentCategory = _toParentCategory(
+					parentCategory = (ParentCategoryImpl)_toParentCategory(
 						assetCategory.getParentCategory());
 				}
 

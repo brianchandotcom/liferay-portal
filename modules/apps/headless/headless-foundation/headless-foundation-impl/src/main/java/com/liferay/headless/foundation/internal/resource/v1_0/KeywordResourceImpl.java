@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.exception.DuplicateTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.foundation.dto.v1_0.Keyword;
+import com.liferay.headless.foundation.internal.dto.v1_0.CreatorImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.KeywordImpl;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.KeywordEntityModel;
@@ -160,7 +161,7 @@ public class KeywordResourceImpl
 		return new KeywordImpl() {
 			{
 				contentSpace = assetTag.getGroupId();
-				creator = CreatorUtil.toCreator(
+				creator = (CreatorImpl)CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(assetTag.getUserId()));
 				dateCreated = assetTag.getCreateDate();

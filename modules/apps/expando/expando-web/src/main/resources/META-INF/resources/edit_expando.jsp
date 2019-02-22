@@ -66,6 +66,11 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()));
 %>
 
+<liferay-ui:error exception="<%= ColumnNameException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= ColumnTypeException.class %>" message="please-select-a-valid-type" />
+<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
+<liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
+
 <portlet:actionURL name='<%= (column == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
 	<portlet:param name="mvcPath" value="/edit_expando.jsp" />
 </portlet:actionURL>
@@ -77,11 +82,6 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
-
-	<liferay-ui:error exception="<%= ColumnNameException.class %>" message="please-enter-a-valid-name" />
-	<liferay-ui:error exception="<%= ColumnTypeException.class %>" message="please-select-a-valid-type" />
-	<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
-	<liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">

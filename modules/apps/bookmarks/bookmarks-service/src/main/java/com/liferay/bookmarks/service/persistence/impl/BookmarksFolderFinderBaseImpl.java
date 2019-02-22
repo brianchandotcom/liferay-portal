@@ -16,48 +16,53 @@ package com.liferay.bookmarks.service.persistence.impl;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
+import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Set;
+
+import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class BookmarksFolderFinderBaseImpl extends BasePersistenceImpl<BookmarksFolder> {
+public abstract class BookmarksFolderFinderBaseImpl extends BasePersistenceImpl<BookmarksFolder> {
 	public BookmarksFolderFinderBaseImpl() {
 		setModelClass(BookmarksFolder.class);
 	}
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getBookmarksFolderPersistence().getBadColumnNames();
+		return bookmarksFolderPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the bookmarks folder persistence.
-	 *
-	 * @return the bookmarks folder persistence
-	 */
-	public BookmarksFolderPersistence getBookmarksFolderPersistence() {
-		return bookmarksFolderPersistence;
+	@Override
+	@Reference(target = BookmarksPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the bookmarks folder persistence.
-	 *
-	 * @param bookmarksFolderPersistence the bookmarks folder persistence
-	 */
-	public void setBookmarksFolderPersistence(
-		BookmarksFolderPersistence bookmarksFolderPersistence) {
-		this.bookmarksFolderPersistence = bookmarksFolderPersistence;
+	@Override
+	@Reference(target = BookmarksPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = BookmarksFolderPersistence.class)
+	@Override
+	@Reference(target = BookmarksPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
 	private static final Log _log = LogFactoryUtil.getLog(BookmarksFolderFinderBaseImpl.class);
 }

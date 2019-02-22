@@ -440,11 +440,6 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().openEntry(userId, entryId);
 	}
 
-	public static void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().rebuildTree(companyId);
-	}
-
 	public static com.liferay.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

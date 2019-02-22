@@ -371,8 +371,6 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	public BookmarksEntry openEntry(long userId, long entryId)
 		throws PortalException;
 
-	public void rebuildTree(long companyId) throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public BookmarksEntry restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException;

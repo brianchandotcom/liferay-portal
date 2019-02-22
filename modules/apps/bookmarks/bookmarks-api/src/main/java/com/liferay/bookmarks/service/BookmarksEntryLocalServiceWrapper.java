@@ -487,12 +487,6 @@ public class BookmarksEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_bookmarksEntryLocalService.rebuildTree(companyId);
-	}
-
-	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -16,13 +16,19 @@ package com.liferay.bookmarks.service.persistence.impl;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence;
+import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Set;
+
+import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,36 +36,35 @@ import java.util.Set;
  * @generated
  */
 @Deprecated
-public class BookmarksEntryFinderBaseImpl extends BasePersistenceImpl<BookmarksEntry> {
+public abstract class BookmarksEntryFinderBaseImpl extends BasePersistenceImpl<BookmarksEntry> {
 	public BookmarksEntryFinderBaseImpl() {
 		setModelClass(BookmarksEntry.class);
 	}
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getBookmarksEntryPersistence().getBadColumnNames();
+		return bookmarksEntryPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the bookmarks entry persistence.
-	 *
-	 * @return the bookmarks entry persistence
-	 */
-	public BookmarksEntryPersistence getBookmarksEntryPersistence() {
-		return bookmarksEntryPersistence;
+	@Override
+	@Reference(target = BookmarksPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the bookmarks entry persistence.
-	 *
-	 * @param bookmarksEntryPersistence the bookmarks entry persistence
-	 */
-	public void setBookmarksEntryPersistence(
-		BookmarksEntryPersistence bookmarksEntryPersistence) {
-		this.bookmarksEntryPersistence = bookmarksEntryPersistence;
+	@Override
+	@Reference(target = BookmarksPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = BookmarksEntryPersistence.class)
+	@Override
+	@Reference(target = BookmarksPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER, unbind = "-")
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
 	private static final Log _log = LogFactoryUtil.getLog(BookmarksEntryFinderBaseImpl.class);
 }

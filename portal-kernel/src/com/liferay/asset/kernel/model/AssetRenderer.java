@@ -16,6 +16,7 @@ package com.liferay.asset.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,6 +33,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jorge Ferrer
@@ -159,6 +162,12 @@ public interface AssetRenderer<T> extends Renderer {
 			LiferayPortletResponse liferayPortletResponse,
 			String noSuchEntryRedirect)
 		throws Exception;
+
+	public default String getURLViewUsages(HttpServletRequest request)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
 
 	public long getUserId();
 

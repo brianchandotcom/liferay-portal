@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
@@ -48,14 +49,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Adam Brandizzi
  */
-public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
+public class WorkflowTaskPermissionCheckerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
@@ -296,42 +293,41 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	protected PermissionChecker mockPermissionChecker(
 		long userId, long[] roleIds, boolean companyAdmin,
-		boolean contentReviewer, boolean omniadmin) {
+		boolean contentReviewer, boolean paraOmniadmin) {
 
-		PermissionChecker permissionChecker = mock(PermissionChecker.class);
+		return new SimplePermissionChecker() {
 
-		when(
-			permissionChecker.getUserId()
-		).thenReturn(
-			userId
-		);
+			@Override
+			public long getCompanyId() {
+				return 0;
+			}
 
-		when(
-			permissionChecker.getRoleIds(Matchers.anyLong(), Matchers.anyLong())
-		).thenReturn(
-			roleIds
-		);
+			@Override
+			public long[] getRoleIds(long userId, long groupId) {
+				return roleIds;
+			}
 
-		when(
-			permissionChecker.isCompanyAdmin()
-		).thenReturn(
-			companyAdmin
-		);
+			@Override
+			public long getUserId() {
+				return userId;
+			}
 
-		when(
-			permissionChecker.isContentReviewer(
-				Matchers.anyLong(), Matchers.anyLong())
-		).thenReturn(
-			contentReviewer
-		);
+			@Override
+			public boolean isCompanyAdmin() {
+				return companyAdmin;
+			}
 
-		when(
-			permissionChecker.isOmniadmin()
-		).thenReturn(
-			omniadmin
-		);
+			@Override
+			public boolean isContentReviewer(long companyId, long groupId) {
+				return contentReviewer;
+			}
 
-		return permissionChecker;
+			@Override
+			public boolean isOmniadmin() {
+				return paraOmniadmin;
+			}
+
+		};
 	}
 
 	protected WorkflowTask mockWorkflowTask() {

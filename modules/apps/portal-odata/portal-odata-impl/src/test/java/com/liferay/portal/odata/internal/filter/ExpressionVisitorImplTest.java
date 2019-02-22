@@ -17,6 +17,7 @@ package com.liferay.portal.odata.internal.filter;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
@@ -50,6 +51,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.assertj.core.api.AbstractThrowableAssert;
+import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -112,6 +116,21 @@ public class ExpressionVisitorImplTest {
 		Assert.assertEquals(value, termFilter.getValue());
 	}
 
+	@Test
+	public void testVisitBinaryExpressionOperationWithEqualOperationAndNullValue() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		ExistsFilter existsFilter =
+			(ExistsFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityField, null);
+
+		Assert.assertEquals(entityField.getName(), existsFilter.getField());
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testVisitBinaryExpressionOperationWithGreaterEqualOperation() {
@@ -156,6 +175,40 @@ public class ExpressionVisitorImplTest {
 		Assert.assertTrue(rangeTermFilter.isIncludesUpper());
 	}
 
+	@Test
+	public void testVisitBinaryExpressionOperationWithGreaterOperationAndNullValue() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.GT, entityFieldsMap.get("title"),
+				null)
+		).isInstanceOf(
+			UnsupportedOperationException.class
+		);
+
+		exception.hasMessage(
+			"Unsupported method _getGTFilter with null values");
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithGreaterOrEqualOperationAndNullValue() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.GE, entityFieldsMap.get("title"),
+				null)
+		).isInstanceOf(
+			UnsupportedOperationException.class
+		);
+
+		exception.hasMessage(
+			"Unsupported method _getGEFilter with null values");
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testVisitBinaryExpressionOperationWithLowerEqualOperation() {
@@ -196,6 +249,40 @@ public class ExpressionVisitorImplTest {
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
 		Assert.assertEquals(value, rangeTermFilter.getUpperBound());
 		Assert.assertNull(rangeTermFilter.getLowerBound());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithLowerOperationAndNullValue() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.LT, entityFieldsMap.get("title"),
+				null)
+		).isInstanceOf(
+			UnsupportedOperationException.class
+		);
+
+		exception.hasMessage(
+			"Unsupported method _getLTFilter with null values");
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithLowerOrEqualOperationAndNullValue() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.LE, entityFieldsMap.get("title"),
+				null)
+		).isInstanceOf(
+			UnsupportedOperationException.class
+		);
+
+		exception.hasMessage(
+			"Unsupported method _getLEFilter with null values");
 	}
 
 	@Test

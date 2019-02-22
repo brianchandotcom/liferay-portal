@@ -383,23 +383,24 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var defaultLanguageId = '<%= themeDisplay.getLanguageId() %>';
 
+	var form = document.<portlet:namespace />fm;
+
 	Liferay.on(
 		'<portlet:namespace />publishDefinition',
 		function(event) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			var titleElement = Liferay.Util.getFormElement('title_' + defaultLanguageId);
+			var titleElement = Liferay.Util.getFormElement(form, 'title_' + defaultLanguageId);
 
 			if (!titleElement) {
 				Liferay.Util.setFormValues(
-					form, {
+					form,
+					{
 						titleElement: ''
 					}
 				);
 			}
 
 			Liferay.Util.postForm(
-				document.<portlet:namespace />fm,
+				form,
 				{
 					data: {
 						content: contentEditor.get(STR_VALUE),
@@ -414,20 +415,19 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	Liferay.on(
 		'<portlet:namespace />saveDefinition',
 		function(event) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			var titleElement = Liferay.Util.getFormElement('title_' + defaultLanguageId);
+			var titleElement = Liferay.Util.getFormElement(form, 'title_' + defaultLanguageId);
 
 			if (!titleElement) {
 				Liferay.Util.setFormValues(
-					form, {
+					form,
+					{
 						titleElement: ''
 					}
 				);
 			}
 
 			Liferay.Util.postForm(
-				document.<portlet:namespace />fm,
+				form,
 				{
 					data: {
 						content: contentEditor.get(STR_VALUE),

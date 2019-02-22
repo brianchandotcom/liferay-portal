@@ -283,9 +283,6 @@ public class CategoryResourceImpl
 	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference
-	private ClassNameService _classNameService;
-
-	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference

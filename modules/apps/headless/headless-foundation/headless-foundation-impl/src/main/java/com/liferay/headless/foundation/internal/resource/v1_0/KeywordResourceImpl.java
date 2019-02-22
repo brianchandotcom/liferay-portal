@@ -179,9 +179,6 @@ public class KeywordResourceImpl
 	private AssetTagService _assetTagService;
 
 	@Reference
-	private ClassNameService _classNameService;
-
-	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference

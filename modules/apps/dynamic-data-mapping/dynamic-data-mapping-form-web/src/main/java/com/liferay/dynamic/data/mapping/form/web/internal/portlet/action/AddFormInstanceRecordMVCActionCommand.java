@@ -96,6 +96,8 @@ public class AddFormInstanceRecordMVCActionCommand
 			validateCaptcha(actionRequest, ddmFormInstance);
 		}
 		catch (CaptchaTextException cte) {
+			SessionErrors.add(actionRequest, cte.getClass());
+
 			return;
 		}
 
@@ -202,15 +204,7 @@ public class AddFormInstanceRecordMVCActionCommand
 			ddmFormInstance.getSettingsModel();
 
 		if (formInstanceSettings.requireCaptcha()) {
-			try {
-				CaptchaUtil.check(actionRequest);
-			}
-			catch (CaptchaTextException cte) {
-				SessionErrors.add(
-					actionRequest, CaptchaTextException.class.getName());
-
-				throw cte;
-			}
+			CaptchaUtil.check(actionRequest);
 		}
 	}
 

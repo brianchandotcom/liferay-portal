@@ -351,7 +351,7 @@
 					try {
 						var itemValue = JSON.parse(selectedItem.value);
 
-						itemSrc = editor.config.attachmentURLPrefix ? editor.config.attachmentURLPrefix + itemValue.title : itemValue.url;
+						itemSrc = editor.config.attachmentURLPrefix ? editor.config.attachmentURLPrefix + encodeURIComponent(itemValue.title) : itemValue.url;
 					}
 					catch (e) {
 					}

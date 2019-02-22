@@ -14,8 +14,8 @@
 
 package com.liferay.headless.workflow.internal.graphql.query.v1_0;
 
-import com.liferay.headless.workflow.dto.v1_0.WorkflowLog;
-import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
+import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowLogImpl;
+import com.liferay.headless.workflow.internal.dto.v1_0.WorkflowTaskImpl;
 import com.liferay.headless.workflow.internal.resource.v1_0.WorkflowLogResourceImpl;
 import com.liferay.headless.workflow.internal.resource.v1_0.WorkflowTaskResourceImpl;
 import com.liferay.headless.workflow.resource.v1_0.WorkflowLogResource;
@@ -42,7 +42,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WorkflowLog getWorkflowLog(
+	public WorkflowLogImpl getWorkflowLog(
 	@GraphQLName("workflow-log-id") Long workflowLogId)
 			throws Exception {
 
@@ -51,13 +51,13 @@ public class Query {
 				workflowLogResource.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return workflowLogResource.getWorkflowLog(
+				return (WorkflowLogImpl)workflowLogResource.getWorkflowLog(
 					workflowLogId);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
+	public Collection<WorkflowLogImpl> getWorkflowTaskWorkflowLogsPage(
 	@GraphQLName("workflow-task-id") Long workflowTaskId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
@@ -74,7 +74,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getRoleWorkflowTasksPage(
+	public Collection<WorkflowTaskImpl> getRoleWorkflowTasksPage(
 	@GraphQLName("role-id") Long roleId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
@@ -91,7 +91,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<WorkflowTask> getWorkflowTasksPage(
+	public Collection<WorkflowTaskImpl> getWorkflowTasksPage(
 	@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
 			throws Exception {
 
@@ -108,7 +108,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public WorkflowTask getWorkflowTask(
+	public WorkflowTaskImpl getWorkflowTask(
 	@GraphQLName("workflow-task-id") Long workflowTaskId)
 			throws Exception {
 
@@ -117,7 +117,7 @@ public class Query {
 				workflowTaskResource.setContextCompany(
 					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return workflowTaskResource.getWorkflowTask(
+				return (WorkflowTaskImpl)workflowTaskResource.getWorkflowTask(
 					workflowTaskId);
 	}
 

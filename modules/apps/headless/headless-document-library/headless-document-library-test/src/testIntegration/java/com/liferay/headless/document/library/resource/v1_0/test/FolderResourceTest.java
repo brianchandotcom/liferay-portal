@@ -115,11 +115,18 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Folder postContentSpaceFolder = invokePostContentSpaceFolder(
 			testGroup.getGroupId(), randomFolder);
 
+		Assert.assertFalse(postContentSpaceFolder.getHasFolders());
+
 		Folder postFolderFolder = invokePostFolderFolder(
 			postContentSpaceFolder.getId(), randomFolder);
 
 		assertEquals(randomFolder, postFolderFolder);
 		assertValid(postFolderFolder);
+
+		Folder postContentSpaceFolderHasFolders = invokeGetFolder(
+			postContentSpaceFolder.getId());
+
+		Assert.assertTrue(postContentSpaceFolderHasFolders.getHasFolders());
 	}
 
 	@Test

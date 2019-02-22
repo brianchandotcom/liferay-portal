@@ -125,38 +125,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 				_serviceContext));
 	}
 
-	protected static WorkflowHandler mockWorkflowHandler() {
-		return new BaseWorkflowHandler() {
-
-			@Override
-			public String getClassName() {
-				return _VALID_ENTRY_CLASS_NAME;
-			}
-
-			@Override
-			public String getType(Locale locale) {
-				return null;
-			}
-
-			@Override
-			public String getURLEditWorkflowTask(
-				long workflowTaskId, ServiceContext serviceContext) {
-
-				if (_serviceContext == serviceContext) {
-					return _VALID_LINK;
-				}
-
-				return null;
-			}
-
-			@Override
-			public Object updateStatus(int status, Map workflowContext) {
-				return null;
-			}
-
-		};
-	}
-
 	protected UserNotificationEvent mockUserNotificationEvent(
 		long workflowTaskId) {
 
@@ -224,9 +192,37 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			ReflectionTestUtil.getFieldValue(
 				WorkflowHandlerRegistryUtil.class, "_workflowHandlerMap");
 
-		WorkflowHandler<?> workflowHandler = mockWorkflowHandler();
+		workflowHandlerMap.put(
+			_VALID_ENTRY_CLASS_NAME,
+			new BaseWorkflowHandler<Object>() {
 
-		workflowHandlerMap.put(workflowHandler.getClassName(), workflowHandler);
+				@Override
+				public String getClassName() {
+					return _VALID_ENTRY_CLASS_NAME;
+				}
+
+				@Override
+				public String getType(Locale locale) {
+					return null;
+				}
+
+				@Override
+				public String getURLEditWorkflowTask(
+					long workflowTaskId, ServiceContext serviceContext) {
+
+					if (_serviceContext == serviceContext) {
+						return _VALID_LINK;
+					}
+
+					return null;
+				}
+
+				@Override
+				public Object updateStatus(int status, Map workflowContext) {
+					return null;
+				}
+
+			});
 	}
 
 	private static void _setUpWorkflowTaskManagerUtil() throws PortalException {

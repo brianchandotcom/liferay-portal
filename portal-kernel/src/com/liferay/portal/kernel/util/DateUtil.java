@@ -97,13 +97,6 @@ public class DateUtil {
 		return dateFormat.format(date);
 	}
 
-	public static int getYear(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-
-		return cal.get(Calendar.YEAR);
-	}
-
 	public static int getDaysBetween(Date date1, Date date2) {
 		return getDaysBetween(date1, date2, null);
 	}
@@ -219,6 +212,14 @@ public class DateUtil {
 
 		return DateFormatFactoryUtil.getSimpleDateFormat(
 			pattern, TimeZoneUtil.getTimeZone(StringPool.UTC));
+	}
+
+	public static int getYear(Date date) {
+		Calendar cal = Calendar.getInstance();
+
+		cal.setTime(date);
+
+		return cal.get(Calendar.YEAR);
 	}
 
 	public static boolean isFormatAmPm(Locale locale) {

@@ -1021,7 +1021,7 @@ definition {
 				AssertClick(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "AssetCategorization#TAG_FILTER_TITLE",
+					locator1 = "BlogsEntry#TAG_FILTER_TITLE",
 					value1 = "Entries with tag ${tagName}"
 				);
 
@@ -1037,7 +1037,7 @@ definition {
 			AssertClick(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "AssetCategorization#TAG_FILTER_TITLE",
+				locator1 = "BlogsEntry#TAG_FILTER_TITLE",
 				value1 = "Entries with tag ${tagName}"
 			);
 
@@ -1056,7 +1056,7 @@ definition {
 				AssertClick(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 
 				AssertTextEquals.assertPartialText(
-					locator1 = "AssetCategorization#TAG_FILTER_TITLE",
+					locator1 = "BlogsEntry#TAG_FILTER_TITLE",
 					value1 = "Entries with tag ${tagName}"
 				);
 
@@ -1070,7 +1070,7 @@ definition {
 			AssertClick.assertTextClickCaseInsensitive(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "AssetCategorization#TAG_FILTER_TITLE",
+				locator1 = "BlogsEntry#TAG_FILTER_TITLE",
 				value1 = "${tagName}"
 			);
 

@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_FILTER_TITLE</td>
-	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG_REMOVE</td>
 	<td>//span[@id='item-tag'][contains(.,'${key_tagName}')]//button[contains(@class,'close')]</td>
 	<td></td>

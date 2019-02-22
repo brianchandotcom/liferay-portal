@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAG_FILTER_TITLE</td>
+	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FLAG_LINK</td>
 	<td>//div[contains(@class,'taglib-flags')]//button[contains(@type,'button')]</td>
 	<td></td>

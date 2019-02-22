@@ -294,7 +294,10 @@ definition {
 
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click(
+			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS",
+			key_entryTitle = "${entryTitle}"
+		);
 
 		MenuItem.viewNotPresent(menuItem = "Edit");
 	}
@@ -516,9 +519,12 @@ definition {
 
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Permissions");
+		var key_entryTitle = "${entryTitle}";
+		
+		Blogs.clickEllipsisItemPG(
+			entryTitle = "${entryTitle}",
+			item = "Permissions"
+		);
 
 		IFrame.selectPermissionsFrame();
 

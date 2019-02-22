@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -85,25 +84,28 @@ public class LegacyDataArchivePortalVersion {
 	}
 
 	private List<String> _getDataArchiveTypes() {
-		Set<String> dataArchiveTypeSet = new HashSet<>();
+		Properties testProperties = new Properties();
 
-		try {
-			List<File> testcaseFiles = JenkinsResultsParserUtil.findFiles(
-				_portalVersionTestDirectory, ".*\\.testcase");
+		File testPropertiesFile = new File(
+			_portalVersionTestDirectory, "test.properties");
 
-			for (File testcaseFile : testcaseFiles) {
-				Document document = Dom4JUtil.parse(
-					JenkinsResultsParserUtil.read(testcaseFile));
+		try (FileInputStream fileInputStream = new FileInputStream(
+				testPropertiesFile)) {
 
-				Element rootElement = document.getRootElement();
-
-				dataArchiveTypeSet.addAll(
-					_getPoshiPropertyValues(rootElement, "data.archive.type"));
-			}
+			testProperties.load(fileInputStream);
 		}
-		catch (DocumentException | IOException e) {
-			throw new RuntimeException(e);
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to load ", testPropertiesFile.getPath()),
+				ioe);
 		}
+
+		String dataArchiveTypeString = testProperties.getProperty(
+			"test.case.available.property.values[data.archive.type]");
+
+		Set<String> dataArchiveTypeSet = new HashSet<>(
+			Arrays.asList(dataArchiveTypeString.split(",")));
 
 		List<String> dataArchiveTypes = new ArrayList<>(dataArchiveTypeSet);
 

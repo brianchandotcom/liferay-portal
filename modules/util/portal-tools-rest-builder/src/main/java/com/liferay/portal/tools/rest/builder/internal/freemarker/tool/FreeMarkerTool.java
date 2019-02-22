@@ -72,9 +72,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getGraphQLParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaParameter> javaParameters, OpenAPIYAML openAPIYAML,
+		boolean annotation) {
 
-		return GraphQLOpenAPIParser.getParameters(javaParameters, annotation);
+		return GraphQLOpenAPIParser.getParameters(
+			javaParameters, openAPIYAML, annotation);
 	}
 
 	public Set<String> getGraphQLSchemaNames(
@@ -85,6 +87,10 @@ public class FreeMarkerTool {
 
 	public String getHTTPMethod(Operation operation) {
 		return OpenAPIParserUtil.getHTTPMethod(operation);
+	}
+
+	public String getImplementationType(String type, Set<String> schemaNames) {
+		return OpenAPIParserUtil.getImplementationType(type, schemaNames);
 	}
 
 	public String getResourceArguments(List<JavaParameter> javaParameters) {

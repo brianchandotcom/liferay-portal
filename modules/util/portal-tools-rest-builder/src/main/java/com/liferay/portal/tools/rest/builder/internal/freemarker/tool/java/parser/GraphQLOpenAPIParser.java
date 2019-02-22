@@ -51,7 +51,7 @@ public class GraphQLOpenAPIParser {
 			javaMethodSignatures.addAll(
 				_getJavaMethodSignatures(
 					configYAML, graphQLType, openAPIYAML, schemaName,
-					fullyQualifiedNames));
+					schemas.keySet(), fullyQualifiedNames));
 		}
 
 		if (!fullyQualifiedNames) {
@@ -82,7 +82,8 @@ public class GraphQLOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaParameter> javaParameters, OpenAPIYAML openAPIYAML,
+		boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -90,7 +91,8 @@ public class GraphQLOpenAPIParser {
 			String parameterAnnotation = null;
 
 			if (annotation) {
-				parameterAnnotation = _getParameterAnnotation(javaParameter);
+				parameterAnnotation = _getParameterAnnotation(
+					javaParameter, openAPIYAML);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
@@ -110,7 +112,8 @@ public class GraphQLOpenAPIParser {
 
 	private static List<JavaMethodSignature> _getJavaMethodSignatures(
 		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
-		String schemaName, boolean fullyQualifiedNames) {
+		String schemaName, Set<String> schemaNames,
+		boolean fullyQualifiedNames) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
@@ -127,14 +130,15 @@ public class GraphQLOpenAPIParser {
 				continue;
 			}
 
-			String returnType = resourceJavaMethodSignature.getReturnType();
+			List<JavaParameter> javaParameters = _getJavaParameters(
+				resourceJavaMethodSignature, schemaNames);
+
+			String returnType = OpenAPIParserUtil.getImplementationType(
+				resourceJavaMethodSignature.getReturnType(), schemaNames);
 
 			if (returnType.startsWith("Page<")) {
 				returnType = "Collection<".concat(returnType.substring(5));
 			}
-
-			List<JavaParameter> javaParameters = _getJavaParameters(
-				resourceJavaMethodSignature);
 
 			javaMethodSignatures.add(
 				new JavaMethodSignature(
@@ -148,33 +152,48 @@ public class GraphQLOpenAPIParser {
 	}
 
 	private static List<JavaParameter> _getJavaParameters(
-		JavaMethodSignature resourceJavaMethodSignature) {
+		JavaMethodSignature resourceJavaMethodSignature,
+		Set<String> schemaNames) {
 
 		List<JavaParameter> javaParameters = new ArrayList<>();
 
 		for (JavaParameter javaParameter :
 				resourceJavaMethodSignature.getJavaParameters()) {
 
+			Operation operation = javaParameter.getOperation();
 			String parameterType = javaParameter.getParameterType();
 
 			if (Objects.equals(parameterType, "Pagination")) {
 				javaParameters.add(
-					new JavaParameter(
-						javaParameter.getOperation(), "pageSize", "int"));
+					new JavaParameter(operation, "pageSize", "int"));
+
+				javaParameters.add(new JavaParameter(operation, "page", "int"));
+			}
+			else {
+				String implementationType =
+					OpenAPIParserUtil.getImplementationType(
+						parameterType, schemaNames);
+				String parameterName = javaParameter.getParameterName();
+
+				if (implementationType.endsWith("Impl") &&
+					schemaNames.contains(parameterType) &&
+					!parameterName.endsWith("Impl")) {
+
+					parameterName = parameterName + "Impl";
+				}
 
 				javaParameters.add(
 					new JavaParameter(
-						javaParameter.getOperation(), "page", "int"));
-			}
-			else {
-				javaParameters.add(javaParameter);
+						operation, parameterName, implementationType));
 			}
 		}
 
 		return javaParameters;
 	}
 
-	private static String _getParameterAnnotation(JavaParameter javaParameter) {
+	private static String _getParameterAnnotation(
+		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+
 		Operation operation = javaParameter.getOperation();
 
 		for (Parameter parameter : operation.getParameters()) {
@@ -203,7 +222,18 @@ public class GraphQLOpenAPIParser {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("@GraphQLName(\"");
-		sb.append(javaParameter.getParameterType());
+
+		String parameterType = javaParameter.getParameterType();
+
+		if (parameterType.endsWith("Impl") &&
+			OpenAPIParserUtil.isSchemaParameter(javaParameter, openAPIYAML)) {
+
+			parameterType = parameterType.substring(
+				0, parameterType.length() - 4);
+		}
+
+		sb.append(parameterType);
+
 		sb.append("\")");
 
 		return sb.toString();

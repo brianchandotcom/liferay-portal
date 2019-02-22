@@ -86,6 +86,32 @@ public class OpenAPIParserUtil {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
+	public static String getImplementationType(
+		String type, Set<String> schemaNames) {
+
+		String simpleClassName = _getSimpleClassName(type);
+
+		if (schemaNames.contains(simpleClassName)) {
+			simpleClassName = simpleClassName + "Impl";
+		}
+
+		if (type.endsWith(">")) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(type.substring(0, type.indexOf("<")));
+			sb.append("<");
+			sb.append(simpleClassName);
+			sb.append(">");
+
+			return sb.toString();
+		}
+		else if (type.endsWith("[]")) {
+			return simpleClassName + "[]";
+		}
+
+		return simpleClassName;
+	}
+
 	public static String getJavaParameterType(
 		String propertySchemaName, Schema schema) {
 
@@ -165,18 +191,6 @@ public class OpenAPIParserUtil {
 		return schemaNames;
 	}
 
-	public static String getSimpleClassName(String type) {
-		if (type.endsWith("[]")) {
-			return type.substring(0, type.length() - 2);
-		}
-
-		if (type.endsWith(">")) {
-			return type.substring(0, type.indexOf("<"));
-		}
-
-		return type;
-	}
-
 	public static boolean hasHTTPMethod(
 		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 
@@ -194,13 +208,21 @@ public class OpenAPIParserUtil {
 	public static boolean isSchemaParameter(
 		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
 
-		String simpleClassName = getSimpleClassName(
+		String simpleClassName = _getSimpleClassName(
 			javaParameter.getParameterType());
 
 		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 
 		if (schemas.containsKey(simpleClassName)) {
 			return true;
+		}
+
+		if (simpleClassName.endsWith("Impl")) {
+			int length = simpleClassName.length();
+
+			if (schemas.containsKey(simpleClassName.substring(0, length - 4))) {
+				return true;
+			}
 		}
 
 		return false;
@@ -296,6 +318,17 @@ public class OpenAPIParserUtil {
 		}
 
 		return StringUtil.upperCaseFirstLetter(type);
+	}
+
+	private static String _getSimpleClassName(String type) {
+		if (type.endsWith("[]")) {
+			return type.substring(0, type.length() - 2);
+		}
+		else if (type.endsWith(">")) {
+			return type.substring(type.indexOf("<") + 1, type.length() - 1);
+		}
+
+		return type;
 	}
 
 	private static String _toFullyQualifiedClassName(

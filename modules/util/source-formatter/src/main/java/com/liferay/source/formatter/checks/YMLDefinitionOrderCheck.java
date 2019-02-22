@@ -48,6 +48,23 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		DefinitionComparator definitionComparator = new DefinitionComparator(
 			fileName);
 
+		if (definitions.size() == 1) {
+			String definition = definitions.get(0);
+
+			String nestedDefinitionIndent =
+				YMLSourceUtil.getNestedDefinitionIndent(definition);
+
+			if (!nestedDefinitionIndent.equals(StringPool.BLANK)) {
+				String newDefinition = _sortDefinitions(
+					fileName, definition, nestedDefinitionIndent);
+
+				if (!newDefinition.equals(definition)) {
+					return StringUtil.replaceFirst(
+						content, definition, newDefinition);
+				}
+			}
+		}
+
 		for (int i = 1; i < definitions.size(); i++) {
 			String definition = definitions.get(i);
 			String previousDefinition = definitions.get(i - 1);

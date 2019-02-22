@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Text right",
+	"thumbnail": "text_right.png",
 	"type": "section"
 }

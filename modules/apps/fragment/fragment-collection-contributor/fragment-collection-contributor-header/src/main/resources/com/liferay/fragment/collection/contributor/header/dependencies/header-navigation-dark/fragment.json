@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Header navigation dark",
+	"thumbnail": "header_navigation_dark.png",
 	"type": "section"
 }

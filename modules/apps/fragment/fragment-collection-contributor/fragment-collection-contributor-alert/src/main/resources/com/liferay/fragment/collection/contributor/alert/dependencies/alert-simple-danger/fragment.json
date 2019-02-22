@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Alert simple danger",
+	"thumbnail": "alert_simple_danger.png",
 	"type": "section"
 }

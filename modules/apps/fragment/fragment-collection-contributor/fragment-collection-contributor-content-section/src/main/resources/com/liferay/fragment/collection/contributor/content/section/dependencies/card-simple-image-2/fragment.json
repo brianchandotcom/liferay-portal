@@ -4,5 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Card simple image - 2",
+	"thumbnail": "card_simple_image_2.png",
 	"type": "section"
 }

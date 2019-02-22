@@ -219,6 +219,18 @@ LayoutFinder.STATE = {
 		.required(),
 
 	/**
+	 * Current portlet max items
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutFinder
+	 * @review
+	 * @type {number}
+	 */
+	maxItems: Config
+		.number()
+		.value(10),
+
+	/**
 	 * Current portlet namespace
 	 * @default undefined
 	 * @instance

@@ -15,6 +15,7 @@
 	{@param? _showFinder: bool}
 	{@param? _toggleDialog: any}
 	{@param? _viewInPageAdministrationURL: string}
+	{@param? maxItems: number}
 	{@param? namespace: string}
 
 	<div class="layout-finder">
@@ -81,7 +82,7 @@
 								<table class="mt-3 table table-autofit">
 									<tbody>
 										{foreach $layout in $layouts}
-											{if index($layout) < 10}
+											{if index($layout) < $maxItems}
 												<tr key="{$layout.url}">
 													<td class="p-0 table-cell-expand">
 														<a class="d-block p-2 text-truncate" href="{$layout.url}">
@@ -94,9 +95,9 @@
 									</tbody>
 								</table>
 
-								{if $totalCount > 10}
+								{if $totalCount > $maxItems}
 									<div class="mt-3 text-center text-info">
-										{$totalCount - 10} {msg desc=""}results-more-refine-keywords{/msg}
+										{$totalCount - $maxItems} {msg desc=""}results-more-refine-keywords{/msg}
 									</div>
 
 									<div class="text-center">

@@ -6476,7 +6476,7 @@ go</echo>
 		/>
 	</target>
 
-	<target name="get-log">
+	<target name="copy-cluster-log">
 		<local name="log.dir" />
 
 		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/logs" property="log.dir" value="${app.server.parent.dir}/logs">
@@ -6500,7 +6500,7 @@ go</echo>
 				<copy
 					file="@{log.file}"
 					overwrite="true"
-					tofile="${liferay.home}/cluster.log"
+					tofile="${liferay.home}/cluster${app.server.bundle.index}.log"
 				/>
 			</sequential>
 		</for>

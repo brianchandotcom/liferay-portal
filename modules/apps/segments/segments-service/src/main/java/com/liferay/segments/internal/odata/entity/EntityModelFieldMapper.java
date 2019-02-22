@@ -119,6 +119,9 @@ public class EntityModelFieldMapper {
 		if (entityFieldType == EntityField.Type.BOOLEAN) {
 			return "boolean";
 		}
+		else if (entityFieldType == EntityField.Type.COLLECTION) {
+			return "collection";
+		}
 		else if (entityFieldType == EntityField.Type.DATE) {
 			return "date";
 		}

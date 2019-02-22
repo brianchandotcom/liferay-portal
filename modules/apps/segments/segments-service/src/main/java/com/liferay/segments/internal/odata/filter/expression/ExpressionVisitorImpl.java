@@ -17,12 +17,16 @@ package com.liferay.segments.internal.odata.filter.expression;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
+import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
+import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
+import com.liferay.portal.odata.filter.expression.LambdaVariableExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
@@ -33,11 +37,13 @@ import com.liferay.segments.context.Context;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -48,19 +54,93 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 	public ExpressionVisitorImpl(EntityModel entityModel) {
 		_entityModel = entityModel;
+		_lambdaCollectionEntityField = null;
+	}
+
+	public ExpressionVisitorImpl(
+		EntityModel entityModel,
+		CollectionEntityField lambdaCollectionEntityField) {
+
+		_entityModel = entityModel;
+		_lambdaCollectionEntityField = lambdaCollectionEntityField;
 	}
 
 	@Override
 	public Predicate<Context> visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
-		Optional<Predicate<Context>> predicateOptional = _getPredicateOptional(
-			operation, left, right);
+		Optional<Predicate<Context>> predicateOptional = Optional.empty();
+
+		if (_lambdaCollectionEntityField != null) {
+			predicateOptional = _getLambdaPredicateOptional(
+				operation, left, right);
+		}
+		else {
+			predicateOptional = _getPredicateOptional(operation, left, right);
+		}
 
 		return predicateOptional.orElseThrow(
 			() -> new UnsupportedOperationException(
 				"Unsupported method visitBinaryExpressionOperation with " +
 					"operation " + operation));
+	}
+
+	@Override
+	public Object visitCollectionPropertyExpression(
+			CollectionPropertyExpression collectionPropertyExpression)
+		throws ExpressionVisitException {
+
+		LambdaFunctionExpression lambdaFunctionExpression =
+			collectionPropertyExpression.getLambdaFunctionExpression();
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		CollectionEntityField collectionEntityField =
+			(CollectionEntityField)entityFieldsMap.get(
+				collectionPropertyExpression.getName());
+
+		return lambdaFunctionExpression.accept(
+			new ExpressionVisitorImpl(
+				_getLambdaEntityModel(
+					lambdaFunctionExpression.getVariableName(),
+					collectionEntityField),
+				collectionEntityField));
+	}
+
+	@Override
+	public Object visitLambdaFunctionExpression(
+			LambdaFunctionExpression.Type type, String variable,
+			Expression expression)
+		throws ExpressionVisitException {
+
+		if (type == LambdaFunctionExpression.Type.ANY) {
+			return _any(expression);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported type visitLambdaFunctionExpression with type " + type);
+	}
+
+	@Override
+	public EntityField visitLambdaVariableExpression(
+			LambdaVariableExpression lambdaVariableExpression)
+		throws ExpressionVisitException {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get(
+			lambdaVariableExpression.getVariableName());
+
+		if (entityField == null) {
+			throw new ExpressionVisitException(
+				"Invoked visitlambdavariableexpression when no entity field " +
+					"is stored for lambda variable name " +
+						lambdaVariableExpression.getVariableName());
+		}
+
+		return entityField;
 	}
 
 	@Override
@@ -125,6 +205,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 						" parameters"));
 			}
 
+			if (_lambdaCollectionEntityField != null) {
+				return _lambdaContains(
+					(EntityField)expressions.get(0), expressions.get(1));
+			}
+
 			return _contains(
 				(EntityField)expressions.get(0), expressions.get(1));
 		}
@@ -155,6 +240,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method visitUnaryExpressionOperation with operation " +
 				operation);
+	}
+
+	private Object _any(Expression expression) throws ExpressionVisitException {
+		return expression.accept(this);
 	}
 
 	private Predicate<Context> _contains(
@@ -240,6 +329,54 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method _getGTPredicate with entity field type " +
 				entityField.getType());
+	}
+
+	private EntityModel _getLambdaEntityModel(
+		String variableName, CollectionEntityField collectionEntityField) {
+
+		return new EntityModel() {
+
+			@Override
+			public Map<String, EntityField> getEntityFieldsMap() {
+				return Collections.singletonMap(
+					variableName, collectionEntityField.getEntityField());
+			}
+
+			@Override
+			public String getName() {
+				return collectionEntityField.getName();
+			}
+
+		};
+	}
+
+	private Predicate<Context> _getLambdaEQPredicate(
+		EntityField entityField, Object fieldValue) {
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
+			Predicate<Context> predicate = p -> Stream.of(
+				(String[])p.get(_lambdaCollectionEntityField.getName())
+			).anyMatch(
+				c -> fieldValue.equals(
+					_normalizeStringLiteral(String.valueOf(c)))
+			);
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _getLambdaEQPredicate with entity field type " +
+				entityField.getType());
+	}
+
+	private Optional<Predicate<Context>> _getLambdaPredicateOptional(
+		BinaryExpression.Operation operation, Object left, Object right) {
+
+		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+			return Optional.of(_getLambdaEQPredicate((EntityField)left, right));
+		}
+
+		return Optional.empty();
 	}
 
 	private Predicate<Context> _getLEPredicate(
@@ -333,6 +470,25 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return Optional.of(predicate);
 	}
 
+	private Predicate<Context> _lambdaContains(
+		EntityField entityField, Object fieldValue) {
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
+			Predicate<Context> predicate = p -> Stream.of(
+				(String[])p.get(_lambdaCollectionEntityField.getName())
+			).anyMatch(
+				c -> StringUtils.containsIgnoreCase(
+					String.valueOf(c), String.valueOf(fieldValue))
+			);
+
+			return predicate;
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method _lambdaContains with entity field type " +
+				entityField.getType());
+	}
+
 	private Object _normalizeStringLiteral(String literal) {
 		literal = StringUtil.toLowerCase(literal);
 
@@ -343,5 +499,6 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	}
 
 	private final EntityModel _entityModel;
+	private final CollectionEntityField _lambdaCollectionEntityField;
 
 }

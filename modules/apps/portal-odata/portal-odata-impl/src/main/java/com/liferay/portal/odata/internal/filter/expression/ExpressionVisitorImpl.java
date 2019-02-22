@@ -150,6 +150,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 			return new LiteralExpressionImpl(
 				literal.getText(), LiteralExpression.Type.STRING);
 		}
+		else if ((edmType == null) ||
+				 Objects.equals("null", literal.getText())) {
+
+			return new NullLiteralExpression();
+		}
 
 		throw new UnsupportedOperationException(
 			"Literal: " + edmType.getFullQualifiedName());

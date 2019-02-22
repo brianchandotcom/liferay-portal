@@ -41,7 +41,7 @@ public interface LiteralExpression extends Expression {
 
 	public static enum Type {
 
-		BOOLEAN, DATE, DATE_TIME, DOUBLE, INTEGER, STRING
+		BOOLEAN, DATE, DATE_TIME, DOUBLE, INTEGER, NULL, STRING
 
 	}
 

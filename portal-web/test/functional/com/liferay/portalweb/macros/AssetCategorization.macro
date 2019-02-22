@@ -9,7 +9,7 @@ definition {
 			);
 		}
 
-		AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
+		KeyPress(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "\RETURN");
 	}
 
 	macro addCategory {

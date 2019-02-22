@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//div[contains(@class,'tagselector')]//span[@class='textboxlistentry-text'][contains(.,'${key_tagName}')]</td>
+	<td>//span[@id='item-tag'][contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,32 +40,32 @@
 </tr>
 <tr>
 	<td>TAG_REMOVE</td>
-	<td>//li[contains(.,'${key_tagName}')]//i[contains(@class,'icon') and contains(@class,'icon-remove')]</td>
+	<td>//span[@id='item-tag'][contains(.,'${key_tagName}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAGS_FIELD</td>
-	<td>//input[contains(@id,'assetTagNames')]</td>
+	<td>//div[contains(@class,'tag-group')]/input[@class='form-control-inset']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAG_AUTOCOMPLETE_CONTAINER</td>
-	<td>//div[contains(@class,'autocomplete-results ') and not(contains(@class,'hidden'))]</td>
+	<td>//div[contains(@class,'tag-group')]/ul</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAG_AUTOCOMPLETE_SPECIFIC</td>
-	<td>//div[contains(@class,'autocomplete-results-content')]//li[.='${key_tagName}']</td>
+	<td>//div[contains(@class,'tag-group')]/ul/li[.='${key_tagName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAGS_SELECT_BUTTON</td>
-	<td>//button[@title='Select Tags']</td>
+	<td>//div[contains(@id,'assetTagsSelector')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TAGS_REMOVE_ICON_GENERIC</td>
-	<td>//div[@class='form-group' and label[contains(.,'Tags')]]//span[@class='textboxlistentry-remove']/i</td>
+	<td>//span[@id='item-tag']//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 </tbody>

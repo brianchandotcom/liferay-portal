@@ -16,10 +16,17 @@ package com.liferay.portal.configuration.metatype.definitions.annotations.intern
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +53,10 @@ public class AnnotationsExtendedObjectClassDefinition
 		_loadConfigurationBeanClass(bundle);
 
 		if (_configurationBeanClass != null) {
-			_processExtendedMetatypeFields();
+			_processExtendedMetatypeFields(_configurationBeanClass);
+		}
+		else {
+			_processExtendedMetatypeFields(bundle);
 		}
 	}
 
@@ -112,6 +122,21 @@ public class AnnotationsExtendedObjectClassDefinition
 		return _objectClassDefinition.getName();
 	}
 
+	private JSONObject _createJSONObject(Bundle bundle, String filePath) {
+		URL url = bundle.getResource(filePath);
+
+		if (url != null) {
+			try (InputStream is = url.openStream()) {
+				return JSONFactoryUtil.createJSONObject(StringUtil.read(is));
+			}
+			catch (Exception e) {
+				_log.error("Unable to process " + filePath + " file", e);
+			}
+		}
+
+		return null;
+	}
+
 	private void _loadConfigurationBeanClass(Bundle bundle) {
 		try {
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
@@ -125,26 +150,56 @@ public class AnnotationsExtendedObjectClassDefinition
 		}
 	}
 
-	private void _processExtendedMetatypeFields() {
+	private void _processExtendedMetatypeFields(Bundle bundle) {
+		JSONObject metatypeJSONObject = _createJSONObject(
+			bundle, "features/metatype.json");
+
+		if (metatypeJSONObject != null) {
+			Map<String, String> attributes = new HashMap<>();
+
+			String category = metatypeJSONObject.getString("category");
+
+			if (Validator.isNotNull(category)) {
+				attributes.put("category", category);
+			}
+			else {
+				JSONObject packageJSONObject = _createJSONObject(
+					bundle, "META-INF/resources/package.json");
+
+				if (packageJSONObject != null) {
+					attributes.put(
+						"category", packageJSONObject.getString("name"));
+				}
+			}
+
+			_extensionAttributes.put(
+				ExtendedObjectClassDefinition.XML_NAMESPACE, attributes);
+		}
+	}
+
+	private void _processExtendedMetatypeFields(
+		Class<?> configurationBeanClass) {
+
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
-			_configurationBeanClass.getAnnotation(
+			configurationBeanClass.getAnnotation(
 				ExtendedObjectClassDefinition.class);
 
 		if (extendedObjectClassDefinition != null) {
-			Map<String, String> map = new HashMap<>();
+			Map<String, String> attributes = new HashMap<>();
 
-			map.put("category", extendedObjectClassDefinition.category());
-			map.put(
+			attributes.put(
+				"category", extendedObjectClassDefinition.category());
+			attributes.put(
 				"description-arguments",
 				StringUtil.merge(
 					extendedObjectClassDefinition.descriptionArguments()));
-			map.put(
+			attributes.put(
 				"factoryInstanceLabelAttribute",
 				extendedObjectClassDefinition.factoryInstanceLabelAttribute());
-			map.put(
+			attributes.put(
 				"generateUI",
 				Boolean.toString(extendedObjectClassDefinition.generateUI()));
-			map.put(
+			attributes.put(
 				"name-arguments",
 				StringUtil.merge(
 					extendedObjectClassDefinition.nameArguments()));
@@ -152,12 +207,15 @@ public class AnnotationsExtendedObjectClassDefinition
 			ExtendedObjectClassDefinition.Scope scope =
 				extendedObjectClassDefinition.scope();
 
-			map.put("scope", scope.toString());
+			attributes.put("scope", scope.toString());
 
 			_extensionAttributes.put(
-				ExtendedObjectClassDefinition.XML_NAMESPACE, map);
+				ExtendedObjectClassDefinition.XML_NAMESPACE, attributes);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AnnotationsExtendedObjectClassDefinition.class);
 
 	private Class<?> _configurationBeanClass;
 	private final Map<Integer, ExtendedAttributeDefinition[]>

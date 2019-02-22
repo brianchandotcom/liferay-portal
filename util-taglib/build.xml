@@ -219,6 +219,8 @@
 	</target>
 
 	<target name="validate-tld">
-		<gradle-execute dir="${project.dir}/util-taglib" task="validateTLD" />
+		<gradle-execute dir="${project.dir}/util-taglib" task="validateTLD">
+			<arg value="--info" />
+		</gradle-execute>
 	</target>
 </project>

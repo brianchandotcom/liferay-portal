@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
@@ -258,6 +259,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Filter _getEQFilter(
 		EntityField entityField, Object fieldValue, Locale locale) {
 
+		if (fieldValue == null) {
+			return new ExistsFilter(entityField.getFilterableName(locale));
+		}
+
 		return new TermFilter(
 			entityField.getFilterableName(locale),
 			entityField.getFilterableValue(fieldValue));
@@ -300,6 +305,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Filter _getGEFilter(
 		EntityField entityField, Object fieldValue, Locale locale) {
 
+		if (fieldValue == null) {
+			throw new UnsupportedOperationException(
+				"Unsupported method _getGEFilter with null values");
+		}
+
 		if (Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			Objects.equals(entityField.getType(), EntityField.Type.DATE_TIME) ||
 			Objects.equals(entityField.getType(), EntityField.Type.DOUBLE) ||
@@ -318,6 +328,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 	private Filter _getGTFilter(
 		EntityField entityField, Object fieldValue, Locale locale) {
+
+		if (fieldValue == null) {
+			throw new UnsupportedOperationException(
+				"Unsupported method _getGTFilter with null values");
+		}
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			Objects.equals(entityField.getType(), EntityField.Type.DATE_TIME) ||
@@ -357,6 +372,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Filter _getLEFilter(
 		EntityField entityField, Object fieldValue, Locale locale) {
 
+		if (fieldValue == null) {
+			throw new UnsupportedOperationException(
+				"Unsupported method _getLEFilter with null values");
+		}
+
 		if (Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			Objects.equals(entityField.getType(), EntityField.Type.DATE_TIME) ||
 			Objects.equals(entityField.getType(), EntityField.Type.DOUBLE) ||
@@ -375,6 +395,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 	private Filter _getLTFilter(
 		EntityField entityField, Object fieldValue, Locale locale) {
+
+		if (fieldValue == null) {
+			throw new UnsupportedOperationException(
+				"Unsupported method _getLTFilter with null values");
+		}
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			Objects.equals(entityField.getType(), EntityField.Type.DATE_TIME) ||

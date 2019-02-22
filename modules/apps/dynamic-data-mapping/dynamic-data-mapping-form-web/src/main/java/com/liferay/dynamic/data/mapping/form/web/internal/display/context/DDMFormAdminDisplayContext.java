@@ -945,9 +945,9 @@ public class DDMFormAdminDisplayContext {
 		HttpSession httpSession = request.getSession();
 
 		boolean showPublishAlert = GetterUtil.getBoolean(
-			httpSession.getAttribute("isShowPublishAlert"));
+			httpSession.getAttribute(DDMFormWebKeys.SHOW_PUBLISH_ALERT));
 
-		httpSession.removeAttribute("isShowPublishAlert");
+		httpSession.removeAttribute(DDMFormWebKeys.SHOW_PUBLISH_ALERT);
 
 		return showPublishAlert;
 	}

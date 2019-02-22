@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.RequiredFormInstanceException;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
+import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
@@ -119,7 +120,8 @@ public class PublishFormInstanceMVCActionCommand
 
 		HttpSession httpSession = request.getSession();
 
-		httpSession.setAttribute("isShowPublishAlert", Boolean.TRUE);
+		httpSession.setAttribute(
+			DDMFormWebKeys.SHOW_PUBLISH_ALERT, Boolean.TRUE);
 
 		return formInstance;
 	}

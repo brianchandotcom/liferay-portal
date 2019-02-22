@@ -30,4 +30,6 @@ public class DDMFormWebKeys {
 
 	public static final String GROUP_ID = "GROUP_ID";
 
+	public static final String SHOW_PUBLISH_ALERT = "SHOW_PUBLISH_ALERT";
+
 }

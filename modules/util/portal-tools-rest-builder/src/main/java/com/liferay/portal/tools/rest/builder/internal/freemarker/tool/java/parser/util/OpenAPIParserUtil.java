@@ -54,16 +54,30 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
-	public static Set<String> getSchemaNames(
-		List<JavaMethodSignature> javaMethodSignatures) {
+	public static Schema getComponentSchema(
+		OpenAPIYAML openAPIYAML, String reference) {
 
-		Set<String> schemaNames = new TreeSet<>();
+		if ((reference == null) ||
+			!reference.startsWith("#/components/schemas/")) {
 
-		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			schemaNames.add(javaMethodSignature.getSchemaName());
+			return null;
 		}
 
-		return schemaNames;
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		return schemas.get(getComponentType(reference));
+	}
+
+	public static String getComponentType(String reference) {
+		int index = reference.lastIndexOf('/');
+
+		if (index == -1) {
+			return reference;
+		}
+
+		return reference.substring(index + 1);
 	}
 
 	public static String getHTTPMethod(Operation operation) {
@@ -139,6 +153,18 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
+	public static Set<String> getSchemaNames(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		Set<String> schemaNames = new TreeSet<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			schemaNames.add(javaMethodSignature.getSchemaName());
+		}
+
+		return schemaNames;
+	}
+
 	public static String getSimpleClassName(String type) {
 		if (type.endsWith("[]")) {
 			return type.substring(0, type.length() - 2);
@@ -160,6 +186,21 @@ public class OpenAPIParserUtil {
 			if (Objects.equals(httpMethod, getHTTPMethod(operation))) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public static boolean isSchemaParameter(
+		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+
+		String simpleClassName = getSimpleClassName(
+			javaParameter.getParameterType());
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+
+		if (schemas.containsKey(simpleClassName)) {
+			return true;
 		}
 
 		return false;
@@ -231,47 +272,6 @@ public class OpenAPIParserUtil {
 		}
 
 		return newJavaParameters;
-	}
-
-	public static Schema getComponentSchema(
-		OpenAPIYAML openAPIYAML, String reference) {
-
-		if ((reference == null) ||
-			!reference.startsWith("#/components/schemas/")) {
-
-			return null;
-		}
-
-		Components components = openAPIYAML.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		return schemas.get(getComponentType(reference));
-	}
-
-	public static String getComponentType(String reference) {
-		int index = reference.lastIndexOf('/');
-
-		if (index == -1) {
-			return reference;
-		}
-
-		return reference.substring(index + 1);
-	}
-
-	public static boolean isSchemaParameter(
-		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
-
-		String simpleClassName = getSimpleClassName(
-			javaParameter.getParameterType());
-
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
-
-		if (schemas.containsKey(simpleClassName)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static String _getJavaDataType(

@@ -1207,6 +1207,23 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			types, start, end, obc);
 	}
 
+	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc) {
+		return _layoutLocalService.getLayouts(groupId, start, end, obc);
+	}
+
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
 		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
@@ -1232,6 +1249,27 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		String preferencesValue) {
 		return _layoutLocalService.getLayouts(companyId, portletId,
 			preferencesKey, preferencesValue);
+	}
+
+	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param keywords keywords
+	* @param types layout types
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, String keywords, String[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.getLayouts(groupId, keywords, types, start,
+			end, obc);
 	}
 
 	@Override
@@ -1324,10 +1362,21 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public int getLayoutsCount(long groupId) {
+		return _layoutLocalService.getLayoutsCount(groupId);
+	}
+
+	@Override
 	public int getLayoutsCount(long groupId, long leftPlid, long rightPlid,
 		boolean privateLayout) {
 		return _layoutLocalService.getLayoutsCount(groupId, leftPlid,
 			rightPlid, privateLayout);
+	}
+
+	@Override
+	public int getLayoutsCount(long groupId, String keywords, String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.getLayoutsCount(groupId, keywords, types);
 	}
 
 	@Override

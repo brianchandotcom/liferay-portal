@@ -1162,6 +1162,22 @@ public class LayoutLocalServiceUtil {
 			end, obc);
 	}
 
+	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc) {
+		return getService().getLayouts(groupId, start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
 		long groupId, long leftPlid, long rightPlid, boolean privateLayout,
 		int start, int end,
@@ -1187,6 +1203,25 @@ public class LayoutLocalServiceUtil {
 		return getService()
 				   .getLayouts(companyId, portletId, preferencesKey,
 			preferencesValue);
+	}
+
+	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param keywords keywords
+	* @param types layout types
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, String keywords, String[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Layout> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayouts(groupId, keywords, types, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayoutsByLayoutPrototypeUuid(
@@ -1273,10 +1308,20 @@ public class LayoutLocalServiceUtil {
 				   .getLayoutsCount(group, privateLayout, keywords, types);
 	}
 
+	public static int getLayoutsCount(long groupId) {
+		return getService().getLayoutsCount(groupId);
+	}
+
 	public static int getLayoutsCount(long groupId, long leftPlid,
 		long rightPlid, boolean privateLayout) {
 		return getService()
 				   .getLayoutsCount(groupId, leftPlid, rightPlid, privateLayout);
+	}
+
+	public static int getLayoutsCount(long groupId, String keywords,
+		String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutsCount(groupId, keywords, types);
 	}
 
 	public static int getLayoutsCount(

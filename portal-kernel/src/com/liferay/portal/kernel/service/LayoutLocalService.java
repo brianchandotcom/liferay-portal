@@ -991,6 +991,20 @@ public interface LayoutLocalService extends BaseLocalService,
 		String keywords, String[] types, int start, int end,
 		OrderByComparator<Layout> obc) throws PortalException;
 
+	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, int start, int end,
+		OrderByComparator<Layout> obc);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, long leftPlid, long rightPlid,
 		boolean privateLayout, int start, int end, OrderByComparator<Layout> obc);
@@ -1008,6 +1022,23 @@ public interface LayoutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutReference[] getLayouts(long companyId, String portletId,
 		String preferencesKey, String preferencesValue);
+
+	/**
+	* Returns a range of all the layouts belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param keywords keywords
+	* @param types layout types
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, String keywords,
+		String[] types, int start, int end, OrderByComparator<Layout> obc)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayoutsByLayoutPrototypeUuid(
@@ -1070,8 +1101,15 @@ public interface LayoutLocalService extends BaseLocalService,
 		String keywords, String[] types) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, long leftPlid, long rightPlid,
 		boolean privateLayout);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(long groupId, String keywords, String[] types)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(User user, boolean privateLayout)

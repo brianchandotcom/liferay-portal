@@ -17,6 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.statement;
 import aQute.bnd.build.Project;
 import aQute.bnd.build.ProjectBuilder;
 import aQute.bnd.build.Workspace;
+import aQute.bnd.osgi.AbstractResource;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
@@ -57,7 +58,6 @@ import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -147,6 +147,17 @@ public class DeploymentStatement extends Statement {
 
 		jar.setManifest(analyzer.calcManifest());
 
+		jar.putResource(
+			"/arquillian.remote.marker",
+			new AbstractResource(System.currentTimeMillis()) {
+
+				@Override
+				protected byte[] getBytes() throws Exception {
+					return new byte[0];
+				}
+
+			});
+
 		return jar;
 	}
 
@@ -200,8 +211,6 @@ public class DeploymentStatement extends Statement {
 
 	private static void _process(JavaArchive javaArchive) {
 		try {
-			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
-
 			javaArchive.addPackages(
 				true, "com.liferay.arquillian.extension.junit.bridge",
 				"org.jboss.shrinkwrap.api",

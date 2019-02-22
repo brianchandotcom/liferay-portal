@@ -63,7 +63,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 			Long folderId, Pagination pagination)
 		throws Exception {
 
-		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
+		Folder parentFolder = _toNewFolder(_dlAppService.getFolder(folderId));
 
 		return _getFolderPage(
 			parentFolder.getRepositoryId(), parentFolder.getId(), pagination);
@@ -98,7 +98,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 			Long documentsRepositoryId, Long parentFolderId, Folder folder)
 		throws Exception {
 
-		return _toFolder(
+		return _toNewFolder(
 			_dlAppService.addFolder(
 				documentsRepositoryId, parentFolderId, folder.getName(),
 				folder.getDescription(), new ServiceContext()));
@@ -121,10 +121,28 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				documentsRepositoryId, parentFolderId));
 	}
 
-	private Folder _toFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder) {
+	private boolean _getHasFolders(Long folderId) throws Exception {
+		Page<Folder> page = getFolderFoldersPage(folderId, Pagination.of(1, 1));
 
-		return new FolderImpl() {
+		if (page.getTotalCount() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private Folder _toFolder(
+			com.liferay.portal.kernel.repository.model.Folder folder)
+		throws Exception {
+
+		return _toFolder(folder, _getHasFolders(folder.getFolderId()));
+	}
+
+	private Folder _toFolder(
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		boolean hasFolders) {
+
+		Folder newFolder = new FolderImpl() {
 			{
 				dateCreated = folder.getCreateDate();
 				dateModified = folder.getModifiedDate();
@@ -134,6 +152,16 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 				name = folder.getName();
 			}
 		};
+
+		newFolder.setHasFolders(hasFolders);
+
+		return newFolder;
+	}
+
+	private Folder _toNewFolder(
+		com.liferay.portal.kernel.repository.model.Folder folder) {
+
+		return _toFolder(folder, false);
 	}
 
 	@Reference

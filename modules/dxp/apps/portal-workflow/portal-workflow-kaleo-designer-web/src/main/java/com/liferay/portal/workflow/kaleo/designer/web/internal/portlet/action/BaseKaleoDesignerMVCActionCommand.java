@@ -74,9 +74,9 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		}
 		catch (WorkflowException we) {
 			if (_log.isWarnEnabled()) {
-				Throwable rootCause = getRootCause(we);
+				Throwable rootThrowable = getRootThrowable(we);
 
-				_log.warn(rootCause, rootCause);
+				_log.warn(rootThrowable, rootThrowable);
 			}
 
 			hideDefaultErrorMessage(actionRequest);
@@ -115,12 +115,12 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		return ResourceBundleUtil.getBundle(locale, getClass());
 	}
 
-	protected Throwable getRootCause(Throwable throwable) {
+	protected Throwable getRootThrowable(Throwable throwable) {
 		if (throwable.getCause() == null) {
 			return throwable;
 		}
 
-		return getRootCause(throwable.getCause());
+		return getRootThrowable(throwable.getCause());
 	}
 
 	protected abstract String getSuccessMessage(ActionRequest actionRequest);

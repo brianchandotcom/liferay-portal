@@ -14,6 +14,8 @@
 
 package com.liferay.comment.taglib.internal.struts;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
@@ -22,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -144,6 +148,13 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -161,14 +172,28 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
-		discussionPermission.checkSubscribePermission(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
+
+		if (assetEntry == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("No asset entry exists with class name ");
+			sb.append(className);
+			sb.append(" and class PK ");
+			sb.append(classPK);
+
+			throw new PortalException(sb.toString());
+		}
+
+		discussionPermission.checkSubscribePermission(
+			assetEntry.getCompanyId(), assetEntry.getGroupId(), className,
+			classPK);
 
 		if (subscribe) {
 			_commentManager.subscribeDiscussion(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				className, classPK);
+				themeDisplay.getUserId(), assetEntry.getGroupId(), className,
+				classPK);
 		}
 		else {
 			_commentManager.unsubscribeDiscussion(
@@ -193,6 +218,20 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (assetEntry == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("No asset entry exists with class name ");
+			sb.append(className);
+			sb.append(" and class PK ");
+			sb.append(classPK);
+
+			throw new PortalException(sb.toString());
+		}
 
 		if (commentId <= 0) {
 
@@ -223,7 +262,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 			try {
 				discussionPermission.checkAddPermission(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					assetEntry.getCompanyId(), assetEntry.getGroupId(),
 					className, classPK);
 
 				commentId = _commentManager.addComment(
@@ -258,8 +297,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 		if (PropsValues.DISCUSSION_SUBSCRIBE) {
 			_commentManager.subscribeDiscussion(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				className, classPK);
+				themeDisplay.getUserId(), assetEntry.getGroupId(), className,
+				classPK);
 		}
 
 		return commentId;
@@ -291,6 +330,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 		return discussionPermission;
 	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private CommentManager _commentManager;

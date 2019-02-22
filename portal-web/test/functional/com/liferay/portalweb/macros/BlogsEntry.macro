@@ -520,7 +520,7 @@ definition {
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
 		var key_entryTitle = "${entryTitle}";
-		
+
 		Blogs.clickEllipsisItemPG(
 			entryTitle = "${entryTitle}",
 			item = "Permissions"

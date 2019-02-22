@@ -262,7 +262,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 	public void setTask(
 			WorkflowTask task) {
 
-			this.task = task;
+			this.task = (WorkflowTaskImpl)task;
 	}
 
 	@JsonIgnore
@@ -272,7 +272,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 
 			try {
 				task =
-					taskUnsafeSupplier.get();
+					(WorkflowTaskImpl)taskUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -281,7 +281,7 @@ public class WorkflowLogImpl implements WorkflowLog {
 
 	@GraphQLField
 	@JsonProperty
-	protected WorkflowTask task;
+	protected WorkflowTaskImpl task;
 	public Long getTaskId() {
 			return taskId;
 	}

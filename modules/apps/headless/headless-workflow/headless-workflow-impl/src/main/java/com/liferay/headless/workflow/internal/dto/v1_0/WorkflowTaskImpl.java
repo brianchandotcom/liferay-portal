@@ -236,7 +236,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setLogs(
 			WorkflowLog[] logs) {
 
-			this.logs = logs;
+			this.logs = (WorkflowLogImpl[])logs;
 	}
 
 	@JsonIgnore
@@ -246,7 +246,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				logs =
-					logsUnsafeSupplier.get();
+					(WorkflowLogImpl[])logsUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -255,7 +255,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 	@GraphQLField
 	@JsonProperty
-	protected WorkflowLog[] logs;
+	protected WorkflowLogImpl[] logs;
 	public Long[] getLogsIds() {
 			return logsIds;
 	}
@@ -317,7 +317,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 	public void setObjectReviewed(
 			ObjectReviewed objectReviewed) {
 
-			this.objectReviewed = objectReviewed;
+			this.objectReviewed = (ObjectReviewedImpl)objectReviewed;
 	}
 
 	@JsonIgnore
@@ -327,7 +327,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 			try {
 				objectReviewed =
-					objectReviewedUnsafeSupplier.get();
+					(ObjectReviewedImpl)objectReviewedUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -336,7 +336,7 @@ public class WorkflowTaskImpl implements WorkflowTask {
 
 	@GraphQLField
 	@JsonProperty
-	protected ObjectReviewed objectReviewed;
+	protected ObjectReviewedImpl objectReviewed;
 	public String[] getTransitions() {
 			return transitions;
 	}

@@ -61,6 +61,36 @@ public class ContextODataMatcherTest {
 	}
 
 	@Test
+	public void testMatchesCollectionWithAnyContains() throws Exception {
+		Context context = new Context() {
+			{
+				put(
+					Context.COOKIES,
+					new String[] {"key1=value1", "key2=value2"});
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				Context.COOKIES + "/any(c:contains(c, 'key1'))", context));
+	}
+
+	@Test
+	public void testMatchesCollectionWithAnyEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(
+					Context.COOKIES,
+					new String[] {"key1=value1", "key2=value2"});
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				Context.COOKIES + "/any(c:c eq 'key1=value1')", context));
+	}
+
+	@Test
 	public void testMatchesDateEquals() throws Exception {
 		LocalDate localDate = LocalDate.of(2019, Month.JANUARY, 1);
 

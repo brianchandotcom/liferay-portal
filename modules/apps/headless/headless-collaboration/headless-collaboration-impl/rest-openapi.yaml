@@ -380,6 +380,10 @@ paths:
     get:
       parameters:
         - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
           name: page
           schema:
             type: integer
@@ -387,6 +391,10 @@ paths:
           name: pageSize
           schema:
             type: integer
+        - in: query
+          name: sort
+          schema:
+            type: string
         - in: path
           name: content-space-id
           required: true

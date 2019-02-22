@@ -95,11 +95,6 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	<%@ include file="/view_flat_user_groups.jspf" %>
 </aui:form>
 
-<portlet:actionURL name="deleteUserGroups" var="deleteUserGroupsURL"/>
-<portlet:renderURL var="userGroupsRenderURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-</portlet:renderURL>
-
 <aui:script>
 	function <portlet:namespace />deleteUserGroups() {
 		<portlet:namespace />doDeleteUserGroup(
@@ -158,20 +153,26 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	}
 
 	function <portlet:namespace />doDeleteUserGroups(userGroupIds) {
-		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
+		var form = document.<portlet:namespace />fm;
+
+		var p_p_lifecycle = form.p_p_lifecycle;
 
 		if (p_p_lifecycle) {
 			p_p_lifecycle.value = '1';
 		}
 
+		<portlet:renderURL var="userGroupsRenderURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+		</portlet:renderURL>
+
 		Liferay.Util.postForm(
-			document.<portlet:namespace />fm,
+			form,
 			{
 				data: {
 					deleteUserGroupIds: userGroupIds,
 					redirect: '<%= userGroupsRenderURL %>'
 				},
-				url: '<%= deleteUserGroupsURL %>'
+				url: '<portlet:actionURL name="deleteUserGroups" />'
 			}
 		);
 	}
@@ -182,13 +183,11 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 			{
 				credentials: 'include'
 			}
-		)
-		.then(
+		).then(
 			function(response) {
 				return response.text();
 			}
-		)
-		.then(
+		).then(
 			function(response) {
 				callback(response);
 			}

@@ -138,14 +138,13 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	</liferay-ui:search-container>
 </aui:form>
 
-<portlet:actionURL name="editUserGroupAssignments" var="editUserGroupAssignmentsURL"/>
-<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/select_user_group_users.jsp" />
-	<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
-</portlet:renderURL>
-
 <aui:script use="liferay-item-selector-dialog">
 	var form = document.<portlet:namespace />fm;
+
+	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/select_user_group_users.jsp" />
+		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
+	</portlet:renderURL>
 
 	function <portlet:namespace />addUsers(event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -157,12 +156,12 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 
 						if (selectedItem) {
 							Liferay.Util.postForm(
-								document.<portlet:namespace />fm,
+								form,
 								{
 									data: {
 										addUserIds: selectedItem
 									},
-									url: '<%= editUserGroupAssignmentsURL %>'
+									url: '<portlet:actionURL name="editUserGroupAssignments" />'
 								}
 							);
 						}
@@ -178,13 +177,13 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 
 	function <portlet:namespace />removeUsers() {
 		Liferay.Util.postForm(
-			document.<portlet:namespace />fm,
+			form,
 			{
 				data: {
 					redirect: '<%= portletURL.toString() %>',
 					removeUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
 				},
-				url: '<%= editUserGroupAssignmentsURL %>'
+				url: '<portlet:actionURL name="editUserGroupAssignments" />'
 			}
 		);
 	}

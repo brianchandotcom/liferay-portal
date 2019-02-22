@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -167,14 +168,12 @@ public class GitWorkingDirectory {
 	}
 
 	public void checkoutUpstreamLocalGitBranch() {
-		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
-
-		String currentBranchName = currentLocalGitBranch.getName();
+		String currentBranchName = getCurrentBranchName();
 
 		String upstreamBranchName = getUpstreamBranchName();
 
-		if (!currentBranchName.equals(upstreamBranchName)) {
-			checkoutLocalGitBranch(getLocalGitBranch(upstreamBranchName));
+		if (!Objects.equals(currentBranchName, upstreamBranchName)) {
+			checkoutLocalGitBranch(getUpstreamLocalGitBranch());
 		}
 	}
 
@@ -785,27 +784,26 @@ public class GitWorkingDirectory {
 
 		currentBranchName = currentBranchName.replaceFirst("\\*\\s*", "");
 
-		return currentBranchName.trim();
+		currentBranchName = currentBranchName.trim();
+
+		if (currentBranchName.isEmpty()) {
+			return null;
+		}
+
+		return currentBranchName;
 	}
 
 	public LocalGitBranch getCurrentLocalGitBranch() {
 		String currentBranchName = getCurrentBranchName();
 
-		if (currentBranchName != null) {
-			LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
-				currentBranchName);
-
-			if (currentLocalGitBranch != null) {
-				return currentLocalGitBranch;
-			}
+		if (currentBranchName == null) {
+			return null;
 		}
 
-		LocalGitBranch upstreamLocalGitBranch = getLocalGitBranch(
-			getUpstreamBranchName());
+		LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
+			currentBranchName);
 
-		checkoutLocalGitBranch(upstreamLocalGitBranch);
-
-		return upstreamLocalGitBranch;
+		return currentLocalGitBranch;
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {
@@ -1023,6 +1021,10 @@ public class GitWorkingDirectory {
 	}
 
 	public LocalGitBranch getLocalGitBranch(String branchName) {
+		if (!hasLocalGitBranch(branchName)) {
+			return null;
+		}
+
 		return getLocalGitBranch(branchName, false);
 	}
 
@@ -1438,6 +1440,30 @@ public class GitWorkingDirectory {
 		return _upstreamBranchName;
 	}
 
+	public LocalGitBranch getUpstreamLocalGitBranch() {
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (hasLocalGitBranch(upstreamBranchName)) {
+			return getLocalGitBranch(upstreamBranchName);
+		}
+
+		RemoteGitBranch upstreamRemoteGitBranch = getRemoteGitBranch(
+			upstreamBranchName, getGitRemote("upstream"));
+
+		fetch(upstreamRemoteGitBranch);
+
+		String currentBranchName = getCurrentBranchName();
+
+		if (currentBranchName == null) {
+			List<LocalGitBranch> localGitBranches = getLocalGitBranches(null);
+
+			checkoutLocalGitBranch(localGitBranches.get(0));
+		}
+
+		return createLocalGitBranch(
+			upstreamBranchName, true, upstreamRemoteGitBranch.getSHA());
+	}
+
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {
 		return getRemoteGitBranch(
 			getUpstreamBranchName(),
@@ -1451,6 +1477,26 @@ public class GitWorkingDirectory {
 
 	public boolean gitRemoteExists(String gitRemoteName) {
 		if (getGitRemote(gitRemoteName) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasLocalGitBranch(String branchName) {
+		waitForIndexLock();
+
+		GitUtil.ExecutionResult executionResult = executeBashCommands(
+			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
+			"git branch | grep [\\s\\*]*" + branchName + "$");
+
+		if (executionResult.getExitValue() == 0) {
+			String standardOut = executionResult.getStandardOut();
+
+			if (standardOut.isEmpty()) {
+				return false;
+			}
+
 			return true;
 		}
 
@@ -1796,18 +1842,6 @@ public class GitWorkingDirectory {
 
 		List<String> localGitBranchNames = toShortNameList(
 			Arrays.asList(standardOut.split("\n")));
-
-		String upstreamBranchName = getUpstreamBranchName();
-
-		if (!localGitBranchNames.contains(upstreamBranchName)) {
-			LocalGitBranch upstreamLocalGitBranch = createLocalGitBranch(
-				getUpstreamBranchName(), true, "HEAD");
-
-			upstreamLocalGitBranch = fetch(
-				upstreamLocalGitBranch, getUpstreamRemoteGitBranch());
-
-			localGitBranchNames.add(upstreamBranchName);
-		}
 
 		return localGitBranchNames;
 	}

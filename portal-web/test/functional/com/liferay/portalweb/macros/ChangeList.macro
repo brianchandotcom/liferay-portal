@@ -20,8 +20,8 @@ definition {
 		);
 	}
 
-	macro enableChangeList {
-		Check.checkToggleSwitch(
+	macro disableChangeList {
+		Uncheck.uncheckToggleSwitch(
 			locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH"
 		);
 
@@ -29,9 +29,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
-
-	macro disableChangeList {
-		Uncheck.uncheckToggleSwitch(
+	
+	macro enableChangeList {
+		Check.checkToggleSwitch(
 			locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH"
 		);
 

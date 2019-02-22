@@ -194,10 +194,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-		AssertElementPresent(
-			locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE",
-			key_entryTitle = "Blogs Entry Title"
-		);
+		Blogs.viewEntryPresent(entryTitle = "Blogs Entry Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",

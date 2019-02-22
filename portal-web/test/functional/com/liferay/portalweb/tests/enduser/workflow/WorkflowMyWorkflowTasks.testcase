@@ -633,7 +633,7 @@ definition {
 
 		var key_entryTitle = "Blogs Entry Title";
 
-		AssertElementPresent(locator1 = "Blogs#ICON_VIEW_ENTRY_TITLE");
+		Blogs.viewEntryPresent(entryTitle = "Blogs Entry Title");
 
 		AssertTextEquals(locator1 = "Blogs#ICON_VIEW_ENTRY_STATUS", value1 = "Pending");
 

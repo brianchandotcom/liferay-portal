@@ -474,25 +474,12 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		);
 	}
 
-	var sidenavSlider = document.getElementById('<portlet:namespace />infoPanelId');
+	var sidenavSlider = $('#<portlet:namespace />infoPanelId');
 
-	if (sidenavSlider) {
-		sidenavSlider.addEventListener(
-			'open.lexicon.sidenav',
-			function(event) {
-				if (window.CustomEvent) {
-				  var openSideNavEvent = new CustomEvent('screenChange.lexicon.sidenav');
-				}
-
-				else {
-					var openSideNavEvent = document.createEvent('CustomEvent');
-					openSideNavEvent.initCustomEvent(
-						'screenChange.lexicon.sidenav',
-						true, true
-					);
-				}
-				document.dispatchEvent(openSideNavEvent);
-			}
-		);
-	}
+	sidenavSlider.on(
+		'open.lexicon.sidenav',
+		function(event) {
+			$(document).trigger('screenChange.lexicon.sidenav');
+		}
+	);
 </aui:script>

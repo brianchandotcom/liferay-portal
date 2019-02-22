@@ -1018,30 +1018,21 @@ public class GitWorkingDirectory {
 	}
 
 	public LocalGitBranch getLocalGitBranch(String branchName) {
-		if (!localGitBranchExists(branchName)) {
-			return null;
-		}
-
 		return getLocalGitBranch(branchName, false);
 	}
 
 	public LocalGitBranch getLocalGitBranch(
 		String branchName, boolean required) {
 
-		List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
-
-		if ((localGitBranches != null) && !localGitBranches.isEmpty()) {
-			return localGitBranches.get(0);
+		if (branchName.equals(getUpstreamBranchName())) {
+			return getUpstreamLocalGitBranch();
 		}
 
-		if (required) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find required branch ", branchName, " from ",
-					String.valueOf(getWorkingDirectory())));
+		if (!localGitBranchExists(branchName)) {
+			return null;
 		}
 
-		return null;
+		return _getLocalGitBranch(branchName, required);
 	}
 
 	public List<LocalGitBranch> getLocalGitBranches(String branchName) {
@@ -1435,7 +1426,7 @@ public class GitWorkingDirectory {
 		String upstreamBranchName = getUpstreamBranchName();
 
 		if (localGitBranchExists(upstreamBranchName)) {
-			return getLocalGitBranch(upstreamBranchName);
+			return _getLocalGitBranch(upstreamBranchName, true);
 		}
 
 		RemoteGitBranch upstreamRemoteGitBranch = getRemoteGitBranch(
@@ -1446,7 +1437,10 @@ public class GitWorkingDirectory {
 		String currentBranchName = getCurrentBranchName();
 
 		if (currentBranchName == null) {
-			List<LocalGitBranch> localGitBranches = getLocalGitBranches(null);
+			List<String> localGitBranchNames = getLocalGitBranchNames();
+
+			List<LocalGitBranch> localGitBranches = getLocalGitBranches(
+				localGitBranchNames.get(0));
 
 			checkoutLocalGitBranch(localGitBranches.get(0));
 		}
@@ -2090,6 +2084,25 @@ public class GitWorkingDirectory {
 				joinedBranchNames.replaceAll("\\s", "\n    ")));
 
 		return true;
+	}
+
+	private LocalGitBranch _getLocalGitBranch(
+		String branchName, boolean required) {
+
+		List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
+
+		if ((localGitBranches != null) && !localGitBranches.isEmpty()) {
+			return localGitBranches.get(0);
+		}
+
+		if (required) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find required branch ", branchName, " from ",
+					String.valueOf(getWorkingDirectory())));
+		}
+
+		return null;
 	}
 
 	private String _getLocalGitBranchesSHAReport() {

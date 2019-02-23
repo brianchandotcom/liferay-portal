@@ -44,7 +44,7 @@ public class JournalSmallImageFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "small-image";
+		return "featured-image";
 	}
 
 	@Override

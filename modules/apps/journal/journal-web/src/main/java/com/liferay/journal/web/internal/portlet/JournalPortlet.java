@@ -844,11 +844,21 @@ public class JournalPortlet extends MVCPortlet {
 		boolean indexable = ParamUtil.getBoolean(
 			uploadPortletRequest, "indexable");
 
-		boolean smallImage = ParamUtil.getBoolean(
-			uploadPortletRequest, "smallImage");
-		String smallImageURL = ParamUtil.getString(
-			uploadPortletRequest, "smallImageURL");
-		File smallFile = uploadPortletRequest.getFile("smallFile");
+		String smallImageSource = ParamUtil.getString(
+			uploadPortletRequest, "smallImageSource", "none");
+
+		boolean smallImage = !Objects.equals(smallImageSource, "none");
+
+		String smallImageURL = StringPool.BLANK;
+		File smallFile = null;
+
+		if (Objects.equals(smallImageSource, "url")) {
+			smallImageURL = ParamUtil.getString(
+				uploadPortletRequest, "smallImageURL");
+		}
+		else if (Objects.equals(smallImageSource, "file")) {
+			smallFile = uploadPortletRequest.getFile("smallFile");
+		}
 
 		String articleURL = ParamUtil.getString(
 			uploadPortletRequest, "articleURL");

@@ -21,7 +21,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
-boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
+String smallImageSource = journalEditArticleDisplayContext.getSmallImageSource();
 %>
 
 <liferay-ui:error-marker
@@ -44,98 +44,51 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 </liferay-ui:error>
 
 <div id="<portlet:namespace />smallImageContainer">
-	<div class="lfr-journal-small-image-header">
-		<aui:input id="useSmallImage" label="use-small-image" name="smallImage" />
+	<aui:select cssClass="lfr-journal-small-image-header lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageSource" value="<%= smallImageSource %>">
+		<aui:option label="no-image" value="none" />
+		<aui:option label="from-url" value="url" />
+		<aui:option label="from-your-computer" value="file" />
+	</aui:select>
+
+	<div class="lfr-journal-small-image-content-url <%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>">
+		<liferay-frontend:fieldset>
+			<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageURL" title="small-image-url" />
+		</liferay-frontend:fieldset>
 	</div>
 
-	<div class="lfr-journal-small-image-content toggler-content-collapsed">
-		<aui:row>
-			<c:if test="<%= smallImage && (article != null) %>">
-				<aui:col width="<%= 50 %>">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="img-responsive lfr-journal-small-image-preview" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" />
-				</aui:col>
-			</c:if>
-
-			<aui:col width="<%= (smallImage && (article != null)) ? 50 : 100 %>">
-				<liferay-frontend:fieldset>
-					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
-
-					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
-				</liferay-frontend:fieldset>
-
-				<liferay-frontend:fieldset>
-					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
-
-					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="" name="smallFile" type="file" />
-				</liferay-frontend:fieldset>
-			</aui:col>
-		</aui:row>
+	<div class="lfr-journal-small-image-content-file <%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>">
+		<liferay-frontend:fieldset>
+			<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallFile" type="file" />
+		</liferay-frontend:fieldset>
 	</div>
 </div>
 
-<aui:script use="aui-toggler">
+<aui:script use="aui-base">
 	var container = A.one('#<portlet:namespace />smallImageContainer');
 
-	var types = container.all('.lfr-journal-small-image-type');
-	var values = container.all('.lfr-journal-small-image-value');
-
 	var selectSmallImageType = function(index) {
-		types.attr('checked', false);
-
-		types.item(index).attr('checked', true);
-
-		values.attr('disabled', true);
-
-		values.item(index).attr('disabled', false);
+		debugger;
+		if (index === 1) {
+			A.one('.lfr-journal-small-image-content-url').show();
+			A.one('.lfr-journal-small-image-content-file').hide();
+		}
+		else if (index === 2) {
+			A.one('.lfr-journal-small-image-content-url').hide();
+			A.one('.lfr-journal-small-image-content-file').show();
+		}
+		else {
+			A.one('.lfr-journal-small-image-content-url').hide();
+			A.one('.lfr-journal-small-image-content-file').hide();
+		}
 	};
 
 	container.delegate(
 		'change',
 		function(event) {
-			var index = types.indexOf(event.currentTarget);
+			var index = event.currentTarget.getDOMNode().selectedIndex;
 
 			selectSmallImageType(index);
 		},
 		'.lfr-journal-small-image-type'
-	);
-
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-content',
-			expanded: <%= smallImage %>,
-			header: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />useSmallImage').attr('checked', expanded);
-
-					if (expanded) {
-						types.each(
-							function(item, index) {
-								if (item.get('checked')) {
-									values.item(index).attr('disabled', false);
-								}
-							}
-						);
-					}
-					else {
-						values.attr('disabled', true);
-					}
-				}
-			}
-		}
-	);
-
-	// LPS-51306
-
-	setTimeout(
-		function() {
-			selectSmallImageType('<%= ((article != null) && Validator.isNotNull(article.getSmallImageURL())) ? 0 : 1 %>');
-		},
-		0
 	);
 </aui:script>

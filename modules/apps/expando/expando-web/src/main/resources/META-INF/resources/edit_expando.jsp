@@ -253,7 +253,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 				</c:if>
 
 				<aui:field-wrapper>
-					<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE %>" />
+					<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= column != null ? propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE : true %>" />
 
 					<div class="form-text">
 						<liferay-ui:message key="setting-a-custom-field-to-searchable-means-that-the-value-of-the-field-is-indexed-when-the-entity-such-as-user-is-modified.-only-java.lang.string-fields-can-be-made-searchable.-note-that-when-an-field-is-newly-made-searchable,-the-indexes-must-be-updated-before-the-data-is-available-to-search" />
@@ -261,7 +261,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 
 					<div class="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
 						<div class="radio">
-							<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+							<aui:input checked="<%= column != null ? propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD : true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 						</div>
 
 						<div class="radio">

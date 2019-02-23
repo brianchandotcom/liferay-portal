@@ -2231,32 +2231,16 @@ log.sanitizer.enabled=false</echo>
 
 							<get-test-batch-app-server-start-executable-arg-line />
 
-							<if>
-								<equals arg1="@{subrepository.name}" arg2="" />
-								<then>
-									<print-test-class-group test.class.group.index="${axis.variable}" />
+							<print-test-class-group test.class.group.index="${axis.variable}" />
 
-									<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
+							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
 
-									<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
-										<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-										<arg value="-Ddatabase.type=@{database.type}" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</gradle-execute>
-								</then>
-								<else>
-									<get-module-base-dir-from-subrepository-name subrepository.name="@{subrepository.name}" />
-
-									<echo>Executing Gradle task in directory "${module.base.dir}": testIntegration.</echo>
-
-									<gradle-execute dir="${module.base.dir}" refreshdependencies="@{refreshdependencies}" task="testIntegration">
-										<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-										<arg value="-Ddatabase.type=@{database.type}" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-									</gradle-execute>
-								</else>
-							</if>
+							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
+								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
+								<arg value="-Ddatabase.type=@{database.type}" />
+								<arg value="-Dbuild.exclude.ant.plugin=true" />
+								<arg value="-Dtest.class.group.index=${axis.variable}" />
+							</gradle-execute>
 
 							<if>
 								<and>

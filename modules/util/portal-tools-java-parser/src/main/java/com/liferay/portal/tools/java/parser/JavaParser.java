@@ -726,18 +726,6 @@ public class JavaParser {
 				break;
 			}
 
-			int lineNumber = precedingCommentToken.getLine();
-
-			if ((lineNumber > 1) &&
-				StringUtil.startsWith(
-					StringUtil.trim(precedingCommentToken.getText()), "*") &&
-				Validator.isNotNull(
-					StringUtil.trim(fileContents.getLine(lineNumber - 2)))) {
-
-				return StringUtil.insert(
-					content, "\n", _getLineStartPos(content, lineNumber));
-			}
-
 			String line = fileContents.getLine(
 				precedingCommentToken.getLine() - 1);
 

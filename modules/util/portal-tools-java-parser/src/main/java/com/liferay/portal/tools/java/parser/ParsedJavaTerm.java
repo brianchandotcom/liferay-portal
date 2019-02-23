@@ -84,118 +84,43 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 			if (((precedingCommentToken.getType() ==
 					TokenTypes.BLOCK_COMMENT_BEGIN) &&
 				 StringUtil.startsWith(
-					 precedingCommentToken.getText(), CharPool.STAR)) ||
+					 StringUtil.trim(precedingCommentToken.getText()),
+					 CharPool.STAR)) ||
 				((precedingCommentToken.getType() ==
 					TokenTypes.SINGLE_LINE_COMMENT) &&
 				 StringUtil.startsWith(
 					 precedingCommentToken.getText(), CharPool.SPACE))) {
 
-				// TODO
-
-				return NO_ACTION_REQUIRED;
-			}
-		}
-
-		if (_content.endsWith("-> {")) {
-			return SINGLE_LINE_BREAK_REQUIRED;
-		}
-
-		String trimmedNextJavaTermContent = StringUtil.trim(
-			nextParsedJavaTerm.getContent());
-
-		if (StringUtil.startsWith(
-				StringUtil.trim(_content), CharPool.CLOSE_CURLY_BRACE)) {
-
-			if (!_content.endsWith(StringPool.OPEN_CURLY_BRACE)) {
-
-				// TODO
-
-				return NO_ACTION_REQUIRED;
-			}
-
-			if (!trimmedNextJavaTermContent.equals(
-					StringPool.OPEN_CURLY_BRACE)) {
-
 				return DOUBLE_LINE_BREAK_REQUIRED;
-			}
-		}
-
-		if (_className.equals(JavaAnnotationFieldDefinition.class.getName())) {
-			return DOUBLE_LINE_BREAK_REQUIRED;
-		}
-
-		int lineCount = StringUtil.count(_content, CharPool.NEW_LINE) + 1;
-
-		if (_className.equals(JavaEnumConstantDefinitions.class.getName()) &&
-			(!_content.endsWith(StringPool.OPEN_CURLY_BRACE) ||
-			 (lineCount == 1) ||
-			 Objects.equals(
-				 _getIndent(_content, 1), _getIndent(_content, lineCount)))) {
-
-			return DOUBLE_LINE_BREAK_REQUIRED;
-		}
-
-		if (_content.endsWith(StringPool.SEMICOLON)) {
-			if (_className.equals(JavaMethodDefinition.class.getName())) {
-				return DOUBLE_LINE_BREAK_REQUIRED;
-			}
-
-			if (_className.equals(JavaBreakStatement.class.getName()) ||
-				_className.equals(JavaContinueStatement.class.getName()) ||
-				_className.equals(JavaReturnStatement.class.getName()) ||
-				_className.equals(JavaThrowStatement.class.getName())) {
-
-				return SINGLE_LINE_BREAK_REQUIRED;
 			}
 
 			return NO_ACTION_REQUIRED;
 		}
 
-		if (!_content.endsWith(StringPool.OPEN_CURLY_BRACE) ||
-			trimmedNextJavaTermContent.startsWith(
-				StringPool.CLOSE_CURLY_BRACE)) {
-
-			// TODO
-
+		if (nextParsedJavaTerm.getPrecedingLineAction() != NO_ACTION_REQUIRED) {
 			return NO_ACTION_REQUIRED;
 		}
 
-		if (_className.equals(JavaClassDefinition.class.getName())) {
+		if (_content.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+			if (_followingNestedCodeBlockClassName != null) {
+				return _getOpenCurlyBraceFollowingLineAction(
+					_followingNestedCodeBlockClassName);
+			}
+
+			return _getOpenCurlyBraceFollowingLineAction(_className);
+		}
+
+		if (Objects.equals(
+				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE) ||
+			_className.equals(JavaConstructorCall.class.getName()) ||
+			_className.equals(JavaMethodDefinition.class.getName()) ||
+			_className.equals(JavaEnumConstantDefinitions.class.getName()) ||
+			_className.equals(JavaAnnotationFieldDefinition.class.getName())) {
+
 			return DOUBLE_LINE_BREAK_REQUIRED;
 		}
 
-		if (trimmedNextJavaTermContent.equals(StringPool.OPEN_CURLY_BRACE)) {
-			String lastLine = StringUtil.trim(
-				JavaParserUtil.getLastLine(_content));
-
-			if (lastLine.startsWith("new ") ||
-				_containsUnquoted(lastLine, " new ")) {
-
-				return SINGLE_LINE_BREAK_REQUIRED;
-			}
-
-			return DOUBLE_LINE_BREAK_REQUIRED;
-		}
-
-		if ((lineCount == 1) ||
-			Objects.equals(
-				_getIndent(_content, 1), _getIndent(_content, lineCount))) {
-
-			String lastLine = StringUtil.trim(
-				JavaParserUtil.getLastLine(_content));
-
-			int x = lastLine.lastIndexOf(" new ");
-
-			if ((x != -1) && !ToolsUtil.isInsideQuotes(lastLine, x) &&
-				(ToolsUtil.getLevel(lastLine.substring(x)) == 0)) {
-
-				return DOUBLE_LINE_BREAK_REQUIRED;
-			}
-
-			return SINGLE_LINE_BREAK_REQUIRED;
-		}
-
-		return DOUBLE_LINE_BREAK_REQUIRED;
+		return NO_ACTION_REQUIRED;
 	}
 
 	public ParsedJavaTerm getNextParsedJavaTerm() {
@@ -207,25 +132,64 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	}
 
 	public int getPrecedingLineAction() {
-		if (((_precedingCommentToken != null) &&
-			 StringUtil.startsWith(
-				 StringUtil.trim(_precedingCommentToken.getText()),
-				 CharPool.STAR)) ||
-			StringUtil.startsWith(
-				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+		ParsedJavaTerm previousParsedJavaTerm = getPreviousParsedJavaTerm();
 
-			// TODO
+		if (_precedingCommentToken != null) {
+			if (previousParsedJavaTerm == null) {
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
+
+			if ((_precedingCommentToken.getType() ==
+					TokenTypes.SINGLE_LINE_COMMENT) &&
+				StringUtil.startsWith(
+					_precedingCommentToken.getText(), CharPool.SPACE)) {
+
+				Position previousEndPosition =
+					previousParsedJavaTerm.getEndPosition();
+
+				if (previousEndPosition.getLineNumber() ==
+						_precedingCommentToken.getLine()) {
+
+					return NO_ACTION_REQUIRED;
+				}
+
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
+
+			if ((_precedingCommentToken.getType() ==
+					TokenTypes.BLOCK_COMMENT_BEGIN) &&
+				StringUtil.startsWith(
+					StringUtil.trim(_precedingCommentToken.getText()),
+					CharPool.STAR) &&
+				!StringUtil.startsWith(
+					StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+
+				return SINGLE_LINE_BREAK_REQUIRED;
+			}
 
 			return NO_ACTION_REQUIRED;
 		}
 
-		ParsedJavaTerm previousParsedJavaTerm = getPreviousParsedJavaTerm();
+		if (previousParsedJavaTerm == null) {
+			return NO_ACTION_REQUIRED;
+		}
 
 		if (StringUtil.endsWith(
 				previousParsedJavaTerm.getContent(),
 				CharPool.OPEN_CURLY_BRACE)) {
 
 			return NO_ACTION_REQUIRED;
+		}
+
+		if (StringUtil.startsWith(
+				StringUtil.trim(_content), StringPool.CLOSE_CURLY_BRACE)) {
+
+			if (_precedingNestedCodeBlockClassName != null) {
+				return _getCloseCurlyBracePrecedingLineAction(
+					_precedingNestedCodeBlockClassName);
+			}
+
+			return _getCloseCurlyBracePrecedingLineAction(_className);
 		}
 
 		if (_className.equals(JavaAnnotationFieldDefinition.class.getName()) ||
@@ -320,6 +284,28 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		}
 	}
 
+	private int _getCloseCurlyBracePrecedingLineAction(String className) {
+		if (className.equals(JavaEnumConstantDefinition.class.getName()) ||
+			className.equals(JavaClassDefinition.class.getName())) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (className.equals(JavaClassCall.class.getName())) {
+			ParsedJavaTerm previousParsedJavaTerm = getPreviousParsedJavaTerm();
+
+			String previousClassName = previousParsedJavaTerm.getClassName();
+
+			if (!previousClassName.equals(
+					JavaInstanceInitialization.class.getName())) {
+
+				return DOUBLE_LINE_BREAK_REQUIRED;
+			}
+		}
+
+		return SINGLE_LINE_BREAK_REQUIRED;
+	}
+
 	private String _getIndent(String s, int lineNumber) {
 		int x = -1;
 
@@ -336,6 +322,67 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 			sb.append(CharPool.TAB);
 		}
+	}
+
+	private int _getOpenCurlyBraceFollowingLineAction(String className) {
+		if (className.equals(JavaLambdaExpression.class.getName())) {
+			return SINGLE_LINE_BREAK_REQUIRED;
+		}
+
+		ParsedJavaTerm nextParsedJavaTerm = getNextParsedJavaTerm();
+
+		String trimmedNextJavaTermContent = StringUtil.trim(
+			nextParsedJavaTerm.getContent());
+
+		if (trimmedNextJavaTermContent.startsWith(
+				StringPool.CLOSE_CURLY_BRACE)) {
+
+			return SINGLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (className.equals(JavaClassDefinition.class.getName()) ||
+			className.equals(JavaEnumConstantDefinition.class.getName())) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (Objects.equals(
+				nextParsedJavaTerm.getClassName(),
+				JavaInstanceInitialization.class.getName())) {
+
+			String lastLine = StringUtil.trim(
+				JavaParserUtil.getLastLine(_content));
+
+			if (lastLine.startsWith("new ") ||
+				_containsUnquoted(lastLine, " new ")) {
+
+				return SINGLE_LINE_BREAK_REQUIRED;
+			}
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		int lineCount = StringUtil.count(_content, CharPool.NEW_LINE) + 1;
+
+		if ((_precedingNestedCodeBlockClassName != null) ||
+			((lineCount > 1) &&
+			 !Objects.equals(
+				 _getIndent(_content, 1), _getIndent(_content, lineCount)))) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		String lastLine = StringUtil.trim(JavaParserUtil.getLastLine(_content));
+
+		int x = lastLine.lastIndexOf(" new ");
+
+		if ((x != -1) && !ToolsUtil.isInsideQuotes(lastLine, x) &&
+			(ToolsUtil.getLevel(lastLine.substring(x)) == 0)) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		return SINGLE_LINE_BREAK_REQUIRED;
 	}
 
 	private final String _className;

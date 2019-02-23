@@ -86,7 +86,7 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 			%>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/edit_expando.jsp" />
+				<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="columnId" value="<%= String.valueOf(expandoColumn.getColumnId()) %>" />
 				<portlet:param name="modelResource" value="<%= modelResource %>" />

@@ -36,7 +36,7 @@ String modelResource = (String)row.getParameter("modelResource");
 >
 	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit_expando.jsp" />
+			<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="columnId" value="<%= String.valueOf(expandoColumn.getColumnId()) %>" />
 			<portlet:param name="modelResource" value="<%= modelResource %>" />

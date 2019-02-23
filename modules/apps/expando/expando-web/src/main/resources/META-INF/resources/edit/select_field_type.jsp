@@ -42,7 +42,7 @@ portletDisplay.setURLBack(redirect);
 
 				<aui:col span="<%= 4 %>">
 					<portlet:renderURL var="editExpandoURL">
-						<portlet:param name="mvcPath" value="/edit_expando.jsp" />
+						<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="modelResource" value="<%= modelResource %>" />
 						<portlet:param name="type" value="<%= String.valueOf(type) %>" />

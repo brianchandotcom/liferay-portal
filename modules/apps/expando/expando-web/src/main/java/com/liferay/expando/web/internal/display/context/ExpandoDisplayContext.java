@@ -89,7 +89,7 @@ public class ExpandoDisplayContext {
 
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/select_field_type.jsp", "redirect",
+							"/edit/select_field_type.jsp", "redirect",
 							PortalUtil.getCurrentURL(_request), "modelResource",
 							modelResource);
 

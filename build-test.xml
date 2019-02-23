@@ -7207,6 +7207,8 @@ cluster.link.autodetect.address=
 
 cluster.link.enabled=true
 
+live.users.enabled=true
+
 dl.store.impl=com.liferay.portal.store.db.DBStore
 
 web.server.display.node=true</echo>

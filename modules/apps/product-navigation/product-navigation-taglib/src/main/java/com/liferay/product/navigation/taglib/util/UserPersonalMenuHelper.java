@@ -17,6 +17,10 @@ package com.liferay.product.navigation.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.user.personal.menu.UserPersonalMenuEntry;
@@ -77,21 +81,37 @@ public class UserPersonalMenuHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		return new DropdownItemList() {
 			{
 				for (UserPersonalMenuEntry entry : userPersonalMenuEntries) {
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.setHref(
-									entry.getPortletURL(request));
-								dropdownItem.setLabel(
-									entry.getLabel(themeDisplay.getLocale()));
-							}));
+					try {
+						if (entry.isShow(permissionChecker)) {
+							add(
+								SafeConsumer.ignore(
+									dropdownItem -> {
+										dropdownItem.setHref(
+											entry.getPortletURL(request));
+										dropdownItem.setLabel(
+											entry.getLabel(
+												themeDisplay.getLocale()));
+									}));
+						}
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(pe, pe);
+						}
+					}
 				}
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserPersonalMenuHelper.class);
 
 	private static UserPersonalMenuEntryRegistry _userPersonalMenuEntryRegistry;
 

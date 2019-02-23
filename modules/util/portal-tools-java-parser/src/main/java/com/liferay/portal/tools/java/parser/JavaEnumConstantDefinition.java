@@ -83,7 +83,7 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 
 		if (_hasBody) {
 			sb.append("\n");
-			sb.append(CODE_BLOCK);
+			sb.append(NESTED_CODE_BLOCK);
 			sb.append("\n");
 			sb.append(originalIndent);
 			sb.append("}");
@@ -92,6 +92,9 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 
 		return sb.toString();
 	}
+
+	protected static final String NESTED_CODE_BLOCK =
+		"${JAVA_ENUM_CONSTANT_DEFINITION_NESTED_CODE_BLOCK}";
 
 	private boolean _hasBody;
 	private final List<JavaAnnotation> _javaAnnotations;

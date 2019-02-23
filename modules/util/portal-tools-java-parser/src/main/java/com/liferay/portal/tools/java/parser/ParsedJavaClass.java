@@ -28,8 +28,18 @@ public class ParsedJavaClass {
 		String content, Position startPosition, Position endPosition,
 		String className) {
 
+		addJavaTerm(content, startPosition, endPosition, className, null, null);
+	}
+
+	public void addJavaTerm(
+		String content, Position startPosition, Position endPosition,
+		String className, String precedingNestedCodeBlockClassName,
+		String followingNestedCodeBlockClassName) {
+
 		ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
-			content, startPosition, endPosition, className);
+			content, startPosition, endPosition, className,
+			precedingNestedCodeBlockClassName,
+			followingNestedCodeBlockClassName);
 
 		if (_firstParsedJavaTerm == null) {
 			_firstParsedJavaTerm = parsedJavaTerm;

@@ -34,12 +34,15 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	public ParsedJavaTerm(
 		String content, Position startPosition, Position endPosition,
-		String className) {
+		String className, String precedingNestedCodeBlockClassName,
+		String followingNestedCodeBlockClassName) {
 
 		_content = content;
 		_startPosition = startPosition;
 		_endPosition = endPosition;
 		_className = className;
+		_precedingNestedCodeBlockClassName = precedingNestedCodeBlockClassName;
+		_followingNestedCodeBlockClassName = followingNestedCodeBlockClassName;
 	}
 
 	@Override
@@ -339,8 +342,10 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	private boolean _containsCommentToken;
 	private final String _content;
 	private final Position _endPosition;
+	private final String _followingNestedCodeBlockClassName;
 	private ParsedJavaTerm _nextParsedJavaTerm;
 	private CommonHiddenStreamToken _precedingCommentToken;
+	private final String _precedingNestedCodeBlockClassName;
 	private ParsedJavaTerm _previousParsedJavaTerm;
 	private final Position _startPosition;
 

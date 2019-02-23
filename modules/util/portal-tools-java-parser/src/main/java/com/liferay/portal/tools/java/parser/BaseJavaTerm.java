@@ -31,8 +31,6 @@ import java.util.Objects;
  */
 public abstract class BaseJavaTerm implements JavaTerm {
 
-	public static final String CODE_BLOCK = "${CODE_BLOCK}";
-
 	@Override
 	public Position getEndPosition() {
 		return _endPosition;

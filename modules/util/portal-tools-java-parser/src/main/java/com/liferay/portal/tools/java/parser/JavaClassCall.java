@@ -125,7 +125,7 @@ public class JavaClassCall extends JavaExpression {
 			sb.append("\n");
 
 			if (!_emptyBody) {
-				sb.append(CODE_BLOCK);
+				sb.append(NESTED_CODE_BLOCK);
 				sb.append("\n");
 			}
 
@@ -141,6 +141,9 @@ public class JavaClassCall extends JavaExpression {
 
 		return sb.toString();
 	}
+
+	protected static final String NESTED_CODE_BLOCK =
+		"${JAVA_CLASS_CALL_NESTED_CODE_BLOCK}";
 
 	private final JavaSimpleValue _className;
 	private boolean _emptyBody;

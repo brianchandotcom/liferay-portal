@@ -19,6 +19,8 @@ import antlr.CommonHiddenStreamToken;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.java.parser.util.DetailASTUtil;
@@ -87,8 +89,9 @@ public class JavaParser {
 	}
 
 	private static ParsedJavaClass _addJavaTerm(
-		ParsedJavaClass parsedJavaClass, DetailAST detailAST, JavaTerm javaTerm,
-		FileContents fileContents) {
+			ParsedJavaClass parsedJavaClass, DetailAST detailAST,
+			JavaTerm javaTerm, FileContents fileContents)
+		throws IOException {
 
 		if (javaTerm == null) {
 			return parsedJavaClass;
@@ -110,59 +113,123 @@ public class JavaParser {
 
 		String expectedIndent = _getExpectedIndent(detailAST, fileContents);
 
-		String content = javaTerm.toString(
+		String javaTermContent = javaTerm.toString(
 			expectedIndent, StringPool.BLANK, _maxLineLength);
 
-		if (!content.contains(BaseJavaTerm.CODE_BLOCK)) {
-			Position endPosition = null;
+		if (javaTermContent.contains(
+				"\n" + JavaClassCall.NESTED_CODE_BLOCK + "\n") ||
+			javaTermContent.contains(
+				"\n" + JavaEnumConstantDefinition.NESTED_CODE_BLOCK + "\n") ||
+			javaTermContent.contains(
+				"\n" + JavaLambdaExpression.NESTED_CODE_BLOCK + "\n")) {
 
-			if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
-				endPosition = DetailASTUtil.getEndPosition(
-					_getLastEnumConstantDefinitionDetailAST(detailAST),
-					fileContents);
-			}
-			else {
-				endPosition = DetailASTUtil.getEndPosition(
-					detailAST, fileContents);
-			}
-
-			parsedJavaClass.addJavaTerm(
-				content, startPosition, endPosition, className);
-
-			return parsedJavaClass;
+			return _addJavaTermWithNestedCodeBlocks(
+				parsedJavaClass, detailAST, javaTermContent, className,
+				startPosition, fileContents);
 		}
 
-		String[] parts = _getParts(
-			content, "\n" + BaseJavaTerm.CODE_BLOCK + "\n");
+		Position endPosition = null;
+
+		if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+			endPosition = DetailASTUtil.getEndPosition(
+				_getLastEnumConstantDefinitionDetailAST(detailAST),
+				fileContents);
+		}
+		else {
+			endPosition = DetailASTUtil.getEndPosition(detailAST, fileContents);
+		}
+
+		parsedJavaClass.addJavaTerm(
+			javaTermContent, startPosition, endPosition, className);
+
+		return parsedJavaClass;
+	}
+
+	private static ParsedJavaClass _addJavaTermWithNestedCodeBlocks(
+			ParsedJavaClass parsedJavaClass, DetailAST detailAST,
+			String javaTermContent, String className, Position startPosition,
+			FileContents fileContents)
+		throws IOException {
+
+		String followingNestedCodeBlockClassName = null;
+		String precedingNestedCodeBlockClassName = null;
 
 		List<Position> curlyBracePositionList = _getCurlyBracePositionList(
 			new ArrayList<>(), detailAST);
 
 		Collections.sort(curlyBracePositionList);
 
-		for (int i = 0; i < parts.length; i++) {
-			Position partStartPosition = null;
+		int count = 0;
 
-			if (i == 0) {
-				partStartPosition = startPosition;
-			}
-			else {
-				partStartPosition = curlyBracePositionList.get((i * 2) - 1);
-			}
+		StringBundler sb = new StringBundler();
 
-			Position partEndPosition = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(javaTermContent))) {
 
-			if (i == (parts.length - 1)) {
-				partEndPosition = DetailASTUtil.getEndPosition(
-					detailAST, fileContents);
-			}
-			else {
-				partEndPosition = curlyBracePositionList.get(i * 2);
-			}
+			String line = null;
 
-			parsedJavaClass.addJavaTerm(
-				parts[i], partStartPosition, partEndPosition, className);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.equals(JavaClassCall.NESTED_CODE_BLOCK)) {
+					followingNestedCodeBlockClassName =
+						JavaClassCall.class.getName();
+				}
+				else if (line.equals(
+							JavaEnumConstantDefinition.NESTED_CODE_BLOCK)) {
+
+					followingNestedCodeBlockClassName =
+						JavaEnumConstantDefinition.class.getName();
+				}
+				else if (line.equals(JavaLambdaExpression.NESTED_CODE_BLOCK)) {
+					followingNestedCodeBlockClassName =
+						JavaLambdaExpression.class.getName();
+				}
+				else {
+					sb.append(line);
+					sb.append("\n");
+
+					continue;
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				Position partStartPosition = null;
+
+				if (count == 0) {
+					partStartPosition = startPosition;
+				}
+				else {
+					partStartPosition = curlyBracePositionList.get(
+						(count * 2) - 1);
+				}
+
+				Position partEndPosition = curlyBracePositionList.get(
+					count * 2);
+
+				parsedJavaClass.addJavaTerm(
+					sb.toString(), partStartPosition, partEndPosition,
+					className, precedingNestedCodeBlockClassName,
+					followingNestedCodeBlockClassName);
+
+				sb.setIndex(0);
+
+				precedingNestedCodeBlockClassName =
+					followingNestedCodeBlockClassName;
+
+				count++;
+			}
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		Position partEndPosition = DetailASTUtil.getEndPosition(
+			detailAST, fileContents);
+		Position partStartPosition = curlyBracePositionList.get(
+			(count * 2) - 1);
+
+		parsedJavaClass.addJavaTerm(
+			sb.toString(), partStartPosition, partEndPosition, className,
+			precedingNestedCodeBlockClassName, null);
 
 		return parsedJavaClass;
 	}
@@ -464,7 +531,8 @@ public class JavaParser {
 	}
 
 	private static ParsedJavaClass _getParsedJavaClass(
-		DetailAST rootDetailAST, FileContents fileContents) {
+			DetailAST rootDetailAST, FileContents fileContents)
+		throws IOException {
 
 		ParsedJavaClass parsedJavaClass = _walk(
 			new ParsedJavaClass(), rootDetailAST, fileContents);
@@ -472,28 +540,6 @@ public class JavaParser {
 		parsedJavaClass.processCommentTokens();
 
 		return parsedJavaClass;
-	}
-
-	private static String[] _getParts(String s, String delimeter) {
-		List<String> parts = new ArrayList<>();
-
-		int x = 0;
-
-		int y = s.indexOf(delimeter, x);
-
-		while (y != -1) {
-			parts.add(s.substring(x, y));
-
-			x = y + delimeter.length();
-
-			y = s.indexOf(delimeter, x);
-		}
-
-		if (x < s.length()) {
-			parts.add(s.substring(x));
-		}
-
-		return parts.toArray(new String[parts.size()]);
 	}
 
 	private static boolean _isAtLineEnd(String line, int x) {
@@ -733,8 +779,9 @@ public class JavaParser {
 	}
 
 	private static ParsedJavaClass _parseDetailAST(
-		ParsedJavaClass parsedJavaClass, DetailAST detailAST,
-		FileContents fileContents) {
+			ParsedJavaClass parsedJavaClass, DetailAST detailAST,
+			FileContents fileContents)
+		throws IOException {
 
 		if (detailAST == null) {
 			return parsedJavaClass;
@@ -874,8 +921,9 @@ public class JavaParser {
 	}
 
 	private static ParsedJavaClass _walk(
-		ParsedJavaClass parsedJavaClass, DetailAST detailAST,
-		FileContents fileContents) {
+			ParsedJavaClass parsedJavaClass, DetailAST detailAST,
+			FileContents fileContents)
+		throws IOException {
 
 		if (detailAST == null) {
 			return parsedJavaClass;

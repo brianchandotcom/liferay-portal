@@ -76,7 +76,7 @@ public class JavaLambdaExpression extends JavaExpression {
 
 		if (_lambdaActionJavaExpression == null) {
 			sb.append("{\n");
-			sb.append(CODE_BLOCK);
+			sb.append(NESTED_CODE_BLOCK);
 			sb.append("\n");
 			sb.append(originalIndent);
 			sb.append("}");
@@ -90,6 +90,9 @@ public class JavaLambdaExpression extends JavaExpression {
 
 		return sb.toString();
 	}
+
+	protected static final String NESTED_CODE_BLOCK =
+		"${JAVA_LAMBDA_EXPRESSION_NESTED_CODE_BLOCK}";
 
 	private List<JavaLambdaParameter> _javaLambdaParameters = new ArrayList<>();
 	private JavaExpression _lambdaActionJavaExpression;

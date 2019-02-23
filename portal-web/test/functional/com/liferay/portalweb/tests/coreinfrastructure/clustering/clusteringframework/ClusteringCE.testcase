@@ -288,4 +288,107 @@ definition {
 
 		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
 	}
+
+	@priority = "5"
+	test ValidateLiveUsers {
+		property test.name.skip.portal.instance = "ClusteringCE#ValidateLiveUsers";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Monitoring"
+		);
+
+		Clustering.viewLiveSessions(
+			number = "1",
+			navItem = "Live Sessions"
+		);
+
+		Clustering.viewNoLiveSessions(
+			number = "2"
+		);
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		Clustering.viewClusterStatusInConsole();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Monitoring"
+		);
+
+		Clustering.viewLiveSessions(
+			number = "1",
+			navItem = "Live Sessions"
+		);
+
+		Clustering.viewLiveSessions(
+			number = "2",
+			navItem = "Live Sessions"
+		);
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Monitoring"
+		);
+
+		Clustering.viewLiveSessions(
+			number = "1",
+			navItem = "Live Sessions"
+		);
+
+		Clustering.viewLiveSessions(
+			number = "2",
+			navItem = "Live Sessions"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Monitoring"
+		);
+
+		Clustering.viewLiveSessions(
+			number = "1",
+			navItem = "Live Sessions"
+		);
+
+		Clustering.viewNoLiveSessions(
+			number = "2"
+		);
+	}
 }

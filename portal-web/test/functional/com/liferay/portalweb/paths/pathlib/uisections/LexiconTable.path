@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>TABLE_SESSION_ID</td>
+	<td>//tr[@data-qa-id='row'][${key_index}]//a[contains(@href,'sessionId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]</td>
 	<td></td>

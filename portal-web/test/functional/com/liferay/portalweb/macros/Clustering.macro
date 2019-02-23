@@ -195,4 +195,23 @@ definition {
 			}
 		}
 	}
+
+	macro viewLiveSessions {
+		var key_navItem = "${navItem}";
+		var key_index = "${number}";
+
+		if (IsElementPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK")) {
+			AssertElementPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
+		}
+
+		var viewSessionId = selenium.getText("LexiconTable#TABLE_SESSION_ID");
+
+		AssertTextPresent(locator1 = "LexiconTable#TABLE_SESSION_ID", value1 = "${viewSessionId}");
+	}
+
+	macro viewNoLiveSessions {
+		var key_index = "${number}";
+
+		AssertElementNotPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
+	}
 }

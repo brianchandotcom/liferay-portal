@@ -23,7 +23,7 @@ AUI.add(
 
 								var payload = {
 									ddmStructureId: fieldSet.get('id'),
-									languageId: themeDisplay.getLanguageId(),
+									languageId: themeDisplay.getDefaultLanguageId(),
 									portletNamespace: Liferay.DDM.Settings.portletNamespace,
 									scopeGroupId: themeDisplay.getScopeGroupId()
 								};

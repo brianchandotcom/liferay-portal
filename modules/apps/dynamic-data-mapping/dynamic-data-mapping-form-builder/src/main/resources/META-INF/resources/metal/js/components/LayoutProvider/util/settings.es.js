@@ -1,7 +1,10 @@
 import {PagesVisitor} from '../../../util/visitors.es';
 
-export const updateSettingsContextOptions = (field, locale, newOptions) => {
+export const containsOptions = ({type}) => {
+	return type === 'options';
+};
 
+export const updateSettingsContextOptions = (field, locale, newOptions) => {
 	return {
 		...field,
 		value: {
@@ -24,7 +27,7 @@ export const updateSettingsContextProperty = (state, settingsContext, propertyNa
 		pages: visitor.mapFields(
 			field => {
 				if (propertyName === field.fieldName) {
-					if (propertyName === 'options') {
+					if (containsOptions(field)) {
 						field = updateSettingsContextOptions(field, locale, propertyValue);
 					}
 					else {

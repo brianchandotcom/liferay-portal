@@ -2,13 +2,13 @@
 	"config": {
 		"imports": {
 			"frontend-taglib-clay": {
-				"clay-alert": ">=2.1.12",
-				"clay-button": ">=2.1.12",
-				"clay-dropdown": ">=2.1.12",
-				"clay-icon": ">=2.1.12",
-				"clay-management-toolbar": ">=2.1.12",
-				"clay-modal": ">=2.1.12",
-				"clay-navigation-bar": ">=2.1.12"
+				"clay-alert": ">=2.9.0",
+				"clay-button": ">=2.9.0",
+				"clay-dropdown": ">=2.9.0",
+				"clay-icon": ">=2.9.0",
+				"clay-management-toolbar": ">=2.9.0",
+				"clay-modal": ">=2.9.0",
+				"clay-navigation-bar": ">=2.9.0"
 			},
 			"dynamic-data-mapping-form-field-type": {
 				"/": ">=4.0.0"

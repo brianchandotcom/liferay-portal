@@ -38,13 +38,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			actions = {
 				"setMultiple('predefinedValue', getValue('multiple'))",
 				"setOptions('predefinedValue', getValue('options'))",
-				"setRequired('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
-				"setRequired('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
-				"setRequired('options', equals(getValue('dataSourceType'), \"manual\"))",
-				"setVisible('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
-				"setVisible('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
-				"setVisible('options', equals(getValue('dataSourceType'), \"manual\"))",
-				"setVisible('predefinedValue', equals(getValue('dataSourceType'), \"manual\"))",
+				"setRequired('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
+				"setRequired('ddmDataProviderInstanceOutput', contains(getValue('dataSourceType'), \"data-provider\"))",
+				"setRequired('options', contains(getValue('dataSourceType'), \"manual\"))",
+				"setVisible('ddmDataProviderInstanceId', contains(getValue('dataSourceType'), \"data-provider\"))",
+				"setVisible('ddmDataProviderInstanceOutput', contains(getValue('dataSourceType'), \"data-provider\"))",
+				"setVisible('options', contains(getValue('dataSourceType'), \"manual\"))",
+				"setVisible('predefinedValue', contains(getValue('dataSourceType'), \"manual\"))",
 				"setVisible('validation', false)"
 			},
 			condition = "TRUE"

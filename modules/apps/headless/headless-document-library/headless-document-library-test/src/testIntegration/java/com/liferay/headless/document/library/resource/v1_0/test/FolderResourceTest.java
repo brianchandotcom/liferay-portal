@@ -61,7 +61,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Page<Folder> page = invokeGetContentSpaceFoldersPage(
 			testGroup.getGroupId(), Pagination.of(2, 1));
 
-		assertEquals(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(randomFolder1, randomFolder2),
 			(List<Folder>)page.getItems());
 		assertValid(page);
@@ -93,7 +93,7 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		Page<Folder> page = invokeGetFolderFoldersPage(
 			postContentSpaceFolder.getId(), Pagination.of(2, 1));
 
-		assertEquals(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(randomFolder1, randomFolder2),
 			(List<Folder>)page.getItems());
 		assertValid(page);

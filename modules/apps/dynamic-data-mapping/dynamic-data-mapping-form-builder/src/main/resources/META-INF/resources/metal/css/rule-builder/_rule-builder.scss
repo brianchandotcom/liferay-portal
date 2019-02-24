@@ -1,3 +1,11 @@
 @import "./data-provider-container";
 @import "./rule-list";
 @import "./rule-list-settings";
+
+.liferay-ddm-form-builder-rule-builder-content {
+	.liferay-ddm-form-rule-builder-timeline .form-group-item div.dropdown, .action {
+		position: relative!important;
+		right: inherit!important;
+		top: inherit!important;
+	}
+}

@@ -1,0 +1,93 @@
+$c: '.ddm-field-options';
+
+#{$c} {
+	align-items: center;
+	display: flex;
+
+	&.dragging {
+		background: #FFF;
+		border-radius: 4px;
+		box-shadow: 0 1px 50px rgba(0, 0, 0, 0.35);
+		padding: 1rem;
+		position: absolute;
+		z-index: 9999;
+	}
+
+	.lexicon-icon-drag {
+		color: #A7A9BC;
+		font-size: 29px;
+		margin-left: -8px;
+		margin-top: 4px;
+	}
+
+	.form-group {
+		margin: 0;
+		width: 100%;
+
+		label {
+			display: none;
+		}
+
+		.key-value-editor {
+			label {
+				color: #C4CFD6;
+				display: inline-block;
+				margin-right: 5px;
+			}
+
+			input {
+				background: transparent;
+				border: none;
+				color: #6B6C7E;
+				display: inline-block;
+				outline: none;
+			}
+
+			label, input {
+				font-size: 11px;
+			}
+		}
+	}
+
+	.close-modal {
+		font-size: 8px;
+		position: absolute;
+		right: 8px;
+		top: 4px;
+	}
+
+	/*
+		Drag and drop options styles
+	*/
+
+	.ddm-source-dragging {
+		opacity: 0.40;
+	}
+
+	.ddm-options-drag {
+		cursor: -webkit-grab;
+		margin-bottom: 26px;
+	}
+
+	&.dragging {
+		cursor: grabbing;
+	}
+
+	> div {
+		position: relative;
+		width: 100%;
+	}
+}
+
+.ddm-options-target {
+	background: #F1F5FF;
+	border: solid 2px #82AAF8;
+	height: 10px;
+	margin: 6px 0;
+	opacity: 0;
+	width: 100%;
+
+	&.targetOver {
+		opacity: 1;
+	}
+}

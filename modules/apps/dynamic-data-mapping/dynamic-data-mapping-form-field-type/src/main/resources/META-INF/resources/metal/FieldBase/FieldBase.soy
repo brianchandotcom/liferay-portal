@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param? contentRenderer: any}
+	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? tip: string}
 	{@param? label: string}
@@ -11,7 +12,15 @@
 	{@param? spritemap: string}
 	{@param? tooltip: string}
 
-	<div class="form-group">
+	{let $fieldCssClassAttribute kind="text"}
+		form-group
+
+		{if $errorMessage}
+			has-error
+		{/if}
+	{/let}
+
+	<div class="{$fieldCssClassAttribute}">
 		{if $repeatable}
 			<div class="ddm-form-field-repeatable-add-button">
 				<a class="icon-plus-sign lfr-ddm-form-field-repeatable-add-button" href="javascript:;"></a>
@@ -57,6 +66,12 @@
 
 		{if $tip}
 			<span class="form-text">{$tip}</span>
+		{/if}
+
+		{if $errorMessage}
+			<div class="form-feedback-group">
+				<div class="form-feedback-item">{$errorMessage}</div>
+			</div>
 		{/if}
 	</div>
 {/template}

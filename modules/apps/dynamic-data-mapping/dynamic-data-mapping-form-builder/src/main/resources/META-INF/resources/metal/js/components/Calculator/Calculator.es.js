@@ -3,6 +3,8 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Calculator.soy.js';
+import Token from '../../expressions/Token.es';
+import Tokenizer from '../../expressions/Tokenizer.es';
 
 /**
  * Calculator.
@@ -12,67 +14,26 @@ import templates from './Calculator.soy.js';
 class Calculator extends Component {
 
 	static STATE = {
-		calculatorOptions: Config.arrayOf(
+		fields: Config.arrayOf(
 			Config.shapeOf(
 				{
+					fieldName: Config.string(),
 					label: Config.string(),
-					tooltip: Config.string(),
+					repeatable: Config.bool(),
 					value: Config.string()
 				}
 			)
 		).value([]),
 
-		deletedFields: Config.arrayOf(Config.string()),
-
-		disableCalculatorField: Config.bool().internal().value(false),
+		functions: Config.array().value([]),
 
 		expression: Config.string().value(''),
 
-		expressionArray: Config.array().valueFn('_expressionArrayValueFn'),
-
 		index: Config.number().value(0),
 
-		resultSelected: Config.string(),
+		repeatableFields: Config.array().valueFn('_repeatableFieldsValueFn'),
 
-		options: Config.arrayOf(
-			Config.shapeOf(
-				{
-					dataType: Config.string(),
-					name: Config.string(),
-					options: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
-					type: Config.string(),
-					value: Config.string()
-				}
-			)
-		).value([]),
-
-		optionsRepeatable: Config.arrayOf(
-			Config.shapeOf(
-				{
-					dataType: Config.string(),
-					name: Config.string(),
-					options: Config.arrayOf(
-						Config.shapeOf(
-							{
-								label: Config.string(),
-								name: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
-					type: Config.string(),
-					value: Config.string()
-				}
-			)
-		).internal().value([]),
+		spritemap: Config.string().required(),
 
 		strings: {
 			value: {
@@ -81,200 +42,180 @@ class Calculator extends Component {
 		}
 	}
 
-	willReceiveState(changes) {
-		if (changes.hasOwnProperty('resultSelected')) {
-			this._resetExpression();
-		}
-		else if (changes.hasOwnProperty('options')) {
-			this._keepLatestExpression(changes);
-		}
+	prepareStateForRender(state) {
+		const {expression} = state;
+
+		return {
+			...state,
+			...this.getStateBasedOnExpression(expression),
+			expression: expression.replace(/[\[\]]/g, '')
+		};
 	}
 
-	/**
-	 * @private
-	 */
-	_expressionArrayValueFn() {
-		let expressionArray = [];
-		const regex = /\(|\)|numeric[0-9]*|[0-9]+|sum\((numeric[0-9]*|[0-9])\)|[+-/*]/g;
+	addTokenToExpression(tokenType, tokenValue) {
+		const {expression, index} = this;
+		const newToken = new Token(tokenType, tokenValue);
+		const tokens = Tokenizer.tokenize(expression);
 
-		if (this.expression.trim()) {
-			expressionArray = this.expression.match(regex);
+		if (this.shouldAddImplicitMultiplication(tokens, newToken)) {
+			tokens.push(new Token(Token.OPERATOR, '*'));
 		}
 
-		return expressionArray;
-	}
-
-	_addItemIntoExpression(calculatorOperationFieldSelected, calculatorSymbol, dropdownItemWasSelected, dropdownItemName) {
-		let {disableCalculatorField, expressionArray} = this;
-
-		if (dropdownItemWasSelected) {
-			if (calculatorOperationFieldSelected) {
-				this._setFieldsRepeatable();
-
-				disableCalculatorField = true;
-
-				expressionArray.push(`${dropdownItemName}(`);
-			}
-			else if (disableCalculatorField) {
-				expressionArray.push(`${dropdownItemName})`);
-
-				disableCalculatorField = false;
-			}
-			else {
-				expressionArray.push(dropdownItemName);
-			}
-		}
-		else if (calculatorSymbol == 'backspace') {
-			expressionArray.pop();
-
-			const lastElement = expressionArray[expressionArray.length - 1];
-
-			if (lastElement && lastElement.indexOf('(') > 0) {
-				disableCalculatorField = true;
-			}
-			else {
-				disableCalculatorField = false;
-			}
-		}
-		else if (calculatorSymbol) {
-			expressionArray.push(calculatorSymbol);
-		}
-
-		expressionArray = this._formatExpression(expressionArray, expressionArray.join(''));
+		tokens.push(newToken);
 
 		this.setState(
 			{
-				disableCalculatorField
+				expression: Tokenizer.stringifyTokens(tokens)
 			}
 		);
 
-		return expressionArray;
-	}
-
-	_formatExpression(expressionArray, expression) {
-		const regexRepeatableArithSigns = /[\+\-\*/]{2,}/;
-		const regexRepeatableDotSign = /[\.]{2,}/;
-
-		if (expression.match(regexRepeatableArithSigns) || expression.match(regexRepeatableDotSign)) {
-			expressionArray.splice(expressionArray.length - 2, 2, expressionArray[expressionArray.length - 1]);
-		}
-
-		return expressionArray;
-	}
-
-	_handleItemSelection(event) {
-		let calculatorOperationFieldSelected;
-		let calculatorSymbol = '';
-		let dropdownItemName = '';
-		let expressionArray = [];
-
-		const {index} = this;
-
-		const keyWasClicked = event.target.dataset;
-
-		const dropdownItemWasSelected = event.data;
-
-		if (dropdownItemWasSelected) {
-			dropdownItemName = event.data.item.fieldName;
-
-			if (!dropdownItemName) {
-				calculatorOperationFieldSelected = true;
-				dropdownItemName = event.data.item.value;
-			}
-		}
-		else if (keyWasClicked) {
-			calculatorSymbol = event.target.dataset.calculatorKey;
-		}
-
-		expressionArray = this._addItemIntoExpression(calculatorOperationFieldSelected, calculatorSymbol, dropdownItemWasSelected, dropdownItemName);
-
-		this.setState(
+		this.emit(
+			'editExpression',
 			{
-				expression: expressionArray.join(''),
-				expressionArray
+				expression: this.expression,
+				index
 			}
 		);
-
-		if (calculatorSymbol || dropdownItemWasSelected) {
-			this.emit(
-				'editExpression',
-				{
-					expression: expressionArray.join(''),
-					index
-				}
-			);
-		}
 	}
 
-	_keepLatestExpression(changes) {
-		const {deletedFields} = this;
-		let {expressionArray} = this;
+	getStateBasedOnExpression(expression) {
+		let disableDot = false;
+		let disableFunctions = false;
+		let disableNumbers = false;
+		let disableOperators = false;
+		let showOnlyRepeatableFields = false;
+		const tokens = Tokenizer.tokenize(expression);
 
-		expressionArray = changes.expressionArray.prevVal;
+		if (
+			tokens.length > 1 &&
+			tokens[tokens.length - 1].type === Token.LEFT_PARENTHESIS &&
+			tokens[tokens.length - 2].type === Token.FUNCTION &&
+			tokens[tokens.length - 2].value === 'sum'
+		) {
+			disableFunctions = true;
+			disableNumbers = true;
+			disableOperators = true;
+			showOnlyRepeatableFields = true;
+		}
 
-		if (deletedFields) {
-			expressionArray = this._updateExpression(expressionArray);
+		if (
+			tokens.length === 0 ||
+			(
+				tokens.length > 0 &&
+				tokens[tokens.length - 1].type !== Token.LITERAL
+			)
+		) {
+			disableDot = true;
+		}
+
+		if (
+			tokens.length > 0 &&
+			tokens[tokens.length - 1].type === Token.OPERATOR
+		) {
+			disableOperators = true;
+		}
+
+		return {
+			disableDot,
+			disableFunctions,
+			disableNumbers,
+			disableOperators,
+			showOnlyRepeatableFields
+		};
+	}
+
+	removeTokenFromExpression() {
+		const {expression, index} = this;
+		const tokens = Tokenizer.tokenize(expression);
+
+		const removedToken = tokens.pop();
+
+		if (
+			removedToken && removedToken.type === Token.LEFT_PARENTHESIS &&
+			tokens.length && tokens[tokens.length - 1].type === Token.FUNCTION
+		) {
+			tokens.pop();
 		}
 
 		this.setState(
 			{
-				expression: expressionArray.join(''),
-				expressionArray
+				expression: Tokenizer.stringifyTokens(tokens)
 			}
 		);
-	}
 
-	_resetExpression() {
-		let {expression, expressionArray} = this;
-
-		expression = '';
-		expressionArray = [];
-
-		this.setState(
+		this.emit(
+			'editExpression',
 			{
-				expression,
-				expressionArray
+				expression: this.expression,
+				index
 			}
 		);
 	}
 
-	_setFieldsRepeatable() {
-		const {options} = this;
+	shouldAddImplicitMultiplication(tokens, newToken) {
+		const lastToken = tokens[tokens.length - 1];
 
-		let {optionsRepeatable} = this;
-
-		optionsRepeatable = options.filter(
-			({repeatable}) => repeatable === true
-		);
-
-		this.setState(
-			{
-				optionsRepeatable
-			}
+		return (
+			lastToken !== undefined &&
+			(
+				(
+					newToken.type === Token.LEFT_PARENTHESIS &&
+					lastToken.type !== Token.OPERATOR &&
+					lastToken.type !== Token.FUNCTION &&
+					lastToken.type !== Token.LEFT_PARENTHESIS
+				) ||
+				(
+					newToken.type === Token.FUNCTION &&
+					lastToken.type !== Token.OPERATOR &&
+					lastToken.type !== Token.LEFT_PARENTHESIS
+				) ||
+				(
+					newToken.type === Token.VARIABLE &&
+					(
+						lastToken.type === Token.VARIABLE ||
+						lastToken.type === Token.LITERAL
+					)
+				) ||
+				(
+					newToken.type === Token.LITERAL &&
+					(
+						lastToken.type === Token.VARIABLE ||
+						lastToken.type === Token.FUNCTION
+					)
+				)
+			)
 		);
 	}
 
-	_updateExpression(expressionArray) {
-		const {deletedFields} = this;
+	_handleFunctionsDropdownItemClicked({data}) {
+		const {item} = data;
 
-		deletedFields.forEach(
-			field => {
-				const index = expressionArray.indexOf(field);
+		this.addTokenToExpression(Token.FUNCTION, item.value);
+		this.addTokenToExpression(Token.LEFT_PARENTHESIS, '(');
+	}
 
-				if (index != -1) {
-					expressionArray.splice(index, 1);
-				}
+	_handleFieldsDropdownItemClicked({data}) {
+		const {item} = data;
+		const {fieldName} = item;
 
-				const indexWithParenthesis = expressionArray.indexOf(`${field})`);
+		this.addTokenToExpression(Token.VARIABLE, fieldName);
+	}
 
-				if (indexWithParenthesis != -1) {
-					expressionArray.splice(indexWithParenthesis, 1);
-					expressionArray.splice(indexWithParenthesis - 1, 1);
-				}
-			}
-		);
+	_handleButtonClicked({delegateTarget}) {
+		const {tokenType, tokenValue} = delegateTarget.dataset;
 
-		return expressionArray;
+		if (tokenValue === 'backspace') {
+			this.removeTokenFromExpression();
+		}
+		else {
+			this.addTokenToExpression(tokenType, tokenValue);
+		}
+	}
+
+	_repeatableFieldsValueFn() {
+		const {fields} = this;
+
+		return fields.filter(({repeatable}) => repeatable === true);
 	}
 }
 

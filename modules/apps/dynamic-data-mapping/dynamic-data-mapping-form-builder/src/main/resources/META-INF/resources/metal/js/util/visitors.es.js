@@ -112,4 +112,77 @@ class PagesVisitor {
 	}
 }
 
-export {PagesVisitor};
+class RulesVisitor {
+	constructor(rules) {
+		this.setRules(rules);
+	}
+
+	containsField(fieldName) {
+		return this._rules.some(
+			rule => {
+				const actionsResult = rule.actions.some(
+					({target}) => {
+						return target === fieldName;
+					}
+				);
+
+				const conditionsResult = rule.conditions.some(
+					condition => {
+						return condition.operands.some(
+							({type, value}) => {
+								return type === 'field' && value === fieldName;
+							}
+						);
+					}
+				);
+
+				return actionsResult || conditionsResult;
+			}
+		);
+	}
+
+	containsFieldExpression(fieldName) {
+		return this._rules.some(
+			rule => {
+				return rule.actions.some(
+					({action, expression}) => {
+						return action === 'calculate' && expression.includes(fieldName);
+					}
+				);
+			}
+		);
+	}
+
+	mapActions(actionMapper) {
+		return this._rules.map(
+			rule => {
+				return {
+					...rule,
+					actions: rule.actions.map(actionMapper)
+				};
+			}
+		);
+	}
+
+	mapConditions(conditionMapper) {
+		return this._rules.map(
+			rule => {
+				return {
+					...rule,
+					conditions: rule.conditions.map(conditionMapper)
+				};
+			}
+		);
+	}
+
+	setRules(rules) {
+		this._rules = [...rules];
+	}
+
+	dispose() {
+		this._rules = null;
+	}
+
+}
+
+export {PagesVisitor, RulesVisitor};

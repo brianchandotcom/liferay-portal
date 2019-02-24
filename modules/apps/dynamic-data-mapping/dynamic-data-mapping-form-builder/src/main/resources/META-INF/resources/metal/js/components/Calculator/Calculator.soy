@@ -1,35 +1,41 @@
 {namespace Calculator}
 
 {template .render}
+	{@param fields: list<?>}
 	{@param index: int}
-	{@param options: list<?>}
-	{@param optionsRepeatable: list<?>}
-	{@param calculatorOptions: list<?>}
-	{@param? disableCalculatorField: bool}
+	{@param functions: list<?>}
+	{@param spritemap: string}
 	{@param strings: [
 			addField: string,
 			theExpressionWillBeDisplayedHere: string
 		]
 	}
-	{@param spritemap: string}
+	{@param? _handleButtonClicked: any}
+	{@param? _handleFieldsDropdownItemClicked: any}
+	{@param? _handleFunctionsDropdownItemClicked: any}
+	{@param? disableDot: bool}
+	{@param? disableFunctions: bool}
+	{@param? disableNumbers: bool}
+	{@param? disableOperators: bool}
 	{@param? expression: string}
-	{@param? _handleItemSelection: any}
+	{@param? repeatableFields: list<?>}
+	{@param? showOnlyRepeatableFields: bool}
 
 	<div action-rule-calculate-index="{$index}" class="action-rule-calculate row">
 		<div class="col-md-12 no-padding">
 			<div class="calculate-container">
 				<div class="calculate-container-calculator-component col-md-3">
 					<div class="liferay-ddm-form-builder-calculator">
-						{let $optionsList: $disableCalculatorField ? $optionsRepeatable : $options /}
-						{let $disableAddField: length($options) > 0 ? false : true /}
+						{let $dropownItems: $showOnlyRepeatableFields ? $repeatableFields : $fields /}
+						{let $disableAddField: $dropownItems and (length($dropownItems) > 0) ? false : true /}
 						{call ClayDropdownBase.render}
 							{param events: [
-								'itemClicked': $_handleItemSelection
+								'itemClicked': $_handleFieldsDropdownItemClicked
 							] /}
 							{param contentRenderer: 'dropdownFormContent' /}
 							{param disabled: $disableAddField /}
 							{param elementClasses: 'calculator-add-field-button-container' /}
-							{param items: $optionsList /}
+							{param items: $dropownItems ? $dropownItems : [] /}
 							{param label: $strings.addField /}
 							{param ref: 'calculatorAddField' + $index /}
 							{param spritemap: $spritemap /}
@@ -37,51 +43,55 @@
 							{param triggerClasses: 'btn-lg calculator-add-field-button ddm-button' /}
 						{/call}
 
-						{let $disableField : $disableCalculatorField ? 'disabled' : '' /}
+						{let $disableNumbersAttribute : $disableNumbers ? 'disabled' : '' /}
 
-						<div class="calculator-button-area" data-onclick="{$_handleItemSelection}">
+						<div class="calculator-button-area">
 							<ul class="calculator-buttons calculator-buttons-numbers">
-								<li class="border-top-left btn btn-secondary button-padding-icons calculator-button" data-calculator-key="backspace">
+								<li class="border-top-left btn btn-secondary button-padding-icons calculator-button" data-onclick="{$_handleButtonClicked}" data-token-type="Backspace" data-token-value="backspace">
 									{call ClayIcon.render}
 										{param spritemap: $spritemap /}
 										{param symbol: 'angle-left' /}
 									{/call}
 								</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="(">(</li>
-								<li class="border-top-right btn btn-secondary calculator-button {$disableField}" data-calculator-key=")">)</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="1">1</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="2">2</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="3">3</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="4">4</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="5">5</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="6">6</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="7">7</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="8">8</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="9">9</li>
-								<li class="border-bottom-left btn btn-secondary button-two-columns calculator-button {$disableField}" data-calculator-key="0">0</li>
-								<li class="border-bottom-right btn btn-secondary calculator-button {$disableField}" data-calculator-key=".">.</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Left Parenthesis" data-token-value="(">(</li>
+								<li class="border-top-right btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Parenthesis Right" data-token-value=")">)</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="1">1</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="2">2</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="3">3</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="4">4</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="5">5</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="6">6</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="7">7</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="8">8</li>
+								<li class="btn btn-secondary calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="9">9</li>
+								<li class="border-bottom-left btn btn-secondary button-two-columns calculator-button {$disableNumbersAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value="0">0</li>
+
+								{let $disableDotAttribute : $disableNumbers or $disableDot ? 'disabled' : '' /}
+
+								<li class="border-bottom-right btn btn-secondary calculator-button {$disableDotAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Literal" data-token-value=".">.</li>
 							</ul>
 
+							{let $disableOperatorsAttribute : $disableOperators ? 'disabled' : '' /}
+
 							<ul class="calculator-buttons calculator-buttons-operators">
-								{let $disableCalculatorOptions:  $disableCalculatorField ? true : false /}
-								<li data-calculator-key="...">
+								<li>
 									{call ClayActionsDropdown.render}
 										{param events: [
-											'itemClicked': $_handleItemSelection
+											'itemClicked': $_handleFunctionsDropdownItemClicked
 										] /}
 										{param elementClasses: 'dropdown-action' /}
-										{param disabled: $disableCalculatorOptions or $disableAddField /}
-										{param items: $calculatorOptions /}
-										{param ref: 'calculatorOptions' + $index /}
+										{param disabled: $disableFunctions /}
+										{param items: $functions /}
+										{param ref: 'functions' + $index /}
 										{param spritemap: $spritemap /}
 										{param style: 'secondary' /}
 										{param triggerClasses: 'dropdown-toggle calculator-add-operator-button-area' /}
 									{/call}
 								</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="+">+</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="-">-</li>
-								<li class="btn btn-secondary calculator-button {$disableField}" data-calculator-key="*">*</li>
-								<li class="border-bottom-left border-bottom-right btn btn-secondary calculator-button {$disableField}" data-calculator-key="/">/</li>
+								<li class="btn btn-secondary calculator-button {$disableOperatorsAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Operator" data-token-value="+">+</li>
+								<li class="btn btn-secondary calculator-button {$disableOperatorsAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Operator" data-token-value="-">-</li>
+								<li class="btn btn-secondary calculator-button {$disableOperatorsAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Operator" data-token-value="*">*</li>
+								<li class="border-bottom-left border-bottom-right btn btn-secondary calculator-button {$disableOperatorsAttribute}" data-onclick="{$_handleButtonClicked}" data-token-type="Operator" data-token-value="/">/</li>
 							</ul>
 						</div>
 					</div>

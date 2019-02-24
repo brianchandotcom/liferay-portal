@@ -59,7 +59,7 @@
 			name: string
 		]>
 	}
-	{@param calculatorOptions: list<[
+	{@param calculatorFunctions: list<[
 			label: string,
 			tooltip: string,
 			value: string
@@ -184,6 +184,7 @@
 					{param binaryOperator: $condition.binaryOperator /}
 					{param fieldOptions: $fieldOptions /}
 					{param firstOperandType: $condition.operands[0].type /}
+					{param firstOperandOptions: $condition.firstOperandOptions /}
 					{param firstOperandValueSelected: $condition.operands[0].value /}
 					{param fixedOptions: $fixedOptions /}
 					{param index: index($condition) /}
@@ -193,7 +194,6 @@
 					{param roles: $roles /}
 					{param secondOperandFieldName: '' /}
 					{param secondOperandType: isNonnull($condition.operands[1]) ? $condition.operands[1].type : '' /}
-					{param secondOperandDataType: isNonnull($condition.operands[1]) ? $condition.operands[1].dataType : '' /}
 					{param secondOperandValue: isNonnull($condition.operands[1]) ? $condition.operands[1].value : '' /}
 					{param selectedOperator: $condition.operator /}
 					{param spritemap: $spritemap /}
@@ -226,7 +226,7 @@
 					{param actionSelected: $action.action /}
 					{param actionExpression: $action.expression /}
 					{param actionTypes: $actionTypes /}
-					{param calculatorOptions: $calculatorOptions /}
+					{param calculatorFunctions: $calculatorFunctions /}
 					{param calculatorFields: $action.calculatorFields /}
 					{param calculatorResultOptions: $calculatorResultOptions /}
 					{param dataProvider: $dataProvider /}
@@ -344,7 +344,7 @@
 		type: string,
 		value: string
 	]>}
-	{@param calculatorOptions: list<[
+	{@param calculatorFunctions: list<[
 			label: string,
 			tooltip: string,
 			value: string
@@ -501,9 +501,8 @@
 						]/}
 						{param expression: $actionExpression /}
 						{param index: $index /}
-						{param calculatorOptions: $calculatorOptions /}
-						{param options: $calculatorFields /}
-						{param optionsRepeatable: [] /}
+						{param functions: $calculatorFunctions /}
+						{param fields: $calculatorFields /}
 						{param resultSelected: $targetSelected /}
 						{param spritemap: $spritemap /}
 						{param strings: $strings /}
@@ -625,7 +624,6 @@
 
 	{@param? secondOperandFieldName: string}
 	{@param? secondOperandType: string}
-	{@param? secondOperandDataType: string}
 	{@param? secondOperandValue: any}
 	{@param? selectedOperator: string}
 
@@ -678,9 +676,9 @@
 								{/call}
 
 								{let $fieldHasOptions:
-									($secondOperandDataType == 'select' or
-									$secondOperandDataType == 'checkbox_multiple' or
-									$secondOperandDataType == 'radio')
+									($secondOperandType == 'select' or
+									$secondOperandType == 'checkbox_multiple' or
+									$secondOperandType == 'radio')
 								/}
 
 								<div class="condition-type-value form-group-item" condition-type-value-index="{$index}">
@@ -709,7 +707,7 @@
 											{param value: [$secondOperandValue] /}
 										{/delcall}
 									{else}
-										{let $fieldType: $secondOperandType == 'string' ? 'text' : $secondOperandType /}
+										{let $fieldType: $secondOperandType /}
 
 										{delcall PageRenderer.RegisterFieldType variant="$fieldType"}
 											{param events: [

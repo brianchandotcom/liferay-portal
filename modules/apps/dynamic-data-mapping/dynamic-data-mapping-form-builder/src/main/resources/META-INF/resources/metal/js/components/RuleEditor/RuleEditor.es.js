@@ -3,7 +3,9 @@ import '../Page/PageRenderer.es';
 import 'clay-alert';
 import 'clay-button';
 import 'clay-modal';
+
 import {Config} from 'metal-state';
+import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {makeFetch} from '../../util/fetch.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import Component from 'metal-component';
@@ -103,7 +105,7 @@ class RuleEditor extends Component {
 
 		activeConditionIndex: Config.number().value(-1),
 
-		calculatorOptions: Config.arrayOf(
+		calculatorFunctions: Config.arrayOf(
 			Config.shapeOf(
 				{
 					label: Config.string(),
@@ -391,6 +393,7 @@ class RuleEditor extends Component {
 	}
 
 	prepareStateForRender(state) {
+		const {pages} = this;
 		const actions = state.loadingDataProviderOptions ? [] : state.actions.map(
 			action => ({
 				...action,
@@ -417,6 +420,18 @@ class RuleEditor extends Component {
 					...condition,
 					binaryOperator: this._isBinary(condition.operator),
 					firstOperandOptions,
+					operands: condition.operands.map(
+						(operand, index) => {
+							if (index === 1 && condition.operands[0].type === 'field') {
+								operand = {
+									...operand,
+									type: getFieldProperty(pages, condition.operands[0].value, 'type')
+								};
+							}
+
+							return operand;
+						}
+					),
 					operators
 				};
 			}
@@ -780,7 +795,7 @@ class RuleEditor extends Component {
 				if (!this.isDisposed()) {
 					this.setState(
 						{
-							calculatorOptions: responseData
+							calculatorFunctions: responseData
 						}
 					);
 				}

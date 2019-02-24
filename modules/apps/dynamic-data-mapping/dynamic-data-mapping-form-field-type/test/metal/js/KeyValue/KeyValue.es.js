@@ -1,5 +1,4 @@
 import KeyValue from 'source/KeyValue/KeyValue.es';
-import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -20,6 +19,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
+						name: 'keyValue',
 						readOnly: false,
 						spritemap
 					}
@@ -34,6 +34,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
+						name: 'keyValue',
 						spritemap,
 						tip: 'Type something'
 					}
@@ -49,6 +50,7 @@ describe(
 				component = new KeyValue(
 					{
 						id: 'ID',
+						name: 'keyValue',
 						spritemap
 					}
 				);
@@ -63,6 +65,7 @@ describe(
 				component = new KeyValue(
 					{
 						label: 'label',
+						name: 'keyValue',
 						spritemap
 					}
 				);
@@ -76,6 +79,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
+						name: 'keyValue',
 						placeholder: 'Option 1',
 						spritemap
 					}
@@ -90,6 +94,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
+						name: 'keyValue',
 						required: false,
 						spritemap
 					}
@@ -105,6 +110,7 @@ describe(
 				component = new KeyValue(
 					{
 						label: 'text',
+						name: 'keyValue',
 						showLabel: true,
 						spritemap
 					}
@@ -119,6 +125,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
+						name: 'keyValue',
 						spritemap
 					}
 				);
@@ -132,6 +139,7 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
+						name: 'keyValue',
 						spritemap,
 						value: 'value'
 					}
@@ -146,106 +154,13 @@ describe(
 			() => {
 				component = new KeyValue(
 					{
-						key: 'key',
+						keyword: 'key',
+						name: 'keyValue',
 						spritemap
 					}
 				);
 
 				expect(component).toMatchSnapshot();
-			}
-		);
-
-		it(
-			'should remove spaces and convert first letter after space to upper case on change label value',
-			() => {
-				component = new KeyValue(
-					{
-						key: 'keyValue',
-						spritemap
-					}
-				);
-
-				const generatedName = component.getGeneratedKey('tes te_A_a');
-
-				expect(generatedName).toEqual('tesTeAa');
-			}
-		);
-
-		it(
-			'should not allow generating field name after editing field name input',
-			() => {
-				component = new KeyValue(
-					{
-						generateKey: true,
-						spritemap
-					}
-				);
-
-				MetalTestUtil.triggerEvent(
-					component.element.querySelector('input.key-value-input'),
-					'input',
-					{value: 'foo'}
-				);
-
-				expect(component.generateKey).toEqual(false);
-			}
-		);
-
-		it(
-			'should emit a "fieldEdited" event when changing the value input',
-			done => {
-				jest.useFakeTimers();
-
-				component = new KeyValue(
-					{
-						spritemap
-					}
-				);
-
-				component.on(
-					'fieldEdited',
-					event => {
-						expect(event.value).toEqual('foo');
-						done();
-					}
-				);
-
-				jest.runAllTimers();
-
-				const valueInput = component.element.querySelector('input.form-control');
-
-				valueInput.value = 'foo';
-				MetalTestUtil.triggerEvent(valueInput, 'input', {});
-			}
-		);
-
-		it(
-			'should generate name when editing the value input if "generateKey" is true',
-			done => {
-				jest.useFakeTimers();
-
-				component = new KeyValue(
-					{
-						generateKey: true,
-						spritemap
-					}
-				);
-
-				component.on(
-					'fieldEdited',
-					event => {
-						expect(component.key).toEqual(component.getGeneratedKey('My Name'));
-
-						done();
-					}
-				);
-
-				const valueInput = component.element.querySelector('input.form-control');
-
-				valueInput.value = 'My Name';
-				MetalTestUtil.triggerEvent(valueInput, 'input', {});
-
-				jest.runAllTimers();
 			}
 		);
 	}

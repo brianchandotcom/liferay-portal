@@ -7,6 +7,12 @@ const spritemap = 'icons.svg';
 describe(
 	'Select',
 	() => {
+		beforeEach(
+			() => {
+				jest.useFakeTimers();
+			}
+		);
+
 		afterEach(
 			() => {
 				if (component) {
@@ -181,6 +187,21 @@ describe(
 		);
 
 		it(
+			'should put an asterisk when field is required',
+			() => {
+				component = new Select(
+					{
+						label: 'This is the label',
+						required: true,
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
 			'should render Label if showLabel is true',
 			() => {
 				component = new Select(
@@ -243,8 +264,11 @@ describe(
 
 				const events = {fieldEdited: handleFieldEdited};
 
+				jest.useFakeTimers();
+
 				component = new Select(
 					{
+						dataSourceType: 'manual',
 						events,
 						options: [
 							{
@@ -262,13 +286,21 @@ describe(
 					}
 				);
 
-				MetalTestUtil.triggerEvent(
-					component.element.querySelector('.dropdown-menu'),
-					'click',
-					{}
+				const spy = jest.spyOn(component, 'emit');
+
+				jest.runAllTimers();
+
+				component._handleItemClicked(
+					{
+						data: {
+							item: {
+								value: 'Liferay'
+							}
+						}
+					}
 				);
 
-				expect(handleFieldEdited).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalled();
 			}
 		);
 
@@ -277,6 +309,7 @@ describe(
 			() => {
 				component = new Select(
 					{
+						dataSourceType: 'manual',
 						options: [
 							{
 								checked: false,
@@ -307,6 +340,7 @@ describe(
 			() => {
 				component = new Select(
 					{
+						dataSourceType: 'manual',
 						options: [
 							{
 								checked: false,
@@ -325,14 +359,71 @@ describe(
 
 				const spy = jest.spyOn(component, 'emit');
 
-				MetalTestUtil.triggerEvent(
-					component.element.querySelector('.dropdown-menu'),
-					'click',
-					{}
+				jest.runAllTimers();
+
+				component._handleItemClicked(
+					{
+						data: {
+							item: {
+								value: 'Liferay'
+							}
+						}
+					}
 				);
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
+			}
+		);
+
+		it(
+			'should render the dropdown with search when there are more than six options',
+			() => {
+				component = new Select(
+					{
+						dataSourceType: 'manual',
+						options: [
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							},
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							},
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							},
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							},
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							},
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							},
+							{
+								label: 'label',
+								name: 'name',
+								value: 'item'
+							}
+						],
+						spritemap
+					}
+				);
+
+				expect(component).toMatchSnapshot();
 			}
 		);
 	}

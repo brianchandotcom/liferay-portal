@@ -16,8 +16,12 @@ package com.liferay.headless.document.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,14 +29,12 @@ import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class FolderResourceTest extends BaseFolderResourceTestCase {
 
@@ -98,6 +100,20 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGetFolderWithDocuments() throws Exception {
+		Folder postFolder = invokePostContentSpaceFolder(
+			testGroup.getGroupId(), randomFolder());
+
+		Assert.assertEquals(false, postFolder.getHasDocuments());
+
+		_addDocument(postFolder.getId());
+
+		Folder getFolder = invokeGetFolder(postFolder.getId());
+
+		Assert.assertEquals(true, getFolder.getHasDocuments());
+	}
+
+	@Test
 	public void testPostContentSpaceFolder() throws Exception {
 		Folder randomFolder = randomFolder();
 
@@ -145,6 +161,19 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 		assertEquals(randomFolder, getFolder);
 		assertValid(getFolder);
+	}
+
+	protected void assertEquals(Folder folder1, Folder folder2) {
+		boolean equals = false;
+
+		if (Objects.equals(
+				folder1.getDescription(), folder2.getDescription()) &&
+			Objects.equals(folder1.getName(), folder2.getName())) {
+
+			equals = true;
+		}
+
+		Assert.assertTrue(equals);
 	}
 
 	protected void assertValid(Folder folder) {
@@ -197,6 +226,15 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 				name = RandomTestUtil.randomString();
 			}
 		};
+	}
+
+	private void _addDocument(long folderId) throws Exception {
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			testGroup.getCompanyId());
+
+		DLAppTestUtil.addFileEntryWithWorkflow(
+			defaultUserId, testGroup.getGroupId(), folderId, StringPool.BLANK,
+			RandomTestUtil.randomString(10), true, new ServiceContext());
 	}
 
 }

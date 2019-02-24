@@ -43,11 +43,13 @@
 	},
 	"dependencies": {
 		"autobind-decorator": "^2.1.0",
-		"clay-checkbox": "^2.2.0",
-		"clay-icon": "^2.2.0",
-		"clay-radio": "^2.2.0",
+		"clay-checkbox": "^2.7.0",
+		"clay-dropdown": "^2.7.0",
+		"clay-icon": "^2.7.0",
+		"clay-radio": "^2.7.0",
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "^2.14.0",
+		"metal-drag-drop": "^3.2.2",
 		"metal-position": "^2.1.2",
 		"metal-soy": "^2.16.0",
 		"text-mask-addons": "^3.7.1",
@@ -86,6 +88,7 @@
 		},
 		"moduleNameMapper": {
 			"(.*)\\.soy$": "$1.soy.js",
+			"dynamic-data-mapping-form-builder/(.*)": "<rootDir>/../dynamic-data-mapping-form-builder/src/main/resources/META-INF/resources/$1",
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/metal/$1.js"
 		},
 		"modulePathIgnorePatterns": [
@@ -103,7 +106,8 @@
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
 		"testURL": "http://localhost",
 		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
+			"<rootDir>.*(node_modules)(?!.*metal.*).*$",
+			"<rootDir>.*(node_modules)(?!.*clay.*).*$"
 		]
 	},
 	"main": "./",

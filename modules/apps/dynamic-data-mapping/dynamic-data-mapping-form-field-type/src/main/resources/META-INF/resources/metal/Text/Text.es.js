@@ -33,6 +33,15 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
+		errorMessage: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
 		fieldName: Config.string(),
 
 		/**
@@ -181,19 +190,43 @@ class Text extends Component {
 		}
 	}
 
+	_handleFieldBlurred(event) {
+		this.emit(
+			'fieldBlurred',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.target.value
+			}
+		);
+	}
+
 	_handleFieldChanged(event) {
 		this.setState(
 			{
 				value: event.target.value
 			},
-			() => this.emit(
-				'fieldEdited',
-				{
-					fieldInstance: this,
-					originalEvent: event,
-					value: event.target.value
-				}
-			)
+			() => {
+				this.emit(
+					'fieldEdited',
+					{
+						fieldInstance: this,
+						originalEvent: event,
+						value: event.target.value
+					}
+				);
+			}
+		);
+	}
+
+	_handleFieldFocused(event) {
+		this.emit(
+			'fieldFocused',
+			{
+				fieldInstance: this,
+				originalEvent: event,
+				value: event.target.value
+			}
 		);
 	}
 

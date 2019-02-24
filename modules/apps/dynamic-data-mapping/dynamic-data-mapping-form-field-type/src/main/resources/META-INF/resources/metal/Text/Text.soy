@@ -2,9 +2,12 @@
 
 {template .render}
 	{@param name: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? _value: string}
 	{@param? displayStyle: string}
+	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
 	{@param? placeholder: string}
@@ -20,7 +23,9 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
 				{param displayStyle: $displayStyle /}
 				{param id: $id /}
 				{param name: $name /}
@@ -30,6 +35,7 @@
 				{param value: $_value /}
 			{/call}
 		{/param}
+		{param errorMessage: $errorMessage /}
 		{param id: $id /}
 		{param label: $label /}
 		{param repeatable: $repeatable /}
@@ -43,7 +49,9 @@
 
 {template .content}
 	{@param name: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? displayStyle: string}
 	{@param? id: string}
 	{@param? placeholder: string}
@@ -54,17 +62,25 @@
 	{let $attributes kind="attributes"}
 		class="form-control"
 
+		name="{$name}"
+
+		type="text"
+
+		data-oninput="{$_handleFieldChanged}"
+
+		data-onfocus="{$_handleFieldFocused}"
+
 		{if $id}
 			id="{$id}"
 		{/if}
-
-		name="{$name}"
 
 		{if $placeholder}
 			placeholder="{$placeholder}"
 		{/if}
 
 		type="text"
+
+		data-onblur="{$_handleFieldBlurred}"
 
 		data-oninput="{$_handleFieldChanged}"
 

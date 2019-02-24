@@ -1,8 +1,12 @@
 {
 	"config": {
 		"imports": {
+			"dynamic-data-mapping-form-builder": {
+				"/": ">=2.0.0"
+			},
 			"frontend-taglib-clay": {
 				"clay-checkbox": "^2.2.0",
+				"clay-dropdown": ">=2.1.12",
 				"clay-icon": "^2.2.0",
 				"clay-radio": "^2.2.0"
 			},

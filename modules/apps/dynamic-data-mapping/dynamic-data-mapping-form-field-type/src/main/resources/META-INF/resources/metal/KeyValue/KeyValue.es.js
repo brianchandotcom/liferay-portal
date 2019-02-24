@@ -1,26 +1,22 @@
 import '../FieldBase/FieldBase.es';
+import '../Text/Text.es';
 import './KeyValueRegister.soy.js';
+
+import {
+	normalizeFieldName
+} from 'dynamic-data-mapping-form-builder/metal/js/components/LayoutProvider/util/fields.es';
 import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './KeyValue.soy.js';
 
 /**
- * KeyValue.
+ * KeywordValue.
  * @extends Component
  */
 
-class KeyValue extends Component {
+class KeywordValue extends Component {
 	static STATE = {
-
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof KeyValue
-		 * @type {?bool}
-		 */
-
-		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -34,25 +30,16 @@ class KeyValue extends Component {
 		/**
 		 * @default false
 		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?bool}
 		 */
 
-		generateKey: Config.bool().internal(),
+		generateKeyword: Config.bool().value(true),
 
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof FieldBase
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?(string|undefined)}
 		 */
 
@@ -61,16 +48,16 @@ class KeyValue extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?(string|undefined)}
 		*/
 
-		key: Config.string(),
+		keyword: Config.string(),
 
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?(string|undefined)}
 		 */
 
@@ -86,6 +73,15 @@ class KeyValue extends Component {
 		predefinedValue: Config.string().value('Option 1'),
 
 		/**
+		 * @default false
+		 * @instance
+		 * @memberof KeywordValue
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -97,7 +93,7 @@ class KeyValue extends Component {
 		/**
 		 * @default false
 		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?bool}
 		 */
 
@@ -106,7 +102,7 @@ class KeyValue extends Component {
 		/**
 		 * @default true
 		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?bool}
 		 */
 
@@ -115,11 +111,20 @@ class KeyValue extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof KeyValue
+		 * @memberof KeywordValue
 		 * @type {?(string|undefined)}
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -131,45 +136,77 @@ class KeyValue extends Component {
 		type: Config.string().value('key-value'),
 
 		/**
-			 * @default undefined
-			 * @instance
-			 * @memberof KeyValue
-			 * @type {?(bool)}
-			 */
+		 * @default undefined
+		 * @instance
+		 * @memberof KeywordValue
+		 * @type {?(bool)}
+		 */
 
-		value: Config.string()
+		value: Config.string(),
+
+		_keyword: Config.string().internal().valueFn('_internalKeywordFn'),
+
+		_value: Config.string().internal().valueFn('_internalValueFn')
 	}
 
-	_handleKeyInputChanged(event) {
-		const {target} = event;
-		const originalEvent = target.originalEvent;
+	willReceiveState(changes) {
+		if (changes.keyword) {
+			this.setState(
+				{
+					_keyword: changes.keyword.newVal
+				}
+			);
+		}
 
-		this._updateKey(target.value);
+		if (changes.value) {
+			this.setState(
+				{
+					_value: changes.value.newVal
+				}
+			);
+		}
+	}
 
-		this.generateKey = false;
-
+	_handleKeywordInputBlurred(event) {
 		this.emit(
-			'fieldEdited',
+			'fieldBlurred',
 			{
 				fieldInstance: this,
-				originalEvent,
-				property: 'key',
-				value: this.key
+				originalEvent: event,
+				value: event.target.value
 			}
 		);
 	}
 
-	_handleValueInputChanged(event) {
+	_handleKeywordInputChanged(event) {
 		const {target} = event;
-		const {value} = target;
-		const originalEvent = target.originalEvent;
+		let {value} = target;
 
-		if (this.generateKey) {
-			this._updateKey(value);
-		}
+		value = normalizeFieldName(value);
 
+		target.value = value;
+
+		this.setState(
+			{
+				generateKeyword: false,
+				keyword: value
+			},
+			() => {
+				this.emit(
+					'fieldKeywordEdited',
+					{
+						fieldInstance: this,
+						originalEvent: event,
+						value
+					}
+				);
+			}
+		);
+	}
+
+	_handleValueInputBlurred({originalEvent, value}) {
 		this.emit(
-			'fieldEdited',
+			'fieldBlurred',
 			{
 				fieldInstance: this,
 				originalEvent,
@@ -178,25 +215,65 @@ class KeyValue extends Component {
 		);
 	}
 
-	_updateKey(str) {
+	_handleValueInputEdited(event) {
+		const {generateKeyword} = this;
+		let {keyword} = this;
+		const {originalEvent, value} = event;
+
+		if (generateKeyword) {
+			keyword = normalizeFieldName(value);
+		}
+
 		this.setState(
 			{
-				key: this.getGeneratedKey(str)
+				keyword,
+				value
+			},
+			() => {
+				this.emit(
+					'fieldKeywordEdited',
+					{
+						fieldInstance: this,
+						originalEvent,
+						value: keyword
+					}
+				);
+				this.emit(
+					'fieldEdited',
+					{
+						fieldInstance: this,
+						originalEvent,
+						value
+					}
+				);
 			}
 		);
 	}
 
-	getGeneratedKey(str) {
-		const key = str.replace(
-			/\s(.)/g,
-			x => {
-				return x.toUpperCase();
+	_handleValueInputFocused({originalEvent, value}) {
+		this.emit(
+			'fieldFocused',
+			{
+				fieldInstance: this,
+				originalEvent,
+				value
 			}
 		);
+	}
 
-		return key.replace(/_|\W/g, '');
+	_internalKeywordFn() {
+		const {keyword} = this;
+
+		return keyword;
+	}
+
+	_internalValueFn() {
+		const {value} = this;
+
+		return value;
 	}
 }
 
-Soy.register(KeyValue, templates);
-export default KeyValue;
+Soy.register(KeywordValue, templates);
+
+export default KeywordValue;

@@ -1,73 +1,89 @@
 {namespace Options}
 
 {template .render}
-	{@param? _handleTextChanged: any}
-	{@param? readOnly: bool}
-	{@param? tip: string}
+	{@param spritemap: string}
+	{@param? _handleOptionBlurred: any}
+	{@param? _handleOptionDeleted: any}
+	{@param? _handleOptionFocused: any}
+	{@param? _handleOptionLabelEdited: any}
+	{@param? _handleOptionValueEdited: any}
+	{@param? id: string}
 	{@param? items: list<[
-		checked: bool,
 		disabled: bool,
-		id: string,
-		inline: bool,
+		generateKeyword: bool,
 		label: string,
-		name: string,
-		showLabel: bool,
 		value: string
 	]>}
-	{@param? id: string}
 	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? readOnly: bool}
 	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showLabel: bool}
-	{@param? spritemap: string}
-	{@param? placeholder: string}
+	{@param? tip: string}
 
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{if $items}
-				<div class="field-options">
+				<div class="ddm-field-options-container">
 					{for $option in $items}
+						<div class="ddm-options-target" data-index={index($option)}></div>
+
 						{let $fieldConfig kind="html"}
-							{call Text.render}
-								{param events: [
-									'fieldEdited': $_handleTextChanged
-								] /}
-								{param readOnly: $readOnly ? $readOnly : $option.disabled /}
-								{param name: $option.name /}
-								{param ref: 'text' /}
-								{param showLabel: false /}
-								{param spritemap: $spritemap /}
-								{param value: $option.label and $option.value ? $option.label : $placeholder /}
-							{/call}
+							<div class="ddm-field-options" data-index={index($option)}>
+								<svg
+									aria-hidden="true"
+									class="lexicon-icon ddm-options-drag lexicon-icon-drag"
+								>
+									<use xlink:href="{$spritemap}#drag" />
+								</svg>
+
+								<div class="ddm-option-entry">
+									{call KeyValue.render}
+										{param events: [
+											'fieldBlurred': $_handleOptionBlurred,
+											'fieldEdited': $_handleOptionLabelEdited,
+											'fieldFocused' : $_handleOptionFocused,
+											'fieldKeywordEdited': $_handleOptionValueEdited
+										] /}
+										{param generateKeyword: $option.generateKeyword /}
+										{param keyword: $option.value /}
+										{param index: index($option) /}
+										{param name: 'option' + index($option) /}
+										{param placeholder: $placeholder /}
+										{param readOnly: $readOnly ? $readOnly : $option.disabled /}
+										{param ref: 'option' + index($option) /}
+										{param required: $required /}
+										{param showLabel: false /}
+										{param spritemap: $spritemap /}
+										{param value: $option.label /}
+									{/call}
+
+									{if not isLast($option)}
+										<button class="close close-modal" data-onclick={$_handleOptionDeleted} type="button">
+											<svg
+											aria-hidden="true"
+											class="lexicon-icon lexicon-icon-times"
+										>
+											<use xlink:href="{$spritemap}#times" />
+											</svg>
+										</button>
+									{/if}
+								</div>
+							</div>
 						{/let}
 
 						{$fieldConfig}
-
-						{if isLast($option)}
-							{call Text.render}
-								{param events: [
-									'fieldEdited': $_handleTextChanged
-								] /}
-
-								{param readOnly: $readOnly ? $readOnly : $option.disabled /}
-								{param name: $option.name /}
-								{param placeholder: $placeholder /}
-								{param ref: 'textVoid' /}
-								{param showLabel: false /}
-								{param spritemap: $spritemap /}
-							{/call}
-						{/if}
 					{/for}
 				</div>
 			{/if}
 		{/param}
 
-		{param tip: $tip /}
 		{param id: $id /}
 		{param label: $label /}
 		{param repeatable: $repeatable /}
-		{param required: $required /}
 		{param showLabel: $showLabel /}
 		{param spritemap: $spritemap /}
+		{param tip: $tip /}
 	{/call}
 {/template}

@@ -30,7 +30,7 @@ export const focusedFieldStructure = Config.shapeOf(
 	}
 );
 
-export const rule = Config.shapeOf(
+export const ruleStructure = Config.shapeOf(
 	{
 		actions: Config.arrayOf(
 			Config.shapeOf(

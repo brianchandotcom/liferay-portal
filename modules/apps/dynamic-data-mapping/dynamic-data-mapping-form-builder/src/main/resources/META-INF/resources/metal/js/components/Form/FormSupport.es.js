@@ -118,7 +118,20 @@ const removeRow = (pages, pageIndex, rowIndex) => {
 	return pages;
 };
 
-const generateFieldName = type => `${type}${Date.now()}`;
+export const findFieldByName = (pages, name) => {
+	let field = null;
+	const visitor = new PagesVisitor(pages);
+
+	visitor.mapFields(
+		currentField => {
+			if (currentField.fieldName === name) {
+				field = currentField;
+			}
+		}
+	);
+
+	return field;
+};
 
 const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 	const row = getRow(pages, pageIndex, rowIndex);
@@ -210,7 +223,7 @@ export default {
 	addFieldToColumn,
 	addRow,
 	emptyPages,
-	generateFieldName,
+	findFieldByName,
 	getColumn,
 	getField,
 	getFieldProperties,

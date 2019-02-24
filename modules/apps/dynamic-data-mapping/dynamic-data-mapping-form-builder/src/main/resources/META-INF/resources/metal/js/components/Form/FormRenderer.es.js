@@ -422,6 +422,15 @@ class FormRenderer extends Component {
 	}
 
 	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldBlurred(event) {
+		this.emit('fieldBlurred', event);
+	}
+
+	/**
 	 * @param {!Object} payload
 	 * @private
 	 */

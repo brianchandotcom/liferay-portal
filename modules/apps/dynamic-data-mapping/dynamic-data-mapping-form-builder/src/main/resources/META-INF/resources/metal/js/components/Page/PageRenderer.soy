@@ -2,12 +2,13 @@
 
 {template .render}
 	{@param spritemap: string}
-	{@param? _handlePageDescriptionChanged: any}
-	{@param? _handlePageTitleChanged: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleOnClickResize: any}
+	{@param? _handlePageDescriptionChanged: any}
+	{@param? _handlePageTitleChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -26,12 +27,13 @@
 	{@param? titlePlaceholder: string}
 
 	{delcall PageRenderer.container variant="$contentRenderer"}
-		{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
-		{param _handlePageTitleChanged: $_handlePageTitleChanged /}
 		{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+		{param _handleFieldBlurred: $_handleFieldBlurred /}
 		{param _handleFieldEdited: $_handleFieldEdited /}
 		{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 		{param _handleOnClickResize: $_handleOnClickResize /}
+		{param _handlePageDescriptionChanged: $_handlePageDescriptionChanged /}
+		{param _handlePageTitleChanged: $_handlePageTitleChanged /}
 		{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 		{param activePage: $activePage /}
 		{param contentRenderer: $contentRenderer /}
@@ -48,12 +50,14 @@
 
 {deltemplate PageRenderer.container variant="'grid'"}
 	{@param spritemap: string}
-	{@param? _handlePageDescriptionChanged: any}
-	{@param? _handlePageTitleChanged: any}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleModal: any}
 	{@param? _handleOnClickResize: any}
+	{@param? _handlePageDescriptionChanged: any}
+	{@param? _handlePageTitleChanged: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -89,7 +93,9 @@
 					{delcall PageRenderer.page variant="$contentRenderer"}
 						{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 						{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+						{param _handleFieldBlurred: $_handleFieldBlurred /}
 						{param _handleFieldEdited: $_handleFieldEdited /}
+						{param _handleModal: $_handleModal /}
 						{param _handleOnClickResize: $_handleOnClickResize /}
 						{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 						{param contentRenderer: $contentRenderer /}
@@ -107,6 +113,7 @@
 
 {deltemplate PageRenderer.container variant="'list'"}
 	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
 	{@param? activePage: number}
 	{@param? contentRenderer: string}
@@ -123,6 +130,7 @@
 
 	<div aria-labelledby="sidebarLightFormsFieldTab" class="{$classes}" id="sidebarLightDetails" role="tabpanel">
 		{delcall PageRenderer.page variant="$contentRenderer"}
+			{param _handleFieldBlurred: $_handleFieldBlurred /}
 			{param _handleFieldEdited: $_handleFieldEdited /}
 			{param contentRenderer: $contentRenderer /}
 			{param editable: $editable /}
@@ -167,7 +175,9 @@
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleModal: any}
 	{@param? _handleOnClickResize: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? contentRenderer: string}
@@ -179,7 +189,9 @@
 		{delcall PageRenderer.row variant="'grid'"}
 			{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 			{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+			{param _handleFieldBlurred: $_handleFieldBlurred /}
 			{param _handleFieldEdited: $_handleFieldEdited /}
+			{param _handleModal: $_handleModal /}
 			{param _handleOnClickResize: $_handleOnClickResize /}
 			{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 			{param contentRenderer: $contentRenderer /}
@@ -196,7 +208,9 @@
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleModal: any}
 	{@param? _handleOnClickResize: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? contentRenderer: string}
@@ -233,7 +247,9 @@
 				{delcall PageRenderer.row variant="$contentRenderer"}
 					{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 					{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+					{param _handleFieldBlurred: $_handleFieldBlurred /}
 					{param _handleFieldEdited: $_handleFieldEdited /}
+					{param _handleModal: $_handleModal /}
 					{param _handleOnClickResize: $_handleOnClickResize /}
 					{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 					{param contentRenderer: $contentRenderer /}
@@ -261,7 +277,9 @@
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleModal: any}
 	{@param? _handleOnClickResize: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? contentRenderer: string}
@@ -275,7 +293,9 @@
 			{delcall PageRenderer.column variant="$contentRenderer"}
 				{param _handleDeleteButtonClicked: $_handleDeleteButtonClicked /}
 				{param _handleDuplicateButtonClicked: $_handleDuplicateButtonClicked /}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param _handleModal: $_handleModal /}
 				{param _handleOnClickResize: $_handleOnClickResize /}
 				{param _handleSelectFieldFocused: $_handleSelectFieldFocused /}
 				{param column: $column /}
@@ -291,6 +311,7 @@
 
 {deltemplate PageRenderer.column variant="'list'"}
 	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
 	{@param? column: ?}
 	{@param? columnIndex: number}
@@ -310,6 +331,7 @@
 				{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 					{param editable: $editable /}
 					{param events: [
+						'fieldBlurred': $_handleFieldBlurred,
 						'fieldEdited': $_handleFieldEdited
 					] /}
 					{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
@@ -324,7 +346,9 @@
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldEdited: any}
+	{@param? _handleModal: any}
 	{@param? _handleOnClickResize: any}
 	{@param? _handleSelectFieldFocused: any}
 	{@param? column: ?}
@@ -358,6 +382,7 @@
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
 						{param readOnly: true  /}
 						{param events: [
+							'fieldBlurred': $_handleFieldBlurred,
 							'fieldEdited': $_handleFieldEdited
 						] /}
 						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageIndex /}
@@ -406,6 +431,7 @@
 	{@param spritemap: string}
 	{@param? _handleDeleteButtonClicked: any}
 	{@param? _handleDuplicateButtonClicked: any}
+	{@param? _handleModal: any}
 
 	<div class="ddm-field-actions-container">
 		<a data-onclick="{$_handleDuplicateButtonClicked}" href="javascript:;">

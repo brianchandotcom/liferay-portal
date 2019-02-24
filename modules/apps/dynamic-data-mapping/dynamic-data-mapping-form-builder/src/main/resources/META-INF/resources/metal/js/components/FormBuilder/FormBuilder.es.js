@@ -1,8 +1,9 @@
 import {Config} from 'metal-state';
 import {debounce} from 'metal-debounce';
 import {EventHandler} from 'metal-events';
-import {focusedFieldStructure, pageStructure} from '../../util/config.es';
-import {formatFieldName, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {generateFieldName} from '../LayoutProvider/util/fields.es';
+import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
@@ -23,7 +24,7 @@ class Builder extends Component {
 		/**
 		 * @default []
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {?array<object>}
 		 */
 
@@ -35,25 +36,36 @@ class Builder extends Component {
 		/**
 		 * @default
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {?number}
 		 */
 
 		activePage: Config.number().value(0),
 
+		editingLanguageId: Config.string(),
+
 		/**
 		 * @default {}
 		 * @instance
-		 * @memberof Sidebar
+		 * @memberof FormBuilder
 		 * @type {?object}
 		 */
 
 		focusedField: focusedFieldStructure.value({}),
 
 		/**
+		 * @default {}
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		locale: Config.string().value('en_US'),
+
+		/**
 		 * @default []
 		 * @instance
-		 * @memberof FormRenderer
+		 * @memberof FormBuilder
 		 * @type {?array<object>}
 		 */
 
@@ -61,7 +73,7 @@ class Builder extends Component {
 
 		/**
 		 * @instance
-		 * @memberof LayoutProvider
+		 * @memberof FormBuilder
 		 * @type {string}
 		 */
 
@@ -69,7 +81,15 @@ class Builder extends Component {
 
 		/**
 		 * @instance
-		 * @memberof Builder
+		 * @memberof FormBuilder
+		 * @type {string}
+		 */
+
+		rules: Config.arrayOf(ruleStructure).required(),
+
+		/**
+		 * @instance
+		 * @memberof FormBuilder
 		 * @type {object}
 		 */
 
@@ -84,13 +104,11 @@ class Builder extends Component {
 
 	created() {
 		this._eventHandler = new EventHandler();
-
-		this._processFieldUpdates = debounce(this._processFieldUpdates.bind(this), 100);
+		this._debouncedFieldEditedHandler = debounce(this._debouncedFieldEditedHandler.bind(this), 100);
 	}
 
 	attached() {
 		const {activePage, pages} = this.props;
-
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const translationManager = document.querySelector('.ddm-translation-manager');
 
@@ -168,8 +186,64 @@ class Builder extends Component {
 		sidebar.open();
 	}
 
+	preparePagesForRender(pages) {
+		const visitor = new PagesVisitor(pages);
+
+		return visitor.mapFields(
+			field => {
+				if (field.type === 'select' && field.dataSourceType !== 'manual') {
+					field = {
+						...field,
+						options: [
+							{
+								label: Liferay.Language.get('dynamically-loaded-data'),
+								value: 'dynamic'
+							}
+						],
+						value: 'dynamic'
+					};
+				}
+
+				return field;
+			}
+		);
+	}
+
+	_debouncedFieldEditedHandler(fieldInstance, value) {
+		const {locale} = this.props;
+		const {fieldName} = fieldInstance;
+
+		this.emit(
+			'fieldEdited',
+			{
+				locale,
+				propertyName: fieldName,
+				propertyValue: value
+			}
+		);
+	}
+
 	_handleActivePageUpdated(activePage) {
 		this.emit('activePageUpdated', activePage);
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+	@autobind
+	_handleSettingsFieldBlurred(event) {
+		this.emit('fieldBlurred', event);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Event} event
+	 * @private
+	 */
+	@autobind
+	_handleSidebarFieldBlurred() {
+		this.emit('sidebarFieldBlurred');
 	}
 
 	/**
@@ -257,7 +331,9 @@ class Builder extends Component {
 	}
 
 	/**
-	 * Continues the propagation of event.
+	 * Event handler for when the user adds a new field to the Form Builder.
+	 * This method creates a new field name based on the label of the FieldType
+	 * added and emits an event with the new field configurations.
 	 * @param {!Event} event
 	 * @private
 	 */
@@ -267,7 +343,7 @@ class Builder extends Component {
 		const {namespace} = this.props;
 		const {settingsContext} = fieldType;
 		const {pages} = settingsContext;
-		const newFieldName = FormSupport.generateFieldName(fieldType.name);
+		const newFieldName = generateFieldName(this.props.pages, fieldType.label);
 
 		const focusedField = {
 			...fieldType,
@@ -288,16 +364,6 @@ class Builder extends Component {
 		);
 
 		this.openSidebar();
-	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleFieldBlurred() {
-		this.emit('fieldBlurred');
 	}
 
 	/**
@@ -374,9 +440,9 @@ class Builder extends Component {
 	 * @param {!Object} event
 	 * @private
 	 */
-
-	_handleFieldEdited({fieldInstance, value}) {
-		this._processFieldUpdates(fieldInstance, value);
+	@autobind
+	_handleSettingsFieldEdited({fieldInstance, value}) {
+		this._debouncedFieldEditedHandler(fieldInstance, value);
 	}
 
 	/**
@@ -396,7 +462,15 @@ class Builder extends Component {
 	 */
 	@autobind
 	_handleFocusedFieldUpdated(focusedField) {
-		this.emit('focusedFieldUpdated', focusedField);
+		const settingsContext = focusedField.settingsContext;
+
+		this.emit(
+			'focusedFieldUpdated',
+			{
+				...focusedField,
+				settingsContext
+			}
+		);
 	}
 
 	_handlePageAdded() {
@@ -465,61 +539,6 @@ class Builder extends Component {
 		return hasFields;
 	}
 
-	_processFieldUpdates(fieldInstance, value) {
-		const {focusedField, namespace} = this.props;
-		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
-		const properties = {columnIndex,
-			pageIndex,
-			rowIndex};
-		const {fieldName, initialConfig_: {locale}} = fieldInstance;
-
-		if (fieldName === 'name') {
-			properties[fieldName] = formatFieldName(instanceId, locale, value);
-			properties.fieldName = value;
-		}
-		else {
-			properties[fieldName] = value;
-		}
-
-		const visitor = new PagesVisitor(settingsContext.pages);
-
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-
-		properties.settingsContext = {
-			...settingsContext,
-			columnIndex,
-			pageIndex,
-			pages: visitor.mapFields(
-				field => {
-					if (fieldName === 'dataType' && field.fieldName === 'validation') {
-						field.validation = {
-							...field.validation,
-							dataType: value
-						};
-					}
-
-					if (field.fieldName === fieldName) {
-						field = {
-							...field,
-							value
-						};
-						if (field.localizable) {
-							field.localizedValue = {
-								...field.localizedValue,
-								[translationManager.get('editingLocale')]: value
-							};
-						}
-					}
-
-					return field;
-				}
-			),
-			rowIndex
-		};
-
-		this.emit('fieldEdited', properties);
-	}
-
 	/**
 	 * @inheritDoc
 	 */
@@ -532,11 +551,13 @@ class Builder extends Component {
 		} = this;
 		const {
 			activePage,
+			editingLanguageId,
 			fieldTypes,
 			focusedField,
 			namespace,
 			pages,
 			paginationMode,
+			rules,
 			spritemap,
 			successPageSettings,
 			visible
@@ -558,12 +579,13 @@ class Builder extends Component {
 
 		const sidebarEvents = {
 			fieldAdded: this._handleFieldAdded.bind(this),
-			fieldBlurred: this._handleFieldBlurred.bind(this),
+			fieldBlurred: this._handleSidebarFieldBlurred,
 			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated,
-			fieldEdited: this._handleFieldEdited.bind(this),
-			focusedFieldUpdated: this._handleFocusedFieldUpdated
+			focusedFieldUpdated: this._handleFocusedFieldUpdated,
+			settingsFieldBlurred: this._handleSettingsFieldBlurred,
+			settingsFieldEdited: this._handleSettingsFieldEdited
 		};
 
 		return (
@@ -573,8 +595,9 @@ class Builder extends Component {
 						<FormRenderer
 							activePage={activePage}
 							editable={true}
+							editingLanguageId={editingLanguageId}
 							events={FormRendererEvents}
-							pages={pages}
+							pages={this.preparePagesForRender(pages)}
 							paginationMode={paginationMode}
 							ref="FormRenderer"
 							spritemap={spritemap}
@@ -631,11 +654,13 @@ class Builder extends Component {
 					</div>
 				</div>
 				<Sidebar
+					editingLanguageId={editingLanguageId}
 					events={sidebarEvents}
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
 					namespace={namespace}
 					ref="sidebar"
+					rules={rules}
 					spritemap={spritemap}
 					visible={visible}
 				/>

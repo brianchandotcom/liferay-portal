@@ -148,7 +148,16 @@ class PageRenderer extends Component {
 	}
 
 	/**
-	 * @param {!Object} data
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldBlurred(event) {
+		this.emit('fieldBlurred', event);
+	}
+
+	/**
+	 * @param {!Object} event
 	 * @private
 	 */
 

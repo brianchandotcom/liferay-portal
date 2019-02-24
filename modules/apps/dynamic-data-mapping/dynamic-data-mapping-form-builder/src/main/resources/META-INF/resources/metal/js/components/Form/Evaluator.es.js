@@ -14,6 +14,7 @@ const WithEvaluator = ChildComponent => {
 
 	class Evaluator extends Component {
 		static PROPS = {
+			editingLanguageId: Config.string(),
 
 			/**
 			 * @instance
@@ -82,7 +83,7 @@ const WithEvaluator = ChildComponent => {
 		_mergePages(sourcePages, newPages) {
 			const visitor = new PagesVisitor(sourcePages);
 
-			return visitor.mapFields(
+			const settingsContext = visitor.mapFields(
 				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
 					const currentField = newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
 
@@ -90,18 +91,11 @@ const WithEvaluator = ChildComponent => {
 						currentField.visible = true;
 					}
 
-					return {
-						...field,
-						dataType: currentField.dataType,
-						errorMessage: currentField.errorMessage,
-						options: currentField.options,
-						readOnly: currentField.readOnly,
-						required: currentField.required,
-						valid: currentField.valid,
-						visible: currentField.visible
-					};
+					return currentField;
 				}
 			);
+
+			return settingsContext;
 		}
 
 		/**
@@ -159,14 +153,16 @@ const WithEvaluator = ChildComponent => {
 
 		render() {
 			const {pages} = this.state;
-			const events = {
-				fieldEdited: this._handleFieldEdited
-			};
+			const {editingLanguageId, events} = this.props;
 
 			return (
 				<ChildComponent
 					{...this.props}
-					events={events}
+					editingLanguageId={editingLanguageId}
+					events={{
+						...events,
+						fieldEdited: this._handleFieldEdited
+					}}
 					pages={pages}
 				/>
 			);

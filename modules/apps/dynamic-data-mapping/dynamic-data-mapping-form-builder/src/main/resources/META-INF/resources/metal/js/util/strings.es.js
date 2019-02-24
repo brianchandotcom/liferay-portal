@@ -4,6 +4,12 @@ export const capitalize = text => {
 
 const SPLIT_REGEX = /({\d+})/g;
 
+/**
+ * Find a field label based on fieldName
+ * @param {string} langKey
+ * @param {Array} args
+ * @return {string} The lang key with variables replaced.
+ */
 export function sub(langKey, args) {
 	const keyArray = langKey.split(SPLIT_REGEX).filter(val => val.length !== 0);
 

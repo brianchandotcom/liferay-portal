@@ -197,8 +197,7 @@ class Select extends Component {
 
 		strings: Config.object().value(
 			{
-				chooseAnOption: Liferay.Language.get('choose-an-option'),
-				dynamicallyLoadedData: Liferay.Language.get('dynamically-loaded-data')
+				chooseAnOption: Liferay.Language.get('choose-an-option')
 			}
 		),
 

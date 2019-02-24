@@ -1,5 +1,5 @@
 import '../Checkbox/Checkbox.es';
-import '../FieldBase/index.es';
+import '../FieldBase/FieldBase.es';
 import '../Numeric/Numeric.es';
 import '../Select/Select.es';
 import '../Text/Text.es';

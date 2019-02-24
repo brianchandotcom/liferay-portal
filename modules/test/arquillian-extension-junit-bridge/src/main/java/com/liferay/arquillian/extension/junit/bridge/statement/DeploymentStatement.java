@@ -216,11 +216,9 @@ public class DeploymentStatement extends Statement {
 			javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
 
 			javaArchive.addPackages(
-				true, "org.jboss.shrinkwrap.api",
+				true, "com.liferay.arquillian.extension.junit.bridge",
+				"org.jboss.shrinkwrap.api",
 				"org.jboss.shrinkwrap.descriptor.api");
-
-			javaArchive.addPackages(
-				true, "com.liferay.arquillian.extension.junit.bridge");
 
 			Manifest manifest = _getManifest(javaArchive);
 

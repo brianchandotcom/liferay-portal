@@ -33,8 +33,8 @@ public class YMLSourceUtil {
 
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
-				"^", indent, "[a-z].*:.*(\n|\\Z)((", indent,
-				"[^a-z\n].*)?(\n|\\Z))*"),
+				"^", indent, "[0-9A-Za-z\"\\-].*:.*(\n|\\Z)((", indent,
+				"[^0-9A-Za-z\n\"\\-].*)?(\n|\\Z))*"),
 			Pattern.MULTILINE);
 
 		Matcher matcher = pattern.matcher(content);

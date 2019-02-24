@@ -330,6 +330,7 @@ class Options extends Component {
 	_createDragDrop() {
 		this._dragAndDrop = new DragDrop(
 			{
+				container: this.element,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.ddm-options-drag',
 				sources: '.ddm-field-options',

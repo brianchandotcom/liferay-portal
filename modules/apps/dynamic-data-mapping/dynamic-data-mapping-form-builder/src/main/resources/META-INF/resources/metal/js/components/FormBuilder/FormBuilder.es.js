@@ -232,8 +232,18 @@ class Builder extends Component {
 	 * @private
 	 */
 	@autobind
-	_handleSettingsFieldBlurred(event) {
-		this.emit('fieldBlurred', event);
+	_handleSettingsFieldBlurred({fieldInstance, value}) {
+		const {locale} = this.props;
+		const {fieldName} = fieldInstance;
+
+		this.emit(
+			'fieldBlurred',
+			{
+				locale,
+				propertyName: fieldName,
+				propertyValue: value
+			}
+		);
 	}
 
 	/**

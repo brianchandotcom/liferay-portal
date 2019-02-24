@@ -12,7 +12,7 @@ const shouldAutoGenerateName = focusedField => {
 };
 
 export const updateFocusedFieldName = (state, focusedField, value) => {
-	const {fieldName} = focusedField;
+	const {fieldName, label} = focusedField;
 	const normalizedFieldName = normalizeFieldName(value);
 
 	const {pages} = state;
@@ -22,7 +22,7 @@ export const updateFocusedFieldName = (state, focusedField, value) => {
 		newFieldName = generateFieldName(pages, value, fieldName);
 	}
 	else {
-		newFieldName = generateFieldName(pages, fieldName, fieldName);
+		newFieldName = generateFieldName(pages, label, fieldName);
 	}
 
 	if (newFieldName) {

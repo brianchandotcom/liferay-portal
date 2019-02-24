@@ -530,7 +530,7 @@ class Sidebar extends Component {
 	}
 
 	@autobind
-	_handleSettingsFieldBlurred() {
+	_handleSettingsFieldBlurred(event) {
 		this.emit('settingsFieldBlurred', event);
 	}
 

@@ -91,6 +91,7 @@ exports[`Field Radio should render options 1`] = `
 <div class="form-group">
   <div class="ddm-radio">
     <div class="custom-control custom-radio" id="id"><label><input class="custom-control-input" name="radioField" value="item" ref="input" type="radio" role="radio"><span class="custom-control-label"><span class="custom-control-label-text">label</span></span></label></div>
+    <div class="custom-control custom-radio" id="id"><label><input class="custom-control-input" name="radioField" value="item" ref="input" type="radio" role="radio"><span class="custom-control-label"><span class="custom-control-label-text">label2</span></span></label></div>
   </div>
 </div>
 `;

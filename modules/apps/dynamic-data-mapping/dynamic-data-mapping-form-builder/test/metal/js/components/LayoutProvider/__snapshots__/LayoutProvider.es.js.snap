@@ -667,6 +667,9 @@ Array [
                                 Object {
                                   "fieldName": "label",
                                   "localizable": true,
+                                  "localizedValue": Object {
+                                    "en_US": "copy-of-x",
+                                  },
                                   "settingsContext": Object {
                                     "pages": Array [
                                       Object {

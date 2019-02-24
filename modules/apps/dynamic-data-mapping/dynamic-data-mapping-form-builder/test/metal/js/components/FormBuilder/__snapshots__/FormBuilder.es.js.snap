@@ -7,7 +7,7 @@ exports[`Builder should render the default markup 1`] = `
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
           <div class="ddm-page-settings" role="group">
-            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </div>
@@ -232,7 +232,7 @@ exports[`Builder should show modal when fieldChangesCanceled event is trigered f
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
           <div class="ddm-page-settings" role="group">
-            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </div>
@@ -457,7 +457,7 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
       <div class="position-relative">
         <div class="ddm-form-pagination position-absolute">
           <div class="ddm-page-settings" role="group">
-            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
+            <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false" role="presentation">
                   <use xlink:href="icons.svg#ellipsis-v"></use>
                 </svg></button></div>
           </div>

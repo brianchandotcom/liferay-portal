@@ -124,6 +124,7 @@ describe(
 						fieldTypes,
 						pages,
 						paginationMode: 'wizard',
+						rules: [],
 						spritemap,
 						successPageSettings
 					}
@@ -181,7 +182,7 @@ describe(
 
 				jest.runAllTimers();
 
-				expect(spy).toHaveBeenCalledWith('fieldBlurred');
+				expect(spy).toHaveBeenCalledWith('sidebarFieldBlurred');
 			}
 		);
 
@@ -319,12 +320,13 @@ describe(
 				component.props.focusedField = mockFieldType;
 
 				sidebar.emit(
-					'fieldEdited',
+					'settingsFieldEdited',
 					{
 						fieldInstance: {
 							...mockFieldType,
 							fieldName: 'label'
-						}
+						},
+						value: 'new label'
 					}
 				);
 
@@ -343,7 +345,7 @@ describe(
 				component.props.focusedField = mockFieldType;
 
 				sidebar.emit(
-					'fieldEdited',
+					'settingsFieldEdited',
 					{
 						fieldInstance: {
 							...mockFieldType,
@@ -526,6 +528,7 @@ describe(
 						fieldTypes,
 						pages: componentPages,
 						paginationMode: 'wizard',
+						rules: [],
 						spritemap,
 						successPageSettings
 					}

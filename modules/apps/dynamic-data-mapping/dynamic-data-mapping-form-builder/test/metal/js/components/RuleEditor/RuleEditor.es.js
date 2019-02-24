@@ -356,7 +356,7 @@ describe(
 									}
 								);
 
-								component.refs.firstOperand0.emitFieldEdited(['radio']);
+								component.refs.firstOperand0.emitFieldEdited(['select']);
 								component.refs.conditionOperator0.emitFieldEdited(['not-contains']);
 
 								jest.runAllTimers();
@@ -375,7 +375,7 @@ describe(
 
 								expect(component.refs.conditionOperator0.value).toEqual(['contains']);
 								expect(component.refs.secondOperandTypeSelector0.value).toEqual(['value']);
-								expect(component.refs.secondOperand0.value).toEqual('123');
+								expect(component.refs.secondOperand0.value).toEqual(['123']);
 							}
 						);
 
@@ -590,7 +590,7 @@ describe(
 
 								jest.runAllTimers();
 
-								component.refs.secondOperand0.emitFieldEdited('123');
+								component.refs.secondOperand0.emitFieldEdited(['123']);
 
 								jest.runAllTimers();
 
@@ -621,7 +621,7 @@ describe(
 
 								expect(component.refs.secondOperandTypeSelector0.value).toEqual(['value']);
 
-								expect(component.refs.secondOperand0.value).toEqual('123');
+								expect(component.refs.secondOperand0.value).toEqual(['123']);
 							}
 						);
 
@@ -1309,7 +1309,7 @@ describe(
 
 						jest.runAllTimers();
 
-						expect(component.refs.secondOperand0.value).toEqual('123');
+						expect(component.refs.secondOperand0.value).toEqual(['123']);
 					}
 				);
 			}

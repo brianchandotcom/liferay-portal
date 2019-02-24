@@ -1,21 +1,10 @@
 import '../../__fixtures__/MockField.es';
-import mockPages from 'mock/mockPages.es';
-import dom from 'metal-dom';
 import Calculator from 'source/components/Calculator/Calculator.es';
+import Token from 'source/expressions/Token.es';
 
 let component;
 
-const pages = [...mockPages];
-
-const calculatorOptions = [
-	{
-		label: 'sum',
-		tooltip: '',
-		value: 'sum'
-	}
-];
-
-const options = [
+const fields = [
 	{
 		dataType: 'number',
 		fieldName: 'option1repeatablefieldName',
@@ -40,14 +29,21 @@ const options = [
 
 const spritemap = 'icons.svg';
 
-const getBaseConfig = () => ({
-	calculatorOptions,
-	expression: '',
-	expressionArray: [],
-	options,
-	pages,
-	spritemap
-});
+const getBaseConfig = () => (
+	{
+		expression: '',
+		fields,
+		functions: [
+			{
+				label: 'sum',
+				tooltip: '',
+				value: 'sum'
+			}
+		],
+		index: 0,
+		spritemap
+	}
+);
 
 describe(
 	'Calculator',
@@ -65,171 +61,183 @@ describe(
 				beforeEach(
 					() => {
 						jest.useFakeTimers();
+
+						component = new Calculator(getBaseConfig());
 					}
 				);
 
 				describe(
-					'when the user selects Calculate in the Actions options',
+					'addTokenToExpression(tokenType, tokenValue)',
 					() => {
 						it(
-							'should show the calculator when a Result is selected',
+							'should add a token to an expression',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig()
-									}
-								);
+								component.expression = '4*[Field1]+';
 
-								component.setState(
-									{
-										resultSelected: 'numero'
-									}
-								);
+								component.addTokenToExpression(Token.VARIABLE, 'Field2');
 
-								jest.runAllTimers();
-
-								expect(component).toMatchSnapshot();
+								expect(component.expression).toEqual('4*[Field1]+[Field2]');
 							}
 						);
 
 						it(
-							'should only show the valid fields when a Calculate action is selected',
+							'should add implicit multiplications to an expression when applicable',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig()
-									}
-								);
+								component.expression = '1+[Field1]';
 
-								jest.runAllTimers();
+								component.addTokenToExpression(Token.VARIABLE, 'Field2');
 
-								const dropdownMenu = component.refs.calculatorOptions0.refs.dropdown.refs.portal.refs.menu;
+								expect(component.expression).toEqual('1+[Field1]*[Field2]');
+							}
+						);
+					}
+				);
 
-								dropdownMenu.querySelector('button[aria-label=\'sum\']').click();
+				describe(
+					'removeTokenFromExpression()',
+					() => {
+						it(
+							'should remove the last token from the expression',
+							() => {
+								component.expression = '4*[Field1]';
 
-								expect(component.optionsRepeatable[0].repeatable).toEqual(true);
+								component.removeTokenFromExpression();
+
+								expect(component.expression).toEqual('4*');
 							}
 						);
 
 						it(
-							'should disable the Add Field button when there\'s no numeric field options',
+							'should remove both the left parenthesis and the function when last tokens are an openning of a function',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig(),
-										options: []
-									}
-								);
+								component.expression = '1+sum\(';
 
-								jest.runAllTimers();
+								component.removeTokenFromExpression();
 
-								expect(component.refs.calculatorAddField0.disabled).toEqual(true);
+								expect(component.expression).toEqual('1+');
+							}
+						);
+					}
+				);
+
+				describe(
+					'getStateBasedOnExpression(expression)',
+					() => {
+						it(
+							'should disable functions, numbers and operators when last token is a sum function',
+							() => {
+								const result = component.getStateBasedOnExpression('4*sum(');
+
+								expect(result.disableFunctions).toBe(true);
+								expect(result.disableNumbers).toBe(true);
+								expect(result.disableOperators).toBe(true);
 							}
 						);
 
 						it(
-							'should not allow type two repeated signs',
+							'should not disable functions, numbers and operators when last token is not a sum function',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig()
-									}
-								);
+								const result = component.getStateBasedOnExpression('4*sum(Field2)+4');
 
-								const button1 = component.element.querySelector('[data-calculator-key=\'1\']');
+								expect(result.disableFunctions).toBe(false);
+								expect(result.disableNumbers).toBe(false);
+								expect(result.disableOperators).toBe(false);
+							}
+						);
+					}
+				);
 
-								const buttonPlus = component.element.querySelector('[data-calculator-key=\'+\']');
+				describe(
+					'shouldAddImplicitMultiplication(tokens, newToken)',
+					() => {
+						it(
+							'should return true if new token is a Left Parenthesis and last token is a Literal',
+							() => {
+								const tokens = [
+									new Token(Token.LITERAL, '5')
+								];
 
-								const button2 = component.element.querySelector('[data-calculator-key=\'2\']');
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.LEFT_PARENTHESIS, '('));
 
-								const buttonMinus = component.element.querySelector('[data-calculator-key=\'-\']');
-
-								dom.triggerEvent(button1, 'click', {});
-								dom.triggerEvent(buttonPlus, 'click', {});
-								dom.triggerEvent(button2, 'click', {});
-								dom.triggerEvent(buttonPlus, 'click', {});
-								dom.triggerEvent(buttonMinus, 'click', {});
-
-								jest.runAllTimers();
-
-								expect(component.expressionArray).toEqual(['1', '+', '2', '-']);
+								expect(result).toEqual(true);
 							}
 						);
 
 						it(
-							'should clear the expression when changing the result field',
+							'should return true if new token is a Left Parenthesis and last token is a Variable',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig()
-									}
-								);
+								const tokens = [
+									new Token(Token.VARIABLE, 'Field1')
+								];
 
-								component.expressionArray = ['a', '+', 'b'];
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.LEFT_PARENTHESIS, '('));
 
-								component.expression = 'a+b';
-
-								component.resultSelected = 'date';
-
-								component.setState(
-									{
-										resultSelected: 'numero'
-									}
-								);
-
-								jest.runAllTimers();
-
-								expect(component.expressionArray).toEqual([]);
-
-								expect(component.expression).toEqual('');
-
+								expect(result).toEqual(true);
 							}
 						);
 
 						it(
-							'should compose an expression by interacting with the calculator fields',
+							'should return true if new token is a Function and last token is a Variable',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig()
-									}
-								);
+								const tokens = [
+									new Token(Token.VARIABLE, 'Field1')
+								];
 
-								const button1 = component.element.querySelector('[data-calculator-key=\'1\']');
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.FUNCTION, 'sum'));
 
-								const buttonPlus = component.element.querySelector('[data-calculator-key=\'+\']');
-
-								const button2 = component.element.querySelector('[data-calculator-key=\'2\']');
-
-								dom.triggerEvent(button1, 'click', {});
-								dom.triggerEvent(buttonPlus, 'click', {});
-								dom.triggerEvent(button2, 'click', {});
-
-								jest.runAllTimers();
-
-								expect(component.expressionArray).toEqual(['1', '+', '2']);
+								expect(result).toEqual(true);
 							}
 						);
 
 						it(
-							'should compose an expression by interacting with the calculator Add Field button',
+							'should return true if new token is a Variable and last token is a Variable',
 							() => {
-								component = new Calculator(
-									{
-										...getBaseConfig(),
-										disableCalculatorField: false
-									}
-								);
+								const tokens = [
+									new Token(Token.VARIABLE, 'Field1')
+								];
 
-								jest.runAllTimers();
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.VARIABLE, 'Field2'));
 
-								const addFieldMenu = component.refs.calculatorAddField0.refs.portal.refs.menu;
+								expect(result).toEqual(true);
+							}
+						);
 
-								addFieldMenu.querySelector('li').click();
+						it(
+							'should return true if new token is a Variable and last token is a Literal',
+							() => {
+								const tokens = [
+									new Token(Token.LITERAL, '345')
+								];
 
-								jest.runAllTimers();
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.VARIABLE, 'Field1'));
 
-								expect(component.expressionArray).toEqual([options[0].fieldName]);
+								expect(result).toEqual(true);
+							}
+						);
+
+						it(
+							'should return true if new token is a Literal and last token is a Variable',
+							() => {
+								const tokens = [
+									new Token(Token.VARIABLE, 'Field1')
+								];
+
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.LITERAL, '111'));
+
+								expect(result).toEqual(true);
+							}
+						);
+
+						it(
+							'should return true if new token is a Literal and last token is a Function',
+							() => {
+								const tokens = [
+									new Token(Token.FUNCTION, 'sum')
+								];
+
+								const result = component.shouldAddImplicitMultiplication(tokens, new Token(Token.LITERAL, '111'));
+
+								expect(result).toEqual(true);
 							}
 						);
 					}

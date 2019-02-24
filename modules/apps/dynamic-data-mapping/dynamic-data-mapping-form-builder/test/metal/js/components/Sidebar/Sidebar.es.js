@@ -274,6 +274,8 @@ describe(
 					}
 				);
 
+				const spy = jest.spyOn(component, 'emit');
+
 				const event = {
 					preventDefault: jest.fn()
 				};
@@ -297,7 +299,11 @@ describe(
 
 				component._handleDragEnded(data, event);
 
+				jest.runAllTimers();
+
 				expect(component).toMatchSnapshot();
+
+				expect(spy).toHaveBeenCalledWith('fieldAdded', expect.anything());
 			}
 		);
 
@@ -326,7 +332,7 @@ describe(
 
 				component._handleFieldSettingsClicked({data});
 
-				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('fieldDuplicated', expect.anything());
 			}
 		);
 

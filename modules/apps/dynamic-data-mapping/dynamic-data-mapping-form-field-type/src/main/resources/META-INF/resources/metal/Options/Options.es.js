@@ -57,7 +57,7 @@ class Options extends Component {
 					value: Config.string()
 				}
 			)
-		).internal(),
+		).internal().valueFn('_internalItemsValueFn'),
 
 		id: Config.string(),
 
@@ -135,8 +135,7 @@ class Options extends Component {
 
 		this.setState(
 			{
-				defaultOption,
-				items: this.getItems(options)
+				defaultOption
 			}
 		);
 
@@ -465,6 +464,12 @@ class Options extends Component {
 				value: options
 			}
 		);
+	}
+
+	_internalItemsValueFn() {
+		const options = this.value[this.getCurrentLanguageId()];
+
+		return this.getItems(options);
 	}
 }
 

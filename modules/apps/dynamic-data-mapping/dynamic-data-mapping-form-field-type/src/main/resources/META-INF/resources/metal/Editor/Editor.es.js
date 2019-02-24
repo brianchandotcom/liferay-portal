@@ -1,4 +1,4 @@
-import '../FieldBase/index.es';
+import '../FieldBase/FieldBase.es';
 import './EditorRegister.soy.js';
 import {Config} from 'metal-state';
 import Component from 'metal-component';

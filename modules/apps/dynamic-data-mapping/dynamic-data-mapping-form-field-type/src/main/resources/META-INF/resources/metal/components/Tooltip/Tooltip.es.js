@@ -6,7 +6,7 @@ import Soy from 'metal-soy';
 import templates from './Tooltip.soy.js';
 import {Align} from 'metal-position';
 
-import '../FormPortal/index.es';
+import '../FormPortal/FormPortal.es';
 
 const POSITIONS = ['top', 'left', 'right', 'bottom'];
 

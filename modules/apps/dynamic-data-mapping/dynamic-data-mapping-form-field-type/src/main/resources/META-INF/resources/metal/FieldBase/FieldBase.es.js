@@ -1,4 +1,4 @@
-import '../components/Tooltip/index.es';
+import '../components/Tooltip/Tooltip.es';
 import 'clay-icon';
 import {Config} from 'metal-state';
 import Component from 'metal-component';

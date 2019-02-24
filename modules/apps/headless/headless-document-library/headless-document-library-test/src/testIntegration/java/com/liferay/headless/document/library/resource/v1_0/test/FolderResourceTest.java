@@ -16,7 +16,11 @@ package com.liferay.headless.document.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.document.library.dto.v1_0.Folder;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.Objects;
 
@@ -49,6 +53,20 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 
 		assertEquals(postFolder, getFolder);
 		assertValid(getFolder);
+	}
+
+	@Test
+	public void testGetFolderWithDocuments() throws Exception {
+		Folder postFolder = invokePostContentSpaceFolder(
+			testGroup.getGroupId(), randomFolder());
+
+		Assert.assertEquals(false, postFolder.getHasDocuments());
+
+		_addDocument(postFolder.getId());
+
+		Folder getFolder = invokeGetFolder(postFolder.getId());
+
+		Assert.assertEquals(true, getFolder.getHasDocuments());
 	}
 
 	@Test
@@ -135,6 +153,15 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 				name = RandomTestUtil.randomString();
 			}
 		};
+	}
+
+	private void _addDocument(long folderId) throws Exception {
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			testGroup.getCompanyId());
+
+		DLAppTestUtil.addFileEntryWithWorkflow(
+			defaultUserId, testGroup.getGroupId(), folderId, StringPool.BLANK,
+			RandomTestUtil.randomString(10), true, new ServiceContext());
 	}
 
 }

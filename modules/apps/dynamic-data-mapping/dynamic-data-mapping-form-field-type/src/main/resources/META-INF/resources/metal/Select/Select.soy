@@ -80,14 +80,16 @@
 	{if $options}
 		{let $attributes kind="attributes"}
 			class="form-control select-field-trigger"
+
 			{if $id}
 				id="{$id}"
 			{/if}
 
 			{if $readOnly}
 				disabled
-			{/if}
+			{else}
 				data-onclick="{$_handleClick}"
+			{/if}
 		{/let}
 
 		{let $trigger kind="html"}
@@ -112,6 +114,7 @@
 		{/let}
 
 		{call ClayDropdownBase.render}
+			{param disabled: $readOnly /}
 			{param events: [
 				'itemClicked': $_handleItemClicked
 			]/}

@@ -15,12 +15,19 @@
 package com.liferay.segments.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.exception.SegmentsExperienceSegmentsEntryException;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 
@@ -124,14 +131,43 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public void deleteSegmentsExperiences(long groupId) throws PortalException {
+	public void deleteSegmentsExperiences(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
 		List<SegmentsExperience> segmentsExperiences =
-			segmentsExperiencePersistence.findByGroupId(groupId);
+			segmentsExperiencePersistence.findByG_C_C(
+				groupId, classNameId, classPK);
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			segmentsExperienceLocalService.deleteSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId());
 		}
+	}
+
+	@Override
+	public SegmentsExperience fetchDefaultSegmentsExperience(
+			long groupId, long classNameId, long classPK,
+			boolean addDefaultExperience)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = _getDefaultSegment(groupId);
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperiencePersistence.fetchByG_S_C_C(
+				groupId, segmentsEntry.getSegmentsEntryId(), classNameId,
+				classPK);
+
+		if (segmentsExperience != null) {
+			return segmentsExperience;
+		}
+
+		if (!addDefaultExperience) {
+			return null;
+		}
+
+		return _addDefaultExperience(
+			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK);
 	}
 
 	@Override
@@ -152,8 +188,16 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
+			long groupId, long classNameId, long classPK, boolean active,
+			boolean addDefaultExperience, int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+
+		throws PortalException {
+
+		if (addDefaultExperience) {
+			segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				groupId, classNameId, classPK, true);
+		}
 
 		return segmentsExperiencePersistence.findByG_C_C_A(
 			groupId, classNameId, classPK, active, start, end,
@@ -161,13 +205,69 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public int getSegmentsExperiencesCount(long groupId) {
-		return segmentsExperiencePersistence.countByGroupId(groupId);
+	public List<SegmentsExperience> getSegmentsExperiences(
+			long groupId, long classNameId, long classPK, boolean active,
+			int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException {
+
+		return segmentsExperienceLocalService.getSegmentsExperiences(
+			groupId, classNameId, classPK, active, true, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsExperience> getSegmentsExperiences(
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK, boolean active, boolean addDefaultExperience,
+			int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+
+		throws PortalException {
+
+		if (addDefaultExperience) {
+			segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				groupId, classNameId, classPK, true);
+		}
+
+		return segmentsExperiencePersistence.findByG_S_C_C_A(
+			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsExperience> getSegmentsExperiences(
+			long groupId, long[] segmentsEntryIds, long classNameId,
+			long classPK, boolean active, int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+
+		throws PortalException {
+
+		return segmentsExperienceLocalService.getSegmentsExperiences(
+			groupId, segmentsEntryIds, classNameId, classPK, active, true,
+			start, end, orderByComparator);
 	}
 
 	@Override
 	public int getSegmentsExperiencesCount(
-		long groupId, long classNameId, long classPK, boolean active) {
+			long groupId, long classNameId, long classPK, boolean active)
+
+		throws PortalException {
+
+		return segmentsExperienceLocalService.getSegmentsExperiencesCount(
+			groupId, classNameId, classPK, active, true);
+	}
+
+	@Override
+	public int getSegmentsExperiencesCount(
+			long groupId, long classNameId, long classPK, boolean active,
+			boolean addDefaultExperience)
+		throws PortalException {
+
+		if (addDefaultExperience) {
+			segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				groupId, classNameId, classPK, true);
+		}
 
 		return segmentsExperiencePersistence.countByG_C_C_A(
 			groupId, classNameId, classPK, active);
@@ -189,6 +289,52 @@ public class SegmentsExperienceLocalServiceImpl
 		segmentsExperience.setActive(active);
 
 		return segmentsExperiencePersistence.update(segmentsExperience);
+	}
+
+	private SegmentsExperience _addDefaultExperience(
+			long groupId, long segmentsEntryId, long classNameId, long classPK)
+		throws PortalException {
+
+		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
+			_getResourceBundleLoader(), "default-experience");
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		serviceContext.setUserId(defaultUserId);
+
+		return segmentsExperienceLocalService.addSegmentsExperience(
+			segmentsEntryId, classNameId, classPK, nameMap, 0, true,
+			serviceContext);
+	}
+
+	private SegmentsEntry _getDefaultSegment(long groupId)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			segmentsEntryLocalService.fetchSegmentsEntry(
+				groupId, SegmentsConstants.KEY_DEFAULT, true);
+
+		if (segmentsEntry == null) {
+			throw new SegmentsExperienceSegmentsEntryException(
+				"Unable to find default segment");
+		}
+
+		return segmentsEntry;
+	}
+
+	private ResourceBundleLoader _getResourceBundleLoader() {
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByBundleSymbolicName(
+				"com.liferay.segments.lang");
 	}
 
 }

@@ -1,0 +1,35 @@
+{
+	"opts": {
+		"template": "templates/default",
+
+		"encoding": "utf8",
+		"destination": "./build/doc/",
+		"recurse": true
+	},
+	"plugins": [
+		"plugins/markdown",
+		"node_modules/jsdoc-export-default-interop/dist/index"
+	],
+	"recurseDepth": 10,
+	"source": {
+		"excludePattern": "(^|\\/|\\\\)_",
+		"include": [
+			"./README.markdown",
+			"src/main/resources/META-INF/resources/js/components",
+			"src/main/resources/META-INF/resources/js/shared"
+		],
+		"includePattern": ".+\\.js(doc|x)?$"
+	},
+	"sourceType": "module",
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": [
+			"jsdoc",
+			"closure"
+		]
+	},
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false
+	}
+}

@@ -162,6 +162,8 @@ if (ddlDisplayContext.isAdminPortlet()) {
 </aui:form>
 
 <aui:script>
+	var form = document.<portlet:namespace />fm;
+
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
@@ -185,15 +187,19 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
 			},
 			function(event) {
-				AUI.$('#<portlet:namespace />ddmStructureId').val(event.ddmstructureid);
-
-				AUI.$('#<portlet:namespace />ddmStructureNameDisplay').val(Liferay.Util.unescape(event.name));
+				Liferay.Util.setFormValues(
+					form,
+					{
+						ddmStructureId: event.ddmstructureid,
+						ddmStructureNameDisplay: Liferay.Util.unescape(event.name)
+					}
+				);
 			}
 		);
 	}
 
 	function <portlet:namespace />saveRecordSet() {
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 </aui:script>
 

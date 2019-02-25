@@ -134,19 +134,29 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 
 <%@ include file="/export_record_set.jspf" %>
 
-<aui:script sandbox="<%= true %>">
-	AUI().use('liferay-portlet-dynamic-data-lists');
-
+<aui:script use="liferay-portlet-dynamic-data-lists">
 	var deleteRecords = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = document.<portlet:namespace />fm;
 
-			var searchContainer = AUI.$('#<portlet:namespace />ddlRecord', form);
+			var searchContainer = form.querySelector('#<portlet:namespace />ddlRecord');
 
-			form.attr('method', 'post');
-			form.fm('recordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+			if (searchContainer) {
+				<portlet:actionURL name="deleteRecord" var="deleteRecordURL">
+					<portlet:param name="mvcPath" value="/view_records.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
 
-			submitForm(form, '<portlet:actionURL name="deleteRecord"><portlet:param name="mvcPath" value="/view_records.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+				Liferay.Util.postForm(
+					form,
+					{
+						data: {
+							recordIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
+						},
+						url: '<%= deleteRecordURL %>'
+					}
+				);
+			}
 		}
 	};
 

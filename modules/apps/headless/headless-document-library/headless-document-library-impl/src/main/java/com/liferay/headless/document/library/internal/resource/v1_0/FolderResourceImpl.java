@@ -63,7 +63,8 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 			Long folderId, Pagination pagination)
 		throws Exception {
 
-		Folder parentFolder = _toNewFolder(_dlAppService.getFolder(folderId));
+		Folder parentFolder = _toFolder(
+			_dlAppService.getFolder(folderId), null, null);
 
 		return _getFolderPage(
 			parentFolder.getRepositoryId(), parentFolder.getId(), pagination);
@@ -155,7 +156,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	private Folder _toFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder,
-		boolean hasDocumentsIn, boolean hasFoldersIn) {
+		Boolean hasDocumentsIn, Boolean hasFoldersIn) {
 
 		return new FolderImpl() {
 			{

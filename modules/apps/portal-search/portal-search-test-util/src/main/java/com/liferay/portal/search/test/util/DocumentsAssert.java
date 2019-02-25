@@ -14,9 +14,11 @@
 
 package com.liferay.portal.search.test.util;
 
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.search.document.Document;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -31,50 +33,105 @@ import org.junit.Assert;
 public class DocumentsAssert {
 
 	public static void assertCount(
-		String message, Document[] documents, String field, int expectedCount) {
+		String message, com.liferay.portal.kernel.search.Document[] documents,
+		String fieldName, int expectedCount) {
 
 		if (documents.length == expectedCount) {
 			return;
 		}
 
-		List<String> actualValues = _getValues(field, documents);
+		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
 			message + "->" + actualValues, expectedCount, documents.length);
 	}
 
 	public static void assertValues(
-		String message, Document[] documents, String field,
-		List<String> expectedValues) {
+		String message, com.liferay.portal.kernel.search.Document[] documents,
+		String fieldName, List<String> expectedValues) {
 
-		List<String> actualValues = _getValues(field, documents);
+		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
 			message + "->" + actualValues, expectedValues.toString(),
 			actualValues.toString());
 	}
 
-	public static void assertValuesIgnoreRelevance(
-		String message, Document[] documents, String field,
-		Collection<String> expectedValues) {
+	public static void assertValues(
+		String message, Stream<Document> documents, String fieldName,
+		String expected) {
 
-		List<String> actualValues = _getValues(field, documents);
+		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
+
+		Assert.assertEquals(
+			message + "->" + actualValues, expected, actualValues.toString());
+	}
+
+	public static void assertValuesIgnoreRelevance(
+		String message, com.liferay.portal.kernel.search.Document[] documents,
+		String fieldName, Collection<String> expectedValues) {
+
+		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
 			message + "->" + actualValues, _sort(expectedValues),
 			_sort(actualValues));
 	}
 
-	private static List<String> _getValues(
-		String field, Document... documents) {
+	public static void assertValuesIgnoreRelevance(
+		String message, Stream<Document> documents, String fieldName,
+		String expected) {
 
-		return Stream.of(
-			documents
-		).map(
-			document -> document.get(field)
+		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
+
+		Assert.assertEquals(
+			message + "->" + actualValues, expected, _sort(actualValues));
+	}
+
+	private static List<Object> _getFieldValues(
+		String fieldName, com.liferay.portal.kernel.search.Document document) {
+
+		return Arrays.asList((Object[])document.getValues(fieldName));
+	}
+
+	private static String _getFieldValueString(List<Object> fieldValues) {
+		if (fieldValues.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		if (fieldValues.size() == 1) {
+			return String.valueOf(fieldValues.get(0));
+		}
+
+		return String.valueOf(fieldValues);
+	}
+
+	private static List<String> _getFieldValueStrings(
+		Stream<List<Object>> stream) {
+
+		return stream.map(
+			DocumentsAssert::_getFieldValueString
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private static List<String> _getFieldValueStrings(
+		String fieldName,
+		com.liferay.portal.kernel.search.Document... documents) {
+
+		Stream<com.liferay.portal.kernel.search.Document> stream = Stream.of(
+			documents);
+
+		return _getFieldValueStrings(
+			stream.map(document -> _getFieldValues(fieldName, document)));
+	}
+
+	private static List<String> _getFieldValueStrings(
+		String fieldName, Stream<Document> stream) {
+
+		return _getFieldValueStrings(
+			stream.map(document -> document.getFieldValues(fieldName)));
 	}
 
 	private static String _sort(Collection<String> collection) {

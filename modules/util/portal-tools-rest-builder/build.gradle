@@ -19,7 +19,7 @@ dependencies {
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 
-	compileInclude group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.1"
+	compileInclude group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.2"
 	compileInclude group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.791"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 	compileInclude project(":apps:portal-vulcan:portal-vulcan-api")

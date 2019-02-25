@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.message.boards.util.comparator.MBObjectsComparator}
+ * @deprecated As of Mueller (7.2.x), replaced by {@link MBObjectsComparator}
  * @review
  */
 @Deprecated

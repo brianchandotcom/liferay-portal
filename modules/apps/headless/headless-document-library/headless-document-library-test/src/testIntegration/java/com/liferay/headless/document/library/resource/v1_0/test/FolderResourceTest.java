@@ -163,19 +163,6 @@ public class FolderResourceTest extends BaseFolderResourceTestCase {
 		assertValid(getFolder);
 	}
 
-	protected void assertEquals(Folder folder1, Folder folder2) {
-		boolean equals = false;
-
-		if (Objects.equals(
-				folder1.getDescription(), folder2.getDescription()) &&
-			Objects.equals(folder1.getName(), folder2.getName())) {
-
-			equals = true;
-		}
-
-		Assert.assertTrue(equals);
-	}
-
 	protected void assertValid(Folder folder) {
 		boolean valid = false;
 

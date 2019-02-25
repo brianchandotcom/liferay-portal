@@ -35,7 +35,15 @@ if (Validator.isNotNull(title)) {
 	navigationItems='<%= journalDisplayContext.getNavigationBarItems("web-content") %>'
 />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+<clay:management-toolbar
+	displayContext="<%= journalManagementToolbarlDisplayContext %>"
+/>
+
+<liferay-frontend:component
+	componentId="<%= journalManagementToolbarlDisplayContext.getDefaultEventHandler() %>"
+	context="<%= journalManagementToolbarlDisplayContext.getComponentContext() %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= journalDisplayContext.isShowInfoButton() %>">

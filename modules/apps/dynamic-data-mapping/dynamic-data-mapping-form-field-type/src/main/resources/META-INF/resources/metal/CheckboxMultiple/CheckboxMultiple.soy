@@ -1,0 +1,87 @@
+{namespace CheckboxMultiple}
+
+{template .render}
+	{@param? id: string}
+	{@param? inline: bool}
+	{@param? label: string}
+	{@param? options: list<[
+		label: string,
+		name: string,
+		value: string
+	]>}
+	{@param? predefinedValue: list<any>}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showAsSwitcher: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tip: string}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param disabled: $readOnly /}
+				{param inline: $inline /}
+				{param options: $options /}
+				{param predefinedValue: $predefinedValue /}
+				{param showAsSwitcher: $showAsSwitcher /}
+				{param showLabel: $showLabel /}
+			{/call}
+		{/param}
+
+		{param id: $id /}
+		{param label: $label /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param? disabled: bool}
+	{@param? inline: bool}
+	{@param? options: list<[
+		label: string,
+		name: string,
+		value: string
+	]>}
+	{@param? predefinedValue: list<any>}
+	{@param? showAsSwitcher: bool}
+
+	<div class="form-group">
+		{if $options}
+			{for $option in $options}
+				{let $isChecked kind="text"}
+					{if $predefinedValue and length($predefinedValue) > 0}
+						{for $predefined in $predefinedValue}
+							{if $predefined == $option.value}
+								isChecked
+							{/if}
+						{/for}
+					{/if}
+				{/let}
+				{if $showAsSwitcher}
+					<div class="lfr-ddm-form-field-checkbox-switch  {if $inline} lfr-ddm-form-field-checkbox-switch-inline {/if}">
+						<label class="simple-toggle-switch toggle-switch">
+							<input class="toggle-switch-check"  {if $isChecked == 'isChecked'}checked{/if} {if $disabled}disabled{/if} type="checkbox"/>
+							<span aria-hidden="true" class="toggle-switch-bar">
+								<span class="toggle-switch-handle"></span>
+							</span>
+							<span class="toggle-switch-label">{$option.label}</span>
+						</label>
+					</div>
+				{else}
+					{call ClayCheckbox.render}
+						{param checked: $isChecked == 'isChecked' ? true : false /}
+						{param disabled: $disabled /}
+						{param inline: $inline /}
+						{param label: $option.label /}
+					{/call}
+				{/if}
+			{/for}
+		{/if}
+	</div>
+{/template}

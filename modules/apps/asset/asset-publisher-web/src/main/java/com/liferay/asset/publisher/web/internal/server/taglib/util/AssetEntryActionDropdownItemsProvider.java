@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -68,11 +69,19 @@ public class AssetEntryActionDropdownItemsProvider {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.putData(
-									"action", "editAssetEntry");
-								dropdownItem.putData(
-									"editAssetEntryURL",
+								dropdownItem.setHref(
 									editAssetEntryURL.toString());
+
+								PortletDisplay portletDisplay =
+									_themeDisplay.getPortletDisplay();
+
+								String id = HtmlUtil.escape(
+									portletDisplay.getNamespace());
+
+								dropdownItem.putData("id", id + "editAsset");
+
+								dropdownItem.putData(
+									"destroyOnHide", Boolean.TRUE.toString());
 								dropdownItem.putData(
 									"title",
 									LanguageUtil.format(
@@ -106,12 +115,12 @@ public class AssetEntryActionDropdownItemsProvider {
 						add(
 							SafeConsumer.ignore(
 								dropdownItem -> {
-									dropdownItem.putData(
-										"action", "assetEntryAction");
-									dropdownItem.putData(
-										"assetEntryActionURL",
+									dropdownItem.setHref(
 										assetEntryAction.getDialogURL(
 											_request, _assetRenderer));
+									dropdownItem.putData(
+										"destroyOnHide",
+										Boolean.TRUE.toString());
 									dropdownItem.putData("title", title);
 									dropdownItem.setLabel(title);
 								}));

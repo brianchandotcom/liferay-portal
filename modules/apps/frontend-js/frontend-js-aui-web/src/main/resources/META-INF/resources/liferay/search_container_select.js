@@ -78,6 +78,10 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
+						var hostContentBox = host.get(STR_CONTENT_BOX);
+
+						instance.set('bulkSelection', hostContentBox.getData('bulkSelection'));
+
 						var toggleRowFn = A.bind(
 							'_onClickRowSelector',
 							instance,
@@ -189,7 +193,9 @@ AUI.add(
 						Liferay.DOMTaskRunner.addTaskState(
 							{
 								data: {
-									elements: elements
+									bulkSelection: instance.get('bulkSelection'),
+									elements: elements,
+									selector: instance.get(STR_ROW_SELECTOR) + ' ' + STR_CHECKBOX_SELECTOR
 								},
 								owner: host.get('id')
 							}
@@ -298,24 +304,36 @@ AUI.add(
 				restoreTask: function(state, params, node) {
 					var container = A.one(node).one('#' + params.containerId);
 
-					var offScreenElementsHtml = '';
+					container.setData('bulkSelection', state.data.bulkSelection);
 
-					AArray.each(
-						state.data.elements,
-						function(item) {
-							var input = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
-
-							if (input) {
+					if (state.data.bulkSelection) {
+						container.all(state.data.selector).each(
+							function(input) {
 								input.attr(STR_CHECKED, true);
 								input.ancestor(params.rowSelector).addClass(params.rowClassNameActive);
 							}
-							else {
-								offScreenElementsHtml += Lang.sub(TPL_HIDDEN_INPUT, item);
-							}
-						}
-					);
+						);
+					}
+					else {
+						var offScreenElementsHtml = '';
 
-					container.append(offScreenElementsHtml);
+						AArray.each(
+							state.data.elements,
+							function(item) {
+								var input = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
+
+								if (input) {
+									input.attr(STR_CHECKED, true);
+									input.ancestor(params.rowSelector).addClass(params.rowClassNameActive);
+								}
+								else {
+									offScreenElementsHtml += Lang.sub(TPL_HIDDEN_INPUT, item);
+								}
+							}
+						);
+
+						container.append(offScreenElementsHtml);
+					}
 				},
 
 				testRestoreTask: function(state, params, node) {

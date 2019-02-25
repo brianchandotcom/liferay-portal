@@ -82,29 +82,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<div class="asset-user-actions">
 			<c:if test="<%= assetPublisherDisplayContext.isEnablePrint() %>">
 				<div class="print-action">
-
-					<%
-					PortletURL printAssetURL = renderResponse.createRenderURL();
-
-					printAssetURL.setParameter("mvcPath", "/view_content.jsp");
-					printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
-					printAssetURL.setParameter("viewMode", Constants.PRINT);
-					printAssetURL.setParameter("type", assetRendererFactory.getType());
-					printAssetURL.setParameter("languageId", languageId);
-
-					String urlTitle = assetRenderer.getUrlTitle(locale);
-
-					if (Validator.isNotNull(urlTitle)) {
-						if (assetRenderer.getGroupId() != scopeGroupId) {
-							printAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
-						}
-
-						printAssetURL.setParameter("urlTitle", urlTitle);
-					}
-
-					printAssetURL.setWindowState(LiferayWindowState.POP_UP);
-					%>
-
 					<c:choose>
 						<c:when test="<%= print %>">
 							<liferay-ui:icon
@@ -130,7 +107,34 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 							<aui:script>
 								function <portlet:namespace />printPage_<%= assetEntryIndex %>() {
-								window.open('<%= printAssetURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
+									window.open(
+
+										<%
+										PortletURL printAssetURL = renderResponse.createRenderURL();
+
+										printAssetURL.setParameter("mvcPath", "/view_content.jsp");
+										printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+										printAssetURL.setParameter("viewMode", Constants.PRINT);
+										printAssetURL.setParameter("type", assetRendererFactory.getType());
+										printAssetURL.setParameter("languageId", languageId);
+
+										String urlTitle = assetRenderer.getUrlTitle(locale);
+
+										if (Validator.isNotNull(urlTitle)) {
+											if (assetRenderer.getGroupId() != scopeGroupId) {
+												printAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+											}
+
+											printAssetURL.setParameter("urlTitle", urlTitle);
+										}
+
+										printAssetURL.setWindowState(LiferayWindowState.POP_UP);
+										%>
+
+										'<%= printAssetURL %>',
+										'',
+										'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
+									);
 								}
 							</aui:script>
 						</c:otherwise>

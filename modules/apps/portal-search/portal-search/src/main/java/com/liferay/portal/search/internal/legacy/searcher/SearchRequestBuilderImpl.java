@@ -22,6 +22,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	@Override
 	public void addAggregation(Aggregation aggregation) {
-		Map<String, Aggregation> map = getAggregationsMap();
+		Map<String, Aggregation> map = getSearchContextKeyAggregationsMap();
 
 		map.put(aggregation.getName(), aggregation);
 	}
@@ -53,7 +54,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public void addPipelineAggregation(
 		PipelineAggregation pipelineAggregation) {
 
-		Map<String, PipelineAggregation> map = getPipelineAggregationsMap();
+		Map<String, PipelineAggregation> map =
+			getSearchContextKeyPipelineAggregationsMap();
 
 		map.put(pipelineAggregation.getName(), pipelineAggregation);
 	}
@@ -76,7 +78,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	@Override
 	public SearchRequestBuilder explain(boolean explain) {
-		_searchContext.setAttribute(_EXPLAIN, Boolean.valueOf(explain));
+		_searchContext.setAttribute(
+			_SEARCH_CONTEXT_KEY_EXPLAIN, Boolean.valueOf(explain));
 
 		return this;
 	}
@@ -86,14 +89,31 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		boolean includeResponseString) {
 
 		_searchContext.setAttribute(
-			_INCLUDE_RESPONSE_STRING, Boolean.valueOf(includeResponseString));
+			_SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING,
+			Boolean.valueOf(includeResponseString));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder query(Query query) {
+		_searchContext.setAttribute(_SEARCH_CONTEXT_KEY_QUERY, query);
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder rescoreQuery(Query rescoreQuery) {
-		_searchContext.setAttribute(_RESCORE_QUERY, rescoreQuery);
+		_searchContext.setAttribute(
+			_SEARCH_CONTEXT_KEY_RESCORE_QUERY, rescoreQuery);
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder sorts(Sort... sorts) {
+		_searchContext.setAttribute(
+			_SEARCH_CONTEXT_KEY_SORTS, new ArrayList<>(Arrays.asList(sorts)));
 
 		return this;
 	}
@@ -101,7 +121,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	@Override
 	public SearchRequestBuilder statsRequests(StatsRequest... statsRequests) {
 		_searchContext.setAttribute(
-			_STATS_REQUESTS, new ArrayList<>(Arrays.asList(statsRequests)));
+			_SEARCH_CONTEXT_KEY_STATS_REQUESTS,
+			new ArrayList<>(Arrays.asList(statsRequests)));
 
 		return this;
 	}
@@ -112,7 +133,7 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		public Map<String, Aggregation> getAggregationsMap() {
 			Map<String, Aggregation> map =
 				(Map<String, Aggregation>)_searchContext.getAttribute(
-					_AGGREGATIONS_MAP);
+					_SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP);
 
 			if (map == null) {
 				return Collections.emptyMap();
@@ -125,7 +146,7 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		public Map<String, PipelineAggregation> getPipelineAggregationsMap() {
 			Map<String, PipelineAggregation> map =
 				(Map<String, PipelineAggregation>)_searchContext.getAttribute(
-					_PIPELINE_AGGREGATIONS_MAP);
+					_SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP);
 
 			if (map == null) {
 				return Collections.emptyMap();
@@ -135,8 +156,15 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		}
 
 		@Override
+		public Query getQuery() {
+			return (Query)_searchContext.getAttribute(
+				_SEARCH_CONTEXT_KEY_QUERY);
+		}
+
+		@Override
 		public Query getRescoreQuery() {
-			return (Query)_searchContext.getAttribute(_RESCORE_QUERY);
+			return (Query)_searchContext.getAttribute(
+				_SEARCH_CONTEXT_KEY_RESCORE_QUERY);
 		}
 
 		public SearchContext getSearchContext() {
@@ -144,9 +172,21 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		}
 
 		@Override
+		public List<Sort> getSorts() {
+			Serializable serializable = _searchContext.getAttribute(
+				_SEARCH_CONTEXT_KEY_SORTS);
+
+			if (serializable != null) {
+				return (List<Sort>)serializable;
+			}
+
+			return Collections.emptyList();
+		}
+
+		@Override
 		public List<StatsRequest> getStatsRequests() {
 			Serializable serializable = _searchContext.getAttribute(
-				_STATS_REQUESTS);
+				_SEARCH_CONTEXT_KEY_STATS_REQUESTS);
 
 			if (serializable != null) {
 				return (List<StatsRequest>)serializable;
@@ -157,40 +197,24 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 		@Override
 		public boolean isExplain() {
-			return GetterUtil.getBoolean(_searchContext.getAttribute(_EXPLAIN));
+			return GetterUtil.getBoolean(
+				_searchContext.getAttribute(_SEARCH_CONTEXT_KEY_EXPLAIN));
 		}
 
 		@Override
 		public boolean isIncludeResponseString() {
 			return GetterUtil.getBoolean(
-				_searchContext.getAttribute(_INCLUDE_RESPONSE_STRING));
+				_searchContext.getAttribute(
+					_SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING));
 		}
 
 	}
 
-	protected Map<String, Aggregation> getAggregationsMap() {
+	protected Map<String, Aggregation> getSearchContextKeyAggregationsMap() {
 		synchronized (_searchContext) {
 			LinkedHashMap<String, Aggregation> linkedHashMap =
 				(LinkedHashMap<String, Aggregation>)_searchContext.getAttribute(
-					_AGGREGATIONS_MAP);
-
-			if (linkedHashMap != null) {
-				return linkedHashMap;
-			}
-
-			linkedHashMap = new LinkedHashMap<>();
-
-			_searchContext.setAttribute(_AGGREGATIONS_MAP, linkedHashMap);
-
-			return linkedHashMap;
-		}
-	}
-
-	protected Map<String, PipelineAggregation> getPipelineAggregationsMap() {
-		synchronized (_searchContext) {
-			LinkedHashMap<String, PipelineAggregation> linkedHashMap =
-				(LinkedHashMap<String, PipelineAggregation>)
-					_searchContext.getAttribute(_PIPELINE_AGGREGATIONS_MAP);
+					_SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP);
 
 			if (linkedHashMap != null) {
 				return linkedHashMap;
@@ -199,25 +223,57 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 			linkedHashMap = new LinkedHashMap<>();
 
 			_searchContext.setAttribute(
-				_PIPELINE_AGGREGATIONS_MAP, linkedHashMap);
+				_SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP, linkedHashMap);
 
 			return linkedHashMap;
 		}
 	}
 
-	private static final String _AGGREGATIONS_MAP = "aggregations.map";
+	protected Map<String, PipelineAggregation>
+		getSearchContextKeyPipelineAggregationsMap() {
 
-	private static final String _EXPLAIN = "explain";
+		synchronized (_searchContext) {
+			LinkedHashMap<String, PipelineAggregation> linkedHashMap =
+				(LinkedHashMap<String, PipelineAggregation>)
+					_searchContext.getAttribute(
+						_SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP);
 
-	private static final String _INCLUDE_RESPONSE_STRING =
-		"include.response.string";
+			if (linkedHashMap != null) {
+				return linkedHashMap;
+			}
 
-	private static final String _PIPELINE_AGGREGATIONS_MAP =
-		"pipeline.aggregations.map";
+			linkedHashMap = new LinkedHashMap<>();
 
-	private static final String _RESCORE_QUERY = "rescore.query";
+			_searchContext.setAttribute(
+				_SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP, linkedHashMap);
 
-	private static final String _STATS_REQUESTS = "stats.requests";
+			return linkedHashMap;
+		}
+	}
+
+	private static final String _SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP =
+		"search.request.aggregations.map";
+
+	private static final String _SEARCH_CONTEXT_KEY_EXPLAIN =
+		"search.request.explain";
+
+	private static final String _SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING =
+		"search.request.include.response.string";
+
+	private static final String _SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP =
+		"search.request.pipeline.aggregations.map";
+
+	private static final String _SEARCH_CONTEXT_KEY_QUERY =
+		"search.request.query";
+
+	private static final String _SEARCH_CONTEXT_KEY_RESCORE_QUERY =
+		"search.request.rescore.query";
+
+	private static final String _SEARCH_CONTEXT_KEY_SORTS =
+		"search.request.sorts";
+
+	private static final String _SEARCH_CONTEXT_KEY_STATS_REQUESTS =
+		"search.request.stats.requests";
 
 	private final SearchContext _searchContext;
 

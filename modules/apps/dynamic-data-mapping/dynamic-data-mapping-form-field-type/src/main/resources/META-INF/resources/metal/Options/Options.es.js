@@ -131,6 +131,8 @@ class Options extends Component {
 
 		if ((options.length == 1) && (options[0].label.toLowerCase() == defaultOptionLabel)) {
 			defaultOption = true;
+
+			this._handleFieldEdited({}, options);
 		}
 
 		this.setState(

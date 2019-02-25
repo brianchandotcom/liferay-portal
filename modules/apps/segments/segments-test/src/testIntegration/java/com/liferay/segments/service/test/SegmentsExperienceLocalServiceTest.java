@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -83,7 +84,8 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			1,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId()));
+				_group.getGroupId(), classNameId, classPK, active, false));
+
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
 			segmentsExperience.getSegmentsEntryId());
@@ -103,28 +105,6 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertNull(
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId()));
-	}
-
-	@Test
-	public void testDeleteSegmentsExperienceByGroupId() throws Exception {
-		int count = 5;
-
-		for (int i = 0; i < count; i++) {
-			_addSegmentsExperience();
-		}
-
-		Assert.assertEquals(
-			count,
-			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId()));
-
-		_segmentsExperienceLocalService.deleteSegmentsExperiences(
-			_group.getGroupId());
-
-		Assert.assertEquals(
-			0,
-			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId()));
 	}
 
 	@Test
@@ -170,6 +150,9 @@ public class SegmentsExperienceLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

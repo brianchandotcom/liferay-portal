@@ -478,7 +478,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		}
 	);
 
-	var ddmStructureDisplayFieldValueInput = document.querySelector('#<portlet:namespace />ddmStructureDisplayFieldValue');
+	var ddmStructureDisplayFieldValueInput = document.getElementById('<portlet:namespace />ddmStructureDisplayFieldValue');
 
 	dom.delegate(
 		sourcePanel,

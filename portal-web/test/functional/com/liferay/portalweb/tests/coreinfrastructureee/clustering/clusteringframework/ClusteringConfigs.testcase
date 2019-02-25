@@ -36,7 +36,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "channelName: liferay-channel-control");
 		AssertConsoleTextPresent(value1 = "JDBC_PING");
 
-		var log2 = Clustering.getLogFileSpecificServer(bundleIndex = "1");
+		var log2 = Clustering.getLogFileSpecificServer(nodePort = "9080");
 
 		if ((contains("${log2}", "Accepted view")) && (contains("${log2}", "channelName: liferay-channel-control")) && (contains("${log2}", "JDBC_PING"))) {
 			echo("Second node started successfully with JDBC_PING configuration");

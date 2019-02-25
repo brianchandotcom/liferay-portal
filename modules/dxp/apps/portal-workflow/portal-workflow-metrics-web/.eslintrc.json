@@ -49,6 +49,7 @@
 			}
 		],
 		"no-console": 0,
+		"no-invalid-this": "off",
 		"no-undef": 2,
 		"no-underscore-dangle": [
 			2,

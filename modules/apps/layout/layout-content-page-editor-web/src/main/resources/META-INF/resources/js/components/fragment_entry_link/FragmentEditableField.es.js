@@ -84,6 +84,8 @@ class FragmentEditableField extends Component {
 		this._destroyProcessors();
 		this._disposeFloatingToolbar();
 
+		this._beforeNavigateHandler.detach();
+
 		window.removeEventListener('beforeunload', this._handleBeforeUnload);
 	}
 
@@ -244,14 +246,6 @@ class FragmentEditableField extends Component {
 			if (!confirm(msg)) {
 				event.originalEvent.preventDefault();
 			}
-		}
-		else {
-			if (this._beforeNavigateHandler) {
-				this._beforeNavigateHandler.detach();
-				this._beforeNavigateHandler = null;
-			}
-
-			this._destroyProcessors();
 		}
 	}
 

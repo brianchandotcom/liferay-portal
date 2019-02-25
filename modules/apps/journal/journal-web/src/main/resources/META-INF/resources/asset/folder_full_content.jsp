@@ -14,10 +14,14 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/asset/init.jsp" %>
 
 <%
+JournalDisplayContext journalDisplayContext = new JournalDisplayContext(request, liferayPortletRequest, liferayPortletResponse, null, null);
+
 JournalFolder folder = journalDisplayContext.getFolder();
+
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <c:if test="<%= folder != null %>">

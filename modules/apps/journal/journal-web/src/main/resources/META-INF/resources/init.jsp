@@ -103,7 +103,6 @@ page import="com.liferay.journal.model.JournalFeedConstants" %><%@
 page import="com.liferay.journal.model.JournalFolder" %><%@
 page import="com.liferay.journal.model.JournalFolderConstants" %><%@
 page import="com.liferay.journal.service.JournalArticleLocalServiceUtil" %><%@
-page import="com.liferay.journal.service.JournalArticleServiceUtil" %><%@
 page import="com.liferay.journal.service.JournalFolderLocalServiceUtil" %><%@
 page import="com.liferay.journal.service.JournalFolderServiceUtil" %><%@
 page import="com.liferay.journal.util.comparator.ArticleVersionComparator" %><%@

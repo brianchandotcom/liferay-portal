@@ -297,7 +297,7 @@ for (long groupId : groupIds) {
 				}
 			);
 
-			function handleDestroyPortlet () {
+			function handleDestroyPortlet() {
 				delegateHandler.removeListener();
 
 				Liferay.detach('destroyPortlet', handleDestroyPortlet);

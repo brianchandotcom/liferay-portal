@@ -3,7 +3,6 @@ import DefaultEventHandler from 'frontend-js-web/liferay/DefaultEventHandler.es'
 class AssetPublisherDropdownDefaultEventHandler extends DefaultEventHandler {
 	assetEntryAction(itemData) {
 		this._openWindow(itemData.title, itemData.assetEntryActionURL);
-
 	}
 
 	editAssetEntry(itemData) {

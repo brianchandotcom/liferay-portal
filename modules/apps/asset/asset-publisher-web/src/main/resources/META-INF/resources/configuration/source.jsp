@@ -235,7 +235,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 	var assetMultipleSelector = document.getElementById('<portlet:namespace />currentClassNameIds');
 	var assetSelector = document.getElementById('<portlet:namespace />anyAssetType');
-	var ddmStructureFieldName = document.getElementById('<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = document.getElementById('<portlet:namespace />orderByColumn1');
 	var orderByColumn2 = document.getElementById('<portlet:namespace />orderByColumn2');
 	var orderingPanel = document.getElementById('<portlet:namespace />ordering');

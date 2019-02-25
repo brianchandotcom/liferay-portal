@@ -2,15 +2,15 @@ import '../FieldBase/FieldBase.es';
 import '../KeyValue/KeyValue.es';
 import './OptionsRegister.soy.js';
 
+import Component from 'metal-component';
+import dom from 'metal-dom';
+import Soy from 'metal-soy';
+import templates from './Options.soy.js';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {
 	normalizeFieldName
 } from 'dynamic-data-mapping-form-builder/metal/js/components/LayoutProvider/util/fields.es';
-import Component from 'metal-component';
-import dom from 'metal-dom';
-import Soy from 'metal-soy';
-import templates from './Options.soy.js';
 
 /**
  * Options.

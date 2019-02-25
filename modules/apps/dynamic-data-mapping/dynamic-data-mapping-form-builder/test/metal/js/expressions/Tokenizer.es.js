@@ -1,5 +1,5 @@
-import Tokenizer from 'source/expressions/Tokenizer.es';
 import Token from 'source/expressions/Token.es';
+import Tokenizer from 'source/expressions/Tokenizer.es';
 
 describe(
 	'Tokenizer',

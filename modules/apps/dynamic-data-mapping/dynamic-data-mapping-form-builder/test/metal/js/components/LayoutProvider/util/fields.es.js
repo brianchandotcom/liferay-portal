@@ -1,7 +1,7 @@
+import mockPages from 'mock/mockPages.es';
 import {
 	generateFieldName
 } from 'source/components/LayoutProvider/util/fields.es';
-import mockPages from 'mock/mockPages.es';
 
 describe(
 	'LayoutProvider/util/fields',

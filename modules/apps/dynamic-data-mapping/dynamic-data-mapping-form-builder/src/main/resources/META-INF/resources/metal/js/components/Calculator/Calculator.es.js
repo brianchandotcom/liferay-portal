@@ -1,10 +1,10 @@
 import 'clay-dropdown';
-import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Calculator.soy.js';
 import Token from '../../expressions/Token.es';
 import Tokenizer from '../../expressions/Tokenizer.es';
+import {Config} from 'metal-state';
 
 /**
  * Calculator.

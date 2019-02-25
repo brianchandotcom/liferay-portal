@@ -1,13 +1,13 @@
 import '../Page/PageRenderer.es';
 import '../SuccessPage/SuccessPage.es';
 import 'clay-button';
-import {Config} from 'metal-state';
-import {DragDrop} from 'metal-drag-drop';
-import {pageStructure} from '../../util/config.es';
 import Component from 'metal-component';
 import FormSupport from './FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './FormRenderer.soy.js';
+import {Config} from 'metal-state';
+import {DragDrop} from 'metal-drag-drop';
+import {pageStructure} from '../../util/config.es';
 import {setValue} from '../../util/i18n.es';
 
 /**

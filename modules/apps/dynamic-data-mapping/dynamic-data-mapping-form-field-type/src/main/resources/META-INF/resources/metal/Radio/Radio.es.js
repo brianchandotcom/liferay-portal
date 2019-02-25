@@ -1,11 +1,11 @@
 import '../FieldBase/FieldBase.es';
 import './RadioRegister.soy.js';
 import 'clay-radio';
-import {Config} from 'metal-state';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './Radio.soy.js';
+import {Config} from 'metal-state';
 
 /**
  * Radio.

@@ -1,6 +1,6 @@
+import RulesSupport from '../../RuleBuilder/RulesSupport.es';
 import {FormSupport} from '../../Form/index.es';
 import {PagesVisitor} from '../../../util/visitors.es';
-import RulesSupport from '../../RuleBuilder/RulesSupport.es';
 
 const formatRules = (state, pages) => {
 	const visitor = new PagesVisitor(pages);

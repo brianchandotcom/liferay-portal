@@ -1,7 +1,7 @@
 import '../../__fixtures__/MockField.es';
-import {dom as MetalTestUtil} from 'metal-dom';
 import mockPages from 'mock/mockPages.es';
 import PageRenderer from 'source/components/Page/PageRenderer.es';
+import {dom as MetalTestUtil} from 'metal-dom';
 
 const spritemap = 'icons.svg';
 let component;

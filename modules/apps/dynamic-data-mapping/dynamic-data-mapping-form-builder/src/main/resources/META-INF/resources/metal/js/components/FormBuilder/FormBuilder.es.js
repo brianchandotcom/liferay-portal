@@ -1,10 +1,3 @@
-import {Config} from 'metal-state';
-import {debounce} from 'metal-debounce';
-import {EventHandler} from 'metal-events';
-import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
-import {generateFieldName} from '../LayoutProvider/util/fields.es';
-import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
-import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
@@ -12,6 +5,13 @@ import dom from 'metal-dom';
 import FormRenderer from '../../components/Form/index.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import Sidebar from '../../components/Sidebar/index.es';
+import {Config} from 'metal-state';
+import {debounce} from 'metal-debounce';
+import {EventHandler} from 'metal-events';
+import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
+import {generateFieldName} from '../LayoutProvider/util/fields.es';
+import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {PagesVisitor} from '../../util/visitors.es';
 
 /**
  * Builder.

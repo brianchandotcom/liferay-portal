@@ -1,15 +1,15 @@
 import 'clay-button';
 import 'clay-dropdown';
 import 'clay-modal';
-import {Config} from 'metal-state';
-import {dom} from 'metal-dom';
-import {pageStructure} from '../../util/config.es';
-import {sub} from '../../util/strings.es';
 import Component from 'metal-component';
 import core from 'metal';
 import FormSupport from '../Form/FormSupport.es';
 import Soy from 'metal-soy';
 import templates from './PageRenderer.soy.js';
+import {Config} from 'metal-state';
+import {dom} from 'metal-dom';
+import {pageStructure} from '../../util/config.es';
+import {sub} from '../../util/strings.es';
 
 class PageRenderer extends Component {
 	static STATE = {

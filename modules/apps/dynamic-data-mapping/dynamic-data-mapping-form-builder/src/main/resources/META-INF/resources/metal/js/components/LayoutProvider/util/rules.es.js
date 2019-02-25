@@ -1,6 +1,6 @@
-import {RulesVisitor} from '../../../util/visitors.es';
 import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';
+import {RulesVisitor} from '../../../util/visitors.es';
 
 export const renameFieldInsideExpression = (expression, fieldName, newFieldName) => {
 	const tokens = Tokenizer.tokenize(expression);

@@ -1,8 +1,8 @@
 import './MockFieldRegister.soy.js';
 import Component from 'metal-component';
+import Config from 'metal-state/lib/Config';
 import Soy from 'metal-soy';
 import templates from './MockField.soy.js';
-import Config from 'metal-state/lib/Config';
 
 class MockField extends Component {
 	static STATE = {

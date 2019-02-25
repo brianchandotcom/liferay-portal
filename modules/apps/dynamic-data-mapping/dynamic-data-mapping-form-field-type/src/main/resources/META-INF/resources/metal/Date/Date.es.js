@@ -1,10 +1,10 @@
 import '../FieldBase/FieldBase.es';
 import './DateRegister.soy.js';
 import 'clay-icon';
-import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Date.soy.js';
+import {Config} from 'metal-state';
 
 /**
  * Date.

@@ -1,6 +1,6 @@
-import {dom as MetalTestUtil} from 'metal-dom';
-import SucessPageSettings from 'mock/mockSuccessPage.es';
 import SuccessPage from 'source/components/SuccessPage/SuccessPage.es';
+import SucessPageSettings from 'mock/mockSuccessPage.es';
+import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;
 let successPageSettings;

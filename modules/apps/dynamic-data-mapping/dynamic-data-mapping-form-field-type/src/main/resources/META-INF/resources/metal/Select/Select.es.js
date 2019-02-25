@@ -4,12 +4,12 @@ import '../Text/Text.es';
 import './SelectRegister.soy.js';
 import 'clay-dropdown';
 import 'clay-icon';
-import {Config} from 'metal-state';
-import {EventHandler} from 'metal-events';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import templates from './Select.soy.js';
+import {Config} from 'metal-state';
+import {EventHandler} from 'metal-events';
 
 class Select extends Component {
 	static STATE = {

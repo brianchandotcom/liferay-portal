@@ -4,13 +4,13 @@ import '../Numeric/Numeric.es';
 import '../Select/Select.es';
 import '../Text/Text.es';
 import './ValidationRegister.soy.js';
-import {Config} from 'metal-state';
-import {subWords} from '../util/strings.es';
 import autobind from 'autobind-decorator';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Validation.soy.js';
 import VALIDATIONS from '../util/validations.es';
+import {Config} from 'metal-state';
+import {subWords} from '../util/strings.es';
 
 class Validation extends Component {
 	static STATE = {

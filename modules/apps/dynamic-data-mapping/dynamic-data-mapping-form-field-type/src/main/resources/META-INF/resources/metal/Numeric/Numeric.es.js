@@ -1,11 +1,11 @@
 import '../FieldBase/FieldBase.es';
 import './NumericRegister.soy.js';
-import {Config} from 'metal-state';
 import Component from 'metal-component';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import Soy from 'metal-soy';
 import templates from './Numeric.soy.js';
 import vanillaTextMask from 'vanilla-text-mask';
+import {Config} from 'metal-state';
 
 class Numeric extends Component {
 	static STATE = {

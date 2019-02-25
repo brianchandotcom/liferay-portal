@@ -1,7 +1,7 @@
 import Component from 'metal-component';
-import vanillaTextMask from 'vanilla-text-mask';
 import Soy from 'metal-soy';
 import templates from './date.soy';
+import vanillaTextMask from 'vanilla-text-mask';
 
 /**
  * Date Component

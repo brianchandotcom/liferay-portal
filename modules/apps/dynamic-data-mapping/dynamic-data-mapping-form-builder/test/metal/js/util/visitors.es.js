@@ -1,5 +1,5 @@
-import {PagesVisitor} from 'source/util/visitors.es';
 import mockPages from 'mock/mockPages.es';
+import {PagesVisitor} from 'source/util/visitors.es';
 
 let visitor;
 

@@ -1,13 +1,13 @@
+import mockPages from 'mock/mockPages.es';
+import {
+	getFieldProperty,
+	getFieldValue
+} from 'source/components/LayoutProvider/util/fields.es';
 import {
 	updateFocusedFieldDataType,
 	updateFocusedFieldLabel,
 	updateFocusedFieldName
 } from 'source/components/LayoutProvider/util/focusedField.es';
-import {
-	getFieldProperty,
-	getFieldValue
-} from 'source/components/LayoutProvider/util/fields.es';
-import mockPages from 'mock/mockPages.es';
 
 const focusedField = {
 	fieldName: 'oldFieldName',

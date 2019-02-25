@@ -1,3 +1,11 @@
+import autobind from 'autobind-decorator';
+import classnames from 'classnames';
+import ClayButton from 'clay-button';
+import Component, {Fragment} from 'metal-jsx';
+import dom from 'metal-dom';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import FormRenderer, {FormSupport} from '../Form/index.es.js';
+import WithEvaluator from '../Form/Evaluator.es';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import {Config} from 'metal-state';
@@ -7,14 +15,6 @@ import {focusedFieldStructure} from '../../util/config.es';
 import {getFieldPropertiesFromSettingsContext, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
 import {selectText} from '../../util/dom.es';
-import autobind from 'autobind-decorator';
-import classnames from 'classnames';
-import ClayButton from 'clay-button';
-import Component, {Fragment} from 'metal-jsx';
-import dom from 'metal-dom';
-import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
-import FormRenderer, {FormSupport} from '../Form/index.es.js';
-import WithEvaluator from '../Form/Evaluator.es';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
@@ -355,29 +355,6 @@ class Sidebar extends Component {
 		const visitor = new RulesVisitor(rules);
 
 		return visitor.containsFieldExpression(fieldName);
-	}
-
-	getFormContext(settingsContext) {
-		const {pages} = settingsContext;
-		const visitor = new PagesVisitor(pages);
-
-		return {
-			...settingsContext,
-			pages: visitor.mapFields(
-				field => {
-
-					// if (field.fieldName === 'name' && this._hasRuleExpression(field.value)) {
-					// 	field = {
-					// 		...field,
-					// 		readOnly: true,
-					// 		tip: Liferay.Language.get('this-field-name-cant-be-changed-because-its-been-used-inside-a-calculate-expression')
-					// 	};
-					// }
-
-					return field;
-				}
-			)
-		};
 	}
 
 	/**
@@ -981,7 +958,7 @@ class Sidebar extends Component {
 										editingLanguageId={editingLanguageId}
 										events={layoutRenderEvents}
 										fieldType={focusedField.type}
-										formContext={this.getFormContext(settingsContext)}
+										formContext={settingsContext}
 										modeRenderer="list"
 										ref="FormRenderer"
 										spritemap={spritemap}

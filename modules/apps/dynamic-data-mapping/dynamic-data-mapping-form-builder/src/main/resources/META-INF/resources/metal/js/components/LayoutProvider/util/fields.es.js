@@ -1,5 +1,5 @@
-import {PagesVisitor} from '../../../util/visitors.es';
 import {findFieldByName} from '../../Form/FormSupport.es';
+import {PagesVisitor} from '../../../util/visitors.es';
 
 export const generateFieldName = (pages, desiredName, currentName = null) => {
 	let counter = 0;

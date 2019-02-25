@@ -1,6 +1,6 @@
 import {FormSupport} from '../../Form/index.es';
-import {updateRulesFieldName} from '../util/rules.es';
 import {updateFocusedField} from '../util/focusedField.es';
+import {updateRulesFieldName} from '../util/rules.es';
 
 export const updatePages = (pages, oldFieldProperties, newFieldProperties) => {
 	const {fieldName} = oldFieldProperties;

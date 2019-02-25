@@ -1,14 +1,14 @@
 import 'clay-button';
 import 'clay-dropdown';
+import Component from 'metal-component';
+import dom from 'metal-dom';
+import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import dom from 'metal-dom';
 
 import templates from './RuleList.soy.js';
-import {PagesVisitor} from '../../util/visitors.es';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import {PagesVisitor} from '../../util/visitors.es';
 
 /**
  * LayoutRenderer.

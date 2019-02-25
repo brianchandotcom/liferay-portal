@@ -1,9 +1,9 @@
+import autobind from 'autobind-decorator';
+import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {convertToSearchParams, makeFetch} from '../../util/fetch.es';
 import {debounce} from 'metal-debounce';
 import {PagesVisitor} from '../../util/visitors.es';
-import autobind from 'autobind-decorator';
-import Component from 'metal-jsx';
 
 const WithEvaluator = ChildComponent => {
 

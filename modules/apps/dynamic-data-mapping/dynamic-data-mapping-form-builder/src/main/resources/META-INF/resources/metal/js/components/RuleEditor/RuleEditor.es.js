@@ -4,13 +4,13 @@ import 'clay-alert';
 import 'clay-button';
 import 'clay-modal';
 
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+import templates from './RuleEditor.soy.js';
 import {Config} from 'metal-state';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {makeFetch} from '../../util/fetch.es';
 import {PagesVisitor} from '../../util/visitors.es';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import templates from './RuleEditor.soy.js';
 
 const fieldOptionStructure = Config.shapeOf(
 	{

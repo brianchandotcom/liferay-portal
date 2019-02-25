@@ -1,9 +1,9 @@
 import '../FieldBase/FieldBase.es';
 import './CheckboxRegister.soy.js';
 import 'clay-checkbox';
-import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
 
 import templates from './Checkbox.soy.js';
 

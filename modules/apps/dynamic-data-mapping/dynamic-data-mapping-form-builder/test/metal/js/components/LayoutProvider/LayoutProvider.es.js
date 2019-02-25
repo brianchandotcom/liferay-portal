@@ -1,6 +1,6 @@
-import {JSXComponent} from 'metal-jsx';
-import mockPages from 'mock/mockPages.es';
 import LayoutProvider from 'source/components/LayoutProvider/LayoutProvider.es';
+import mockPages from 'mock/mockPages.es';
+import {JSXComponent} from 'metal-jsx';
 import {PagesVisitor} from 'source/util/visitors.es';
 
 let component;

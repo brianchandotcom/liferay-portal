@@ -1,6 +1,6 @@
 import {
-	FieldsLoader as loader,
-	getFieldsFromModules
+	getFieldsFromModules,
+	FieldsLoader as loader
 } from 'source/components/FieldsLoader/FieldsLoader.es';
 
 const modules = {

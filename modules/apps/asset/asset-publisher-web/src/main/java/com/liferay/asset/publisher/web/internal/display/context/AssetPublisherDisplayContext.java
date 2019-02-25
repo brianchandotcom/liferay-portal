@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -905,15 +904,13 @@ public class AssetPublisherDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
-		String redirect = _getScopeAssetPortletRedirect(
-			liferayPortletRequest, liferayPortletResponse);
-
 		for (long groupId : groupIds) {
 			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
 				_assetHelper.getAssetPublisherAddItemHolders(
 					liferayPortletRequest, liferayPortletResponse, groupId,
 					getClassNameIds(), getClassTypeIds(),
-					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
+					getAllAssetCategoryIds(), getAllAssetTagNames(),
+					_themeDisplay.getURLCurrent());
 
 			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
 				scopeAssetPublisherAddItemHolders.put(
@@ -1603,30 +1600,6 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredCategories;
-	}
-
-	private String _getScopeAssetPortletRedirect(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
-
-		PortletURL currentURLObj = PortletURLUtil.getCurrent(
-			liferayPortletRequest, liferayPortletResponse);
-
-		String redirect = ParamUtil.getString(
-			liferayPortletRequest, "redirect", currentURLObj.toString());
-
-		redirectURL.setParameter("redirect", redirect);
-
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return redirectURL.toString();
 	}
 
 	private Integer _abstractLength;

@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.util.AssetHelper;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -156,11 +154,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		portletURL.setParameter("mvcPath", "/add_asset_selector.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		urlMenuItem.setURL(portletURL.toString());
-
-		urlMenuItem.setUseDialog(true);
 
 		menuItems.add(urlMenuItem);
 	}
@@ -230,8 +225,6 @@ public class AssetPublisherPortletToolbarContributor
 
 		urlMenuItem.setURL(url);
 
-		urlMenuItem.setUseDialog(true);
-
 		return urlMenuItem;
 	}
 
@@ -289,9 +282,6 @@ public class AssetPublisherPortletToolbarContributor
 
 	@Reference
 	private AssetHelper _assetHelper;
-
-	@Reference
-	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -223,7 +222,6 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 
 		addPortletURL.setPortletMode(PortletMode.VIEW);
-		addPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return addPortletURL;
 	}
@@ -236,7 +234,6 @@ public class AssetHelperImpl implements AssetHelper {
 		addPortletURL.setParameter(
 			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		addPortletURL.setParameter("groupId", String.valueOf(groupId));
-		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 		if (addDisplayPageParameter && (layout != null)) {
 			addPortletURL.setParameter("layoutUuid", layout.getUuid());

@@ -1,0 +1,1281 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should add a tag 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="4"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        test
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="4"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should hide the dropdown list 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should remove a tag 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should search 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should show the dropdown list 1`] = `
+<div
+  className="is-active align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+  <div
+    className="drop-suggestion dropdown-menu"
+    tabIndex="-1"
+  >
+    <ul
+      className="list-unstyled"
+    >
+      <li
+        data-tag="meeting"
+        key="0"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#0"
+        >
+          meeting
+        </a>
+      </li>
+      <li
+        data-tag="assist"
+        key="1"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#1"
+        >
+          assist
+        </a>
+      </li>
+      <li
+        data-tag="not real"
+        key="2"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#2"
+        >
+          not real
+        </a>
+      </li>
+      <li
+        data-tag="much"
+        key="3"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#3"
+        >
+          much
+        </a>
+      </li>
+      <li
+        data-tag="so much"
+        key="4"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#4"
+        >
+          so much
+        </a>
+      </li>
+      <li
+        data-tag="to do any"
+        key="5"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#5"
+        >
+          to do any
+        </a>
+      </li>
+      <li
+        data-tag="a long component text example to test its overflow behavior."
+        key="6"
+        onClick={[Function]}
+      >
+        <a
+          className="dropdown-item "
+          href="#6"
+        >
+          a long component text example to test its overflow behavior.
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Should test component render 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should test keydown press 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should test keyenter press 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="4"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        meeting
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="4"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;
+
+exports[`Should test keyup press 1`] = `
+<div
+  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+  onDoubleClick={[Function]}
+  onFocus={[Function]}
+>
+  <div
+    className="col-11 p-0"
+  >
+    <span
+      className="label label-dismissible label-secondary"
+      key="0"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        ops
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="0"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="1"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        message
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="1"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="2"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        advocate
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="2"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <span
+      className="label label-dismissible label-secondary"
+      key="3"
+      tabIndex="-1"
+    >
+      <span
+        className="label-item label-item-expand"
+      >
+        Maybe
+      </span>
+      <span
+        className="label-item label-item-after"
+      >
+        <button
+          aria-label="Close"
+          className="close"
+          data-tag-index="3"
+          onClick={[Function]}
+          type="button"
+        >
+          <Icon
+            iconName="times"
+          />
+        </button>
+      </span>
+    </span>
+    <input
+      className="form-control-inset"
+      onKeyUp={[Function]}
+      type="text"
+    />
+  </div>
+  <div
+    className="col-1 mt-1"
+  >
+    <Icon
+      iconName="caret-double"
+    />
+  </div>
+</div>
+`;

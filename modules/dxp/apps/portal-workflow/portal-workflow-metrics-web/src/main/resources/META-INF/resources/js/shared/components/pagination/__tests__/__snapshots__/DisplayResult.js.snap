@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="pagination-results"
+>
+  Showing 11 to 110 of 20 entries.
+</div>
+`;

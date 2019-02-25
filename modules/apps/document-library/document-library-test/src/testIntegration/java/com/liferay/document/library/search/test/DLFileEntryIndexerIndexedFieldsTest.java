@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -200,10 +201,14 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put("extension_String_sortable", fileEntry.getExtension());
 		map.put("fileEntryTypeId", "0");
 		map.put("hidden", "false");
-		map.put("mimeType", fileEntry.getMimeType().replaceAll("/", "_"));
+		map.put(
+			"mimeType",
+			StringUtil.replace(
+				fileEntry.getMimeType(), CharPool.SLASH, CharPool.UNDERLINE));
 		map.put(
 			"mimeType_String_sortable",
-			fileEntry.getMimeType().replaceAll("/", "_"));
+			StringUtil.replace(
+				fileEntry.getMimeType(), CharPool.SLASH, CharPool.UNDERLINE));
 		map.put("path", fileEntry.getTitle());
 		map.put("readCount", String.valueOf(fileEntry.getReadCount()));
 		map.put("size", String.valueOf(fileEntry.getSize()));

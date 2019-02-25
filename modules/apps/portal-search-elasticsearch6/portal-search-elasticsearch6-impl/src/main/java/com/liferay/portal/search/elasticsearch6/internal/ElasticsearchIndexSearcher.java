@@ -129,6 +129,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 				populateResponse(searchSearchResponse, searchResponseBuilder);
 
+				searchResponseBuilder.searchHits(
+					searchSearchResponse.getSearchHits());
+
 				hits = searchSearchResponse.getHits();
 
 				Document[] documents = hits.getDocs();
@@ -316,6 +319,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setStart(start);
 
 		searchSearchRequest.setSorts(searchContext.getSorts());
+		searchSearchRequest.setSorts(searchRequest.getSorts());
 		searchSearchRequest.setStats(searchContext.getStats());
 		searchSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 
@@ -401,6 +405,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		baseSearchRequest.setExplain(searchRequest.isExplain());
 		baseSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());
+		baseSearchRequest.setQuery(searchRequest.getQuery());
 		baseSearchRequest.setRescoreQuery(searchRequest.getRescoreQuery());
 		baseSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 

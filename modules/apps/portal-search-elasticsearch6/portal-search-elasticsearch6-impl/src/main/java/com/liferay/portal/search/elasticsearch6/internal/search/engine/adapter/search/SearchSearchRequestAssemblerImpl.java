@@ -15,23 +15,29 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlighterTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.query.QueryToQueryBuilderTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
+import com.liferay.portal.search.sort.Sort;
+import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SearchSearchRequestAssembler.class)
+@Component(service = SearchSearchRequestAssembler.class)
 public class SearchSearchRequestAssemblerImpl
 	implements SearchSearchRequestAssembler {
 
@@ -51,94 +57,16 @@ public class SearchSearchRequestAssemblerImpl
 		_commonSearchRequestBuilderAssembler.assemble(
 			searchRequestBuilder, searchSearchRequest);
 
-		addGroupBy(searchRequestBuilder, searchSearchRequest);
-
-		if (searchSearchRequest.isHighlightEnabled()) {
-			_highlighterTranslator.translate(
-				searchRequestBuilder,
-				searchSearchRequest.getHighlightFieldNames(),
-				searchSearchRequest.isHighlightRequireFieldMatch(),
-				searchSearchRequest.getHighlightFragmentSize(),
-				searchSearchRequest.getHighlightSnippetSize(),
-				searchSearchRequest.isLuceneSyntax());
-		}
-
-		addPagination(
-			searchRequestBuilder, searchSearchRequest.getStart(),
-			searchSearchRequest.getSize());
-		addPreference(searchRequestBuilder, searchSearchRequest);
-		addSelectedFields(
-			searchRequestBuilder, searchSearchRequest.getSelectedFieldNames());
-		addStats(searchRequestBuilder, searchSearchRequest.getStats());
-
-		_sortTranslator.translate(
-			searchRequestBuilder, searchSearchRequest.getSorts());
-
-		searchRequestBuilder.setTrackScores(
-			searchSearchRequest.isScoreEnabled());
-	}
-
-	protected void addGroupBy(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchSearchRequest searchSearchRequest) {
-
-		GroupBy groupBy = searchSearchRequest.getGroupBy();
-
-		if (groupBy == null) {
-			return;
-		}
-
-		_groupByTranslator.translate(
-			searchRequestBuilder, groupBy, searchSearchRequest.getSorts(),
-			searchSearchRequest.getLocale(),
-			searchSearchRequest.getSelectedFieldNames(),
-			searchSearchRequest.getHighlightFieldNames(),
-			searchSearchRequest.isHighlightEnabled(),
-			searchSearchRequest.isHighlightRequireFieldMatch(),
-			searchSearchRequest.getHighlightFragmentSize(),
-			searchSearchRequest.getHighlightSnippetSize(),
-			searchSearchRequest.getStart(), searchSearchRequest.getSize());
-	}
-
-	protected void addPagination(
-		SearchRequestBuilder searchRequestBuilder, int start, int size) {
-
-		searchRequestBuilder.setFrom(start);
-		searchRequestBuilder.setSize(size);
-	}
-
-	protected void addPreference(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchSearchRequest searchSearchRequest) {
-
-		String preference = searchSearchRequest.getPreference();
-
-		if (!Validator.isBlank(preference)) {
-			searchRequestBuilder.setPreference(preference);
-		}
-	}
-
-	protected void addSelectedFields(
-		SearchRequestBuilder searchRequestBuilder,
-		String[] selectedFieldNames) {
-
-		if (ArrayUtil.isEmpty(selectedFieldNames)) {
-			searchRequestBuilder.addStoredField(StringPool.STAR);
-		}
-		else {
-			searchRequestBuilder.storedFields(selectedFieldNames);
-		}
-	}
-
-	protected void addStats(
-		SearchRequestBuilder searchRequestBuilder,
-		Map<String, Stats> statsMap) {
-
-		if (!MapUtil.isEmpty(statsMap)) {
-			statsMap.forEach(
-				(key, stats) -> _statsTranslator.populateRequest(
-					searchRequestBuilder, translate(stats)));
-		}
+		setFetchSource(searchRequestBuilder, searchSearchRequest);
+		setGroupBy(searchRequestBuilder, searchSearchRequest);
+		setHighlighter(searchRequestBuilder, searchSearchRequest);
+		setPagination(searchRequestBuilder, searchSearchRequest);
+		setPreference(searchRequestBuilder, searchSearchRequest);
+		setSorts(searchRequestBuilder, searchSearchRequest);
+		setStats(searchRequestBuilder, searchSearchRequest);
+		setStoredFields(searchRequestBuilder, searchSearchRequest);
+		setTrackScores(searchRequestBuilder, searchSearchRequest);
+		setVersion(searchRequestBuilder, searchSearchRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -150,9 +78,59 @@ public class SearchSearchRequestAssemblerImpl
 			commonSearchRequestBuilderAssembler;
 	}
 
+	protected void setFetchSource(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getFetchSource() != null) {
+			searchRequestBuilder.setFetchSource(
+				searchSearchRequest.getFetchSource());
+		}
+	}
+
+	protected void setGroupBy(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getGroupBy() != null) {
+			_groupByTranslator.translate(
+				searchRequestBuilder, searchSearchRequest.getGroupBy(),
+				searchSearchRequest.getSorts71(),
+				searchSearchRequest.getLocale(),
+				searchSearchRequest.getSelectedFieldNames(),
+				searchSearchRequest.getHighlightFieldNames(),
+				searchSearchRequest.isHighlightEnabled(),
+				searchSearchRequest.isHighlightRequireFieldMatch(),
+				searchSearchRequest.getHighlightFragmentSize(),
+				searchSearchRequest.getHighlightSnippetSize(),
+				searchSearchRequest.getStart(), searchSearchRequest.getSize());
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setGroupByTranslator(GroupByTranslator groupByTranslator) {
 		_groupByTranslator = groupByTranslator;
+	}
+
+	protected void setHighlighter(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getHighlight() != null) {
+			searchRequestBuilder.highlighter(
+				_highlightTranslator.translate(
+					searchSearchRequest.getHighlight(),
+					_queryToQueryBuilderTranslator));
+		}
+		else if (searchSearchRequest.isHighlightEnabled()) {
+			_highlighterTranslator.translate(
+				searchRequestBuilder,
+				searchSearchRequest.getHighlightFieldNames(),
+				searchSearchRequest.isHighlightRequireFieldMatch(),
+				searchSearchRequest.getHighlightFragmentSize(),
+				searchSearchRequest.getHighlightSnippetSize(),
+				searchSearchRequest.isLuceneSyntax());
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -162,9 +140,78 @@ public class SearchSearchRequestAssemblerImpl
 		_highlighterTranslator = highlighterTranslator;
 	}
 
+	protected void setPagination(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getStart() != null) {
+			searchRequestBuilder.setFrom(searchSearchRequest.getStart());
+		}
+
+		if (searchSearchRequest.getSize() != null) {
+			searchRequestBuilder.setSize(searchSearchRequest.getSize());
+		}
+	}
+
+	protected void setPreference(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		String preference = searchSearchRequest.getPreference();
+
+		if (!Validator.isBlank(preference)) {
+			searchRequestBuilder.setPreference(preference);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setQueryToQueryBuilderTranslator(
+		QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
+
+		_queryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSortFieldTranslator(
+		SortFieldTranslator<SortBuilder> sortFieldTranslator) {
+
+		_sortFieldTranslator = sortFieldTranslator;
+	}
+
+	protected void setSorts(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		List<Sort> sorts = searchSearchRequest.getSorts();
+
+		Stream<Sort> stream = sorts.stream();
+
+		stream.map(
+			_sortFieldTranslator::translate
+		).forEach(
+			searchRequestBuilder::addSort
+		);
+
+		_sortTranslator.translate(
+			searchRequestBuilder, searchSearchRequest.getSorts71());
+	}
+
 	@Reference(unbind = "-")
 	protected void setSortTranslator(SortTranslator sortTranslator) {
 		_sortTranslator = sortTranslator;
+	}
+
+	protected void setStats(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		Map<String, Stats> statsMap = searchSearchRequest.getStats();
+
+		if (!MapUtil.isEmpty(statsMap)) {
+			statsMap.forEach(
+				(key, stats) -> _statsTranslator.populateRequest(
+					searchRequestBuilder, translate(stats)));
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -179,6 +226,40 @@ public class SearchSearchRequestAssemblerImpl
 		_statsTranslator = statsTranslator;
 	}
 
+	protected void setStoredFields(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		String[] selectedFieldNames =
+			searchSearchRequest.getSelectedFieldNames();
+
+		if (!ArrayUtil.isEmpty(selectedFieldNames)) {
+			searchRequestBuilder.storedFields(selectedFieldNames);
+		}
+		else {
+			searchRequestBuilder.addStoredField(StringPool.STAR);
+		}
+	}
+
+	protected void setTrackScores(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getScoreEnabled() != null) {
+			searchRequestBuilder.setTrackScores(
+				searchSearchRequest.getScoreEnabled());
+		}
+	}
+
+	protected void setVersion(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		if (searchSearchRequest.getVersion() != null) {
+			searchRequestBuilder.setVersion(searchSearchRequest.getVersion());
+		}
+	}
+
 	protected StatsRequest translate(Stats stats) {
 		StatsRequestBuilder statsRequestBuilder =
 			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
@@ -190,6 +271,10 @@ public class SearchSearchRequestAssemblerImpl
 		_commonSearchRequestBuilderAssembler;
 	private GroupByTranslator _groupByTranslator;
 	private HighlighterTranslator _highlighterTranslator;
+	private final HighlightTranslator _highlightTranslator =
+		new HighlightTranslator();
+	private QueryToQueryBuilderTranslator _queryToQueryBuilderTranslator;
+	private SortFieldTranslator<SortBuilder> _sortFieldTranslator;
 	private SortTranslator _sortTranslator;
 	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private StatsTranslator _statsTranslator;

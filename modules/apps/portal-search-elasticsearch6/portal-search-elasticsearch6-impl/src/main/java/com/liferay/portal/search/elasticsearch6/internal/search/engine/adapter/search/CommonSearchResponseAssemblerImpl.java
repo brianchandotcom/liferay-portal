@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = CommonSearchResponseAssembler.class)
+@Component(service = CommonSearchResponseAssembler.class)
 public class CommonSearchResponseAssemblerImpl
 	implements CommonSearchResponseAssembler {
 

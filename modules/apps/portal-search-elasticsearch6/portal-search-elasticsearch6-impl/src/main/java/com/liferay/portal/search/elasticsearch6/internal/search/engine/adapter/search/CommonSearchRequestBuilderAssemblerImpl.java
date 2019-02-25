@@ -49,9 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, service = CommonSearchRequestBuilderAssembler.class
-)
+@Component(service = CommonSearchRequestBuilderAssembler.class)
 public class CommonSearchRequestBuilderAssemblerImpl
 	implements CommonSearchRequestBuilderAssembler {
 
@@ -63,6 +61,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		setAggregations(searchRequestBuilder, baseSearchRequest);
 		setExplain(searchRequestBuilder, baseSearchRequest);
 		setFacets(searchRequestBuilder, baseSearchRequest);
+		setIndexBoosts(searchRequestBuilder, baseSearchRequest);
 		setIndices(searchRequestBuilder, baseSearchRequest);
 		setMinScore(searchRequestBuilder, baseSearchRequest);
 		setPipelineAggregations(searchRequestBuilder, baseSearchRequest);
@@ -73,37 +72,20 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		setStatsRequests(searchRequestBuilder, baseSearchRequest);
 		setTimeout(searchRequestBuilder, baseSearchRequest);
 		setTrackTotalHits(searchRequestBuilder, baseSearchRequest);
+		setTypes(searchRequestBuilder, baseSearchRequest);
 	}
 
 	protected QueryBuilder getQueryBuilder(
-		BaseSearchRequest searchSearchRequest) {
+		BaseSearchRequest baseSearchRequest) {
 
-		com.liferay.portal.kernel.search.Query query =
-			searchSearchRequest.getQuery71();
+		Query query = baseSearchRequest.getQuery();
 
-		QueryBuilder queryBuilder =
-			_legacyQueryToQueryBuilderTranslator.translate(query, null);
-
-		if ((query.getPreBooleanFilter() == null) ||
-			(query instanceof BooleanQuery)) {
-
-			return queryBuilder;
+		if (query != null) {
+			return _queryToQueryBuilderTranslator.translate(
+				baseSearchRequest.getQuery());
 		}
 
-		// LPS-86537 the following is only present to allow for backwards
-		// compatibility.  Not all Query should have filters allowed according
-		// to Elasticsearch's API.
-
-		// See related note in BooleanQueryTranslatorImpl
-
-		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-
-		boolQueryBuilder.filter(
-			_filterToQueryBuilderTranslator.translate(
-				query.getPreBooleanFilter(), null));
-		boolQueryBuilder.must(queryBuilder);
-
-		return boolQueryBuilder;
+		return translateQuery(baseSearchRequest.getQuery71());
 	}
 
 	protected void setAggregations(
@@ -137,7 +119,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		searchRequestBuilder.setExplain(baseSearchRequest.isExplain());
+		if (baseSearchRequest.getExplain() != null) {
+			searchRequestBuilder.setExplain(baseSearchRequest.getExplain());
+		}
 	}
 
 	protected void setFacets(
@@ -162,6 +146,17 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		_filterToQueryBuilderTranslator = filterToQueryBuilderTranslator;
 	}
 
+	protected void setIndexBoosts(
+		SearchRequestBuilder searchRequestBuilder,
+		BaseSearchRequest baseSearchRequest) {
+
+		Map<String, Float> indexBoosts = baseSearchRequest.getIndexBoosts();
+
+		if (MapUtil.isNotEmpty(indexBoosts)) {
+			indexBoosts.forEach(searchRequestBuilder::addIndexBoost);
+		}
+	}
+
 	protected void setIndices(
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
@@ -181,7 +176,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		if (baseSearchRequest.getMinimumScore() > 0) {
+		if (baseSearchRequest.getMinimumScore() != null) {
 			searchRequestBuilder.setMinScore(
 				baseSearchRequest.getMinimumScore());
 		}
@@ -222,12 +217,15 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		if (baseSearchRequest.getPostFilter() != null) {
-			QueryBuilder postFilterQueryBuilder =
+		if (baseSearchRequest.getPostFilterQuery() != null) {
+			searchRequestBuilder.setPostFilter(
+				_queryToQueryBuilderTranslator.translate(
+					baseSearchRequest.getPostFilterQuery()));
+		}
+		else if (baseSearchRequest.getPostFilter() != null) {
+			searchRequestBuilder.setPostFilter(
 				_filterToQueryBuilderTranslator.translate(
-					baseSearchRequest.getPostFilter(), null);
-
-			searchRequestBuilder.setPostFilter(postFilterQueryBuilder);
+					baseSearchRequest.getPostFilter(), null));
 		}
 	}
 
@@ -249,9 +247,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		if (baseSearchRequest.isRequestCache()) {
+		if (baseSearchRequest.getRequestCache() != null) {
 			searchRequestBuilder.setRequestCache(
-				baseSearchRequest.isRequestCache());
+				baseSearchRequest.getRequestCache());
 		}
 	}
 
@@ -292,7 +290,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		if (baseSearchRequest.getTimeoutInMilliseconds() > 0) {
+		if (baseSearchRequest.getTimeoutInMilliseconds() != null) {
 			searchRequestBuilder.setTimeout(
 				TimeValue.timeValueMillis(
 					baseSearchRequest.getTimeoutInMilliseconds()));
@@ -303,8 +301,47 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		searchRequestBuilder.setTrackTotalHits(
-			baseSearchRequest.isTrackTotalHits());
+		if (baseSearchRequest.getTrackTotalHits() != null) {
+			searchRequestBuilder.setTrackTotalHits(
+				baseSearchRequest.getTrackTotalHits());
+		}
+	}
+
+	protected void setTypes(
+		SearchRequestBuilder searchRequestBuilder,
+		BaseSearchRequest baseSearchRequest) {
+
+		if (baseSearchRequest.getTypes() != null) {
+			searchRequestBuilder.setTypes(baseSearchRequest.getTypes());
+		}
+	}
+
+	protected QueryBuilder translateQuery(
+		com.liferay.portal.kernel.search.Query query) {
+
+		QueryBuilder queryBuilder =
+			_legacyQueryToQueryBuilderTranslator.translate(query, null);
+
+		if ((query.getPreBooleanFilter() == null) ||
+			(query instanceof BooleanQuery)) {
+
+			return queryBuilder;
+		}
+
+		// LPS-86537 the following is only present to allow for backwards
+		// compatibility.  Not all Query should have filters allowed according
+		// to Elasticsearch's API.
+
+		// See related note in BooleanQueryTranslatorImpl
+
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		boolQueryBuilder.filter(
+			_filterToQueryBuilderTranslator.translate(
+				query.getPreBooleanFilter(), null));
+		boolQueryBuilder.must(queryBuilder);
+
+		return boolQueryBuilder;
 	}
 
 	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;

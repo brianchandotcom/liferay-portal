@@ -60,6 +60,7 @@
 			%>
 
 			<clay:dropdown-actions
+				defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -128,6 +129,7 @@
 			%>
 
 			<clay:dropdown-actions
+				defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
 			/>
 		</liferay-ui:search-container-column-text>

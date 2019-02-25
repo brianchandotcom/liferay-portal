@@ -189,11 +189,11 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		Portlet.shutdownSpecificServer(nodePort = "8080");
+		Clustering.shutdownSpecificServer(nodePort = "8080");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		Portlet.startSpecificServer(
+		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "8080"
@@ -211,9 +211,9 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		Portlet.shutdownSpecificServer(nodePort = "9080");
+		Clustering.shutdownSpecificServer(nodePort = "9080");
 
-		Portlet.startSpecificServer(
+		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "9080"

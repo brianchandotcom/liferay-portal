@@ -186,11 +186,11 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		Portlet.shutdownSpecificServer(nodePort = "8080");
+		Clustering.shutdownSpecificServer(nodePort = "8080");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
-		Portlet.startSpecificServer(
+		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "8080"
@@ -208,9 +208,9 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		Portlet.shutdownSpecificServer(nodePort = "9080");
+		Clustering.shutdownSpecificServer(nodePort = "9080");
 
-		Portlet.startSpecificServer(
+		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
 			nodePort = "9080"
@@ -410,32 +410,32 @@ definition {
 		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
 
 		for (var nodeport : list "8080,9080") {
-			Portlet.getClusterNodelogFile(nodePort = "${nodeport}");
+			Clustering.getClusterNodelogFile(nodePort = "${nodeport}");
 		};
 
-		var controlAddress0 = Portlet.getClusterNodeControlAddress(nodePort = "8080");
-		var transportAddress0 = Portlet.getClusterNodeTransportAddress(nodePort = "8080");
+		var controlAddress0 = Clustering.getClusterNodeControlAddress(nodePort = "8080");
+		var transportAddress0 = Clustering.getClusterNodeTransportAddress(nodePort = "8080");
 		echo("control Address0 is ${controlAddress0}");
 		echo("transport Address0 is ${transportAddress0}");
 
-		var controlAddress1 = Portlet.getClusterNodeControlAddress(nodePort = "9080");
-		var transportAddress1 = Portlet.getClusterNodeTransportAddress(nodePort = "9080");
+		var controlAddress1 = Clustering.getClusterNodeControlAddress(nodePort = "9080");
+		var transportAddress1 = Clustering.getClusterNodeTransportAddress(nodePort = "9080");
 		echo("control Address1 is ${controlAddress1}");
 		echo("transport Address1 is ${transportAddress1}");
 
 		for (var nodeport : list "8080,9080") {
-			Portlet.viewTextPresentOnSpecificConsole(
+			Clustering.viewTextPresentOnSpecificConsole(
 				nodePort = "${nodeport}",
 				expectText = "Accepted view [${controlAddress0}|1] (2) [${controlAddress0}, ${controlAddress1}]"
 			);
 
-			Portlet.viewTextPresentOnSpecificConsole(
+			Clustering.viewTextPresentOnSpecificConsole(
 				nodePort = "${nodeport}",
 				expectText = "Accepted view [${transportAddress0}|1] (2) [${transportAddress0}, ${transportAddress1}]"
 			);
 		};
 
-		Portlet.deployJarOnSpecificServer(
+		Clustering.deployJarOnSpecificServer(
 			nodePort = "8080",
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar"
 		);
@@ -473,7 +473,7 @@ catch (Exception e) {
 
 		AssertConsoleTextPresent(value1 = "Put test.key into test.cache");
 
-		Portlet.deployJarOnSpecificServer(
+		Clustering.deployJarOnSpecificServer(
 			nodePort = "9080",
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar"
 		);
@@ -514,15 +514,15 @@ for (String key : keys) {
 '''
 		);
 
-		Portlet.getClusterNodelogFile(nodePort = "9080");
+		Clustering.getClusterNodelogFile(nodePort = "9080");
 
 		for (var expectText : list "Put test.key into test.cache,test.key=test.value") {
-			Portlet.viewTextPresentOnSpecificConsole(
+			Clustering.viewTextPresentOnSpecificConsole(
 				nodePort = "8080",
 				expectText = "${expectText}"
 				);
 
-			Portlet.viewTextPresentOnSpecificConsole(
+			Clustering.viewTextPresentOnSpecificConsole(
 				nodePort = "8080",
 				expectText = "${test.key=test.value}"
 				);

@@ -20,6 +20,7 @@ import com.liferay.headless.document.library.resource.v1_0.FolderResource;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -35,6 +36,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -96,6 +98,45 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 			throws Exception {
 
 				return new FolderImpl();
+	}
+	@Override
+	@Consumes("application/json")
+	@PATCH
+	@Path("/folders/{folder-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Folder patchFolder(
+	@PathParam("folder-id") Long folderId,Folder folder)
+			throws Exception {
+
+				Folder existingFolder = getFolder(folderId);
+
+						if (Validator.isNotNull(folder.getDateCreated())) {
+							existingFolder.setDateCreated(folder.getDateCreated());
+	}
+						if (Validator.isNotNull(folder.getDateModified())) {
+							existingFolder.setDateModified(folder.getDateModified());
+	}
+						if (Validator.isNotNull(folder.getDescription())) {
+							existingFolder.setDescription(folder.getDescription());
+	}
+						if (Validator.isNotNull(folder.getHasDocuments())) {
+							existingFolder.setHasDocuments(folder.getHasDocuments());
+	}
+						if (Validator.isNotNull(folder.getHasFolders())) {
+							existingFolder.setHasFolders(folder.getHasFolders());
+	}
+						if (Validator.isNotNull(folder.getId())) {
+							existingFolder.setId(folder.getId());
+	}
+						if (Validator.isNotNull(folder.getName())) {
+							existingFolder.setName(folder.getName());
+	}
+						if (Validator.isNotNull(folder.getRepositoryId())) {
+							existingFolder.setRepositoryId(folder.getRepositoryId());
+	}
+
+				return putFolder(folderId, existingFolder);
 	}
 	@Override
 	@Consumes("application/json")

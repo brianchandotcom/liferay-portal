@@ -86,6 +86,10 @@ public abstract class BaseFolderResourceTestCase {
 			Assert.assertTrue(true);
 	}
 	@Test
+	public void testPatchFolder() throws Exception {
+			Assert.assertTrue(true);
+	}
+	@Test
 	public void testPutFolder() throws Exception {
 			Assert.assertTrue(true);
 	}
@@ -196,6 +200,29 @@ public abstract class BaseFolderResourceTestCase {
 
 	protected Http.Response invokeGetFolderResponse(
 				Long folderId)
+			throws Exception {
+
+			Http.Options options = _createHttpOptions();
+
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}", folderId));
+
+			HttpUtil.URLtoString(options);
+
+			return options.getResponse();
+	}
+	protected Folder invokePatchFolder(
+				Long folderId,Folder folder)
+			throws Exception {
+
+			Http.Options options = _createHttpOptions();
+
+			options.setLocation(_resourceURL + _toPath("/folders/{folder-id}", folderId));
+
+				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), FolderImpl.class);
+	}
+
+	protected Http.Response invokePatchFolderResponse(
+				Long folderId,Folder folder)
 			throws Exception {
 
 			Http.Options options = _createHttpOptions();

@@ -44,6 +44,9 @@ public interface FolderResource {
 	public Folder getFolder(
 				Long folderId)
 			throws Exception;
+	public Folder patchFolder(
+				Long folderId,Folder folder)
+			throws Exception;
 	public Folder putFolder(
 				Long folderId,Folder folder)
 			throws Exception;

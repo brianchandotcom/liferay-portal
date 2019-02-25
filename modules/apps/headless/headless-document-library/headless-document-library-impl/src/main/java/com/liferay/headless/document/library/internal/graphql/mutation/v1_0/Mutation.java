@@ -125,6 +125,14 @@ public class Mutation {
 					folderId);
 	}
 	@GraphQLInvokeDetached
+	public Folder patchFolder(
+	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") Folder folder)
+			throws Exception {
+
+				return _getFolderResource().patchFolder(
+					folderId,folder);
+	}
+	@GraphQLInvokeDetached
 	public Folder putFolder(
 	@GraphQLName("folder-id") Long folderId,@GraphQLName("Folder") Folder folder)
 			throws Exception {

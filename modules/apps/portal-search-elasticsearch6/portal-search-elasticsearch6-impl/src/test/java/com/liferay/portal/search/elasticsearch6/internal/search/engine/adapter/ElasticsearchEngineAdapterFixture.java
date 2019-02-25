@@ -78,14 +78,6 @@ public class ElasticsearchEngineAdapterFixture {
 				}
 			};
 
-		com.liferay.portal.search.elasticsearch6.internal.search.engine.
-			adapter.search2.SearchRequestExecutorFixture
-			search2SearchRequestExecutorFixture =
-				new com.liferay.portal.search.elasticsearch6.
-					internal.search.engine.adapter.search2.
-						SearchRequestExecutorFixture(
-							elasticsearchClientResolver);
-
 		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
 			new SnapshotRequestExecutorFixture() {
 				{
@@ -113,9 +105,6 @@ public class ElasticsearchEngineAdapterFixture {
 
 				setSearchRequestExecutor(
 					searchRequestExecutorFixture.getSearchRequestExecutor());
-
-				setSearch2SearchRequestExecutor(
-					search2SearchRequestExecutorFixture.createExecutor());
 
 				setSnapshotRequestExecutor(
 					snapshotRequestExecutorFixture.

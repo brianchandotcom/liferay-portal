@@ -174,7 +174,7 @@ public class ElasticsearchAggregationVisitorFixture {
 							getElasticsearchQueryTranslator());
 					setSortFieldTranslator(
 						elasticsearchSortFieldTranslatorFixture.
-							getElasticsearchQueryTranslator());
+							getElasticsearchSortFieldTranslator());
 				}
 			});
 	}

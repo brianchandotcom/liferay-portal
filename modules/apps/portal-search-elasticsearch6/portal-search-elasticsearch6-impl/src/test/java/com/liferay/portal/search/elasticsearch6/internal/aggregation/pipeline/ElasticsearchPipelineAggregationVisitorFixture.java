@@ -55,7 +55,7 @@ public class ElasticsearchPipelineAggregationVisitorFixture {
 
 		elasticsearchPipelineAggregationVisitor.setSortFieldTranslator(
 			elasticsearchSortFieldTranslatorFixture.
-				getElasticsearchQueryTranslator());
+				getElasticsearchSortFieldTranslator());
 	}
 
 	private final ElasticsearchPipelineAggregationVisitor

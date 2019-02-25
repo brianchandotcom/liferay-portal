@@ -26,18 +26,21 @@ public class ElasticsearchSortFieldTranslatorFixture {
 	public ElasticsearchSortFieldTranslatorFixture(
 		QueryTranslator<QueryBuilder> queryTranslator) {
 
-		_elasticsearchQueryTranslator = new ElasticsearchSortFieldTranslator() {
-			{
-				setQueryTranslator(queryTranslator);
-			}
-		};
+		_elasticsearchSortFieldTranslator =
+			new ElasticsearchSortFieldTranslator() {
+				{
+					setQueryTranslator(queryTranslator);
+				}
+			};
 	}
 
-	public ElasticsearchSortFieldTranslator getElasticsearchQueryTranslator() {
-		return _elasticsearchQueryTranslator;
+	public ElasticsearchSortFieldTranslator
+		getElasticsearchSortFieldTranslator() {
+
+		return _elasticsearchSortFieldTranslator;
 	}
 
 	private final ElasticsearchSortFieldTranslator
-		_elasticsearchQueryTranslator;
+		_elasticsearchSortFieldTranslator;
 
 }

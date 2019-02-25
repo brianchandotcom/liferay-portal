@@ -24,6 +24,7 @@ import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteRec
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionGetRecordRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionGetRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataRecordCollectionListRecordRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionListRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSavePermissionsRequestExecutor;
@@ -54,6 +55,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionListRecordRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionListRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionListRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionListResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
@@ -306,6 +309,24 @@ public class DEDataRecordCollectionServiceImpl
 					deDataRecordCollectionGetRequest.
 						getDEDataRecordCollectionId(),
 					nsrse);
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException(e);
+		}
+	}
+
+	@Override
+	public DEDataRecordCollectionListRecordResponse execute(
+			DEDataRecordCollectionListRecordRequest
+				deDataRecordCollectionListRecordRequest)
+		throws DEDataRecordCollectionException {
+
+		try {
+			return _deDataRecordCollectionListRecordRequestExecutor.execute(
+				deDataRecordCollectionListRecordRequest);
+		}
+		catch (DEDataRecordCollectionException dedrce) {
+			throw dedrce;
 		}
 		catch (Exception e) {
 			throw new DEDataRecordCollectionException(e);
@@ -630,6 +651,10 @@ public class DEDataRecordCollectionServiceImpl
 			new DEDataRecordCollectionListRequestExecutor(
 				ddlRecordSetLocalService, _deDataEngineRequestExecutor);
 
+		_deDataRecordCollectionListRecordRequestExecutor =
+			new DEDataRecordCollectionListRecordRequestExecutor(
+				ddlRecordLocalService, _deDataEngineRequestExecutor);
+
 		_deDataRecordCollectionSaveModelPermissionsRequestExecutor =
 			new DEDataRecordCollectionSaveModelPermissionsRequestExecutor(
 				resourcePermissionLocalService);
@@ -783,6 +808,8 @@ public class DEDataRecordCollectionServiceImpl
 		_deDataRecordCollectionGetRecordRequestExecutor;
 	private DEDataRecordCollectionGetRequestExecutor
 		_deDataRecordCollectionGetRequestExecutor;
+	private DEDataRecordCollectionListRecordRequestExecutor
+		_deDataRecordCollectionListRecordRequestExecutor;
 	private DEDataRecordCollectionListRequestExecutor
 		_deDataRecordCollectionListRequestExecutor;
 	private DEDataRecordCollectionSaveModelPermissionsRequestExecutor

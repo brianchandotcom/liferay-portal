@@ -108,6 +108,21 @@ public interface DEDataRecordCollectionService {
 		throws DEDataRecordCollectionException;
 
 	/**
+	 * List all the {@link DEDataRecord} from the database related to the
+	 * {@link DEDataRecordCollection} ID passed as a parameter on the request.
+	 *
+	 * @param DEDataRecordCollectionListRecordRequest request to list
+	 * {@link DEDataRecord}
+	 * @return {@link DEDataRecordCollectionListRecordResponse} Response
+	 * of the list request
+	 * @review
+	 */
+	public DEDataRecordCollectionListRecordResponse execute(
+			DEDataRecordCollectionListRecordRequest
+				deDataRecordCollectionListRecordRequest)
+		throws DEDataRecordCollectionException;
+
+	/**
 	 * List {@link DEDataRecordCollection} from the database corresponding to the
 	 * group ID passed as a parameter on the request.
 	 *

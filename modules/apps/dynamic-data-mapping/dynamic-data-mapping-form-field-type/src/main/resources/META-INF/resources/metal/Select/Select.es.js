@@ -265,27 +265,14 @@ class Select extends Component {
 			value: ''
 		};
 
-		let newOptions = [...options];
-
-		newOptions.unshift(emptyOption);
-
-		newOptions = newOptions.map(
-			option => {
-				let active = false;
-
-				if (option.value === selectedValue) {
-					active = true;
-				}
-
-				return {
-					...option,
-					active,
-					type: 'item'
-				};
-			}
+		const newOptions = [
+			emptyOption,
+			...options
+		].map(
+			option => this._markSelectedOption(option, selectedValue)
+		).concat(
+			fixedOptions.map(option => this._markSelectedOption(option, selectedValue))
 		);
-
-		newOptions = newOptions.concat(fixedOptions);
 
 		if (newOptions.length > 2 && fixedOptions.length) {
 			newOptions[options.length].separator = true;
@@ -297,6 +284,14 @@ class Select extends Component {
 			predefinedValue: predefinedValueArray[0] || '',
 			selectedLabel: this._getSelectedLabel(selectedValue),
 			value: selectedValue
+		};
+	}
+
+	_markSelectedOption(option, value) {
+		return {
+			...option,
+			active: option.value === value,
+			type: 'item'
 		};
 	}
 
@@ -314,10 +309,10 @@ class Select extends Component {
 		const {fixedOptions, options, placeholder, predefinedValue} = this;
 		let predefinedLabel;
 		let selectedLabel = placeholder;
-		const selectedOption = options.find(option => option.value === selectedValue);
+		let selectedOption = options.find(option => option.value === selectedValue);
 
 		if (!selectedOption) {
-			selectedLabel = fixedOptions.find(option => option.value === selectedValue);
+			selectedOption = fixedOptions.find(option => option.value === selectedValue);
 		}
 
 		if (selectedOption) {

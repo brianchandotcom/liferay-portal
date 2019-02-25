@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import './FragmentEditableFieldTooltip.es';
@@ -52,41 +51,9 @@ const FLOATING_TOOLBAR_PANELS = [
 const SAVE_CHANGES_DELAY = 1500;
 
 /**
- * Buttons rendered inside the tooltip
- * @review
- */
-const TOOLTIP_BUTTONS = {
-	edit: {
-		id: 'edit',
-		label: Liferay.Language.get('edit')
-	},
-
-	map: {
-		id: 'map',
-		label: Liferay.Language.get('map[relational]')
-	},
-
-	selectImage: {
-		id: 'selectImage',
-		label: Liferay.Language.get('select-image')
-	}
-};
-
-/**
  * FragmentEditableField
  */
 class FragmentEditableField extends Component {
-
-	/**
-	 * Adds item types to state
-	 * @param {Object} _state
-	 * @private
-	 * @return {Object}
-	 * @static
-	 */
-	static _addItemTypesToState(_state) {
-		return setIn(_state, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
-	}
 
 	/**
 	 * @inheritDoc
@@ -153,21 +120,10 @@ class FragmentEditableField extends Component {
 			content = Soy.toIncDom(tempContent.innerHTML);
 		}
 
-		const _tooltipButtons = this._getTooltipButtons(
-			this.type
-		);
+		const nextState = setIn(state, ['content'], content);
 
-		const nextState = FragmentEditableField._addItemTypesToState(state);
-
-		return object.mixin(
-			{},
-			nextState,
-			{
-				content,
-				_tooltipButtons
+		return setIn(nextState, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
 			}
-		);
-	}
 
 	/**
 	 * @inheritDoc
@@ -273,30 +229,6 @@ class FragmentEditableField extends Component {
 		);
 
 		this._editing = true;
-	}
-
-	/**
-	 * Get the list of buttons that should be rendered inside the tooltip
-	 * @param {string} editableType
-	 * @private
-	 * @return {object}
-	 * @review
-	 */
-	_getTooltipButtons(editableType) {
-		const _tooltipButtons = [];
-
-		if (this.showMapping) {
-			_tooltipButtons.push(TOOLTIP_BUTTONS.map);
-		}
-
-		if (editableType === 'image') {
-			_tooltipButtons.push(TOOLTIP_BUTTONS.selectImage);
-		}
-		else {
-			_tooltipButtons.push(TOOLTIP_BUTTONS.edit);
-		}
-
-		return _tooltipButtons;
 	}
 
 	/**
@@ -792,28 +724,6 @@ FragmentEditableField.STATE = {
 	 * @type {HTMLElement}
 	 */
 	_tooltipAlignElement: Config.internal().object(),
-
-	/**
-	 * List of buttons rendered inside the tooltip
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {Array<{
-	 *   id: !string,
-	 *   label: !string
-	 * }>}
-	 */
-	_tooltipButtons: Config
-		.internal()
-		.arrayOf(
-			Config.shapeOf(
-				{
-					id: Config.string().required(),
-					label: Config.string().required()
-				}
-			)
-		),
 
 	/**
 	 * Label shown inside editable's tooltip instead of action buttons

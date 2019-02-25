@@ -7,25 +7,12 @@
 	{@param content: html}
 	{@param editableId: string}
 	{@param type: string}
-	{@param? _editing: bool}
 	{@param? _handleEditableBlur: any}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableHoverStart: any}
-	{@param? _handleEditableMouseEnter: any}
-	{@param? _handleEditableMouseLeave: any}
-	{@param? _handleOutsideTooltipClick: any}
-	{@param? _handleTooltipButtonClick: any}
-	{@param? _showTooltip: bool}
-	{@param? _tooltipAlignElement: ?}
-	{@param? _tooltipButtons: list<[
-		id: string,
-		label: string
-	]>}
-	{@param? _tooltipLabel: string}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
 	{@param? itemTypes: ?}
-	{@param? store: ?}
 
 	{let $editableClasses kind="text"}
 		{if $activeItemId == $editableId and $activeItemType == $itemTypes.editable}
@@ -37,8 +24,6 @@
 		class="{$editableClasses}"
 		data-onblur="{$_handleEditableBlur}"
 		data-onclick="{$_handleEditableClick}"
-		data-onmouseenter="{$_handleEditableMouseEnter}"
-		data-onmouseleave="{$_handleEditableMouseLeave}"
 		data-onmouseover="{$_handleEditableHoverStart}"
 		id="{$editableId}"
 		ref="editable"
@@ -46,19 +31,5 @@
 		type="{$type}"
 	>
 		{$content}
-
-		{if not $_editing and $_showTooltip and $_tooltipAlignElement and $_tooltipButtons}
-			{call com.liferay.layout.content.page.editor.web.FragmentEditableFieldTooltip.render}
-				{param alignElement: $_tooltipAlignElement /}
-				{param buttons: $_tooltipButtons /}
-				{param events: [
-					'buttonClick': $_handleTooltipButtonClick,
-					'outsideTooltipClick': $_handleOutsideTooltipClick
-				] /}
-				{param label: $_tooltipLabel /}
-				{param portalElement: 'body' /}
-				{param store: $store /}
-			{/call}
-		{/if}
 	</lfr-editable>
 {/template}

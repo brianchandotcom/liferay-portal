@@ -6,7 +6,6 @@ import './FragmentEditableFieldTooltip.es';
 
 import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
-import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {Store} from '../../store/store.es';
@@ -132,15 +131,6 @@ class FragmentEditableField extends Component {
 	 * @review
 	 */
 	rendered() {
-		if (this._showEditor) {
-			this._showEditor = false;
-			this._enableEditor();
-		}
-
-		if (this.refs.editable !== this._tooltipAlignElement) {
-			this._tooltipAlignElement = this.refs.editable;
-		}
-
 		if (
 			(this.editableId === this.activeItemId) &&
 			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable)
@@ -299,29 +289,7 @@ class FragmentEditableField extends Component {
 				}
 			);
 		}
-
-		if (this._tooltipLabel) {
-			this._showTooltip = false;
-			this._tooltipLabel = '';
 		}
-
-		if (
-			(this.showMapping && !this._editing) ||
-			(getActiveEditableElement() !== this.refs.editable)
-		) {
-			if (this.showMapping) {
-				this._showTooltip = !this._showTooltip;
-			}
-			else {
-				this._showTooltip = false;
-				this._enableEditor();
-			}
-
-			if (!this._showTooltip) {
-				this._handleEditableMouseEnter();
-			}
-		}
-	}
 
 	/**
 	 * Callback executed when the exiting editor is destroyed
@@ -352,34 +320,6 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
-	 * Callback executed when cursor enters editable element
-	 * @private
-	 * @review
-	 */
-	_handleEditableMouseEnter() {
-		if (
-			!this._editing &&
-			this.editableValues.mappedField &&
-			!this._showTooltip
-		) {
-			this._showTooltip = true;
-			this._tooltipLabel = this.editableValues.mappedField;
-		}
-	}
-
-	/**
-	 * Callback executed when cursor leaves editable element
-	 * @private
-	 * @review
-	 */
-	_handleEditableMouseLeave() {
-		if (this._tooltipLabel && !this._editing) {
-			this._showTooltip = false;
-			this._tooltipLabel = '';
-		}
-	}
-
-	/**
 	 * Callback executed when an editable value changes
 	 * @param {string} newValue
 	 * @private
@@ -403,7 +343,7 @@ class FragmentEditableField extends Component {
 		const {panelId} = data;
 
 		if (panelId === FLOATING_TOOLBAR_EDIT_PANEL_ID) {
-			this._showEditor = true;
+			this._enableEditor();
 		}
 		else if (panelId === FLOATING_TOOLBAR_MAP_PANEL_ID) {
 			this.store
@@ -417,48 +357,6 @@ class FragmentEditableField extends Component {
 					}
 				);
 		}
-
-		this._showTooltip = false;
-	}
-
-	/**
-	 * Handle clicks outside tooltip element
-	 * @private
-	 * @review
-	 */
-	_handleOutsideTooltipClick() {
-		this._showTooltip = false;
-	}
-
-	/**
-	 * Handle tooltip button click event
-	 * @param {{buttonId: string}} event
-	 * @private
-	 * @review
-	 */
-	_handleTooltipButtonClick(event) {
-		const {buttonId} = event;
-
-		if (
-			buttonId === TOOLTIP_BUTTONS.edit.id ||
-			buttonId === TOOLTIP_BUTTONS.selectImage.id
-		) {
-			this._showEditor = true;
-		}
-		else if (buttonId === TOOLTIP_BUTTONS.map.id) {
-			this.store
-				.dispatchAction(
-					OPEN_MAPPING_FIELDS_DIALOG,
-					{
-						editableId: this.editableId,
-						editableType: this.type,
-						fragmentEntryLinkId: this.fragmentEntryLinkId,
-						mappedFieldId: this.editableValues.mappedField || ''
-					}
-				);
-		}
-
-		this._showTooltip = false;
 	}
 
 	/**
@@ -637,16 +535,6 @@ FragmentEditableField.STATE = {
 	type: Config.string().required(),
 
 	/**
-	 * True if mapping is activated
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!boolean}
-	 */
-	showMapping: Config.bool().required(),
-
-	/**
 	 * Store instance
 	 * @default undefined
 	 * @instance
@@ -680,58 +568,6 @@ FragmentEditableField.STATE = {
 	 */
 
 	_saveChangesTimeout: Config.number().internal(),
-
-	/**
-	 * Flag indicating if the editable editor should be enabled.
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_showEditor: Config
-		.internal()
-		.bool()
-		.value(false),
-
-	/**
-	 * Flag indicating if the click tooltip should be visible.
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_showTooltip: Config
-		.internal()
-		.bool()
-		.value(false),
-
-	/**
-	 * Reference element used for aligning the tooltip
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {HTMLElement}
-	 */
-	_tooltipAlignElement: Config.internal().object(),
-
-	/**
-	 * Label shown inside editable's tooltip instead of action buttons
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_tooltipLabel: Config
-		.internal()
-		.string()
-		.value(''),
 
 	/**
 	 * Flag indicating if there are unsaved changes

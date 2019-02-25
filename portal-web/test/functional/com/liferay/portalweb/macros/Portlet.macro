@@ -197,6 +197,17 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to remove this component?");
 	}
 
+	@description = "Deploy the following jar into Liferay Portal server with port ${nodePort}: ${liferayDependencyJars}"
+	macro deployJarOnSpecificServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=${liferayDependencyJars} -Dapp.server.bundle.index=${bundleIndex}"
+		);
+	}
+
 	@summary = "Drag and drop the '${portletName}' portlet from column ${columnNumberFrom} to column ${columnNumberTo}"
 	macro dragAndDropPortletToColumnPG {
 		var key_portletTitleName = "${portletName}";
@@ -229,6 +240,40 @@ definition {
 		}
 
 		AssertElementNotPresent(locator1 = "Treeview#NODE_COLLAPSED");
+	}
+
+	@description = "Get cluster node control address in console"
+	macro getClusterNodeControlAddress {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
+
+		var controlAddress = StringUtil.extractLast("${fileContent}", "liferay-channel-control, localAddress:");
+		var controlAddress = StringUtil.extractFirst("${controlAddress}", "properties");
+		var controlAddress = StringUtil.replace("${controlAddress}", ",", "");
+		var controlAddress = StringUtil.trim("${controlAddress}");
+		return "${controlAddress}";
+
+		echo("control Address of ${nodePort} is ${controlAddress}");
+	}
+
+	@description = "Get cluster node transport address in console"
+	macro getClusterNodeTransportAddress {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
+
+		var transportAddress = StringUtil.extractLast("${fileContent}", "liferay-channel-transport-0, localAddress:");
+		var transportAddress = StringUtil.extractFirst("${transportAddress}", "properties");
+		var transportAddress = StringUtil.replace("${transportAddress}", ",", "");
+		var transportAddress = StringUtil.trim("${transportAddress}");
+		return "${transportAddress}";
+
+		echo("transport Address of ${nodePort} is ${transportAddress}");
 	}
 
 	macro gotoPortletOptions {
@@ -532,6 +577,38 @@ definition {
 			locator1 = "Portlet#TITLE",
 			value1 = "${portletName}"
 		);
+	}
+
+	@description = "This will view the text shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
+	macro viewTextPresentOnSpecificConsole {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
+
+		if (contains("${fileContent}", "${expectText}")) {
+			echo("${nodePort}: ${expectText}");
+		}
+		else {
+			fail("Fail to find the log present on Console");
+		}
+	}
+
+	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
+	macro viewTextNotPresentOnSpecificConsole {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
+
+		if (!(contains("${fileContent}", "${exceptionText}"))) {
+			echo("No exception on Console");
+		}
+		else {
+			fail("Got exception ${exceptionText} on ${nodePort}");
+		}
 	}
 
 	macro viewUndeployMessage {

@@ -199,7 +199,7 @@ public class SchedulerEventMessageListenerWrapperTest {
 			futureTask2.get();
 		}
 		catch (ExecutionException ee) {
-			Assert.fail("Should not throw exception " + ee);
+			throw new AssertionError("Should not throw exception", ee);
 		}
 
 		_testMessageListener.unblock();

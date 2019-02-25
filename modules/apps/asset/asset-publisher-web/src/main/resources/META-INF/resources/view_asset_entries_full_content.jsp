@@ -19,13 +19,7 @@
 <%
 AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view.jsp-assetEntryResult");
 
-List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
-
-request.setAttribute("view.jsp-results", assetEntries);
-
-for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
-	AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
-
+for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
 
 	if (assetRendererFactory == null) {
@@ -48,22 +42,15 @@ for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryI
 	}
 
 	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetEntryIndex", assetEntryIndex);
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-	request.setAttribute("view.jsp-print", Boolean.FALSE);
-	request.setAttribute("view.jsp-title", assetRenderer.getTitle(locale));
-
-	try {
 %>
 
-		<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/view_asset_entry_full_content.jsp" servletContext="<%= application %>" />
+
+	<div class="separator"><!-- --></div>
 
 <%
-	}
-	catch (Exception e) {
-		_log.error(e.getMessage());
-	}
 }
 %>
 

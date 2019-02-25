@@ -5288,6 +5288,36 @@ go</echo>
 		</gradle-execute>
 	</target>
 
+	<target name="copy-cluster-log">
+		<local name="log.dir" />
+
+		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/logs" property="log.dir" value="${app.server.parent.dir}/logs">
+			<or>
+				<not>
+					<isset property="app.server.bundle.index" />
+				</not>
+				<equals arg1="${app.server.bundle.index}" arg2="0" />
+			</or>
+		</condition>
+
+		<for param="log.file">
+			<path>
+				<fileset
+					dir="${log.dir}"
+				>
+					<include name="*.log" />
+				</fileset>
+			</path>
+			<sequential>
+				<copy
+					file="@{log.file}"
+					overwrite="true"
+					tofile="${liferay.home}/cluster${app.server.bundle.index}.log"
+				/>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="copy-log-file">
 		<for param="log.file">
 			<path>
@@ -6474,36 +6504,6 @@ go</echo>
 			file="${changelog.dir}/git-build-log.html"
 			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
 		/>
-	</target>
-
-	<target name="copy-cluster-log">
-		<local name="log.dir" />
-
-		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/logs" property="log.dir" value="${app.server.parent.dir}/logs">
-			<or>
-				<not>
-					<isset property="app.server.bundle.index" />
-				</not>
-				<equals arg1="${app.server.bundle.index}" arg2="0" />
-			</or>
-		</condition>
-
-		<for param="log.file">
-			<path>
-				<fileset
-					dir="${log.dir}"
-				>
-					<include name="*.log" />
-				</fileset>
-			</path>
-			<sequential>
-				<copy
-					file="@{log.file}"
-					overwrite="true"
-					tofile="${liferay.home}/cluster${app.server.bundle.index}.log"
-				/>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="install-patch">

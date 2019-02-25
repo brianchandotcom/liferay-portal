@@ -297,8 +297,20 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 			_ddmDataProviderInstanceOutputParametersDataProvider.getData(
 				ddmDataProviderRequest);
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			ddmDataProviderResponse.hasOutput("outputParameterNames"));
+
+		Optional<List<KeyValuePair>> outputParameterNamesOptional =
+			ddmDataProviderResponse.getOutputOptional(
+				"outputParameterNames", List.class);
+
+		Assert.assertTrue(outputParameterNamesOptional.isPresent());
+
+		List<KeyValuePair> keyValuePairs = new ArrayList();
+
+		Assert.assertEquals(
+			keyValuePairs.toString(), keyValuePairs,
+			outputParameterNamesOptional.get());
 	}
 
 	private void _setUpLanguageUtil() {

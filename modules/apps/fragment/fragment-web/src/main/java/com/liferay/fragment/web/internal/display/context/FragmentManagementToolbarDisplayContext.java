@@ -222,21 +222,6 @@ public class FragmentManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							getFilterNavigationDropdownItemsLabel());
-					});
-			}
-		};
-	}
-
-	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		return new LabelItemList() {
 			{

@@ -1843,10 +1843,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Group group, boolean privateLayout, boolean includeUserGroups)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+		int count = layoutPersistence.countByG_P(
 			group.getGroupId(), privateLayout);
-
-		int count = layoutSet.getPageCount();
 
 		if (!group.isUser() || !includeUserGroups) {
 			return count;
@@ -1863,10 +1861,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				Group userGroupGroup = groupPersistence.findByC_C_C(
 					group.getCompanyId(), userGroupClassNameId, userGroupId);
 
-				layoutSet = layoutSetPersistence.findByG_P(
+				count += layoutPersistence.countByG_P(
 					userGroupGroup.getGroupId(), privateLayout);
-
-				count += layoutSet.getPageCount();
 			}
 		}
 

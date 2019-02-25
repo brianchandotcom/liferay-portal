@@ -523,6 +523,27 @@ paths:
                 $ref: "#/components/schemas/Folder"
           description: ""
       tags: ["Folder"]
+    patch:
+      parameters:
+        - in: path
+          name: folder-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+      tags: ["Folder"]
     put:
       parameters:
         - in: path

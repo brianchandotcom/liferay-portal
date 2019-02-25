@@ -167,7 +167,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 				!nestedDefinitions.isEmpty());
 
 			if (!newDefinition.equals(definition)) {
-				content = StringUtil.replaceFirst(
+				content = StringUtil.replaceLast(
 					content, definition, newDefinition);
 			}
 		}

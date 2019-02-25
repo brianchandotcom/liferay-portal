@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.liferay.headless.foundation.dto.v1_0.Creator;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -805,7 +806,7 @@ public abstract class BaseVocabularyResourceTestCase {
 		@JsonProperty
 		protected Long contentSpace;
 
-		@JsonProperty
+		@JsonDeserialize(as = CreatorImpl.class)
 		protected Creator creator;
 
 		@JsonProperty

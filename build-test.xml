@@ -5662,6 +5662,34 @@ go</echo>
 				/>
 			</then>
 		</if>
+
+		<condition else="${app.server.parent.dir}-${app.server.bundle.index}/deploy" property="deploy.dir" value="${app.server.parent.dir}/deploy">
+			<or>
+				<not>
+					<isset property="app.server.bundle.index" />
+				</not>
+				<equals arg1="${app.server.bundle.index}" arg2="0" />
+			</or>
+		</condition>
+
+		<echo>This is deploy dir ${deploy.dir}</echo>
+
+		<if>
+			<isset property="liferay.dependency.jars" />
+
+			<then>
+				<property name="liferay.dependency.jars" value="${liferay.dependency.jars}" />
+				<echo>Copying ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars} to ${deploy.dir}/${liferay.dependency.jars}</echo>
+
+				<copy
+					file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/${liferay.dependency.jars}"
+					todir="${deploy.dir}"
+				/>
+			</then>
+			<else>
+				<echo>This is dependancy name in else block ${liferay.dependency.jars}</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="deploy-extra-apps">

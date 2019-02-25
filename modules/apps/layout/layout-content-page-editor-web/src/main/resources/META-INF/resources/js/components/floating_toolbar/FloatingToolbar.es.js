@@ -3,7 +3,9 @@ import Soy from 'metal-soy';
 import {Align} from 'metal-position';
 import {Config} from 'metal-state';
 
+import {CLEAR_ACTIVE_ITEM} from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbar.soy';
 
 /**
@@ -54,6 +56,18 @@ class FloatingToolbar extends Component {
 		);
 
 		return selectedPanelId;
+	}
+
+	_handleFloatingToolbarFocusOut() {
+		requestAnimationFrame(
+			() => {
+				if (shouldClearFocus(this.anchorElement)) {
+					this.store.dispatchAction(
+						CLEAR_ACTIVE_ITEM
+					);
+				}
+			}
+		);
 	}
 
 	/**

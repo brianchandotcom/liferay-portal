@@ -123,6 +123,28 @@ public class DLFileEntryChangesRegisterCTEntityTest {
 	}
 
 	@Test
+	public void testUpdateAssetTagRegisterChange() throws PortalException {
+		FileEntry fileEntry = _addFileEntry();
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		serviceContext.setAssetTagNames(new String[] {"tag1"});
+
+		fileEntry = _dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), StringPool.BLANK,
+			ContentTypes.TEXT_PLAIN, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC, null, 0,
+			serviceContext);
+
+		List<CTEntry> modelChangeCTEntries = _ctManager.getModelChangeCTEntries(
+			_userId, fileEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			"Amount of model change CTEntry is incorrect", 2,
+			modelChangeCTEntries.size());
+	}
+
+	@Test
 	public void testUpdateFileEntryCreatesCTEntry() throws PortalException {
 		FileEntry fileEntry = _addFileEntry();
 

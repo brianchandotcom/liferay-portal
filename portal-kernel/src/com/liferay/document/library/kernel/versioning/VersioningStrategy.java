@@ -23,7 +23,8 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 public interface VersioningStrategy {
 
 	public DLVersionNumberIncrease computeDLVersionNumberIncrease(
-		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion);
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		String[] newTagNames);
 
 	public boolean isOverridable();
 

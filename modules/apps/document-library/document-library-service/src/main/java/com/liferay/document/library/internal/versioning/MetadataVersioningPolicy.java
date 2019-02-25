@@ -45,7 +45,8 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 
 	@Override
 	public Optional<DLVersionNumberIncrease> computeDLVersionNumberIncrease(
-		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		String[] newTagNames) {
 
 		if (!Objects.equals(
 				previousDLFileVersion.getTitle(),

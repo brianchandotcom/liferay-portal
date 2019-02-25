@@ -25,6 +25,7 @@ import java.util.Optional;
 public interface VersioningPolicy {
 
 	public Optional<DLVersionNumberIncrease> computeDLVersionNumberIncrease(
-		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion);
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		String[] newTagNames);
 
 }

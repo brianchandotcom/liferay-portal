@@ -354,7 +354,7 @@ public class DLFileEntryLocalServiceImpl
 		DLVersionNumberIncrease computedDLVersionNumberIncrease =
 			_computeDLVersionNumberIncrease(
 				dlVersionNumberIncrease, lastDLFileVersion, latestDLFileVersion,
-				serviceContext.getWorkflowAction());
+				serviceContext);
 
 		if (computedDLVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
 			_overwritePreviousFileVersion(
@@ -2910,7 +2910,9 @@ public class DLFileEntryLocalServiceImpl
 	private DLVersionNumberIncrease _computeDLVersionNumberIncrease(
 		DLVersionNumberIncrease dlVersionNumberIncrease,
 		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
-		int workflowAction) {
+		ServiceContext serviceContext) {
+
+		int workflowAction = serviceContext.getWorkflowAction();
 
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 			return DLVersionNumberIncrease.MINOR;
@@ -2937,7 +2939,8 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return versioningStrategy.computeDLVersionNumberIncrease(
-			previousDLFileVersion, nextDLFileVersion);
+			previousDLFileVersion, nextDLFileVersion,
+			serviceContext.getAssetTagNames());
 	}
 
 	private boolean _isValidFileVersionNumber(String version) {

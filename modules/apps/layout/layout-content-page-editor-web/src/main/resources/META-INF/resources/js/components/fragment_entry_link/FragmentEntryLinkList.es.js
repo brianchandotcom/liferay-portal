@@ -8,10 +8,10 @@ import '../floating_toolbar/FloatingToolbar.es';
 import './FragmentEntryLinkListSection.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
-import {CLEAR_ACTIVE_ITEM, CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, REMOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_DROP_TARGET, UPDATE_HOVERED_ITEM} from '../../actions/actions.es';
-import {focusItem, moveItem, removeItem, setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {CLEAR_DROP_TARGET, CLEAR_HOVERED_ITEM, MOVE_FRAGMENT_ENTRY_LINK, MOVE_SECTION, UPDATE_ACTIVE_ITEM, UPDATE_DROP_TARGET} from '../../actions/actions.es';
+import {focusItem, moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
-import {getFragmentColumn, getItemMoveDirection, getSectionIndex, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
+import {getFragmentColumn, getTargetBorder} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -331,106 +331,6 @@ class FragmentEntryLinkList extends Component {
 
 			moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
 		}
-	}
-
-	/**
-	 * Callback executed when a section lose the focus
-	 * @private
-	 */
-	_handleSectionFocusOut() {
-		requestAnimationFrame(
-			() => {
-				if (shouldClearFocus(this.element)) {
-					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
-				}
-			}
-		);
-	}
-
-	/**
-	 * Callback executed when a section is clicked.
-	 * @param {Event} event
-	 * @private
-	 */
-	_handleSectionClick(event) {
-		event.stopPropagation();
-
-		this.store.dispatchAction(
-			UPDATE_ACTIVE_ITEM,
-			{
-				activeItemId: event.delegateTarget.dataset.layoutSectionId,
-				activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
-			}
-		);
-	}
-
-	/**
-	 * Callback executed when a section starts being hovered.
-	 * @param {Event} event
-	 * @private
-	 */
-	_handleSectionHoverStart(event) {
-		if (this.store) {
-			this.store.dispatchAction(
-				UPDATE_HOVERED_ITEM,
-				{
-					hoveredItemId: event.delegateTarget.dataset.layoutSectionId,
-					hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
-				}
-			);
-		}
-	}
-
-	/**
-	 * Callback executed when a key is pressed on focused section
-	 * @private
-	 * @param {Event} event
-	 */
-	_handleSectionKeyUp(event) {
-		const direction = getItemMoveDirection(event.which);
-		const sectionId = document.activeElement.dataset.layoutSectionId;
-		const sectionIndex = getSectionIndex(
-			this.layoutData.structure,
-			sectionId
-		);
-		const targetItem = this.layoutData.structure[
-			sectionIndex + direction
-		];
-
-		if (direction && targetItem) {
-			const moveItemPayload = {
-				sectionId,
-				targetBorder: getTargetBorder(direction),
-				targetItemId: targetItem.rowId
-			};
-
-			this.store.dispatchAction(
-				UPDATE_ACTIVE_ITEM,
-				{
-					activeItemId: sectionId,
-					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
-				}
-			);
-
-			moveItem(this.store, MOVE_SECTION, moveItemPayload);
-		}
-	}
-
-	/**
-	 * Callback executed when the remove section button is clicked
-	 * @param {Event} event
-	 * @private
-	 */
-	_handleSectionRemoveButtonClick(event) {
-		event.stopPropagation();
-
-		removeItem(
-			this.store,
-			REMOVE_SECTION,
-			{
-				sectionId: this.hoveredItemId
-			}
-		);
 	}
 
 	/**

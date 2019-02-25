@@ -24,11 +24,6 @@
 	]}
 	{@param? _handleFragmentEntryLinkListHoverEnd: any}
 	{@param? _handleFragmentMove: any}
-	{@param? _handleSectionFocusOut: any}
-	{@param? _handleSectionClick: any}
-	{@param? _handleSectionHoverStart: any}
-	{@param? _handleSectionKeyUp: any}
-	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
@@ -67,11 +62,6 @@
 			{foreach $row in $layoutData.structure}
 				{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkListSection.render}
 					{param _handleFragmentMove: $_handleFragmentMove /}
-					{param _handleSectionClick: $_handleSectionClick /}
-					{param _handleSectionFocusOut: $_handleSectionFocusOut /}
-					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
-					{param _handleSectionKeyUp: $_handleSectionKeyUp /}
-					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultSegmentId: $defaultSegmentId /}

@@ -120,7 +120,7 @@ public class SelectDDMFormFieldTypeSettingsTest
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
 		Assert.assertEquals(
-			"not(equals(getValue('ddmDataProviderInstanceId'), ''))",
+			"contains(getValue('dataSourceType'), \"data-provider\")",
 			ddmFormRule0.getCondition());
 
 		List<String> actions = ddmFormRule0.getActions();

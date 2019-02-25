@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.HashMap;
@@ -42,17 +40,14 @@ public class URLCompareUtil {
 			return false;
 		}
 
-		URI uri1 = _toURI(url1);
-		URI uri2 = _toURI(url2);
-
 		if (!Objects.equals(
-				_normalizePath(uri1.getPath()),
-				_normalizePath(uri2.getPath()))) {
+				_normalizePath(url1.getPath()),
+				_normalizePath(url2.getPath()))) {
 
 			return false;
 		}
 
-		if (!Objects.equals(_getQueryMap(uri1), _getQueryMap(uri2))) {
+		if (!Objects.equals(_getQueryMap(url1), _getQueryMap(url2))) {
 			return false;
 		}
 
@@ -69,8 +64,8 @@ public class URLCompareUtil {
 		return port;
 	}
 
-	private static Map<String, String> _getQueryMap(URI uri) {
-		String query = uri.getQuery();
+	private static Map<String, String> _getQueryMap(URL url) {
+		String query = url.getQuery();
 
 		Map<String, String> queryMap = new HashMap<>();
 
@@ -91,20 +86,6 @@ public class URLCompareUtil {
 		String normalizedPath = path.replaceAll("/{2,}", "/");
 
 		return normalizedPath.replaceAll("/*$", "");
-	}
-
-	private static URI _toURI(URL url) {
-		URI uri;
-
-		try {
-			uri = url.toURI();
-		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException(
-				"Unable to create URI from URL " + url, urise);
-		}
-
-		return uri;
 	}
 
 	private static final Pattern _queryPattern = Pattern.compile(

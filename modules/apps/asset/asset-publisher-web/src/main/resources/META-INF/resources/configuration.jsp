@@ -113,7 +113,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		handleCreateAssetListLinkClick
 	);
 
-	function handleDestroyPortlet () {
+	function handleDestroyPortlet() {
 		createAssetListLinkClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

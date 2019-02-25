@@ -615,8 +615,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 	private static final Set<String>
 		_layoutLocalServiceStagingAdviceMethodNames = new HashSet<>(
 			Arrays.asList(
-				"createLayout", "deleteLayout", "getLayouts", "updateLayout",
-				"updateLookAndFeel", "updateName"));
+				"create", "createLayout", "deleteLayout", "getLayout",
+				"getLayouts", "updateLayout", "updateLookAndFeel",
+				"updateName"));
 
 	private BeanFactory _beanFactory;
 
@@ -643,7 +644,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
-			if (methodName.equals("createLayout")) {
+			if (methodName.equals("create") ||
+				methodName.equals("createLayout")) {
+
 				return _invoke(method, arguments);
 			}
 			else if (methodName.equals("deleteLayout")) {
@@ -661,6 +664,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				else {
 					return wrapReturnValue(_invoke(method, arguments), false);
 				}
+			}
+			else if (methodName.equals("getLayout")) {
+				return _invoke(method, arguments);
 			}
 			else if (methodName.equals("getLayouts")) {
 				boolean showIncomplete = false;

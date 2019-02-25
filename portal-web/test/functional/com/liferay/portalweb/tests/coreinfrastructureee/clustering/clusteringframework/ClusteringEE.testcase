@@ -382,4 +382,150 @@ definition {
 
 		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
 	}
+
+	test CacheReplicationbyCopy {
+		property custom.properties = "cluster.link.enabled=true${line.separator}ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true${line.separator}ehcache.bootstrap.cache.loader.enabled=false";
+		property test.name.skip.portal.instance = "ClusteringEE#CacheReplicationbyCopy";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		Page.assertNodePortPG(nodePort = "9080");
+
+		User.logoutPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+
+		for (var nodeport : list "8080,9080") {
+			Portlet.getClusterNodelogFile(nodePort = "${nodeport}");
+		};
+
+		var controlAddress0 = Portlet.getClusterNodeControlAddress(nodePort = "8080");
+		var transportAddress0 = Portlet.getClusterNodeTransportAddress(nodePort = "8080");
+		echo("control Address0 is ${controlAddress0}");
+		echo("transport Address0 is ${transportAddress0}");
+
+		var controlAddress1 = Portlet.getClusterNodeControlAddress(nodePort = "9080");
+		var transportAddress1 = Portlet.getClusterNodeTransportAddress(nodePort = "9080");
+		echo("control Address1 is ${controlAddress1}");
+		echo("transport Address1 is ${transportAddress1}");
+
+		for (var nodeport : list "8080,9080") {
+			Portlet.viewTextPresentOnSpecificConsole(
+				nodePort = "${nodeport}",
+				expectText = "Accepted view [${controlAddress0}|1] (2) [${controlAddress0}, ${controlAddress1}]"
+			);
+
+			Portlet.viewTextPresentOnSpecificConsole(
+				nodePort = "${nodeport}",
+				expectText = "Accepted view [${transportAddress0}|1] (2) [${transportAddress0}, ${transportAddress1}]"
+			);
+		};
+
+		Portlet.deployJarOnSpecificServer(
+			nodePort = "8080",
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = '''
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
+import java.lang.reflect.Constructor;
+
+try {
+	ClassLoader testModuleClassLoader = ClassLoaderPool.getClassLoader("com.liferay.cluster.test.module_2.0.0");
+
+	Class<?> clazz = testModuleClassLoader.loadClass("com.liferay.cluster.test.module.internel.ClusterTestClass");
+
+	Constructor<?> constructor = clazz.getConstructor(String.class);
+
+	PortalCache testCache = MultiVMPoolUtil.getPortalCache("test.cache");
+
+	testCache.put("test.key", constructor.newInstance("test.value"));
+}
+catch (Exception e) {
+	out.println(e);
+}
+'''
+		);
+
+		AssertConsoleTextPresent(value1 = "Put test.key into test.cache");
+
+		Portlet.deployJarOnSpecificServer(
+			nodePort = "9080",
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar"
+		);
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = '''
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import java.util.List;
+
+
+PortalCache<String, String> testCache = MultiVMPoolUtil.getPortalCache("test.cache");
+
+List<String> keys = testCache.getKeys();
+
+if (keys.isEmpty()) {
+	out.println("test.cache is empty");
+
+	return;
+}
+
+for (String key : keys) {
+	out.println(key  + "=" + testCache.get(key));
+}
+'''
+		);
+
+		Portlet.getClusterNodelogFile(nodePort = "9080");
+
+		for (var expectText : list "Put test.key into test.cache,test.key=test.value") {
+			Portlet.viewTextPresentOnSpecificConsole(
+				nodePort = "8080",
+				expectText = "${expectText}"
+				);
+
+			Portlet.viewTextPresentOnSpecificConsole(
+				nodePort = "8080",
+				expectText = "${test.key=test.value}"
+				);
+		};
+	}
 }

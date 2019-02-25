@@ -179,6 +179,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 				expressions, MethodExpression.Type.CONTAINS);
 		}
 
+		if (methodKind == MethodKind.STARTSWITH) {
+			return new MethodExpressionImpl(
+				expressions, MethodExpression.Type.STARSWITH);
+		}
+
 		throw new UnsupportedOperationException("Method call: " + methodKind);
 	}
 

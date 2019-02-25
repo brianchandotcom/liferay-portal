@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.PrefixFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
@@ -203,6 +204,18 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			}
 
 			return _contains(
+				(EntityField)expressions.get(0), expressions.get(1), _locale);
+		}
+
+		if (type == MethodExpression.Type.STARSWITH) {
+			if (expressions.size() != 2) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported method visitMethodExpression with method",
+						"type ", type, " and ", expressions.size(), "params"));
+			}
+
+			return _startsWith(
 				(EntityField)expressions.get(0), expressions.get(1), _locale);
 		}
 
@@ -453,6 +466,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		return StringUtil.replace(
 			literal, StringPool.DOUBLE_APOSTROPHE, StringPool.APOSTROPHE);
+	}
+
+	private Filter _startsWith(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		return new PrefixFilter(
+			entityField.getFilterableName(locale),
+			entityField.getFilterableValue(fieldValue));
 	}
 
 	private final EntityModel _entityModel;

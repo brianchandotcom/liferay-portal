@@ -101,7 +101,6 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 				MultiSessionMessages.add(actionRequest, "displayPageAdded");
 			}
 			else if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-
 				MultiSessionMessages.add(
 					actionRequest, "layoutPageTemplateAdded");
 			}

@@ -398,13 +398,7 @@ definition {
 			portlet = "Blogs"
 		);
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		BlogsEntry.moveToRecycleBinCP(
-			assetType = "Blogs Entry",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "${entryTitle}"
-		);
+		BlogsNavigator.moveToRecycleBinCP(entryTitle = "${entryTitle}");
 
 		Navigator.openURL();
 

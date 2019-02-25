@@ -17,13 +17,13 @@ lfr-editable {
 	}
 
 	&.fragments-editor__editable {
-		&--active, &--active.mapped {
+		&--active, &--active.mapped, &--active.mapped:hover {
 			box-shadow: 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
 			outline: 0;
 		}
 	}
 
-	&:hover {
+	&:hover, &.mapped:hover {
 		box-shadow: 0 0 0 1px $fragmentEditableFieldHoverBorderColor;
 	}
 

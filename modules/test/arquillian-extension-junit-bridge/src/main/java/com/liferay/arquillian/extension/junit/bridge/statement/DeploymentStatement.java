@@ -219,8 +219,7 @@ public class DeploymentStatement extends Statement {
 
 	private static void _process(JavaArchive javaArchive) {
 		javaArchive.addPackages(
-			true, "com.liferay.arquillian.extension.junit.bridge",
-			"org.jboss.shrinkwrap.api", "org.jboss.shrinkwrap.descriptor.api");
+			true, "com.liferay.arquillian.extension.junit.bridge");
 	}
 
 	private long _installBundle(FrameworkMBean frameworkMBean, Path path)

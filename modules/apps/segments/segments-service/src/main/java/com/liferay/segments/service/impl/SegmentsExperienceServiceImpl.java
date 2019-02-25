@@ -81,8 +81,13 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
+			long groupId, long classNameId, long classPK, boolean active,
+			int start, int end,
+			OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException {
+
+		segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			groupId, classNameId, classPK, true);
 
 		return segmentsExperiencePersistence.filterFindByG_C_C_A(
 			groupId, classNameId, classPK, active, start, end,
@@ -90,14 +95,12 @@ public class SegmentsExperienceServiceImpl
 	}
 
 	@Override
-	public int getSegmentsExperiencesCount(long groupId) {
-		return segmentsExperiencePersistence.filterCountByGroupId(groupId);
-	}
-
-	@Override
 	public int getSegmentsExperiencesCount(
-		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
+			long groupId, long classNameId, long classPK, boolean active)
+		throws PortalException {
+
+		segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+			groupId, classNameId, classPK, true);
 
 		return segmentsExperiencePersistence.filterCountByG_C_C_A(
 			groupId, classNameId, classPK, active);

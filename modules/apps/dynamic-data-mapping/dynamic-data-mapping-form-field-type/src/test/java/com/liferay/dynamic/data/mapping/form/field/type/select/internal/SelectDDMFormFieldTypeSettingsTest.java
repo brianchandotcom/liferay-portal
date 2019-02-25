@@ -153,38 +153,38 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setRequired('ddmDataProviderInstanceId', equals(getValue(" +
+				"setRequired('ddmDataProviderInstanceId', contains(getValue(" +
 					"'dataSourceType'), \"data-provider\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setRequired('ddmDataProviderInstanceOutput', equals(" +
+				"setRequired('ddmDataProviderInstanceOutput', contains(" +
 					"getValue('dataSourceType'), \"data-provider\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setRequired('options', equals(getValue('dataSourceType'), " +
+				"setRequired('options', contains(getValue('dataSourceType'), " +
 					"\"manual\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setVisible('ddmDataProviderInstanceId', equals(getValue(" +
+				"setVisible('ddmDataProviderInstanceId', contains(getValue(" +
 					"'dataSourceType'), \"data-provider\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setVisible('ddmDataProviderInstanceOutput', equals(getValue(" +
-					"'dataSourceType'), \"data-provider\"))"));
+				"setVisible('ddmDataProviderInstanceOutput', contains(" +
+					"getValue('dataSourceType'), \"data-provider\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
-				"setVisible('options', equals(getValue('dataSourceType'), " +
+				"setVisible('options', contains(getValue('dataSourceType'), " +
 					"\"manual\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains(
 				"setVisible('predefinedValue', " +
-					"equals(getValue('dataSourceType'), \"manual\"))"));
+					"contains(getValue('dataSourceType'), \"manual\"))"));
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains("setVisible('validation', false)"));

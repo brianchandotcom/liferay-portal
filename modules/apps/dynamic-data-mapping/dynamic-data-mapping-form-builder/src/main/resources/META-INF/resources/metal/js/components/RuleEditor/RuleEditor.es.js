@@ -422,7 +422,7 @@ class RuleEditor extends Component {
 					firstOperandOptions,
 					operands: condition.operands.map(
 						(operand, index) => {
-							if (index === 1 && condition.operands[0].type === 'field') {
+							if (index === 1 && operand.type !== 'field' && operand.type !== 'user') {
 								operand = {
 									...operand,
 									type: getFieldProperty(pages, condition.operands[0].value, 'type')

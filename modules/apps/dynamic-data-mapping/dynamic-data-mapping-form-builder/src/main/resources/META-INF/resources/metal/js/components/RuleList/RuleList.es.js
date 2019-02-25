@@ -423,8 +423,18 @@ class RuleList extends Component {
 		if (operand.type === 'field') {
 			label = this._getFieldLabel(operand.value);
 		}
-		else if (index === 1 && this._getFieldType(operands[0].value) == 'select') {
-			label = this._getOptionLabel(operands[0].value, operand.value);
+		else if (operand.type === 'user') {
+			label = Liferay.Language.get('user');
+		}
+		else if (operand.type !== 'field') {
+			const fieldType = this._getFieldType(operands[0].value);
+
+			if (fieldType == 'select' || fieldType === 'radio') {
+				label = this._getOptionLabel(operands[0].value, operand.value);
+			}
+			else {
+				label = this._getFieldLabel(operand.value);
+			}
 		}
 		else {
 			label = operand.value;

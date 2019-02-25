@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -89,13 +87,8 @@ public class JournalContentPortletToolbarContributor
 		portletURL.setParameter("groupId", String.valueOf(scopeGroupId));
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("portletResource", portletDisplay.getId());
-		portletURL.setParameter(
-			"redirect",
-			_getAddJournalArticleRedirectURL(themeDisplay, portletRequest));
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter("referringPlid", String.valueOf(plid));
-		portletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		List<DDMStructure> ddmStructures =
 			_journalFolderService.getDDMStructures(
@@ -152,7 +145,6 @@ public class JournalContentPortletToolbarContributor
 			urlMenuItem.setLabel(label);
 
 			urlMenuItem.setURL(portletURL.toString());
-			urlMenuItem.setUseDialog(true);
 
 			menuItems.add(urlMenuItem);
 		}
@@ -184,26 +176,6 @@ public class JournalContentPortletToolbarContributor
 		}
 
 		return menuItems;
-	}
-
-	private String _getAddJournalArticleRedirectURL(
-			ThemeDisplay themeDisplay, PortletRequest portletRequest)
-		throws Exception {
-
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		redirectURL.setParameter(
-			"mvcPath", "/update_journal_article_redirect.jsp");
-		redirectURL.setParameter(
-			"referringPortletResource", portletDisplay.getId());
-
-		return redirectURL.toString();
 	}
 
 	private boolean _hasAddArticlePermission(ThemeDisplay themeDisplay) {

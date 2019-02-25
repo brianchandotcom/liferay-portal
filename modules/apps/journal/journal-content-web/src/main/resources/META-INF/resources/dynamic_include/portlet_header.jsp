@@ -45,7 +45,6 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 				id="editWebContentIcon"
 				message="edit-web-content"
 				url="<%= journalContentDisplayContext.getURLEdit() %>"
-				useDialog="<%= true %>"
 			/>
 		</c:if>
 
@@ -66,7 +65,6 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 				id="editTemplateIcon"
 				message="edit-template"
 				url="<%= journalContentDisplayContext.getURLEditTemplate() %>"
-				useDialog="<%= true %>"
 			/>
 		</c:if>
 

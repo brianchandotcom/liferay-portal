@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -606,31 +606,16 @@ public class JournalContentDisplayContext {
 				assetRendererFactory.getAssetRenderer(
 					article, AssetRendererFactory.TYPE_LATEST_APPROVED);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletURL redirectURL = PortletURLFactoryUtil.create(
-				_portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
-				PortletRequest.RENDER_PHASE);
-
-			redirectURL.setParameter(
-				"mvcPath", "/update_journal_article_redirect.jsp");
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			redirectURL.setParameter(
-				"referringPortletResource", portletDisplay.getId());
-
-			redirectURL.setWindowState(LiferayWindowState.POP_UP);
+			LiferayPortletResponse liferayPortletResponse =
+				PortalUtil.getLiferayPortletResponse(_portletResponse);
 
 			PortletURL portletURL = latestArticleAssetRenderer.getURLEdit(
 				PortalUtil.getLiferayPortletRequest(_portletRequest), null,
-				LiferayWindowState.POP_UP, redirectURL);
+				LiferayWindowState.MAXIMIZED,
+				liferayPortletResponse.createRenderURL());
 
 			portletURL.setParameter(
 				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-			portletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 			return portletURL.toString();
 		}
@@ -656,25 +641,11 @@ public class JournalContentDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_ddm_template.jsp");
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			_portletRequest, portletDisplay.getId(),
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"mvcPath", "/update_journal_article_redirect.jsp");
-		redirectURL.setParameter(
-			"referringPortletResource", portletDisplay.getId());
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		portletURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		portletURL.setParameter(
 			"ddmTemplateId", String.valueOf(ddmTemplate.getTemplateId()));
 		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
 	}

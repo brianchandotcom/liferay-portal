@@ -467,44 +467,48 @@ AUI.add(
 			},
 
 			_handleConditionFieldsChange: function(event) {
-				var instance = this;
+				if (event.prevVal[0] != event.newVal[0]) {
+					var instance = this;
 
-				var field = event.target;
-				var fieldName = field.get('fieldName');
+					var field = event.target;
 
-				if (fieldName) {
-					var index = fieldName.split('-')[0];
+					var fieldName = field.get('fieldName');
 
-					if (fieldName.match('-condition-first-operand')) {
-						var dataType = instance._getProperty(field, 'dataType');
-						var operatorSelected = instance._getOperator(index);
-						var repeatable = instance._getProperty(field, 'repeatable');
+					if (fieldName) {
+						var index = fieldName.split('-')[0];
 
-						operatorSelected.cleanSelect();
+						if (fieldName.match('-condition-first-operand')) {
+							var dataType = instance._getProperty(field, 'dataType');
+							var operatorSelected = instance._getOperator(index);
+							var repeatable = instance._getProperty(field, 'repeatable');
 
-						instance._hideSecondOperandField(index);
+							operatorSelected.cleanSelect();
 
-						instance._hideSecondOperandTypeField(index);
+							instance._hideSecondOperandField(index);
 
-						instance._clearOperatorField(index);
+							instance._hideSecondOperandTypeField(index);
 
-						instance._updateOperatorList(index, dataType, repeatable);
-					}
-					else if (fieldName.match('-condition-operator')) {
-						var operator = event.newVal[0];
+							instance._clearOperatorField(index);
 
-						instance._updateSecondOperandType(operator, index);
-						instance._updateTypeFieldVisibility(index);
-					}
-					else if (fieldName.match('-condition-second-operand-type')) {
-						instance._updateSecondOperandFieldVisibility(index);
+							instance._updateOperatorList(index, dataType, repeatable);
+						}
+						else if (fieldName.match('-condition-operator')) {
+							var operator = event.newVal[0];
 
-						instance._conditions[index + '-condition-second-operand-input-integer'].setValue('');
-						instance._conditions[index + '-condition-second-operand-input-text'].setValue('');
-						instance._conditions[index + '-condition-second-operand-input-decimal'].setValue('');
-						instance._conditions[index + '-condition-second-operand-input-date'].setValue('');
+							instance._updateSecondOperandType(operator, index);
+							instance._updateTypeFieldVisibility(index);
+						}
+						else if (fieldName.match('-condition-second-operand-type')) {
+							instance._updateSecondOperandFieldVisibility(index);
+
+							instance._conditions[index + '-condition-second-operand-input-integer'].setValue('');
+							instance._conditions[index + '-condition-second-operand-input-text'].setValue('');
+							instance._conditions[index + '-condition-second-operand-input-decimal'].setValue('');
+							instance._conditions[index + '-condition-second-operand-input-date'].setValue('');
+						}
 					}
 				}
+
 			},
 
 			_handleDeleteConditionClick: function(event) {

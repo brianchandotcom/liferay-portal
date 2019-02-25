@@ -266,7 +266,7 @@ public class ContentPageEditorDisplayContext {
 		if (showMapping) {
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put("icon", "simulation-menu");
+			availableSoyContext.put("icon", "bolt");
 			availableSoyContext.put(
 				"label", LanguageUtil.get(themeDisplay.getLocale(), "mapping"));
 			availableSoyContext.put("sidebarPanelId", "mapping");

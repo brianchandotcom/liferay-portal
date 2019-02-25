@@ -26,6 +26,8 @@ import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRecordRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionListRecordRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionListRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionListRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionListResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionRequestBuilder;
@@ -2449,6 +2451,83 @@ public class DEDataRecordCollectionServiceTest {
 			user, _group, deDataDefinition, _deDataRecordCollectionService);
 	}
 
+	@Test(expected = DEDataRecordCollectionException.InvalidDataRecord.class)
+	public void testInsertDataRecordWithAnInvalidFieldValue() throws Exception {
+		DEDataDefinitionRule deDataDefinitionRule = new DEDataDefinitionRule();
+
+		deDataDefinitionRule.setName(
+			DEDataDefinitionRuleConstants.EMAIL_ADDRESS_RULE);
+		deDataDefinitionRule.setRuleType(
+			DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
+
+		deDataDefinitionRule.getDEDataDefinitionFieldNames().add("email");
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinitionWithRuleFunction(
+				_adminUser, _group, _deDataDefinitionService,
+				deDataDefinitionRule);
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, deDataDefinition,
+				_deDataRecordCollectionService);
+
+		DEDataRecord deDataRecord = new DEDataRecord();
+
+		deDataRecord.setDEDataRecordCollection(deDataRecordCollection);
+
+		Map<String, Object> values = new HashMap() {
+			{
+				put("name", "Liferay");
+				put("email", "test");
+			}
+		};
+
+		deDataRecord.setValues(values);
+
+		DEDataRecordCollectionSaveRecordRequest
+			deDataRecordCollectionSaveRecordRequest =
+				DEDataRecordCollectionRequestBuilder.saveRecordBuilder(
+					deDataRecord
+				).inGroup(
+					_group.getGroupId()
+				).onBehalfOf(
+					_adminUser.getUserId()
+				).build();
+
+		DEDataEngineTestUtil.saveDataRecord(
+			_adminUser, _group, _deDataRecordCollectionService,
+			deDataRecordCollectionSaveRecordRequest);
+	}
+
+	@Test
+	public void testInsertDataRecordWithAValidFieldValue() throws Exception {
+		DEDataDefinitionRule deDataDefinitionRule = new DEDataDefinitionRule();
+
+		deDataDefinitionRule.setName(
+			DEDataDefinitionRuleConstants.EMAIL_ADDRESS_RULE);
+		deDataDefinitionRule.setRuleType(
+			DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
+
+		deDataDefinitionRule.getDEDataDefinitionFieldNames().add("email");
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinitionWithRuleFunction(
+				_adminUser, _group, _deDataDefinitionService,
+				deDataDefinitionRule);
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, deDataDefinition,
+				_deDataRecordCollectionService);
+
+		DEDataRecord deDataRecord = DEDataEngineTestUtil.insertDEDataRecord(
+			_adminUser, _group, deDataRecordCollection,
+			_deDataRecordCollectionService);
+
+		Assert.assertTrue(deDataRecord.getDEDataRecordId() > 0);
+	}
+
 	@Test(
 		expected = DEDataRecordCollectionException.NoSuchDataRecordCollection.class
 	)
@@ -2642,81 +2721,37 @@ public class DEDataRecordCollectionServiceTest {
 			deDataRecordCollectionSaveRecordRequest);
 	}
 
-	@Test(expected = DEDataRecordCollectionException.InvalidDataRecord.class)
-	public void testInsertRecordWithAnInvalidFieldValue() throws Exception {
-		DEDataDefinitionRule deDataDefinitionRule = new DEDataDefinitionRule();
-
-		deDataDefinitionRule.setName(
-			DEDataDefinitionRuleConstants.EMAIL_ADDRESS_RULE);
-		deDataDefinitionRule.setRuleType(
-			DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
-
-		deDataDefinitionRule.getDEDataDefinitionFieldNames().add("email");
-
-		DEDataDefinition deDataDefinition =
-			DEDataEngineTestUtil.insertDEDataDefinitionWithRuleFunction(
-				_adminUser, _group, _deDataDefinitionService,
-				deDataDefinitionRule);
-
-		DEDataRecordCollection deDataRecordCollection =
-			DEDataEngineTestUtil.insertDEDataRecordCollection(
-				_adminUser, _group, deDataDefinition,
-				_deDataRecordCollectionService);
-
-		DEDataRecord deDataRecord = new DEDataRecord();
-
-		deDataRecord.setDEDataRecordCollection(deDataRecordCollection);
-
-		Map<String, Object> values = new HashMap() {
-			{
-				put("name", "Liferay");
-				put("email", "test");
-			}
-		};
-
-		deDataRecord.setValues(values);
-
-		DEDataRecordCollectionSaveRecordRequest
-			deDataRecordCollectionSaveRecordRequest =
-				DEDataRecordCollectionRequestBuilder.saveRecordBuilder(
-					deDataRecord
-				).inGroup(
-					_group.getGroupId()
-				).onBehalfOf(
-					_adminUser.getUserId()
-				).build();
-
-		DEDataEngineTestUtil.saveDataRecord(
-			_adminUser, _group, _deDataRecordCollectionService,
-			deDataRecordCollectionSaveRecordRequest);
-	}
-
 	@Test
-	public void testInsertRecordWithAValidFieldValue() throws Exception {
-		DEDataDefinitionRule deDataDefinitionRule = new DEDataDefinitionRule();
+	public void testInsertDataRecordWithoutImpactOtherCollections()
+		throws Exception {
 
-		deDataDefinitionRule.setName(
-			DEDataDefinitionRuleConstants.EMAIL_ADDRESS_RULE);
-		deDataDefinitionRule.setRuleType(
-			DEDataDefinitionRuleConstants.VALIDATION_RULE_TYPE);
-
-		deDataDefinitionRule.getDEDataDefinitionFieldNames().add("email");
-
-		DEDataDefinition deDataDefinition =
-			DEDataEngineTestUtil.insertDEDataDefinitionWithRuleFunction(
-				_adminUser, _group, _deDataDefinitionService,
-				deDataDefinitionRule);
-
-		DEDataRecordCollection deDataRecordCollection =
+		DEDataRecordCollection deDataRecordCollection1 =
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
-				_adminUser, _group, deDataDefinition,
+				_adminUser, _group, _deDataDefinitionService,
 				_deDataRecordCollectionService);
 
-		DEDataRecord deDataRecord = DEDataEngineTestUtil.insertDEDataRecord(
-			_adminUser, _group, deDataRecordCollection,
+		DEDataRecord deDataRecord1 = DEDataEngineTestUtil.insertDEDataRecord(
+			_adminUser, _group, deDataRecordCollection1,
 			_deDataRecordCollectionService);
 
-		Assert.assertTrue(deDataRecord.getDEDataRecordId() > 0);
+		DEDataRecordCollection deDataRecordCollection2 =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+					_adminUser, _group, _deDataDefinitionService,
+					_deDataRecordCollectionService);
+
+		DEDataRecord deDataRecord2 = DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection2,
+				_deDataRecordCollectionService);
+
+		List<DEDataRecord> deDataRecords1 = listDEDataRecords(
+			deDataRecordCollection1.getDEDataRecordCollectionId(), null, null);
+
+		List<DEDataRecord> deDataRecords2 = listDEDataRecords(
+			deDataRecordCollection2.getDEDataRecordCollectionId(), null, null);
+
+		Assert.assertFalse(deDataRecords1.contains(deDataRecord2));
+
+		Assert.assertFalse(deDataRecords2.contains(deDataRecord1));
 	}
 
 	@Test(
@@ -3042,6 +3077,308 @@ public class DEDataRecordCollectionServiceTest {
 		Assert.assertEquals(
 			deDataRecordCollections.toString(), 3,
 			deDataRecordCollections.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedMiddleInsideRange()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), 1, 5);
+
+		Assert.assertEquals(deDataRecords.toString(), 4, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedMiddleOutOfRange() throws Exception {
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), 4, 10);
+
+		Assert.assertEquals(deDataRecords.toString(), 1, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedOutOfRange() throws Exception {
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), 6, 10);
+
+		Assert.assertEquals(deDataRecords.toString(), 0, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedReturnLast() throws Exception {
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), 4, 5);
+
+		Assert.assertEquals(deDataRecords.toString(), 1, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedStartingAtMinusOne()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), -2, 5);
+
+		Assert.assertEquals(deDataRecords.toString(), 5, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedStartingAtMinusTwo()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), -1, 5);
+
+		Assert.assertEquals(deDataRecords.toString(), 5, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordPaginatedStartingAtZero() throws Exception {
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), 0, 5);
+
+		Assert.assertEquals(deDataRecords.toString(), 5, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordWithInvalidGroupId() throws Exception {
+		List<DEDataRecord> deDataRecords = listDEDataRecords(-1, null, null);
+
+		Assert.assertTrue(deDataRecords.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordWithNonexistentGroup() throws Exception {
+		List<DEDataRecord> deDataRecords = listDEDataRecords(1, null, null);
+
+		Assert.assertTrue(deDataRecords.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordWithNoRecords() throws Exception {
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			_group.getGroupId(), null, null);
+
+		Assert.assertTrue(deDataRecords.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordWithoutSpecifyingFinalIndex()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRecordRequest
+			deDataRecordCollectionListRecordRequest =
+				DEDataRecordCollectionRequestBuilder.listRecordBuilder(
+					deDataRecordCollection.getDEDataRecordCollectionId()
+				).startingAt(
+					3
+				).build();
+
+		DEDataRecordCollectionListRecordResponse
+			deDataRecordCollectionListRecordResponse =
+				_deDataRecordCollectionService.execute(
+					deDataRecordCollectionListRecordRequest);
+
+		List<DEDataRecord> deDataRecords =
+			deDataRecordCollectionListRecordResponse.getDEDataRecords();
+
+		Assert.assertTrue(deDataRecords.isEmpty());
+	}
+
+	@Test
+	public void testListDataRecordWithoutSpecifyingPagination()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRecordRequest
+			deDataRecordCollectionListRecordRequest =
+				DEDataRecordCollectionRequestBuilder.listRecordBuilder(
+					deDataRecordCollection.getDEDataRecordCollectionId()
+				).build();
+
+		DEDataRecordCollectionListRecordResponse
+			deDataRecordCollectionListRecordResponse =
+				_deDataRecordCollectionService.execute(
+					deDataRecordCollectionListRecordRequest);
+
+		List<DEDataRecord> deDataRecords =
+			deDataRecordCollectionListRecordResponse.getDEDataRecords();
+
+		Assert.assertEquals(deDataRecords.toString(), 5, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordWithoutSpecifyingStartIndex()
+		throws Exception {
+
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		DEDataRecordCollectionListRecordRequest
+			deDataRecordCollectionListRecordRequest =
+				DEDataRecordCollectionRequestBuilder.listRecordBuilder(
+					deDataRecordCollection.getDEDataRecordCollectionId()
+				).endingAt(
+					3
+				).build();
+
+		DEDataRecordCollectionListRecordResponse
+			deDataRecordCollectionListRecordResponse =
+				_deDataRecordCollectionService.execute(
+					deDataRecordCollectionListRecordRequest);
+
+		List<DEDataRecord> deDataRecords =
+			deDataRecordCollectionListRecordResponse.getDEDataRecords();
+
+		Assert.assertEquals(deDataRecords.toString(), 3, deDataRecords.size());
+	}
+
+	@Test
+	public void testListDataRecordWithRecords() throws Exception {
+		DEDataRecordCollection deDataRecordCollection =
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		int total = 30;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, deDataRecordCollection,
+				_deDataRecordCollectionService);
+		}
+
+		List<DEDataRecord> deDataRecords = listDEDataRecords(
+			deDataRecordCollection.getDEDataRecordCollectionId(), null, null);
+
+		Assert.assertEquals(deDataRecords.toString(), 30, deDataRecords.size());
 	}
 
 	@Test(expected = DEDataRecordCollectionException.MustHavePermission.class)
@@ -3843,6 +4180,42 @@ public class DEDataRecordCollectionServiceTest {
 			_siteMember, _group, deDataRecord, _deDataRecordCollectionService);
 	}
 
+	@Test
+	public void testUpdateDataRecordWithoutImpactOtherCollections()
+		throws Exception {
+
+		DEDataRecord deDataRecord1 = DEDataEngineTestUtil.insertDEDataRecord(
+			_adminUser, _group, _deDataDefinitionService,
+			_deDataRecordCollectionService);
+
+		DEDataRecord deDataRecord2 = DEDataEngineTestUtil.insertDEDataRecord(
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+
+		Map<String, Object> values = new HashMap() {
+			{
+				put("name", "Liferay-BR");
+				put("email", "test_br@liferay.com");
+			}
+		};
+
+		deDataRecord2.setValues(values);
+
+		DEDataRecord deDataRecord2AfterUpdate =
+			DEDataEngineTestUtil.updateDEDataRecord(
+				_adminUser, _group, deDataRecord2,
+				_deDataRecordCollectionService);
+
+		Map<String, Object> deDataRecord1Values = deDataRecord1.getValues();
+
+		Map<String, Object> deDataRecord2Values =
+			deDataRecord2AfterUpdate.getValues();
+
+		Assert.assertTrue(deDataRecord2Values.equals(values));
+
+		Assert.assertFalse(deDataRecord1Values.equals(values));
+	}
+
 	protected List<DEDataRecordCollection> listDEDataRecordCollections(
 			long groupId, Integer start, Integer end)
 		throws Exception {
@@ -3862,6 +4235,28 @@ public class DEDataRecordCollectionServiceTest {
 				deDataRecordCollectionListRequest);
 
 		return deDataRecordCollectionListResponse.getDEDataRecordCollections();
+	}
+
+	protected List<DEDataRecord> listDEDataRecords(
+			long deDataRecordCollectionId, Integer start, Integer end)
+		throws Exception {
+
+		DEDataRecordCollectionListRecordRequest
+			deDataRecordCollectionListRecordRequest =
+					DEDataRecordCollectionRequestBuilder.listRecordBuilder(
+						deDataRecordCollectionId
+					).endingAt(
+						GetterUtil.getInteger(end, QueryUtil.ALL_POS)
+					).startingAt(
+						GetterUtil.getInteger(start, QueryUtil.ALL_POS)
+					).build();
+
+		DEDataRecordCollectionListRecordResponse
+			deDataRecordCollectionListRecordResponse =
+				_deDataRecordCollectionService.execute(
+					deDataRecordCollectionListRecordRequest);
+
+		return deDataRecordCollectionListRecordResponse.getDEDataRecords();
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

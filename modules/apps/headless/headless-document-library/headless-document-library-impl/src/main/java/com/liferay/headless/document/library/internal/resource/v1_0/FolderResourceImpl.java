@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Optional;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -71,6 +73,26 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 	}
 
 	@Override
+	public Folder patchFolder(Long folderId, Folder folder) throws Exception {
+		com.liferay.portal.kernel.repository.model.Folder existing =
+			_dlAppService.getFolder(folderId);
+
+		String name = Optional.ofNullable(
+			folder.getName()
+		).orElse(
+			existing.getName()
+		);
+
+		String description = Optional.ofNullable(
+			folder.getDescription()
+		).orElse(
+			existing.getDescription()
+		);
+
+		return _updateFolder(folderId, name, description);
+	}
+
+	@Override
 	public Folder postContentSpaceFolder(Long contentSpaceId, Folder folder)
 		throws Exception {
 
@@ -89,10 +111,8 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 	@Override
 	public Folder putFolder(Long folderId, Folder folder) throws Exception {
-		return _toFolder(
-			_dlAppService.updateFolder(
-				folderId, folder.getName(), folder.getDescription(),
-				new ServiceContext()));
+		return _updateFolder(
+			folderId, folder.getName(), folder.getDescription());
 	}
 
 	private Folder _addFolder(
@@ -176,6 +196,14 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		com.liferay.portal.kernel.repository.model.Folder folder) {
 
 		return _toFolder(folder, false, false);
+	}
+
+	private Folder _updateFolder(Long folderId, String name, String description)
+		throws Exception {
+
+		return _toFolder(
+			_dlAppService.updateFolder(
+				folderId, name, description, new ServiceContext()));
 	}
 
 	@Reference

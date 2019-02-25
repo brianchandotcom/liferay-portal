@@ -197,9 +197,13 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			"dataRepositoryId", String.valueOf(fileEntry.getRepositoryId()));
 		map.put("ddmContent", "text/plain; charset=UTF-8 UTF-8");
 		map.put("extension", fileEntry.getExtension());
+		map.put("extension_String_sortable", fileEntry.getExtension());
 		map.put("fileEntryTypeId", "0");
 		map.put("hidden", "false");
 		map.put("mimeType", fileEntry.getMimeType().replaceAll("/", "_"));
+		map.put(
+			"mimeType_String_sortable",
+			fileEntry.getMimeType().replaceAll("/", "_"));
 		map.put("path", fileEntry.getTitle());
 		map.put("readCount", String.valueOf(fileEntry.getReadCount()));
 		map.put("size", String.valueOf(fileEntry.getSize()));

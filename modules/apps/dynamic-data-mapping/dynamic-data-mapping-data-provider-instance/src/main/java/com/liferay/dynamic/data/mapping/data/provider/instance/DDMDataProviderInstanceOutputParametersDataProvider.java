@@ -72,11 +72,13 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 		DDMDataProviderResponse.Builder builder =
 			DDMDataProviderResponse.Builder.newBuilder();
 
-		if (dataProviderInstanceId == 0) {
-			return builder.build();
-		}
-
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		if (dataProviderInstanceId == 0) {
+			return builder.withOutput(
+				"outputParameterNames", keyValuePairs
+			).build();
+		}
 
 		try {
 			DDMDataProviderOutputParametersSettings[]

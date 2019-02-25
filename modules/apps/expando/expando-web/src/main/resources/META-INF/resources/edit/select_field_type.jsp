@@ -32,32 +32,125 @@ portletDisplay.setURLBack(redirect);
 		</h2>
 
 		<aui:row>
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createTextAreaURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.STRING) %>" />
+				</portlet:renderURL>
 
-			<%
-			for (int type : ExpandoColumnConstants.TYPES) {
-				if ((type == ExpandoColumnConstants.BOOLEAN_ARRAY) || (type == ExpandoColumnConstants.DATE_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
-					continue;
-				}
-			%>
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "text-area") %>'
+					url="<%= createTextAreaURL %>"
+				/>
+			</aui:col>
 
-				<aui:col span="<%= 4 %>">
-					<portlet:renderURL var="editExpandoURL">
-						<portlet:param name="mvcPath" value="/edit/expando.jsp" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="modelResource" value="<%= modelResource %>" />
-						<portlet:param name="type" value="<%= String.valueOf(type) %>" />
-					</portlet:renderURL>
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createTextFieldURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.STRING) %>" />
+				</portlet:renderURL>
 
-					<liferay-frontend:horizontal-card
-						text="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>"
-						url="<%= editExpandoURL %>"
-					/>
-				</aui:col>
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "text-field") %>'
+					url="<%= createTextFieldURL %>"
+				/>
+			</aui:col>
 
-			<%
-			}
-			%>
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createNumberURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_NUMBER %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.NUMBER) %>" />
+				</portlet:renderURL>
 
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "number") %>'
+					url="<%= createNumberURL %>"
+				/>
+			</aui:col>
+
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createDropdownURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.STRING_ARRAY) %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "dropdown") %>'
+					url="<%= createDropdownURL %>"
+				/>
+			</aui:col>
+
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createCheckboxURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.STRING_ARRAY) %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "checkbox") %>'
+					url="<%= createCheckboxURL %>"
+				/>
+			</aui:col>
+
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createRadioURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.STRING_ARRAY) %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "radio") %>'
+					url="<%= createRadioURL %>"
+				/>
+			</aui:col>
+
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createGeolocationURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_GEOLOCATION %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.GEOLOCATION) %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "geolocation") %>'
+					url="<%= createGeolocationURL %>"
+				/>
+			</aui:col>
+
+			<aui:col span="<%= 4 %>">
+				<portlet:renderURL var="createDateURL">
+					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="modelResource" value="<%= modelResource %>" />
+					<portlet:param name="displayType" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_DATE %>" />
+					<portlet:param name="type" value="<%= String.valueOf(ExpandoColumnConstants.DATE) %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:horizontal-card
+					text='<%= LanguageUtil.get(request, "date") %>'
+					url="<%= createDateURL %>"
+				/>
+			</aui:col>
 		</aui:row>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

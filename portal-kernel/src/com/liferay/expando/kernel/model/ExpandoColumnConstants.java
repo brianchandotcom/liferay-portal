@@ -107,12 +107,20 @@ public class ExpandoColumnConstants {
 
 	public static final String PROPERTY_DISPLAY_TYPE_CHECKBOX = "checkbox";
 
+	public static final String PROPERTY_DISPLAY_TYPE_DATE = "date";
+
+	public static final String PROPERTY_DISPLAY_TYPE_GEOLOCATION =
+		"geolocation";
+
+	public static final String PROPERTY_DISPLAY_TYPE_NUMBER = "number";
+
 	public static final String PROPERTY_DISPLAY_TYPE_RADIO = "radio";
 
-	public static final String PROPERTY_DISPLAY_TYPE_SELECTION_LIST =
-		"selection-list";
+	public static final String PROPERTY_DISPLAY_TYPE_SELECTION_LIST = "selection-list";
 
 	public static final String PROPERTY_DISPLAY_TYPE_TEXT_BOX = "text-box";
+
+	public static final String PROPERTY_DISPLAY_TYPE_TEXT_FIELD = "text-field";
 
 	public static final String PROPERTY_HEIGHT = "height";
 

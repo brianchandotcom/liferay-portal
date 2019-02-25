@@ -52,7 +52,11 @@ int propertyIndexType = GetterUtil.getInteger(properties.get(ExpandoColumnConsta
 boolean propertySecret = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_SECRET));
 int propertyHeight = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.PROPERTY_HEIGHT));
 int propertyWidth = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.PROPERTY_WIDTH));
-String propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE));
+String propertyDisplayType = ParamUtil.getString(request, "displayType", ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD);
+
+if (column != null) {
+	propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE));
+}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -82,6 +86,8 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
+
+	<aui:input name="Property--display-type--" type="hidden" value="<%= propertyDisplayType %>" />
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">

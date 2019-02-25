@@ -85,6 +85,7 @@
 		<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
 	</c:when>
 	<c:otherwise>
+
 		<%
 		String xml = StringPool.BLANK;
 

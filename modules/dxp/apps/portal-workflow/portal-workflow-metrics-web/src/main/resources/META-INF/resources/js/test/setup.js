@@ -44,6 +44,7 @@ global.console = {error: jest.fn(), log: console.log};
 
 global.localStorage = (() => {
 	let store = {};
+
 	return {
 		clear() {
 			store = {};

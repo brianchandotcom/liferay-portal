@@ -7,14 +7,15 @@ import {PAGE_CHANGE} from '../router/RouterConstants';
  * */
 export default ({backPath, title}) => {
 	let backMenu = null;
-	const headerTitle = document.getElementsByClassName(
-		'control-menu-level-1-heading'
-	)[0];
 	const backMenuElement = document.getElementsByClassName(
 		'metric-control-menu-heading'
 	);
+	const headerTitle = document.getElementsByClassName(
+		'control-menu-level-1-heading'
+	)[0];
 	const emitEvent = function() {
 		const path = this.getAttribute('data-path');
+
 		document.dispatchEvent(
 			new CustomEvent(PAGE_CHANGE, {
 				bubbles: true,
@@ -30,10 +31,12 @@ export default ({backPath, title}) => {
 
 	if (backMenuElement.length && !backPath) {
 		backMenuElement[0].parentNode.removeChild(backMenuElement[0]);
-	} else if (!backMenuElement.length) {
-		const menuHeader = document.getElementsByClassName('control-menu-nav')[1];
-		backMenu = document.createElement('li');
+	}
+	else if (!backMenuElement.length) {
 		const iconName = 'angle-left';
+		const menuHeader = document.getElementsByClassName('control-menu-nav')[1];
+
+		backMenu = document.createElement('li');
 		backMenu.className = 'control-menu-nav-item metric-control-menu-heading';
 		backMenu.innerHTML = `
 			<a class="back-url-link control-menu-icon" href="#" data-senna-off>
@@ -44,10 +47,11 @@ export default ({backPath, title}) => {
 				</span>
 			</a>`;
 
-		menuHeader.appendChild(backMenu);
 		backMenu.setAttribute('data-path', backPath);
 		backMenu.addEventListener('click', emitEvent.bind(backMenu));
-	} else {
+		menuHeader.appendChild(backMenu);
+	}
+	else {
 		backMenu = backMenuElement[0];
 		backMenu.setAttribute('data-path', backPath);
 	}

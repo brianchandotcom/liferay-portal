@@ -41,7 +41,10 @@ export default class ProcessListCard extends React.Component {
 	}
 
 	/**
-	 * @param {request} param0 configuration
+	 * @param {Object} configuration
+	 * @param {string} configuration.keyword
+	 * @param {number} configuration.size
+	 * @param {number} configuration.start
 	 */
 	requestData({keyword, size, start}) {
 		const {client} = this.props;

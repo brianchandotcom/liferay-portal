@@ -18,6 +18,7 @@ export default class Entries extends React.Component {
 	@autobind
 	setEntry(entry) {
 		const {onSelectEntry} = this.props;
+
 		this.setState({selectedEntry: entry});
 		onSelectEntry(entry);
 	}
@@ -25,6 +26,7 @@ export default class Entries extends React.Component {
 	render() {
 		const {entries} = this.props;
 		const {selectedEntry} = this.state;
+
 		return (
 			<div className="dropdown pagination-items-per-page">
 				<a

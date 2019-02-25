@@ -10,6 +10,7 @@ export default class PageItem extends React.Component {
 	@autobind
 	setPage() {
 		const {onChangePage, page} = this.props;
+
 		onChangePage(page);
 	}
 
@@ -37,6 +38,7 @@ export default class PageItem extends React.Component {
 					</a>
 				);
 			}
+
 			return (
 				<a className="page-link" href={`#${page}`}>
 					{page + 1}

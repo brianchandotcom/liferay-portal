@@ -5,6 +5,7 @@ import renderer from 'react-test-renderer';
 
 beforeAll(() => {
 	const vbody = document.createElement('div');
+
 	vbody.innerHTML =
 		'<ul class="control-menu-nav"><label class="control-menu-level-1-heading">title</label></ul><ul class="control-menu-nav"></ul>';
 	document.body.appendChild(vbody);
@@ -31,6 +32,7 @@ test('Should test component navegation', () => {
 			to="process-list"
 		/>
 	);
+
 	linkProcessList.find('a').simulate('click');
 
 	expect(tree).toMatchSnapshot();

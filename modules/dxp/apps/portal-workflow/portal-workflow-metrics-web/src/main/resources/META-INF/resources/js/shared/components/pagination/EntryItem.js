@@ -9,6 +9,7 @@ export default class EntryItem extends React.Component {
 	@autobind
 	setEntry() {
 		const {entry, onChangeEntry} = this.props;
+
 		onChangeEntry(entry);
 	}
 

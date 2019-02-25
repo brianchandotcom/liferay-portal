@@ -10,6 +10,7 @@ import Router from '../shared/components/router/Router';
 export default class AppComponent extends React.Component {
 	render() {
 		const {companyId} = this.props;
+
 		return (
 			<div className="portal-workflow-metrics-app">
 				<Router

@@ -6,34 +6,22 @@ import React from 'react';
  * @memberof shared/components
  * */
 export default class MultiSelect extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor({data, selectedTags}) {
+		super({data, selectedTags});
 
 		this.state = {
 			active: false,
-			data: [
-				'ops',
-				'message',
-				'meeting',
-				'assist',
-				'not real',
-				'advocate',
-				'Maybe',
-				'much',
-				'so much',
-				'to do any',
-				'a long component text example to test its overflow behavior.'
-			],
+			data,
 			searchKey: '',
-			selectedTags: ['ops', 'message', 'advocate', 'Maybe'],
+			selectedTags,
 			verticalIndex: -1
 		};
 
 		this.addTag = this.addTag.bind(this);
-		this.removeTag = this.removeTag.bind(this);
-		this.onSearch = this.onSearch.bind(this);
-		this.showDropList = this.showDropList.bind(this);
 		this.hideDropList = this.hideDropList.bind(this);
+		this.onSearch = this.onSearch.bind(this);
+		this.removeTag = this.removeTag.bind(this);
+		this.showDropList = this.showDropList.bind(this);
 	}
 
 	get dataFiltred() {
@@ -45,46 +33,6 @@ export default class MultiSelect extends React.Component {
 			.filter(tag => term === '' || tag.toLowerCase().indexOf(term) > -1);
 	}
 
-	showDropList() {
-		this.setState({active: true});
-	}
-
-	hideDropList() {
-		this.setState({active: false});
-	}
-
-	onSearch(event) {
-		const {value: searchKey} = event.target;
-		const {keyCode} = event;
-		let {selectedTags, verticalIndex} = this.state;
-		const dataFiltred = this.dataFiltred;
-		const dataCount = dataFiltred.length;
-
-		if ([38, 40].indexOf(keyCode) > -1) {
-			verticalIndex = keyCode === 40 ? verticalIndex + 1 : verticalIndex - 1;
-			verticalIndex =
-				verticalIndex < 0
-					? 0
-					: verticalIndex + 1 > dataCount
-						? dataCount - 1
-						: verticalIndex;
-
-			this.setState({verticalIndex});
-		} else if (keyCode === 13 && verticalIndex > -1) {
-			selectedTags = [...selectedTags, dataFiltred[verticalIndex]];
-			this.setState({
-				searchKey: '',
-				selectedTags,
-				verticalIndex: -1
-			});
-		} else {
-			this.setState({
-				searchKey,
-				verticalIndex: -1
-			});
-		}
-	}
-
 	addTag(event) {
 		const tag = event.currentTarget.getAttribute('data-tag');
 		const {selectedTags} = this.state;
@@ -94,13 +42,59 @@ export default class MultiSelect extends React.Component {
 		});
 	}
 
+	hideDropList() {
+		this.setState({active: false});
+	}
+
+	onSearch(event) {
+		const dataFiltred = this.dataFiltred;
+		const {
+			keyCode,
+			target: {value: searchKey}
+		} = event;
+		let {selectedTags, verticalIndex} = this.state;
+
+		if ([38, 40].indexOf(keyCode) > -1) {
+			const dataCount = dataFiltred.length;
+
+			verticalIndex = keyCode === 40 ? verticalIndex + 1 : verticalIndex - 1;
+			verticalIndex =
+				verticalIndex < 0
+					? 0
+					: verticalIndex + 1 > dataCount
+						? dataCount - 1
+						: verticalIndex;
+
+			this.setState({verticalIndex});
+		}
+		else if (keyCode === 13 && verticalIndex > -1) {
+			selectedTags = [...selectedTags, dataFiltred[verticalIndex]];
+			this.setState({
+				searchKey: '',
+				selectedTags,
+				verticalIndex: -1
+			});
+		}
+		else {
+			this.setState({
+				searchKey,
+				verticalIndex: -1
+			});
+		}
+	}
+
 	removeTag(event) {
 		const tagIndex = Number(event.currentTarget.getAttribute('data-tag-index'));
 		const {selectedTags} = this.state;
+
 		selectedTags.splice(tagIndex, 1);
 		this.setState({
 			selectedTags
 		});
+	}
+
+	showDropList() {
+		this.setState({active: true});
 	}
 
 	render() {

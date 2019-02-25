@@ -404,7 +404,7 @@ exports[`Should search 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        ops
+        message
       </span>
       <span
         className="label-item label-item-after"
@@ -430,7 +430,7 @@ exports[`Should search 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        message
+        advocate
       </span>
       <span
         className="label-item label-item-after"
@@ -456,32 +456,6 @@ exports[`Should search 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
         Maybe
       </span>
       <span
@@ -490,7 +464,7 @@ exports[`Should search 1`] = `
         <button
           aria-label="Close"
           className="close"
-          data-tag-index="3"
+          data-tag-index="2"
           onClick={[Function]}
           type="button"
         >
@@ -884,7 +858,7 @@ exports[`Should test keydown press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        ops
+        message
       </span>
       <span
         className="label-item label-item-after"
@@ -910,7 +884,7 @@ exports[`Should test keydown press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        message
+        advocate
       </span>
       <span
         className="label-item label-item-after"
@@ -936,32 +910,6 @@ exports[`Should test keydown press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
         Maybe
       </span>
       <span
@@ -970,7 +918,7 @@ exports[`Should test keydown press 1`] = `
         <button
           aria-label="Close"
           className="close"
-          data-tag-index="3"
+          data-tag-index="2"
           onClick={[Function]}
           type="button"
         >
@@ -1013,7 +961,7 @@ exports[`Should test keyenter press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        ops
+        message
       </span>
       <span
         className="label-item label-item-after"
@@ -1039,7 +987,7 @@ exports[`Should test keyenter press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        message
+        advocate
       </span>
       <span
         className="label-item label-item-after"
@@ -1065,7 +1013,7 @@ exports[`Should test keyenter press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        advocate
+        Maybe
       </span>
       <span
         className="label-item label-item-after"
@@ -1091,7 +1039,7 @@ exports[`Should test keyenter press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        Maybe
+        ops
       </span>
       <span
         className="label-item label-item-after"
@@ -1100,32 +1048,6 @@ exports[`Should test keyenter press 1`] = `
           aria-label="Close"
           className="close"
           data-tag-index="3"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="4"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        meeting
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="4"
           onClick={[Function]}
           type="button"
         >
@@ -1168,7 +1090,7 @@ exports[`Should test keyup press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        ops
+        message
       </span>
       <span
         className="label-item label-item-after"
@@ -1194,7 +1116,7 @@ exports[`Should test keyup press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        message
+        advocate
       </span>
       <span
         className="label-item label-item-after"
@@ -1220,32 +1142,6 @@ exports[`Should test keyup press 1`] = `
       <span
         className="label-item label-item-expand"
       >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
         Maybe
       </span>
       <span
@@ -1254,7 +1150,7 @@ exports[`Should test keyup press 1`] = `
         <button
           aria-label="Close"
           className="close"
-          data-tag-index="3"
+          data-tag-index="2"
           onClick={[Function]}
           type="button"
         >

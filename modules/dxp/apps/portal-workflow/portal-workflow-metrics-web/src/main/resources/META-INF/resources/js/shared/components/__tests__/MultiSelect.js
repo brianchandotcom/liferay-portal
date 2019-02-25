@@ -1,14 +1,33 @@
 import MultiSelect from '../MultiSelect';
 import React from 'react';
 
+const data = [
+	'ops',
+	'message',
+	'meeting',
+	'assist',
+	'not real',
+	'advocate',
+	'Maybe',
+	'much',
+	'so much',
+	'to do any',
+	'a long component text example to test its overflow behavior.'
+];
+const selectedTags = ['ops', 'message', 'advocate', 'Maybe'];
+
 test('Should test component render', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	expect(component).toMatchSnapshot();
 });
 
 test('Should show the dropdown list', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -17,7 +36,9 @@ test('Should show the dropdown list', () => {
 });
 
 test('Should hide the dropdown list', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -26,7 +47,9 @@ test('Should hide the dropdown list', () => {
 });
 
 test('Should add a tag', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -39,7 +62,9 @@ test('Should add a tag', () => {
 });
 
 test('Should remove a tag', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -52,7 +77,9 @@ test('Should remove a tag', () => {
 });
 
 test('Should test keydown press', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -64,7 +91,9 @@ test('Should test keydown press', () => {
 });
 
 test('Should test keyup press', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -76,7 +105,9 @@ test('Should test keyup press', () => {
 });
 
 test('Should test keyenter press', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 
@@ -92,7 +123,9 @@ test('Should test keyenter press', () => {
 });
 
 test('Should search', () => {
-	const component = shallow(<MultiSelect />);
+	const component = shallow(
+		<MultiSelect data={data} selectedTags={selectedTags} />
+	);
 
 	const instance = component.instance();
 

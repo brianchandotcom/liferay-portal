@@ -2,28 +2,32 @@ import Link from '../Link';
 import React from 'react';
 import Router from '../Router';
 
+afterEach(() => {
+	const vbodyElement = document.body.getElementsByClassName('vbody')[0];
+
+	vbodyElement.parentNode.removeChild(vbodyElement);
+});
+
 beforeEach(() => {
 	const vbody = document.createElement('div');
+
 	vbody.className = 'vbody';
 	vbody.innerHTML =
 		'<ul class="control-menu-nav"><label class="control-menu-level-1-heading">title</label></ul><ul class="control-menu-nav"></ul>';
 	document.body.appendChild(vbody);
 });
 
-afterEach(() => {
-	const vbodyElement = document.body.getElementsByClassName('vbody')[0];
-	vbodyElement.parentNode.removeChild(vbodyElement);
-});
-
 test('Should test component render', () => {
 	const component = shallow(<Router defautPath="test" paths={[]} />);
 	const instance = component.instance();
+
 	instance.componentDidMount();
 	instance.componentWillUnmount();
 
 	const link = shallow(
 		<Link className="test" text="test" to="test" type="button" />
 	);
+
 	link.find('a').simulate('click');
 
 	expect(component).toMatchSnapshot();
@@ -49,6 +53,7 @@ test('Should test navigate', () => {
 	];
 	const component = shallow(<Router defautPath="test-1" paths={paths} />);
 	const instance = component.instance();
+
 	instance.componentDidMount();
 	instance.componentWillUnmount();
 
@@ -61,6 +66,7 @@ test('Should test navigate', () => {
 			type="button"
 		/>
 	);
+
 	link.find('a').simulate('click');
 
 	expect(component).toMatchSnapshot();
@@ -86,6 +92,7 @@ test('Should test navigate with title', () => {
 	];
 	const component = shallow(<Router defautPath="test-3" paths={paths} />);
 	const instance = component.instance();
+
 	instance.componentDidMount();
 	instance.componentWillUnmount();
 
@@ -98,6 +105,7 @@ test('Should test navigate with title', () => {
 			type="button"
 		/>
 	);
+
 	link.find('a').simulate('click');
 
 	expect(component).toMatchSnapshot();
@@ -123,6 +131,7 @@ test('Should test returning navigate', () => {
 	];
 	const component = shallow(<Router defautPath="test-3" paths={paths} />);
 	const instance = component.instance();
+
 	instance.componentDidMount();
 	instance.componentWillUnmount();
 
@@ -136,6 +145,7 @@ test('Should test returning navigate', () => {
 			type="button"
 		/>
 	);
+
 	link.find('a').simulate('click');
 
 	const linkreturn = shallow(
@@ -146,6 +156,7 @@ test('Should test returning navigate', () => {
 			to="test-3"
 		/>
 	);
+
 	linkreturn.find('a').simulate('click');
 
 	expect(component).toMatchSnapshot();
@@ -166,6 +177,7 @@ test('Should test returning navigate by click', () => {
 	];
 	const component = shallow(<Router defautPath="test-1" paths={paths} />);
 	const instance = component.instance();
+
 	instance.componentDidMount();
 	instance.componentWillUnmount();
 
@@ -179,11 +191,13 @@ test('Should test returning navigate by click', () => {
 			type="button"
 		/>
 	);
+
 	link.find('a').simulate('click');
 
 	const linkReturn = document.body.getElementsByClassName(
 		'metric-control-menu-heading'
 	)[0];
+
 	linkReturn.dispatchEvent(new Event('click'));
 
 	expect(component).toMatchSnapshot();

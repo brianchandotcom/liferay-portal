@@ -13,13 +13,6 @@ export default class Router extends React.Component {
 		this.state = {path: props.defautPath, query: {}};
 	}
 
-	componentWillUnmount() {
-		if (this.unsub) {
-			this.unsub();
-			this.unsub = null;
-		}
-	}
-
 	componentDidMount() {
 		const changePage = ({detail: {path, query, title}}) => {
 			const {defautPath, paths} = this.props;
@@ -32,9 +25,11 @@ export default class Router extends React.Component {
 				if (!title) {
 					({title} = componentRender);
 				}
+
 				if (isFirstPage) {
 					controlMenuHeading({title});
-				} else {
+				}
+				else {
 					controlMenuHeading({backPath: lastPath, title});
 				}
 			}
@@ -48,6 +43,14 @@ export default class Router extends React.Component {
 			document.removeEventListener(PAGE_CHANGE, changePage.bind(this));
 		};
 	}
+
+	componentWillUnmount() {
+		if (this.unsub) {
+			this.unsub();
+			this.unsub = null;
+		}
+	}
+
 	render() {
 		const {paths} = this.props;
 		const {path, query} = this.state;

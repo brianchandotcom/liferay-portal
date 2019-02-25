@@ -1,14 +1,13 @@
 {
 	"opts": {
-		"template": "templates/default",
-
-		"encoding": "utf8",
 		"destination": "./build/doc/",
-		"recurse": true
+		"encoding": "utf8",
+		"recurse": true,
+		"template": "templates/default"
 	},
 	"plugins": [
-		"plugins/markdown",
-		"node_modules/jsdoc-export-default-interop/dist/index"
+		"node_modules/jsdoc-export-default-interop/dist/index",
+		"plugins/markdown"
 	],
 	"recurseDepth": 10,
 	"source": {
@@ -24,8 +23,8 @@
 	"tags": {
 		"allowUnknownTags": true,
 		"dictionaries": [
-			"jsdoc",
-			"closure"
+			"closure",
+			"jsdoc"
 		]
 	},
 	"templates": {

@@ -11,6 +11,7 @@ export default class EmptyContent extends React.Component {
 			type === 'not-found'
 				? 'taglib-empty-search-result-message-header'
 				: 'taglib-empty-result-message-header';
+
 		return (
 			<div className="sheet taglib-empty-result-message">
 				<div className={classNameType} />

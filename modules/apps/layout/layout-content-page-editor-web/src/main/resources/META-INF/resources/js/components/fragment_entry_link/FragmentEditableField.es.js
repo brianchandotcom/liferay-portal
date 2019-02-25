@@ -38,7 +38,7 @@ const FLOATING_TOOLBAR_PANELS = [
 		title: Liferay.Language.get('edit')
 	},
 	{
-		icon: 'plug',
+		icon: 'bolt',
 		panelId: FLOATING_TOOLBAR_MAP_PANEL_ID,
 		title: Liferay.Language.get('map')
 	}

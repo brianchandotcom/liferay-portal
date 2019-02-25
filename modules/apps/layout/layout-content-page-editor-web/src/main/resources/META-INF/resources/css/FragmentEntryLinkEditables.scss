@@ -35,6 +35,11 @@ lfr-editable {
 		@include lfr-editable-focus;
 	}
 
+	.cke_editable {
+		background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
+		outline: 0;
+	}
+
 	.fragment-entry-link-list.translating & {
 		background-color: fade_out($fragmentEditableFieldGridDefaultColor, 0.9);
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;

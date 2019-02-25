@@ -152,6 +152,11 @@
 		<finder name="SegmentsEntryId" return-type="Collection">
 			<finder-column name="segmentsEntryId" />
 		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="G_S_C_C" return-type="SegmentsExperience" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsEntryId" />
@@ -164,9 +169,21 @@
 			<finder-column name="classPK" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="G_S_C_C_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="segmentsEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="active" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
+		<exception>SegmentsExperienceSegmentsEntry</exception>
 	</exceptions>
 </service-builder>

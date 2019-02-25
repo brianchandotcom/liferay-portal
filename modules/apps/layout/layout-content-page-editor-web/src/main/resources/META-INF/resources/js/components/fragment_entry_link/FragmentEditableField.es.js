@@ -124,7 +124,7 @@ class FragmentEditableField extends Component {
 		const nextState = setIn(state, ['content'], content);
 
 		return setIn(nextState, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
-			}
+	}
 
 	/**
 	 * @inheritDoc
@@ -144,12 +144,11 @@ class FragmentEditableField extends Component {
 
 	/**
 	 * @inheritDoc
-	 * @param {{_showTooltip: bool}} changes
 	 * @return {boolean}
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		return Boolean(changes._showTooltip);
+		return !this._editing && Boolean(changes.activeItemId);
 	}
 
 	/**
@@ -263,11 +262,11 @@ class FragmentEditableField extends Component {
 	_handleEditableBlur() {
 		requestAnimationFrame(
 			() => {
-		if (shouldClearFocus(this.element)) {
-			this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+				if (shouldClearFocus(this.element)) {
+					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
 					this._editing = false;
 				}
-		}
+			}
 		);
 	}
 
@@ -289,7 +288,7 @@ class FragmentEditableField extends Component {
 				}
 			);
 		}
-		}
+	}
 
 	/**
 	 * Callback executed when the exiting editor is destroyed

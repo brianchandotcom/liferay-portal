@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.highlight.HighlightField;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +29,7 @@ import java.util.Map;
  * @author Michael C. Han
  */
 @ProviderType
-public class SearchHit {
+public class SearchHit implements Serializable {
 
 	public void addHighlightField(HighlightField highlightField) {
 		_highlightFields.put(highlightField.getName(), highlightField);

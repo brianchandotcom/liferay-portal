@@ -17,9 +17,12 @@ package com.liferay.portal.search.searcher;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.stats.StatsResponse;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Holds various outcomes returned when a search is performed.
@@ -34,6 +37,8 @@ public interface SearchResponse {
 	public AggregationResult getAggregationResult(String name);
 
 	public Map<String, AggregationResult> getAggregationResultsMap();
+
+	public Stream<Document> getDocumentsStream();
 
 	/**
 	 * Returns the request string submitted to the search engine.
@@ -54,6 +59,8 @@ public interface SearchResponse {
 	 * @review
 	 */
 	public String getResponseString();
+
+	public SearchHits getSearchHits();
 
 	/**
 	 * Returns the map containing the metrics aggregations computed by the

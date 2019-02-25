@@ -16,6 +16,8 @@ package com.liferay.portal.search.hits;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
  * @author Michael C. Han
  */
 @ProviderType
-public class SearchHits {
+public class SearchHits implements Serializable {
 
 	public void addSearchHit(SearchHit searchHit) {
 		_searchHits.add(searchHit);

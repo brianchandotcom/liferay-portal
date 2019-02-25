@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.util.List;
@@ -38,6 +39,8 @@ public interface SearchRequest {
 
 	public Map<String, PipelineAggregation> getPipelineAggregationsMap();
 
+	public Query getQuery();
+
 	/**
 	 * Provides a secondary query to reorder the top documents returned.
 	 *
@@ -46,6 +49,8 @@ public interface SearchRequest {
 	 * @review
 	 */
 	public Query getRescoreQuery();
+
+	public List<Sort> getSorts();
 
 	/**
 	 * Provides the metric aggregations that are to be computed for each field.

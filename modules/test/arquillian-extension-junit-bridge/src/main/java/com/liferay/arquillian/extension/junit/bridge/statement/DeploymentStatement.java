@@ -23,7 +23,6 @@ import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.activator.ArquillianBundleActivator;
 import com.liferay.arquillian.extension.junit.bridge.jmx.JMXProxyUtil;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -42,22 +41,16 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.jar.Attributes;
-import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import javax.management.ObjectName;
 
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
-import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -98,9 +91,7 @@ public class DeploymentStatement extends Statement {
 
 			ProjectBuilder projectBuilder = _createProjectBuilder(project);
 
-			Analyzer analyzer = new Analyzer();
-
-			Jar jar = _createJar(project, projectBuilder, analyzer)) {
+			Jar jar = _createJar(project, projectBuilder)) {
 
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
@@ -132,29 +123,13 @@ public class DeploymentStatement extends Statement {
 		}
 	}
 
-	private static Set<String> _createImportPackages(Manifest manifest) {
-		Set<String> importPackages = new HashSet<>();
-
-		Collections.addAll(importPackages, _IMPORTS_PACKAGES);
-
-		Attributes mainAttributes = manifest.getMainAttributes();
-
-		importPackages.addAll(
-			StringUtil.split(mainAttributes.getValue(_importPackageName)));
-
-		return importPackages;
-	}
-
 	private static Jar _createJar(
-			Project project, ProjectBuilder projectBuilder, Analyzer analyzer)
+			Project project, ProjectBuilder projectBuilder)
 		throws Exception {
 
 		Jar jar = projectBuilder.build();
 
-		analyzer.setProperties(project.getProperties());
-		analyzer.setJar(jar);
-
-		jar.setManifest(analyzer.calcManifest());
+		jar.setManifest(_createManifest(jar, project));
 
 		jar.putResource(
 			"/arquillian.remote.marker",
@@ -168,6 +143,46 @@ public class DeploymentStatement extends Statement {
 			});
 
 		return jar;
+	}
+
+	private static Manifest _createManifest(Jar jar, Project project)
+		throws Exception {
+
+		Analyzer analyzer = new Analyzer();
+
+		analyzer.setProperties(project.getProperties());
+		analyzer.setJar(jar);
+
+		Manifest manifest = analyzer.calcManifest();
+
+		Set<String> importPackages = new HashSet<>();
+
+		Collections.addAll(importPackages, _IMPORTS_PACKAGES);
+
+		Attributes mainAttributes = manifest.getMainAttributes();
+
+		importPackages.addAll(
+			StringUtil.split(mainAttributes.getValue(_importPackageName)));
+
+		importPackages.remove(
+			"com.liferay.arquillian.extension.junit.bridge.junit");
+
+		StringBundler sb = new StringBundler(importPackages.size() * 2);
+
+		for (String attributeValue : importPackages) {
+			sb.append(attributeValue);
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		mainAttributes.put(_importPackageName, sb.toString());
+
+		mainAttributes.put(
+			_bundleActivatorName,
+			ArquillianBundleActivator.class.getCanonicalName());
+
+		return manifest;
 	}
 
 	private static ProjectBuilder _createProjectBuilder(Project project)
@@ -202,83 +217,10 @@ public class DeploymentStatement extends Statement {
 		return files;
 	}
 
-	private static Manifest _getManifest(Archive<?> archive)
-		throws IOException {
-
-		Node manifestNode = archive.get(JarFile.MANIFEST_NAME);
-
-		if (manifestNode == null) {
-			return null;
-		}
-
-		Asset manifestAsset = manifestNode.getAsset();
-
-		try (InputStream inputStream = manifestAsset.openStream()) {
-			return new Manifest(inputStream);
-		}
-	}
-
 	private static void _process(JavaArchive javaArchive) {
-		try {
-			javaArchive.addPackages(
-				true, "com.liferay.arquillian.extension.junit.bridge",
-				"org.jboss.shrinkwrap.api",
-				"org.jboss.shrinkwrap.descriptor.api");
-
-			Manifest manifest = _getManifest(javaArchive);
-
-			Set<String> importPackages = _createImportPackages(manifest);
-
-			importPackages.remove(
-				"com.liferay.arquillian.extension.junit.bridge.junit");
-
-			_setManifestValues(manifest, _importPackageName, importPackages);
-
-			Attributes mainAttributes = manifest.getMainAttributes();
-
-			mainAttributes.put(
-				_bundleActivatorName,
-				ArquillianBundleActivator.class.getCanonicalName());
-
-			_setManifest(javaArchive, manifest);
-		}
-		catch (IOException ioe) {
-			throw new IllegalArgumentException(
-				"Invalid OSGi bundle: " + javaArchive, ioe);
-		}
-	}
-
-	private static void _setManifest(Archive<?> archive, Manifest manifest)
-		throws IOException {
-
-		archive.delete(JarFile.MANIFEST_NAME);
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		manifest.write(unsyncByteArrayOutputStream);
-
-		archive.add(
-			new ByteArrayAsset(unsyncByteArrayOutputStream.toByteArray()),
-			JarFile.MANIFEST_NAME);
-	}
-
-	private static void _setManifestValues(
-		Manifest manifest, Attributes.Name attributeName,
-		Collection<String> attributeValues) {
-
-		Attributes mainAttributes = manifest.getMainAttributes();
-
-		StringBundler sb = new StringBundler(attributeValues.size() * 2);
-
-		for (String attributeValue : attributeValues) {
-			sb.append(attributeValue);
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		mainAttributes.put(attributeName, sb.toString());
+		javaArchive.addPackages(
+			true, "com.liferay.arquillian.extension.junit.bridge",
+			"org.jboss.shrinkwrap.api", "org.jboss.shrinkwrap.descriptor.api");
 	}
 
 	private long _installBundle(FrameworkMBean frameworkMBean, Path path)

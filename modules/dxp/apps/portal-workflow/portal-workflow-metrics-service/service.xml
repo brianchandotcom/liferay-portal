@@ -74,6 +74,9 @@
 		<column name="description" type="String" />
 		<column name="duration" type="long" />
 		<column name="processId" type="long" />
+		<column name="startNodeNames" type="String" />
+		<column name="pauseNodeNames" type="String" />
+		<column name="stopNodeNames" type="String" />
 
 		<!-- Finder methods -->
 

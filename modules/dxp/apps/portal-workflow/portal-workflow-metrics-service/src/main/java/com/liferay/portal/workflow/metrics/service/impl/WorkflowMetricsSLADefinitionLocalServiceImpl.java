@@ -17,10 +17,12 @@ package com.liferay.portal.workflow.metrics.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,7 +32,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 			String name, String description, long duration, long processId,
-			ServiceContext serviceContext)
+			String[] startNodeNames, String[] pauseNodeNames,
+			String[] stopNodeNames, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
@@ -51,6 +54,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
 		workflowMetricsSLADefinition.setProcessId(processId);
+		workflowMetricsSLADefinition.setStartNodeNames(
+			StringUtil.merge(startNodeNames));
+		workflowMetricsSLADefinition.setPauseNodeNames(
+			StringUtil.merge(pauseNodeNames));
+		workflowMetricsSLADefinition.setStopNodeNames(
+			StringUtil.merge(stopNodeNames));
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
@@ -61,9 +70,26 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		return workflowMetricsSLADefinition;
 	}
 
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, long processId) {
+
+		return workflowMetricsSLADefinitionPersistence.findByC_P(
+			companyId, processId);
+	}
+
+	public int getWorkflowMetricsSLADefinitionsCount(
+		long companyId, long processId) {
+
+		return workflowMetricsSLADefinitionPersistence.countByC_P(
+			companyId, processId);
+	}
+
+	@Override
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitiontId, String name,
-			String description, long duration, ServiceContext serviceContext)
+			String description, long duration, String[] startNodeNames,
+			String[] pauseNodeNames, String[] stopNodeNames,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
@@ -74,6 +100,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
+		workflowMetricsSLADefinition.setStartNodeNames(
+			StringUtil.merge(startNodeNames));
+		workflowMetricsSLADefinition.setPauseNodeNames(
+			StringUtil.merge(pauseNodeNames));
+		workflowMetricsSLADefinition.setStopNodeNames(
+			StringUtil.merge(stopNodeNames));
 
 		return workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);

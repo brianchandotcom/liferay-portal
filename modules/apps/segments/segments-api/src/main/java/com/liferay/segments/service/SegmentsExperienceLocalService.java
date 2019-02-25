@@ -121,8 +121,8 @@ public interface SegmentsExperienceLocalService extends BaseLocalService,
 	public SegmentsExperience deleteSegmentsExperience(
 		SegmentsExperience segmentsExperience) throws PortalException;
 
-	public void deleteSegmentsExperiences(long groupId)
-		throws PortalException;
+	public void deleteSegmentsExperiences(long groupId, long classNameId,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
@@ -190,6 +190,11 @@ public interface SegmentsExperienceLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience fetchDefaultSegmentsExperience(long groupId,
+		long classNameId, long classPK, boolean addDefaultExperience)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperience fetchSegmentsExperience(long segmentsExperienceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -237,8 +242,30 @@ public interface SegmentsExperienceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long classNameId, long classPK, boolean active,
+		boolean addDefaultExperience, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
 		long classNameId, long classPK, boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator);
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, boolean addDefaultExperience, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsExperience> getSegmentsExperiences(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws PortalException;
 
 	/**
 	* Returns the number of segments experiences.
@@ -249,11 +276,13 @@ public interface SegmentsExperienceLocalService extends BaseLocalService,
 	public int getSegmentsExperiencesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSegmentsExperiencesCount(long groupId);
+	public int getSegmentsExperiencesCount(long groupId, long classNameId,
+		long classPK, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperiencesCount(long groupId, long classNameId,
-		long classPK, boolean active);
+		long classPK, boolean active, boolean addDefaultExperience)
+		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
 		long segmentsExperienceId, long segmentsEntryId,

@@ -533,6 +533,292 @@ public class SegmentsExperienceUtil {
 	}
 
 	/**
+	* Returns all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_C_C(long groupId,
+		long classNameId, long classPK) {
+		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns a range of all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end) {
+		return getPersistence()
+				   .findByG_C_C(groupId, classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments experience
+	* @throws NoSuchExperienceException if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience findByG_C_C_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .findByG_C_C_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience fetchByG_C_C_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_C_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments experience
+	* @throws NoSuchExperienceException if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience findByG_C_C_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .findByG_C_C_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience fetchByG_C_C_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_C_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the segments experiences before and after the current segments experience in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param segmentsExperienceId the primary key of the current segments experience
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segments experience
+	* @throws NoSuchExperienceException if a segments experience with the primary key could not be found
+	*/
+	public static SegmentsExperience[] findByG_C_C_PrevAndNext(
+		long segmentsExperienceId, long groupId, long classNameId,
+		long classPK, OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .findByG_C_C_PrevAndNext(segmentsExperienceId, groupId,
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns all the segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_C_C(long groupId,
+		long classNameId, long classPK) {
+		return getPersistence().filterFindByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_C_C(groupId, classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_C_C(groupId, classNameId, classPK, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the segments experiences before and after the current segments experience in the ordered set of segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param segmentsExperienceId the primary key of the current segments experience
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segments experience
+	* @throws NoSuchExperienceException if a segments experience with the primary key could not be found
+	*/
+	public static SegmentsExperience[] filterFindByG_C_C_PrevAndNext(
+		long segmentsExperienceId, long groupId, long classNameId,
+		long classPK, OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .filterFindByG_C_C_PrevAndNext(segmentsExperienceId,
+			groupId, classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Removes all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	*/
+	public static void removeByG_C_C(long groupId, long classNameId,
+		long classPK) {
+		getPersistence().removeByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching segments experiences
+	*/
+	public static int countByG_C_C(long groupId, long classNameId, long classPK) {
+		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of segments experiences that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @return the number of matching segments experiences that the user has permission to view
+	*/
+	public static int filterCountByG_C_C(long groupId, long classNameId,
+		long classPK) {
+		return getPersistence().filterCountByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
 	* Returns the segments experience where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
 	*
 	* @param groupId the group ID
@@ -925,6 +1211,545 @@ public class SegmentsExperienceUtil {
 		long classPK, boolean active) {
 		return getPersistence()
 				   .filterCountByG_C_C_A(groupId, classNameId, classPK, active);
+	}
+
+	/**
+	* Returns all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryId, classNameId,
+			classPK, active);
+	}
+
+	/**
+	* Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		int start, int end) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryId, classNameId,
+			classPK, active, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryId, classNameId,
+			classPK, active, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryId, classNameId,
+			classPK, active, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments experience
+	* @throws NoSuchExperienceException if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience findByG_S_C_C_A_First(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .findByG_S_C_C_A_First(groupId, segmentsEntryId,
+			classNameId, classPK, active, orderByComparator);
+	}
+
+	/**
+	* Returns the first segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience fetchByG_S_C_C_A_First(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_S_C_C_A_First(groupId, segmentsEntryId,
+			classNameId, classPK, active, orderByComparator);
+	}
+
+	/**
+	* Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments experience
+	* @throws NoSuchExperienceException if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience findByG_S_C_C_A_Last(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .findByG_S_C_C_A_Last(groupId, segmentsEntryId, classNameId,
+			classPK, active, orderByComparator);
+	}
+
+	/**
+	* Returns the last segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	*/
+	public static SegmentsExperience fetchByG_S_C_C_A_Last(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_S_C_C_A_Last(groupId, segmentsEntryId,
+			classNameId, classPK, active, orderByComparator);
+	}
+
+	/**
+	* Returns the segments experiences before and after the current segments experience in the ordered set where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param segmentsExperienceId the primary key of the current segments experience
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segments experience
+	* @throws NoSuchExperienceException if a segments experience with the primary key could not be found
+	*/
+	public static SegmentsExperience[] findByG_S_C_C_A_PrevAndNext(
+		long segmentsExperienceId, long groupId, long segmentsEntryId,
+		long classNameId, long classPK, boolean active,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .findByG_S_C_C_A_PrevAndNext(segmentsExperienceId, groupId,
+			segmentsEntryId, classNameId, classPK, active, orderByComparator);
+	}
+
+	/**
+	* Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A(groupId, segmentsEntryId,
+			classNameId, classPK, active);
+	}
+
+	/**
+	* Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A(groupId, segmentsEntryId,
+			classNameId, classPK, active, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active,
+		int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A(groupId, segmentsEntryId,
+			classNameId, classPK, active, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the segments experiences before and after the current segments experience in the ordered set of segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param segmentsExperienceId the primary key of the current segments experience
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segments experience
+	* @throws NoSuchExperienceException if a segments experience with the primary key could not be found
+	*/
+	public static SegmentsExperience[] filterFindByG_S_C_C_A_PrevAndNext(
+		long segmentsExperienceId, long groupId, long segmentsEntryId,
+		long classNameId, long classPK, boolean active,
+		OrderByComparator<SegmentsExperience> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchExperienceException {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A_PrevAndNext(segmentsExperienceId,
+			groupId, segmentsEntryId, classNameId, classPK, active,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A(groupId, segmentsEntryIds,
+			classNameId, classPK, active);
+	}
+
+	/**
+	* Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A(groupId, segmentsEntryIds,
+			classNameId, classPK, active, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments experiences that the user has permission to view
+	*/
+	public static List<SegmentsExperience> filterFindByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_C_C_A(groupId, segmentsEntryIds,
+			classNameId, classPK, active, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryIds, classNameId,
+			classPK, active);
+	}
+
+	/**
+	* Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @return the range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryIds, classNameId,
+			classPK, active, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryIds, classNameId,
+			classPK, active, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @param start the lower bound of the range of segments experiences
+	* @param end the upper bound of the range of segments experiences (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching segments experiences
+	*/
+	public static List<SegmentsExperience> findByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_S_C_C_A(groupId, segmentsEntryIds, classNameId,
+			classPK, active, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	*/
+	public static void removeByG_S_C_C_A(long groupId, long segmentsEntryId,
+		long classNameId, long classPK, boolean active) {
+		getPersistence()
+			.removeByG_S_C_C_A(groupId, segmentsEntryId, classNameId, classPK,
+			active);
+	}
+
+	/**
+	* Returns the number of segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the number of matching segments experiences
+	*/
+	public static int countByG_S_C_C_A(long groupId, long segmentsEntryId,
+		long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .countByG_S_C_C_A(groupId, segmentsEntryId, classNameId,
+			classPK, active);
+	}
+
+	/**
+	* Returns the number of segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the number of matching segments experiences
+	*/
+	public static int countByG_S_C_C_A(long groupId, long[] segmentsEntryIds,
+		long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .countByG_S_C_C_A(groupId, segmentsEntryIds, classNameId,
+			classPK, active);
+	}
+
+	/**
+	* Returns the number of segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryId the segments entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the number of matching segments experiences that the user has permission to view
+	*/
+	public static int filterCountByG_S_C_C_A(long groupId,
+		long segmentsEntryId, long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .filterCountByG_S_C_C_A(groupId, segmentsEntryId,
+			classNameId, classPK, active);
+	}
+
+	/**
+	* Returns the number of segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param segmentsEntryIds the segments entry IDs
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param active the active
+	* @return the number of matching segments experiences that the user has permission to view
+	*/
+	public static int filterCountByG_S_C_C_A(long groupId,
+		long[] segmentsEntryIds, long classNameId, long classPK, boolean active) {
+		return getPersistence()
+				   .filterCountByG_S_C_C_A(groupId, segmentsEntryIds,
+			classNameId, classPK, active);
 	}
 
 	/**

@@ -73,22 +73,18 @@ public class SegmentsExperienceServiceWrapper
 	public java.util.List<com.liferay.segments.model.SegmentsExperience> getSegmentsExperiences(
 		long groupId, long classNameId, long classPK, boolean active,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsExperience> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsExperience> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _segmentsExperienceService.getSegmentsExperiences(groupId,
 			classNameId, classPK, active, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getSegmentsExperiencesCount(long groupId) {
-		return _segmentsExperienceService.getSegmentsExperiencesCount(groupId);
-	}
-
-	@Override
 	public int getSegmentsExperiencesCount(long groupId, long classNameId,
-		long classPK, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsExperience> orderByComparator) {
+		long classPK, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _segmentsExperienceService.getSegmentsExperiencesCount(groupId,
-			classNameId, classPK, active, start, end, orderByComparator);
+			classNameId, classPK, active);
 	}
 
 	@Override

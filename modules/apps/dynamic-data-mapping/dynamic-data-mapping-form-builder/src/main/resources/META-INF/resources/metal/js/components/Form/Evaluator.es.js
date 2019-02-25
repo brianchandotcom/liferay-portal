@@ -112,38 +112,41 @@ const WithEvaluator = ChildComponent => {
 		 * @private
 		 */
 
-		_processEvaluation({fieldName}) {
-			const {fieldType, formContext, url} = this.props;
-			const {pages} = this.state;
+		_processEvaluation(fieldInstance) {
+			if (!fieldInstance.isDisposed() && !this.isDisposed()) {
+				const {fieldName} = fieldInstance;
+				const {fieldType, formContext, url} = this.props;
+				const {pages} = this.state;
 
-			makeFetch(
-				{
-					body: convertToSearchParams(
-						{
-							languageId: themeDisplay.getLanguageId(),
-							newField: '',
-							p_auth: Liferay.authToken,
-							portletNamespace: '',
-							serializedFormContext: JSON.stringify(formContext),
-							trigger: fieldName,
-							type: fieldType
-						}
-					),
-					url
-				}
-			).then(
-				newPages => {
-					const mergedPages = this._mergePages(pages, newPages);
+				makeFetch(
+					{
+						body: convertToSearchParams(
+							{
+								languageId: themeDisplay.getLanguageId(),
+								newField: '',
+								p_auth: Liferay.authToken,
+								portletNamespace: '',
+								serializedFormContext: JSON.stringify(formContext),
+								trigger: fieldName,
+								type: fieldType
+							}
+						),
+						url
+					}
+				).then(
+					newPages => {
+						const mergedPages = this._mergePages(pages, newPages);
 
-					this.emit('evaluated', mergedPages);
+						this.emit('evaluated', mergedPages);
 
-					this.setState(
-						{
-							pages: mergedPages
-						}
-					);
-				}
-			);
+						this.setState(
+							{
+								pages: mergedPages
+							}
+						);
+					}
+				);
+			}
 		}
 
 		/**

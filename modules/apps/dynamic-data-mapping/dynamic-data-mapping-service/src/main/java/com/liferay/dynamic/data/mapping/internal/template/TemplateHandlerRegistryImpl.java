@@ -308,6 +308,8 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				boolean cacheable = GetterUtil.getBoolean(
 					templateElement.elementText("cacheable"));
 
+				serviceContext.setAddGuestPermissions(true);
+
 				if (ddmTemplate == null) {
 					_ddmTemplateLocalService.addTemplate(
 						userId, group.getGroupId(), classNameId, 0,

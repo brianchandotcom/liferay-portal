@@ -104,15 +104,3 @@ searchContainer.setResults(results);
 </c:if>
 
 <%@ include file="/blogs/view_entries.jspf" %>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("trashEnabled", trashHelper.isTrashEnabled(scopeGroupId));
-%>
-
-<liferay-frontend:component
-	componentId="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= context %>"
-	module="js/ElementsDefaultEventHandler.es"
-/>

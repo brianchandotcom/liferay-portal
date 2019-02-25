@@ -55,15 +55,9 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 				</div>
 
 				<div class="autofit-col visible-interaction">
-
-					<%
-					BlogsEntryActionDropdownItemsProvider blogsEntryActionDropdownItemsProvider = new BlogsEntryActionDropdownItemsProvider(entry, renderRequest, renderResponse, permissionChecker, resourceBundle, trashHelper);
-					%>
-
-					<clay:dropdown-actions
-						defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
-					/>
+					<div class="dropdown dropdown-action">
+						<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
+					</div>
 				</div>
 			</div>
 

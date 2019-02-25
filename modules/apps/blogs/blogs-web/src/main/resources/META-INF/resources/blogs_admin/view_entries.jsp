@@ -95,5 +95,5 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 <liferay-frontend:component
 	componentId="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 	context="<%= blogEntriesDisplayContext.getComponentContext() %>"
-	module="js/ElementsDefaultEventHandler.es"
+	module="blogs_admin/js/ElementsDefaultEventHandler.es"
 />

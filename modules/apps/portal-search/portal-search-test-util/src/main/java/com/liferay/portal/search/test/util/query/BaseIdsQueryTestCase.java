@@ -17,18 +17,19 @@ package com.liferay.portal.search.test.util.query;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.search2.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search2.SearchSearchResponse;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -38,52 +39,28 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 
 	@Test
 	public void testIdsQuery() {
-		addDocument(
-			document -> {
-				document.addKeyword(Field.UID, 1);
-				document.addKeyword(Field.USER_NAME, "SomeUser1");
-				document.addNumber(Field.PRIORITY, 1);
-			});
-		addDocument(
-			document -> {
-				document.addKeyword(Field.UID, 2);
-				document.addKeyword(Field.USER_NAME, "SomeUser2");
-				document.addNumber(Field.PRIORITY, 1);
-			});
-		addDocument(
-			document -> {
-				document.addKeyword(Field.UID, 3);
-				document.addKeyword(Field.USER_NAME, "SomeUser3");
-				document.addNumber(Field.PRIORITY, 1);
-			});
-		addDocument(
-			document -> {
-				document.addKeyword(Field.UID, 4);
-				document.addKeyword(Field.USER_NAME, "SomeUser4");
-				document.addNumber(Field.PRIORITY, 1);
-			});
-		addDocument(
-			document -> {
-				document.addKeyword(Field.UID, 5);
-				document.addKeyword(Field.USER_NAME, "SomeUser5");
-				document.addNumber(Field.PRIORITY, 1);
-			});
+		index(1, "alpha");
+		index(2, "bravo");
+		index(3, "charlie");
+		index(4, "delta");
+
+		IdsQuery idsQuery = queries.ids();
+
+		idsQuery.addIds("1", "4");
+
+		FieldSort fieldSort = new FieldSort(Field.USER_NAME);
+
+		fieldSort.setSortOrder(SortOrder.DESC);
+
+		String expected = "[delta, alpha]";
 
 		assertSearch(
 			indexingTestHelper -> {
-				IdsQuery idsQuery = queries.ids();
-
-				idsQuery.addIds("1", "5");
-
 				SearchSearchRequest searchSearchRequest =
 					new SearchSearchRequest();
 
 				searchSearchRequest.setIndexNames("_all");
 				searchSearchRequest.setQuery(idsQuery);
-
-				FieldSort fieldSort = new FieldSort(Field.USER_NAME);
-
-				fieldSort.setSortOrder(SortOrder.ASC);
 
 				searchSearchRequest.addSorts(fieldSort);
 
@@ -95,25 +72,27 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-				Assert.assertEquals("Total hits", 2, searchHits.getTotalHits());
+				Stream<Document> stream = getDocumentsStream(searchHits);
 
-				List<SearchHit> searchHitList = searchHits.getSearchHits();
+				DocumentsAssert.assertValues(
+					searchSearchResponse.getSearchRequestString(), stream,
+					Field.USER_NAME, expected);
+			});
+	}
 
-				Assert.assertEquals("Retrieved hits", 2, searchHitList.size());
+	protected Stream<Document> getDocumentsStream(SearchHits searchHits) {
+		List<SearchHit> list = searchHits.getSearchHits();
 
-				SearchHit searchHit1 = searchHitList.get(0);
+		Stream<SearchHit> stream = list.stream();
 
-				Document document1 = searchHit1.getDocument();
+		return stream.map(SearchHit::getDocument);
+	}
 
-				Assert.assertEquals(
-					"SomeUser1", document1.getFieldValue(Field.USER_NAME));
-
-				SearchHit searchHit2 = searchHitList.get(1);
-
-				Document document2 = searchHit2.getDocument();
-
-				Assert.assertEquals(
-					"SomeUser5", document2.getFieldValue(Field.USER_NAME));
+	protected void index(int uid, String userName) {
+		addDocument(
+			document -> {
+				document.addKeyword(Field.UID, uid);
+				document.addKeyword(Field.USER_NAME, userName);
 			});
 	}
 

@@ -15,24 +15,14 @@
 package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.search2.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search2.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.script.Script;
-import com.liferay.portal.search.sort.FieldSort;
-import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -46,14 +36,14 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 		index(2, "alpha", "bravo");
 		index(3, "alpha", "bravo", "charlie");
 
-		assertTermsSetWithField(Arrays.asList("alpha"), "[[alpha]]");
+		assertTermsSetWithField(Arrays.asList("alpha"), "[alpha]");
 
 		assertTermsSetWithField(
-			Arrays.asList("alpha", "bravo"), "[[alpha], [alpha, bravo]]");
+			Arrays.asList("alpha", "bravo"), "[[alpha, bravo], alpha]");
 
 		assertTermsSetWithField(
 			Arrays.asList("alpha", "bravo", "charlie"),
-			"[[alpha], [alpha, bravo], [alpha, bravo, charlie]]");
+			"[[alpha, bravo, charlie], [alpha, bravo], alpha]");
 
 		assertTermsSetWithField(Arrays.asList("bravo"), "[]");
 
@@ -70,19 +60,19 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 
 		assertTermsSetWithScript(
 			Arrays.asList("alpha"), source,
-			"[[alpha], [alpha, bravo], [alpha, bravo, charlie]]");
+			"[[alpha, bravo, charlie], [alpha, bravo], alpha]");
 
 		assertTermsSetWithScript(
 			Arrays.asList("alpha", "bravo"), source,
-			"[[alpha], [alpha, bravo], [alpha, bravo, charlie]]");
+			"[[alpha, bravo, charlie], [alpha, bravo], alpha]");
 
 		assertTermsSetWithScript(
 			Arrays.asList("alpha", "bravo", "charlie"), source,
-			"[[alpha], [alpha, bravo], [alpha, bravo, charlie]]");
+			"[[alpha, bravo, charlie], [alpha, bravo], alpha]");
 
 		assertTermsSetWithScript(
 			Arrays.asList("bravo"), source,
-			"[[alpha, bravo], [alpha, bravo, charlie]]");
+			"[[alpha, bravo, charlie], [alpha, bravo]]");
 
 		assertTermsSetWithScript(
 			Arrays.asList("bravo", "charlie"), source,
@@ -92,44 +82,21 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 	protected void assertTermsSet(
 		TermsSetQuery termsSetQuery, String expected) {
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest() {
-			{
-				addSorts(
-					new FieldSort(Field.PRIORITY) {
-						{
-							setSortOrder(SortOrder.ASC);
-						}
-					});
-
-				setIndexNames("_all");
-
-				setQuery(termsSetQuery);
-			}
-		};
-
 		assertSearch(
 			indexingTestHelper -> {
-				SearchEngineAdapter searchEngineAdapter =
-					getSearchEngineAdapter();
+				indexingTestHelper.defineRequest(
+					searchRequestBuilder -> searchRequestBuilder.query(
+						termsSetQuery));
 
-				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(searchSearchRequest);
+				indexingTestHelper.search();
 
-				SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-				List<SearchHit> searchHitList = searchHits.getSearchHits();
-
-				Stream<SearchHit> stream = searchHitList.stream();
-
-				Assert.assertEquals(
-					expected,
-					String.valueOf(
-						stream.map(
-							searchHit -> getFieldValues(
-								searchHit, Field.USER_NAME)
-						).collect(
-							Collectors.toList()
-						)));
+				indexingTestHelper.verifyResponse(
+					searchResponse -> {
+						DocumentsAssert.assertValuesIgnoreRelevance(
+							searchResponse.getRequestString(),
+							searchResponse.getDocumentsStream(),
+							Field.USER_NAME, expected);
+					});
 			});
 	}
 
@@ -152,14 +119,6 @@ public abstract class BaseTermsSetQueryTestCase extends BaseIndexingTestCase {
 			new Script("painless", source));
 
 		assertTermsSet(termsSetQuery, expected);
-	}
-
-	protected List<Object> getFieldValues(
-		SearchHit searchHit, String fieldName) {
-
-		Document document = searchHit.getDocument();
-
-		return document.getFieldValues(fieldName);
 	}
 
 	protected void index(int priority, String... userNames) {

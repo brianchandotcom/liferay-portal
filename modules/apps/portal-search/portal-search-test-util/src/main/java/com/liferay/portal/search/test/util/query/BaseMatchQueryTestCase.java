@@ -16,8 +16,8 @@ package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.search2.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search2.SearchSearchResponse;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.MatchQuery;

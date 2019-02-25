@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -93,6 +94,17 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			jsonObject.put(
 				"redirectURL",
 				getRedirectURL(actionRequest, layoutPageTemplateEntry));
+
+			if (type ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+				MultiSessionMessages.add(actionRequest, "displayPageAdded");
+			}
+			else if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+
+				MultiSessionMessages.add(
+					actionRequest, "layoutPageTemplateAdded");
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

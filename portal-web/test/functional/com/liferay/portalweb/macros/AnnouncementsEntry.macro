@@ -113,9 +113,9 @@ definition {
 			value1 = "Are you sure you want to delete this? It will be deleted immediately."
 		);
 
-		AssertTextNotPresent(value1 = "{entryTitle}");
+		AssertTextNotPresent(value1 = "${entryTitle}");
 
-		AssertTextNotPresent(value1 = "{entryContent}");
+		AssertTextNotPresent(value1 = "${entryContent}");
 	}
 
 	macro editPG {
@@ -188,9 +188,9 @@ definition {
 	}
 
 	macro viewDeletePG {
-		AssertTextNotPresent(value1 = "{entryTitle}");
+		AssertTextNotPresent(value1 = "${entryTitle}");
 
-		AssertTextNotPresent(value1 = "{entryContent}");
+		AssertTextNotPresent(value1 = "${entryContent}");
 	}
 
 	macro viewList {

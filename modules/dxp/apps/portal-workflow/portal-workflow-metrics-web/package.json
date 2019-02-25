@@ -47,6 +47,9 @@
 				"lines": 80
 			}
 		},
+		"moduleNameMapper": {
+			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/src/main/resources/META-INF/resources/js/test/mock/openToast.js"
+		},
 		"setupTestFrameworkScriptFile": "<rootDir>src/main/resources/META-INF/resources/js/test/setup.js",
 		"snapshotSerializers": [
 			"enzyme-to-json/serializer"

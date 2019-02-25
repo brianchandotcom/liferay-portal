@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"clay-button": "^2.8.0",
-		"clay-multi-select": "^2.8.0",
-		"clay-radio": "^2.8.0",
+		"clay-button": "^2.8.3",
+		"clay-multi-select": "^2.8.3",
+		"clay-radio": "^2.8.3",
 		"metal-component": "^2.16.7",
 		"metal-soy": "^2.16.7",
 		"metal-state": "^2.16.7"
@@ -20,7 +20,7 @@
 	"name": "document-library-web",
 	"scripts": {
 		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && npm run cleanSoy",
-		"build:soy": "metalsoy --soyDeps \"node_modules/+(clay-*|com.liferay.frontend.js.web)/**/*.soy\"",
+		"build:soy": "metalsoy --soyDeps \"node_modules/+(clay-*|com.liferay.frontend.js.web|com.liferay.asset.taglib)/**/*.soy\"",
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",
 		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",

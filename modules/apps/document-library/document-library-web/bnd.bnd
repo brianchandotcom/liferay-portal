@@ -12,7 +12,7 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	soy;\
-		filter:="(type=frontend-js-web)"
+		filter:="(|(type=frontend-js-web)(type=asset-taglib))"
 	osgi.extender;\
 		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /document-library-web

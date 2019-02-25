@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.asset.taglib.servlet.taglib,\
 	com.liferay.asset.taglib.servlet.taglib.soy
 Liferay-JS-Config: /META-INF/resources/config.js
+Liferay-JS-Submodules-Bridge: asset-taglib
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

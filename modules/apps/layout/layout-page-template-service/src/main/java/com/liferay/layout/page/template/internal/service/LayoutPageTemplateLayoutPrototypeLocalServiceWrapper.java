@@ -23,14 +23,12 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,18 +75,8 @@ public class LayoutPageTemplateLayoutPrototypeLocalServiceWrapper
 			return layoutPrototype;
 		}
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					_layoutPageTemplateEntryLocalService.
-						addLayoutPageTemplateEntry(layoutPrototype);
-
-					return null;
-				}
-
-			});
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			layoutPrototype);
 
 		return layoutPrototype;
 	}

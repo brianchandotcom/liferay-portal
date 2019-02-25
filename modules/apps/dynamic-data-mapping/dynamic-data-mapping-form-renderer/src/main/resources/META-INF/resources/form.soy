@@ -58,7 +58,7 @@
 
 					var portlet = event.portlet;
 
-					if (portlet && portlet.contains(form.get('container'))) {lb}
+					if (form && portlet && portlet.contains(form.get('container'))) {lb}
 						form.destroy();
 
 						Liferay.detach('destroyPortlet', destroyFormHandle);

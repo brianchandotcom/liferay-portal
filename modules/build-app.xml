@@ -58,6 +58,7 @@
 					dir="${modules.dir}"
 				>
 					<include name="apps/*" />
+					<include name="private/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
 				</dirset>
 			</path>

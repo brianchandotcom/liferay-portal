@@ -1,4 +1,20 @@
 .portal-workflow-metrics-app {
 	margin-top: 0 !important;
 	padding-top: 0;
+
+	> div > .sheet {
+		margin-top: 20px;
+
+		> .sheet-section > h3.sheet-subtitle {
+			margin-bottom: 8px;
+
+			> .reference-mark {
+				color: #B95000;
+				display: inline-block;
+				font-size: 6px;
+				position: relative;
+				vertical-align: super;
+			}
+		}
+	}
 }

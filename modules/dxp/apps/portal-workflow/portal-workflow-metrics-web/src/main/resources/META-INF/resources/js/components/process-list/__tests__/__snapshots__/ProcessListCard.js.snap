@@ -61,7 +61,7 @@ exports[`Should render component 1`] = `
       className="sheet taglib-empty-result-message"
     >
       <div
-        className="taglib-empty-search-result-message-header"
+        className="taglib-empty-result-message-header"
       />
       <h3
         className="text-center"
@@ -141,7 +141,7 @@ exports[`Should render component with 4 records 1`] = `
       className="sheet taglib-empty-result-message"
     >
       <div
-        className="taglib-empty-search-result-message-header"
+        className="taglib-empty-result-message-header"
       />
       <h3
         className="text-center"
@@ -221,7 +221,7 @@ exports[`Should render component with 10 records 1`] = `
       className="sheet taglib-empty-result-message"
     >
       <div
-        className="taglib-empty-search-result-message-header"
+        className="taglib-empty-result-message-header"
       />
       <h3
         className="text-center"

@@ -2,6 +2,10 @@ import ClayCharts from 'clay-charts-react';
 import React from 'react';
 import SummaryCard from './SummaryCard';
 
+/**
+ * @class
+ * @memberof open-processes-summary
+ * */
 export default class OpenProcessesSummary extends React.Component {
 	render() {
 		const CHART_DATA = {

@@ -1,119 +1,107 @@
-import mockGraphqlClient from '../../../test/mock-graphql-client';
+import fetch from '../../../test/mock/fetch';
 import ProcessListCard from '../ProcessListCard';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 test('Should render component', () => {
-	mockGraphqlClient.data = {processes: {total: 0, workflowProcesses: []}};
-
+	const data = {items: [], totalCount: 0};
 	const component = renderer.create(
-		<ProcessListCard client={mockGraphqlClient} companyId={1} />
+		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
-
 	const tree = component.toJSON();
 
 	expect(tree).toMatchSnapshot();
 });
 
 test('Should render component with 10 records', () => {
-	mockGraphqlClient.data = {
-		processes: {
-			total: 10,
-			workflowProcesses: [
-				{
-					instancesCount: 0,
-					title: 'Single Approver 1'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 2'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 3'
-				},
-				{
-					instancesCount: 1,
-					title: 'Single Approver 4'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 5'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 6'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 7'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 8'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 9'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 10'
-				}
-			]
-		}
+	const data = {
+		items: [
+			{
+				instancesCount: 0,
+				title: 'Single Approver 1'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 2'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 3'
+			},
+			{
+				instancesCount: 1,
+				title: 'Single Approver 4'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 5'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 6'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 7'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 8'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 9'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 10'
+			}
+		],
+		totalCount: 10
 	};
-
 	const component = renderer.create(
-		<ProcessListCard client={mockGraphqlClient} companyId={1} />
+		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
-
 	const tree = component.toJSON();
 
 	expect(tree).toMatchSnapshot();
 });
 
 test('Should render component with 4 records', () => {
-	mockGraphqlClient.data = {
-		processes: {
-			total: 4,
-			workflowProcesses: [
-				{
-					instancesCount: 0,
-					title: 'Single Approver 1'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 2'
-				},
-				{
-					instancesCount: 0,
-					title: 'Single Approver 3'
-				},
-				{
-					instancesCount: 1,
-					title: 'Single Approver 4'
-				}
-			]
-		}
+	const data = {
+		items: [
+			{
+				instancesCount: 0,
+				title: 'Single Approver 1'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 2'
+			},
+			{
+				instancesCount: 0,
+				title: 'Single Approver 3'
+			},
+			{
+				instancesCount: 1,
+				title: 'Single Approver 4'
+			}
+		],
+		totalCount: 4
 	};
-
 	const component = renderer.create(
-		<ProcessListCard client={mockGraphqlClient} companyId={1} />
+		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
-
 	const tree = component.toJSON();
 
 	expect(tree).toMatchSnapshot();
 });
 
 test('Should change entry', () => {
-	mockGraphqlClient.data = {processes: {total: 0, workflowProcesses: []}};
-
+	const data = {items: [], totalCount: 0};
 	const component = shallow(
-		<ProcessListCard client={mockGraphqlClient} companyId={1} />
+		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
-
 	const instance = component.instance();
 
 	instance.setEntry(20);
@@ -121,12 +109,10 @@ test('Should change entry', () => {
 });
 
 test('Should change page', () => {
-	mockGraphqlClient.data = {processes: {total: 0, workflowProcesses: []}};
-
+	const data = {items: [], totalCount: 0};
 	const component = shallow(
-		<ProcessListCard client={mockGraphqlClient} companyId={1} />
+		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
-
 	const instance = component.instance();
 
 	instance
@@ -135,12 +121,10 @@ test('Should change page', () => {
 });
 
 test('Should search', () => {
-	mockGraphqlClient.data = {processes: {total: 0, workflowProcesses: []}};
-
+	const data = {items: [], totalCount: 0};
 	const component = shallow(
-		<ProcessListCard client={mockGraphqlClient} companyId={1} />
+		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
-
 	const instance = component.instance();
 
 	instance.onSearch('test');

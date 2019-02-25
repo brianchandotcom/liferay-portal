@@ -1,6 +1,10 @@
 import ProcessListItem from './ProcessListItem';
 import React from 'react';
 
+/**
+ * @class
+ * @memberof processes-list
+ * */
 export default class ProcessListTable extends React.Component {
 	render() {
 		const {processes} = this.props;
@@ -38,14 +42,8 @@ export default class ProcessListTable extends React.Component {
 					</thead>
 
 					<tbody>
-						{processes.map(({instancesCount, title}, index) => (
-							<ProcessListItem
-								instancesCount={instancesCount}
-								key={index}
-								onTime="-"
-								overdue="-"
-								processName={title}
-							/>
+						{processes.map((process, index) => (
+							<ProcessListItem {...process} key={index} />
 						))}
 					</tbody>
 				</table>

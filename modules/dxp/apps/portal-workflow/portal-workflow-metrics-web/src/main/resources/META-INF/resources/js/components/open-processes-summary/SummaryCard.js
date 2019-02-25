@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * @class
+ * @memberof open-processes-summary
+ * */
 export default class SummaryCard extends React.Component {
 	render() {
 		const {description, total} = this.props;

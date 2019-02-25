@@ -71,14 +71,10 @@ exports[`Should render component 1`] = `
           </div>
         </td>
         <td>
-          0 item
+           items
         </td>
-        <td>
-          -
-        </td>
-        <td>
-          -
-        </td>
+        <td />
+        <td />
       </tr>
     </tbody>
   </table>

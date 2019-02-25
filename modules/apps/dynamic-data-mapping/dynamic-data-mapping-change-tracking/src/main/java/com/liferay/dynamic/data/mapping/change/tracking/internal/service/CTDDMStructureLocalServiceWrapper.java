@@ -274,8 +274,9 @@ public class CTDDMStructureLocalServiceWrapper
 					_log.warn(cte.getMessage());
 				}
 			}
-
-			throw cte;
+			else {
+				throw cte;
+			}
 		}
 	}
 

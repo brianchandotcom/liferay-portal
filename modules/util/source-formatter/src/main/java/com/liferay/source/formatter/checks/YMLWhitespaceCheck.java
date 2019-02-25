@@ -25,6 +25,8 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -40,6 +42,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			content, CharPool.TAB, StringPool.FOUR_SPACES);
 
 		content = _formatDefinitions(fileName, content, StringPool.BLANK, 0);
+
+		content = _formatMappingEntry(content);
 
 		return super.doProcess(fileName, absolutePath, content);
 	}
@@ -171,6 +175,36 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
+	private String _formatMappingEntry(String content) {
+		Matcher matcher = _mappingEntryPattern.matcher(content);
+
+		while (matcher.find()) {
+			String s = matcher.group();
+
+			String[] lines = s.split("\n");
+
+			if (lines.length <= 1) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(lines[0]);
+
+			for (int i = 1; i < lines.length; i++) {
+				sb.append(StringPool.NEW_LINE);
+				sb.append(lines[i].substring(2));
+			}
+
+			sb.append(StringPool.NEW_LINE);
+
+			content = StringUtil.replaceFirst(
+				content, matcher.group(), sb.toString());
+		}
+
+		return content;
+	}
+
 	private boolean _hasMapInsideList(String[] lines) {
 		if (lines.length <= 1) {
 			return false;
@@ -192,5 +226,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 		return false;
 	}
+
+	private static final Pattern _mappingEntryPattern = Pattern.compile(
+		"^( +)- .+(\n|\\Z)((\\1 +.+)?(\n|\\Z))+", Pattern.MULTILINE);
 
 }

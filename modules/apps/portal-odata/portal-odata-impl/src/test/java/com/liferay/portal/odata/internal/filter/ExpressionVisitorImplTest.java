@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.PrefixFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
+import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.portal.odata.internal.filter.expression.BinaryExpressionImpl;
 import com.liferay.portal.odata.internal.filter.expression.CollectionPropertyExpressionImpl;
@@ -54,6 +56,7 @@ import java.util.stream.Stream;
 
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -492,6 +495,25 @@ public class ExpressionVisitorImplTest {
 		Assert.assertEquals("keywords", entityField2.getName());
 		Assert.assertEquals(
 			EntityField.Type.COLLECTION, entityField2.getType());
+	}
+
+	@Test
+	public void testVisitMethodExpressionWithStartsWith() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("title");
+
+		String value = "title1";
+
+		PrefixFilter prefixFilter =
+			(PrefixFilter)
+				_expressionVisitorImpl.visitMethodExpression(
+					Arrays.asList(Arrays.array(entityField, value)),
+					MethodExpression.Type.STARSWITH);
+
+		Assert.assertEquals(entityField.getName(), prefixFilter.getField());
+		Assert.assertEquals(value, prefixFilter.getPrefix());
 	}
 
 	@Test

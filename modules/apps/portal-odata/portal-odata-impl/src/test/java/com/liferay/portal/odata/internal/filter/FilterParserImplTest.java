@@ -621,6 +621,81 @@ public class FilterParserImplTest {
 		exception.hasMessage("Filter is null");
 	}
 
+	@Test
+	public void testParseWithStarsWithMethod() throws ExpressionVisitException {
+		Expression expression = _filterParserImpl.parse(
+			"startswith(fieldExternal, 'value')");
+
+		Assert.assertNotNull(expression);
+
+		MethodExpression methodExpression = (MethodExpression)expression;
+
+		Assert.assertEquals(
+			MethodExpression.Type.STARSWITH, methodExpression.getType());
+
+		List<Expression> expressions = methodExpression.getExpressions();
+
+		MemberExpression memberExpression = (MemberExpression)expressions.get(
+			0);
+
+		PrimitivePropertyExpression primitivePropertyExpression =
+			(PrimitivePropertyExpression)memberExpression.getExpression();
+
+		Assert.assertEquals(
+			"fieldExternal", primitivePropertyExpression.getName());
+
+		LiteralExpression literalExpression =
+			(LiteralExpression)expressions.get(1);
+
+		Assert.assertEquals("'value'", literalExpression.getText());
+	}
+
+	@Test
+	public void testParseWithStarsWithMethodAndBooleanType() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse("startswith(booleanExternal, 7)")
+		).isInstanceOf(
+			ExpressionVisitException.class
+		);
+
+		exception.hasMessage("Incompatible types.");
+	}
+
+	@Test
+	public void testParseWithStarsWithMethodAndDateType() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse(
+				"contains(dateExternal, 2012-05-29T09:13:28Z)")
+		).isInstanceOf(
+			ExpressionVisitException.class
+		);
+
+		exception.hasMessage("Incompatible types.");
+	}
+
+	@Test
+	public void testParseWithStarsWithMethodAnDoubleType() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse("contains(doubleExternal, 7)")
+		).isInstanceOf(
+			ExpressionVisitException.class
+		);
+
+		exception.hasMessage("Incompatible types.");
+	}
+
+	@Test
+	public void testParseWithStartsWithMethodAndDateType() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse(
+				"startswith(dateExternal, 2012-05-29T09:13:28Z)")
+		).isInstanceOf(
+			ExpressionVisitException.class
+		);
+
+		exception.hasMessage("Incompatible types.");
+	}
+
 	private static final FilterParserImpl _filterParserImpl =
 		new FilterParserImpl(
 			new EntityModel() {

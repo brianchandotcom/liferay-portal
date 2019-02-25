@@ -40,6 +40,10 @@ public abstract class BaseSearchRequest {
 		_aggregationsMap.put(aggregation.getName(), aggregation);
 	}
 
+	public void addIndexBoost(String index, float boost) {
+		_indexBoosts.put(index, boost);
+	}
+
 	public void addPipelineAggregation(
 		PipelineAggregation pipelineAggregation) {
 
@@ -51,15 +55,23 @@ public abstract class BaseSearchRequest {
 		return Collections.unmodifiableMap(_aggregationsMap);
 	}
 
+	public Boolean getExplain() {
+		return _explain;
+	}
+
 	public Map<String, Facet> getFacets() {
 		return _facets;
+	}
+
+	public Map<String, Float> getIndexBoosts() {
+		return Collections.unmodifiableMap(_indexBoosts);
 	}
 
 	public String[] getIndexNames() {
 		return _indexNames;
 	}
 
-	public float getMinimumScore() {
+	public Float getMinimumScore() {
 		return _minimumScore;
 	}
 
@@ -71,12 +83,20 @@ public abstract class BaseSearchRequest {
 		return _postFilter;
 	}
 
+	public Query getPostFilterQuery() {
+		return _postFilterQuery;
+	}
+
 	public Query getQuery() {
 		return _query;
 	}
 
 	public com.liferay.portal.kernel.search.Query getQuery71() {
 		return _legacyQuery;
+	}
+
+	public Boolean getRequestCache() {
+		return _requestCache;
 	}
 
 	public Query getRescoreQuery() {
@@ -87,8 +107,16 @@ public abstract class BaseSearchRequest {
 		return Collections.unmodifiableList(_statsRequests);
 	}
 
-	public long getTimeoutInMilliseconds() {
+	public Long getTimeoutInMilliseconds() {
 		return _timeoutInMilliseconds;
+	}
+
+	public Boolean getTrackTotalHits() {
+		return _trackTotalHits;
+	}
+
+	public String[] getTypes() {
+		return _types;
 	}
 
 	public boolean isBasicFacetSelection() {
@@ -96,7 +124,11 @@ public abstract class BaseSearchRequest {
 	}
 
 	public boolean isExplain() {
-		return _explain;
+		if (_explain != null) {
+			return _explain;
+		}
+
+		return false;
 	}
 
 	public boolean isIncludeResponseString() {
@@ -104,11 +136,19 @@ public abstract class BaseSearchRequest {
 	}
 
 	public boolean isRequestCache() {
-		return _requestCache;
+		if (_requestCache != null) {
+			return _requestCache;
+		}
+
+		return false;
 	}
 
 	public boolean isTrackTotalHits() {
-		return _trackTotalHits;
+		if (_trackTotalHits != null) {
+			return _trackTotalHits;
+		}
+
+		return false;
 	}
 
 	public void putAllFacets(Map<String, Facet> facets) {
@@ -123,7 +163,7 @@ public abstract class BaseSearchRequest {
 		_basicFacetSelection = basicFacetSelection;
 	}
 
-	public void setExplain(boolean explain) {
+	public void setExplain(Boolean explain) {
 		_explain = explain;
 	}
 
@@ -135,12 +175,16 @@ public abstract class BaseSearchRequest {
 		_indexNames = indexNames;
 	}
 
-	public void setMinimumScore(float minimumScore) {
+	public void setMinimumScore(Float minimumScore) {
 		_minimumScore = minimumScore;
 	}
 
 	public void setPostFilter(Filter postFilter) {
 		_postFilter = postFilter;
+	}
+
+	public void setPostFilterQuery(Query postFilterQuery) {
+		_postFilterQuery = postFilterQuery;
 	}
 
 	public void setQuery(com.liferay.portal.kernel.search.Query legacyQuery) {
@@ -151,7 +195,7 @@ public abstract class BaseSearchRequest {
 		_query = query;
 	}
 
-	public void setRequestCache(boolean requestCache) {
+	public void setRequestCache(Boolean requestCache) {
 		_requestCache = requestCache;
 	}
 
@@ -163,31 +207,38 @@ public abstract class BaseSearchRequest {
 		_statsRequests = new ArrayList<>(statsRequests);
 	}
 
-	public void setTimeoutInMilliseconds(long timeoutInMilliseconds) {
+	public void setTimeoutInMilliseconds(Long timeoutInMilliseconds) {
 		_timeoutInMilliseconds = timeoutInMilliseconds;
 	}
 
-	public void setTrackTotalHits(boolean trackTotalHits) {
+	public void setTrackTotalHits(Boolean trackTotalHits) {
 		_trackTotalHits = trackTotalHits;
+	}
+
+	public void setTypes(String... types) {
+		_types = types;
 	}
 
 	private final Map<String, Aggregation> _aggregationsMap =
 		new LinkedHashMap<>();
 	private boolean _basicFacetSelection;
-	private boolean _explain;
+	private Boolean _explain;
 	private final Map<String, Facet> _facets = new LinkedHashMap<>();
 	private boolean _includeResponseString;
+	private final Map<String, Float> _indexBoosts = new LinkedHashMap<>();
 	private String[] _indexNames;
 	private com.liferay.portal.kernel.search.Query _legacyQuery;
-	private float _minimumScore;
+	private Float _minimumScore;
 	private final Map<String, PipelineAggregation> _pipelineAggregationsMap =
 		new LinkedHashMap<>();
 	private Filter _postFilter;
+	private Query _postFilterQuery;
 	private Query _query;
-	private boolean _requestCache;
+	private Boolean _requestCache;
 	private Query _rescoreQuery;
 	private List<StatsRequest> _statsRequests = Collections.emptyList();
-	private long _timeoutInMilliseconds;
-	private boolean _trackTotalHits = true;
+	private Long _timeoutInMilliseconds;
+	private Boolean _trackTotalHits;
+	private String[] _types;
 
 }

@@ -18,10 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
+import com.liferay.portal.search.highlight.Highlight;
+import com.liferay.portal.search.sort.Sort;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,12 +44,24 @@ public class SearchSearchRequest
 		return searchRequestExecutor.executeSearchRequest(this);
 	}
 
+	public void addSorts(Sort... sorts) {
+		Collections.addAll(_sorts, sorts);
+	}
+
 	public String getAlternateUidFieldName() {
 		return _alternateUidFieldName;
 	}
 
+	public Boolean getFetchSource() {
+		return _fetchSource;
+	}
+
 	public GroupBy getGroupBy() {
 		return _groupBy;
+	}
+
+	public Highlight getHighlight() {
+		return _highlight;
 	}
 
 	public String[] getHighlightFieldNames() {
@@ -76,19 +93,32 @@ public class SearchSearchRequest
 		throw new UnsupportedOperationException();
 	}
 
+	public Boolean getScoreEnabled() {
+		return _scoreEnabled;
+	}
+
 	public String[] getSelectedFieldNames() {
 		return _selectedFieldNames;
 	}
 
-	public int getSize() {
+	public Integer getSize() {
 		return _size;
 	}
 
-	public Sort[] getSorts() {
-		return _sorts;
+	public List<Sort> getSorts() {
+		return Collections.unmodifiableList(_sorts);
 	}
 
-	public int getStart() {
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 * 		Sort
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.search.Sort[] getSorts71() {
+		return _legacySorts;
+	}
+
+	public Integer getStart() {
 		return _start;
 	}
 
@@ -99,6 +129,10 @@ public class SearchSearchRequest
 	@Deprecated
 	public Map<String, Stats> getStats() {
 		return _stats;
+	}
+
+	public Boolean getVersion() {
+		return _version;
 	}
 
 	public boolean isHighlightEnabled() {
@@ -114,12 +148,16 @@ public class SearchSearchRequest
 	}
 
 	public boolean isScoreEnabled() {
-		return _scoreEnabled;
+		if (_scoreEnabled != null) {
+			return _scoreEnabled;
+		}
+
+		return false;
 	}
 
 	public void putAllStats(Map<String, Stats> stats) {
 		if (_stats == null) {
-			_stats = new HashMap<>();
+			_stats = new LinkedHashMap<>();
 		}
 
 		_stats.putAll(stats);
@@ -129,8 +167,16 @@ public class SearchSearchRequest
 		_alternateUidFieldName = alternateUidFieldName;
 	}
 
+	public void setFetchSource(Boolean fetchSource) {
+		_fetchSource = fetchSource;
+	}
+
 	public void setGroupBy(GroupBy groupBy) {
 		_groupBy = groupBy;
+	}
+
+	public void setHighlight(Highlight highlight) {
+		_highlight = highlight;
 	}
 
 	public void setHighlightEnabled(boolean highlightEnabled) {
@@ -179,8 +225,17 @@ public class SearchSearchRequest
 		_size = size;
 	}
 
-	public void setSorts(Sort[] sorts) {
-		_sorts = sorts;
+	public void setSorts(Collection<Sort> sorts) {
+		_sorts = new ArrayList<>(sorts);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by
+	 * 		Sort
+	 */
+	@Deprecated
+	public void setSorts(com.liferay.portal.kernel.search.Sort[] sorts) {
+		_legacySorts = sorts;
 	}
 
 	public void setStart(int start) {
@@ -196,21 +251,29 @@ public class SearchSearchRequest
 		_stats = stats;
 	}
 
+	public void setVersion(Boolean version) {
+		_version = version;
+	}
+
 	private String _alternateUidFieldName;
+	private Boolean _fetchSource;
 	private GroupBy _groupBy;
+	private Highlight _highlight;
 	private boolean _highlightEnabled;
-	private String[] _highlightFieldNames;
+	private String[] _highlightFieldNames = {};
 	private int _highlightFragmentSize = 80;
 	private boolean _highlightRequireFieldMatch = true;
 	private int _highlightSnippetSize = 3;
+	private com.liferay.portal.kernel.search.Sort[] _legacySorts = {};
 	private Locale _locale;
 	private boolean _luceneSyntax;
 	private String _preference;
-	private boolean _scoreEnabled;
+	private Boolean _scoreEnabled;
 	private String[] _selectedFieldNames;
-	private int _size;
-	private Sort[] _sorts;
-	private int _start;
+	private Integer _size;
+	private List<Sort> _sorts = new ArrayList<>();
+	private Integer _start;
 	private Map<String, Stats> _stats;
+	private Boolean _version;
 
 }

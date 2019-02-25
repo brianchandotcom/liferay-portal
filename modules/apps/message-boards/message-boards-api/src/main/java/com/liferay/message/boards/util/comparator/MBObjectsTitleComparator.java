@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of Mueller (7.2.x), replaced by {@link com.liferay.message.boards.util.comparator.MBObjectsComparator}
+ * @review
  */
+@Deprecated
 public class MBObjectsTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =

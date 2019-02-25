@@ -50,13 +50,13 @@ public class VersioningPolicyVersioningStrategyTest {
 	@Test(expected = NullPointerException.class)
 	public void testFailsWithNullNextDLFileVersion() {
 		_versioningStrategy.computeDLVersionNumberIncrease(
-			new DLFileVersionImpl(), null);
+			new DLFileVersionImpl(), null, new String[0]);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testFailsWithNullPreviousDLFileVersion() {
 		_versioningStrategy.computeDLVersionNumberIncrease(
-			null, new DLFileVersionImpl());
+			null, new DLFileVersionImpl(), new String[0]);
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class VersioningPolicyVersioningStrategyTest {
 		Assert.assertEquals(
 			DLVersionNumberIncrease.NONE,
 			_versioningStrategy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion));
+				previousDLFileVersion, nextDLFileVersion, new String[0]));
 	}
 
 	@Inject(filter = "component.name=*.VersioningPolicyVersioningStrategy")

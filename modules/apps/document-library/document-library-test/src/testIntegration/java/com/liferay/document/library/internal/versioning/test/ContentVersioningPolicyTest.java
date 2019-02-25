@@ -51,13 +51,13 @@ public class ContentVersioningPolicyTest {
 	@Test(expected = NullPointerException.class)
 	public void testFailsWithNullNextDLFileVersion() {
 		_versioningPolicy.computeDLVersionNumberIncrease(
-			new DLFileVersionImpl(), null);
+			new DLFileVersionImpl(), null, new String[0]);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testFailsWithNullPreviousDLFileVersion() {
 		_versioningPolicy.computeDLVersionNumberIncrease(
-			null, new DLFileVersionImpl());
+			null, new DLFileVersionImpl(), new String[0]);
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class ContentVersioningPolicyTest {
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersion, nextDLFileVersion, new String[0]);
 
 		Assert.assertTrue(dlVersionNumberIncreaseOptional.isPresent());
 		Assert.assertEquals(
@@ -94,7 +94,7 @@ public class ContentVersioningPolicyTest {
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersion, nextDLFileVersion, new String[0]);
 
 		Assert.assertTrue(dlVersionNumberIncreaseOptional.isPresent());
 		Assert.assertEquals(
@@ -116,7 +116,7 @@ public class ContentVersioningPolicyTest {
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersion, nextDLFileVersion, new String[0]);
 
 		Assert.assertFalse(dlVersionNumberIncreaseOptional.isPresent());
 	}
@@ -133,7 +133,7 @@ public class ContentVersioningPolicyTest {
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersion, nextDLFileVersion, new String[0]);
 
 		Assert.assertFalse(dlVersionNumberIncreaseOptional.isPresent());
 	}

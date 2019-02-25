@@ -43,7 +43,8 @@ public class ContentVersioningPolicy implements VersioningPolicy {
 
 	@Override
 	public Optional<DLVersionNumberIncrease> computeDLVersionNumberIncrease(
-		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		String[] newTagNames) {
 
 		long previousSize = previousDLFileVersion.getSize();
 		long nextSize = nextDLFileVersion.getSize();

@@ -43,12 +43,13 @@ public class VersioningPolicyVersioningStrategy implements VersioningStrategy {
 
 	@Override
 	public DLVersionNumberIncrease computeDLVersionNumberIncrease(
-		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		String[] newTagNames) {
 
 		for (VersioningPolicy versioningPolicy : _serviceTrackerList) {
 			Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 				versioningPolicy.computeDLVersionNumberIncrease(
-					previousDLFileVersion, nextDLFileVersion);
+					previousDLFileVersion, nextDLFileVersion, newTagNames);
 
 			if (dlVersionNumberIncreaseOptional.isPresent()) {
 				return dlVersionNumberIncreaseOptional.get();

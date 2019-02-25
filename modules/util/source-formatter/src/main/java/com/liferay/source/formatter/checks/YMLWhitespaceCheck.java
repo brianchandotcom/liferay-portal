@@ -154,6 +154,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 					content = StringUtil.replaceFirst(
 						content, definition, newDefinition);
 				}
+
+				definition = newDefinition;
 			}
 
 			String newDefinition = _formatDefinition(

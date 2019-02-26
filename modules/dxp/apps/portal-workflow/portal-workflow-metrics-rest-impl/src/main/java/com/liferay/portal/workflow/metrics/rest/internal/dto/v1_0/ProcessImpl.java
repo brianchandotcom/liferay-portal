@@ -40,14 +40,20 @@ public class ProcessImpl implements Process {
 			return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(
+			Long id) {
+
 			this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier) {
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier) {
+
 			try {
-				id = idUnsafeSupplier.get();
+				id =
+					idUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -61,14 +67,20 @@ public class ProcessImpl implements Process {
 			return instanceCount;
 	}
 
-	public void setInstanceCount(Integer instanceCount) {
+	public void setInstanceCount(
+			Integer instanceCount) {
+
 			this.instanceCount = instanceCount;
 	}
 
 	@JsonIgnore
-	public void setInstanceCount(UnsafeSupplier<Integer, Throwable> instanceCountUnsafeSupplier) {
+	public void setInstanceCount(
+			UnsafeSupplier<Integer, Throwable>
+				instanceCountUnsafeSupplier) {
+
 			try {
-				instanceCount = instanceCountUnsafeSupplier.get();
+				instanceCount =
+					instanceCountUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -82,14 +94,20 @@ public class ProcessImpl implements Process {
 			return ontimeInstanceCount;
 	}
 
-	public void setOntimeInstanceCount(Integer ontimeInstanceCount) {
+	public void setOntimeInstanceCount(
+			Integer ontimeInstanceCount) {
+
 			this.ontimeInstanceCount = ontimeInstanceCount;
 	}
 
 	@JsonIgnore
-	public void setOntimeInstanceCount(UnsafeSupplier<Integer, Throwable> ontimeInstanceCountUnsafeSupplier) {
+	public void setOntimeInstanceCount(
+			UnsafeSupplier<Integer, Throwable>
+				ontimeInstanceCountUnsafeSupplier) {
+
 			try {
-				ontimeInstanceCount = ontimeInstanceCountUnsafeSupplier.get();
+				ontimeInstanceCount =
+					ontimeInstanceCountUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -103,14 +121,20 @@ public class ProcessImpl implements Process {
 			return overdueInstanceCount;
 	}
 
-	public void setOverdueInstanceCount(Integer overdueInstanceCount) {
+	public void setOverdueInstanceCount(
+			Integer overdueInstanceCount) {
+
 			this.overdueInstanceCount = overdueInstanceCount;
 	}
 
 	@JsonIgnore
-	public void setOverdueInstanceCount(UnsafeSupplier<Integer, Throwable> overdueInstanceCountUnsafeSupplier) {
+	public void setOverdueInstanceCount(
+			UnsafeSupplier<Integer, Throwable>
+				overdueInstanceCountUnsafeSupplier) {
+
 			try {
-				overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
+				overdueInstanceCount =
+					overdueInstanceCountUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -124,14 +148,20 @@ public class ProcessImpl implements Process {
 			return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(
+			String title) {
+
 			this.title = title;
 	}
 
 	@JsonIgnore
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier) {
+	public void setTitle(
+			UnsafeSupplier<String, Throwable>
+				titleUnsafeSupplier) {
+
 			try {
-				title = titleUnsafeSupplier.get();
+				title =
+					titleUnsafeSupplier.get();
 	}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

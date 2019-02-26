@@ -21,8 +21,9 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.SLAImpl;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import java.net.URI;
 
@@ -31,10 +32,14 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -45,18 +50,64 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseProcessResourceImpl implements ProcessResource {
+public abstract class BaseSLAResourceImpl implements SLAResource {
 
 	@Override
 	@GET
-	@Path("/processes")
+	@Path("/processes/{process-id}/slas")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<Process> getProcessesPage(
-	@QueryParam("title") String title,@Context Pagination pagination)
+	public Page<SLA> getProcessSLAsPage(
+	@PathParam("process-id") Long processId,@Context Pagination pagination)
 			throws Exception {
 
 				return Page.of(Collections.emptyList());
+	}
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Path("/processes/{process-id}/slas")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public SLA postProcessSlas(
+	@PathParam("process-id") Long processId,SLA sLA)
+			throws Exception {
+
+				return new SLAImpl();
+	}
+	@Override
+	@DELETE
+	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public boolean deleteProcessSla(
+	@PathParam("process-id") Long processId,@PathParam("sla-id") Long slaId)
+			throws Exception {
+
+				return false;
+	}
+	@Override
+	@GET
+	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public SLA getProcessSla(
+	@PathParam("process-id") Long processId,@PathParam("sla-id") Long slaId)
+			throws Exception {
+
+				return new SLAImpl();
+	}
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public SLA putProcessSla(
+	@PathParam("process-id") Long processId,@PathParam("sla-id") Long slaId,SLA sLA)
+			throws Exception {
+
+				return new SLAImpl();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -67,11 +118,11 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 		URI baseURI = contextUriInfo.getBaseUri();
 
 		URI resourceURI = UriBuilder.fromResource(
-			BaseProcessResourceImpl.class
+			BaseSLAResourceImpl.class
 		).build();
 
 		URI methodURI = UriBuilder.fromMethod(
-			BaseProcessResourceImpl.class, methodName
+			BaseSLAResourceImpl.class, methodName
 		).build(
 			values
 		);

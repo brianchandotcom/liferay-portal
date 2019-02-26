@@ -27,28 +27,43 @@ public interface Process {
 
 	public Long getId();
 
-	public void setId(Long id);
+	public void setId(
+			Long id);
 
-	public void setId(UnsafeSupplier<Long, Throwable> idUnsafeSupplier);
+	public void setId(
+			UnsafeSupplier<Long, Throwable>
+				idUnsafeSupplier);
 	public Integer getInstanceCount();
 
-	public void setInstanceCount(Integer instanceCount);
+	public void setInstanceCount(
+			Integer instanceCount);
 
-	public void setInstanceCount(UnsafeSupplier<Integer, Throwable> instanceCountUnsafeSupplier);
+	public void setInstanceCount(
+			UnsafeSupplier<Integer, Throwable>
+				instanceCountUnsafeSupplier);
 	public Integer getOntimeInstanceCount();
 
-	public void setOntimeInstanceCount(Integer ontimeInstanceCount);
+	public void setOntimeInstanceCount(
+			Integer ontimeInstanceCount);
 
-	public void setOntimeInstanceCount(UnsafeSupplier<Integer, Throwable> ontimeInstanceCountUnsafeSupplier);
+	public void setOntimeInstanceCount(
+			UnsafeSupplier<Integer, Throwable>
+				ontimeInstanceCountUnsafeSupplier);
 	public Integer getOverdueInstanceCount();
 
-	public void setOverdueInstanceCount(Integer overdueInstanceCount);
+	public void setOverdueInstanceCount(
+			Integer overdueInstanceCount);
 
-	public void setOverdueInstanceCount(UnsafeSupplier<Integer, Throwable> overdueInstanceCountUnsafeSupplier);
+	public void setOverdueInstanceCount(
+			UnsafeSupplier<Integer, Throwable>
+				overdueInstanceCountUnsafeSupplier);
 	public String getTitle();
 
-	public void setTitle(String title);
+	public void setTitle(
+			String title);
 
-	public void setTitle(UnsafeSupplier<String, Throwable> titleUnsafeSupplier);
+	public void setTitle(
+			UnsafeSupplier<String, Throwable>
+				titleUnsafeSupplier);
 
 }

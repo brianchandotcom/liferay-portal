@@ -12,30 +12,24 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.message.body.v1_0;
+package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.context.resolver.v1_0;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.ProcessImpl;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.SLAImpl;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,51 +42,34 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=portal-workflow-metrics-rest-application)",
-		"osgi.jaxrs.name=portal-workflow-metrics-rest-application.v1_0.JSONMessageBodyReader"
+		"osgi.jaxrs.name=portal-workflow-metrics-rest-application.v1_0.ObjectMapperContextResolver"
 	},
-	service = MessageBodyReader.class
+	service = ContextResolver.class
 )
-@Consumes(MediaType.APPLICATION_JSON)
 @Generated("")
 @Provider
-public class JSONMessageBodyReader implements MessageBodyReader<Object> {
+public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
 
-	@Override
-	public boolean isReadable(
-		Class<?> clazz, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
-			if (clazz.equals(Process.class)) {
-				return true;
-	}
-
-		return false;
-	}
-
-	@Override
-	public Object readFrom(
-			Class<Object> clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap<String, String> multivaluedMap,
-			InputStream inputStream)
-		throws IOException, WebApplicationException {
-
-		return _objectMapper.readValue(inputStream, clazz);
+	public ObjectMapper getContext(Class<?> clazz) {
+		return _objectMapper;
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
 			registerModule(
 				new SimpleModule("portal-workflow-metrics-rest-application", Version.unknownVersion()) {
 					{
 						setAbstractTypes(
 							new SimpleAbstractTypeResolver() {
 								{
-										addMapping(Process.class, ProcessImpl.class);
+									addMapping(Process.class, ProcessImpl.class);
+									addMapping(SLA.class, SLAImpl.class);
 	}
 							});
 	}
 				});
-
 			setDateFormat(new ISO8601DateFormat());
 	}
 	};

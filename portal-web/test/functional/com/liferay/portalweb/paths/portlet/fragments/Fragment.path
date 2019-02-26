@@ -14,8 +14,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_IMAGE</td>
+	<td>//div[contains(@class,'container-fluid')][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_EDITOR_FRAGMENT</td>
 	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_EDITOR_FRAGMENT_IMAGE</td>
+	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

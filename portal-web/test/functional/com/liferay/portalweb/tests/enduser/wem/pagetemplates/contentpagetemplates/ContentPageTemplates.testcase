@@ -62,6 +62,15 @@ definition {
 				id = "image"
 			);
 		}
+
+		task ("Assert the Image fragment's image was changed") {
+			AssertVisible(
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE",
+				key_fragmentClass = "image",
+				key_image = "Document_1.png",
+				key_position = "1"
+			);
+		}
 	}
 
 	@description = "Change a fragment's editable text field."

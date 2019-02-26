@@ -35,6 +35,10 @@ definition {
 			value1 = "${fileName}"
 		);
 
+		Pause(
+			locator1 = "3000"
+		);
+
 		SelectFrameTop();
 
 		Click(locator1 = "Button#ADD");

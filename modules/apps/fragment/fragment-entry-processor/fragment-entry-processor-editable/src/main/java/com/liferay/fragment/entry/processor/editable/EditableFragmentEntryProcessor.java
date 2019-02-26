@@ -14,6 +14,10 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -26,7 +30,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -178,14 +184,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				String value = StringPool.BLANK;
 
-				if (Objects.equals(
-						mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
-
+				if (_isMapped(editableValueJSONObject, mode)) {
 					EditableElementParser editableElementParser =
 						_editableElementParsers.get(property);
 
 					value = _getMappedValue(
-						editableElementParser, editableValueJSONObject);
+						editableElementParser, editableValueJSONObject, mode,
+						locale);
 				}
 
 				if (Validator.isNull(value)) {
@@ -237,11 +242,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String value = StringPool.BLANK;
 
-			if (Objects.equals(
-					mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
-
+			if (_isMapped(editableValueJSONObject, mode)) {
 				value = _getMappedValue(
-					editableElementParser, editableValueJSONObject);
+					editableElementParser, editableValueJSONObject, mode,
+					locale);
 			}
 
 			if (Validator.isNull(value)) {
@@ -363,16 +367,41 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getMappedValue(
-		EditableElementParser editableElementParser, JSONObject jsonObject) {
+			EditableElementParser editableElementParser, JSONObject jsonObject,
+			String mode, Locale locale)
+		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
 
-		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
+		if (Validator.isNotNull(value)) {
+			return StringUtil.replace(
+				editableElementParser.getFieldTemplate(), "field_name", value);
 		}
 
-		return StringUtil.replace(
-			editableElementParser.getFieldTemplate(), "field_name", value);
+		if (_isMapped(jsonObject, mode)) {
+			long assetEntryClassNameId = jsonObject.getLong(
+				"assetEntryClassNameId");
+			long assetEntryClassPK = jsonObject.getLong("assetEntryClassPK");
+			String assetEntryFieldName = jsonObject.getString(
+				"assetEntryFieldName");
+
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				assetEntryClassNameId, assetEntryClassPK);
+
+			if (assetEntry != null) {
+				AssetDisplayContributor assetDisplayContributor =
+					_assetDisplayContributorTracker.getAssetDisplayContributor(
+						_portal.getClassName(assetEntryClassNameId));
+
+				Object fieldValue =
+					assetDisplayContributor.getAssetDisplayFieldValue(
+						assetEntry, assetEntryFieldName, locale);
+
+				return GetterUtil.get(fieldValue, StringPool.BLANK);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getSegmentsExperienceValue(
@@ -429,6 +458,23 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return stylesheet;
+	}
+
+	private boolean _isMapped(JSONObject jsonObject, String mode) {
+		long assetEntryClassNameId = jsonObject.getLong(
+			"assetEntryClassNameId");
+		long assetEntryClassPK = jsonObject.getLong("assetEntryClassPK");
+		String assetEntryFieldName = jsonObject.getString(
+			"assetEntryFieldName");
+
+		if ((assetEntryClassNameId > 0) && (assetEntryClassPK > 0) &&
+			Validator.isNotNull(assetEntryFieldName)) {
+
+			return true;
+		}
+
+		return Objects.equals(
+			mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE);
 	}
 
 	private boolean _isPersonalizationSupported(JSONObject jsonObject) {
@@ -584,7 +630,16 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private static final Pattern _cssSelectorPattern = Pattern.compile(
 		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
 
+	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -36,6 +36,10 @@ public interface BucketSortPipelineAggregation extends PipelineAggregation {
 
 	public Integer getSize();
 
+	public void setFrom(Integer from);
+
+	public void setGapPolicy(GapPolicy gapPolicy);
+
 	public void setSize(Integer size);
 
 }

@@ -74,26 +74,32 @@ public class ScriptedMetricAggregationImpl
 		return _reduceScript;
 	}
 
+	@Override
 	public void putParameter(String paramName, Object paramValue) {
 		_parameters.put(paramName, paramValue);
 	}
 
+	@Override
 	public void setCombineScript(Script combineScript) {
 		_combineScript = combineScript;
 	}
 
+	@Override
 	public void setInitScript(Script initScript) {
 		_initScript = initScript;
 	}
 
+	@Override
 	public void setMapScript(Script mapScript) {
 		_mapScript = mapScript;
 	}
 
+	@Override
 	public void setParameters(Map<String, Object> parameters) {
 		_parameters = parameters;
 	}
 
+	@Override
 	public void setReduceScript(Script reduceScript) {
 		_reduceScript = reduceScript;
 	}

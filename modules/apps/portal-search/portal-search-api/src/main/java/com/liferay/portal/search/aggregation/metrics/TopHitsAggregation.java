@@ -64,12 +64,20 @@ public interface TopHitsAggregation extends Aggregation {
 
 	public void setFetchSource(Boolean fetchSource);
 
+	public void setFetchSourceExclude(String[] fetchSourceExclude);
+
+	public void setFetchSourceInclude(String[] fetchSourceInclude);
+
 	public void setFetchSourceIncludeExclude(
 		String[] fetchSourceInclude, String[] fetchSourceExclude);
 
 	public void setFrom(Integer from);
 
 	public void setHighlight(Highlight highlight);
+
+	public void setScriptFields(List<ScriptField> scriptFields);
+
+	public void setSelectedFields(List<String> selectedFields);
 
 	public void setSize(Integer size);
 

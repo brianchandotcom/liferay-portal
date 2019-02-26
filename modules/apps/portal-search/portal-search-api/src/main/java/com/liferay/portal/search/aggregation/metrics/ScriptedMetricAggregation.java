@@ -37,4 +37,16 @@ public interface ScriptedMetricAggregation extends Aggregation {
 
 	public Script getReduceScript();
 
+	public void putParameter(String paramName, Object paramValue);
+
+	public void setCombineScript(Script combineScript);
+
+	public void setInitScript(Script initScript);
+
+	public void setMapScript(Script mapScript);
+
+	public void setParameters(Map<String, Object> parameters);
+
+	public void setReduceScript(Script reduceScript);
+
 }

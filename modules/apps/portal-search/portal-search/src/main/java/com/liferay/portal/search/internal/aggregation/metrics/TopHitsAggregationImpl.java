@@ -125,10 +125,12 @@ public class TopHitsAggregationImpl
 		_fetchSource = fetchSource;
 	}
 
+	@Override
 	public void setFetchSourceExclude(String[] fetchSourceExclude) {
 		_fetchSourceExclude = fetchSourceExclude;
 	}
 
+	@Override
 	public void setFetchSourceInclude(String[] fetchSourceInclude) {
 		_fetchSourceInclude = fetchSourceInclude;
 	}
@@ -155,10 +157,12 @@ public class TopHitsAggregationImpl
 		_highlight = highlight;
 	}
 
+	@Override
 	public void setScriptFields(List<ScriptField> scriptFields) {
 		_scriptFields = scriptFields;
 	}
 
+	@Override
 	public void setSelectedFields(List<String> selectedFields) {
 		_selectedFields = selectedFields;
 	}

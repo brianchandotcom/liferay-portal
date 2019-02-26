@@ -25,4 +25,8 @@ public interface BucketMetricsPipelineAggregation extends PipelineAggregation {
 
 	public GapPolicy getGapPolicy();
 
+	public void setFormat(String format);
+
+	public void setGapPolicy(GapPolicy gapPolicy);
+
 }

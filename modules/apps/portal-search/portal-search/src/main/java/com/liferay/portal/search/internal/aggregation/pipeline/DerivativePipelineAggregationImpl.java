@@ -60,14 +60,17 @@ public class DerivativePipelineAggregationImpl
 		return _unit;
 	}
 
+	@Override
 	public void setFormat(String format) {
 		_format = format;
 	}
 
+	@Override
 	public void setGapPolicy(GapPolicy gapPolicy) {
 		_gapPolicy = gapPolicy;
 	}
 
+	@Override
 	public void setUnit(String unit) {
 		_unit = unit;
 	}

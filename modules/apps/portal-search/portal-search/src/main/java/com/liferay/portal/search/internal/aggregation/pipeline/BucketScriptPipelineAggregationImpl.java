@@ -70,6 +70,7 @@ public class BucketScriptPipelineAggregationImpl
 		return _script;
 	}
 
+	@Override
 	public void setFormat(String format) {
 		_format = format;
 	}

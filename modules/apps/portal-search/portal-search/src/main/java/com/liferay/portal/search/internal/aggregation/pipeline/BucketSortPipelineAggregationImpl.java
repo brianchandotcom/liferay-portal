@@ -65,10 +65,12 @@ public class BucketSortPipelineAggregationImpl
 		return _size;
 	}
 
+	@Override
 	public void setFrom(Integer from) {
 		_from = from;
 	}
 
+	@Override
 	public void setGapPolicy(GapPolicy gapPolicy) {
 		_gapPolicy = gapPolicy;
 	}

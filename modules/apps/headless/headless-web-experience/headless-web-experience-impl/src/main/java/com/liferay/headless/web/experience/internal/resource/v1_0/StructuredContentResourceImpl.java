@@ -506,11 +506,20 @@ public class StructuredContentResourceImpl
 
 		return transform(
 			Arrays.asList(contentFieldValuesArray),
-			contentFieldValues -> new DDMFormFieldValue() {
+			contentFieldValue -> new DDMFormFieldValue() {
 				{
-					setName(contentFieldValues.getName());
+					setName(contentFieldValue.getName());
 					setValue(
-						_toDDMValue(ddmStructure, locale, contentFieldValues));
+						_toDDMValue(ddmStructure, locale, contentFieldValue));
+
+					if (contentFieldValue.getValue() != null) {
+						Value value = contentFieldValue.getValue();
+
+						setNestedDDMFormFields(
+							_toDDMFormFieldValues(
+								value.getContentFieldValues(), ddmStructure,
+								locale));
+					}
 				}
 			});
 	}

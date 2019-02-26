@@ -68,9 +68,6 @@ components:
                 type: string
               height:
                 type: number
-              id:
-                format: int64
-                type: integer
               resolutionName:
                 type: string
               sizeInBytes:

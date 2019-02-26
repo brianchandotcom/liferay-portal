@@ -48,7 +48,7 @@ public interface DocumentResource {
 			Long folderId, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Document patchDocument(Long documentId, Document document)
+	public Document patchDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception;
 
 	public Document postContentSpaceDocument(

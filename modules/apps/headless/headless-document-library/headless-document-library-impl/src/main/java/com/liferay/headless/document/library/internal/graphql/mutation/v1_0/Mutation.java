@@ -68,12 +68,12 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public Document patchDocument(
 			@GraphQLName("document-id") Long documentId,
-			@GraphQLName("Document") Document document)
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
 		throws Exception {
 
 		DocumentResource documentResource = _createDocumentResource();
 
-		return documentResource.patchDocument(documentId, document);
+		return documentResource.patchDocument(documentId, multipartBody);
 	}
 
 	@GraphQLInvokeDetached

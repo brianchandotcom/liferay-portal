@@ -105,17 +105,68 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		return Page.of(Collections.emptyList());
 	}
 
-	@Consumes("application/json")
+	@Consumes("multipart/form-data")
 	@Override
 	@PATCH
 	@Path("/documents/{document-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Document patchDocument(
-			@PathParam("document-id") Long documentId, Document document)
+			@PathParam("document-id") Long documentId,
+			MultipartBody multipartBody)
 		throws Exception {
 
-		return new Document();
+		Document existingDocument = getDocument(documentId);
+
+		if (Validator.isNotNull(document.getCategoryIds())) {
+			existingDocument.setCategoryIds(document.getCategoryIds());
+		}
+
+		if (Validator.isNotNull(document.getContentUrl())) {
+			existingDocument.setContentUrl(document.getContentUrl());
+		}
+
+		if (Validator.isNotNull(document.getDateCreated())) {
+			existingDocument.setDateCreated(document.getDateCreated());
+		}
+
+		if (Validator.isNotNull(document.getDateModified())) {
+			existingDocument.setDateModified(document.getDateModified());
+		}
+
+		if (Validator.isNotNull(document.getDescription())) {
+			existingDocument.setDescription(document.getDescription());
+		}
+
+		if (Validator.isNotNull(document.getEncodingFormat())) {
+			existingDocument.setEncodingFormat(document.getEncodingFormat());
+		}
+
+		if (Validator.isNotNull(document.getFileExtension())) {
+			existingDocument.setFileExtension(document.getFileExtension());
+		}
+
+		if (Validator.isNotNull(document.getFolderId())) {
+			existingDocument.setFolderId(document.getFolderId());
+		}
+
+		if (Validator.isNotNull(document.getId())) {
+			existingDocument.setId(document.getId());
+		}
+
+		if (Validator.isNotNull(document.getKeywords())) {
+			existingDocument.setKeywords(document.getKeywords());
+		}
+
+		if (Validator.isNotNull(document.getSizeInBytes())) {
+			existingDocument.setSizeInBytes(document.getSizeInBytes());
+		}
+
+		if (Validator.isNotNull(document.getTitle())) {
+			existingDocument.setTitle(document.getTitle());
+		}
+
+		return putDocument(documentId, existingDocument);
 	}
 
 	@Consumes("multipart/form-data")

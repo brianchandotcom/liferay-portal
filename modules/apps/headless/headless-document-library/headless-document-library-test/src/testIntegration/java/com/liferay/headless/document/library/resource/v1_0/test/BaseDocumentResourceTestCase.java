@@ -275,7 +275,8 @@ public abstract class BaseDocumentResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected Document invokePatchDocument(Long documentId, Document document)
+	protected Document invokePatchDocument(
+			Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -288,7 +289,7 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	protected Http.Response invokePatchDocumentResponse(
-			Long documentId, Document document)
+			Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

@@ -264,14 +264,11 @@ public class DeploymentStatement extends Statement {
 	}
 
 	private static final String[] _IMPORTS_PACKAGES = {
-		"javax.management", "javax.management.*", "javax.naming",
-		"javax.naming.*", "org.junit.internal", "org.junit.internal.runners",
-		"org.junit.internal.runners.model",
+		"javax.management", "javax.management.*",
 		"org.junit.internal.runners.statements", "org.junit.rules",
 		"org.junit.runner.manipulation", "org.junit.runner.notification",
-		"org.junit.runners", "org.junit.runners.model", "org.osgi.framework",
-		"org.osgi.framework.wiring", "org.osgi.service.packageadmin",
-		"org.osgi.service.startlevel", "org.osgi.util.tracker"
+		"org.junit.runners.model", "org.osgi.framework",
+		"org.osgi.framework.wiring"
 	};
 
 	private static final File _buildDir = new File(

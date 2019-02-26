@@ -168,8 +168,7 @@ public class AcceptLanguageContextProviderTest {
 		catch (Exception e) {
 			Assert.assertEquals(ClientErrorException.class, e.getClass());
 			Assert.assertEquals(
-				"The preferred locale: es_ES is not available",
-				e.getMessage());
+				"The preferred locale: es_ES is not available", e.getMessage());
 		}
 	}
 

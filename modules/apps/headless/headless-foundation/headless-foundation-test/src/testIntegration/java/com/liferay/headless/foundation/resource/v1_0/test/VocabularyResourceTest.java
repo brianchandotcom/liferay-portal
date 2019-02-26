@@ -30,6 +30,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -163,6 +164,50 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 				Collections.singletonList(randomVocabulary1),
 				(List<Vocabulary>)page.getItems());
 		}
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithPagination()
+		throws Exception {
+
+		Vocabulary randomVocabulary1 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary1);
+
+		Vocabulary randomVocabulary2 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary2);
+
+		Vocabulary randomVocabulary3 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary3);
+
+		Page<Vocabulary> page1 = invokeGetContentSpaceVocabulariesPage(
+			testGroup.getGroupId(), null, Pagination.of(2, 1), null);
+
+		List<Vocabulary> vocabularies1 = (List<Vocabulary>)page1.getItems();
+
+		Assert.assertEquals(vocabularies1.toString(), 2, vocabularies1.size());
+
+		Page<Vocabulary> page2 = invokeGetContentSpaceVocabulariesPage(
+			testGroup.getGroupId(), null, Pagination.of(2, 2), null);
+
+		List<Vocabulary> vocabularies2 = (List<Vocabulary>)page2.getItems();
+
+		Assert.assertEquals(vocabularies2.toString(), 1, vocabularies2.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				randomVocabulary1, randomVocabulary2, randomVocabulary3),
+			new ArrayList<Vocabulary>() {
+				{
+					addAll(vocabularies1);
+					addAll(vocabularies2);
+				}
+			});
 	}
 
 	@Test

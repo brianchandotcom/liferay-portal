@@ -227,35 +227,50 @@ int index = 0;
 </div>
 
 <aui:script>
-	var form = AUI.$(document.<portlet:namespace />fm);
+	var form = document.<portlet:namespace />fm;
 
-	form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom').prop('disabled', true);
-	form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom').prop('disabled', true);
-	form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom').prop('disabled', true);
+	var dayFromInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom');
+	var monthFromInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom');
+	var yearFromInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom');
 
-	form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo').prop('disabled', true);
-	form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo').prop('disabled', true);
-	form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo').prop('disabled', true);
+	var dayToInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo');
+	var monthToInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo');
+	var yearToInput = Liferay.Util.getFormElement(form, '<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo');
 
-	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
-		var A = AUI();
-		var Lang = A.Lang;
-		var LString = Lang.String;
+	if (dayFromInput && monthFromInput && yearFromInput && dayToInput && monthToInput && yearToInput) {
+		Liferay.Util.toggleDisabled(dayFromInput, true);
+		Liferay.Util.toggleDisabled(monthFromInput, true);
+		Liferay.Util.toggleDisabled(yearFromInput, true);
 
-		var dayFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom').val();
-		var monthFrom = Lang.toInt(form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom').val()) + 1;
-		var yearFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom').val();
+		Liferay.Util.toggleDisabled(dayToInput, true);
+		Liferay.Util.toggleDisabled(monthToInput, true);
+		Liferay.Util.toggleDisabled(yearToInput, true);
 
-		var dayTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo').val();
-		var monthTo = Lang.toInt(form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo').val()) + 1;
-		var yearTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo').val();
+		function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
+			var A = AUI();
+			var Lang = A.Lang;
+			var LString = Lang.String;
 
-		var range = '[' + yearFrom + LString.padNumber(monthFrom, 2) + LString.padNumber(dayFrom, 2) + '000000 TO ' + yearTo + LString.padNumber(monthTo, 2) + LString.padNumber(dayTo, 2) + '235959]';
+			var dayFrom = dayFromInput.value;
+			var monthFrom = Lang.toInt(monthFromInput.value) + 1;
+			var yearFrom = yearFromInput.value;
 
-		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
-		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
+			var dayTo = dayToInput.value;
+			var monthTo = Lang.toInt(monthToInput.value) + 1;
+			var yearTo = yearToInput.value;
 
-		submitForm(form);
+			var range = '[' + yearFrom + LString.padNumber(monthFrom, 2) + LString.padNumber(dayFrom, 2) + '000000 TO ' + yearTo + LString.padNumber(monthTo, 2) + LString.padNumber(dayTo, 2) + '235959]';
+
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>': range,
+						'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection': selection
+					}
+				}
+			);
+		}
 	}
 </aui:script>
 

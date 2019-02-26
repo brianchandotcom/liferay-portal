@@ -34,44 +34,6 @@ Hits hits = searchDisplayContext.getHits();
 			}
 			%>
 
-			<aui:script sandbox="<%= true %>">
-				$('#<portlet:namespace />facetNavigation').on(
-					'click',
-					'.facet-value a',
-					function(event) {
-						event.preventDefault();
-
-						var term = $(event.currentTarget);
-
-						var facetValue = term.parentsUntil('.search-facet', '.facet-value');
-
-						if (!facetValue.hasClass('active')) {
-							facetValue.addClass('active');
-
-							facetValue.siblings().removeClass('active');
-
-							var searchFacet = facetValue.parentsUntil('.search-layout', '.search-facet');
-
-							var form = $(document.<portlet:namespace />fm);
-
-							var field = form.fm(searchFacet.data('facetfieldname'));
-							var fieldSelection = form.fm(searchFacet.data('facetfieldname') + 'selection');
-
-							if (field.length) {
-								field.val(term.data('value'));
-
-								if (fieldSelection.length) {
-									fieldSelection.val(term.data('selection'));
-								}
-
-								form.fm('<%= SearchContainer.DEFAULT_CUR_PARAM %>').val(1);
-
-								submitForm(form);
-							}
-						}
-					}
-				);
-			</aui:script>
 		</aui:col>
 	</c:if>
 
@@ -134,14 +96,92 @@ Hits hits = searchDisplayContext.getHits();
 	</aui:col>
 </aui:row>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />search').delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
+<aui:script require="metal-dom/src/dom as dom">
+	var facetNavigation = document.getElementById('<portlet:namespace />facetNavigation');
 
-			currentTarget.siblings('.table-details').toggleClass('hide');
-		},
-		'.expand-details'
-	);
+	if (facetNavigation) {
+		dom.delegate(
+			facetNavigation,
+			'click',
+			'.facet-value a',
+			function(event) {
+				event.preventDefault();
+
+				var target = event.delegateTarget;
+
+				if (!target.classList.contains('active')) {
+					target.classList.add('active');
+
+					var searchFacet = dom.closest(target, '.search-facet');
+
+					var facetValueSiblings = Array.prototype.filter.call(
+						target.parentNode.children,
+						function(child) {
+							return child !== target;
+						}
+					);
+
+					facetValueSiblings.forEach(
+						function(facet) {
+							facet.classList.remove('active');
+						}
+					);
+
+					var form = document.<portlet:namespace />fm;
+
+					var field = Liferay.Util.getFormElement(form, searchFacet.dataset.facetfieldname);
+
+					if (field) {
+						field.value = target.dataset.value;
+
+						var fieldSelection = Liferay.Util.getFormElement(form, searchFacet.dataset.facetfieldname + 'selection');
+
+						if (fieldSelection) {
+							fieldSelection.value = target.dataset.selection;
+						}
+
+						Liferay.Util.postForm(
+							form,
+							{
+								data: {
+									'<%= SearchContainer.DEFAULT_CUR_PARAM %>': 1
+								}
+							}
+						)
+					}
+				}
+			}
+		);
+	}
+
+	var searchResultsContainer = document.getElementById('<portlet:namespace />search');
+
+	if (searchResultsContainer) {
+		dom.delegate(
+			searchResultsContainer,
+			'click',
+			'.expand-details',
+			function(event) {
+				var target = event.delegateTarget;
+
+				var targetSiblings = Array.prototype.filter.call(
+					target.parentNode.children,
+					function(child) {
+						return child !== target && child.classList.contains('table-details');
+					}
+				);
+
+				targetSiblings.forEach(
+					function(sibling) {
+						if (sibling.classList.contains('hide')) {
+							sibling.classList.remove('hide');
+						}
+						else {
+							sibling.classList.add('hide');
+						}
+					}
+				);
+			}
+		);
+	}
 </aui:script>

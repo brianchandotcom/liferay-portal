@@ -92,12 +92,15 @@
 	</c:if>
 </div>
 
-<aui:script>
+<script>
 	function <portlet:namespace />searchKeywords(newKeywords) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('keywords').val(newKeywords);
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			document.<portlet:namespace />fm,
+			{
+				data: {
+					keywords: newKeywords
+				}
+			}
+		);
 	}
-</aui:script>
+</script>

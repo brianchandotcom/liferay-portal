@@ -11,34 +11,6 @@ AUI.add(
 				return parameterArray;
 			},
 
-			changeSelection: function(event) {
-				var form = event.currentTarget.form;
-
-				if (!form) {
-					return;
-				}
-
-				var selections = [];
-
-				var formSortSelect = $('#' + form.id + ' select.sort-term');
-
-				selections.push(formSortSelect.value);
-
-				SortUtil.selectTerms(form, selections);
-			},
-
-			clearSelections: function(event) {
-				var form = $(event.currentTarget).closest('form')[0];
-
-				if (!form) {
-					return;
-				}
-
-				var selections = [];
-
-				SortUtil.selectTerms(form, selections);
-			},
-
 			removeURLParameters: function(key, parameterArray) {
 				key = encodeURIComponent(key);
 
@@ -55,30 +27,6 @@ AUI.add(
 				);
 
 				return newParameters;
-			},
-
-			selectTerms: function(form, selections) {
-				var formParameterName = $('#' + form.id + ' input.sort-parameter-name');
-
-				var key = formParameterName[0].value;
-
-				document.location.search = SortUtil.updateQueryString(key, selections, document.location.search);
-			},
-
-			setURLParameter: function(url, name, value) {
-				var parts = url.split('?');
-
-				var address = parts[0];
-
-				var queryString = parts[1];
-
-				if (!queryString) {
-					queryString = '';
-				}
-
-				queryString = Liferay.Search.SortUtil.updateQueryString(name, [value], queryString);
-
-				return address + '?' + queryString;
 			},
 
 			setURLParameters: function(key, values, parameterArray) {

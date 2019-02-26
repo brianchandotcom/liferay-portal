@@ -63,42 +63,6 @@ String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT)
 	</c:if>
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />keywords').on(
-		'keydown',
-		function(event) {
-			if (event.keyCode === 13) {
-				<portlet:namespace />search();
-			}
-		}
-	);
-</aui:script>
-
-<aui:script>
-	function <portlet:namespace />addSearchProvider() {
-		<portlet:resourceURL var="openSearchDescriptionXMLURL">
-			<portlet:param name="mvcPath" value="/open_search_description.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</portlet:resourceURL>
-
-		window.external.AddSearchProvider('<%= openSearchDescriptionXMLURL.toString() %>');
-	}
-
-	window.<portlet:namespace />search = function() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= SearchContainer.DEFAULT_CUR_PARAM %>').val(1);
-
-		var keywords = form.fm('keywords').val();
-
-		keywords = keywords.replace(/^\s+|\s+$/, '');
-
-		if (keywords != '') {
-			submitForm(form);
-		}
-	}
-</aui:script>
-
 <%
 String pageSubtitle = LanguageUtil.get(request, "search-results");
 String pageKeywords = LanguageUtil.get(request, "search");
@@ -114,3 +78,50 @@ if (Validator.isNotNull(searchDisplayContext.getKeywords())) {
 PortalUtil.setPageSubtitle(pageSubtitle, request);
 PortalUtil.setPageKeywords(pageKeywords, request);
 %>
+
+<script>
+	var keywordsInput = document.getElementById('<portlet:namespace />keywords');
+
+	if (keywordsInput) {
+		keywordsInput.addEventListener(
+			'keydown',
+			function(event) {
+				if (event.keyCode === 13) {
+					<portlet:namespace />search();
+				}
+			}
+		);
+	}
+
+	function <portlet:namespace />addSearchProvider() {
+		<portlet:resourceURL var="openSearchDescriptionXMLURL">
+			<portlet:param name="mvcPath" value="/open_search_description.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</portlet:resourceURL>
+
+		window.external.AddSearchProvider('<%= openSearchDescriptionXMLURL.toString() %>');
+	}
+
+	function <portlet:namespace />search() {
+		var form = document.<portlet:namespace />fm;
+
+		Liferay.Util.setFormValues(
+			form,
+			{
+				'<%= SearchContainer.DEFAULT_CUR_PARAM %>': 1
+			}
+		);
+
+		var keywordsInput = Liferay.Util.getFormElement(form, 'keywords');
+
+		if (keywordsInput) {
+			var keywords = keywordsInput.value;
+
+			keywords = keywords.replace(/^\s+|\s+$/, '');
+
+			if (keywords != '') {
+				submitForm(form);
+			}
+		}
+	}
+</script>

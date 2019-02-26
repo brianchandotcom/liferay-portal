@@ -63,17 +63,26 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 	rightTitle="available"
 />
 
-<aui:script>
-	var form = AUI.$(document.<portlet:namespace />fm);
+<script>
+	var form = document.<portlet:namespace />fm;
 
-	$('#<portlet:namespace />fm').on(
-		'submit',
-		function(event) {
-			event.preventDefault();
+	var currentAssetTypes = Liferay.Util.getFormElement(form, 'currentAssetTypes');
 
-			form.fm('<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>').val(Liferay.Util.listSelect(form.fm('currentAssetTypes')));
+	if (currentAssetTypes) {
+		form.addEventListener(
+			'submit',
+			function(event) {
+				event.preventDefault();
 
-			submitForm(form);
-		}
-	);
-</aui:script>
+				Liferay.Util.postForm(
+					form,
+					{
+						data: {
+							'<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>': Liferay.Util.listSelect(currentAssetTypes)
+						}
+					}
+				);
+			}
+		);
+	}
+</script>

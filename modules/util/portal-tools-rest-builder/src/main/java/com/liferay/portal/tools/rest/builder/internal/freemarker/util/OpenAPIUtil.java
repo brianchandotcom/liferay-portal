@@ -76,7 +76,7 @@ public class OpenAPIUtil {
 		return allSchemas;
 	}
 
-	public static String getVersionDirName(OpenAPIYAML openAPIYAML) {
+	public static String escapeVersion(OpenAPIYAML openAPIYAML) {
 		Info info = openAPIYAML.getInfo();
 
 		String version = info.getVersion();

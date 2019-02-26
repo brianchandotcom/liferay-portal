@@ -55,7 +55,18 @@ int propertyWidth = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.
 String propertyDisplayType = ParamUtil.getString(request, "displayType", ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD);
 
 if (column != null) {
-	propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE));
+	String defaultPropertyDisplayType = null;
+
+	if (type == ExpandoColumnConstants.STRING) {
+		if (propertyHeight > 0) {
+			defaultPropertyDisplayType = ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX;
+		}
+		else {
+			defaultPropertyDisplayType = ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD;
+		}
+	}
+
+	propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), defaultPropertyDisplayType);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

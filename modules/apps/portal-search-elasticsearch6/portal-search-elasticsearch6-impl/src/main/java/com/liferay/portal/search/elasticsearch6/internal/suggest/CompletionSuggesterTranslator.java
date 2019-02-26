@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch6.internal.suggest;
 
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 
-import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface CompletionSuggesterTranslator {
 
-	public SuggestBuilder translate(CompletionSuggester completionSuggester);
+	public SuggestionBuilder translate(CompletionSuggester completionSuggester);
 
 }

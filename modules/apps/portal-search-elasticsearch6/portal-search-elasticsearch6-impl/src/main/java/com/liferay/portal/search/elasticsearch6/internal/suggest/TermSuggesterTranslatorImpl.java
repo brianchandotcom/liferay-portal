@@ -17,8 +17,8 @@ package com.liferay.portal.search.elasticsearch6.internal.suggest;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestBuilders;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestionBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,9 +31,7 @@ public class TermSuggesterTranslatorImpl
 	extends BaseSuggesterTranslatorImpl implements TermSuggesterTranslator {
 
 	@Override
-	public SuggestBuilder translate(TermSuggester termSuggester) {
-		SuggestBuilder suggestBuilder = new SuggestBuilder();
-
+	public SuggestionBuilder translate(TermSuggester termSuggester) {
 		TermSuggestionBuilder termSuggesterBuilder =
 			SuggestBuilders.termSuggestion(termSuggester.getField());
 
@@ -95,10 +93,7 @@ public class TermSuggesterTranslatorImpl
 
 		termSuggesterBuilder.text(termSuggester.getValue());
 
-		suggestBuilder.addSuggestion(
-			termSuggester.getName(), termSuggesterBuilder);
-
-		return suggestBuilder;
+		return termSuggesterBuilder;
 	}
 
 }

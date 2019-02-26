@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch6.internal.suggest;
 
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 
-import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface TermSuggesterTranslator {
 
-	public SuggestBuilder translate(TermSuggester termSuggester);
+	public SuggestionBuilder translate(TermSuggester termSuggester);
 
 }

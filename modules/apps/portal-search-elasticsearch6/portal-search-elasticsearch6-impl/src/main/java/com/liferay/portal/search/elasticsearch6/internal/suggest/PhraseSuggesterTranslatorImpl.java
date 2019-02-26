@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Set;
 
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestBuilders;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.phrase.DirectCandidateGeneratorBuilder;
 import org.elasticsearch.search.suggest.phrase.PhraseSuggestionBuilder;
 
@@ -40,9 +40,7 @@ public class PhraseSuggesterTranslatorImpl
 	extends BaseSuggesterTranslatorImpl implements PhraseSuggesterTranslator {
 
 	@Override
-	public SuggestBuilder translate(PhraseSuggester phraseSuggester) {
-		SuggestBuilder suggestBuilder = new SuggestBuilder();
-
+	public SuggestionBuilder translate(PhraseSuggester phraseSuggester) {
 		PhraseSuggestionBuilder phraseSuggestionBuilder =
 			SuggestBuilders.phraseSuggestion(phraseSuggester.getField());
 
@@ -103,10 +101,7 @@ public class PhraseSuggesterTranslatorImpl
 
 		phraseSuggestionBuilder.text(phraseSuggester.getValue());
 
-		suggestBuilder.addSuggestion(
-			phraseSuggester.getName(), phraseSuggestionBuilder);
-
-		return suggestBuilder;
+		return phraseSuggestionBuilder;
 	}
 
 	protected void translate(

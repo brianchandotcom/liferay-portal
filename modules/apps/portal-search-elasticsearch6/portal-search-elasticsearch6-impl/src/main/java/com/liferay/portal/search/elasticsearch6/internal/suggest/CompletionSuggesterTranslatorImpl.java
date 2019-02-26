@@ -17,8 +17,8 @@ package com.liferay.portal.search.elasticsearch6.internal.suggest;
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestBuilders;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,8 +31,8 @@ public class CompletionSuggesterTranslatorImpl
 	implements CompletionSuggesterTranslator {
 
 	@Override
-	public SuggestBuilder translate(CompletionSuggester completionSuggester) {
-		SuggestBuilder suggestBuilder = new SuggestBuilder();
+	public SuggestionBuilder translate(
+		CompletionSuggester completionSuggester) {
 
 		CompletionSuggestionBuilder completionSuggesterBuilder =
 			SuggestBuilders.completionSuggestion(
@@ -54,10 +54,7 @@ public class CompletionSuggesterTranslatorImpl
 
 		completionSuggesterBuilder.text(completionSuggester.getValue());
 
-		suggestBuilder.addSuggestion(
-			completionSuggester.getName(), completionSuggesterBuilder);
-
-		return suggestBuilder;
+		return completionSuggesterBuilder;
 	}
 
 }

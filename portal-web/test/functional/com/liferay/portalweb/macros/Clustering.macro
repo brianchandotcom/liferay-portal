@@ -149,7 +149,7 @@ definition {
 	macro viewClusterStatusInConsole {
 		var nodeLog2 = Clustering.getLogFileSpecificServer(nodePort = "9080");
 
-		for (var consoleText : list "Accepted view,channelName: liferay-channel-control,com.liferay.portal.cluster.multiple,com.liferay.portal.cache.multiple,com.liferay.portal.scheduler.multiple") {
+		for (var consoleText : list "Accepted view,channelName: liferay-channel-control") {
 			AssertConsoleTextPresent(value1 = "${consoleText}");
 
 			if (!(contains("${nodeLog2}", "${consoleText}"))) {

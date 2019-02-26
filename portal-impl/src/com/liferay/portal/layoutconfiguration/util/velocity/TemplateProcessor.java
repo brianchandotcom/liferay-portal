@@ -186,13 +186,67 @@ public class TemplateProcessor implements ColumnProcessor {
 
 	@Override
 	public String processPortlet(String portletId) throws Exception {
+		return processPortlet(portletId, (Map<String, ?>)null);
+	}
+
+	@Override
+	public String processPortlet(
+			String portletId, Map<String, ?> defaultSettingsMap)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (defaultSettingsMap != null) {
+			Settings settings = SettingsFactoryUtil.getSettings(
+				new PortletInstanceSettingsLocator(
+					themeDisplay.getLayout(), portletId));
+
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
+
+			boolean modified = false;
+
+			for (Map.Entry<String, ?> entry : defaultSettingsMap.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+
+				if (value instanceof String) {
+					Object storedValue = modifiableSettings.getValue(key, null);
+
+					if (storedValue == null) {
+						modifiableSettings.setValue(key, (String)value);
+
+						modified = true;
+					}
+				}
+				else if (value instanceof String[]) {
+					Object[] storedValues = modifiableSettings.getValues(
+						key, null);
+
+					if (storedValues == null) {
+						modifiableSettings.setValues(key, (String[])value);
+
+						modified = true;
+					}
+				}
+				else {
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"Key ", key, " has unsupported value of type ",
+							ClassUtil.getClassName(value.getClass())));
+				}
+			}
+
+			if (modified) {
+				modifiableSettings.store();
+			}
+		}
+
 		_request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(_response);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
@@ -219,60 +273,6 @@ public class TemplateProcessor implements ColumnProcessor {
 		finally {
 			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
 		}
-	}
-
-	@Override
-	public String processPortlet(
-			String portletId, Map<String, ?> defaultSettingsMap)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Settings settings = SettingsFactoryUtil.getSettings(
-			new PortletInstanceSettingsLocator(
-				themeDisplay.getLayout(), portletId));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		boolean modified = false;
-
-		for (Map.Entry<String, ?> entry : defaultSettingsMap.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-
-			if (value instanceof String) {
-				Object storedValue = modifiableSettings.getValue(key, null);
-
-				if (storedValue == null) {
-					modifiableSettings.setValue(key, (String)value);
-
-					modified = true;
-				}
-			}
-			else if (value instanceof String[]) {
-				Object[] storedValues = modifiableSettings.getValues(key, null);
-
-				if (storedValues == null) {
-					modifiableSettings.setValues(key, (String[])value);
-
-					modified = true;
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"Key ", key, " has unsupported value of type ",
-						ClassUtil.getClassName(value.getClass())));
-			}
-		}
-
-		if (modified) {
-			modifiableSettings.store();
-		}
-
-		return processPortlet(portletId);
 	}
 
 	@Override

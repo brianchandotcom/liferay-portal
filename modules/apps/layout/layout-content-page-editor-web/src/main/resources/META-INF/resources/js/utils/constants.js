@@ -22,7 +22,7 @@ export const FLOATING_TOOLBAR_PANELS = {
 
 	map: {
 		icon: 'bolt',
-		panelId: 'map',
+		panelId: 'mapping',
 		title: Liferay.Language.get('map')
 	},
 

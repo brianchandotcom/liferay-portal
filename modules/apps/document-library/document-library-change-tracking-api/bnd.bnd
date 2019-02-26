@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Document Library Change Tracking API
+Bundle-SymbolicName: com.liferay.document.library.change.tracking.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.change.tracking.service,\
+	com.liferay.document.library.change.tracking.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../document-library-change-tracking-service/service.xml

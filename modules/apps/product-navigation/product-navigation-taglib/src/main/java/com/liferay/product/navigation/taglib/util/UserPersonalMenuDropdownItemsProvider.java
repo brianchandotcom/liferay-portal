@@ -29,20 +29,19 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = {})
-public class UserPersonalMenuHelper {
+public class UserPersonalMenuDropdownItemsProvider {
 
-	public static List<DropdownItem> getDropdownItems(
-		HttpServletRequest request) {
+	public UserPersonalMenuDropdownItemsProvider(HttpServletRequest request) {
+		_request = request;
+	}
 
+	public List<DropdownItem> getDropdownItems() {
 		List<List<UserPersonalMenuEntry>> groupedPersonalMenuEntries =
-			_userPersonalMenuEntryRegistry.getGroupedUserPersonalMenuEntries();
+			UserPersonalMenuEntryRegistryUtil.
+				getGroupedUserPersonalMenuEntries();
 
 		int size = groupedPersonalMenuEntries.size();
 
@@ -55,7 +54,6 @@ public class UserPersonalMenuHelper {
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
 								_getDropdownItems(
-									request,
 									groupedPersonalMenuEntries.get(index)));
 
 							if (index < (size - 1)) {
@@ -67,18 +65,10 @@ public class UserPersonalMenuHelper {
 		};
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserPersonalMenuEntryRegistry(
-		UserPersonalMenuEntryRegistry userPersonalMenuEntryRegistry) {
-
-		_userPersonalMenuEntryRegistry = userPersonalMenuEntryRegistry;
-	}
-
-	private static List<DropdownItem> _getDropdownItems(
-		HttpServletRequest request,
+	private List<DropdownItem> _getDropdownItems(
 		List<UserPersonalMenuEntry> userPersonalMenuEntries) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
@@ -93,7 +83,7 @@ public class UserPersonalMenuHelper {
 								SafeConsumer.ignore(
 									dropdownItem -> {
 										dropdownItem.setHref(
-											entry.getPortletURL(request));
+											entry.getPortletURL(_request));
 										dropdownItem.setLabel(
 											entry.getLabel(
 												themeDisplay.getLocale()));
@@ -111,8 +101,8 @@ public class UserPersonalMenuHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserPersonalMenuHelper.class);
+		UserPersonalMenuDropdownItemsProvider.class);
 
-	private static UserPersonalMenuEntryRegistry _userPersonalMenuEntryRegistry;
+	private final HttpServletRequest _request;
 
 }

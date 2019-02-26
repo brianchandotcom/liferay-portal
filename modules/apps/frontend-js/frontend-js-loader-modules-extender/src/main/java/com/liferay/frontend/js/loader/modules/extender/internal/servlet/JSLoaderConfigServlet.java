@@ -18,6 +18,8 @@ import com.liferay.frontend.js.loader.modules.extender.internal.Details;
 import com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderConfigPortalWebResources;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,6 +37,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -90,6 +93,17 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		printWriter.println(
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				request);
+
+		String resolvePath = absolutePortalURLBuilder.forServlet(
+			"/js_resolve_modules"
+		).build();
+
+		printWriter.println(
+			"Liferay.RESOLVE_PATH = \"" + resolvePath + "\";\n");
+
 		printWriter.println(
 			"Liferay.WAIT_TIMEOUT = " + (_details.waitTimeout() * 1000) +
 				";\n");
@@ -102,6 +116,9 @@ public class JSLoaderConfigServlet extends HttpServlet {
 	protected void setDetails(Details details) {
 		_details = details;
 	}
+
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private ComponentContext _componentContext;
 	private volatile Details _details;

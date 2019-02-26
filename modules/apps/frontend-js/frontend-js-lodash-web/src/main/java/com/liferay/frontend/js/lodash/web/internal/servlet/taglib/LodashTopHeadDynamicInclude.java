@@ -29,6 +29,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +67,7 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			printWriter.print(
 				absolutePortalURLBuilder.forModule(
-					"frontend-js-lodash-web/" + fileName
+					_bundle, fileName
 				).build());
 
 			printWriter.println("\" type=\"text/javascript\"></script>");
@@ -80,20 +82,24 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Activate
 	@Modified
 	protected void activate(
-			ComponentContext componentContext, Map<String, Object> properties)
+			BundleContext bundleContext, ComponentContext componentContext,
+			Map<String, Object> properties)
 		throws Exception {
+
+		_bundle = bundleContext.getBundle();
 
 		_jsLodashConfiguration = ConfigurableUtil.createConfigurable(
 			JSLodashConfiguration.class, properties);
 	}
 
 	private static final String[] _FILE_NAMES = {
-		"lodash/lodash.js", "lodash/util.js"
+		"/lodash/lodash.js", "/lodash/util.js"
 	};
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
+	private Bundle _bundle;
 	private volatile JSLodashConfiguration _jsLodashConfiguration;
 
 }

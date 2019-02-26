@@ -16,6 +16,8 @@ package com.liferay.portal.url.builder;
 
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 
+import org.osgi.framework.Bundle;
+
 /**
  * Provides a builder for constructing absolute URLs pointing to portal
  * resources.
@@ -47,9 +49,26 @@ public interface AbsolutePortalURLBuilder {
 	 * Returns URLs for module resources. Module resources live in {@link
 	 * com.liferay.portal.kernel.util.Portal#getPathModule()}.
 	 *
+	 * @param  bundle the OSGi bundle containing the resource
 	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns module resource URLs
+	 * @review
 	 */
+	public ModuleAbsolutePortalURLBuilder forModule(
+		Bundle bundle, String relativeURL);
+
+	/**
+	 * Returns URLs for module resources. Module resources live in {@link
+	 * com.liferay.portal.kernel.util.Portal#getPathModule()}.
+	 *
+	 * @param  relativeURL the resource's relative URL
+	 * @return a builder that returns module resource URLs
+	 * @deprecated As of Mueller (7.2.x), as of 7.2 use
+	 *             {@link AbsolutePortalURLBuilder#forModule(Bundle, String)}
+	 *             instead
+	 * @review
+	 */
+	@Deprecated
 	public ModuleAbsolutePortalURLBuilder forModule(String relativeURL);
 
 	/**
@@ -67,12 +86,28 @@ public interface AbsolutePortalURLBuilder {
 
 	/**
 	 * Returns URLs for arbitrary resources. Arbitrary resources live in the
-	 * portal's root path.
+	 * portal's root path (that can be "/" or "/something" if the portal has not
+	 * been installed as the ROOT webapp).
+	 *
+	 * WARNING: Do not use this method unless none of the others serve your
+	 * purpose. Otherwise you may end up hard coding configurable paths.
 	 *
 	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns arbitrary resource URLs
+	 * @see Portal#getPathContext()
+	 * @review
 	 */
 	public ResourceAbsolutePortalURLBuilder forResource(String relativeURL);
+
+	/**
+	 * Returns URLs for servlet resources. Servlet resources live in {@link
+	 * com.liferay.portal.kernel.util.Portal#getPathModule()}.
+	 *
+	 * @param  relativeURL the resource's relative URL
+	 * @return a builder that returns servlet resource URLs
+	 * @review
+	 */
+	public ServletAbsolutePortalURLBuilder forServlet(String relativeURL);
 
 	/**
 	 * Returns absolute URLs without the CDN part.

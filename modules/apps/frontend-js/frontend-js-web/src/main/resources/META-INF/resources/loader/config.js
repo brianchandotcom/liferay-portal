@@ -21,5 +21,7 @@
 
 	__CONFIG__.exposeGlobal = Liferay.EXPOSE_GLOBAL;
 
+	__CONFIG__.resolvePath = Liferay.RESOLVE_PATH;
+
 	__CONFIG__.waitTimeout = Liferay.WAIT_TIMEOUT;
 }());

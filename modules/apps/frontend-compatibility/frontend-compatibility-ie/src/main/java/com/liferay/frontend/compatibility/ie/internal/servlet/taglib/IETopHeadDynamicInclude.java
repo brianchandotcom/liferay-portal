@@ -17,17 +17,18 @@ package com.liferay.frontend.compatibility.ie.internal.servlet.taglib;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,8 +56,8 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 					"<script data-senna-track=\"permanent\" src=\"");
 
 				printWriter.print(
-					absolutePortalURLBuilder.forResource(
-						"/o/frontend-compatibility-ie/" + fileName
+					absolutePortalURLBuilder.forModule(
+						_bundle, fileName
 					).build());
 
 				printWriter.println("\" type=\"text/javascript\"></script>");
@@ -70,10 +71,15 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundle = bundleContext.getBundle();
+	}
+
 	private static final String[] _FILE_NAMES = {
-		"array.fill.js", "array.find.js", "array.from.js", "fetch.js",
-		"formdata.js", "object.assign.js", "object.entries.js",
-		"object.values.js", "string.endswith.js", "url.search.params.js"
+		"/array.fill.js", "/array.find.js", "/array.from.js", "/fetch.js",
+		"/formdata.js", "/object.assign.js", "/object.entries.js",
+		"/object.values.js", "/string.endswith.js", "/url.search.params.js"
 	};
 
 	@Reference
@@ -82,13 +88,6 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private BrowserSniffer _browserSniffer;
 
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.compatibility.ie)",
-		unbind = "-"
-	)
-	private ServletContext _servletContext;
+	private Bundle _bundle;
 
 }

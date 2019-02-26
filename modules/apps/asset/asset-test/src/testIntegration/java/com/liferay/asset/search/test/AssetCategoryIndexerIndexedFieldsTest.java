@@ -182,10 +182,9 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		map.put(
 			"parentCategoryId",
 			String.valueOf(assetCategory.getParentCategoryId()));
+		map.put("title_ja_JP", assetCategory.getName());
 		map.put(
-			"title_sortable",
-			StringUtil.lowerCase(
-				assetCategory.getTitle(assetCategory.getDefaultLanguageId())));
+			"title_sortable", StringUtil.lowerCase(assetCategory.getName()));
 
 		indexedFieldsFixture.populateUID(
 			AssetCategory.class.getName(), assetCategory.getCategoryId(), map);
@@ -217,12 +216,12 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 	}
 
 	private void _populateTitles(String title, Map<String, String> map) {
-		map.put(Field.TITLE, title);
+		map.put("localized_title", title);
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("title_");
+			sb.append("localized_title_");
 			sb.append(locale.getLanguage());
 			sb.append("_");
 			sb.append(locale.getCountry());

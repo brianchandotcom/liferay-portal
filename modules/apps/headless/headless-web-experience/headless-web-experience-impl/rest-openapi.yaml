@@ -61,6 +61,59 @@ components:
         title:
           type: string
       type: object
+    ContentFieldValue:
+      description: https://www.schema.org/ContentFieldValue
+      properties:
+        dataType:
+          type: string
+        id:
+          format: int64
+          type: integer
+        inputControl:
+          type: string
+        label:
+          type: string
+        name:
+          type: string
+        value:
+          properties:
+            data:
+              type: string
+            document:
+              allOf:
+              - $ref: "#/components/schemas/ContentDocument"
+              readOnly: true
+            documentId:
+              format: int64
+              type: integer
+              writeOnly: true
+            geo:
+              description: https://www.schema.org/GeoCoordinates
+              properties:
+                id:
+                  format: int64
+                  type: integer
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+              type: object
+            link:
+              format: uri
+              type: string
+            structuredContent:
+              allOf:
+              - $ref: "#/components/schemas/StructuredContent"
+              readOnly: true
+            structuredContentId:
+              format: int64
+              type: integer
+              writeOnly: true
+            contentFieldValues:
+              items:
+                $ref: "#/components/schemas/ContentFieldValue"
+              type: array
+          type: object
     ContentStructure:
       description: https://www.schema.org/ContentStructure
       properties:
@@ -207,57 +260,9 @@ components:
           type: array
         title:
           type: string
-        values:
-          description: https://www.schema.org/ContentFieldValue
+        contentFieldValues:
           items:
-            properties:
-              dataType:
-                type: string
-              id:
-                format: int64
-                type: integer
-              inputControl:
-                type: string
-              label:
-                type: string
-              name:
-                type: string
-              value:
-                properties:
-                  data:
-                    type: string
-                  document:
-                    allOf:
-                      - $ref: "#/components/schemas/ContentDocument"
-                    readOnly: true
-                  documentId:
-                    format: int64
-                    type: integer
-                    writeOnly: true
-                  geo:
-                    description: https://www.schema.org/GeoCoordinates
-                    properties:
-                      id:
-                        format: int64
-                        type: integer
-                      latitude:
-                        type: number
-                      longitude:
-                        type: number
-                    type: object
-                  link:
-                    format: uri
-                    type: string
-                  structuredContent:
-                    allOf:
-                      - $ref: "#/components/schemas/StructuredContent"
-                    readOnly: true
-                  structuredContentId:
-                    format: int64
-                    type: integer
-                    writeOnly: true
-                type: object
-            type: object
+            $ref: "#/components/schemas/ContentFieldValue"
           type: array
     StructuredContentImage:
       description: https://www.schema.org/StructuredContentImage

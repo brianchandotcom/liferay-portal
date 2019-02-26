@@ -37,11 +37,11 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
+import com.liferay.headless.web.experience.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
 import com.liferay.headless.web.experience.dto.v1_0.RenderedContentsURL;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.headless.web.experience.dto.v1_0.Value;
-import com.liferay.headless.web.experience.dto.v1_0.Values;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.web.experience.internal.dto.v1_0.util.CreatorUtil;
@@ -284,7 +284,7 @@ public class StructuredContentResourceImpl
 					_toDDMFormFieldValues(
 						ddmStructure,
 						contextAcceptLanguage.getPreferredLocale(),
-						structuredContent.getValues()),
+						structuredContent.getContentFieldValues()),
 					ddmStructure),
 				ddmStructure.getStructureKey(),
 				_getDDMTemplateKey(ddmStructure), null,
@@ -330,7 +330,8 @@ public class StructuredContentResourceImpl
 				_journalConverter.getContent(
 					ddmStructure,
 					_toDDMFields(
-						journalArticle, structuredContent.getValues())),
+						journalArticle,
+						structuredContent.getContentFieldValues())),
 				journalArticle.getDDMStructureKey(),
 				_getDDMTemplateKey(ddmStructure),
 				journalArticle.getLayoutUuid(),
@@ -428,7 +429,48 @@ public class StructuredContentResourceImpl
 		};
 	}
 
-	private Fields _toDDMFields(JournalArticle journalArticle, Values[] values)
+	private ContentFieldValue[] _toContentFieldValues(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		Fields ddmFields = _journalConverter.getDDMFields(
+			ddmStructure, journalArticle.getContent());
+
+		List<ContentFieldValue> contentFieldValues = new ArrayList<>();
+
+		Iterator<com.liferay.dynamic.data.mapping.storage.Field> iterator =
+			ddmFields.iterator();
+
+		while (iterator.hasNext()) {
+			com.liferay.dynamic.data.mapping.storage.Field ddmField =
+				iterator.next();
+
+			DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+				ddmField.getName());
+
+			contentFieldValues.add(
+				new ContentFieldValue() {
+					{
+						dataType = ContentStructureUtil.toDataType(
+							ddmFormField);
+						inputControl = ContentStructureUtil.toInputControl(
+							ddmFormField);
+						name = ddmField.getName();
+						value = _toValue(
+							contextAcceptLanguage.getPreferredLocale(),
+							ddmField);
+					}
+				});
+		}
+
+		return contentFieldValues.toArray(new ContentFieldValue[0]);
+	}
+
+	private Fields _toDDMFields(
+			JournalArticle journalArticle,
+			ContentFieldValue[] contentFieldValues)
 		throws PortalException {
 
 		Fields ddmFields = _journalConverter.getDDMFields(
@@ -436,7 +478,7 @@ public class StructuredContentResourceImpl
 
 		List<DDMFormFieldValue> ddmFormFieldValues = _toDDMFormFieldValues(
 			journalArticle.getDDMStructure(),
-			contextAcceptLanguage.getPreferredLocale(), values);
+			contextAcceptLanguage.getPreferredLocale(), contentFieldValues);
 
 		Iterator<com.liferay.dynamic.data.mapping.storage.Field> iterator =
 			ddmFields.iterator();
@@ -460,11 +502,11 @@ public class StructuredContentResourceImpl
 	}
 
 	private List<DDMFormFieldValue> _toDDMFormFieldValues(
-			DDMStructure ddmStructure, Locale locale, Values[] valuesArray)
-		throws PortalException {
+		DDMStructure ddmStructure, Locale locale,
+		ContentFieldValue[] contentFieldValues) {
 
 		return transform(
-			Arrays.asList(valuesArray),
+			Arrays.asList(contentFieldValues),
 			values -> {
 				return new DDMFormFieldValue() {
 					{
@@ -476,13 +518,14 @@ public class StructuredContentResourceImpl
 	}
 
 	private com.liferay.dynamic.data.mapping.model.Value _toDDMValue(
-			DDMStructure ddmStructure, Locale locale, Values values)
+			DDMStructure ddmStructure, Locale locale,
+			ContentFieldValue contentFieldValue)
 		throws PortalException {
 
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-			values.getName());
+			contentFieldValue.getName());
 
-		final Value value = values.getValue();
+		final Value value = contentFieldValue.getValue();
 
 		if (ddmFormField.isLocalizable()) {
 			return new LocalizedValue() {
@@ -602,7 +645,7 @@ public class StructuredContentResourceImpl
 					ddmStructure, journalArticle);
 				title = journalArticle.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
-				values = _toValues(journalArticle);
+				contentFieldValues = _toContentFieldValues(journalArticle);
 			}
 		};
 	}
@@ -727,42 +770,6 @@ public class StructuredContentResourceImpl
 				data = String.valueOf(ddmField.getValue(locale));
 			}
 		};
-	}
-
-	private Values[] _toValues(JournalArticle journalArticle) throws Exception {
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		Fields ddmFields = _journalConverter.getDDMFields(
-			ddmStructure, journalArticle.getContent());
-
-		List<Values> values = new ArrayList<>();
-
-		Iterator<com.liferay.dynamic.data.mapping.storage.Field> iterator =
-			ddmFields.iterator();
-
-		while (iterator.hasNext()) {
-			com.liferay.dynamic.data.mapping.storage.Field ddmField =
-				iterator.next();
-
-			DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-				ddmField.getName());
-
-			values.add(
-				new Values() {
-					{
-						dataType = ContentStructureUtil.toDataType(
-							ddmFormField);
-						inputControl = ContentStructureUtil.toInputControl(
-							ddmFormField);
-						name = ddmField.getName();
-						value = _toValue(
-							contextAcceptLanguage.getPreferredLocale(),
-							ddmField);
-					}
-				});
-		}
-
-		return values.toArray(new Values[0]);
 	}
 
 	@Context

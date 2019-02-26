@@ -15,7 +15,11 @@
 package com.liferay.portal.tools.java.parser.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,6 +31,21 @@ import org.apache.commons.io.FileUtils;
  * @author Hugo Huijser
  */
 public class FileUtil {
+
+	public static File createTempFile(String extension) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append(StringPool.SLASH);
+		sb.append(PwdGenerator.getPassword(8, PwdGenerator.KEY2));
+
+		if (Validator.isFileExtension(extension)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(extension);
+		}
+
+		return new File(sb.toString());
+	}
 
 	public static String read(File file) throws IOException {
 		try {

@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
@@ -85,23 +86,26 @@ public class SuggestSearchRequestExecutorImpl
 
 		searchRequestBuilder.setIndices(suggestSearchRequest.getIndexNames());
 
-		Suggester suggester = suggestSearchRequest.getSuggester();
+		Map<String, Suggester> suggesterMap =
+			suggestSearchRequest.getSuggesterMap();
 
-		SuggestBuilder suggestBuilder = _suggesterTranslator.translate(
-			suggester, null);
+		SuggestBuilder suggestBuilder = new SuggestBuilder();
 
-		Map<String, SuggestionBuilder<?>> suggestionBuilders =
-			suggestBuilder.getSuggestions();
-
-		for (Map.Entry<String, SuggestionBuilder<?>> entry :
-			suggestionBuilders.entrySet()) {
-
-			SuggestBuilder suggestBuilder2 = new SuggestBuilder();
-
-			searchRequestBuilder.suggest(
-				suggestBuilder2.addSuggestion(
-					entry.getKey(), entry.getValue()));
+		if (!Validator.isBlank(suggestSearchRequest.getGlobalText())) {
+			suggestBuilder.setGlobalText(suggestSearchRequest.getGlobalText());
 		}
+
+		for (Map.Entry<String, Suggester> entry : suggesterMap.entrySet()) {
+			Suggester suggester = entry.getValue();
+			String suggesterName = entry.getKey();
+
+			SuggestionBuilder suggestionBuilder =
+				_suggesterTranslator.translate(suggester, null);
+
+			suggestBuilder.addSuggestion(suggesterName, suggestionBuilder);
+		}
+
+		searchRequestBuilder.suggest(suggestBuilder);
 
 		return searchRequestBuilder;
 	}
@@ -113,9 +117,9 @@ public class SuggestSearchRequestExecutorImpl
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setSuggesterTranslator(
-		SuggesterTranslator<SuggestBuilder> suggesterTranslator) {
+		SuggesterTranslator<SuggestionBuilder> suggesterTranslator) {
 
 		_suggesterTranslator = suggesterTranslator;
 	}
@@ -192,6 +196,6 @@ public class SuggestSearchRequestExecutorImpl
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-	private SuggesterTranslator<SuggestBuilder> _suggesterTranslator;
+	private SuggesterTranslator<SuggestionBuilder> _suggesterTranslator;
 
 }

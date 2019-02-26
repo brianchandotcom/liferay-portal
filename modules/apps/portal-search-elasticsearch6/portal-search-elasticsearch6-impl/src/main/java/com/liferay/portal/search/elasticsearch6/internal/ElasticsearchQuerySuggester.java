@@ -213,7 +213,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 					_indexNameBuilder.getIndexName(
 						searchContext.getCompanyId()));
 
-			suggestSearchRequest.setSuggester(suggester);
+			suggestSearchRequest.addSuggester(suggester);
 
 			SuggestSearchResponse suggestSearchResponse =
 				_searchEngineAdapter.execute(suggestSearchRequest);

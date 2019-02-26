@@ -57,6 +57,27 @@ definition {
 		return "${fileContent}";
 	}
 
+	macro runGroovyScript {
+		User.loginPG(
+			nodePort = "${nodePort}",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		var script = TestCase.getFileContent(fileName = "${scriptFile}");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}"
+		);
+	}
+
 	@description = "This will shutdown the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."
 	macro shutdownSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
@@ -103,27 +124,6 @@ definition {
 		);
 	}
 
-	macro runGroovyScript {
-		User.loginPG(
-			nodePort = "${nodePort}",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Server Administration"
-		);
-
-		var script = TestCase.getFileContent(fileName = "${scriptFile}");
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}"
-		);
-	}
-
 	macro viewClusterStatusInConsole {
 		var nodeLog2 = Clustering.getLogFileSpecificServer(nodePort = "9080");
 
@@ -132,20 +132,6 @@ definition {
 
 			if (!(contains("${nodeLog2}", "${consoleText}"))) {
 				fail("Second cluster node log does not contain expected text: ${consoleText}");
-			}
-		}
-	}
-
-	@description = "This will view the text shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
-	macro viewTextPresentOnSpecificNode {
-		if ("${nodePort}" == "8080") {
-			AssertConsoleTextPresent(value1 = "${expectedText}");
-		}
-		else {
-			var nodeLog = Clustering.getLogFileSpecificServer(nodePort = "${nodePort}");
-
-			if (!(contains("${nodeLog}", "${expectedText}"))) {
-				fail("Failed to find expected text: ${expectedText} on cluser node at ${nodePort}");
 			}
 		}
 	}
@@ -160,6 +146,20 @@ definition {
 
 			if (contains("${nodeLog}", "${exceptionText}")) {
 				fail("Able to find exception: ${exceptionText} on cluser node at ${nodePort}");
+			}
+		}
+	}
+
+	@description = "This will view the text shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
+	macro viewTextPresentOnSpecificNode {
+		if ("${nodePort}" == "8080") {
+			AssertConsoleTextPresent(value1 = "${expectedText}");
+		}
+		else {
+			var nodeLog = Clustering.getLogFileSpecificServer(nodePort = "${nodePort}");
+
+			if (!(contains("${nodeLog}", "${expectedText}"))) {
+				fail("Failed to find expected text: ${expectedText} on cluser node at ${nodePort}");
 			}
 		}
 	}

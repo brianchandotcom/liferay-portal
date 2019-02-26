@@ -27,7 +27,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -94,8 +93,7 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 			Assert.fail("Should throw TimeoutException");
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof TimeoutException);
+		catch (TimeoutException te) {
 		}
 
 		_testMessageListener.unblock();
@@ -195,12 +193,7 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 		thread2.interrupt();
 
-		try {
-			futureTask2.get();
-		}
-		catch (ExecutionException ee) {
-			throw new AssertionError("Should not throw exception", ee);
-		}
+		futureTask2.get();
 
 		_testMessageListener.unblock();
 

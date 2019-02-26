@@ -22,10 +22,6 @@ AUI.add(
 						validator: Lang.isObject
 					},
 
-					moveEntryUrl: {
-						validator: Lang.isString
-					},
-
 					searchContainerId: {
 						validator: Lang.isString
 					},
@@ -199,8 +195,6 @@ AUI.add(
 					_moveToFolder: function(obj) {
 						var instance = this;
 
-						var namespace = instance.NS;
-
 						var dropTarget = obj.targetItem;
 
 						var selectedItems = obj.selectedItems;
@@ -211,11 +205,7 @@ AUI.add(
 							if (!instance._searchContainer.select ||
 								selectedItems.indexOf(dropTarget.one('input[type=checkbox]'))
 							) {
-								var form = instance.get('form').node;
-
-								form.get(namespace + 'newFolderId').val(folderId);
-
-								instance._processAction('move', instance.get('moveEntryUrl'));
+								instance._processMoveAction(folderId);
 							}
 						}
 					},

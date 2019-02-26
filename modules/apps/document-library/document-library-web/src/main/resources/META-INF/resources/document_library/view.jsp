@@ -224,7 +224,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 							node: A.one(document.<portlet:namespace />fm2)
 						},
 						maxFileSize: <%= dlConfiguration.fileMaxSize() %>,
-						moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="newFolderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>',
 						namespace: '<portlet:namespace />',
 						portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
 						redirect: encodeURIComponent('<%= currentURL %>'),

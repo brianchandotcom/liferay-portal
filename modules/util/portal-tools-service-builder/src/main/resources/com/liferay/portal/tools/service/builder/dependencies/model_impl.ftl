@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.model.version.VersionedModelInvocationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -82,8 +81,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.math.BigDecimal;
 
@@ -694,11 +691,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public ${versionedEntity.name} toVersionedModel() {
-			if (_${versionedEntity.varName} == null) {
-				_${versionedEntity.varName} = (${versionedEntity.name})ProxyUtil.newProxyInstance(_classLoader, _versionedModelInterfaces, new VersionedModelInvocationHandler(this, _versionedModelMethodsMap));
-			}
+			${versionedEntity.name} ${versionedEntity.varName} = new ${versionedEntity.name}Impl();
 
-			return _${versionedEntity.varName};
+			${versionedEntity.varName}.setPrimaryKey(getVersionedModelId());
+			${versionedEntity.varName}.setHeadId(-getVersionedModelId());
+
+			populateVersionedModel(${versionedEntity.varName});
+
+			return ${versionedEntity.varName};
 		}
 	</#if>
 
@@ -1751,34 +1751,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#if dependencyInjectorDS>
 		private static boolean _entityCacheEnabled;
 		private static boolean _finderCacheEnabled;
-	</#if>
-
-	<#if entity.versionedEntity??>
-		<#assign versionedEntity = entity.versionedEntity />
-
-		private static final Map<Method, Method> _versionedModelMethodsMap = new HashMap<Method, Method>();
-		private static final Class<?>[] _versionedModelInterfaces = new Class<?>[] {${versionedEntity.name}.class};
-
-		static {
-			try {
-				_versionedModelMethodsMap.put(${versionedEntity.name}.class.getMethod("getPrimaryKey"), ${entity.name}.class.getMethod("getVersionedModelId"));
-
-				<#list versionedEntity.entityColumns as entityColumn>
-					<#if !stringUtil.equals(entityColumn.methodName, "HeadId") && !stringUtil.equals(entityColumn.methodName, "MvccVersion")>
-						<#if stringUtil.equals(entityColumn.type, "boolean")>
-							_versionedModelMethodsMap.put(${versionedEntity.name}.class.getMethod("is${entityColumn.methodName}"), ${entity.name}.class.getMethod("is${entityColumn.methodName}"));
-						</#if>
-
-						_versionedModelMethodsMap.put(${versionedEntity.name}.class.getMethod("get${entityColumn.methodName}"), ${entity.name}.class.getMethod("get${entityColumn.methodName}"));
-					</#if>
-				</#list>
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
-			}
-		}
-
-		private volatile ${versionedEntity.name} _${versionedEntity.varName};
 	</#if>
 
 	<#list entity.databaseRegularEntityColumns as entityColumn>

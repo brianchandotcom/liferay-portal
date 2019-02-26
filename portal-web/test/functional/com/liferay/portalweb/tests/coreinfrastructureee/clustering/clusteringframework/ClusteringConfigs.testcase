@@ -42,8 +42,6 @@ definition {
 			fail("Failed to find JDBC_PING configuration on second node.");
 		}
 
-		User.logoutPG();
-
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",

@@ -11,11 +11,7 @@ definition {
 	}
 
 	macro enableDebugging {
-		User.loginPG(
-			nodePort = "${nodePort}",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -80,11 +76,7 @@ definition {
 	}
 
 	macro runGroovyScript {
-		User.loginPG(
-			nodePort = "${nodePort}",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -38,9 +38,9 @@ definition {
 	macro gotoAddPGViaWCD {
 		Click.clickNoWaitForVisible(locator1 = "WCD#ADD_WEB_CONTENT");
 
-		 Click(locator1 = "WCD#ADD_WEB_CONTENT");
+		Click(locator1 = "WCD#ADD_WEB_CONTENT");
 
-		 Click(locator1 = "WCD#ADD_WEB_CONTENT");
+		Click(locator1 = "WCD#ADD_WEB_CONTENT");
 
 		if (!(contains("${structureName}", "{structureName}"))) {
 			var structureName = "${structureName}";

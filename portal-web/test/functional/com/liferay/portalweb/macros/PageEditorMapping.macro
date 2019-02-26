@@ -6,12 +6,6 @@ definition {
 	}
 
 	macro mapEditableTextToAsset {
-		MouseOver.mouseOverNotVisible(
-			locator1 = "Fragment#EDITABLE_FIELD",
-			key_fragmentName = "${fragmentName}",
-			key_id = "${id}"
-		);
-
 		Click(
 			locator1 = "Fragment#EDITABLE_FIELD",
 			key_fragmentName = "${fragmentName}",

@@ -363,6 +363,13 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Publish to Live");
 	}
 
+	macro clickEllipsisItemCP {
+		LexiconCard.clickEllipsisItem(
+			card = "${entryTitle}",
+			item = "${item}"
+		);
+	}
+
 	macro clickEllipsisItemPG {
 		Click(
 			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS",

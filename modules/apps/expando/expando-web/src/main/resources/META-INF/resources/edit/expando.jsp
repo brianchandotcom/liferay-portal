@@ -104,10 +104,10 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 		<h2 class="sheet-title">
 
 			<%
-			String typeLabel = LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type));
+			String displayTypeLabel = LanguageUtil.get(request, propertyDisplayType);
 			%>
 
-			<%= LanguageUtil.format(request, column != null ? "edit-x-field" : "new-custom-field", new Object[] {typeLabel}, false) %>
+			<%= LanguageUtil.format(request, column != null ? "edit-x" : "new-x", new Object[] {displayTypeLabel}, false) %>
 		</h2>
 
 		<liferay-frontend:fieldset-group>

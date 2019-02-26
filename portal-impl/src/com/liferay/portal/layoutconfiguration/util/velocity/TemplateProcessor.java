@@ -17,10 +17,12 @@ package com.liferay.portal.layoutconfiguration.util.velocity;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.portlet.PortletPreferences;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -197,10 +201,29 @@ public class TemplateProcessor implements ColumnProcessor {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
+
+		if (layout.isTypePortlet()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (!layoutTypePortlet.hasPortletId(portletId, true) &&
+				!layout.isPortletEmbedded(portletId, layout.getGroupId())) {
+
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					layout.getCompanyId(), layout.getGroupId(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					PortletKeys.PREFS_PLID_SHARED, portletId,
+					portlet.getDefaultPreferences());
+			}
+		}
+
 		if (defaultSettingsMap != null) {
 			Settings settings = SettingsFactoryUtil.getSettings(
-				new PortletInstanceSettingsLocator(
-					themeDisplay.getLayout(), portletId));
+				new PortletInstanceSettingsLocator(layout, portletId));
 
 			ModifiableSettings modifiableSettings =
 				settings.getModifiableSettings();
@@ -247,9 +270,6 @@ public class TemplateProcessor implements ColumnProcessor {
 
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(_response);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), portletId);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

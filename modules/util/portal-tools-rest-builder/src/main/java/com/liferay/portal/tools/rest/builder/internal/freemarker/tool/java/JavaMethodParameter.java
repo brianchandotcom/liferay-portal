@@ -19,9 +19,9 @@ import com.liferay.portal.vulcan.yaml.openapi.Operation;
 /**
  * @author Peter Shin
  */
-public class JavaParameter {
+public class JavaMethodParameter {
 
-	public JavaParameter(
+	public JavaMethodParameter(
 		Operation operation, String parameterName, String parameterType) {
 
 		_operation = operation;

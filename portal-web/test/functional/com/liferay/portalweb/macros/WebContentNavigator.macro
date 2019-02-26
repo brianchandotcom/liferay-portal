@@ -47,7 +47,7 @@ definition {
 
 		var key_structureName = "${structureName}";
 
-		AssertClick(
+		Click(
 			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
 			value1 = "${structureName}"
 		);

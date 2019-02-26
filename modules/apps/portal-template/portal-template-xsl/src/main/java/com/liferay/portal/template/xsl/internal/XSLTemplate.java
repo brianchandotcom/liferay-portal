@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -76,9 +77,11 @@ public class XSLTemplate implements Template {
 
 		Class<?> transformerFactoryClass = TransformerFactoryImpl.class;
 
+		_transformerFactoryClassLoader =
+			transformerFactoryClass.getClassLoader();
+
 		_transformerFactory = TransformerFactory.newInstance(
-			transformerFactoryClass.getName(),
-			transformerFactoryClass.getClassLoader());
+			transformerFactoryClass.getName(), _transformerFactoryClassLoader);
 
 		try {
 			_transformerFactory.setFeature(
@@ -202,6 +205,14 @@ public class XSLTemplate implements Template {
 
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				contextClassLoader, _transformerFactoryClassLoader));
+
 		try {
 			doProcessTemplate(writer);
 		}
@@ -243,6 +254,9 @@ public class XSLTemplate implements Template {
 						_errorTemplateResource.getTemplateId(),
 					e2);
 			}
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -304,6 +318,7 @@ public class XSLTemplate implements Template {
 	private final boolean _preventLocalConnections;
 	private final TemplateContextHelper _templateContextHelper;
 	private final TransformerFactory _transformerFactory;
+	private final ClassLoader _transformerFactoryClassLoader;
 	private StreamSource _xmlStreamSource;
 	private final XSLTemplateResource _xslTemplateResource;
 

@@ -51,14 +51,24 @@ if (discussionCommentIterator != null) {
 }
 %>
 
-<aui:script sandbox="<%= true %>">
-	var rootIndexPage = $('#<%= namespace %>rootIndexPage');
-	var index = $('#<%= namespace %>index');
+<script>
+	var indexInput = document.getElementById('<%= namespace %>index');
 
-	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
-	index.val('<%= String.valueOf(index) %>');
+	if (indexInput) {
+		indexInput.value = '<%= String.valueOf(index) %>';
+	}
+
+	var rootIndexPageInput = document.getElementById('<%= namespace %>rootIndexPage');
+
+	if (rootIndexPageInput) {
+		rootIndexPageInput.value = '<%= String.valueOf(rootIndexPage) %>';
+	}
 
 	<c:if test="<%= (rootDiscussionComment != null) && (discussion.getDiscussionCommentsCount() <= index) %>">
-		$('#<%= namespace %>moreCommentsContainer').hide();
+		var moreCommentsContainer = document.getElementById('<%= namespace %>moreCommentsContainer');
+
+		if (moreCommentsContainer) {
+			moreCommentsContainer.classList.add('hide');
+		}
 	</c:if>
-</aui:script>
+</script>

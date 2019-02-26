@@ -85,7 +85,6 @@ import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
-import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.hits.SearchHitsTranslator;
@@ -415,16 +414,15 @@ public class ElasticsearchAggregationResultTranslator
 
 		Percentiles percentiles = (Percentiles)_elasticsearchAggregation;
 
-		PercentilesBucketPipelineAggregationResult
-			percentilesBucketPipelineAggregationResult =
-				_aggregationResults.percentiles(percentiles.getName());
+		PercentilesAggregationResult percentilesAggregationResult =
+			_aggregationResults.percentiles(percentiles.getName());
 
 		percentiles.forEach(
 			percentile ->
-				percentilesBucketPipelineAggregationResult.addPercentile(
+				percentilesAggregationResult.addPercentile(
 					percentile.getPercent(), percentile.getValue()));
 
-		return percentilesBucketPipelineAggregationResult;
+		return percentilesAggregationResult;
 	}
 
 	@Override

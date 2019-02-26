@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.document.library.change.tracking.service.persistence.CTDLFolderFinderOverride.countFE_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			JOIN
+				CTEntry ON
+					CTEntry.classPK = DLFileVersion.fileVersionId
+			JOIN
+				CTCollections_CTEntries ON
+					CTEntry.ctEntryId = CTCollections_CTEntries.ctEntryId
+			JOIN
+				CTCollection ON
+					CTCollections_CTEntries.ctCollectionId = CTCollection.ctCollectionId
+			WHERE
+				(DLFileVersion.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_VERSION_FOLDER_ID$] AND
+				(
+					(
+						(CTCollection.userId = ?) AND
+						(CTCollection.ctCollectionId = ?)
+					) OR
+	 			 	(CTCollection.ctCollectionId = ?)
+				)
+		]]>
+	</sql>
+</custom-sql>

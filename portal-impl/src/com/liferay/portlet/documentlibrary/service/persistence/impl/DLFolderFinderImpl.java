@@ -272,8 +272,7 @@ public class DLFolderFinderImpl
 			sb.append(") UNION ALL (");
 			sb.append(
 				getFileVersionsSQL(
-					COUNT_FE_BY_G_F, groupId, mimeTypes, queryDefinition,
-					inlineSQLHelper));
+					groupId, mimeTypes, queryDefinition, inlineSQLHelper));
 			sb.append(") UNION ALL (");
 			sb.append(
 				getFileShortcutsSQL(
@@ -306,21 +305,9 @@ public class DLFolderFinderImpl
 
 			qPos.add(queryDefinition.getStatus());
 			qPos.add(folderId);
-			qPos.add(groupId);
-			qPos.add(queryDefinition.getStatus());
 
-			if ((queryDefinition.getOwnerUserId() > 0) &&
-				queryDefinition.isIncludeOwner()) {
-
-				qPos.add(queryDefinition.getOwnerUserId());
-				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
-			}
-
-			qPos.add(folderId);
-
-			if (mimeTypes != null) {
-				qPos.add(mimeTypes);
-			}
+			doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
+				qPos, queryDefinition, groupId, folderId, mimeTypes);
 
 			qPos.add(groupId);
 			qPos.add(true);
@@ -353,6 +340,27 @@ public class DLFolderFinderImpl
 		}
 	}
 
+	protected void doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
+		QueryPos qPos, QueryDefinition<?> queryDefinition, long groupId,
+		long folderId, String[] mimeTypes) {
+
+		qPos.add(groupId);
+		qPos.add(queryDefinition.getStatus());
+
+		if ((queryDefinition.getOwnerUserId() > 0) &&
+			queryDefinition.isIncludeOwner()) {
+
+			qPos.add(queryDefinition.getOwnerUserId());
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+		}
+
+		qPos.add(folderId);
+
+		if (mimeTypes != null) {
+			qPos.add(mimeTypes);
+		}
+	}
+
 	protected int doCountFE_ByG_F(
 		long groupId, long folderId, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
@@ -363,8 +371,7 @@ public class DLFolderFinderImpl
 			session = openSession();
 
 			String sql = getFileVersionsSQL(
-				COUNT_FE_BY_G_F, groupId, null, queryDefinition,
-				inlineSQLHelper);
+				groupId, null, queryDefinition, inlineSQLHelper);
 
 			sql = updateSQL(sql, folderId, false, false);
 
@@ -412,8 +419,7 @@ public class DLFolderFinderImpl
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
 			String sql = getFileVersionsSQL(
-				COUNT_FE_BY_G_F, groupId, mimeTypes, queryDefinition,
-				inlineSQLHelper);
+				groupId, mimeTypes, queryDefinition, inlineSQLHelper);
 
 			sb.append(sql);
 
@@ -701,6 +707,11 @@ public class DLFolderFinderImpl
 		}
 	}
 
+	protected String doGetFileVersionSql(QueryDefinition<?> queryDefinition) {
+		return CustomSQLUtil.get(
+			COUNT_FE_BY_G_F, queryDefinition, DLFileVersionImpl.TABLE_NAME);
+	}
+
 	protected String getFileEntriesSQL(
 		String id, long groupId, String[] mimeTypes,
 		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
@@ -775,11 +786,10 @@ public class DLFolderFinderImpl
 	}
 
 	protected String getFileVersionsSQL(
-		String id, long groupId, String[] mimeTypes,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		long groupId, String[] mimeTypes, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
 
-		String sql = CustomSQLUtil.get(
-			id, queryDefinition, DLFileVersionImpl.TABLE_NAME);
+		String sql = doGetFileVersionSql(queryDefinition);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(

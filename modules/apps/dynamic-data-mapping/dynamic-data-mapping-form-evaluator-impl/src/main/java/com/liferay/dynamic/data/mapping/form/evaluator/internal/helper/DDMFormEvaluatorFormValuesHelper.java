@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class DDMFormEvaluatorFormValuesHelper {
 
 	public DDMFormEvaluatorFormValuesHelper(DDMFormValues ddmFormValues) {

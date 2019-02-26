@@ -112,9 +112,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	* #upgradeLongTextTable(String, String, String, String, String[])}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * #upgradeLongTextTable(String, String, String, String, String[])}
+	 */
 	@Deprecated
 	protected void upgradeLongTextTable(
 			String columnName, String selectSQL, String updateSQL,
@@ -186,9 +186,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	* #upgradeLongTextTable(String, String, String, String[][], WildcardMode)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * #upgradeLongTextTable(String, String, String, String[][], WildcardMode)}
+	 */
 	@Deprecated
 	protected void upgradeLongTextTable(
 			String tableName, String columnName, String[][] names,

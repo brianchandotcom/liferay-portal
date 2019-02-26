@@ -17,8 +17,8 @@ package com.liferay.dynamic.data.mapping.expression.model;
 import aQute.bnd.annotation.ProviderType;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 @ProviderType
 public class ArrayExpression extends Term {
 

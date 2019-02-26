@@ -20,8 +20,8 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateR
 import java.util.Locale;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class DDMFormEvaluatorExpressionParameterAccessor
 	implements DDMExpressionParameterAccessor {
 

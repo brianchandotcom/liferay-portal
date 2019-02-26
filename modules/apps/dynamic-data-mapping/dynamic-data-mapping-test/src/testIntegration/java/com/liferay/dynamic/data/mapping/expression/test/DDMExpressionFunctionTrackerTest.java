@@ -33,8 +33,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 @RunWith(Arquillian.class)
 public class DDMExpressionFunctionTrackerTest {
 

@@ -24,7 +24,6 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import org.osgi.service.component.annotations.Component;
 
 /**
-
  * @author Luan Maoski
  */
 @Component(

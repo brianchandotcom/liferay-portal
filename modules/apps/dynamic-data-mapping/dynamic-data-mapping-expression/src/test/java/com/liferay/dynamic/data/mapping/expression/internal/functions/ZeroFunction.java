@@ -19,8 +19,8 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import java.math.BigDecimal;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class ZeroFunction
 	implements DDMExpressionFunction.Function0<BigDecimal> {
 

@@ -22,9 +22,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
-* @author Leonardo Barros
-* @author Rafael Praxedes
-*/
+ * @author Leonardo Barros
+ * @author Rafael Praxedes
+ */
 public class DDMFormEvaluatorExpressionActionHandler
 	implements DDMExpressionActionHandler {
 

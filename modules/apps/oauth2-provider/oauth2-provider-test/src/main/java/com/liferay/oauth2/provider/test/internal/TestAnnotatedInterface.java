@@ -24,8 +24,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public interface TestAnnotatedInterface {
 
 	@GET

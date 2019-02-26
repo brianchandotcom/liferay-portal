@@ -26,8 +26,8 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class DDMFormEvaluatorRuleHelper {
 
 	public DDMFormEvaluatorRuleHelper(

@@ -63,8 +63,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class DDMFormEvaluatorHelper {
 
 	public DDMFormEvaluatorHelper(

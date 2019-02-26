@@ -47,9 +47,9 @@ public final class DEDataRecordValuesSerializerApplyRequest {
 	}
 
 	/**
-	* Inner builder that assembles the request.
-	* @review
-	*/
+	 * Inner builder that assembles the request.
+	 * @review
+	 */
 	public static final class Builder {
 
 		/**

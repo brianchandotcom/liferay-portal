@@ -223,8 +223,8 @@ public class PluginPackageUtil {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), since 7.1.0
-	*/
+	 * @deprecated As of Judson (7.1.x), since 7.1.0
+	 */
 	@Deprecated
 	public static Hits search(
 			String keywords, String type, String tag, String license,

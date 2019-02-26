@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class MaxFunction
 	implements DDMExpressionFunction.Function1<BigDecimal[], BigDecimal> {
 

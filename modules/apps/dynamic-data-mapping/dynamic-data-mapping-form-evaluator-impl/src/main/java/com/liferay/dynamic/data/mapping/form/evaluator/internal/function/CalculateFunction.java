@@ -19,8 +19,8 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import org.osgi.service.component.annotations.Component;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 @Component(factory = DDMConstants.EXPRESSION_FUNCTION_FACTORY_NAME)
 public class CalculateFunction extends SetPropertyFunction<String> {
 

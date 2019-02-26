@@ -33,9 +33,9 @@ public class DEDataRecordValuesSerializerApplyResponse {
 	}
 
 	/**
-	* Inner builder that assembles the response
-	* @review
-	*/
+	 * Inner builder that assembles the response
+	 * @review
+	 */
 	public static class Builder {
 
 		/**

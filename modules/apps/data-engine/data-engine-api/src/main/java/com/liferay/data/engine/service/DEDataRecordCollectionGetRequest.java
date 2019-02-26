@@ -15,11 +15,11 @@
 package com.liferay.data.engine.service;
 
 /**
-* This class represents a request to get a {@link DEDataRecordCollection} from the database.
-*
-* @author Leonardo Barros
-* @review
-*/
+ * This class represents a request to get a {@link DEDataRecordCollection} from the database.
+ *
+ * @author Leonardo Barros
+ * @review
+ */
 public final class DEDataRecordCollectionGetRequest {
 
 	/**

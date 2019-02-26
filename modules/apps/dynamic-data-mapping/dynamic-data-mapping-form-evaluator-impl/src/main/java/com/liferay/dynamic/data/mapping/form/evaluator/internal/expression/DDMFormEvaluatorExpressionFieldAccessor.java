@@ -36,8 +36,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 /**
-* @author Rafael Praxedes
-*/
+ * @author Rafael Praxedes
+ */
 public class DDMFormEvaluatorExpressionFieldAccessor
 	implements DDMExpressionFieldAccessor {
 

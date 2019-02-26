@@ -16,7 +16,8 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
@@ -76,6 +77,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -93,12 +95,15 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.text.DateFormat;
+
 import java.time.LocalDateTime;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -667,6 +672,24 @@ public class StructuredContentResourceImpl
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
 			ddmField.getName());
 
+		if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+			return new Value() {
+				{
+					DateFormat dateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+
+					Date date = dateFormat.parse(
+						String.valueOf(ddmField.getValue(locale)));
+
+					StdDateFormat stdDateFormat = new StdDateFormat();
+
+					stdDateFormat.withColonInTimeZone(true);
+
+					data = stdDateFormat.format(date);
+				}
+			};
+		}
+
 		if (Objects.equals(
 				DDMFormFieldType.DOCUMENT_LIBRARY, ddmFormField.getType())) {
 
@@ -793,9 +816,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

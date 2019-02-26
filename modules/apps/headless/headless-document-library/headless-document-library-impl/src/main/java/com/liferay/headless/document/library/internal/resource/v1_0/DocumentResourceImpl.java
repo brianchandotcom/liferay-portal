@@ -429,11 +429,13 @@ public class DocumentResourceImpl
 				adaptedImages = _getAdaptiveMedias(fileEntry);
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
-						FileEntry.class.getName(), fileEntry.getFileEntryId()));
+						DLFileEntry.class.getName(),
+						fileEntry.getFileEntryId()));
 				categories = _getCategories(fileEntry);
 				categoryIds = ArrayUtil.toArray(
 					_assetCategoryLocalService.getCategoryIds(
-						FileEntry.class.getName(), fileEntry.getFileEntryId()));
+						DLFileEntry.class.getName(),
+						fileEntry.getFileEntryId()));
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);

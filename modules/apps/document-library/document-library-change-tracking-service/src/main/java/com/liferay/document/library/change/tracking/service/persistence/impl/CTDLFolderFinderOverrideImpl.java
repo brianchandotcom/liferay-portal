@@ -1,0 +1,94 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.change.tracking.service.persistence.impl;
+
+import com.liferay.change.tracking.CTEngineManager;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.document.library.change.tracking.service.persistence.CTDLFolderFinderOverride;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
+import com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl;
+
+import java.util.Optional;
+
+/**
+ * @author Luiz Marins
+ */
+public class CTDLFolderFinderOverrideImpl
+	extends DLFolderFinderImpl implements CTDLFolderFinderOverride {
+
+	public static final String COUNT_FE_BY_G_F =
+		CTDLFolderFinderOverride.class.getName() + ".countFE_ByG_F";
+
+	@Override
+	public int filterCountF_FE_FS_ByG_F_M_M(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition) {
+
+		return doCountF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition,
+			true);
+	}
+
+	@Override
+	protected void doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
+		QueryPos qPos, QueryDefinition<?> queryDefinition, long groupId,
+		long folderId, String[] mimeTypes) {
+
+		super.doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
+			qPos, queryDefinition, groupId, folderId, mimeTypes);
+
+		long userId = queryDefinition.getOwnerUserId();
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getActiveCTCollectionOptional(userId);
+
+		CTCollection ctCollection = ctCollectionOptional.get();
+
+		Optional<CTCollection> productionCTCollectionOptional =
+			_ctEngineManager.getProductionCTCollectionOptional(
+				group.getCompanyId());
+
+		CTCollection productionCollection =
+			productionCTCollectionOptional.get();
+
+		qPos.add(userId);
+		qPos.add(ctCollection.getCtCollectionId());
+		qPos.add(productionCollection.getCtCollectionId());
+	}
+
+	@Override
+	protected String doGetFileVersionSql(QueryDefinition<?> queryDefinition) {
+		return _customSQL.get(
+			getClass(), COUNT_FE_BY_G_F, queryDefinition,
+			DLFileVersionImpl.TABLE_NAME);
+	}
+
+	@ServiceReference(type = CTEngineManager.class)
+	private CTEngineManager _ctEngineManager;
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
+
+	@ServiceReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
+
+}

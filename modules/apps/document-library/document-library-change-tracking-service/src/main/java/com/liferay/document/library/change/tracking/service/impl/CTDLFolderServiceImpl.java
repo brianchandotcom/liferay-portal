@@ -15,6 +15,15 @@
 package com.liferay.document.library.change.tracking.service.impl;
 
 import com.liferay.document.library.change.tracking.service.base.CTDLFolderServiceBaseImpl;
+import com.liferay.document.library.change.tracking.service.persistence.CTDLFolderFinderOverride;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 
 /**
  * The implementation of the ctdl folder remote service.
@@ -36,5 +45,36 @@ public class CTDLFolderServiceImpl extends CTDLFolderServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.document.library.change.tracking.service.CTDLFolderServiceUtil</code> to access the ctdl folder remote service.
 	 */
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (!ModelResourcePermissionHelper.contains(
+				_dlFolderModelResourcePermission, getPermissionChecker(),
+				groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return _dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
+
+	private static volatile ModelResourcePermission<DLFolder>
+		_dlFolderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CTDLFolderServiceImpl.class, "_dlFolderModelResourcePermission",
+				DLFolder.class);
+
+	@BeanReference(type = CTDLFolderFinderOverride.class)
+	private CTDLFolderFinderOverride _dlFolderFinder;
 
 }

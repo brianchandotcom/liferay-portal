@@ -69,20 +69,24 @@ public class NonceUtil {
 	public static boolean verify(String nonce) {
 		_cleanUp();
 
-		if (_checkInLocalNode(nonce) || _checkInCluster(nonce)) {
+		if (_verifyInLocalNode(nonce) || _verifyInCluster(nonce)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static boolean _checkInCluster(String nonce) {
+	private static void _cleanUp() {
+		while (_nonceDelayQueue.poll() != null);
+	}
+
+	private static boolean _verifyInCluster(String nonce) {
 		if (!ClusterExecutorUtil.isEnabled()) {
 			return false;
 		}
 
 		MethodHandler methodHandler = new MethodHandler(
-			_checkInLocalNode, nonce);
+			_verifyInLocalNode, nonce);
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
@@ -123,14 +127,10 @@ public class NonceUtil {
 		return false;
 	}
 
-	private static boolean _checkInLocalNode(String nonce) {
+	private static boolean _verifyInLocalNode(String nonce) {
 		_cleanUp();
 
 		return _nonceDelayQueue.remove(new NonceDelayed(nonce));
-	}
-
-	private static void _cleanUp() {
-		while (_nonceDelayQueue.poll() != null);
 	}
 
 	private static final long _NONCE_EXPIRATION =
@@ -141,10 +141,10 @@ public class NonceUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(NonceUtil.class);
 
-	private static final MethodKey _checkInLocalNode = new MethodKey(
-		NonceUtil.class, "_checkInLocalNode", String.class);
 	private static final DelayQueue<NonceDelayed> _nonceDelayQueue =
 		new DelayQueue<>();
+	private static final MethodKey _verifyInLocalNode = new MethodKey(
+		NonceUtil.class, "_verifyInLocalNode", String.class);
 
 	private static class NonceDelayed implements Delayed {
 

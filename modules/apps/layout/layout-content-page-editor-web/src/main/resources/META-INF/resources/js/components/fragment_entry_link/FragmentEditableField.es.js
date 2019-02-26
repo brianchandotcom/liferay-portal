@@ -121,9 +121,13 @@ class FragmentEditableField extends Component {
 			content = Soy.toIncDom(tempContent.innerHTML);
 		}
 
-		const nextState = setIn(state, ['content'], content);
+		let nextState = state;
 
-		return setIn(nextState, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
+		nextState = setIn(nextState, ['content'], content);
+		nextState = setIn(nextState, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
+		nextState = setIn(nextState, ['fragmentEntryLinkEditableId'], `${this.fragmentEntryLinkId}-${this.editableId}`);
+
+		return nextState;
 	}
 
 	/**
@@ -132,7 +136,7 @@ class FragmentEditableField extends Component {
 	 */
 	rendered() {
 		if (
-			(this.editableId === this.activeItemId) &&
+			(`${this.fragmentEntryLinkId}-${this.editableId}` === this.activeItemId) &&
 			(this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable)
 		) {
 			this._createFloatingToolbar();
@@ -283,7 +287,7 @@ class FragmentEditableField extends Component {
 			this.store.dispatchAction(
 				UPDATE_ACTIVE_ITEM,
 				{
-					activeItemId: this.editableId,
+					activeItemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
 					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
 				}
 			);
@@ -311,7 +315,7 @@ class FragmentEditableField extends Component {
 			this.store.dispatchAction(
 				UPDATE_HOVERED_ITEM,
 				{
-					hoveredItemId: this.editableId,
+					hoveredItemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
 					hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable
 				}
 			);

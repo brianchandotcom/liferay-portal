@@ -428,7 +428,7 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	_updateEditableStatus(editableId, value, defaultValue, mappedField) {
-		const element = this.element.querySelector(`lfr-editable[id="${editableId}"]`);
+		const element = this.element.querySelector(`lfr-editable[data-editable-id="${editableId}"]`);
 
 		if (element) {
 			removeClasses(

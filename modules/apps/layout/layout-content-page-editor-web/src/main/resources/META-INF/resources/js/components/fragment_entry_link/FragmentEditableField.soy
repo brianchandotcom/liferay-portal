@@ -5,27 +5,31 @@
  */
 {template .render}
 	{@param content: html}
-	{@param editableId: string}
 	{@param type: string}
 	{@param? _handleEditableBlur: any}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableHoverStart: any}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
+	{@param? editableId: string}
+	{@param? fragmentEntryLinkEditableId: string}
+	{@param? fragmentEntryLinkId: string}
 	{@param? itemTypes: ?}
 
 	{let $editableClasses kind="text"}
-		{if $activeItemId == $editableId and $activeItemType == $itemTypes.editable}
+		{if $activeItemId == $fragmentEntryLinkEditableId and $activeItemType == $itemTypes.editable}
 			fragments-editor__editable--active
 		{/if}
 	{/let}
 
 	<lfr-editable
 		class="{$editableClasses}"
+		data-editable-id="{$editableId}"
+		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
 		data-onblur="{$_handleEditableBlur}"
 		data-onclick="{$_handleEditableClick}"
 		data-onmouseover="{$_handleEditableHoverStart}"
-		id="{$editableId}"
+		id="{$fragmentEntryLinkEditableId}"
 		ref="editable"
 		tabindex="0"
 		type="{$type}"

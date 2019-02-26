@@ -86,8 +86,8 @@ public class FunctionScoreQueryTranslatorImpl
 			QueryBuilders.functionScoreQuery(
 				queryBuilder,
 				filterFunctionBuilders.toArray(
-					new FunctionScoreQueryBuilder.FilterFunctionBuilder[
-						filterFunctionBuilders.size()]));
+					new FunctionScoreQueryBuilder.FilterFunctionBuilder
+						[filterFunctionBuilders.size()]));
 
 		if (functionScoreQuery.getMinScore() != null) {
 			functionScoreQueryBuilder.setMinScore(
@@ -118,9 +118,9 @@ public class FunctionScoreQueryTranslatorImpl
 		return functionScoreQueryBuilder;
 	}
 
-	protected org.elasticsearch.common.lucene.search.function.
-		FunctionScoreQuery.ScoreMode translate(
-			FunctionScoreQuery.ScoreMode scoreMode) {
+	protected
+		org.elasticsearch.common.lucene.search.function.FunctionScoreQuery.
+			ScoreMode translate(FunctionScoreQuery.ScoreMode scoreMode) {
 
 		if (scoreMode == FunctionScoreQuery.ScoreMode.AVG) {
 			return org.elasticsearch.common.lucene.search.function.

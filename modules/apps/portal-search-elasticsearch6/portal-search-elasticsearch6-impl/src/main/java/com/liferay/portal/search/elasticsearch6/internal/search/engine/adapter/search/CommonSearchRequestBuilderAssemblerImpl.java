@@ -166,8 +166,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	@Reference(unbind = "-")
 	protected void setLegacyQueryToQueryBuilderTranslator(
-		com.liferay.portal.search.elasticsearch6.internal.legacy.
-			query.QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
+		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
+			QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
 
 		_legacyQueryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
 	}

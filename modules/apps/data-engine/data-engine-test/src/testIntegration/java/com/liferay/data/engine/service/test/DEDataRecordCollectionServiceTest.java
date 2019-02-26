@@ -2917,7 +2917,7 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
-				DEDataRecordCollectionRequestBuilder.listBuilder(
+			DEDataRecordCollectionRequestBuilder.listBuilder(
 			).inGroup(
 				_group.getGroupId()
 			).startingAt(
@@ -2947,7 +2947,7 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
-				DEDataRecordCollectionRequestBuilder.listBuilder(
+			DEDataRecordCollectionRequestBuilder.listBuilder(
 			).endingAt(
 				GetterUtil.getInteger(null, QueryUtil.ALL_POS)
 			).startingAt(
@@ -2977,7 +2977,7 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
-				DEDataRecordCollectionRequestBuilder.listBuilder(
+			DEDataRecordCollectionRequestBuilder.listBuilder(
 			).inGroup(
 				_group.getGroupId()
 			).build();
@@ -3007,7 +3007,7 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
-				DEDataRecordCollectionRequestBuilder.listBuilder(
+			DEDataRecordCollectionRequestBuilder.listBuilder(
 			).inGroup(
 				_group.getGroupId()
 			).endingAt(
@@ -3848,7 +3848,7 @@ public class DEDataRecordCollectionServiceTest {
 		throws Exception {
 
 		DEDataRecordCollectionListRequest deDataRecordCollectionListRequest =
-				DEDataRecordCollectionRequestBuilder.listBuilder(
+			DEDataRecordCollectionRequestBuilder.listBuilder(
 			).endingAt(
 				GetterUtil.getInteger(end, QueryUtil.ALL_POS)
 			).inGroup(

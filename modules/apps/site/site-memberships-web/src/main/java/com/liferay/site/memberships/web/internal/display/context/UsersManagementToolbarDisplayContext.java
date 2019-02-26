@@ -162,8 +162,7 @@ public class UsersManagementToolbarDisplayContext
 
 		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				ActionKeys.ASSIGN_MEMBERS) &&
+				themeDisplay.getScopeGroupId(), ActionKeys.ASSIGN_MEMBERS) &&
 			!SiteMembershipPolicyUtil.isMembershipProtected(
 				themeDisplay.getPermissionChecker(), user.getUserId(),
 				themeDisplay.getScopeGroupId()) &&

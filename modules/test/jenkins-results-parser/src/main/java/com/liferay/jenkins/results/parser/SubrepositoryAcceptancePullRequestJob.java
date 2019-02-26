@@ -68,7 +68,6 @@ public class SubrepositoryAcceptancePullRequestJob
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "][",
 				_testSuiteName, "]"),
-
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "]")
 		};

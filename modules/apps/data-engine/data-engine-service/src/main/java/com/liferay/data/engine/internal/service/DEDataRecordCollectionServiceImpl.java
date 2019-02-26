@@ -367,8 +367,8 @@ public class DEDataRecordCollectionServiceImpl
 				deDataRecordCollectionSavePermissionsRequest.getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
 
-			return _deDataRecordCollectionSavePermissionsRequestExecutor.execute(
-				deDataRecordCollectionSavePermissionsRequest);
+			return _deDataRecordCollectionSavePermissionsRequestExecutor.
+				execute(deDataRecordCollectionSavePermissionsRequest);
 		}
 		catch (PrincipalException.MustHavePermission mhp) {
 			throw new DEDataRecordCollectionException.MustHavePermission(

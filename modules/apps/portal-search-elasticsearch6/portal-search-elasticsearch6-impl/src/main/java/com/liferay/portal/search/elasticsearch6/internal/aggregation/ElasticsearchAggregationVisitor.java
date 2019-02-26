@@ -211,9 +211,8 @@ public class ElasticsearchAggregationVisitor
 	public AggregationBuilder visit(GeoBoundsAggregation geoBoundsAggregation) {
 		GeoBoundsAggregationBuilder geoBoundsAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.geoBounds(
-						geoBoundsAggregation.getName()),
+				baseMetricsAggregation -> AggregationBuilders.geoBounds(
+					geoBoundsAggregation.getName()),
 				geoBoundsAggregation, this, _pipelineAggregationTranslator);
 
 		if (geoBoundsAggregation.getWrapLongitude() != null) {
@@ -229,9 +228,8 @@ public class ElasticsearchAggregationVisitor
 		GeoCentroidAggregation geoCentroidAggregation) {
 
 		return _baseFieldAggregationTranslator.translate(
-			baseMetricsAggregation ->
-				AggregationBuilders.geoCentroid(
-					geoCentroidAggregation.getName()),
+			baseMetricsAggregation -> AggregationBuilders.geoCentroid(
+				geoCentroidAggregation.getName()),
 			geoCentroidAggregation, this, _pipelineAggregationTranslator);
 	}
 

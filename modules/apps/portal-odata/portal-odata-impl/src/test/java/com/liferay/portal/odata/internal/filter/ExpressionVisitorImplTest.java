@@ -127,9 +127,8 @@ public class ExpressionVisitorImplTest {
 		EntityField entityField = entityFieldsMap.get("title");
 
 		ExistsFilter existsFilter =
-			(ExistsFilter)
-				_expressionVisitorImpl.visitBinaryExpressionOperation(
-					BinaryExpression.Operation.EQ, entityField, null);
+			(ExistsFilter)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.EQ, entityField, null);
 
 		Assert.assertEquals(entityField.getName(), existsFilter.getField());
 	}
@@ -507,10 +506,9 @@ public class ExpressionVisitorImplTest {
 		String value = "title1";
 
 		PrefixFilter prefixFilter =
-			(PrefixFilter)
-				_expressionVisitorImpl.visitMethodExpression(
-					Arrays.asList(Arrays.array(entityField, value)),
-					MethodExpression.Type.STARTS_WITH);
+			(PrefixFilter)_expressionVisitorImpl.visitMethodExpression(
+				Arrays.asList(Arrays.array(entityField, value)),
+				MethodExpression.Type.STARTS_WITH);
 
 		Assert.assertEquals(entityField.getName(), prefixFilter.getField());
 		Assert.assertEquals(value, prefixFilter.getPrefix());

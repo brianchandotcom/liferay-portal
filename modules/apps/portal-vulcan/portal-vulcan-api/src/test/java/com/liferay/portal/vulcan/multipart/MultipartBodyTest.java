@@ -56,8 +56,8 @@ public class MultipartBodyTest {
 			"contentType", "fileName", null, 0);
 
 		MultipartBody multipartBody = MultipartBody.of(
-			Collections.singletonMap("file", binaryFile),
-			__ -> _objectMapper, Collections.emptyMap());
+			Collections.singletonMap("file", binaryFile), __ -> _objectMapper,
+			Collections.emptyMap());
 
 		assertThat(multipartBody.getBinaryFile("file"), is(binaryFile));
 		assertThat(multipartBody.getBinaryFile("null"), is(nullValue()));

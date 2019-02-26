@@ -40,7 +40,6 @@ public class SegmentsExperienceLocalServiceImpl
 			long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, int priority, boolean active,
 			ServiceContext serviceContext)
-
 		throws PortalException {
 
 		// Segments experience
@@ -136,8 +135,8 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
-	public SegmentsExperience fetchSegmentsExperience(long segmentsExperienceId)
-	{
+	public SegmentsExperience fetchSegmentsExperience(
+		long segmentsExperienceId) {
 
 		return segmentsExperiencePersistence.fetchByPrimaryKey(
 			segmentsExperienceId);

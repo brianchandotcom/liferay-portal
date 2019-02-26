@@ -32,7 +32,8 @@ public class QueryPreProcessConfigurationImpl
 	}
 
 	@Reference
-	protected com.liferay.portal.kernel.search.query.
-		QueryPreProcessConfiguration queryPreProcessConfiguration;
+	protected
+		com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration
+			queryPreProcessConfiguration;
 
 }

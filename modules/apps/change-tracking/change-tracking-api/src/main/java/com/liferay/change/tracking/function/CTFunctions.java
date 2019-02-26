@@ -48,8 +48,8 @@ public class CTFunctions {
 		getFetchSiteNameFunction() {
 
 		return classedModel -> {
-			Optional<Group> groupOptional =
-				getFetchGroupFunction().apply(classedModel);
+			Optional<Group> groupOptional = getFetchGroupFunction().apply(
+				classedModel);
 
 			if (!groupOptional.isPresent()) {
 				return StringPool.BLANK;

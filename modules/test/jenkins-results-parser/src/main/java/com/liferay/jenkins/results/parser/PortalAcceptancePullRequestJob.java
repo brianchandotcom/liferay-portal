@@ -97,7 +97,6 @@ public class PortalAcceptancePullRequestJob
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "][",
 				_testSuiteName, "]"),
-
 			JenkinsResultsParserUtil.combine(
 				"test.batch.run.property.query[", testBatchName, "]")
 		};

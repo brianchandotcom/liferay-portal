@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(service = SimpleStringQueryTranslator .class)
+@Component(service = SimpleStringQueryTranslator.class)
 public class SimpleStringQueryTranslatorImpl
 	implements SimpleStringQueryTranslator {
 

@@ -56,9 +56,8 @@ public class GeoDistanceAggregationTranslatorImpl
 
 		GeoDistanceAggregationBuilder geoDistanceAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
-				baseMetricsAggregation ->
-					AggregationBuilders.geoDistance(
-						baseMetricsAggregation.getName(), geoPoint),
+				baseMetricsAggregation -> AggregationBuilders.geoDistance(
+					baseMetricsAggregation.getName(), geoPoint),
 				geoDistanceAggregation, aggregationTranslator,
 				pipelineAggregationTranslator);
 

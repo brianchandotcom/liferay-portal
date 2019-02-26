@@ -100,9 +100,9 @@ public class SearchRequestExecutorFixture {
 
 		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
 			ElasticsearchQueryTranslatorFixture
-			legacyElasticsearchQueryTranslatorFixture =
-				new com.liferay.portal.search.elasticsearch6.internal.
-					legacy.query.ElasticsearchQueryTranslatorFixture();
+				legacyElasticsearchQueryTranslatorFixture =
+					new com.liferay.portal.search.elasticsearch6.internal.
+						legacy.query.ElasticsearchQueryTranslatorFixture();
 
 		com.liferay.portal.search.elasticsearch6.internal.legacy.query.
 			ElasticsearchQueryTranslator legacyElasticsearchQueryTranslator =

@@ -96,9 +96,10 @@ public class ElasticsearchSortFieldTranslator
 		int i = 0;
 
 		geoLocationPoints.forEach(
-			geoLocationPoint -> geoPoints[i] = new GeoPoint(
-				geoLocationPoint.getLatitude(),
-				geoLocationPoint.getLongitude()));
+			geoLocationPoint ->
+				geoPoints[i] = new GeoPoint(
+					geoLocationPoint.getLatitude(),
+					geoLocationPoint.getLongitude()));
 
 		GeoDistanceSortBuilder geoDistanceSortBuilder =
 			SortBuilders.geoDistanceSort(geoDistanceSort.getField(), geoPoints);

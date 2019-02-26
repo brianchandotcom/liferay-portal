@@ -21,6 +21,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,6 +65,32 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 		assertEquals(
 			Arrays.asList(randomVocabulary1, randomVocabulary2),
 			(List<Vocabulary>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithFilterNameEquals()
+		throws Exception {
+
+		Vocabulary randomVocabulary1 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary1);
+
+		Vocabulary randomVocabulary2 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary2);
+
+		String filter = "name eq '" + randomVocabulary1.getName() + "'";
+
+		Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
+			testGroup.getGroupId(), filter, Pagination.of(2, 1), null);
+
+		assertEquals(
+			Collections.singletonList(randomVocabulary1),
+			(List<Vocabulary>)page.getItems());
+
 		assertValid(page);
 	}
 

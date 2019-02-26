@@ -254,7 +254,16 @@ AUI.add(
 					_openModalMove: function() {
 						var instance = this;
 
-						var dialogTitle = Lang.sub(Liferay.Language.get('select-x'), ['folder']);
+						var selectedItems = 0;
+
+						if (instance._searchContainer.select) {
+							selectedItems = instance._searchContainer.select.getAllSelectedElements().filter(':enabled').size();
+						}
+
+						var dialogTitle = Lang.sub(
+							Liferay.Language.get('select-destination-folder-for-x-items'),
+							[selectedItems]
+						);
 
 						Liferay.Util.selectEntity(
 							{

@@ -14,9 +14,21 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
+import com.liferay.headless.foundation.dto.v1_0.Segment;
 import com.liferay.headless.foundation.resource.v1_0.SegmentResource;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.provider.SegmentsEntryProvider;
+import com.liferay.segments.service.SegmentsEntryService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +39,52 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SegmentResource.class
 )
 public class SegmentResourceImpl extends BaseSegmentResourceImpl {
+
+	@Override
+	public Page<Segment> getUserSegmentsPage(Long userId, Pagination pagination)
+		throws Exception {
+
+		User user = _userService.getUserById(userId);
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			user.getModelClassName(), user.getPrimaryKey());
+
+		List<SegmentsEntry> segmentsEntries = new ArrayList<>();
+
+		for (long segmentEntryId : segmentsEntryIds) {
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryService.getSegmentsEntry(segmentEntryId);
+
+			segmentsEntries.add(segmentsEntry);
+		}
+
+		return Page.of(
+			transform(segmentsEntries, this::_toSegment), pagination,
+			segmentsEntries.size());
+	}
+
+	private Segment _toSegment(SegmentsEntry segmentsEntry) {
+		return new Segment() {
+			{
+				active = segmentsEntry.isActive();
+				criteria = segmentsEntry.getCriteria();
+				dateCreated = segmentsEntry.getCreateDate();
+				dateModified = segmentsEntry.getModifiedDate();
+				id = segmentsEntry.getSegmentsEntryId();
+				name = segmentsEntry.getName(
+					segmentsEntry.getDefaultLanguageId());
+				source = segmentsEntry.getSource();
+			}
+		};
+	}
+
+	@Reference
+	private SegmentsEntryProvider _segmentsEntryProvider;
+
+	@Reference
+	private SegmentsEntryService _segmentsEntryService;
+
+	@Reference
+	private UserService _userService;
+
 }

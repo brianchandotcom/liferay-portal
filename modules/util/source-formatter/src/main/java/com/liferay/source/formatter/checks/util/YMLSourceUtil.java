@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -31,16 +29,33 @@ public class YMLSourceUtil {
 	public static List<String> getDefinitions(String content, String indent) {
 		List<String> definitions = new ArrayList<>();
 
-		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"^", indent, "[^ ].*:.*(\n|\\Z)((", indent, " .*)?(\n|\\Z))*"),
-			Pattern.MULTILINE);
+		String[] lines = content.split("\n");
 
-		Matcher matcher = pattern.matcher(content);
+		StringBundler sb = new StringBundler();
 
-		while (matcher.find()) {
-			definitions.add(matcher.group());
+		for (String line : lines) {
+			if (!line.startsWith(indent)) {
+				continue;
+			}
+
+			String s = line.substring(indent.length(), indent.length() + 1);
+
+			if (!s.equals(StringPool.SPACE)) {
+				if (sb.length() != 0) {
+					sb.setIndex(sb.index() - 1);
+
+					definitions.add(sb.toString());
+					sb.setIndex(0);
+				}
+			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		definitions.add(sb.toString());
 
 		return definitions;
 	}

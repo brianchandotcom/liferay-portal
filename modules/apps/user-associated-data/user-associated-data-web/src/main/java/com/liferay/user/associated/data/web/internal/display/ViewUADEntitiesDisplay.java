@@ -17,6 +17,9 @@ package com.liferay.user.associated.data.web.internal.display;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Drew Brokke
  */
@@ -34,24 +37,16 @@ public class ViewUADEntitiesDisplay {
 		return _searchContainer;
 	}
 
+	public List<Class<?>> getTypeClasses() {
+		return _typeClasses;
+	}
+
 	public String getTypeName() {
 		return _typeName;
 	}
 
-	public String getUADRegistryKey() {
-		return _uadRegistryKey;
-	}
-
-	public boolean isHierarchical() {
-		return _hierarchical;
-	}
-
 	public void setApplicationKey(String applicationKey) {
 		_applicationKey = applicationKey;
-	}
-
-	public void setHierarchical(boolean hierarchical) {
-		_hierarchical = hierarchical;
 	}
 
 	public void setResultRowSplitter(ResultRowSplitter resultRowSplitter) {
@@ -62,19 +57,18 @@ public class ViewUADEntitiesDisplay {
 		_searchContainer = searchContainer;
 	}
 
+	public void setTypeClasses(Class<?>[] typeClasses) {
+		_typeClasses = Arrays.asList(typeClasses);
+	}
+
 	public void setTypeName(String typeName) {
 		_typeName = typeName;
 	}
 
-	public void setUADRegistryKey(String uadRegistryKey) {
-		_uadRegistryKey = uadRegistryKey;
-	}
-
 	private String _applicationKey;
-	private boolean _hierarchical;
 	private ResultRowSplitter _resultRowSplitter;
 	private SearchContainer<UADEntity> _searchContainer;
+	private List<Class<?>> _typeClasses;
 	private String _typeName;
-	private String _uadRegistryKey;
 
 }

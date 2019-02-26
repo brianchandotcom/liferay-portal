@@ -62,9 +62,23 @@ public class UADHierarchyDisplay {
 			_containerTypeClasses = null;
 		}
 		else {
-			Stream<UADDisplay> stream = Arrays.stream(containerUADDisplays);
+			Stream<UADDisplay> containerUADDisplayStream = Arrays.stream(
+				containerUADDisplays);
 
-			_containerTypeClasses = stream.map(
+			_containerTypeClasses = containerUADDisplayStream.map(
+				UADDisplay::getTypeClass
+			).toArray(
+				Class[]::new
+			);
+		}
+
+		if (_uadDisplays.length == 0) {
+			_typeClasses = null;
+		}
+		else {
+			Stream<UADDisplay> stream = Arrays.stream(_uadDisplays);
+
+			_typeClasses = stream.map(
 				UADDisplay::getTypeClass
 			).toArray(
 				Class[]::new
@@ -161,6 +175,10 @@ public class UADHierarchyDisplay {
 
 	public String[] getSortingFieldNames() {
 		return getColumnFieldNames();
+	}
+
+	public Class<?>[] getTypeClasses() {
+		return _typeClasses;
 	}
 
 	public UADDisplay<?>[] getUADDisplays() {
@@ -306,7 +324,7 @@ public class UADHierarchyDisplay {
 	}
 
 	private <T> UADDisplay _getUADDisplay(T object) {
-		for (Class typeClass : _uadDisplayMap.keySet()) {
+		for (Class<?> typeClass : _uadDisplayMap.keySet()) {
 			if (typeClass.isInstance(object)) {
 				return _uadDisplayMap.get(typeClass);
 			}
@@ -316,6 +334,7 @@ public class UADHierarchyDisplay {
 	}
 
 	private final Class<?>[] _containerTypeClasses;
+	private final Class<?>[] _typeClasses;
 	private Map<Class<?>, UADDisplay<?>> _uadDisplayMap = new HashMap<>();
 	private final UADDisplay<?>[] _uadDisplays;
 	private final UADHierarchyDeclaration _uadHierarchyDeclaration;

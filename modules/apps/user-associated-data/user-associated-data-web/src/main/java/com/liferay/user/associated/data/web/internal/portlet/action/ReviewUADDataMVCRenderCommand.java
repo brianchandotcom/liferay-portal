@@ -120,7 +120,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				_uadRegistry.getUADHierarchyDisplay(applicationKey);
 
 			if (uadHierarchyDisplay != null) {
-				viewUADEntitiesDisplay.setHierarchical(true);
 				viewUADEntitiesDisplay.setResultRowSplitter(
 					new UADHierarchyResultRowSplitter(
 						LocaleThreadLocal.getThemeDisplayLocale(),
@@ -130,6 +129,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 						renderRequest, liferayPortletResponse, applicationKey,
 						currentURL, groupIds, selectedUser,
 						uadHierarchyDisplay));
+				viewUADEntitiesDisplay.setTypeClasses(
+					uadHierarchyDisplay.getTypeClasses());
 
 				UADDisplay<?>[] uadDisplays =
 					uadHierarchyDisplay.getUADDisplays();
@@ -138,8 +139,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplays[0]);
 			}
 			else {
-				String uadRegistryKey = ParamUtil.getString(
-					renderRequest, "uadRegistryKey");
+				String uadRegistryKey = _uadReviewDataHelper.getUADRegistryKey(
+					renderRequest);
 
 				if (Validator.isNull(uadRegistryKey)) {
 					uadRegistryKey =
@@ -150,7 +151,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				UADDisplay uadDisplay = _uadRegistry.getUADDisplay(
 					uadRegistryKey);
 
-				viewUADEntitiesDisplay.setHierarchical(false);
 				viewUADEntitiesDisplay.setSearchContainer(
 					_uadReviewDataHelper.getSearchContainer(
 						renderRequest, liferayPortletResponse, currentURL,
@@ -159,7 +159,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					uadDisplay.getTypeName(
 						LocaleThreadLocal.getThemeDisplayLocale()));
 
-				viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
+				viewUADEntitiesDisplay.setTypeClasses(
+					new Class<?>[] {uadDisplay.getTypeClass()});
 
 				renderRequest.setAttribute(
 					UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);

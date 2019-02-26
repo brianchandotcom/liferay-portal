@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.util;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +31,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+import com.liferay.user.associated.data.web.internal.search.UADHierarchyChecker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
@@ -49,7 +50,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Samuel Tran
+ * @author Samuel Trong Tran
  */
 @Component(immediate = true, service = UADReviewDataHelper.class)
 public class UADReviewDataHelper {
@@ -102,13 +103,8 @@ public class UADReviewDataHelper {
 			searchContainer.setTotal(0);
 		}
 
-		RowChecker rowChecker = new EmptyOnClickRowChecker(
-			liferayPortletResponse);
-
-		Class<?> uadClass = uadDisplay.getTypeClass();
-
-		rowChecker.setRememberCheckBoxStateURLRegex(
-			"uadRegistryKey=" + uadClass.getName());
+		RowChecker rowChecker = new UADHierarchyChecker(
+			liferayPortletResponse, new UADDisplay[] {uadDisplay});
 
 		searchContainer.setRowChecker(rowChecker);
 
@@ -176,12 +172,38 @@ public class UADReviewDataHelper {
 			searchContainer.setTotal(0);
 		}
 
-		RowChecker rowChecker = new EmptyOnClickRowChecker(
-			liferayPortletResponse);
+		RowChecker rowChecker = new UADHierarchyChecker(
+			liferayPortletResponse, uadHierarchyDisplay.getUADDisplays());
 
 		searchContainer.setRowChecker(rowChecker);
 
 		return searchContainer;
+	}
+
+	public String getUADRegistryKey(PortletRequest portletRequest) {
+		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
+
+		for (String key : parameterMap.keySet()) {
+			if (key.startsWith("uadRegistryKey__")) {
+				return portletRequest.getParameter(key);
+			}
+		}
+
+		return null;
+	}
+
+	public String[] getUADRegistryKeys(PortletRequest portletRequest) {
+		List<String> uadRegistryKeys = new ArrayList<>();
+
+		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
+
+		for (String key : parameterMap.keySet()) {
+			if (key.startsWith("uadRegistryKey__")) {
+				uadRegistryKeys.add(portletRequest.getParameter(key));
+			}
+		}
+
+		return uadRegistryKeys.toArray(new String[uadRegistryKeys.size()]);
 	}
 
 	private SearchContainer<UADEntity> _constructSearchContainer(

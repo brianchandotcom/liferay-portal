@@ -221,7 +221,7 @@ public class UADRegistry {
 
 	protected <T> ServiceTrackerMap<String, T>
 		getUADHierachyDeclarationServiceTrackerMap(
-			BundleContext bundleContext, Class clazz) {
+			BundleContext bundleContext, Class<T> clazz) {
 
 		return ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, clazz, null,

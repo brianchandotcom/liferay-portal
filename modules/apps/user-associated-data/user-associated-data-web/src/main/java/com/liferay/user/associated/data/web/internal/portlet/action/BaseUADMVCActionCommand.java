@@ -28,9 +28,11 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
+import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,17 +46,17 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void doMultipleAction(
-			ActionRequest actionRequest,
+			ActionRequest actionRequest, String entityType,
 			UnsafeConsumer<Object, Exception> unsafeConsumer)
 		throws Exception {
 
-		for (Object entity : getEntities(actionRequest)) {
+		for (Object entity : getEntities(actionRequest, entityType)) {
 			unsafeConsumer.accept(entity);
 		}
 	}
 
 	protected void doNonreviewableRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+		ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String mvcRenderCommandName = null;
@@ -62,10 +64,10 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		long selectedUserId = getSelectedUserId(actionRequest);
 
 		if (uadApplicationSummaryHelper.getTotalNonreviewableUADEntitiesCount(
-				selectedUserId) == 0) {
+			selectedUserId) == 0) {
 
 			if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-					selectedUserId) == 0) {
+				selectedUserId) == 0) {
 
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
@@ -92,7 +94,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void doReviewableRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+		ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String mvcRenderCommandName = null;
@@ -100,11 +102,11 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		long selectedUserId = getSelectedUserId(actionRequest);
 
 		if (uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
-				selectedUserId) == 0) {
+			selectedUserId) == 0) {
 
 			if (uadApplicationSummaryHelper.
-					getTotalNonreviewableUADEntitiesCount(selectedUserId) ==
-						0) {
+				getTotalNonreviewableUADEntitiesCount(selectedUserId) ==
+				0) {
 
 				mvcRenderCommandName = "/completed_data_erasure";
 			}
@@ -130,17 +132,20 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, liferayPortletURL.toString());
 	}
 
-	protected List<Object> getEntities(ActionRequest actionRequest)
+	protected List<Object> getEntities(
+			ActionRequest actionRequest, String entityType)
 		throws Exception {
 
 		List<Object> entities = new ArrayList<>();
 
 		String[] primaryKeys = ParamUtil.getStringValues(
-			actionRequest, "primaryKeys");
+			actionRequest, "primaryKeys__" + entityType);
+		String uadRegistryKey = ParamUtil.getString(
+			actionRequest, "uadRegistryKey__" + entityType);
+
+		UADDisplay uadDisplay = uadRegistry.getUADDisplay(uadRegistryKey);
 
 		for (String primaryKey : primaryKeys) {
-			UADDisplay uadDisplay = getUADDisplay(actionRequest);
-
 			entities.add(uadDisplay.get(primaryKey));
 		}
 
@@ -153,6 +158,20 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		String primaryKey = ParamUtil.getString(actionRequest, "primaryKey");
 
 		return uadDisplay.get(primaryKey);
+	}
+
+	protected List<String> getEntityTypes(ActionRequest actionRequest) {
+		List<String> entityTypes = new ArrayList<>();
+
+		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
+
+		for (String key : parameterMap.keySet()) {
+			if (key.startsWith("uadRegistryKey__")) {
+				entityTypes.add(key.substring(key.lastIndexOf("_") + 1));
+			}
+		}
+
+		return entityTypes;
 	}
 
 	protected User getSelectedUser(ActionRequest actionRequest)
@@ -168,15 +187,25 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected UADAnonymizer getUADAnonymizer(ActionRequest actionRequest) {
-		return uadRegistry.getUADAnonymizer(getUADRegistryKey(actionRequest));
+		return uadRegistry.getUADAnonymizer(
+			uadReviewDataHelper.getUADRegistryKey(actionRequest));
+	}
+
+	protected UADAnonymizer getUADAnonymizer(
+		ActionRequest actionRequest, String entityType) {
+
+		return uadRegistry.getUADAnonymizer(
+			ParamUtil.getString(
+				actionRequest, "uadRegistryKey__" + entityType));
 	}
 
 	protected UADDisplay getUADDisplay(ActionRequest actionRequest) {
-		return uadRegistry.getUADDisplay(getUADRegistryKey(actionRequest));
+		return uadRegistry.getUADDisplay(
+			uadReviewDataHelper.getUADRegistryKey(actionRequest));
 	}
 
 	protected String getUADRegistryKey(ActionRequest actionRequest) {
-		return ParamUtil.getString(actionRequest, "uadRegistryKey");
+		return uadReviewDataHelper.getUADRegistryKey(actionRequest);
 	}
 
 	@Reference
@@ -187,5 +216,8 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected UADRegistry uadRegistry;
+
+	@Reference
+	protected UADReviewDataHelper uadReviewDataHelper;
 
 }

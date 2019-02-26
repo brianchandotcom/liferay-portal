@@ -41,9 +41,12 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
+		for (String entityType : getEntityTypes(actionRequest)) {
+			UADAnonymizer uadAnonymizer = getUADAnonymizer(
+				actionRequest, entityType);
 
-		doMultipleAction(actionRequest, uadAnonymizer::delete);
+			doMultipleAction(actionRequest, entityType, uadAnonymizer::delete);
+		}
 
 		doReviewableRedirect(actionRequest, actionResponse);
 	}

@@ -31,18 +31,27 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-	<aui:input name="primaryKeys" type="hidden" />
-	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
+
+	<%
+	for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
+	%>
+
+		<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
+		<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
+
+	<%
+	}
+	%>
 
 	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL" />
 
-		<liferay-frontend:sidebar-panel
+		<%--<liferay-frontend:sidebar-panel
 			resourceURL="<%= entityTypeSidebarURL %>"
 			searchContainerId="UADEntities"
 		>
 			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:sidebar-panel>
+		</liferay-frontend:sidebar-panel>--%>
 
 		<div class="sidenav-content">
 			<liferay-ui:search-container
@@ -113,14 +122,25 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 		var form = document.getElementById('<portlet:namespace />viewUADEntitiesFm');
 
 		if (form) {
-			var primaryKeys = form.querySelector('#<portlet:namespace />primaryKeys');
 
-			if (primaryKeys) {
-				primaryKeys.setAttribute(
-					'value',
-					Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-				);
+			<%
+			for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
+				String primaryKeysVar = "primaryKeys" + typeClass.getSimpleName();
+			%>
+
+				var <%= primaryKeysVar %> = form.querySelector('#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>');
+
+				if (<%= primaryKeysVar %>) {
+					<%= primaryKeysVar %>.setAttribute(
+						'value',
+						Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>')
+					);
+				}
+
+			<%
 			}
+			%>
+
 		}
 
 		<portlet:namespace />confirmAction('viewUADEntitiesFm', actionURL, message);

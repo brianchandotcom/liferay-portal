@@ -122,7 +122,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="panel-group">
-				<c:if test="<%= !viewUADEntitiesDisplay.isHierarchical() %>">
+				<c:if test="<%= viewUADEntitiesDisplay.getTypeName() != null %>">
 					<div class="panel panel-secondary">
 						<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
 							<span class="panel-title">
@@ -226,13 +226,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		}
 	);
 
-	<c:if test="<%= !viewUADEntitiesDisplay.isHierarchical() %>">
+	<c:if test="<%= viewUADEntitiesDisplay.getTypeName() != null %>">
 		registerClickHandler(
 			<portlet:namespace />entitiesTypePanelBody,
 			function(event) {
 				const url = new Uri(baseURL);
 
-				url.setParameterValue('<portlet:namespace />uadRegistryKey', event.target.value);
+				url.setParameterValue('<portlet:namespace />uadRegistryKey__', event.target.value);
 
 				Liferay.Util.navigate(url.toString());
 			}

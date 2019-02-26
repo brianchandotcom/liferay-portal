@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PAGE_TRANSLATIONS_CHECKBOX</td>
-	<td>//label[contains(.,'Use page translations')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Use Page Translations')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

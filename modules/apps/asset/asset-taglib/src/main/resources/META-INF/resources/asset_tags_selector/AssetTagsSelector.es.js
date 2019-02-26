@@ -18,7 +18,7 @@ class AssetTagSelector extends Component {
 	attached(...args) {
 		super.attached(...args);
 
-		this.refs.multiSelect.dataSource = this._handleQuery.bind(this);
+		this._dataSource = this._handleQuery.bind(this);
 	}
 
 	/**
@@ -140,6 +140,16 @@ class AssetTagSelector extends Component {
 }
 
 AssetTagSelector.STATE = {
+
+	/**
+	 * Function to be called every time that change the input value
+	 * @default _handleQuery
+	 * @instance
+	 * @memberof AssetTagSelector
+	 * @review
+	 * @type {?func}
+	 */
+	_dataSource: Config.func().internal(),
 
 	/**
 	 * A function to call when a tag is added

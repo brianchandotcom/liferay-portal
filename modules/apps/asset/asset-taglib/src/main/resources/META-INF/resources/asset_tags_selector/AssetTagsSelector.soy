@@ -9,6 +9,7 @@
 	{@param spritemap: string}
 	{@param? tagNames: string}
 	{@param? selectedItems: list<?>}
+	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
@@ -17,7 +18,7 @@
 		<input id="{$inputName}" type="hidden" value="{$tagNames}" />
 
 		{call ClayMultiSelect.render}
-			{param dataSource: [] /}
+			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
 				'buttonClicked': $_handleButtonClicked,
 				'itemAdded': $_handleItemAdded,

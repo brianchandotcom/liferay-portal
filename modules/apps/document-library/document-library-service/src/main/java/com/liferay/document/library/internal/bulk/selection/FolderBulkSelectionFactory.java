@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -44,9 +43,7 @@ public class FolderBulkSelectionFactory
 
 	@Override
 	public BulkSelection<Folder> create(Map<String, String[]> parameterMap) {
-		boolean selectAll = MapUtil.getBoolean(parameterMap, "selectAll");
-
-		if (selectAll) {
+		if (BulkSelectionFactoryUtil.isSelectAll(parameterMap)) {
 			long repositoryId = BulkSelectionFactoryUtil.getRepositoryId(
 				parameterMap);
 

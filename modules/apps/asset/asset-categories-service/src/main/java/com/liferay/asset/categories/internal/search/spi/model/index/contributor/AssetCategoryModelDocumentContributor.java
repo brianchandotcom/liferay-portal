@@ -72,16 +72,18 @@ public class AssetCategoryModelDocumentContributor
 			assetCategory.getDescriptionMap());
 
 		document.addText(Field.NAME, assetCategory.getName());
-		document.addText(
-			Field.TITLE,
-			assetCategory.getTitle(assetCategory.getDefaultLanguageId()));
-		document.addLocalizedKeyword(
-			Field.TITLE,
-			_populateMap(assetCategory, assetCategory.getTitleMap()), true,
-			true);
+
+		_searchLocalizationHelper.addLocalizedField(
+			document, Field.TITLE, siteDefaultLocale,
+			assetCategory.getTitleMap());
 
 		document.addKeyword(
 			"leftCategoryId", assetCategory.getLeftCategoryId());
+
+		document.addLocalizedKeyword(
+			"localized_title",
+			_populateMap(assetCategory, assetCategory.getTitleMap()), true,
+			true);
 	}
 
 	protected void addSearchAssetCategoryTitles(

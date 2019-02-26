@@ -57,11 +57,13 @@ public class AssetVocabularyModelDocumentContributor
 			assetVocabulary.getDescriptionMap());
 
 		document.addText(Field.NAME, assetVocabulary.getName());
-		document.addText(
-			Field.TITLE,
-			assetVocabulary.getTitle(assetVocabulary.getDefaultLanguageId()));
+
+		_searchLocalizationHelper.addLocalizedField(
+			document, Field.TITLE, siteDefaultLocale,
+			assetVocabulary.getTitleMap());
+
 		document.addLocalizedKeyword(
-			Field.TITLE,
+			"localized_title",
 			_populateMap(assetVocabulary, assetVocabulary.getTitleMap()), true,
 			true);
 	}

@@ -299,6 +299,27 @@ components:
         roleType:
           type: string
       type: object
+    Segment:
+      description: "https://schema.org/Audience"
+      properties:
+        active:
+          type: boolean
+        criteria:
+          type: string
+        dateCreated:
+          format: date-time
+          type: string
+        dateModified:
+          format: date-time
+          type: string
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        source:
+          type: string
+      type: object
     UserAccount:
       description: https://www.schema.org/UserAccount
       properties:
@@ -1220,6 +1241,33 @@ paths:
                 type: array
           description: ""
       tags: ["Role"]
+  "/user-accounts/{user-id}/segments":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: path
+          name: user-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Segment"
+                type: array
+          description: ""
+      tags: ["Segment"]
   "/vocabularies/{vocabulary-id}":
     delete:
       parameters:

@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -146,6 +147,66 @@ public class DocumentResourceImpl
 				}
 			},
 			filter, pagination, sorts);
+	}
+
+	@Override
+	public Document patchDocument(Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		FileEntry oldFileEntry = _dlAppService.getFileEntry(documentId);
+
+		BinaryFile binaryFile = Optional.ofNullable(
+			multipartBody.getBinaryFile("file")
+		).orElse(
+			new BinaryFile(
+				oldFileEntry.getMimeType(), oldFileEntry.getFileName(),
+				oldFileEntry.getContentStream(), oldFileEntry.getSize())
+		);
+
+		Optional<Document> optional = Optional.empty();
+
+		if (Validator.isNotNull(multipartBody.getValueAsString("Document"))) {
+			optional = Optional.of(
+				multipartBody.getValueAsInstance("Document", Document.class));
+		}
+
+		String title = optional.map(
+			Document::getTitle
+		).orElseGet(
+			oldFileEntry::getTitle
+		);
+
+		String description = optional.map(
+			Document::getTitle
+		).orElseGet(
+			oldFileEntry::getDescription
+		);
+
+		Long[] categoryIds = optional.map(
+			Document::getCategoryIds
+		).orElseGet(
+			() -> ArrayUtil.toArray(
+				_assetCategoryLocalService.getCategoryIds(
+					DLFileEntry.class.getName(), documentId))
+		);
+
+		String[] keywords = optional.map(
+			Document::getKeywords
+		).orElseGet(
+			() -> _assetTagLocalService.getTagNames(
+				DLFileEntry.class.getName(), documentId)
+		);
+
+		FileEntry fileEntry = _dlAppService.updateFileEntry(
+			documentId, binaryFile.getFileName(), binaryFile.getContentType(),
+			title, description, null, DLVersionNumberIncrease.AUTOMATIC,
+			binaryFile.getInputStream(), binaryFile.getSize(),
+			_getServiceContext(
+				oldFileEntry.getGroupId(), categoryIds, keywords));
+
+		return _toDocument(
+			fileEntry, fileEntry.getFileVersion(),
+			_userService.getUserById(fileEntry.getUserId()));
 	}
 
 	@Override

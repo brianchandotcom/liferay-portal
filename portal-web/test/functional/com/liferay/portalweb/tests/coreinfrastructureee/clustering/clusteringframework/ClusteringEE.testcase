@@ -389,6 +389,14 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
+		Clustering.enableDebugging(
+			nodePort = "8080"
+		);
+
+		Clustering.enableDebugging(
+			nodePort = "9080"
+		);
+
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar",
 			nodePort = "8080"

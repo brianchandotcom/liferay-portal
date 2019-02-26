@@ -10,6 +10,25 @@ definition {
 		);
 	}
 
+	macro enableDebugging {
+		User.loginPG(
+			nodePort = "${nodePort}",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
+			categoryPriority = "DEBUG"
+		);
+	}
+
 	@description = "Get cluster node control address in console"
 	macro getClusterNodeControlAddress {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");

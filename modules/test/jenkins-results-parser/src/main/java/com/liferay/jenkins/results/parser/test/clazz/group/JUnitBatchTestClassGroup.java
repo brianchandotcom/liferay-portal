@@ -19,7 +19,9 @@ import com.google.common.collect.Lists;
 import com.liferay.jenkins.results.parser.CentralMergePullRequestJob;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.SubrepositoryGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.SubrepositoryTestClassJob;
 
 import java.io.File;
@@ -386,14 +388,21 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		if (portalTestClassJob instanceof SubrepositoryTestClassJob) {
+			SubrepositoryTestClassJob subrepositoryTestClassJob =
+				(SubrepositoryTestClassJob)portalTestClassJob;
+
+			SubrepositoryGitWorkingDirectory subrepositoryGitWorkingDirectory =
+				subrepositoryTestClassJob.getSubrepositoryGitWorkingDirectory();
+
 			_rootWorkingDirectory =
-				((SubrepositoryTestClassJob)portalTestClassJob).
-					getSubrepositoryGitWorkingDirectory().getWorkingDirectory();
+				subrepositoryGitWorkingDirectory.getWorkingDirectory();
 		}
 		else {
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				portalTestClassJob.getPortalGitWorkingDirectory();
+
 			_rootWorkingDirectory =
-				portalTestClassJob.getPortalGitWorkingDirectory().
-					getWorkingDirectory();
+				portalGitWorkingDirectory.getWorkingDirectory();
 		}
 
 		_setAutoBalanceTestFiles();

@@ -20,7 +20,7 @@
 	var="removeLinkIcon"
 >
 	<liferay-ui:icon
-		icon="times"
+		icon="times-circle"
 		markupView="lexicon"
 		message="remove"
 	/>
@@ -29,7 +29,7 @@
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	emptyResultsMessage="none"
-	headerNames="type,title,scope,null"
+	headerNames="title,null"
 	total="<%= inputAssetLinksDisplayContext.getAssetLinksCount() %>"
 >
 	<liferay-ui:search-container-results
@@ -46,23 +46,19 @@
 		AssetEntry assetLinkEntry = inputAssetLinksDisplayContext.getAssetLinkEntry(assetLink);
 		%>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= inputAssetLinksDisplayContext.getAssetType(assetLinkEntry) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="title"
-			truncate="<%= true %>"
-			value="<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="scope"
-			value="<%= HtmlUtil.escape(inputAssetLinksDisplayContext.getGroupDescriptiveName(assetLinkEntry)) %>"
-		/>
-
 		<liferay-ui:search-container-column-text>
+			<h5>
+				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
+			</h5>
+
+			<div class="text-secondary">
+				<%= inputAssetLinksDisplayContext.getAssetType(assetLinkEntry) %>
+			</div>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			cssClass="text-right"
+		>
 			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
@@ -74,9 +70,9 @@
 </liferay-ui:search-container>
 
 <c:if test="<%= stagingGroupHelper.isLiveGroup(themeDisplay.getScopeGroupId()) %>">
-	<div>
+	<span>
 		<liferay-ui:message key="related-assets-for-staged-asset-types-can-be-managed-on-the-staging-site" />
-	</div>
+	</span>
 </c:if>
 
 <liferay-ui:icon-menu
@@ -141,9 +137,11 @@
 										var entityId = assetEntry.entityid;
 
 										if (searchContainerData.indexOf(entityId) == -1) {
-											var entryLink = '<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
+											var entryLink = '<div class="text-right"><a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
 
-											searchContainer.addRow([assetEntry.assettype, A.Escape.html(assetEntry.assettitle), A.Escape.html(assetEntry.groupdescriptivename), entryLink], entityId);
+											var entryHtml = '<h5>' + A.Escape.html(assetEntry.assettitle) + '</h5><div class="text-secondary">' + A.Escape.html(assetEntry.assettype) + '</div>';
+
+											searchContainer.addRow([entryHtml, entryLink], entityId);
 
 											searchContainer.updateDataStore();
 										}

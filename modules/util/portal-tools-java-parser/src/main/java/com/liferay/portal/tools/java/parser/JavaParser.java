@@ -48,12 +48,41 @@ import java.util.Objects;
  */
 public class JavaParser {
 
-	public static boolean parse(File file, int maxLineLength)
+	/**
+	 * Passing the file is faster than passing content, but more intrusive as it
+	 * writes the parsed content to the file if there is incorrect parsing.
+	 */
+	public static String parse(File file, int maxLineLength)
 		throws CheckstyleException, IOException {
 
 		_maxLineLength = maxLineLength;
 
-		return _parse(file, false);
+		return _parse(file, FileUtil.read(file));
+	}
+
+	public static String parse(File file, String content, int maxLineLength)
+		throws CheckstyleException, IOException {
+
+		_maxLineLength = maxLineLength;
+
+		return _parse(file, content);
+	}
+
+	public static String parse(String content, int maxLineLength)
+		throws CheckstyleException, IOException {
+
+		_maxLineLength = maxLineLength;
+
+		File tempFile = FileUtil.createTempFile("java");
+
+		try {
+			FileUtil.write(tempFile, content);
+
+			return _parse(tempFile, content);
+		}
+		finally {
+			tempFile.delete();
+		}
 	}
 
 	private static ParsedJavaClass _addClosingJavaTerm(
@@ -536,7 +565,7 @@ public class JavaParser {
 		return false;
 	}
 
-	private static boolean _parse(File file, boolean modified)
+	private static String _parse(File file, String content)
 		throws CheckstyleException, IOException {
 
 		FileText fileText = new FileText(
@@ -550,18 +579,16 @@ public class JavaParser {
 		ParsedJavaClass parsedJavaClass = _getParsedJavaClass(
 			rootDetailAST, fileContents);
 
-		String content = FileUtil.read(file);
-
 		String newContent = _parseContent(
 			content, parsedJavaClass, fileContents);
 
 		if (!newContent.equals(content)) {
 			FileUtil.write(file, newContent);
 
-			return _parse(file, true);
+			return _parse(file, newContent);
 		}
 
-		return modified;
+		return newContent;
 	}
 
 	private static String _parseContent(

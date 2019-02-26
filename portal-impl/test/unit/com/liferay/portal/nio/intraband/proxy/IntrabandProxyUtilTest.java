@@ -140,6 +140,7 @@ public class IntrabandProxyUtilTest {
 
 			@SuppressWarnings("unused")
 			private String _testField;
+
 		}
 
 		Field[] fields = TestClass.class.getDeclaredFields();
@@ -2190,6 +2191,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private String _PROXY_METHODS_MAPPING;
+
 			}
 
 			try {
@@ -2214,6 +2216,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private String _log;
+
 			}
 
 			try {
@@ -2237,6 +2240,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private Object _targetLocator;
+
 			}
 
 			try {
@@ -2262,6 +2266,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				int _proxyType = 0;
+
 			}
 
 			try {
@@ -2286,6 +2291,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private Object _id;
+
 			}
 
 			try {
@@ -2309,6 +2315,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private Object _intraband;
+
 			}
 
 			try {
@@ -2333,6 +2340,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private Object _registrationReference;
+
 			}
 
 			try {
@@ -2358,6 +2366,7 @@ public class IntrabandProxyUtilTest {
 
 				@SuppressWarnings("unused")
 				private Object _exceptionHandler;
+
 			}
 
 			try {

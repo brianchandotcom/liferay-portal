@@ -116,7 +116,6 @@ public class ElasticsearchSpellCheckIndexWriter
 
 				bulkDocumentRequest.addBulkableDocumentRequest(
 					indexDocumentRequest);
-
 			});
 
 		_searchEngineAdapter.execute(bulkDocumentRequest);

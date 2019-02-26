@@ -47,7 +47,6 @@ public class ExportImportConfigurationModelIndexerWriterContributor
 				batchIndexingActionable.addDocuments(
 					modelIndexerWriterDocumentHelper.getDocument(
 						exportImportConfiguration));
-
 			});
 	}
 

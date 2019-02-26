@@ -179,7 +179,6 @@ public class OAuth2AuthorizationException extends AuthorizationException {
 						OAuth2AuthorizationException.UnsupportedResponseType::
 							new);
 				}
-
 			};
 
 }

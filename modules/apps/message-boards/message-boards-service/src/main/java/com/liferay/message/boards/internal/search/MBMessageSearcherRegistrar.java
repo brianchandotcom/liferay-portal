@@ -52,7 +52,6 @@ public class MBMessageSearcherRegistrar {
 					modelSummaryContributor);
 				modelSearchDefinition.setModelVisibilityContributor(
 					modelVisibilityContributor);
-
 			});
 	}
 

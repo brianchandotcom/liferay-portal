@@ -1200,7 +1200,6 @@ public class WorkflowTaskDisplayContext {
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_workflowTaskRequestHelper.getRequest(), navigation));
-
 		};
 	}
 

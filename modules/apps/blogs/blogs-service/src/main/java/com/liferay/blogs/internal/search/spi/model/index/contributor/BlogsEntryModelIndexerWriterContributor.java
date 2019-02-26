@@ -62,7 +62,6 @@ public class BlogsEntryModelIndexerWriterContributor
 				};
 
 				dynamicQuery.add(statusProperty.in(statuses));
-
 			});
 		batchIndexingActionable.setPerformActionMethod(
 			(BlogsEntry blogsEntry) -> {
@@ -70,7 +69,6 @@ public class BlogsEntryModelIndexerWriterContributor
 					modelIndexerWriterDocumentHelper.getDocument(blogsEntry);
 
 				batchIndexingActionable.addDocuments(document);
-
 			});
 	}
 

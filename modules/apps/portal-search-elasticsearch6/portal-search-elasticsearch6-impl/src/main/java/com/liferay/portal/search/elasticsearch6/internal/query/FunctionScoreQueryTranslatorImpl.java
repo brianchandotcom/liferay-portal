@@ -79,7 +79,6 @@ public class FunctionScoreQueryTranslatorImpl
 				}
 
 				filterFunctionBuilders.add(filterFunctionBuilder);
-
 			});
 
 		FunctionScoreQueryBuilder functionScoreQueryBuilder =

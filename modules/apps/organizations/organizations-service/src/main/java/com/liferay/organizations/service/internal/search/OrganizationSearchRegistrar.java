@@ -46,7 +46,6 @@ public class OrganizationSearchRegistrar {
 					modelIndexWriterContributor);
 				modelSearchDefinition.setModelSummaryContributor(
 					modelSummaryContributor);
-
 			});
 	}
 

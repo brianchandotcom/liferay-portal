@@ -119,7 +119,6 @@ public abstract class BaseHighlighterTestCase extends BaseIndexingTestCase {
 				Assert.assertEquals(
 					"Highlighted texts ->" + actualValues,
 					expectedValues.toString(), actualValues.toString());
-
 			});
 	}
 

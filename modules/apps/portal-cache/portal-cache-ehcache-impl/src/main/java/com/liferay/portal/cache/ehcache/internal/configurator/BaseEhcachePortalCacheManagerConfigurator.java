@@ -324,7 +324,6 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 						NotificationScope.REMOTE,
 						PortalCacheListenerScope.REMOTE);
 				}
-
 			};
 
 }

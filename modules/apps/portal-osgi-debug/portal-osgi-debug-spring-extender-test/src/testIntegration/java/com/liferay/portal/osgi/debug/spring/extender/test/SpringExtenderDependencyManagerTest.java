@@ -317,7 +317,6 @@ public class SpringExtenderDependencyManagerTest {
 						getBytes());
 
 				jarOutputStream.closeEntry();
-
 			}
 
 			return new UnsyncByteArrayInputStream(

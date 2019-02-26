@@ -63,7 +63,6 @@ public class MoreLikeThisQueryTranslatorImpl
 							documentIdentifier.getId());
 
 					likeItems.add(moreLikeThisQueryBuilderItem);
-
 				});
 		}
 

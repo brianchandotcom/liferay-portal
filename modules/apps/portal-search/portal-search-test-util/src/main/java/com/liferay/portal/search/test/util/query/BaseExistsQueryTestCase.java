@@ -83,7 +83,6 @@ public abstract class BaseExistsQueryTestCase extends BaseIndexingTestCase {
 
 				Assert.assertEquals(
 					"SomeUser1", document.getFieldValue(Field.USER_NAME));
-
 			});
 	}
 

@@ -45,7 +45,6 @@ public class BookmarksFolderSearchRegistrar {
 					modelIndexWriterContributor);
 				modelSearchDefinition.setModelSummaryContributor(
 					modelSummaryContributor);
-
 			});
 	}
 

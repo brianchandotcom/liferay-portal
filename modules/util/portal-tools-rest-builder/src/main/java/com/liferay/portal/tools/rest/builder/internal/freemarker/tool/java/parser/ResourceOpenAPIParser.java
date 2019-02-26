@@ -77,7 +77,6 @@ public class ResourceOpenAPIParser extends BaseOpenAPIParser {
 							path, pathItem, operation, schemaName,
 							getJavaParameters(operation), methodName,
 							returnType));
-
 				});
 		}
 

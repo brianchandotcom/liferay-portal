@@ -193,7 +193,6 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 				ps3.execute();
 			}
-
 		}
 		catch (SQLException sqle) {
 			throw new UpgradeException(sqle);

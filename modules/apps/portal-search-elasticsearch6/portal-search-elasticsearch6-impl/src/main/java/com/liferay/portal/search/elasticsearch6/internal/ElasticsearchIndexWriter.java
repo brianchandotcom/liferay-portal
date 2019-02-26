@@ -93,7 +93,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 				bulkDocumentRequest.addBulkableDocumentRequest(
 					indexDocumentRequest);
-
 			});
 
 		_searchEngineAdapter.execute(bulkDocumentRequest);
@@ -149,7 +148,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 				bulkDocumentRequest.addBulkableDocumentRequest(
 					deleteDocumentRequest);
-
 			});
 
 		_searchEngineAdapter.execute(bulkDocumentRequest);
@@ -233,7 +231,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 				bulkDocumentRequest.addBulkableDocumentRequest(
 					updateDocumentRequest);
-
 			});
 
 		_searchEngineAdapter.execute(bulkDocumentRequest);

@@ -50,7 +50,6 @@ public class BlogsEntrySearchRegistrar {
 					modelSummaryContributor);
 				modelSearchDefinition.setModelVisibilityContributor(
 					modelVisibilityContributor);
-
 			});
 	}
 

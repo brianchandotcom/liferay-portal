@@ -538,7 +538,6 @@ public class WorkflowInstanceViewDisplayContext
 				getViewPortletURL(), "navigation", navigation, "mvcPath",
 				"/view.jsp");
 			dropdownItem.setLabel(LanguageUtil.get(request, navigation));
-
 		};
 	}
 

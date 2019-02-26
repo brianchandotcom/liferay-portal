@@ -1293,7 +1293,6 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 				}
 			);
-
 		}
 
 		return ddmFormFieldTypeServicesTracker;

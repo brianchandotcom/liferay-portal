@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -70,7 +71,21 @@ public abstract class Base${schemaName}ResourceTestCase {
 	}
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
-		protected ${javaMethodSignature.returnType} invoke${javaMethodSignature.methodName?cap_first}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)}) throws Exception {
+		<#assign
+			parameters = freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)
+			privateLocationMethod = false
+		/>
+
+		<#if parameters?contains("Filter filter") && parameters?contains("Sort[] sorts")>
+			<#assign
+				parameters = parameters?replace("Filter filter", "String filter")?replace("Sort[] sorts", "String sorts")
+				privateLocationMethod = true
+			/>
+		</#if>
+
+		protected ${javaMethodSignature.returnType} invoke${javaMethodSignature.methodName?cap_first}(${parameters})
+			throws Exception {
+
 			Http.Options options = _createHttpOptions();
 
 			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters) />
@@ -83,7 +98,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
+			<#if privateLocationMethod>
+				options.setLocation(_${javaMethodSignature.methodName?remove_ending("Page")}Location(${arguments}));
+			<#else>
+				options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
+			</#if>
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
 				options.setPost(true);
@@ -102,7 +121,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			</#if>
 		}
 
-		protected Http.Response invoke${javaMethodSignature.methodName?cap_first}Response(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)}) throws Exception {
+		protected Http.Response invoke${javaMethodSignature.methodName?cap_first}Response(${parameters})
+			throws Exception {
+
 			Http.Options options = _createHttpOptions();
 
 			<#assign arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters) />
@@ -115,7 +136,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 				options.setDelete(true);
 			</#if>
 
-			options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
+			<#if privateLocationMethod>
+				options.setLocation(_${javaMethodSignature.methodName?remove_ending("Page")}Location(${arguments}));
+			<#else>
+				options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName}));
+			</#if>
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
 				options.setPost(true);
@@ -127,6 +152,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			return options.getResponse();
 		}
+
+		<#if privateLocationMethod>
+			private String _${javaMethodSignature.methodName?remove_ending("Page")}Location(${parameters}) {
+				Http http = new HttpImpl();
+
+				String url = _resourceURL + _toPath(
+					"${javaMethodSignature.path}", ${javaMethodSignature.javaParameters[0].parameterName});
+
+				url = http.addParameter(url, "filter", filter);
+				url = http.addParameter(url, "page", pagination.getPageNumber());
+				url = http.addParameter(url, "pageSize", pagination.getItemsPerPage());
+				url = http.addParameter(url, "sort", sort);
+
+				return url;
+			}
+		</#if>
 	</#list>
 
 	protected void assertEquals(${schemaName} ${schemaVarName}1, ${schemaName} ${schemaVarName}2) {

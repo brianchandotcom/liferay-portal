@@ -279,22 +279,18 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
@@ -352,22 +348,18 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
@@ -425,22 +417,18 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
@@ -498,22 +486,18 @@ exports[`Sidebar should render a Sidebar open 1`] = `
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
@@ -571,22 +555,18 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
@@ -644,22 +624,18 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>
@@ -717,22 +693,18 @@ exports[`Sidebar should render the default markup 1`] = `
           <div aria-labelledby="#ddm-field-types-basic-header" id="ddm-field-types-basic-body" class="panel-collapse show" role="tabpanel">
             <div class="panel-body p-0 m-0 list-group">
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="text" ref="fieldType_text">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
-                      <use xlink:href="icons.svg#text"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-text" aria-hidden="true">
+                        <use xlink:href="icons.svg#text"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Text Field</span></h4>
                   <p class="list-group-subtitle text-truncate">Single line or multiline text area.</p>
                 </div>
               </div>
               <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="checkbox" ref="fieldType_checkbox">
-                <div class="autofit-col">
-                  <div class="sticker sticker-secondary"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
-                      <use xlink:href="icons.svg#select-from-list"></use>
-                    </svg></div>
-                </div>
+                <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-select-from-list" aria-hidden="true">
+                        <use xlink:href="icons.svg#select-from-list"></use>
+                      </svg></span></span></div>
                 <div class="autofit-col autofit-col-expand">
                   <h4 class="list-group-title text-truncate"><span>Multiple Selection</span></h4>
                   <p class="list-group-subtitle text-truncate">Select multiple options using a checkbox.</p>

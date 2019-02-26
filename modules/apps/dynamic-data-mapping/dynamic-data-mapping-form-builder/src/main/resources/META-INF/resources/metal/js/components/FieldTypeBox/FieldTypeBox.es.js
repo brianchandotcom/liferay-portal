@@ -9,16 +9,19 @@ const FieldTypeBox = ({fieldType, spritemap}) => {
 			ref={`fieldType_${name}`}
 		>
 			<div class="autofit-col">
-				<div class="sticker sticker-secondary">
-					<svg
-						aria-hidden="true"
-						class={`lexicon-icon lexicon-icon-${icon}`}
-					>
-						<use
-							xlink:href={`${spritemap}#${icon}`}
-						/>
-					</svg>
-				</div>
+				<span class="sticker sticker-secondary">
+					<span class="inline-item">
+						<svg
+							aria-hidden="true"
+							class={`lexicon-icon lexicon-icon-${icon}`}
+						>
+							<use
+								xlink:href={`${spritemap}#${icon}`}
+							/>
+						</svg>
+					</span>
+
+				</span>
 			</div>
 			<div class="autofit-col autofit-col-expand">
 				<h4 class="list-group-title text-truncate">

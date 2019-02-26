@@ -5,7 +5,6 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property remote.elasticsearch.enabled = "true";
-	property test.run.environment = "EE";
 	property testray.main.component.name = "Clustering";
 
 	setUp {

@@ -51,6 +51,10 @@ public interface AssetDisplayContributor {
 		return getAssetDisplayFieldsValues(assetEntry, locale);
 	}
 
+	public Object getAssetDisplayFieldValue(
+			AssetEntry assetEntry, String fieldName, Locale locale)
+		throws PortalException;
+
 	public String getClassName();
 
 	public default List<AssetDisplayField> getClassTypeFields(

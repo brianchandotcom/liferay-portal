@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -30,6 +31,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -111,6 +113,39 @@ public abstract class BaseAssetDisplayContributor<T>
 	}
 
 	@Override
+	public Object getAssetDisplayFieldValue(
+			AssetEntry assetEntry, String fieldName, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		T assetObject = assetRenderer.getAssetObject();
+
+		List<AssetDisplayContributorField> assetDisplayContributorFields =
+			AssetDisplayContributorFieldHelperUtil.
+				getAssetDisplayContributorFields(assetEntry.getClassName());
+
+		for (AssetDisplayContributorField assetDisplayContributorField :
+				assetDisplayContributorFields) {
+
+			if (Objects.equals(
+					assetDisplayContributorField.getKey(), fieldName)) {
+
+				return assetDisplayContributorField.getValue(
+					assetObject, locale);
+			}
+		}
+
+		return getClassTypeFieldValue(assetObject, fieldName, locale);
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
@@ -130,6 +165,15 @@ public abstract class BaseAssetDisplayContributor<T>
 	@Deprecated
 	protected Map<String, String> getAssetEntryModelFieldsMap() {
 		throw new UnsupportedOperationException();
+	}
+
+	protected Object getClassTypeFieldValue(
+		T assetEntryObject, String fieldName, Locale locale) {
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetEntryObject, locale);
+
+		return classTypeValues.getOrDefault(fieldName, StringPool.BLANK);
 	}
 
 	protected abstract Map<String, Object> getClassTypeValues(

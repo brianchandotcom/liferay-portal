@@ -820,7 +820,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>GZip Filter</filter-name>
-		<url-pattern>/o/js_loader_modules</url-pattern>
+		<url-pattern>/o/js_loader_config</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>

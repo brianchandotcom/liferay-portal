@@ -12,20 +12,25 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender.internal;
+package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
-import com.liferay.portal.minifier.MinifierUtil;
-
-import org.osgi.service.component.annotations.Component;
+import java.util.Collection;
+import java.util.Map;
 
 /**
- * @author Iván Zaera Avellón
+ * Unifies config generator and NPMRegistry modules into a single entity to be
+ * used in resolutions.
+ * @author Rodolfo Roza Miranda
+ * @review
  */
-@Component(service = Minifier.class)
-public class Minifier {
+public interface ModuleDescriptor {
 
-	public String minify(String resourceName, String content) {
-		return MinifierUtil.minifyJavaScript(resourceName, content);
-	}
+	public Collection<String> getDependencies();
+
+	public Map<String, String> getMappings();
+
+	public String getName();
+
+	public String getPath();
 
 }

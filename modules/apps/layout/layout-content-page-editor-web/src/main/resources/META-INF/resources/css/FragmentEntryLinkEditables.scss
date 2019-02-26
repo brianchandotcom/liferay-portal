@@ -2,7 +2,7 @@
 
 @import "variables";
 
-lfr-editable {
+.fragments-editor__editable {
 	background-size: $fragmentEditableFieldGridSize $fragmentEditableFieldGridSize;
 	box-shadow: 0 0 0 1px transparent;
 	cursor: pointer;
@@ -16,14 +16,15 @@ lfr-editable {
 		max-width: 100%;
 	}
 
-	&.fragments-editor__editable {
-		&--active, &--active.mapped, &--active.mapped:hover {
+	&--active,
+	&--active.mapped,
+	&--active.mapped:hover {
 			box-shadow: 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
 			outline: 0;
 		}
-	}
 
-	&:hover, &.mapped:hover {
+	&:hover,
+	&.mapped:hover {
 		box-shadow: 0 0 0 1px $fragmentEditableFieldHoverBorderColor;
 	}
 

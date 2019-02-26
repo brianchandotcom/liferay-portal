@@ -17,8 +17,10 @@
 	{@param? itemTypes: ?}
 
 	{let $editableClasses kind="text"}
+		fragments-editor__editable
+
 		{if $activeItemId == $fragmentEntryLinkEditableId and $activeItemType == $itemTypes.editable}
-			fragments-editor__editable--active
+			{sp}fragments-editor__editable--active
 		{/if}
 	{/let}
 

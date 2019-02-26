@@ -26,7 +26,6 @@
 	{@param? _handleFragmentMove: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? fragmentsEditorSidebarVisible: bool}
-	{@param? highlightMapping: bool}
 	{@param? mappingFieldsURL: string}
 	{@param? segmentId: string}
 	{@param? store: ?}
@@ -42,10 +41,6 @@
 
 		{if $fragmentsEditorSidebarVisible}
 			{sp}fragment-entry-link-list--padded
-		{/if}
-
-		{if $highlightMapping}
-			{sp}mapping
 		{/if}
 
 		{if $languageId != $defaultLanguageId}

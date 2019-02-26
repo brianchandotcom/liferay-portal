@@ -202,16 +202,6 @@ const INITIAL_STATE = {
 		.value(true),
 
 	/**
-	 * If true, editable values should be highlighted.
-	 * @default false
-	 * @review
-	 * @type {boolean}
-	 */
-	highlightMapping: Config
-		.bool()
-		.value(false),
-
-	/**
 	 * Border of the target item where another item is being dragged to
 	 * @default null
 	 * @review

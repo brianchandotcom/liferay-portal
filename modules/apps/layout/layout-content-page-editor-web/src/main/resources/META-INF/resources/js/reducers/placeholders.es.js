@@ -4,7 +4,6 @@ import {
 	CLEAR_HOVERED_ITEM,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_DROP_TARGET,
-	UPDATE_HIGHLIGHT_MAPPING_STATUS,
 	UPDATE_HOVERED_ITEM
 } from '../actions/actions.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
@@ -63,24 +62,6 @@ function updateDropTargetReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {object} payload
- * @param {bool} payload.highlightMapping
- * @return {object}
- * @review
- */
-function updateHighlightMappingReducer(state, actionType, payload) {
-	let nextState = state;
-
-	if (actionType === UPDATE_HIGHLIGHT_MAPPING_STATUS) {
-		nextState = setIn(nextState, ['highlightMapping'], Boolean(payload.highlightMapping));
-	}
-
-	return nextState;
-}
-
-/**
  * Updates hovered element data with the information sent.
  * @param {!object} state
  * @param {UPDATE_HOVERED_ITEM} actionType
@@ -108,6 +89,5 @@ function updateHoveredItemReducer(state, actionType, payload) {
 export {
 	updateActiveItemReducer,
 	updateDropTargetReducer,
-	updateHighlightMappingReducer,
 	updateHoveredItemReducer
 };

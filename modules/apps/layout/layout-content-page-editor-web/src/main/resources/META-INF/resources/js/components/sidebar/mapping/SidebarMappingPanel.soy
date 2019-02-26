@@ -4,9 +4,7 @@
  * SidebarMappingPanel
  */
 {template .render}
-	{@param? _handleHighlightMappingCheckboxChange: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
-	{@param? highlightMapping: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -54,27 +52,6 @@
 					{msg desc=""}select{/msg}
 				</button>
 			{/if}
-		</div>
-
-		<div class="form-group">
-			{let $highlightCheckboxAttributes kind="attributes"}
-				class="form-check-input"
-				data-onchange="{$_handleHighlightMappingCheckboxChange}"
-				type="checkbox"
-
-				{if $highlightMapping}
-					checked
-				{/if}
-			{/let}
-
-			<div class="form-check">
-				<label class="form-check-label">
-					<input {$highlightCheckboxAttributes}>
-					<span class="form-check-label-text">
-						{msg desc=""}show-editable-areas{/msg}
-					</span>
-				</label>
-			</div>
 		</div>
 	</div>
 {/template}

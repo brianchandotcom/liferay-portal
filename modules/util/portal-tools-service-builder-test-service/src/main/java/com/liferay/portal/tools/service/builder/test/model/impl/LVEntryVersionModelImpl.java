@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.model.version.VersionedModelInvocationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -33,8 +32,6 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersionModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.sql.Types;
 
@@ -362,14 +359,14 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 
 	@Override
 	public LVEntry toVersionedModel() {
-		if (_lvEntry == null) {
-			_lvEntry = (LVEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_versionedModelInterfaces,
-					new VersionedModelInvocationHandler(this,
-						_versionedModelMethodsMap));
-		}
+		LVEntry lvEntry = new LVEntryImpl();
 
-		return _lvEntry;
+		lvEntry.setPrimaryKey(getVersionedModelId());
+		lvEntry.setHeadId(-getVersionedModelId());
+
+		populateVersionedModel(lvEntry);
+
+		return lvEntry;
 	}
 
 	@Override
@@ -738,41 +735,6 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			LVEntryVersion.class, ModelWrapper.class
 		};
-	private static final Map<Method, Method> _versionedModelMethodsMap = new HashMap<Method, Method>();
-	private static final Class<?>[] _versionedModelInterfaces = new Class<?>[] {
-			LVEntry.class
-		};
-
-	static {
-		try {
-			_versionedModelMethodsMap.put(LVEntry.class.getMethod(
-					"getPrimaryKey"),
-				LVEntryVersion.class.getMethod("getVersionedModelId"));
-
-			_versionedModelMethodsMap.put(LVEntry.class.getMethod("getUuid"),
-				LVEntryVersion.class.getMethod("getUuid"));
-
-			_versionedModelMethodsMap.put(LVEntry.class.getMethod(
-					"getDefaultLanguageId"),
-				LVEntryVersion.class.getMethod("getDefaultLanguageId"));
-
-			_versionedModelMethodsMap.put(LVEntry.class.getMethod(
-					"getLvEntryId"),
-				LVEntryVersion.class.getMethod("getLvEntryId"));
-
-			_versionedModelMethodsMap.put(LVEntry.class.getMethod("getGroupId"),
-				LVEntryVersion.class.getMethod("getGroupId"));
-
-			_versionedModelMethodsMap.put(LVEntry.class.getMethod(
-					"getUniqueGroupKey"),
-				LVEntryVersion.class.getMethod("getUniqueGroupKey"));
-		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
-		}
-	}
-
-	private volatile LVEntry _lvEntry;
 	private long _lvEntryVersionId;
 	private int _version;
 	private int _originalVersion;

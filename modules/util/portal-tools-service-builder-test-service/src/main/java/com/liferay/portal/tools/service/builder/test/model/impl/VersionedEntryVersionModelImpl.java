@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.model.version.VersionedModelInvocationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -33,8 +32,6 @@ import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersionModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.sql.Types;
 
@@ -294,14 +291,14 @@ public class VersionedEntryVersionModelImpl extends BaseModelImpl<VersionedEntry
 
 	@Override
 	public VersionedEntry toVersionedModel() {
-		if (_versionedEntry == null) {
-			_versionedEntry = (VersionedEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_versionedModelInterfaces,
-					new VersionedModelInvocationHandler(this,
-						_versionedModelMethodsMap));
-		}
+		VersionedEntry versionedEntry = new VersionedEntryImpl();
 
-		return _versionedEntry;
+		versionedEntry.setPrimaryKey(getVersionedModelId());
+		versionedEntry.setHeadId(-getVersionedModelId());
+
+		populateVersionedModel(versionedEntry);
+
+		return versionedEntry;
 	}
 
 	@Override
@@ -576,31 +573,6 @@ public class VersionedEntryVersionModelImpl extends BaseModelImpl<VersionedEntry
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			VersionedEntryVersion.class, ModelWrapper.class
 		};
-	private static final Map<Method, Method> _versionedModelMethodsMap = new HashMap<Method, Method>();
-	private static final Class<?>[] _versionedModelInterfaces = new Class<?>[] {
-			VersionedEntry.class
-		};
-
-	static {
-		try {
-			_versionedModelMethodsMap.put(VersionedEntry.class.getMethod(
-					"getPrimaryKey"),
-				VersionedEntryVersion.class.getMethod("getVersionedModelId"));
-
-			_versionedModelMethodsMap.put(VersionedEntry.class.getMethod(
-					"getVersionedEntryId"),
-				VersionedEntryVersion.class.getMethod("getVersionedEntryId"));
-
-			_versionedModelMethodsMap.put(VersionedEntry.class.getMethod(
-					"getGroupId"),
-				VersionedEntryVersion.class.getMethod("getGroupId"));
-		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
-		}
-	}
-
-	private volatile VersionedEntry _versionedEntry;
 	private long _versionedEntryVersionId;
 	private int _version;
 	private int _originalVersion;

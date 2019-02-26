@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.model.version.VersionedModelInvocationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -33,8 +32,6 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVe
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersionModel;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.sql.Types;
 
@@ -366,14 +363,14 @@ public class LVEntryLocalizationVersionModelImpl extends BaseModelImpl<LVEntryLo
 
 	@Override
 	public LVEntryLocalization toVersionedModel() {
-		if (_lvEntryLocalization == null) {
-			_lvEntryLocalization = (LVEntryLocalization)ProxyUtil.newProxyInstance(_classLoader,
-					_versionedModelInterfaces,
-					new VersionedModelInvocationHandler(this,
-						_versionedModelMethodsMap));
-		}
+		LVEntryLocalization lvEntryLocalization = new LVEntryLocalizationImpl();
 
-		return _lvEntryLocalization;
+		lvEntryLocalization.setPrimaryKey(getVersionedModelId());
+		lvEntryLocalization.setHeadId(-getVersionedModelId());
+
+		populateVersionedModel(lvEntryLocalization);
+
+		return lvEntryLocalization;
 	}
 
 	@Override
@@ -738,45 +735,6 @@ public class LVEntryLocalizationVersionModelImpl extends BaseModelImpl<LVEntryLo
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			LVEntryLocalizationVersion.class, ModelWrapper.class
 		};
-	private static final Map<Method, Method> _versionedModelMethodsMap = new HashMap<Method, Method>();
-	private static final Class<?>[] _versionedModelInterfaces = new Class<?>[] {
-			LVEntryLocalization.class
-		};
-
-	static {
-		try {
-			_versionedModelMethodsMap.put(LVEntryLocalization.class.getMethod(
-					"getPrimaryKey"),
-				LVEntryLocalizationVersion.class.getMethod(
-					"getVersionedModelId"));
-
-			_versionedModelMethodsMap.put(LVEntryLocalization.class.getMethod(
-					"getLvEntryLocalizationId"),
-				LVEntryLocalizationVersion.class.getMethod(
-					"getLvEntryLocalizationId"));
-
-			_versionedModelMethodsMap.put(LVEntryLocalization.class.getMethod(
-					"getLvEntryId"),
-				LVEntryLocalizationVersion.class.getMethod("getLvEntryId"));
-
-			_versionedModelMethodsMap.put(LVEntryLocalization.class.getMethod(
-					"getLanguageId"),
-				LVEntryLocalizationVersion.class.getMethod("getLanguageId"));
-
-			_versionedModelMethodsMap.put(LVEntryLocalization.class.getMethod(
-					"getTitle"),
-				LVEntryLocalizationVersion.class.getMethod("getTitle"));
-
-			_versionedModelMethodsMap.put(LVEntryLocalization.class.getMethod(
-					"getContent"),
-				LVEntryLocalizationVersion.class.getMethod("getContent"));
-		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
-		}
-	}
-
-	private volatile LVEntryLocalization _lvEntryLocalization;
 	private long _lvEntryLocalizationVersionId;
 	private int _version;
 	private int _originalVersion;

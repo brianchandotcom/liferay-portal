@@ -16,11 +16,13 @@ package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
+import com.liferay.document.library.internal.bulk.selection.util.BulkSelectionFactoryUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -42,39 +44,35 @@ public class FolderBulkSelectionFactory
 
 	@Override
 	public BulkSelection<Folder> create(Map<String, String[]> parameterMap) {
+		boolean selectAll = MapUtil.getBoolean(parameterMap, "selectAll");
+
+		if (selectAll) {
+			if (!parameterMap.containsKey("repositoryId")) {
+				throw new IllegalArgumentException();
+			}
+
+			String[] repositoryIds = parameterMap.get("repositoryId");
+
+			long repositoryId = GetterUtil.getLong(repositoryIds[0]);
+
+			if (repositoryId == 0) {
+				throw new IllegalArgumentException();
+			}
+
+			long folderId = BulkSelectionFactoryUtil.getFolderId(parameterMap);
+
+			return new FolderFolderBulkSelection(
+				repositoryId, folderId, parameterMap, _resourceBundleLoader,
+				_language, _repositoryProvider, _dlAppService);
+		}
+
 		if (!parameterMap.containsKey("rowIdsFolder")) {
 			return new EmptyBulkSelection<>();
 		}
 
 		String[] values = parameterMap.get("rowIdsFolder");
 
-		if (values.length > 1) {
-			return _getFolderSelection(values, parameterMap);
-		}
-
-		String value = values[0];
-
-		if (!value.startsWith("all:")) {
-			return _getFolderSelection(values, parameterMap);
-		}
-
-		if (!parameterMap.containsKey("repositoryId")) {
-			throw new IllegalArgumentException();
-		}
-
-		String[] repositoryIds = parameterMap.get("repositoryId");
-
-		long repositoryId = GetterUtil.getLong(repositoryIds[0]);
-
-		if (repositoryId == 0) {
-			throw new IllegalArgumentException();
-		}
-
-		long folderId = GetterUtil.getLong(value.substring(4));
-
-		return new FolderFolderBulkSelection(
-			repositoryId, folderId, parameterMap, _resourceBundleLoader,
-			_language, _repositoryProvider, _dlAppService);
+		return _getFolderSelection(values, parameterMap);
 	}
 
 	private BulkSelection<Folder> _getFolderSelection(

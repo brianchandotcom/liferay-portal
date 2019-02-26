@@ -43,8 +43,6 @@ public class YMLSourceUtil {
 
 			if (!s.equals(StringPool.SPACE)) {
 				if (sb.length() != 0) {
-					sb.setIndex(sb.index() - 1);
-
 					definitions.add(sb.toString());
 					sb.setIndex(0);
 				}

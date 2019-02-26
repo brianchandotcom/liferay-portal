@@ -243,7 +243,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "publishToLive");
 			dropdownItem.putData("publishEntryURL", publishEntryURL.toString());
-			dropdownItem.setLabel("publish-to-live");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_request, "publish-to-live"));
 		};
 	}
 

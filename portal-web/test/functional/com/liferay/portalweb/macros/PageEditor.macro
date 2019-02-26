@@ -25,6 +25,10 @@ definition {
 			key_id = "${id}"
 		);
 
+		Click(
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON"
+		);
+
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
@@ -54,9 +58,9 @@ definition {
 			key_id = "${id}"
 		);
 
-		if (IsElementPresent(locator1 = "Button#EDIT")) {
-			Button.clickEdit();
-		}
+		Click(
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON"
+		);
 
 		Type(
 			locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",

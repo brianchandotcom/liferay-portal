@@ -18,7 +18,9 @@ definition {
 			key_id = "${id}"
 		);
 
-		Button.clickMap();
+		Click(
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON"
+		);
 
 		AssertClick(
 			locator1 = "PageEditor#LIST_GROUP_ITEM",

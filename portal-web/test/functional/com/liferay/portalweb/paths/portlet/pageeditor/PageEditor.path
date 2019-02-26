@@ -96,6 +96,22 @@
 	<td>//section[contains(@class,'fragment-entry-link')][${key_position}]/nav//button</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDITABLE_FIELD_TOOLBAR-->
+<tr>
+	<td>EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON</td>
+	<td>//button[@title='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
+	<td>//button[@title='Map']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

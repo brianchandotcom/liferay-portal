@@ -65,6 +65,9 @@ definition {
 
 	@description = "This will get the log content for a specific clustered server bundle"
 	macro getLogFileSpecificServer {
+		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "copy-cluster-log -Dapp.server.bundle.index=${bundleIndex}"

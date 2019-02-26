@@ -213,6 +213,10 @@ public class ScreenNavigationTag extends IncludeTag {
 	}
 
 	private String _getDefaultScreenNavigationCategoryKey() {
+		if (ListUtil.isEmpty(_screenNavigationCategories)) {
+			return null;
+		}
+
 		ScreenNavigationCategory screenNavigationCategory =
 			_screenNavigationCategories.get(0);
 

@@ -83,8 +83,9 @@ public class DDMExpressionImplTest extends PowerMockito {
 		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
 			"6 / 3");
 
-		Assert.assertEquals(
-			new BigDecimal(2).setScale(2), ddmExpression.evaluate());
+		BigDecimal bigDecimal = new BigDecimal(2);
+
+		Assert.assertEquals(bigDecimal.setScale(2), ddmExpression.evaluate());
 	}
 
 	@Test
@@ -92,8 +93,9 @@ public class DDMExpressionImplTest extends PowerMockito {
 		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
 			"15 / 2");
 
-		Assert.assertEquals(
-			new BigDecimal(7.5).setScale(2), ddmExpression.evaluate());
+		BigDecimal bigDecimal = new BigDecimal(7.5);
+
+		Assert.assertEquals(bigDecimal.setScale(2), ddmExpression.evaluate());
 	}
 
 	@Test
@@ -101,8 +103,10 @@ public class DDMExpressionImplTest extends PowerMockito {
 		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
 			"10 / 9");
 
+		BigDecimal bigDecimal = new BigDecimal(1.11);
+
 		Assert.assertEquals(
-			new BigDecimal(1.11).setScale(2, RoundingMode.FLOOR),
+			bigDecimal.setScale(2, RoundingMode.FLOOR),
 			ddmExpression.evaluate());
 	}
 
@@ -390,8 +394,9 @@ public class DDMExpressionImplTest extends PowerMockito {
 		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
 			"(8 + 2) / 2.5");
 
-		Assert.assertEquals(
-			new BigDecimal(4).setScale(2), ddmExpression.evaluate());
+		BigDecimal bigDecimal = new BigDecimal(4);
+
+		Assert.assertEquals(bigDecimal.setScale(2), ddmExpression.evaluate());
 	}
 
 	@Test

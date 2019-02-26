@@ -48,14 +48,17 @@ public class DiversifiedSamplerAggregationImpl
 		return _shardSize;
 	}
 
+	@Override
 	public void setExecutionHint(String executionHint) {
 		_executionHint = executionHint;
 	}
 
+	@Override
 	public void setMaxDocsPerValue(Integer maxDocsPerValue) {
 		_maxDocsPerValue = maxDocsPerValue;
 	}
 
+	@Override
 	public void setShardSize(Integer shardSize) {
 		_shardSize = shardSize;
 	}

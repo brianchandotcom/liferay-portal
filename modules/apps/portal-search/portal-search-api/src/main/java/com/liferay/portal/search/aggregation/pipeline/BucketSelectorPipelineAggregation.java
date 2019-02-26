@@ -34,4 +34,6 @@ public interface BucketSelectorPipelineAggregation extends PipelineAggregation {
 
 	public Script getScript();
 
+	public void setGapPolicy(GapPolicy gapPolicy);
+
 }

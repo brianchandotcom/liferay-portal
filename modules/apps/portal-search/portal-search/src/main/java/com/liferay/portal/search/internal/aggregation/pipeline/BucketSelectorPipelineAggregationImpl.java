@@ -75,6 +75,7 @@ public class BucketSelectorPipelineAggregationImpl
 		return _script;
 	}
 
+	@Override
 	public void setGapPolicy(GapPolicy gapPolicy) {
 		_gapPolicy = gapPolicy;
 	}

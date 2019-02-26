@@ -30,4 +30,10 @@ public interface DiversifiedSamplerAggregation extends FieldAggregation {
 
 	public Integer getShardSize();
 
+	public void setExecutionHint(String executionHint);
+
+	public void setMaxDocsPerValue(Integer maxDocsPerValue);
+
+	public void setShardSize(Integer shardSize);
+
 }

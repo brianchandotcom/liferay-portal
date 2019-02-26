@@ -44,4 +44,25 @@ public interface SignificantTermsAggregation extends FieldAggregation {
 
 	public Integer getSize();
 
+	public void setBackgroundFilterQuery(Query backgroundFilterQuery);
+
+	public void setBucketCountThresholds(
+		BucketCountThresholds bucketCountThresholds);
+
+	public void setExecutionHint(String executionHint);
+
+	public void setIncludeExcludeClause(
+		IncludeExcludeClause includeExcludeClause);
+
+	public void setMinDocCount(Long minDocCount);
+
+	public void setShardMinDocCount(Long shardMinDocCount);
+
+	public void setShardSize(Integer shardSize);
+
+	public void setSignificanceHeuristic(
+		SignificanceHeuristic significanceHeuristic);
+
+	public void setSize(Integer size);
+
 }

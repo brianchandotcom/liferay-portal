@@ -38,6 +38,7 @@ public class ChildrenAggregationImpl
 		return _childType;
 	}
 
+	@Override
 	public void setChildType(String childType) {
 		_childType = childType;
 	}

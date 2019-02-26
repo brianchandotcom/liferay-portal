@@ -82,44 +82,53 @@ public class SignificantTermsAggregationImpl
 		return _size;
 	}
 
+	@Override
 	public void setBackgroundFilterQuery(Query backgroundFilterQuery) {
 		_backgroundFilterQuery = backgroundFilterQuery;
 	}
 
+	@Override
 	public void setBucketCountThresholds(
 		BucketCountThresholds bucketCountThresholds) {
 
 		_bucketCountThresholds = bucketCountThresholds;
 	}
 
+	@Override
 	public void setExecutionHint(String executionHint) {
 		_executionHint = executionHint;
 	}
 
+	@Override
 	public void setIncludeExcludeClause(
 		IncludeExcludeClause includeExcludeClause) {
 
 		_includeExcludeClause = includeExcludeClause;
 	}
 
+	@Override
 	public void setMinDocCount(Long minDocCount) {
 		_minDocCount = minDocCount;
 	}
 
+	@Override
 	public void setShardMinDocCount(Long shardMinDocCount) {
 		_shardMinDocCount = shardMinDocCount;
 	}
 
+	@Override
 	public void setShardSize(Integer shardSize) {
 		_shardSize = shardSize;
 	}
 
+	@Override
 	public void setSignificanceHeuristic(
 		SignificanceHeuristic significanceHeuristic) {
 
 		_significanceHeuristic = significanceHeuristic;
 	}
 
+	@Override
 	public void setSize(Integer size) {
 		_size = size;
 	}

@@ -26,4 +26,6 @@ public interface CumulativeSumPipelineAggregation extends PipelineAggregation {
 
 	public String getFormat();
 
+	public void setFormat(String format);
+
 }

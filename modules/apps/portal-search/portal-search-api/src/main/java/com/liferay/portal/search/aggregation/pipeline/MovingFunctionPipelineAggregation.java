@@ -34,4 +34,8 @@ public interface MovingFunctionPipelineAggregation extends PipelineAggregation {
 
 	public int getWindow();
 
+	public void setFormat(String format);
+
+	public void setGapPolicy(GapPolicy gapPolicy);
+
 }

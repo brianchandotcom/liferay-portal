@@ -21,6 +21,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -37,6 +38,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -101,6 +103,19 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Consumes("application/json")
+	@Override
+	@PATCH
+	@Path("/documents/{document-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public Document patchDocument(
+			@PathParam("document-id") Long documentId, Document document)
+		throws Exception {
+
+		return new Document();
 	}
 
 	@Consumes("multipart/form-data")

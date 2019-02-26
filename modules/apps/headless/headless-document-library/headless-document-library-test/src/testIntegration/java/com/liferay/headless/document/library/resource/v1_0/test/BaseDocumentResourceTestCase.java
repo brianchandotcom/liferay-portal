@@ -85,6 +85,11 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDocument() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostContentSpaceDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -264,6 +269,32 @@ public abstract class BaseDocumentResourceTestCase {
 
 		options.setLocation(
 			_resourceURL + _toPath("/folders/{folder-id}/documents", folderId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Document invokePatchDocument(Long documentId, Document document)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), Document.class);
+	}
+
+	protected Http.Response invokePatchDocumentResponse(
+			Long documentId, Document document)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL + _toPath("/documents/{document-id}", documentId));
 
 		HttpUtil.URLtoString(options);
 

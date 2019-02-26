@@ -113,6 +113,12 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		printWriter.close();
 	}
 
+	protected void setAbsolutePortalURLBuilderFactory(
+		AbsolutePortalURLBuilderFactory absolutePortalURLBuilderFactory) {
+
+		_absolutePortalURLBuilderFactory = absolutePortalURLBuilderFactory;
+	}
+
 	protected void setDetails(Details details) {
 		_details = details;
 	}

@@ -21,6 +21,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.ServletAbsolutePortalURLBuilder;
 import com.liferay.portal.util.PortalImpl;
 
 import java.util.Collections;
@@ -31,6 +34,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
 
 import org.osgi.service.component.ComponentContext;
 
@@ -81,7 +86,13 @@ public class JSLoaderConfigServletTest extends PowerMockito {
 		jsLoaderConfigServlet.service(
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertNotNull(mockHttpServletResponse.getContentAsString());
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertNotNull(content);
+		Assert.assertTrue(
+			content.contains(
+				"Liferay.RESOLVE_PATH = \"/o/js_resolve_modules\""));
+
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT_UTF8,
 			mockHttpServletResponse.getContentType());
@@ -102,6 +113,37 @@ public class JSLoaderConfigServletTest extends PowerMockito {
 
 		jsLoaderConfigServlet.activate(
 			mock(ComponentContext.class), properties);
+
+		AbsolutePortalURLBuilderFactory absolutePortalURLBuilderFactory = mock(
+			AbsolutePortalURLBuilderFactory.class);
+
+		AbsolutePortalURLBuilder absolutePortalURLBuilder = mock(
+			AbsolutePortalURLBuilder.class);
+
+		ServletAbsolutePortalURLBuilder servletAbsolutePortalURLBuilder = mock(
+			ServletAbsolutePortalURLBuilder.class);
+
+		when(
+			servletAbsolutePortalURLBuilder.build()
+		).thenReturn(
+			"/o/js_resolve_modules"
+		);
+
+		when(
+			absolutePortalURLBuilder.forServlet(Mockito.any())
+		).thenReturn(
+			servletAbsolutePortalURLBuilder
+		);
+
+		when(
+			absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				Mockito.any())
+		).thenReturn(
+			absolutePortalURLBuilder
+		);
+
+		jsLoaderConfigServlet.setAbsolutePortalURLBuilderFactory(
+			absolutePortalURLBuilderFactory);
 
 		MockServletContext mockServletContext = new MockServletContext();
 

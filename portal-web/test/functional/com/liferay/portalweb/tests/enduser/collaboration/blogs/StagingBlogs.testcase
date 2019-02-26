@@ -112,8 +112,8 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
-		Staging.publishViaSAP(
-			entry = "Blogs Entry Title",
+		Blogs.publishViaSAP(
+			entryTitle = "Blogs Entry Title",
 			confirmMessage = "Are you sure you want to publish to live?"
 		);
 

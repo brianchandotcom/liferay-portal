@@ -18,6 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.suggest.Suggester;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Michael C. Han
  */
@@ -36,19 +39,32 @@ public class SuggestSearchRequest
 		return searchRequestExecutor.executeSearchRequest(this);
 	}
 
+	public void addSuggester(Suggester suggester) {
+		_suggesterMap.put(suggester.getName(), suggester);
+	}
+
+	public String getGlobalText() {
+		return _globalText;
+	}
+
 	public String[] getIndexNames() {
 		return _indexNames;
 	}
 
-	public Suggester getSuggester() {
-		return _suggester;
+	public Suggester getSuggester(String name) {
+		return _suggesterMap.get(name);
 	}
 
-	public void setSuggester(Suggester suggester) {
-		_suggester = suggester;
+	public Map<String, Suggester> getSuggesterMap() {
+		return _suggesterMap;
 	}
 
+	public void setGlobalText(String globalText) {
+		_globalText = globalText;
+	}
+
+	private String _globalText;
 	private final String[] _indexNames;
-	private Suggester _suggester;
+	private Map<String, Suggester> _suggesterMap = new HashMap<>();
 
 }

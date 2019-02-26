@@ -30,25 +30,29 @@ public class SuggestSearchResponse implements SearchResponse {
 	public void addSuggestSearchResult(
 		SuggestSearchResult suggestSearchResult) {
 
-		_suggestSearchResult.put(
+		_suggestSearchResultMap.put(
 			suggestSearchResult.getName(), suggestSearchResult);
 	}
 
 	public Collection<String> getSuggesterNames() {
 		return Collections.unmodifiableCollection(
-			_suggestSearchResult.keySet());
+			_suggestSearchResultMap.keySet());
 	}
 
 	public SuggestSearchResult getSuggesterResult(String name) {
-		return _suggestSearchResult.get(name);
+		return _suggestSearchResultMap.get(name);
 	}
 
-	public Collection<SuggestSearchResult> getSuggestSearchResult() {
+	public Map<String, SuggestSearchResult> getSuggestSearchResultMap() {
+		return Collections.unmodifiableMap(_suggestSearchResultMap);
+	}
+
+	public Collection<SuggestSearchResult> getSuggestSearchResults() {
 		return Collections.unmodifiableCollection(
-			_suggestSearchResult.values());
+			_suggestSearchResultMap.values());
 	}
 
-	private final Map<String, SuggestSearchResult> _suggestSearchResult =
+	private final Map<String, SuggestSearchResult> _suggestSearchResultMap =
 		new HashMap<>();
 
 }

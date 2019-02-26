@@ -15,5 +15,6 @@ dependencies {
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":private:apps:portal-workflow:portal-workflow-metrics-api")
 	compileOnly project(":private:apps:portal-workflow:portal-workflow-metrics-rest-api")
 }

@@ -1,0 +1,10 @@
+buildService {
+	apiDir = "../document-library-change-tracking-api/src/main/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:document-library:document-library-change-tracking-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+}

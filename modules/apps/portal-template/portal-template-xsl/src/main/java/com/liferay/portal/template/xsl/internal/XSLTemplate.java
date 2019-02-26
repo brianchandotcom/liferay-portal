@@ -44,6 +44,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.xalan.processor.TransformerFactoryImpl;
+
 /**
  * @author Tina Tian
  * @author Peter Fellwock
@@ -72,7 +74,11 @@ public class XSLTemplate implements Template {
 		_preventLocalConnections =
 			xslEngineConfiguration.preventLocalConnections();
 
-		_transformerFactory = TransformerFactory.newInstance();
+		Class<?> transformerFactoryClass = TransformerFactoryImpl.class;
+
+		_transformerFactory = TransformerFactory.newInstance(
+			transformerFactoryClass.getName(),
+			transformerFactoryClass.getClassLoader());
 
 		try {
 			_transformerFactory.setFeature(

@@ -38,7 +38,6 @@ import com.liferay.portal.search.facet.custom.CustomFacetFactory;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.ProcessImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.util.ArrayList;
@@ -250,7 +249,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	}
 
 	private Process _toProcess(Document document) {
-		return new ProcessImpl() {
+		return new Process() {
 			{
 				instanceCount = _getInstanceCount(document.get("name"));
 				title = document.get("title");

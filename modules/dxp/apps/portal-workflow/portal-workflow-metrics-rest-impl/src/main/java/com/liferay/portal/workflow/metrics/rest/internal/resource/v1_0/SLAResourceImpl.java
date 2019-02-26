@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.SLAImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
@@ -80,6 +79,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				sla.getStopNodeNames(), _createServiceContext()));
 	}
 
+	@Override
 	public SLA putProcessSla(Long processId, Long slaId, SLA sla)
 		throws Exception {
 
@@ -111,7 +111,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	private SLA _toSLA(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		return new SLAImpl() {
+		return new SLA() {
 			{
 				setDescription(workflowMetricsSLADefinition.getDescription());
 				setDuration(workflowMetricsSLADefinition.getDuration());

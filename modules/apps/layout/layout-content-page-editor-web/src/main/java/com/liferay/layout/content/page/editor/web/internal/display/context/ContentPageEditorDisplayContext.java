@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,6 +59,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -82,11 +86,15 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -177,6 +185,21 @@ public class ContentPageEditorDisplayContext {
 		soyContext.put("languageId", themeDisplay.getLanguageId());
 		soyContext.put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData()));
+
+		Stream<SoyContext> mappedAssetEntriesStream =
+			_mappedAssetEntries.stream();
+
+		_mappedAssetEntries = mappedAssetEntriesStream.collect(
+			Collectors.collectingAndThen(
+				Collectors.toCollection(
+					() -> new TreeSet<>(
+						Comparator.comparingLong(
+							mappedSoyContext -> GetterUtil.getLong(
+								mappedSoyContext.get("assetEntryClassPK"))))),
+				HashSet::new));
+
+		soyContext.put("mappedAssetEntries", _mappedAssetEntries);
+
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
@@ -309,6 +332,57 @@ public class ContentPageEditorDisplayContext {
 	protected final long classPK;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
+
+	private void _addMappedAssetEntries(JSONObject editableValuesJSONObject) {
+		Iterator<String> keysIterator = editableValuesJSONObject.keys();
+
+		while (keysIterator.hasNext()) {
+			String key = keysIterator.next();
+
+			JSONObject editableProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(key);
+
+			Iterator<String> editableKeysIterator =
+				editableProcessorJSONObject.keys();
+
+			while (editableKeysIterator.hasNext()) {
+				String editableKey = editableKeysIterator.next();
+
+				JSONObject editableJSONObject =
+					editableProcessorJSONObject.getJSONObject(editableKey);
+
+				if (editableJSONObject.has("assetEntryClassNameId") &&
+					editableJSONObject.has("assetEntryClassPK") &&
+					editableJSONObject.has("assetEntryFieldName")) {
+
+					SoyContext mappedAssetEntrySoyContext =
+						SoyContextFactoryUtil.createSoyContext();
+
+					mappedAssetEntrySoyContext.put(
+						"assetEntryClassNameId",
+						editableJSONObject.get("assetEntryClassNameId"));
+					mappedAssetEntrySoyContext.put(
+						"assetEntryClassPK",
+						editableJSONObject.get("assetEntryClassPK"));
+
+					AssetEntry assetEntry =
+						AssetEntryLocalServiceUtil.fetchEntry(
+							editableJSONObject.getLong("assetEntryClassNameId"),
+							editableJSONObject.getLong("assetEntryClassPK"));
+
+					if (assetEntry == null) {
+						continue;
+					}
+
+					mappedAssetEntrySoyContext.put(
+						"assetEntryTitle",
+						assetEntry.getTitle(themeDisplay.getLocale()));
+
+					_mappedAssetEntries.add(mappedAssetEntrySoyContext);
+				}
+			}
+		}
+	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
@@ -725,10 +799,14 @@ public class ContentPageEditorDisplayContext {
 
 				soyContext.putHTML("content", content);
 
-				soyContext.put(
-					"editableValues",
+				JSONObject editableValuesJSONObject =
 					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues()));
+						fragmentEntryLink.getEditableValues());
+
+				_addMappedAssetEntries(editableValuesJSONObject);
+
+				soyContext.put("editableValues", editableValuesJSONObject);
+
 				soyContext.put(
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
@@ -862,6 +940,7 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
+	private Set<SoyContext> _mappedAssetEntries = new HashSet<>();
 	private String _redirect;
 	private final RenderResponse _renderResponse;
 	private List<SoyContext> _sidebarPanelSoyContexts;

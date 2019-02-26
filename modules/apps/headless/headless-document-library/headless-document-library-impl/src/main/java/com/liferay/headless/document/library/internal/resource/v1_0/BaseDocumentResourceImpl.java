@@ -116,57 +116,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 			MultipartBody multipartBody)
 		throws Exception {
 
-		Document existingDocument = getDocument(documentId);
-
-		if (Validator.isNotNull(document.getCategoryIds())) {
-			existingDocument.setCategoryIds(document.getCategoryIds());
-		}
-
-		if (Validator.isNotNull(document.getContentUrl())) {
-			existingDocument.setContentUrl(document.getContentUrl());
-		}
-
-		if (Validator.isNotNull(document.getDateCreated())) {
-			existingDocument.setDateCreated(document.getDateCreated());
-		}
-
-		if (Validator.isNotNull(document.getDateModified())) {
-			existingDocument.setDateModified(document.getDateModified());
-		}
-
-		if (Validator.isNotNull(document.getDescription())) {
-			existingDocument.setDescription(document.getDescription());
-		}
-
-		if (Validator.isNotNull(document.getEncodingFormat())) {
-			existingDocument.setEncodingFormat(document.getEncodingFormat());
-		}
-
-		if (Validator.isNotNull(document.getFileExtension())) {
-			existingDocument.setFileExtension(document.getFileExtension());
-		}
-
-		if (Validator.isNotNull(document.getFolderId())) {
-			existingDocument.setFolderId(document.getFolderId());
-		}
-
-		if (Validator.isNotNull(document.getId())) {
-			existingDocument.setId(document.getId());
-		}
-
-		if (Validator.isNotNull(document.getKeywords())) {
-			existingDocument.setKeywords(document.getKeywords());
-		}
-
-		if (Validator.isNotNull(document.getSizeInBytes())) {
-			existingDocument.setSizeInBytes(document.getSizeInBytes());
-		}
-
-		if (Validator.isNotNull(document.getTitle())) {
-			existingDocument.setTitle(document.getTitle());
-		}
-
-		return putDocument(documentId, existingDocument);
+		return new Document();
 	}
 
 	@Consumes("multipart/form-data")

@@ -26,6 +26,8 @@ import com.liferay.portal.tools.java.parser.util.JavaParserUtil;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -52,6 +54,16 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	public boolean containsCommentToken() {
 		return _containsCommentToken;
+	}
+
+	public String getAccessModifier() {
+		Matcher matcher = _accessModifierPattern.matcher(_content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
 	}
 
 	public String getClassName() {
@@ -174,6 +186,13 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 			return NO_ACTION_REQUIRED;
 		}
 
+		if (_className.equals(JavaVariableDefinition.class.getName()) &&
+			_className.equals(previousParsedJavaTerm.getClassName())) {
+
+			return _getBetweenVariableDefinitionsLineAction(
+				previousParsedJavaTerm);
+		}
+
 		if (StringUtil.endsWith(
 				previousParsedJavaTerm.getContent(),
 				CharPool.OPEN_CURLY_BRACE)) {
@@ -242,6 +261,16 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 		return _startPosition;
 	}
 
+	public String getVariableName() {
+		Matcher matcher = _variableNamePattern.matcher(_content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
+	}
+
 	public void setContainsCommentToken(boolean containsCommentToken) {
 		_containsCommentToken = containsCommentToken;
 	}
@@ -282,6 +311,63 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 				return true;
 			}
 		}
+	}
+
+	private int _getBetweenVariableDefinitionsLineAction(
+		ParsedJavaTerm previousJavaTerm) {
+
+		if ((_followingNestedCodeBlockClassName != null) ||
+			(previousJavaTerm._followingNestedCodeBlockClassName != null) ||
+			(previousJavaTerm._precedingNestedCodeBlockClassName != null) ||
+			(previousJavaTerm.getPrecedingCommentToken() != null)) {
+
+			return NO_ACTION_REQUIRED;
+		}
+
+		String accessModifier = getAccessModifier();
+		String previousAccessModifier = previousJavaTerm.getAccessModifier();
+
+		if ((accessModifier == null) && (previousAccessModifier == null)) {
+			return NO_ACTION_REQUIRED;
+		}
+
+		if (!Objects.equals(accessModifier, previousAccessModifier) ||
+			(previousJavaTerm.getPrecedingCommentToken() != null) ||
+			StringUtil.startsWith(StringUtil.trim(_content), CharPool.AT) ||
+			StringUtil.startsWith(
+				StringUtil.trim(previousJavaTerm.getContent()), CharPool.AT)) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		String previousContent = previousJavaTerm.getContent();
+
+		if (previousContent.matches("(?s).*\\sstatic\\s.*") ^
+			_content.matches("(?s).*\\sstatic\\s.*")) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		String previousVariableName = previousJavaTerm.getVariableName();
+		String variableName = getVariableName();
+
+		if ((StringUtil.isUpperCase(previousVariableName) &&
+			 !StringUtil.isLowerCase(previousVariableName)) ||
+			(StringUtil.isUpperCase(variableName) &&
+			 !StringUtil.isLowerCase(variableName))) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		if (previousContent.matches("(?s).*\\sstatic\\s.*") &&
+			(previousVariableName.equals("_instance") ||
+			 previousVariableName.equals("_log") ||
+			 previousVariableName.equals("_logger"))) {
+
+			return DOUBLE_LINE_BREAK_REQUIRED;
+		}
+
+		return SINGLE_LINE_BREAK_REQUIRED;
 	}
 
 	private int _getCloseCurlyBracePrecedingLineAction(String className) {
@@ -384,6 +470,11 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 		return SINGLE_LINE_BREAK_REQUIRED;
 	}
+
+	private static final Pattern _accessModifierPattern = Pattern.compile(
+		"\t(private|protected|public)\\s");
+	private static final Pattern _variableNamePattern = Pattern.compile(
+		"\\s(\\w+)( =|;)");
 
 	private final String _className;
 	private boolean _containsCommentToken;

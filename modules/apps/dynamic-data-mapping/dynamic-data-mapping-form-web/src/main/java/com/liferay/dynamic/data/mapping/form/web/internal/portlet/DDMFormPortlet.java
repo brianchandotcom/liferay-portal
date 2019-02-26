@@ -177,7 +177,8 @@ public class DDMFormPortlet extends MVCPortlet {
 			DDMFormDisplayContext ddmFormDisplayContext)
 		throws PortalException {
 
-		DDMFormInstance ddmFormInstance = ddmFormDisplayContext.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			ddmFormDisplayContext.getFormInstance();
 
 		if (ddmFormInstance == null) {
 			return;

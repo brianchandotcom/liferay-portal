@@ -32,7 +32,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 			String name, String description, long duration, long processId,
-			String[] startNodeNames, String[] pauseNodeNames,
+			String[] pauseNodeNames, String[] startNodeNames,
 			String[] stopNodeNames, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -54,10 +54,10 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
 		workflowMetricsSLADefinition.setProcessId(processId);
-		workflowMetricsSLADefinition.setStartNodeNames(
-			StringUtil.merge(startNodeNames));
 		workflowMetricsSLADefinition.setPauseNodeNames(
 			StringUtil.merge(pauseNodeNames));
+		workflowMetricsSLADefinition.setStartNodeNames(
+			StringUtil.merge(startNodeNames));
 		workflowMetricsSLADefinition.setStopNodeNames(
 			StringUtil.merge(stopNodeNames));
 
@@ -87,8 +87,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	@Override
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitiontId, String name,
-			String description, long duration, String[] startNodeNames,
-			String[] pauseNodeNames, String[] stopNodeNames,
+			String description, long duration, String[] pauseNodeNames,
+			String[] startNodeNames, String[] stopNodeNames,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -100,10 +100,10 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
-		workflowMetricsSLADefinition.setStartNodeNames(
-			StringUtil.merge(startNodeNames));
 		workflowMetricsSLADefinition.setPauseNodeNames(
 			StringUtil.merge(pauseNodeNames));
+		workflowMetricsSLADefinition.setStartNodeNames(
+			StringUtil.merge(startNodeNames));
 		workflowMetricsSLADefinition.setStopNodeNames(
 			StringUtil.merge(stopNodeNames));
 

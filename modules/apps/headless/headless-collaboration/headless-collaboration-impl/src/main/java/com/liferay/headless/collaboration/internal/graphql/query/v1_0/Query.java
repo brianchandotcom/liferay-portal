@@ -120,8 +120,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
+			@GraphQLName("filter") Filter filter,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
 		throws Exception {
 
 		BlogPostingImageResource blogPostingImageResource =
@@ -133,7 +134,7 @@ public class Query {
 
 		Page paginationPage =
 			blogPostingImageResource.getContentSpaceBlogPostingImagesPage(
-				contentSpaceId, Pagination.of(pageSize, page));
+				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
 	}

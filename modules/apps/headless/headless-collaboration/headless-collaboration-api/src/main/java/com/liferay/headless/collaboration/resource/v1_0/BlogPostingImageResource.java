@@ -16,6 +16,8 @@ package com.liferay.headless.collaboration.resource.v1_0;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -36,7 +38,8 @@ public interface BlogPostingImageResource {
 	public boolean deleteImageObject(Long imageObjectId) throws Exception;
 
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
-			Long contentSpaceId, Pagination pagination)
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public BlogPostingImage getImageObject(Long imageObjectId) throws Exception;

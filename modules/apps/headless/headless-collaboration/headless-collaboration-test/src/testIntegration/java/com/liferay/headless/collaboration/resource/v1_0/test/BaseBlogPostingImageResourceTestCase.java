@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -207,7 +209,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	protected Page<BlogPostingImage> invokeGetContentSpaceBlogPostingImagesPage(
-			Long contentSpaceId, Pagination pagination)
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -225,7 +228,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	protected Http.Response invokeGetContentSpaceBlogPostingImagesPageResponse(
-			Long contentSpaceId, Pagination pagination)
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

@@ -386,6 +386,10 @@ AUI.add(
 
 						form.get(namespace + 'redirect').val(redirectUrl);
 
+						var bulkSelection = instance._searchContainer.select && instance._searchContainer.select.get('bulkSelection');
+
+						form.get(namespace + 'selectAll').val(bulkSelection);
+
 						submitForm(form, url, false);
 					}
 				}

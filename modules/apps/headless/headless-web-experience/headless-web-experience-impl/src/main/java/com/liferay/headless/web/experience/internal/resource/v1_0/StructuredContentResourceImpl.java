@@ -282,9 +282,8 @@ public class StructuredContentResourceImpl
 				},
 				_createJournalArticleContent(
 					_toDDMFormFieldValues(
-						ddmStructure,
-						contextAcceptLanguage.getPreferredLocale(),
-						structuredContent.getContentFieldValues()),
+						structuredContent.getContentFieldValues(), ddmStructure,
+						contextAcceptLanguage.getPreferredLocale()),
 					ddmStructure),
 				ddmStructure.getStructureKey(),
 				_getDDMTemplateKey(ddmStructure), null,
@@ -330,8 +329,8 @@ public class StructuredContentResourceImpl
 				_journalConverter.getContent(
 					ddmStructure,
 					_toDDMFields(
-						journalArticle,
-						structuredContent.getContentFieldValues())),
+						structuredContent.getContentFieldValues(),
+						journalArticle)),
 				journalArticle.getDDMStructureKey(),
 				_getDDMTemplateKey(ddmStructure),
 				journalArticle.getLayoutUuid(),
@@ -469,16 +468,16 @@ public class StructuredContentResourceImpl
 	}
 
 	private Fields _toDDMFields(
-			JournalArticle journalArticle,
-			ContentFieldValue[] contentFieldValues)
+			ContentFieldValue[] contentFieldValues,
+			JournalArticle journalArticle)
 		throws PortalException {
 
 		Fields ddmFields = _journalConverter.getDDMFields(
 			journalArticle.getDDMStructure(), journalArticle.getContent());
 
 		List<DDMFormFieldValue> ddmFormFieldValues = _toDDMFormFieldValues(
-			journalArticle.getDDMStructure(),
-			contextAcceptLanguage.getPreferredLocale(), contentFieldValues);
+			contentFieldValues, journalArticle.getDDMStructure(),
+			contextAcceptLanguage.getPreferredLocale());
 
 		Iterator<com.liferay.dynamic.data.mapping.storage.Field> iterator =
 			ddmFields.iterator();
@@ -502,18 +501,17 @@ public class StructuredContentResourceImpl
 	}
 
 	private List<DDMFormFieldValue> _toDDMFormFieldValues(
-		DDMStructure ddmStructure, Locale locale,
-		ContentFieldValue[] contentFieldValues) {
+		ContentFieldValue[] contentFieldValuesArray, DDMStructure ddmStructure,
+		Locale locale) {
 
 		return transform(
-			Arrays.asList(contentFieldValues),
-			values -> {
-				return new DDMFormFieldValue() {
-					{
-						setName(values.getName());
-						setValue(_toDDMValue(ddmStructure, locale, values));
-					}
-				};
+			Arrays.asList(contentFieldValuesArray),
+			contentFieldValues -> new DDMFormFieldValue() {
+				{
+					setName(contentFieldValues.getName());
+					setValue(
+						_toDDMValue(ddmStructure, locale, contentFieldValues));
+				}
 			});
 	}
 

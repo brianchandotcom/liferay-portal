@@ -160,9 +160,8 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Segments experiences
 
-		segmentsExperienceLocalService.
-			deleteSegmentsEntrySegmentsExperiences(
-				segmentsEntry.getSegmentsEntryId());
+		segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
+			segmentsEntry.getSegmentsEntryId());
 
 		// Segments rels
 

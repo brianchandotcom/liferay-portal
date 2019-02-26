@@ -14,23 +14,14 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
-import com.liferay.portal.vulcan.yaml.openapi.Operation;
-
 /**
  * @author Peter Shin
  */
 public class JavaMethodParameter {
 
-	public JavaMethodParameter(
-		Operation operation, String parameterName, String parameterType) {
-
-		_operation = operation;
+	public JavaMethodParameter(String parameterName, String parameterType) {
 		_parameterName = parameterName;
 		_parameterType = parameterType;
-	}
-
-	public Operation getOperation() {
-		return _operation;
 	}
 
 	public String getParameterName() {
@@ -41,7 +32,6 @@ public class JavaMethodParameter {
 		return _parameterType;
 	}
 
-	private final Operation _operation;
 	private final String _parameterName;
 	private final String _parameterType;
 

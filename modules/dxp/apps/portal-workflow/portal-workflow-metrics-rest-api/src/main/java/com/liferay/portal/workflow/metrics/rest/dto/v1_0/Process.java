@@ -14,56 +14,170 @@
 
 package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Rafael Praxedes
  * @generated
  */
 @Generated("")
-public interface Process {
+@GraphQLName("Process")
+@XmlRootElement(name = "Process")
+public class Process {
 
-	public Long getId();
+	public Long getId() {
+		return id;
+	}
 
-	public void setId(
-			Long id);
+	public Integer getInstanceCount() {
+		return instanceCount;
+	}
 
-	public void setId(
-			UnsafeSupplier<Long, Throwable>
-				idUnsafeSupplier);
-	public Integer getInstanceCount();
+	public Integer getOntimeInstanceCount() {
+		return ontimeInstanceCount;
+	}
 
+	public Integer getOverdueInstanceCount() {
+		return overdueInstanceCount;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setInstanceCount(Integer instanceCount) {
+		this.instanceCount = instanceCount;
+	}
+
+	@JsonIgnore
 	public void setInstanceCount(
-			Integer instanceCount);
+		UnsafeSupplier<Integer, Exception> instanceCountUnsafeSupplier) {
 
-	public void setInstanceCount(
-			UnsafeSupplier<Integer, Throwable>
-				instanceCountUnsafeSupplier);
-	public Integer getOntimeInstanceCount();
+		try {
+			instanceCount = instanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public void setOntimeInstanceCount(Integer ontimeInstanceCount) {
+		this.ontimeInstanceCount = ontimeInstanceCount;
+	}
+
+	@JsonIgnore
 	public void setOntimeInstanceCount(
-			Integer ontimeInstanceCount);
+		UnsafeSupplier<Integer, Exception> ontimeInstanceCountUnsafeSupplier) {
 
-	public void setOntimeInstanceCount(
-			UnsafeSupplier<Integer, Throwable>
-				ontimeInstanceCountUnsafeSupplier);
-	public Integer getOverdueInstanceCount();
+		try {
+			ontimeInstanceCount = ontimeInstanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public void setOverdueInstanceCount(Integer overdueInstanceCount) {
+		this.overdueInstanceCount = overdueInstanceCount;
+	}
+
+	@JsonIgnore
 	public void setOverdueInstanceCount(
-			Integer overdueInstanceCount);
+		UnsafeSupplier<Integer, Exception> overdueInstanceCountUnsafeSupplier) {
 
-	public void setOverdueInstanceCount(
-			UnsafeSupplier<Integer, Throwable>
-				overdueInstanceCountUnsafeSupplier);
-	public String getTitle();
+		try {
+			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@JsonIgnore
 	public void setTitle(
-			String title);
+		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
 
-	public void setTitle(
-			UnsafeSupplier<String, Throwable>
-				titleUnsafeSupplier);
+		try {
+			title = titleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler(12);
+
+		sb.append("{");
+
+		sb.append("id=");
+
+		sb.append(id);
+		sb.append(", instanceCount=");
+
+		sb.append(instanceCount);
+		sb.append(", ontimeInstanceCount=");
+
+		sb.append(ontimeInstanceCount);
+		sb.append(", overdueInstanceCount=");
+
+		sb.append(overdueInstanceCount);
+		sb.append(", title=");
+
+		sb.append(title);
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long id;
+
+	@GraphQLField
+	@JsonProperty
+	protected Integer instanceCount;
+
+	@GraphQLField
+	@JsonProperty
+	protected Integer ontimeInstanceCount;
+
+	@GraphQLField
+	@JsonProperty
+	protected Integer overdueInstanceCount;
+
+	@GraphQLField
+	@JsonProperty
+	protected String title;
 
 }

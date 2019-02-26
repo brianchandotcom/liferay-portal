@@ -14,72 +14,224 @@
 
 package com.liferay.portal.workflow.metrics.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+
+import graphql.annotations.annotationTypes.GraphQLField;
+import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Rafael Praxedes
  * @generated
  */
 @Generated("")
-public interface SLA {
+@GraphQLName("SLA")
+@XmlRootElement(name = "SLA")
+public class SLA {
 
-	public String getName();
+	public String getDescription() {
+		return description;
+	}
 
-	public void setName(
-			String name);
+	public Long getDuration() {
+		return duration;
+	}
 
-	public void setName(
-			UnsafeSupplier<String, Throwable>
-				nameUnsafeSupplier);
-	public String getDescription();
+	public String getName() {
+		return name;
+	}
 
+	public String[] getPauseNodeNames() {
+		return pauseNodeNames;
+	}
+
+	public Long getProcessId() {
+		return processId;
+	}
+
+	public String[] getStartNodeNames() {
+		return startNodeNames;
+	}
+
+	public String[] getStopNodeNames() {
+		return stopNodeNames;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@JsonIgnore
 	public void setDescription(
-			String description);
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-	public void setDescription(
-			UnsafeSupplier<String, Throwable>
-				descriptionUnsafeSupplier);
-	public Long getDuration();
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public void setDuration(Long duration) {
+		this.duration = duration;
+	}
+
+	@JsonIgnore
 	public void setDuration(
-			Long duration);
+		UnsafeSupplier<Long, Exception> durationUnsafeSupplier) {
 
-	public void setDuration(
-			UnsafeSupplier<Long, Throwable>
-				durationUnsafeSupplier);
-	public Long getProcessId();
+		try {
+			duration = durationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-	public void setProcessId(
-			Long processId);
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	public void setProcessId(
-			UnsafeSupplier<Long, Throwable>
-				processIdUnsafeSupplier);
-	public String[] getStartNodeNames();
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-	public void setStartNodeNames(
-			String[] startNodeNames);
+	public void setPauseNodeNames(String[] pauseNodeNames) {
+		this.pauseNodeNames = pauseNodeNames;
+	}
 
-	public void setStartNodeNames(
-			UnsafeSupplier<String[], Throwable>
-				startNodeNamesUnsafeSupplier);
-	public String[] getPauseNodeNames();
-
+	@JsonIgnore
 	public void setPauseNodeNames(
-			String[] pauseNodeNames);
+		UnsafeSupplier<String[], Exception> pauseNodeNamesUnsafeSupplier) {
 
-	public void setPauseNodeNames(
-			UnsafeSupplier<String[], Throwable>
-				pauseNodeNamesUnsafeSupplier);
-	public String[] getStopNodeNames();
+		try {
+			pauseNodeNames = pauseNodeNamesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public void setProcessId(Long processId) {
+		this.processId = processId;
+	}
+
+	@JsonIgnore
+	public void setProcessId(
+		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
+
+		try {
+			processId = processIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setStartNodeNames(String[] startNodeNames) {
+		this.startNodeNames = startNodeNames;
+	}
+
+	@JsonIgnore
+	public void setStartNodeNames(
+		UnsafeSupplier<String[], Exception> startNodeNamesUnsafeSupplier) {
+
+		try {
+			startNodeNames = startNodeNamesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setStopNodeNames(String[] stopNodeNames) {
+		this.stopNodeNames = stopNodeNames;
+	}
+
+	@JsonIgnore
 	public void setStopNodeNames(
-			String[] stopNodeNames);
+		UnsafeSupplier<String[], Exception> stopNodeNamesUnsafeSupplier) {
 
-	public void setStopNodeNames(
-			UnsafeSupplier<String[], Throwable>
-				stopNodeNamesUnsafeSupplier);
+		try {
+			stopNodeNames = stopNodeNamesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler(16);
+
+		sb.append("{");
+
+		sb.append("name=");
+
+		sb.append(name);
+		sb.append(", description=");
+
+		sb.append(description);
+		sb.append(", duration=");
+
+		sb.append(duration);
+		sb.append(", processId=");
+
+		sb.append(processId);
+		sb.append(", startNodeNames=");
+
+		sb.append(startNodeNames);
+		sb.append(", pauseNodeNames=");
+
+		sb.append(pauseNodeNames);
+		sb.append(", stopNodeNames=");
+
+		sb.append(stopNodeNames);
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@GraphQLField
+	@JsonProperty
+	protected String description;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long duration;
+
+	@GraphQLField
+	@JsonProperty
+	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] pauseNodeNames;
+
+	@GraphQLField
+	@JsonProperty
+	protected Long processId;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] startNodeNames;
+
+	@GraphQLField
+	@JsonProperty
+	protected String[] stopNodeNames;
 
 }

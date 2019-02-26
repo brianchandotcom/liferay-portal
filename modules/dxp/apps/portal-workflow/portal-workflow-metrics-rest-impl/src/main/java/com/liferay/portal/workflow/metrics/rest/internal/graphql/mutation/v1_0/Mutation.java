@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0.SLAResourceImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import graphql.annotations.annotationTypes.GraphQLField;
@@ -23,10 +24,6 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Rafael Praxedes
  * @generated
@@ -34,52 +31,42 @@ import org.osgi.util.tracker.ServiceTracker;
 @Generated("")
 public class Mutation {
 
+	@GraphQLInvokeDetached
+	public boolean deleteProcessSla(
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("sla-id") Long slaId)
+		throws Exception {
+
+		SLAResource sLAResource = _createSLAResource();
+
+		return sLAResource.deleteProcessSla(processId, slaId);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public SLA postProcessSlas(
-	@GraphQLName("process-id") Long processId,@GraphQLName("SLA") SLA sLA)
-			throws Exception {
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("SLA") SLA sLA)
+		throws Exception {
 
-				return _getSLAResource().postProcessSlas(
-					processId,sLA);
-	}
-	@GraphQLInvokeDetached
-	public boolean deleteProcessSla(
-	@GraphQLName("process-id") Long processId,@GraphQLName("sla-id") Long slaId)
-			throws Exception {
+		SLAResource sLAResource = _createSLAResource();
 
-				return _getSLAResource().deleteProcessSla(
-					processId,slaId);
+		return sLAResource.postProcessSlas(processId, sLA);
 	}
+
 	@GraphQLInvokeDetached
 	public SLA putProcessSla(
-	@GraphQLName("process-id") Long processId,@GraphQLName("sla-id") Long slaId,@GraphQLName("SLA") SLA sLA)
-			throws Exception {
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("sla-id") Long slaId, @GraphQLName("SLA") SLA sLA)
+		throws Exception {
 
-				return _getSLAResource().putProcessSla(
-					processId,slaId,sLA);
+		SLAResource sLAResource = _createSLAResource();
+
+		return sLAResource.putProcessSla(processId, slaId, sLA);
 	}
 
-	private static SLAResource _getSLAResource() {
-			return _sLAResourceServiceTracker.getService();
-	}
-
-	private static final ServiceTracker<SLAResource, SLAResource>
-			_sLAResourceServiceTracker;
-
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Mutation.class);
-
-				ServiceTracker<SLAResource, SLAResource>
-					sLAResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							SLAResource.class, null);
-
-				sLAResourceServiceTracker.open();
-
-				_sLAResourceServiceTracker =
-					sLAResourceServiceTracker;
+	private static SLAResource _createSLAResource() {
+		return new SLAResourceImpl();
 	}
 
 }

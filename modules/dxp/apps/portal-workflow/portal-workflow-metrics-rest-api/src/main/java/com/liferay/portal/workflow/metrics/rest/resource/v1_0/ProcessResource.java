@@ -32,9 +32,8 @@ import javax.annotation.Generated;
 @Generated("")
 public interface ProcessResource {
 
-	public Page<Process> getProcessesPage(
-				String title,Pagination pagination)
-			throws Exception;
+	public Page<Process> getProcessesPage(String title, Pagination pagination)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

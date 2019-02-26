@@ -32,21 +32,18 @@ import javax.annotation.Generated;
 @Generated("")
 public interface SLAResource {
 
-	public Page<SLA> getProcessSLAsPage(
-				Long processId,Pagination pagination)
-			throws Exception;
-	public SLA postProcessSlas(
-				Long processId,SLA sLA)
-			throws Exception;
-	public boolean deleteProcessSla(
-				Long processId,Long slaId)
-			throws Exception;
-	public SLA getProcessSla(
-				Long processId,Long slaId)
-			throws Exception;
-	public SLA putProcessSla(
-				Long processId,Long slaId,SLA sLA)
-			throws Exception;
+	public boolean deleteProcessSla(Long processId, Long slaId)
+		throws Exception;
+
+	public SLA getProcessSla(Long processId, Long slaId) throws Exception;
+
+	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
+		throws Exception;
+
+	public SLA postProcessSlas(Long processId, SLA sLA) throws Exception;
+
+	public SLA putProcessSla(Long processId, Long slaId, SLA sLA)
+		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

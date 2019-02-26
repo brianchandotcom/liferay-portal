@@ -47,16 +47,16 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseProcessResourceImpl implements ProcessResource {
 
-	@Override
 	@GET
+	@Override
 	@Path("/processes")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public Page<Process> getProcessesPage(
-	@QueryParam("title") String title,@Context Pagination pagination)
-			throws Exception {
+			@QueryParam("title") String title, @Context Pagination pagination)
+		throws Exception {
 
-				return Page.of(Collections.emptyList());
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -76,10 +76,13 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Exception> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

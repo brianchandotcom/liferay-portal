@@ -20,6 +20,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0.ProcessResourceImpl;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0.SLAResourceImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
@@ -31,10 +33,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Rafael Praxedes
  * @generated
@@ -45,88 +43,65 @@ public class Query {
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Collection<Process> getProcessesPage(
-	@GraphQLName("title") String title,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
+			@GraphQLName("title") String title,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
 
-				ProcessResource processResource = _getProcessResource();
+		ProcessResource processResource = _createProcessResource();
 
-				processResource.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		processResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				Page paginationPage = processResource.getProcessesPage(
-					title,Pagination.of(pageSize, page));
+		Page paginationPage = processResource.getProcessesPage(
+			title, Pagination.of(pageSize, page));
 
-				return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public Collection<SLA> getProcessSLAsPage(
-	@GraphQLName("process-id") Long processId,@GraphQLName("pageSize") int pageSize,@GraphQLName("page") int page)
-			throws Exception {
-
-				SLAResource sLAResource = _getSLAResource();
-
-				sLAResource.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
-
-				Page paginationPage = sLAResource.getProcessSLAsPage(
-					processId,Pagination.of(pageSize, page));
-
-				return paginationPage.getItems();
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public SLA getProcessSla(
-	@GraphQLName("process-id") Long processId,@GraphQLName("sla-id") Long slaId)
-			throws Exception {
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("sla-id") Long slaId)
+		throws Exception {
 
-				SLAResource sLAResource = _getSLAResource();
+		SLAResource sLAResource = _createSLAResource();
 
-				sLAResource.setContextCompany(
-					CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
+		sLAResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
 
-				return sLAResource.getProcessSla(
-					processId,slaId);
+		return sLAResource.getProcessSla(processId, slaId);
 	}
 
-	private static ProcessResource _getProcessResource() {
-			return _processResourceServiceTracker.getService();
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<SLA> getProcessSLAsPage(
+			@GraphQLName("process-id") Long processId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		SLAResource sLAResource = _createSLAResource();
+
+		sLAResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage = sLAResource.getProcessSLAsPage(
+			processId, Pagination.of(pageSize, page));
+
+		return paginationPage.getItems();
 	}
 
-	private static final ServiceTracker<ProcessResource, ProcessResource>
-			_processResourceServiceTracker;
-	private static SLAResource _getSLAResource() {
-			return _sLAResourceServiceTracker.getService();
+	private static ProcessResource _createProcessResource() {
+		return new ProcessResourceImpl();
 	}
 
-	private static final ServiceTracker<SLAResource, SLAResource>
-			_sLAResourceServiceTracker;
-
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(Query.class);
-
-				ServiceTracker<ProcessResource, ProcessResource>
-					processResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							ProcessResource.class, null);
-
-				processResourceServiceTracker.open();
-
-				_processResourceServiceTracker =
-					processResourceServiceTracker;
-				ServiceTracker<SLAResource, SLAResource>
-					sLAResourceServiceTracker =
-						new ServiceTracker<>(
-							bundle.getBundleContext(),
-							SLAResource.class, null);
-
-				sLAResourceServiceTracker.open();
-
-				_sLAResourceServiceTracker =
-					sLAResourceServiceTracker;
+	private static SLAResource _createSLAResource() {
+		return new SLAResourceImpl();
 	}
 
 }

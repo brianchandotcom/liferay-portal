@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.SLAImpl;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
 import java.net.URI;
@@ -52,62 +51,69 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseSLAResourceImpl implements SLAResource {
 
-	@Override
-	@GET
-	@Path("/processes/{process-id}/slas")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public Page<SLA> getProcessSLAsPage(
-	@PathParam("process-id") Long processId,@Context Pagination pagination)
-			throws Exception {
-
-				return Page.of(Collections.emptyList());
-	}
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/processes/{process-id}/slas")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public SLA postProcessSlas(
-	@PathParam("process-id") Long processId,SLA sLA)
-			throws Exception {
-
-				return new SLAImpl();
-	}
-	@Override
 	@DELETE
+	@Override
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public boolean deleteProcessSla(
-	@PathParam("process-id") Long processId,@PathParam("sla-id") Long slaId)
-			throws Exception {
+			@PathParam("process-id") Long processId,
+			@PathParam("sla-id") Long slaId)
+		throws Exception {
 
-				return false;
+		return false;
 	}
-	@Override
+
 	@GET
+	@Override
 	@Path("/processes/{process-id}/slas/{sla-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
 	public SLA getProcessSla(
-	@PathParam("process-id") Long processId,@PathParam("sla-id") Long slaId)
-			throws Exception {
+			@PathParam("process-id") Long processId,
+			@PathParam("sla-id") Long slaId)
+		throws Exception {
 
-				return new SLAImpl();
+		return new SLA();
 	}
+
+	@GET
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Path("/processes/{process-id}/slas")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public SLA putProcessSla(
-	@PathParam("process-id") Long processId,@PathParam("sla-id") Long slaId,SLA sLA)
-			throws Exception {
+	public Page<SLA> getProcessSLAsPage(
+			@PathParam("process-id") Long processId,
+			@Context Pagination pagination)
+		throws Exception {
 
-				return new SLAImpl();
+		return Page.of(Collections.emptyList());
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/processes/{process-id}/slas")
+	@POST
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public SLA postProcessSlas(@PathParam("process-id") Long processId, SLA sLA)
+		throws Exception {
+
+		return new SLA();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Path("/processes/{process-id}/slas/{sla-id}")
+	@Produces("application/json")
+	@PUT
+	@RequiresScope("everything.read")
+	public SLA putProcessSla(
+			@PathParam("process-id") Long processId,
+			@PathParam("sla-id") Long slaId, SLA sLA)
+		throws Exception {
+
+		return new SLA();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -127,10 +133,13 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 			values
 		);
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		return baseURI.toString() + resourceURI.toString() +
+			methodURI.toString();
 	}
 
-	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Throwable> unsafeFunction) {
+	protected <T, R> List<R> transform(
+		List<T> list, UnsafeFunction<T, R, Exception> unsafeFunction) {
+
 		return TransformUtil.transform(list, unsafeFunction);
 	}
 

@@ -14,18 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.context.resolver.v1_0;
 
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.ProcessImpl;
-import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.SLAImpl;
 
 import javax.annotation.Generated;
 
@@ -48,7 +40,8 @@ import org.osgi.service.component.annotations.Component;
 )
 @Generated("")
 @Provider
-public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {
+public class ObjectMapperContextResolver
+	implements ContextResolver<ObjectMapper> {
 
 	public ObjectMapper getContext(Class<?> clazz) {
 		return _objectMapper;
@@ -58,20 +51,8 @@ public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper
 		{
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
-			registerModule(
-				new SimpleModule("portal-workflow-metrics-rest-application", Version.unknownVersion()) {
-					{
-						setAbstractTypes(
-							new SimpleAbstractTypeResolver() {
-								{
-									addMapping(Process.class, ProcessImpl.class);
-									addMapping(SLA.class, SLAImpl.class);
-	}
-							});
-	}
-				});
 			setDateFormat(new ISO8601DateFormat());
-	}
+		}
 	};
 
 }

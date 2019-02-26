@@ -17,6 +17,9 @@ package com.liferay.portal.app.license.resolver.hook;
 import com.liferay.portal.app.license.AppLicenseVerifier;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.hooks.resolver.ResolverHook;
@@ -38,13 +41,18 @@ public class AppResolverHookFactory implements ResolverHookFactory {
 
 	@Override
 	public ResolverHook begin(Collection<BundleRevision> triggers) {
-		return new AppResolverHook(_serviceTracker);
+		return new AppResolverHook(
+			_serviceTracker, _filteredBundleSymbolicNames, _filteredProductIds);
 	}
 
 	public void close() {
 		_serviceTracker.close();
 	}
 
+	private final Set<String> _filteredBundleSymbolicNames =
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private final Set<String> _filteredProductIds = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
 	private final ServiceTracker<AppLicenseVerifier, AppLicenseVerifier>
 		_serviceTracker;
 

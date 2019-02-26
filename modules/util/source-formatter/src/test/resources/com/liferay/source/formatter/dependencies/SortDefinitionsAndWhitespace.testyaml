@@ -1,0 +1,71 @@
+components:
+  schemas:
+    WebUrl:
+      properties:
+        url:
+          type: string
+        id:
+          type: integer
+          format: int64
+        urlType:
+          type: string
+      description: https://www.schema.org/WebUrl
+      type: object
+    Email:
+      properties:
+        type:
+          type: string
+        id:
+          type: integer
+          format: int64
+      type: object
+      description: https://www.schema.org/Email
+info:
+  title: ""
+  version: v1.0
+  description: ""
+openapi: 3.0.1
+paths:
+  "/addresses/{address-id}":
+    get:
+      parameters:
+        - in: path
+          name: address-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostalAddress"
+          description: ""
+      tags: ["PostalAddress"]
+  "/addresses":
+    get:
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PostalAddress"
+          description: ""
+      tags: ["PostalAddress"]
+      parameters:
+        - in: query
+          schema:
+            type: integer
+          name: page
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: path
+          name: generic-parent-id
+          required: true
+          schema:
+            type: object

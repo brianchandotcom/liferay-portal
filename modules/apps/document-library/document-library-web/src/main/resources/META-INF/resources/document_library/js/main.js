@@ -279,11 +279,7 @@ AUI.add(
 								uri: instance.get('selectFolderURL')
 							},
 							function(event) {
-								var form = instance.get('form').node;
-
-								form.get(instance.NS + 'newFolderId').val(event.folderid);
-
-								instance._processAction('move', location.href);
+								instance._processMoveAction(event.folderid);
 							}
 						);
 					},
@@ -346,6 +342,23 @@ AUI.add(
 						form.get(namespace + 'selectAll').val(bulkSelection);
 
 						submitForm(form, url, false);
+					},
+
+					_processMoveAction(newFolderId) {
+						var instance = this;
+
+						var form = instance.get('form').node;
+
+						var actionUrl = instance.get('editEntryUrl');
+
+						form.attr('action', actionUrl);
+						form.attr('method', 'POST');
+						form.attr('enctype', 'multipart/form-data');
+
+						form.get(instance.NS + 'cmd').val('move');
+						form.get(instance.NS + 'newFolderId').val(newFolderId);
+
+						submitForm(form, actionUrl, false);
 					}
 				}
 			}

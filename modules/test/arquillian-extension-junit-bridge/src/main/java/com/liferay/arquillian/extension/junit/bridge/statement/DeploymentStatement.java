@@ -20,14 +20,15 @@ import aQute.bnd.build.Workspace;
 import aQute.bnd.osgi.AbstractResource;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Resource;
 
 import com.liferay.arquillian.extension.junit.bridge.activator.ArquillianBundleActivator;
 import com.liferay.arquillian.extension.junit.bridge.jmx.JMXProxyUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -38,22 +39,24 @@ import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import javax.management.ObjectName;
-
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
-import org.jboss.shrinkwrap.api.importer.ZipImporter;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 import org.junit.runners.model.Statement;
 
@@ -93,28 +96,15 @@ public class DeploymentStatement extends Statement {
 
 			Jar jar = _createJar(project, projectBuilder)) {
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			jar.write(byteArrayOutputStream);
-
-			ZipImporter zipImporter = ShrinkWrap.create(ZipImporter.class);
-
-			zipImporter.importFrom(
-				new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
-
-			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
-
-			_process(javaArchive);
-
 			Path path = Files.createTempFile(null, ".jar");
 
-			ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
+			Map<String, Resource> resources = _getArquillianClasses();
 
-			try (InputStream inputStream = zipExporter.exportAsInputStream()) {
-				Files.copy(
-					inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+			for (Map.Entry<String, Resource> entry : resources.entrySet()) {
+				jar.putResource(entry.getKey(), entry.getValue());
 			}
+
+			jar.write(path.toFile());
 
 			return path;
 		}
@@ -133,14 +123,7 @@ public class DeploymentStatement extends Statement {
 
 		jar.putResource(
 			"/arquillian.remote.marker",
-			new AbstractResource(System.currentTimeMillis()) {
-
-				@Override
-				protected byte[] getBytes() throws Exception {
-					return new byte[0];
-				}
-
-			});
+			new ByteResource(System.currentTimeMillis(), new byte[0]));
 
 		return jar;
 	}
@@ -195,6 +178,53 @@ public class DeploymentStatement extends Statement {
 		return projectBuilder;
 	}
 
+	private static Map<String, Resource> _getArquillianClasses()
+		throws Exception {
+
+		ProtectionDomain protectionDomain =
+			DeploymentStatement.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		File file = new File(url.toURI());
+
+		Map<String, Resource> resources = new HashMap<>();
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (!name.endsWith(".class")) {
+					continue;
+				}
+
+				try (ByteArrayOutputStream byteArrayOutputStream =
+						new ByteArrayOutputStream();
+					InputStream inputStream = zipFile.getInputStream(
+						zipEntry)) {
+
+					StreamUtil.transfer(
+						inputStream, byteArrayOutputStream, false);
+
+					byte[] bytes = byteArrayOutputStream.toByteArray();
+
+					resources.put(
+						name,
+						new ByteResource(System.currentTimeMillis(), bytes));
+
+				}
+			}
+		}
+
+		return resources;
+	}
+
 	private static List<File> _getClassPathFiles() {
 		List<File> files = new ArrayList<>();
 
@@ -215,11 +245,6 @@ public class DeploymentStatement extends Statement {
 		}
 
 		return files;
-	}
-
-	private static void _process(JavaArchive javaArchive) {
-		javaArchive.addPackages(
-			true, "com.liferay.arquillian.extension.junit.bridge");
 	}
 
 	private long _installBundle(FrameworkMBean frameworkMBean, Path path)
@@ -267,5 +292,22 @@ public class DeploymentStatement extends Statement {
 	}
 
 	private final Statement _statement;
+
+	private static class ByteResource extends AbstractResource {
+
+		public ByteResource(long modified, byte[] bytes) {
+			super(modified);
+
+			_bytes = bytes;
+		}
+
+		@Override
+		protected byte[] getBytes() throws Exception {
+			return _bytes;
+		}
+
+		private final byte[] _bytes;
+
+	}
 
 }

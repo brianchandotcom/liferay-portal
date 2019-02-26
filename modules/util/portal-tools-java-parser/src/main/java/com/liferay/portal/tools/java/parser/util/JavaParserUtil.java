@@ -591,8 +591,12 @@ public class JavaParserUtil {
 				javaAnnotationMemberValuePairs);
 		}
 		else {
-			javaAnnotation.setValueJavaExpression(
-				_parseJavaExpression(lparenDetailAST.getNextSibling()));
+			DetailAST nextSiblingDetailAST = lparenDetailAST.getNextSibling();
+
+			if (nextSiblingDetailAST.getType() != TokenTypes.RPAREN) {
+				javaAnnotation.setValueJavaExpression(
+					_parseJavaExpression(lparenDetailAST.getNextSibling()));
+			}
 		}
 
 		return javaAnnotation;

@@ -41,6 +41,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -696,7 +697,10 @@ public class JavaParser {
 			fileContents, startLineNumber, endLineNumber);
 
 		if (!actualJavaTermContent.contains(expectedJavaTermContent) &&
-			!actualJavaTermContent.contains("\n\n")) {
+			(!actualJavaTermContent.contains("\n\n") ||
+			 !Objects.equals(
+				 parsedJavaTerm.getClassName(),
+				 JavaTryStatement.class.getName()))) {
 
 			return _fixContent(
 				content, parsedJavaTerm.getContent(), startPosition,

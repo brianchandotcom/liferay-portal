@@ -27,9 +27,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-import java.util.function.Predicate;
 
 /**
  * @author Peter Shin
@@ -64,29 +62,21 @@ public class FreeMarkerTool {
 		ConfigYAML configYAML, final String graphQLType,
 		OpenAPIYAML openAPIYAML) {
 
-		Predicate<Operation> predicate = new Predicate<Operation>() {
+		return GraphQLOpenAPIParser.getJavaMethodSignatures(
+			configYAML, openAPIYAML,
+			operation -> {
+				String requiredType = "mutation";
 
-			@Override
-			public boolean test(Operation operation) {
-				if (Objects.equals(graphQLType, "mutation") &&
-					!Get.class.isInstance(operation)) {
-
-					return true;
+				if (operation instanceof Get) {
+					requiredType = "query";
 				}
 
-				if (Objects.equals(graphQLType, "query") &&
-					Get.class.isInstance(operation)) {
-
+				if (requiredType.equals(graphQLType)) {
 					return true;
 				}
 
 				return false;
-			}
-
-		};
-
-		return GraphQLOpenAPIParser.getJavaMethodSignatures(
-			configYAML, openAPIYAML, predicate);
+			});
 	}
 
 	public String getGraphQLMethodAnnotations(

@@ -147,6 +147,12 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		newWorkflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
+		newWorkflowMetricsSLADefinition.setPauseNodeNames(RandomTestUtil.randomString());
+
+		newWorkflowMetricsSLADefinition.setStartNodeNames(RandomTestUtil.randomString());
+
+		newWorkflowMetricsSLADefinition.setStopNodeNames(RandomTestUtil.randomString());
+
 		_workflowMetricsSLADefinitions.add(_persistence.update(
 				newWorkflowMetricsSLADefinition));
 
@@ -182,6 +188,12 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			newWorkflowMetricsSLADefinition.getDuration());
 		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getProcessId(),
 			newWorkflowMetricsSLADefinition.getProcessId());
+		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getPauseNodeNames(),
+			newWorkflowMetricsSLADefinition.getPauseNodeNames());
+		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getStartNodeNames(),
+			newWorkflowMetricsSLADefinition.getStartNodeNames());
+		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getStopNodeNames(),
+			newWorkflowMetricsSLADefinition.getStopNodeNames());
 	}
 
 	@Test
@@ -258,7 +270,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
-			"duration", true, "processId", true);
+			"duration", true, "processId", true, "pauseNodeNames", true,
+			"startNodeNames", true, "stopNodeNames", true);
 	}
 
 	@Test
@@ -536,6 +549,12 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		workflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
 
 		workflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
+
+		workflowMetricsSLADefinition.setPauseNodeNames(RandomTestUtil.randomString());
+
+		workflowMetricsSLADefinition.setStartNodeNames(RandomTestUtil.randomString());
+
+		workflowMetricsSLADefinition.setStopNodeNames(RandomTestUtil.randomString());
 
 		_workflowMetricsSLADefinitions.add(_persistence.update(
 				workflowMetricsSLADefinition));

@@ -63,7 +63,9 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	 */
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 		String name, String description, long duration, long processId,
-		ServiceContext serviceContext) throws PortalException;
+		String[] pauseNodeNames, String[] startNodeNames,
+		String[] stopNodeNames, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the workflow metrics sla definition to the database. Also notifies the appropriate model listeners.
@@ -253,6 +255,10 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, long processId);
+
 	/**
 	* Returns all the workflow metrics sla definitions matching the UUID and company.
 	*
@@ -287,9 +293,15 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWorkflowMetricsSLADefinitionsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWorkflowMetricsSLADefinitionsCount(long companyId,
+		long processId);
+
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 		long workflowMetricsSLADefinitiontId, String name, String description,
-		long duration, ServiceContext serviceContext) throws PortalException;
+		long duration, String[] pauseNodeNames, String[] startNodeNames,
+		String[] stopNodeNames, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the workflow metrics sla definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

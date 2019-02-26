@@ -47,6 +47,9 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDuration(model.getDuration());
 		soapModel.setProcessId(model.getProcessId());
+		soapModel.setPauseNodeNames(model.getPauseNodeNames());
+		soapModel.setStartNodeNames(model.getStartNodeNames());
+		soapModel.setStopNodeNames(model.getStopNodeNames());
 
 		return soapModel;
 	}
@@ -207,6 +210,30 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		_processId = processId;
 	}
 
+	public String getPauseNodeNames() {
+		return _pauseNodeNames;
+	}
+
+	public void setPauseNodeNames(String pauseNodeNames) {
+		_pauseNodeNames = pauseNodeNames;
+	}
+
+	public String getStartNodeNames() {
+		return _startNodeNames;
+	}
+
+	public void setStartNodeNames(String startNodeNames) {
+		_startNodeNames = startNodeNames;
+	}
+
+	public String getStopNodeNames() {
+		return _stopNodeNames;
+	}
+
+	public void setStopNodeNames(String stopNodeNames) {
+		_stopNodeNames = stopNodeNames;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _workflowMetricsSLADefinitionId;
@@ -220,4 +247,7 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 	private String _description;
 	private long _duration;
 	private long _processId;
+	private String _pauseNodeNames;
+	private String _startNodeNames;
+	private String _stopNodeNames;
 }

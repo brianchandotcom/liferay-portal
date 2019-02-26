@@ -79,7 +79,7 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,12 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 		sb.append(duration);
 		sb.append(", processId=");
 		sb.append(processId);
+		sb.append(", pauseNodeNames=");
+		sb.append(pauseNodeNames);
+		sb.append(", startNodeNames=");
+		sb.append(startNodeNames);
+		sb.append(", stopNodeNames=");
+		sb.append(stopNodeNames);
 		sb.append("}");
 
 		return sb.toString();
@@ -169,6 +175,27 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 		workflowMetricsSLADefinitionImpl.setDuration(duration);
 		workflowMetricsSLADefinitionImpl.setProcessId(processId);
 
+		if (pauseNodeNames == null) {
+			workflowMetricsSLADefinitionImpl.setPauseNodeNames("");
+		}
+		else {
+			workflowMetricsSLADefinitionImpl.setPauseNodeNames(pauseNodeNames);
+		}
+
+		if (startNodeNames == null) {
+			workflowMetricsSLADefinitionImpl.setStartNodeNames("");
+		}
+		else {
+			workflowMetricsSLADefinitionImpl.setStartNodeNames(startNodeNames);
+		}
+
+		if (stopNodeNames == null) {
+			workflowMetricsSLADefinitionImpl.setStopNodeNames("");
+		}
+		else {
+			workflowMetricsSLADefinitionImpl.setStopNodeNames(stopNodeNames);
+		}
+
 		workflowMetricsSLADefinitionImpl.resetOriginalValues();
 
 		return workflowMetricsSLADefinitionImpl;
@@ -195,6 +222,9 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 		duration = objectInput.readLong();
 
 		processId = objectInput.readLong();
+		pauseNodeNames = objectInput.readUTF();
+		startNodeNames = objectInput.readUTF();
+		stopNodeNames = objectInput.readUTF();
 	}
 
 	@Override
@@ -244,6 +274,27 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 		objectOutput.writeLong(duration);
 
 		objectOutput.writeLong(processId);
+
+		if (pauseNodeNames == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(pauseNodeNames);
+		}
+
+		if (startNodeNames == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(startNodeNames);
+		}
+
+		if (stopNodeNames == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(stopNodeNames);
+		}
 	}
 
 	public long mvccVersion;
@@ -259,4 +310,7 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 	public String description;
 	public long duration;
 	public long processId;
+	public String pauseNodeNames;
+	public String startNodeNames;
+	public String stopNodeNames;
 }

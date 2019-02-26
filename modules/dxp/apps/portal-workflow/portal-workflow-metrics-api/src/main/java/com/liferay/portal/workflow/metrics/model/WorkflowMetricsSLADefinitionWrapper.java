@@ -61,6 +61,9 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
 		attributes.put("processId", getProcessId());
+		attributes.put("pauseNodeNames", getPauseNodeNames());
+		attributes.put("startNodeNames", getStartNodeNames());
+		attributes.put("stopNodeNames", getStopNodeNames());
 
 		return attributes;
 	}
@@ -145,6 +148,24 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 		if (processId != null) {
 			setProcessId(processId);
 		}
+
+		String pauseNodeNames = (String)attributes.get("pauseNodeNames");
+
+		if (pauseNodeNames != null) {
+			setPauseNodeNames(pauseNodeNames);
+		}
+
+		String startNodeNames = (String)attributes.get("startNodeNames");
+
+		if (startNodeNames != null) {
+			setStartNodeNames(startNodeNames);
+		}
+
+		String stopNodeNames = (String)attributes.get("stopNodeNames");
+
+		if (stopNodeNames != null) {
+			setStopNodeNames(stopNodeNames);
+		}
 	}
 
 	/**
@@ -228,6 +249,16 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	}
 
 	/**
+	* Returns the pause node names of this workflow metrics sla definition.
+	*
+	* @return the pause node names of this workflow metrics sla definition
+	*/
+	@Override
+	public String getPauseNodeNames() {
+		return model.getPauseNodeNames();
+	}
+
+	/**
 	* Returns the primary key of this workflow metrics sla definition.
 	*
 	* @return the primary key of this workflow metrics sla definition
@@ -245,6 +276,26 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	@Override
 	public long getProcessId() {
 		return model.getProcessId();
+	}
+
+	/**
+	* Returns the start node names of this workflow metrics sla definition.
+	*
+	* @return the start node names of this workflow metrics sla definition
+	*/
+	@Override
+	public String getStartNodeNames() {
+		return model.getStartNodeNames();
+	}
+
+	/**
+	* Returns the stop node names of this workflow metrics sla definition.
+	*
+	* @return the stop node names of this workflow metrics sla definition
+	*/
+	@Override
+	public String getStopNodeNames() {
+		return model.getStopNodeNames();
 	}
 
 	/**
@@ -383,6 +434,16 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	}
 
 	/**
+	* Sets the pause node names of this workflow metrics sla definition.
+	*
+	* @param pauseNodeNames the pause node names of this workflow metrics sla definition
+	*/
+	@Override
+	public void setPauseNodeNames(String pauseNodeNames) {
+		model.setPauseNodeNames(pauseNodeNames);
+	}
+
+	/**
 	* Sets the primary key of this workflow metrics sla definition.
 	*
 	* @param primaryKey the primary key of this workflow metrics sla definition
@@ -400,6 +461,26 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	@Override
 	public void setProcessId(long processId) {
 		model.setProcessId(processId);
+	}
+
+	/**
+	* Sets the start node names of this workflow metrics sla definition.
+	*
+	* @param startNodeNames the start node names of this workflow metrics sla definition
+	*/
+	@Override
+	public void setStartNodeNames(String startNodeNames) {
+		model.setStartNodeNames(startNodeNames);
+	}
+
+	/**
+	* Sets the stop node names of this workflow metrics sla definition.
+	*
+	* @param stopNodeNames the stop node names of this workflow metrics sla definition
+	*/
+	@Override
+	public void setStopNodeNames(String stopNodeNames) {
+		model.setStopNodeNames(stopNodeNames);
 	}
 
 	/**

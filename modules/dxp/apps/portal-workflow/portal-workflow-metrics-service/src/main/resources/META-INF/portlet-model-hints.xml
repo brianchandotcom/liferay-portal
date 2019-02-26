@@ -38,5 +38,8 @@
 		<field name="description" type="String" />
 		<field name="duration" type="long" />
 		<field name="processId" type="long" />
+		<field name="pauseNodeNames" type="String" />
+		<field name="startNodeNames" type="String" />
+		<field name="stopNodeNames" type="String" />
 	</model>
 </model-hints>

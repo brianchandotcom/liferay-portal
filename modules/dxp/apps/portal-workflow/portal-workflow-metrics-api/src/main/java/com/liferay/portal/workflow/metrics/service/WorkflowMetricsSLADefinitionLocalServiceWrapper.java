@@ -37,10 +37,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 		String name, String description, long duration, long processId,
+		String[] pauseNodeNames, String[] startNodeNames,
+		String[] stopNodeNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowMetricsSLADefinitionLocalService.addWorkflowMetricsSLADefinition(name,
-			description, duration, processId, serviceContext);
+			description, duration, processId, pauseNodeNames, startNodeNames,
+			stopNodeNames, serviceContext);
 	}
 
 	/**
@@ -290,6 +293,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, long processId) {
+		return _workflowMetricsSLADefinitionLocalService.getWorkflowMetricsSLADefinitions(companyId,
+			processId);
+	}
+
 	/**
 	* Returns all the workflow metrics sla definitions matching the UUID and company.
 	*
@@ -333,13 +343,22 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public int getWorkflowMetricsSLADefinitionsCount(long companyId,
+		long processId) {
+		return _workflowMetricsSLADefinitionLocalService.getWorkflowMetricsSLADefinitionsCount(companyId,
+			processId);
+	}
+
+	@Override
 	public com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 		long workflowMetricsSLADefinitiontId, String name, String description,
-		long duration,
+		long duration, String[] pauseNodeNames, String[] startNodeNames,
+		String[] stopNodeNames,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowMetricsSLADefinitionLocalService.updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinitiontId,
-			name, description, duration, serviceContext);
+			name, description, duration, pauseNodeNames, startNodeNames,
+			stopNodeNames, serviceContext);
 	}
 
 	/**

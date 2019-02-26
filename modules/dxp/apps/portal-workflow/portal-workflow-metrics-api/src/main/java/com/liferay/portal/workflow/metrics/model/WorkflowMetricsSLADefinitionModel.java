@@ -277,4 +277,49 @@ public interface WorkflowMetricsSLADefinitionModel extends BaseModel<WorkflowMet
 	 * @param processId the process ID of this workflow metrics sla definition
 	 */
 	public void setProcessId(long processId);
+
+	/**
+	 * Returns the pause node names of this workflow metrics sla definition.
+	 *
+	 * @return the pause node names of this workflow metrics sla definition
+	 */
+	@AutoEscape
+	public String getPauseNodeNames();
+
+	/**
+	 * Sets the pause node names of this workflow metrics sla definition.
+	 *
+	 * @param pauseNodeNames the pause node names of this workflow metrics sla definition
+	 */
+	public void setPauseNodeNames(String pauseNodeNames);
+
+	/**
+	 * Returns the start node names of this workflow metrics sla definition.
+	 *
+	 * @return the start node names of this workflow metrics sla definition
+	 */
+	@AutoEscape
+	public String getStartNodeNames();
+
+	/**
+	 * Sets the start node names of this workflow metrics sla definition.
+	 *
+	 * @param startNodeNames the start node names of this workflow metrics sla definition
+	 */
+	public void setStartNodeNames(String startNodeNames);
+
+	/**
+	 * Returns the stop node names of this workflow metrics sla definition.
+	 *
+	 * @return the stop node names of this workflow metrics sla definition
+	 */
+	@AutoEscape
+	public String getStopNodeNames();
+
+	/**
+	 * Sets the stop node names of this workflow metrics sla definition.
+	 *
+	 * @param stopNodeNames the stop node names of this workflow metrics sla definition
+	 */
+	public void setStopNodeNames(String stopNodeNames);
 }

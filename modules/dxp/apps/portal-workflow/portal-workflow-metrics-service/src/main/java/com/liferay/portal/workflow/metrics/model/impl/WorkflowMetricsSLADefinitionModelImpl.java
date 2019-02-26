@@ -82,7 +82,10 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "duration", Types.BIGINT },
-			{ "processId", Types.BIGINT }
+			{ "processId", Types.BIGINT },
+			{ "pauseNodeNames", Types.VARCHAR },
+			{ "startNodeNames", Types.VARCHAR },
+			{ "stopNodeNames", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -100,9 +103,12 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("processId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("pauseNodeNames", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("startNodeNames", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("stopNodeNames", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,duration LONG,processId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,duration LONG,processId LONG,pauseNodeNames VARCHAR(75) null,startNodeNames VARCHAR(75) null,stopNodeNames VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table WorkflowMetricsSLADefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY workflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WorkflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
@@ -245,6 +251,12 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		attributeSetterBiConsumers.put("duration", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setDuration);
 		attributeGetterFunctions.put("processId", WorkflowMetricsSLADefinition::getProcessId);
 		attributeSetterBiConsumers.put("processId", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setProcessId);
+		attributeGetterFunctions.put("pauseNodeNames", WorkflowMetricsSLADefinition::getPauseNodeNames);
+		attributeSetterBiConsumers.put("pauseNodeNames", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setPauseNodeNames);
+		attributeGetterFunctions.put("startNodeNames", WorkflowMetricsSLADefinition::getStartNodeNames);
+		attributeSetterBiConsumers.put("startNodeNames", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setStartNodeNames);
+		attributeGetterFunctions.put("stopNodeNames", WorkflowMetricsSLADefinition::getStopNodeNames);
+		attributeSetterBiConsumers.put("stopNodeNames", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setStopNodeNames);
 
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
@@ -481,6 +493,51 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	}
 
 	@Override
+	public String getPauseNodeNames() {
+		if (_pauseNodeNames == null) {
+			return "";
+		}
+		else {
+			return _pauseNodeNames;
+		}
+	}
+
+	@Override
+	public void setPauseNodeNames(String pauseNodeNames) {
+		_pauseNodeNames = pauseNodeNames;
+	}
+
+	@Override
+	public String getStartNodeNames() {
+		if (_startNodeNames == null) {
+			return "";
+		}
+		else {
+			return _startNodeNames;
+		}
+	}
+
+	@Override
+	public void setStartNodeNames(String startNodeNames) {
+		_startNodeNames = startNodeNames;
+	}
+
+	@Override
+	public String getStopNodeNames() {
+		if (_stopNodeNames == null) {
+			return "";
+		}
+		else {
+			return _stopNodeNames;
+		}
+	}
+
+	@Override
+	public void setStopNodeNames(String stopNodeNames) {
+		_stopNodeNames = stopNodeNames;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				WorkflowMetricsSLADefinition.class.getName()));
@@ -530,6 +587,9 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		workflowMetricsSLADefinitionImpl.setDescription(getDescription());
 		workflowMetricsSLADefinitionImpl.setDuration(getDuration());
 		workflowMetricsSLADefinitionImpl.setProcessId(getProcessId());
+		workflowMetricsSLADefinitionImpl.setPauseNodeNames(getPauseNodeNames());
+		workflowMetricsSLADefinitionImpl.setStartNodeNames(getStartNodeNames());
+		workflowMetricsSLADefinitionImpl.setStopNodeNames(getStopNodeNames());
 
 		workflowMetricsSLADefinitionImpl.resetOriginalValues();
 
@@ -684,6 +744,30 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 		workflowMetricsSLADefinitionCacheModel.processId = getProcessId();
 
+		workflowMetricsSLADefinitionCacheModel.pauseNodeNames = getPauseNodeNames();
+
+		String pauseNodeNames = workflowMetricsSLADefinitionCacheModel.pauseNodeNames;
+
+		if ((pauseNodeNames != null) && (pauseNodeNames.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.pauseNodeNames = null;
+		}
+
+		workflowMetricsSLADefinitionCacheModel.startNodeNames = getStartNodeNames();
+
+		String startNodeNames = workflowMetricsSLADefinitionCacheModel.startNodeNames;
+
+		if ((startNodeNames != null) && (startNodeNames.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.startNodeNames = null;
+		}
+
+		workflowMetricsSLADefinitionCacheModel.stopNodeNames = getStopNodeNames();
+
+		String stopNodeNames = workflowMetricsSLADefinitionCacheModel.stopNodeNames;
+
+		if ((stopNodeNames != null) && (stopNodeNames.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.stopNodeNames = null;
+		}
+
 		return workflowMetricsSLADefinitionCacheModel;
 	}
 
@@ -774,6 +858,9 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	private long _processId;
 	private long _originalProcessId;
 	private boolean _setOriginalProcessId;
+	private String _pauseNodeNames;
+	private String _startNodeNames;
+	private String _stopNodeNames;
 	private long _columnBitmask;
 	private WorkflowMetricsSLADefinition _escapedModel;
 }

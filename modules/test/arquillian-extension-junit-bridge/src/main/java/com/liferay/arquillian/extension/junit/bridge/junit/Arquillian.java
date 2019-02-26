@@ -75,14 +75,8 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public Description getDescription() {
-		Description description = Description.createSuiteDescription(
+		return Description.createSuiteDescription(
 			_clazz.getName(), _clazz.getAnnotations());
-
-		for (FrameworkMethod frameworkMethod : _getChildren()) {
-			description.addChild(_describeChild(frameworkMethod));
-		}
-
-		return description;
 	}
 
 	@Override

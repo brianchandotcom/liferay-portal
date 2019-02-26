@@ -481,6 +481,17 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro publishViaSAP {
+		Blogs.clickEllipsisItemCP(
+			entryTitle = "${entryTitle}",
+			item = "Publish To Live"
+		);
+
+		AssertConfirm(value1 = "${confirmMessage}");
+
+		AssertTextEquals(locator1 = "Staging#PROCESS_SUCCESSFUL", value1 = "Successful");
+	}
+
 	macro subscribePG {
 		AssertClick(locator1 = "Blogs#SUBSCRIBE_LINK", value1 = "Subscribe");
 

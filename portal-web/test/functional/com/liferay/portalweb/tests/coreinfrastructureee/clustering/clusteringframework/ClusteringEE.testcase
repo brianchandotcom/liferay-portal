@@ -466,7 +466,7 @@ definition {
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-remove"
+			scriptFile = "groovy-script-portal-cache-remove.groovy"
 		);
 
 		Clustering.viewTextPresentOnSpecificNode(
@@ -481,7 +481,7 @@ definition {
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-remove"
+			scriptFile = "groovy-script-portal-cache-remove.groovy"
 		);
 
 		Clustering.viewTextPresentOnSpecificNode(

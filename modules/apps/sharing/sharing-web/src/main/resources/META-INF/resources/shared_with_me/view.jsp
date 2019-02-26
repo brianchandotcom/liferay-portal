@@ -113,5 +113,5 @@ context.put("viewAssetTypeURL", viewAssetTypeURL.toString());
 <liferay-frontend:component
 	componentId='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
 	context="<%= context %>"
-	module="sharing-web/SharedWithMe.es"
+	module="SharedWithMe.es"
 />

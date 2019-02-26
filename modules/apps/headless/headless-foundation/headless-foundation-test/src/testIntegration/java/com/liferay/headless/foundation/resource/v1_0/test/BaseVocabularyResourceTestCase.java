@@ -27,14 +27,13 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.net.URL;
@@ -153,6 +152,26 @@ public abstract class BaseVocabularyResourceTestCase {
 		return false;
 	}
 
+	protected Http.Options getHttpOptions(
+		Long contentSpaceId, String filter, Pagination pagination,
+		String sort) {
+		Http.Options options = _createHttpOptions();
+
+		Http http = new HttpImpl();
+
+		String url = _resourceURL + _toPath(
+			"/content-spaces/{content-space-id}/vocabularies", contentSpaceId);
+
+		url = http.addParameter(url, "filter", filter);
+		url = http.addParameter(url, "page", pagination.getPageNumber());
+		url = http.addParameter(url, "pageSize", pagination.getItemsPerPage());
+		url = http.addParameter(url, "sort", sort);
+
+		options.setLocation(url);
+
+		return options;
+	}
+
 	protected boolean invokeDeleteVocabulary(Long vocabularyId)
 		throws Exception {
 
@@ -185,36 +204,23 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	protected Page<Vocabulary> invokeGetContentSpaceVocabulariesPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
+		Long contentSpaceId, String filter, Pagination pagination, String sort)
+			throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
-					contentSpaceId));
+		Http.Options options =
+			getHttpOptions(contentSpaceId, filter, pagination, sort);
 
 		return _outputObjectMapper.readValue(
 			HttpUtil.URLtoString(options),
-			new TypeReference<Page<VocabularyImpl>>() {
-			});
+			new TypeReference<Page<VocabularyImpl>>() {});
 	}
 
 	protected Http.Response invokeGetContentSpaceVocabulariesPageResponse(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
+		Long contentSpaceId, String filter, Pagination pagination, String sort)
+			throws Exception {
 
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/content-spaces/{content-space-id}/vocabularies",
-					contentSpaceId));
+		Http.Options options =
+			getHttpOptions(contentSpaceId, filter, pagination, sort);
 
 		HttpUtil.URLtoString(options);
 

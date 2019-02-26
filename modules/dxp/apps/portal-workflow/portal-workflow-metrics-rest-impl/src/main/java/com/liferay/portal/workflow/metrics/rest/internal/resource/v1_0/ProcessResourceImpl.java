@@ -81,7 +81,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 		return new BooleanFilter() {
 			{
 				addRequiredTerm("active", true);
-				addRequiredTerm("companyId", company.getCompanyId());
+				addRequiredTerm("companyId", contextCompany.getCompanyId());
 				addRequiredTerm("deleted", false);
 			}
 		};
@@ -90,7 +90,7 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 	private int _getInstanceCount(String name) {
 		BooleanFilter booleanFilter = new BooleanFilter() {
 			{
-				addRequiredTerm("companyId", company.getCompanyId());
+				addRequiredTerm("companyId", contextCompany.getCompanyId());
 				addRequiredTerm("completed", false);
 				addRequiredTerm("deleted", false);
 

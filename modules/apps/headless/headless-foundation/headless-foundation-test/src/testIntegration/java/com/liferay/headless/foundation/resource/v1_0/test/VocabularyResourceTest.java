@@ -14,17 +14,37 @@
 
 package com.liferay.headless.foundation.resource.v1_0.test;
 
+import static com.liferay.portal.odata.entity.EntityField.Type;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.text.DateFormat;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,6 +53,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testDeleteVocabulary() throws Exception {
@@ -65,6 +90,79 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 			Arrays.asList(randomVocabulary1, randomVocabulary2),
 			(List<Vocabulary>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		Vocabulary vocabulary1 = invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary());
+
+		Vocabulary randomVocabulary2 = randomVocabulary();
+
+		Thread.sleep(1000);
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary2);
+
+		List<EntityField> stringEntityFields = _getEntityFields(Type.DATE_TIME);
+
+		Map<String, Function<Vocabulary, Date>> map =
+			getDateTimeEntityNameGetterMap();
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		for (EntityField entityField : stringEntityFields) {
+			Date date = map.get(entityField.getName()).apply(vocabulary1);
+
+			Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
+				testGroup.getGroupId(),
+				entityField.getName() + " eq " + dateFormat.format(date),
+				Pagination.of(2, 1), null);
+
+			assertEquals(
+				Collections.singletonList(vocabulary1),
+				(List<Vocabulary>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithFilterStringEquals()
+		throws Exception {
+
+		Vocabulary randomVocabulary1 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary1);
+
+		Vocabulary randomVocabulary2 = randomVocabulary();
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary2);
+
+		List<EntityField> stringEntityFields = _getEntityFields(Type.STRING);
+
+		Map<String, Function<Vocabulary, String>> map =
+			getStringEntityNameGetterMap();
+
+		for (EntityField entityField : stringEntityFields) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(entityField.getName());
+			sb.append(" eq '");
+			sb.append(map.get(entityField.getName()).apply(randomVocabulary1));
+			sb.append("'");
+
+			Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
+				testGroup.getGroupId(), sb.toString(), Pagination.of(2, 1),
+				null);
+
+			assertEquals(
+				Collections.singletonList(randomVocabulary1),
+				(List<Vocabulary>)page.getItems());
+		}
 	}
 
 	@Test
@@ -151,8 +249,31 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 	}
 
 	@Override
+	protected Map<String, Function<Vocabulary, Date>>
+		getDateTimeEntityNameGetterMap() {
+
+		return new HashMap<String, Function<Vocabulary, Date>>() {
+			{
+				put("dateCreated", Vocabulary::getDateCreated);
+				put("dateModified", Vocabulary::getDateModified);
+			}
+		};
+	}
+
+	@Override
+	protected Map<String, Function<Vocabulary, String>>
+		getStringEntityNameGetterMap() {
+
+		return new HashMap<String, Function<Vocabulary, String>>() {
+			{
+				put("name", Vocabulary::getName);
+			}
+		};
+	}
+
+	@Override
 	protected Vocabulary randomVocabulary() {
-		return new VocabularyImpl() {
+		return new Vocabulary() {
 			{
 				contentSpace = testGroup.getGroupId();
 				description = RandomTestUtil.randomString();
@@ -160,5 +281,27 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 			}
 		};
 	}
+
+	private List<EntityField> _getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		EntityModel entityModel = _entityModelResource.getEntityModel(null);
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		Collection<EntityField> entityFields = entityFieldsMap.values();
+
+		Stream<EntityField> stream = entityFields.stream();
+
+		return stream.filter(
+			entityField -> Objects.equals(entityField.getType(), type)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Inject
+	private EntityModelResource _entityModelResource;
 
 }

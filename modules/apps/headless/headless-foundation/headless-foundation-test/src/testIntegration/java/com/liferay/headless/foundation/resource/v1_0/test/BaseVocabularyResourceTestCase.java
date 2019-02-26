@@ -35,7 +35,11 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -144,6 +148,16 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Map<String, Function<Vocabulary, Date>>
+		getDateTimeEntityNameGetterMap() {
+		return Collections.emptyMap();
+	}
+
+	protected Map<String, Function<Vocabulary, String>>
+		getStringEntityNameGetterMap() {
+		return Collections.emptyMap();
 	}
 
 	protected boolean invokeDeleteVocabulary(Long vocabularyId)

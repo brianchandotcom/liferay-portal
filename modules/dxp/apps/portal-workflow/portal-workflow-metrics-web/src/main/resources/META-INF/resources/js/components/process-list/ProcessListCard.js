@@ -54,7 +54,7 @@ export default class ProcessListCard extends React.Component {
 				? REQUEST_ORIGIN_TYPE_SEARCH
 				: REQUEST_ORIGIN_TYPE_FETCH;
 
-		return client(`/process?page=${start}&pageSize=${size}`).then(
+		return client(`/processes?page=${start}&pageSize=${size}`).then(
 			({items: processes, totalCount: total}) => ({
 				processes,
 				total

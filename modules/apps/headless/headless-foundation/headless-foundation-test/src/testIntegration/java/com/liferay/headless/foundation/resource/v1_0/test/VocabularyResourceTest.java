@@ -86,7 +86,7 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 		Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
 			testGroup.getGroupId(), null, Pagination.of(2, 1), null);
 
-		assertEquals(
+		assertEqualsIgnoringOrder(
 			Arrays.asList(randomVocabulary1, randomVocabulary2),
 			(List<Vocabulary>)page.getItems());
 		assertValid(page);
@@ -162,6 +162,43 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 			assertEquals(
 				Collections.singletonList(randomVocabulary1),
 				(List<Vocabulary>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithSort() throws Exception {
+		Vocabulary randomVocabulary1 = randomVocabulary();
+
+		randomVocabulary1.setName("Vocabulary1");
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary1);
+
+		Vocabulary randomVocabulary2 = randomVocabulary();
+
+		randomVocabulary2.setName("Vocabulary2");
+
+		invokePostContentSpaceVocabulary(
+			testGroup.getGroupId(), randomVocabulary2);
+
+		Collection<EntityField> entityFields = _getEntityFields();
+
+		for (EntityField entityField : entityFields) {
+			Page<Vocabulary> ascPage = invokeGetContentSpaceVocabulariesPage(
+				testGroup.getGroupId(), null, Pagination.of(2, 1),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(randomVocabulary1, randomVocabulary2),
+				(List<Vocabulary>)ascPage.getItems());
+
+			Page<Vocabulary> descPage = invokeGetContentSpaceVocabulariesPage(
+				testGroup.getGroupId(), null, Pagination.of(2, 1),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(randomVocabulary2, randomVocabulary1),
+				(List<Vocabulary>)descPage.getItems());
 		}
 	}
 
@@ -282,15 +319,19 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 		};
 	}
 
-	private List<EntityField> _getEntityFields(EntityField.Type type)
-		throws Exception {
-
+	private Collection<EntityField> _getEntityFields() throws Exception {
 		EntityModel entityModel = _entityModelResource.getEntityModel(null);
 
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
-		Collection<EntityField> entityFields = entityFieldsMap.values();
+		return entityFieldsMap.values();
+	}
+
+	private List<EntityField> _getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		Collection<EntityField> entityFields = _getEntityFields();
 
 		Stream<EntityField> stream = entityFields.stream();
 

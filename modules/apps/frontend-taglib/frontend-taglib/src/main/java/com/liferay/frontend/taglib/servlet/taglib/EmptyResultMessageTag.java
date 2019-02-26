@@ -45,6 +45,10 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_componentId = componentId;
 	}
 
+	public void setDefaultEventHandler(String defaultEventHandler) {
+		_defaultEventHandler = defaultEventHandler;
+	}
+
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -67,6 +71,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_actionDropdownItems = null;
 		_animationType = EmptyResultMessageKeys.AnimationType.EMPTY;
 		_componentId = null;
+		_defaultEventHandler = null;
 		_description = null;
 		_elementType = null;
 	}
@@ -87,6 +92,9 @@ public class EmptyResultMessageTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:empty-result-message:componentId", _componentId);
 		request.setAttribute(
+			"liferay-frontend:empty-result-message:defaultEventHandler",
+			_defaultEventHandler);
+		request.setAttribute(
 			"liferay-frontend:empty-result-message:description", _description);
 
 		if (Validator.isNull(_elementType)) {
@@ -103,6 +111,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 	private EmptyResultMessageKeys.AnimationType _animationType =
 		EmptyResultMessageKeys.AnimationType.EMPTY;
 	private String _componentId;
+	private String _defaultEventHandler;
 	private String _description;
 	private String _elementType;
 

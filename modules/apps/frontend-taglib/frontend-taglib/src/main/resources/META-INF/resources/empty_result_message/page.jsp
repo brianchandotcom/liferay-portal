@@ -36,6 +36,7 @@
 					<c:when test="<%= actionDropdownItems.size() > 1 %>">
 						<clay:dropdown-menu
 							componentId="<%= componentId %>"
+							defaultEventHandler="<%= defaultEventHandler %>"
 							dropdownItems="<%= actionDropdownItems %>"
 							label='<%= LanguageUtil.get(request, "new") %>'
 							style="secondary"
@@ -54,6 +55,7 @@
 									buttonStyle="secondary"
 									componentId="<%= componentId %>"
 									data='<%= (HashMap)actionDropdownItem.get("data") %>'
+									defaultEventHandler="<%= defaultEventHandler %>"
 									href='<%= String.valueOf(actionDropdownItem.get("href")) %>'
 									label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
 								/>
@@ -62,6 +64,7 @@
 								<clay:button
 									componentId="<%= componentId %>"
 									data='<%= (HashMap)actionDropdownItem.get("data") %>'
+									defaultEventHandler="<%= defaultEventHandler %>"
 									label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
 									style="secondary"
 								/>

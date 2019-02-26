@@ -160,6 +160,15 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 		return null;
 	}
 
+	@Override
+	public boolean isUserOwned(MBCategory mbCategory, long userId) {
+		if (mbCategory.getUserId() == userId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	protected Portal portal;
 

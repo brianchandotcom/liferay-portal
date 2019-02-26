@@ -267,7 +267,8 @@ public class UADReviewDataHelper {
 
 		UADEntity<T> uadEntity = new UADEntity(
 			uadHierarchyDisplay.unwrap(entity),
-			uadHierarchyDisplay.getPrimaryKey(entity), editURL, viewURL);
+			uadHierarchyDisplay.getPrimaryKey(entity), editURL,
+			uadHierarchyDisplay.isUserOwned(entity, selectedUserId), viewURL);
 
 		Map<String, Object> columnFieldValues =
 			uadHierarchyDisplay.getFieldValues(
@@ -290,7 +291,7 @@ public class UADReviewDataHelper {
 		UADEntity<T> uadEntity = new UADEntity(
 			entity, uadDisplay.getPrimaryKey(entity),
 			uadDisplay.getEditURL(
-				entity, liferayPortletRequest, liferayPortletResponse),
+				entity, liferayPortletRequest, liferayPortletResponse), true,
 			null);
 
 		Map<String, Object> columnFieldValues = uadDisplay.getFieldValues(

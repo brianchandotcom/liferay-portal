@@ -85,7 +85,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			Object entity = uadDisplay.get(rowId);
 
 			UADEntity uadEntity = new UADEntity(
-				entity, uadDisplay.getPrimaryKey(entity), null, null);
+				entity, uadDisplay.getPrimaryKey(entity), null, true, null);
 
 			uadEntities.add(uadEntity);
 		}

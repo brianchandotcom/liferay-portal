@@ -101,6 +101,15 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 		return mbMessage.getThreadId();
 	}
 
+	@Override
+	public boolean isUserOwned(MBMessage mbMessage, long userId) {
+		if (mbMessage.getUserId() == userId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	protected Portal portal;
 

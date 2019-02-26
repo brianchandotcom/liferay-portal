@@ -148,6 +148,15 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 		return null;
 	}
 
+	@Override
+	public boolean isUserOwned(DLFolder dlFolder, long userId) {
+		if (dlFolder.getUserId() == userId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	protected Portal portal;
 

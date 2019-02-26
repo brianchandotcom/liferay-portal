@@ -101,6 +101,15 @@ public class MBThreadUADDisplay extends BaseMBThreadUADDisplay {
 		return null;
 	}
 
+	@Override
+	public boolean isUserOwned(MBThread mbThread, long userId) {
+		if (mbThread.getUserId() == userId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	protected Portal portal;
 

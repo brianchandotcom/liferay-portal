@@ -210,6 +210,10 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		return false;
 	}
 
+	public default boolean isUserOwned(T t, long userId) {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Returns paginated sorted entities of type {@code T} related to a user,
 	 * optionally filtered by groups and/or keywords.

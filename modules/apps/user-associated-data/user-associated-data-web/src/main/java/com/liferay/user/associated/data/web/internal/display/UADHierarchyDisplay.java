@@ -54,7 +54,7 @@ public class UADHierarchyDisplay {
 			containerUADDisplays,
 			_uadHierarchyDeclaration.getNoncontainerUADDisplays());
 
-		for (UADDisplay<?> uadDisplay : _uadDisplays) {
+		for (UADDisplay uadDisplay : _uadDisplays) {
 			_uadDisplayMap.put(uadDisplay.getTypeClass(), uadDisplay);
 		}
 
@@ -89,7 +89,7 @@ public class UADHierarchyDisplay {
 	public long countAll(long userId) {
 		long count = 0;
 
-		for (UADDisplay<?> uadDisplay : _uadDisplays) {
+		for (UADDisplay uadDisplay : _uadDisplays) {
 			count += uadDisplay.count(userId);
 		}
 
@@ -122,7 +122,7 @@ public class UADHierarchyDisplay {
 	public <T> Map<String, Object> getFieldValues(T object, Locale locale) {
 		Map<String, Object> fieldValues = new LinkedHashMap<>();
 
-		UADDisplay<T> uadDisplay = _getUADDisplay(unwrap(object));
+		UADDisplay uadDisplay = _getUADDisplay(unwrap(object));
 
 		if (uadDisplay != null) {
 			if (object instanceof ContainerDisplay) {
@@ -214,6 +214,14 @@ public class UADHierarchyDisplay {
 		return renderURL.toString();
 	}
 
+	public <T> boolean isUserOwned(T object, long userId) {
+		T unwrappedObject = unwrap(object);
+
+		UADDisplay uadDisplay = _getUADDisplay(unwrappedObject);
+
+		return uadDisplay.isUserOwned(unwrappedObject, userId);
+	}
+
 	public List<Object> search(
 			Class<?> parentContainerClass, Serializable parentContainerId,
 			long userId, long[] groupIds, String keywords, String orderByField,
@@ -227,14 +235,14 @@ public class UADHierarchyDisplay {
 
 		List<Object> allUserItems = new ArrayList<>();
 
-		for (UADDisplay<?> uadDisplay : _uadDisplays) {
+		for (UADDisplay uadDisplay : _uadDisplays) {
 			allUserItems.addAll(
 				uadDisplay.search(
 					userId, groupIds, keywords, orderByField, orderByType,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
-		for (UADDisplay<?> containerUADDisplay :
+		for (UADDisplay containerUADDisplay :
 				_uadHierarchyDeclaration.getContainerUADDisplays()) {
 
 			searchResults.addAll(
@@ -323,7 +331,7 @@ public class UADHierarchyDisplay {
 		return topLevelCategories.values();
 	}
 
-	private <T> UADDisplay _getUADDisplay(T object) {
+	private <T> UADDisplay<?> _getUADDisplay(T object) {
 		for (Class<?> typeClass : _uadDisplayMap.keySet()) {
 			if (typeClass.isInstance(object)) {
 				return _uadDisplayMap.get(typeClass);

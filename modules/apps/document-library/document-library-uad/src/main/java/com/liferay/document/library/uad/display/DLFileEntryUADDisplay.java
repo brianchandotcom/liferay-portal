@@ -106,6 +106,15 @@ public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 		return dlFileEntry.getFolderId();
 	}
 
+	@Override
+	public boolean isUserOwned(DLFileEntry dlFileEntry, long userId) {
+		if (dlFileEntry.getUserId() == userId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
 

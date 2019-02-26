@@ -47,17 +47,8 @@ public class FileEntryBulkSelectionFactory
 		boolean selectAll = MapUtil.getBoolean(parameterMap, "selectAll");
 
 		if (selectAll) {
-			if (!parameterMap.containsKey("repositoryId")) {
-				throw new IllegalArgumentException();
-			}
-
-			String[] repositoryIds = parameterMap.get("repositoryId");
-
-			long repositoryId = GetterUtil.getLong(repositoryIds[0]);
-
-			if (repositoryId == 0) {
-				throw new IllegalArgumentException();
-			}
+			long repositoryId = BulkSelectionFactoryUtil.getRepositoryId(
+				parameterMap);
 
 			long folderId = BulkSelectionFactoryUtil.getFolderId(parameterMap);
 

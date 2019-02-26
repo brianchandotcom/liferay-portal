@@ -30,4 +30,20 @@ public class BulkSelectionFactoryUtil {
 			new long[] {DLFolderConstants.DEFAULT_PARENT_FOLDER_ID})[0];
 	}
 
+	public static long getRepositoryId(Map<String, String[]> parameterMap) {
+		if (!parameterMap.containsKey("repositoryId")) {
+			throw new IllegalArgumentException();
+		}
+
+		String[] repositoryIds = parameterMap.get("repositoryId");
+
+		long repositoryId = GetterUtil.getLong(repositoryIds[0]);
+
+		if (repositoryId == 0) {
+			throw new IllegalArgumentException();
+		}
+
+		return repositoryId;
+	}
+
 }

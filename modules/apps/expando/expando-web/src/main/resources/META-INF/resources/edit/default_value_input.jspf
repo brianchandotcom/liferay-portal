@@ -89,12 +89,12 @@
 		<%
 		String xml = StringPool.BLANK;
 
-		if (type == ExpandoColumnConstants.STRING_LOCALIZED && defaultValue != null) {
+		if ((type == ExpandoColumnConstants.STRING_LOCALIZED) && (defaultValue != null)) {
 			xml = LocalizationUtil.updateLocalization((Map<Locale, String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
 		}
 		%>
 
-		<div class="<%= type == ExpandoColumnConstants.STRING_LOCALIZED ? "" : "hide" %>" id="<portlet:namespace />textLocalizedField">
+		<div class="<%= (type == ExpandoColumnConstants.STRING_LOCALIZED) ? "" : "hide" %>" id="<portlet:namespace />textLocalizedField">
 			<aui:field-wrapper cssClass="localized-input-wrapper" label="starting-value">
 				<liferay-ui:input-localized
 					name="defaultValueLocalized"
@@ -103,11 +103,11 @@
 			</aui:field-wrapper>
 		</div>
 
-		<div class="<%= type != ExpandoColumnConstants.STRING_LOCALIZED ? "" : "hide" %>" id="<portlet:namespace />textField">
-			<aui:input label="starting-value" name="defaultValue" type="text" value="<%= defaultValue != null ? String.valueOf(defaultValue) : StringPool.BLANK %>" />
+		<div class="<%= (type != ExpandoColumnConstants.STRING_LOCALIZED) ? "" : "hide" %>" id="<portlet:namespace />textField">
+			<aui:input label="starting-value" name="defaultValue" type="text" value="<%= (defaultValue != null) ? String.valueOf(defaultValue) : StringPool.BLANK %>" />
 		</div>
 
-		<c:if test="<%= (type == ExpandoColumnConstants.STRING || type == ExpandoColumnConstants.STRING_LOCALIZED) && column == null %>">
+		<c:if test="<%= ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_LOCALIZED)) && (column == null) %>">
 			<aui:input label="make-field-localizable" name="Property--localize-field--" onChange='<%= renderResponse.getNamespace() + "onLocalizeFieldChange(event);" %>' type="checkbox" value="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>" />
 
 			<aui:script>

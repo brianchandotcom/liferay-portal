@@ -48,15 +48,15 @@
 	<aui:field-wrapper>
 		<c:choose>
 			<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
-				<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= column != null ? propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE : true %>" />
+				<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= (column != null) ? (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) : true %>" />
 
 				<div class="form-text">
 					<liferay-ui:message key="custom-field-index-type-help" />
 				</div>
 
-				<div class="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
+				<div class="<%= (propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE) ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
 					<div class="radio">
-						<aui:input checked="<%= column != null ? propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD : true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+						<aui:input checked="<%= (column != null) ? (propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) : true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 					</div>
 
 					<div class="radio">
@@ -69,12 +69,11 @@
 				</aui:script>
 			</c:when>
 			<c:otherwise>
-					<aui:input label="searchable-as-keyword" name="Property--index-type--" type="toggle-switch" value="<%= propertyIndexType %>" />
+				<aui:input label="searchable-as-keyword" name="Property--index-type--" type="toggle-switch" value="<%= propertyIndexType %>" />
 
-					<div class="form-text">
-						<liferay-ui:message key="custom-field-index-type-help" />
-					</div>
-
+				<div class="form-text">
+					<liferay-ui:message key="custom-field-index-type-help" />
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</aui:field-wrapper>

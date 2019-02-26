@@ -14,12 +14,32 @@
 
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
+import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,21 +63,63 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
+	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		Folder folder = _blogsEntryService.addAttachmentsFolder(contentSpaceId);
+
+		Hits hits = SearchUtil.getHits(
+			filter, _indexerRegistry.nullSafeGetIndexer(DLFileEntry.class),
+			pagination,
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						Field.FOLDER_ID, String.valueOf(folder.getFolderId())),
+					BooleanClauseOccur.MUST);
+			},
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			_searchResultPermissionFilterFactory, sorts);
+
+		List<FileEntry> fileEntries = new ArrayList<>();
+
+		for (Document document : hits.getDocs()) {
+			long fileEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+			fileEntries.add(fileEntry);
+		}
+
+		return Page.of(
+			transform(fileEntries, this::_toBlogPostingImage), pagination,
+			fileEntries.size());
+	}
+
+	@Override
 	public BlogPostingImage getImageObject(Long imageObjectId)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(imageObjectId);
 
-		return _toBlogPostingImage(fileEntry, fileEntry.getFileVersion());
+		return _toBlogPostingImage(fileEntry);
 	}
 
-	private BlogPostingImage _toBlogPostingImage(
-		FileEntry fileEntry, FileVersion fileVersion) {
+	private BlogPostingImage _toBlogPostingImage(FileEntry fileEntry)
+		throws PortalException {
 
 		return new BlogPostingImage() {
 			{
 				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileVersion, null, "");
+					fileEntry, fileEntry.getFileVersion(), null, "");
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
@@ -68,9 +130,19 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Reference
+	private BlogsEntryService _blogsEntryService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory;
 
 }

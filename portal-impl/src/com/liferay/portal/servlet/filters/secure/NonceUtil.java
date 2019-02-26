@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.secure;
 
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
-import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +27,8 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
@@ -89,27 +90,34 @@ public class NonceUtil {
 		FutureClusterResponses futureClusterResponses =
 			ClusterExecutorUtil.execute(clusterRequest);
 
-		ClusterNodeResponses clusterNodeResponses;
+		BlockingQueue<ClusterNodeResponse> clusterNodeResponses =
+			futureClusterResponses.getPartialResults();
 
 		try {
-			clusterNodeResponses = futureClusterResponses.get(
-				10, TimeUnit.SECONDS);
-		}
-		catch (Exception e) {
-			_log.error("Error trying to verify nonce accross the cluster", e);
+			while (!(clusterNodeResponses.isEmpty() &&
+					 futureClusterResponses.isDone())) {
 
-			return false;
-		}
+				ClusterNodeResponse clusterNodeResponse =
+					clusterNodeResponses.poll(
+						_TIMEOUT_IN_MILLISECONDS, TimeUnit.MILLISECONDS);
 
-		BlockingQueue<ClusterNodeResponse> clusterResponses =
-			clusterNodeResponses.getClusterResponses();
+				if (clusterNodeResponse == null) {
+					_log.error(
+						"Timeout waiting for nonce verification in the " +
+							"cluster");
 
-		while (!clusterResponses.isEmpty()) {
-			ClusterNodeResponse clusterNodeResponse = clusterResponses.poll();
+					return false;
+				}
 
-			if (GetterUtil.getBoolean(clusterNodeResponse.getResult())) {
-				return true;
+				if (GetterUtil.getBoolean(clusterNodeResponse.getResult())) {
+					return true;
+				}
 			}
+		}
+		catch (InterruptedException ie) {
+			_log.error(
+				"Interrupted while waiting for nonce verification in the " +
+					"cluster");
 		}
 
 		return false;
@@ -127,6 +135,9 @@ public class NonceUtil {
 
 	private static final long _NONCE_EXPIRATION =
 		PropsValues.WEBDAV_NONCE_EXPIRATION * Time.MINUTE;
+
+	private static final long _TIMEOUT_IN_MILLISECONDS = GetterUtil.getLong(
+		PropsUtil.get(PropsKeys.NONCES_CLUSTER_TIMEOUT), 10000);
 
 	private static final Log _log = LogFactoryUtil.getLog(NonceUtil.class);
 

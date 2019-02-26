@@ -45,25 +45,41 @@
 		</aui:field-wrapper>
 	</c:if>
 
+	<aui:field-wrapper>
+		<c:choose>
+			<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
+				<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= column != null ? propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE : true %>" />
+
+				<div class="form-text">
+					<liferay-ui:message key="custom-field-index-type-help" />
+				</div>
+
+				<div class="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
+					<div class="radio">
+						<aui:input checked="<%= column != null ? propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD : true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+					</div>
+
+					<div class="radio">
+						<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" label="as-text" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
+					</div>
+				</div>
+
+				<aui:script>
+					Liferay.Util.toggleBoxes('<portlet:namespace />searchable', '<portlet:namespace />propertyIndexType');
+				</aui:script>
+			</c:when>
+			<c:otherwise>
+					<aui:input label="searchable-as-keyword" name="Property--index-type--" type="toggle-switch" value="<%= propertyIndexType %>" />
+
+					<div class="form-text">
+						<liferay-ui:message key="custom-field-index-type-help" />
+					</div>
+
+			</c:otherwise>
+		</c:choose>
+	</aui:field-wrapper>
+
 	<c:if test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD) %>">
-		<aui:field-wrapper>
-			<aui:input label="searchable" name="searchable" type="toggle-switch" value="<%= column != null ? propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE : true %>" />
-
-			<div class="form-text">
-				<liferay-ui:message key="custom-field-index-type-help" />
-			</div>
-
-			<div class="<%= propertyIndexType != ExpandoColumnConstants.INDEX_TYPE_NONE ? "" : "hide" %>" id="<portlet:namespace />propertyIndexType">
-				<div class="radio">
-					<aui:input checked="<%= column != null ? propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD : true %>" label="as-keyword" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
-				</div>
-
-				<div class="radio">
-					<aui:input checked="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" label="as-text" name="Property--index-type--" type="radio" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
-				</div>
-			</div>
-		</aui:field-wrapper>
-
 		<aui:field-wrapper>
 			<aui:input cssClass="lfr-input-text short-input-text" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
 
@@ -83,7 +99,3 @@
 		</aui:field-wrapper>
 	</c:if>
 </liferay-frontend:fieldset>
-
-<aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />searchable', '<portlet:namespace />propertyIndexType');
-</aui:script>

@@ -32,9 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Values")
-@XmlRootElement(name = "Values")
-public class Values {
+@GraphQLName("ContentFieldValue")
+@XmlRootElement(name = "ContentFieldValue")
+public class ContentFieldValue {
 
 	public String getDataType() {
 		return dataType;

@@ -54,6 +54,10 @@ public class StructuredContent {
 		return comment;
 	}
 
+	public ContentFieldValue[] getContentFieldValues() {
+		return contentFieldValues;
+	}
+
 	public Long getContentSpace() {
 		return contentSpace;
 	}
@@ -100,10 +104,6 @@ public class StructuredContent {
 
 	public String getTitle() {
 		return title;
-	}
-
-	public Values[] getValues() {
-		return values;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
@@ -165,6 +165,23 @@ public class StructuredContent {
 
 		try {
 			comment = commentUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setContentFieldValues(ContentFieldValue[] contentFieldValues) {
+		this.contentFieldValues = contentFieldValues;
+	}
+
+	@JsonIgnore
+	public void setContentFieldValues(
+		UnsafeSupplier<ContentFieldValue[], Exception>
+			contentFieldValuesUnsafeSupplier) {
+
+		try {
+			contentFieldValues = contentFieldValuesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -364,22 +381,6 @@ public class StructuredContent {
 		}
 	}
 
-	@JsonIgnore
-	public void setValues(
-		UnsafeSupplier<Values[], Exception> valuesUnsafeSupplier) {
-
-		try {
-			values = valuesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setValues(Values[] values) {
-		this.values = values;
-	}
-
 	public String toString() {
 		StringBundler sb = new StringBundler(36);
 
@@ -433,9 +434,9 @@ public class StructuredContent {
 		sb.append(", title=");
 
 		sb.append(title);
-		sb.append(", values=");
+		sb.append(", contentFieldValues=");
 
-		sb.append(values);
+		sb.append(contentFieldValues);
 
 		sb.append("}");
 
@@ -457,6 +458,10 @@ public class StructuredContent {
 	@GraphQLField
 	@JsonProperty
 	protected Comment[] comment;
+
+	@GraphQLField
+	@JsonProperty
+	protected ContentFieldValue[] contentFieldValues;
 
 	@GraphQLField
 	@JsonProperty
@@ -505,9 +510,5 @@ public class StructuredContent {
 	@GraphQLField
 	@JsonProperty
 	protected String title;
-
-	@GraphQLField
-	@JsonProperty
-	protected Values[] values;
 
 }

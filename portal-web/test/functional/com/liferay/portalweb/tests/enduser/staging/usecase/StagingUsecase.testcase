@@ -129,7 +129,7 @@ definition {
 		Staging.viewAddButtonDoesNotExist();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -139,7 +139,7 @@ definition {
 		Staging.viewAddButtonDoesNotExist();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -192,7 +192,7 @@ definition {
 	@priority = "4"
 	test EditPublishTemplate {
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -269,7 +269,7 @@ definition {
 		Page.viewNoPG(pageName = "Page Name 2");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -323,7 +323,7 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -380,7 +380,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -395,7 +395,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -570,7 +570,7 @@ definition {
 		Navigator.gotoStagedView();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -595,9 +595,9 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.addCP(
@@ -606,9 +606,9 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Staging.publishToLiveNowViaPortletCP();
@@ -616,9 +616,9 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.viewCP(
@@ -712,7 +712,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -738,7 +738,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -839,7 +839,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -882,7 +882,7 @@ definition {
 		Tag.addCP(tagName = "tag2");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -930,7 +930,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1028,7 +1028,7 @@ definition {
 	@priority = "5"
 	test StagingPublishWCWithImageFieldEdit {
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1049,7 +1049,7 @@ definition {
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1064,7 +1064,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1112,7 +1112,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1212,7 +1212,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -1224,7 +1224,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1278,7 +1278,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -1319,7 +1319,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);

@@ -183,7 +183,7 @@ definition {
 		ProductMenu.gotoSite(site = "${siteScopeName}");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
 			portlet = "${portletName}"
 		);

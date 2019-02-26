@@ -92,7 +92,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -111,7 +111,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -275,7 +275,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -457,7 +457,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -720,7 +720,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -739,7 +739,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -853,7 +853,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1079,7 +1079,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -1255,7 +1255,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://localhost:9080");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1312,7 +1312,7 @@ definition {
 		property content.targeting.release = "true";
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1424,7 +1424,7 @@ definition {
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1740,7 +1740,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1759,7 +1759,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1886,7 +1886,7 @@ definition {
 		ProductMenu.gotoSite(site = "Import Site");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1901,7 +1901,7 @@ definition {
 		ProductMenu.gotoSite(site = "Import Site");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -1947,7 +1947,7 @@ definition {
 		Navigator.gotoStagedView();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2249,7 +2249,7 @@ definition {
 		Navigator.gotoStagedView();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2378,7 +2378,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2512,7 +2512,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2696,7 +2696,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2728,7 +2728,7 @@ definition {
 			ProductMenu.gotoSite(site = "Site Name");
 
 			ProductMenu.gotoPortlet(
-				category = "Content",
+				category = "Content &amp; Data",
 				panel = "Site Administration",
 				portlet = "Web Content"
 			);
@@ -2810,9 +2810,9 @@ definition {
 			ProductMenu.gotoSite(site = "Site Name");
 
 			ProductMenu.gotoPortlet(
-				category = "Members",
+				category = "People",
 				panel = "Site Administration",
-				portlet = "Site Memberships"
+				portlet = "Memberships"
 			);
 
 			Site.assignUserAsMemberCP(
@@ -2940,7 +2940,7 @@ definition {
 		ProductMenu.gotoSite(site = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2963,7 +2963,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -2982,7 +2982,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3075,7 +3075,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3094,7 +3094,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3203,7 +3203,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -3217,7 +3217,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -3285,9 +3285,9 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserAsMemberCP(
@@ -3330,7 +3330,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3349,7 +3349,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3423,9 +3423,9 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserAsMemberCP(
@@ -3453,7 +3453,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3613,7 +3613,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3625,7 +3625,7 @@ definition {
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -3676,7 +3676,7 @@ definition {
 		PortletEntry.save();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -3777,7 +3777,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3796,7 +3796,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3894,7 +3894,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -3906,7 +3906,7 @@ definition {
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -3957,7 +3957,7 @@ definition {
 		PortletEntry.save();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -4054,7 +4054,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -4097,7 +4097,7 @@ definition {
 		LAR.exportPortlet(larFileName = "Audience_Targeting.lar");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -4143,7 +4143,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Import Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -4299,7 +4299,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);

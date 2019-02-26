@@ -20,7 +20,7 @@ definition {
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
-				category = "Content",
+				category = "Content &amp; Data",
 				panel = "Site Administration",
 				portlet = "Polls"
 			);
@@ -39,7 +39,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);
@@ -85,7 +85,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);
@@ -148,7 +148,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);
@@ -219,7 +219,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);
@@ -266,7 +266,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);
@@ -279,7 +279,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);
@@ -338,7 +338,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Polls"
 		);

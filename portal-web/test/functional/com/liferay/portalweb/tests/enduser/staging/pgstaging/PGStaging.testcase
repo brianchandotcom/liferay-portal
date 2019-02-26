@@ -220,7 +220,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -300,7 +300,7 @@ definition {
 		WebContent.viewNoEditWCViaAP(assetTitle = "Web Content Title");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -679,7 +679,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -699,7 +699,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -718,7 +718,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -844,7 +844,7 @@ definition {
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);

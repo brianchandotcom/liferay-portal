@@ -249,9 +249,9 @@ definition {
 		ProductMenu.gotoSite(site = "Site A");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignSiteRoleCP(
@@ -264,9 +264,9 @@ definition {
 		ProductMenu.gotoSite(site = "Site C");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignSiteRoleCP(

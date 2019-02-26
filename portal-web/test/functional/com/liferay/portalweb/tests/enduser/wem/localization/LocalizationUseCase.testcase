@@ -162,7 +162,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.configureCurrentLanguagesCP(

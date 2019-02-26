@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADT_IFRAME</td>
-	<td>//iframe[contains(@src,'Application%20Display%20Templates')]</td>
+	<td>//iframe[contains(@src,'Widget%20Display%20Templates')]</td>
 	<td></td>
 </tr>
 <tr>

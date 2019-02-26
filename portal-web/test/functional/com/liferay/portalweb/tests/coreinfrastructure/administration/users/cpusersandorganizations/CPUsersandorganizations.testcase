@@ -428,9 +428,9 @@ definition {
 		ProductMenu.gotoSite(site = "Organization Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.addCP(
@@ -1391,9 +1391,9 @@ definition {
 		Navigator.openSiteURL(siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.addCP(
@@ -1478,7 +1478,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		var siteID = "siteID";

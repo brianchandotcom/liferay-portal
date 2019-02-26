@@ -148,7 +148,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -180,7 +180,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -284,7 +284,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -314,7 +314,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -428,7 +428,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -460,7 +460,7 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -516,7 +516,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -548,7 +548,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -1503,7 +1503,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -1530,7 +1530,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);
@@ -1595,7 +1595,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Blogs"
 		);

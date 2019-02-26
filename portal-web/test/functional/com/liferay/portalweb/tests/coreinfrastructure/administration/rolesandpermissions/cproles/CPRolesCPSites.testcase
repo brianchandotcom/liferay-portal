@@ -193,9 +193,9 @@ definition {
 		ProductMenu.gotoSite(site = "Parent Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserAsMemberCP(
@@ -207,9 +207,9 @@ definition {
 		ProductMenu.gotoSite(site = "Parent Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignSiteRoleCP(
@@ -220,9 +220,9 @@ definition {
 		ProductMenu.gotoSite(site = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserAsMemberCP(
@@ -234,9 +234,9 @@ definition {
 		ProductMenu.gotoSite(site = "Child SiteName");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignSiteRoleCP(
@@ -322,9 +322,9 @@ definition {
 		ProductMenu.gotoSite(site = "Child SiteName1");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserAsMemberCP(

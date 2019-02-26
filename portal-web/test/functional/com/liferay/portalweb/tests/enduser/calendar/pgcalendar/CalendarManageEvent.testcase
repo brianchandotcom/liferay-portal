@@ -707,9 +707,9 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserAsMemberCP(

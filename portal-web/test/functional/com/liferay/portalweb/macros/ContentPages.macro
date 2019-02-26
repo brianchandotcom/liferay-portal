@@ -11,7 +11,7 @@ definition {
 			Navigator.gotoNavNested(navNested = "Basic Pages");
 
 			LexiconCard.clickCard(
-				card = "Content Page"
+				card = "Standard Page"
 			);
 		}
 	}

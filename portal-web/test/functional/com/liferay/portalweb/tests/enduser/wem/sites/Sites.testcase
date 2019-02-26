@@ -271,7 +271,7 @@ definition {
 		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);

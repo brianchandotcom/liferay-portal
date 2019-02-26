@@ -68,9 +68,9 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserGroupAsMemberCP(
@@ -83,9 +83,9 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignSiteRoleToUserGroup(
@@ -384,7 +384,7 @@ definition {
 		User.viewLoggedInPG(userFirstName = "Test");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);
@@ -411,7 +411,7 @@ definition {
 		User.viewLoggedInPG(userFirstName = "Test");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);

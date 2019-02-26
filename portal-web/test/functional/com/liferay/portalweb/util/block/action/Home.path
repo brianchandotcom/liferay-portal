@@ -622,7 +622,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_MEMBERS_SITE_TEAMS</td>
-	<td>//ul[contains(@class,'nav-equal-height')]/li[contains(.,'Site Teams')]/a</td>
+	<td>//ul[contains(@class,'nav-equal-height')]/li[contains(.,'"Teams"')]/a</td>
 	<td></td>
 </tr>
 <tr>

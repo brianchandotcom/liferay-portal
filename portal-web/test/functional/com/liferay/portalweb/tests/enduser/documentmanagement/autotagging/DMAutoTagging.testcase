@@ -158,12 +158,12 @@ definition {
 
 		SitePages.addPublicPage(pageName = "AutoTag Disabled Site Page");
 
-		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Site Settings");
+		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Settings");
 
 		Navigator.openSiteURL(siteName = "Site AutoTag Enabled");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -175,7 +175,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -189,7 +189,7 @@ definition {
 		Navigator.openSiteURL(siteName = "Site AutoTag Disabled");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -201,7 +201,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -330,7 +330,7 @@ definition {
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -342,7 +342,7 @@ definition {
 		);
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);

@@ -413,9 +413,9 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
@@ -496,9 +496,9 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignSiteRoleCP(
@@ -509,9 +509,9 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		NavItem.gotoUserGroups();
@@ -535,7 +535,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.addVirtualHostsURLCP(
@@ -843,7 +843,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
@@ -855,7 +855,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
@@ -903,7 +903,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.editCP(siteName = "Site2 Name", siteNameEdit = "Site2 Name Edit");
@@ -957,7 +957,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.inactivateCP(siteName = "Site1 Name");
@@ -1280,9 +1280,9 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.addCP(
@@ -1293,9 +1293,9 @@ definition {
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.assignMembersCP(teamName = "Site Team Name", userScreenName = "usersn1");
@@ -1360,9 +1360,9 @@ definition {
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		Team.addCP(
@@ -1373,7 +1373,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.assignDefaultSiteTeam(teamName = '''<script>alert(123);</script>''');

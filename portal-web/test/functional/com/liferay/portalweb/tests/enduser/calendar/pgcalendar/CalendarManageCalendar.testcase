@@ -736,7 +736,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Site Settings"
+			portlet = "Settings"
 		);
 
 		Site.editCP(siteName = "Site Name", siteNameEdit = "Site Name Edit");

@@ -277,7 +277,7 @@ definition {
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONFIGURATION_SITE_SETTINGS")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONFIGURATION_SITE_SETTINGS";
-				var permissionNavigationValue = "Site Settings";
+				var permissionNavigationValue = "Settings";
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_BLOGS")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS";
@@ -313,11 +313,11 @@ definition {
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS")) {
 				var permissionNavigationKey = "SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS";
-				var permissionNavigationValue = "Site Memberships";
+				var permissionNavigationValue = "Memberships";
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_MEMBERS_SITE_TEAMS")) {
 				var permissionNavigationKey = "SITE_ADMIN_MEMBERS_SITE_TEAMS";
-				var permissionNavigationValue = "Site Teams";
+				var permissionNavigationValue = "Teams";
 			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_PAGES_SITE_PAGES")) {
 				var permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES";
@@ -520,7 +520,7 @@ definition {
 		}
 		else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE")) {
 			var permissionNavigationKey = "CONTROL_PANEL_SITES_SITES";
-			var permissionNavigationValue = "Site Settings";
+			var permissionNavigationValue = "Settings";
 		}
 		else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_SITES_SITES")) {
 			var permissionNavigationKey = "CONTROL_PANEL_SITES_SITES";
@@ -584,7 +584,7 @@ definition {
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS")) {
 			var permissionNavigationKey = "SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS";
-			var permissionNavigationValue = "Site Memberships";
+			var permissionNavigationValue = "Memberships";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_PAGES_SITE_PAGES")) {
 			var permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES";

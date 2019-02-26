@@ -493,7 +493,7 @@ definition {
 		var page2URL = Navigator.getCurrentURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content"
 		);

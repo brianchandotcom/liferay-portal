@@ -70,9 +70,9 @@ definition {
 		Portlet.addPG(portletName = "Invite Members");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		AssertElementNotPresent(locator1 = "Card#SPECIFIC_TEXT");
@@ -112,9 +112,9 @@ definition {
 		Navigator.gotoSitePage(pageName = "Site Page 1", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.viewMemberCP(

@@ -88,7 +88,7 @@ definition {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -114,7 +114,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -137,7 +137,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -170,7 +170,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -190,7 +190,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -227,7 +227,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -243,7 +243,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -260,7 +260,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -285,7 +285,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -309,7 +309,7 @@ definition {
 		DMDocument.viewCP(dmDocumentSize = "34KB", dmDocumentTitle = "Document_3.doc");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -324,7 +324,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -357,7 +357,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -377,7 +377,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -393,7 +393,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -437,7 +437,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -449,7 +449,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -471,7 +471,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -556,7 +556,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -574,7 +574,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -613,7 +613,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -650,7 +650,7 @@ definition {
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);

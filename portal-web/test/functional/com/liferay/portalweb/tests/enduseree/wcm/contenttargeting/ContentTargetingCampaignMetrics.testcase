@@ -69,7 +69,7 @@ definition {
 		property content.targeting.release = "true";
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Documents and Media"
 		);
@@ -238,7 +238,7 @@ definition {
 		PortletEntry.save();
 
 		ProductMenu.gotoPortlet(
-			category = "Content",
+			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Forms"
 		);

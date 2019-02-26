@@ -211,9 +211,9 @@ definition {
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Teams"
+			portlet = "Teams"
 		);
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
@@ -247,7 +247,7 @@ definition {
 	macro viewDefaultCP {
 		var key_teamName = "${teamName}";
 
-		PortletEntry.viewEmptyMessage(entity = "Site Teams");
+		PortletEntry.viewEmptyMessage(entity = "Teams");
 
 		AssertTextNotPresent(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",

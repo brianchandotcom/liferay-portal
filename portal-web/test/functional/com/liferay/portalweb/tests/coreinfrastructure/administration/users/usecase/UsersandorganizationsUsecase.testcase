@@ -192,9 +192,9 @@ definition {
 		ProductMenu.gotoSite(site = "College of Agricultural Science");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "Agricultural Science");
@@ -202,9 +202,9 @@ definition {
 		ProductMenu.gotoSite(site = "College of Business");
 
 		ProductMenu.gotoPortlet(
-			category = "Members",
+			category = "People",
 			panel = "Site Administration",
-			portlet = "Site Memberships"
+			portlet = "Memberships"
 		);
 
 		for (var userGroupName : list "Business: Accounting,Business: Business Administration") {
@@ -215,9 +215,9 @@ definition {
 			ProductMenu.gotoSite(site = "${siteName}");
 
 			ProductMenu.gotoPortlet(
-				category = "Members",
+				category = "People",
 				panel = "Site Administration",
-				portlet = "Site Memberships"
+				portlet = "Memberships"
 			);
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "Business: ${siteName}");

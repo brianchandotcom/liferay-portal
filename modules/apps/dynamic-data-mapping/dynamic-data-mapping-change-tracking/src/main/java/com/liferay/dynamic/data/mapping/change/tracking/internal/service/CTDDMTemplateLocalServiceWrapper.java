@@ -138,7 +138,7 @@ public class CTDDMTemplateLocalServiceWrapper
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
-		// This is needed because of synchronisation
+		// this is needed because of synchronisation
 
 	}
 

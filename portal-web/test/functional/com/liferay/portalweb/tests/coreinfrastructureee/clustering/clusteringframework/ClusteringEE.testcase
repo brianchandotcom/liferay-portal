@@ -389,143 +389,109 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
-
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
-
-		Page.assertNodePortPG(nodePort = "9080");
-
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
-
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
-
-		for (var nodeport : list "8080,9080") {
-			Clustering.getClusterNodelogFile(nodePort = "${nodeport}");
-		};
-
-		var controlAddress0 = Clustering.getClusterNodeControlAddress(nodePort = "8080");
-		var transportAddress0 = Clustering.getClusterNodeTransportAddress(nodePort = "8080");
-		echo("control Address0 is ${controlAddress0}");
-		echo("transport Address0 is ${transportAddress0}");
-
-		var controlAddress1 = Clustering.getClusterNodeControlAddress(nodePort = "9080");
-		var transportAddress1 = Clustering.getClusterNodeTransportAddress(nodePort = "9080");
-		echo("control Address1 is ${controlAddress1}");
-		echo("transport Address1 is ${transportAddress1}");
-
-		for (var nodeport : list "8080,9080") {
-			Clustering.viewTextPresentOnSpecificConsole(
-				nodePort = "${nodeport}",
-				expectText = "Accepted view [${controlAddress0}|1] (2) [${controlAddress0}, ${controlAddress1}]"
-			);
-
-			Clustering.viewTextPresentOnSpecificConsole(
-				nodePort = "${nodeport}",
-				expectText = "Accepted view [${transportAddress0}|1] (2) [${transportAddress0}, ${transportAddress1}]"
-			);
-		};
-
 		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar",
+			nodePort = "8080"
+		);
+
+		Clustering.runGroovyScript(
 			nodePort = "8080",
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar"
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Server Administration"
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Put test.key into test.cache",
+			nodePort = "8080"
 		);
 
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = '''
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
-import java.lang.reflect.Constructor;
-
-try {
-	ClassLoader testModuleClassLoader = ClassLoaderPool.getClassLoader("com.liferay.cluster.test.module_2.0.0");
-
-	Class<?> clazz = testModuleClassLoader.loadClass("com.liferay.cluster.test.module.internel.ClusterTestClass");
-
-	Constructor<?> constructor = clazz.getConstructor(String.class);
-
-	PortalCache testCache = MultiVMPoolUtil.getPortalCache("test.cache");
-
-	testCache.put("test.key", constructor.newInstance("test.value"));
-}
-catch (Exception e) {
-	out.println(e);
-}
-'''
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Unable to deserialize object",
+			nodePort = "9080"
 		);
 
-		AssertConsoleTextPresent(value1 = "Put test.key into test.cache");
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-portal-cache-get.groovy"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "test.cache is empty",
+			nodePort = "9080"
+		);
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-portal-cache-remove.groovy"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "8080"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "9080"
+		);
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "8080"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Unable to deserialize object",
+			nodePort = "9080"
+		);
 
 		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar",
+			nodePort = "9080"
+		);
+
+		Clustering.runGroovyScript(
 			nodePort = "9080",
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar"
+			scriptFile = "groovy-script-portal-cache-get.groovy"
 		);
 
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "test.key=null",
+			nodePort = "9080"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Server Administration"
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-cache-remove"
 		);
 
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = '''
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.cache.PortalCache;
-import java.util.List;
-
-
-PortalCache<String, String> testCache = MultiVMPoolUtil.getPortalCache("test.cache");
-
-List<String> keys = testCache.getKeys();
-
-if (keys.isEmpty()) {
-	out.println("test.cache is empty");
-
-	return;
-}
-
-for (String key : keys) {
-	out.println(key  + "=" + testCache.get(key));
-}
-'''
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "8080"
 		);
 
-		Clustering.getClusterNodelogFile(nodePort = "9080");
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "9080"
+		);
 
-		for (var expectText : list "Put test.key into test.cache,test.key=test.value") {
-			Clustering.viewTextPresentOnSpecificConsole(
-				nodePort = "8080",
-				expectText = "${expectText}"
-				);
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-cache-remove"
+		);
 
-			Clustering.viewTextPresentOnSpecificConsole(
-				nodePort = "8080",
-				expectText = "${test.key=test.value}"
-				);
-		};
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "8080"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Removed test.key from test.cache",
+			nodePort = "9080"
+		);
 	}
 }

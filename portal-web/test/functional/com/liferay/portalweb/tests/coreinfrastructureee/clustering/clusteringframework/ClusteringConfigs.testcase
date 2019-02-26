@@ -32,17 +32,24 @@ definition {
 		property cluster.jdbc.ping = "true";
 		property test.name.skip.portal.instance = "ClusteringConfigs#StartupJDBCPING";
 
-		AssertConsoleTextPresent(value1 = "Accepted view");
-		AssertConsoleTextPresent(value1 = "channelName: liferay-channel-control");
+		Clustering.viewClusterStatusInConsole();
+
 		AssertConsoleTextPresent(value1 = "JDBC_PING");
 
 		var log2 = Clustering.getLogFileSpecificServer(nodePort = "9080");
 
-		if ((contains("${log2}", "Accepted view")) && (contains("${log2}", "channelName: liferay-channel-control")) && (contains("${log2}", "JDBC_PING"))) {
-			echo("Second node started successfully with JDBC_PING configuration");
+		if (!(contains("${log2}", "JDBC_PING"))) {
+			fail("Failed to find JDBC_PING configuration on second node.");
 		}
-		else {
-			fail("Fail to successfully start second node on JDBC_PING.");
-		}
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
+
+		echo("Successfully logged in to both nodes on JDBC_PING");
 	}
 }

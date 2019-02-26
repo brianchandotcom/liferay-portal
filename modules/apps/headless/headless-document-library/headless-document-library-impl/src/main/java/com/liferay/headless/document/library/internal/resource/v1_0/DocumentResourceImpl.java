@@ -191,7 +191,9 @@ public class DocumentResourceImpl
 			documentId, binaryFileName, binaryFile.getContentType(), title,
 			document.getDescription(), null, DLVersionNumberIncrease.AUTOMATIC,
 			binaryFile.getInputStream(), binaryFile.getSize(),
-			_getServiceContext(oldFileEntry.getGroupId(), document));
+			_getServiceContext(
+				oldFileEntry.getGroupId(), document.getCategoryIds(),
+				document.getKeywords()));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -219,7 +221,9 @@ public class DocumentResourceImpl
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, binaryFileName, binaryFile.getContentType(),
 			title, document.getDescription(), null, binaryFile.getInputStream(),
-			binaryFile.getSize(), _getServiceContext(groupId, document));
+			binaryFile.getSize(),
+			_getServiceContext(
+				groupId, document.getCategoryIds(), document.getKeywords()));
 
 		return _toDocument(
 			fileEntry, fileEntry.getFileVersion(),
@@ -301,19 +305,17 @@ public class DocumentResourceImpl
 			fileEntries.size());
 	}
 
-	private ServiceContext _getServiceContext(long groupId, Document document) {
+	private ServiceContext _getServiceContext(
+		long groupId, Long[] categoryIds, String[] keywords) {
+
 		return new ServiceContext() {
 			{
 				setAddGroupPermissions(true);
 				setAddGuestPermissions(true);
 
-				Long[] categoryIds = document.getCategoryIds();
-
 				if (ArrayUtil.isNotEmpty(categoryIds)) {
 					setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
 				}
-
-				String[] keywords = document.getKeywords();
 
 				if (ArrayUtil.isNotEmpty(keywords)) {
 					setAssetTagNames(keywords);

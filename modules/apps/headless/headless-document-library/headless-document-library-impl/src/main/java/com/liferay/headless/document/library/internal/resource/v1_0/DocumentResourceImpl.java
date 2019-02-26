@@ -167,7 +167,7 @@ public class DocumentResourceImpl
 
 		if (Validator.isNotNull(multipartBody.getValueAsString("Document"))) {
 			optional = Optional.of(
-				multipartBody.getValueAsInstance("Document", Document.class));
+				multipartBody.getValueAsInstance("document", Document.class));
 		}
 
 		String title = optional.map(
@@ -234,7 +234,7 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		Document document = multipartBody.getValueAsInstance(
-			"Document", Document.class);
+			"document", Document.class);
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -267,7 +267,7 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		Document document = multipartBody.getValueAsInstance(
-			"Document", Document.class);
+			"document", Document.class);
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 

@@ -691,9 +691,11 @@ public class JavaParser {
 
 		String expectedIndent = _getIndent(expectedJavaTermContent);
 
-		content = _fixIndent(
-			content, startPosition.getLineNumber(), actualIndent,
-			expectedIndent);
+		if (!actualIndent.equals(expectedIndent)) {
+			return _fixIndent(
+				content, startPosition.getLineNumber(), actualIndent,
+				expectedIndent);
+		}
 
 		String actualJavaTermContent = _getContent(
 			fileContents, startLineNumber, endLineNumber);

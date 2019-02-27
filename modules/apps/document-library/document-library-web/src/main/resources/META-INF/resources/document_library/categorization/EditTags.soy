@@ -94,10 +94,10 @@
 	{/if}
 
 	{call com.liferay.asset.taglib.AssetTagsSelector.render}
+		{param elementClasses: 'clay-multi-select' /}
+		{param groupIds: $groupIds /}
 		{param id: $portletNamespace + 'assetTagsSelector' /}
 		{param inputName: $portletNamespace + '_hiddenInput' /}
-		{param groupIds: $groupIds /}
-		{param elementClasses: 'clay-multi-select' /}
 		{param selectedItems: $commonTags /}
 		{param spritemap: $spritemap /}
 	{/call}

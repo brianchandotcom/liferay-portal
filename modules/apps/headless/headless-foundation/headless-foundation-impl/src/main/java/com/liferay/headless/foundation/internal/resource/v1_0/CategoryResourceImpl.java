@@ -15,6 +15,7 @@
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
@@ -119,6 +120,14 @@ public class CategoryResourceImpl
 				if (vocabularyId != null) {
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
+
+					booleanFilter.add(
+						new TermFilter(
+							Field.ASSET_PARENT_CATEGORY_ID,
+							String.valueOf(
+								AssetCategoryConstants.
+									DEFAULT_PARENT_CATEGORY_ID)),
+						BooleanClauseOccur.MUST);
 
 					booleanFilter.add(
 						new TermFilter(

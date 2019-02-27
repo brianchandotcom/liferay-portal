@@ -314,7 +314,7 @@ AUI.add(
 						if (!editTagsComponent) {
 							var pathModule = instance.get('pathModule');
 							var urlSearchTags = pathModule +'/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
-							var urlTags = pathModule + '/bulk/asset/tags/' + instance.get('classNameId') + '/common';
+							var urlTags = pathModule + '/bulk/asset/tags/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = pathModule + '/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(

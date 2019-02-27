@@ -1218,31 +1218,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return true;
 	}
 
-	private boolean _logBundleStartError(Bundle bundle) {
-		try {
-			URL url = bundle.getEntry("/META-INF/marketplace.properties");
-
-			if (url != null) {
-				Properties properties = new Properties();
-
-				properties.load(url.openStream());
-
-				String productId = (String)properties.get("product-id");
-
-				if (productId != null) {
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to read bundle properties", e);
-			}
-		}
-
-		return true;
-	}
-
 	private void _refreshBundles(List<Bundle> refreshBundles) {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
@@ -1755,15 +1730,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					bundle.start();
 				}
 				catch (BundleException be) {
-					String logMessage =
-						"Unable to start bundle " + bundle.getSymbolicName();
+					String message = be.getMessage();
 
-					if (_logBundleStartError(bundle)) {
-						_log.error(logMessage, be);
+					if (message.endsWith(
+							"Bundle was filtered by a resolver hook.\n")) {
+
+						continue;
 					}
-					else if (_log.isDebugEnabled()) {
-						_log.debug(logMessage, be);
-					}
+
+					_log.error(
+						"Unable to start bundle " + bundle.getSymbolicName(),
+						be);
 				}
 			}
 		}

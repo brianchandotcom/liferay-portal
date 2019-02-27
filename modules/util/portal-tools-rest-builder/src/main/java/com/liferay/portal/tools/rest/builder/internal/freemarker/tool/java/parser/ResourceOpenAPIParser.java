@@ -368,7 +368,7 @@ public class ResourceOpenAPIParser {
 			urls.add("");
 		}
 
-		if (returnType.startsWith("Page<" + schemaName)) {
+		if (_isGetToSameSchema(httpMethod, returnType, "Page<" + schemaName)) {
 			urls.add(TextFormatter.formatPlural(schemaName));
 		}
 
@@ -507,13 +507,23 @@ public class ResourceOpenAPIParser {
 		return "boolean";
 	}
 
+	private static boolean _isGetToSameSchema(
+		String httpMethod, String returnType, String schemaName) {
+
+		if (httpMethod.equals("get") && returnType.startsWith(schemaName)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static boolean _isPostToSameSchema(
 		String httpMethod, String path, String schemaName, int segmentNumber) {
 
 		String lastSegment = PathUtil.getLastSegment(path, segmentNumber);
 
 		if (httpMethod.equals("post") &&
-			lastSegment.startsWith(TextFormatter.formatPlural(schemaName))) {
+			lastSegment.equals(TextFormatter.formatPlural(schemaName))) {
 
 			return true;
 		}

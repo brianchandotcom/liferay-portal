@@ -443,6 +443,12 @@ public class StructuredContentResourceImpl
 				setAddGroupPermissions(true);
 				setAddGuestPermissions(true);
 
+				Long[] categoryIds = structuredContent.getCategoryIds();
+
+				if (ArrayUtil.isNotEmpty(categoryIds)) {
+					setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
+				}
+
 				if (structuredContent.getKeywords() != null) {
 					setAssetTagNames(structuredContent.getKeywords());
 				}

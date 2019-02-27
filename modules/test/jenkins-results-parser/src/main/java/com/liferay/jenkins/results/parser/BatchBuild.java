@@ -266,18 +266,16 @@ public class BatchBuild extends BaseBuild {
 				continue;
 			}
 
-			Matcher axisBuildURLMatcher = null;
+			Pattern buildURLPattern = null;
 
 			if (fromArchive) {
-				Pattern archiveBuildURLPattern = getArchiveBuildURLPattern();
-
-				axisBuildURLMatcher = archiveBuildURLPattern.matcher(
-					axisBuildURL);
+				buildURLPattern = AxisBuild.archiveBuildURLPattern;
 			}
 			else {
-				axisBuildURLMatcher = AxisBuild.buildURLPattern.matcher(
-					axisBuildURL);
+				buildURLPattern = AxisBuild.buildURLPattern;
 			}
+
+			Matcher axisBuildURLMatcher = buildURLPattern.matcher(axisBuildURL);
 
 			axisBuildURLMatcher.find();
 

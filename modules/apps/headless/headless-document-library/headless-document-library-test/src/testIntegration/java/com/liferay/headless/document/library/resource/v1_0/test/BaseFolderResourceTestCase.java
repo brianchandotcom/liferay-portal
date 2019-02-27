@@ -444,6 +444,7 @@ public abstract class BaseFolderResourceTestCase {
 	protected Folder randomFolder() {
 		return new Folder() {
 			{
+				contentSpaceId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
@@ -451,7 +452,6 @@ public abstract class BaseFolderResourceTestCase {
 				hasFolders = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
-				repositoryId = RandomTestUtil.randomLong();
 			}
 		};
 	}

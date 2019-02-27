@@ -116,6 +116,10 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 
 		Folder existingFolder = getFolder(folderId);
 
+		if (Validator.isNotNull(folder.getContentSpaceId())) {
+			existingFolder.setContentSpaceId(folder.getContentSpaceId());
+		}
+
 		if (Validator.isNotNull(folder.getDateCreated())) {
 			existingFolder.setDateCreated(folder.getDateCreated());
 		}
@@ -138,10 +142,6 @@ public abstract class BaseFolderResourceImpl implements FolderResource {
 
 		if (Validator.isNotNull(folder.getName())) {
 			existingFolder.setName(folder.getName());
-		}
-
-		if (Validator.isNotNull(folder.getRepositoryId())) {
-			existingFolder.setRepositoryId(folder.getRepositoryId());
 		}
 
 		return putFolder(folderId, existingFolder);

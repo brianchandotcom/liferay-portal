@@ -38,6 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Folder")
 public class Folder {
 
+	public Long getContentSpaceId() {
+		return contentSpaceId;
+	}
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -66,8 +70,20 @@ public class Folder {
 		return name;
 	}
 
-	public Long getRepositoryId() {
-		return repositoryId;
+	public void setContentSpaceId(Long contentSpaceId) {
+		this.contentSpaceId = contentSpaceId;
+	}
+
+	@JsonIgnore
+	public void setContentSpaceId(
+		UnsafeSupplier<Long, Exception> contentSpaceIdUnsafeSupplier) {
+
+		try {
+			contentSpaceId = contentSpaceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void setDateCreated(Date dateCreated) {
@@ -178,28 +194,15 @@ public class Folder {
 		}
 	}
 
-	public void setRepositoryId(Long repositoryId) {
-		this.repositoryId = repositoryId;
-	}
-
-	@JsonIgnore
-	public void setRepositoryId(
-		UnsafeSupplier<Long, Exception> repositoryIdUnsafeSupplier) {
-
-		try {
-			repositoryId = repositoryIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public String toString() {
 		StringBundler sb = new StringBundler(18);
 
 		sb.append("{");
 
-		sb.append("dateCreated=");
+		sb.append("contentSpaceId=");
+
+		sb.append(contentSpaceId);
+		sb.append(", dateCreated=");
 
 		sb.append(dateCreated);
 		sb.append(", dateModified=");
@@ -220,14 +223,15 @@ public class Folder {
 		sb.append(", name=");
 
 		sb.append(name);
-		sb.append(", repositoryId=");
-
-		sb.append(repositoryId);
 
 		sb.append("}");
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected Long contentSpaceId;
 
 	@GraphQLField
 	@JsonProperty
@@ -256,9 +260,5 @@ public class Folder {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long repositoryId;
 
 }

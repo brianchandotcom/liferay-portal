@@ -29,9 +29,19 @@ public class BaseBeforeAfterClassTestItem {
 		testItemHelper.write("setUpClassBase");
 	}
 
+	@BeforeClass
+	public static void setUpClassOverridden() throws IOException {
+		testItemHelper.write("setUpClassOverriddenBase");
+	}
+
 	@AfterClass
 	public static void tearDownClassBase() throws IOException {
 		testItemHelper.write("tearDownClassBase");
+	}
+
+	@AfterClass
+	public static void tearDownClassOverridden() throws IOException {
+		testItemHelper.write("tearDownClassOverriddenBase");
 	}
 
 	protected static final TestItemHelper testItemHelper = new TestItemHelper(

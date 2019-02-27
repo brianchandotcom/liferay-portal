@@ -36,8 +36,8 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutModel
-	extends BaseModel<Layout>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends AttachedModel, BaseModel<Layout>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1039,32 +1039,46 @@ public interface LayoutModel
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
-	 * Returns the referrer class name ID of this layout.
+	 * Returns the fully qualified class name of this layout.
 	 *
-	 * @return the referrer class name ID of this layout
+	 * @return the fully qualified class name of this layout
 	 */
-	public long getReferrerClassNameId();
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
 
 	/**
-	 * Sets the referrer class name ID of this layout.
+	 * Returns the class name ID of this layout.
 	 *
-	 * @param referrerClassNameId the referrer class name ID of this layout
+	 * @return the class name ID of this layout
 	 */
-	public void setReferrerClassNameId(long referrerClassNameId);
+	@Override
+	public long getClassNameId();
 
 	/**
-	 * Returns the referrer class pk of this layout.
+	 * Sets the class name ID of this layout.
 	 *
-	 * @return the referrer class pk of this layout
+	 * @param classNameId the class name ID of this layout
 	 */
-	public long getReferrerClassPK();
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
-	 * Sets the referrer class pk of this layout.
+	 * Returns the class pk of this layout.
 	 *
-	 * @param referrerClassPK the referrer class pk of this layout
+	 * @return the class pk of this layout
 	 */
-	public void setReferrerClassPK(long referrerClassPK);
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this layout.
+	 *
+	 * @param classPK the class pk of this layout
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the publish date of this layout.

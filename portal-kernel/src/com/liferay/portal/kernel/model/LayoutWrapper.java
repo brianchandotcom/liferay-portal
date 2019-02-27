@@ -80,8 +80,8 @@ public class LayoutWrapper
 		attributes.put(
 			"sourcePrototypeLayoutUuid", getSourcePrototypeLayoutUuid());
 		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("referrerClassNameId", getReferrerClassNameId());
-		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("publishDate", getPublishDate());
 
 		return attributes;
@@ -296,16 +296,16 @@ public class LayoutWrapper
 			setLastPublishDate(lastPublishDate);
 		}
 
-		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (referrerClassNameId != null) {
-			setReferrerClassNameId(referrerClassNameId);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
-		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
+		Long classPK = (Long)attributes.get("classPK");
 
-		if (referrerClassPK != null) {
-			setReferrerClassPK(referrerClassPK);
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		Date publishDate = (Date)attributes.get("publishDate");
@@ -398,6 +398,36 @@ public class LayoutWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getChildren(permissionChecker);
+	}
+
+	/**
+	 * Returns the fully qualified class name of this layout.
+	 *
+	 * @return the fully qualified class name of this layout
+	 */
+	@Override
+	public String getClassName() {
+		return model.getClassName();
+	}
+
+	/**
+	 * Returns the class name ID of this layout.
+	 *
+	 * @return the class name ID of this layout
+	 */
+	@Override
+	public long getClassNameId() {
+		return model.getClassNameId();
+	}
+
+	/**
+	 * Returns the class pk of this layout.
+	 *
+	 * @return the class pk of this layout
+	 */
+	@Override
+	public long getClassPK() {
+		return model.getClassPK();
 	}
 
 	/**
@@ -1014,26 +1044,6 @@ public class LayoutWrapper
 	@Override
 	public Date getPublishDate() {
 		return model.getPublishDate();
-	}
-
-	/**
-	 * Returns the referrer class name ID of this layout.
-	 *
-	 * @return the referrer class name ID of this layout
-	 */
-	@Override
-	public long getReferrerClassNameId() {
-		return model.getReferrerClassNameId();
-	}
-
-	/**
-	 * Returns the referrer class pk of this layout.
-	 *
-	 * @return the referrer class pk of this layout
-	 */
-	@Override
-	public long getReferrerClassPK() {
-		return model.getReferrerClassPK();
 	}
 
 	@Override
@@ -1666,6 +1676,31 @@ public class LayoutWrapper
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
+	@Override
+	public void setClassName(String className) {
+		model.setClassName(className);
+	}
+
+	/**
+	 * Sets the class name ID of this layout.
+	 *
+	 * @param classNameId the class name ID of this layout
+	 */
+	@Override
+	public void setClassNameId(long classNameId) {
+		model.setClassNameId(classNameId);
+	}
+
+	/**
+	 * Sets the class pk of this layout.
+	 *
+	 * @param classPK the class pk of this layout
+	 */
+	@Override
+	public void setClassPK(long classPK) {
+		model.setClassPK(classPK);
+	}
+
 	/**
 	 * Sets the color scheme ID of this layout.
 	 *
@@ -2086,26 +2121,6 @@ public class LayoutWrapper
 	@Override
 	public void setPublishDate(Date publishDate) {
 		model.setPublishDate(publishDate);
-	}
-
-	/**
-	 * Sets the referrer class name ID of this layout.
-	 *
-	 * @param referrerClassNameId the referrer class name ID of this layout
-	 */
-	@Override
-	public void setReferrerClassNameId(long referrerClassNameId) {
-		model.setReferrerClassNameId(referrerClassNameId);
-	}
-
-	/**
-	 * Sets the referrer class pk of this layout.
-	 *
-	 * @param referrerClassPK the referrer class pk of this layout
-	 */
-	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		model.setReferrerClassPK(referrerClassPK);
 	}
 
 	/**

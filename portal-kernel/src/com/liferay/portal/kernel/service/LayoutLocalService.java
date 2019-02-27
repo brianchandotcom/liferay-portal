@@ -114,9 +114,8 @@ public interface LayoutLocalService
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 String)}.
-	 * @param referrerClassNameId the referrer entity class name ID
-	 * @param referrerClassPK the referrer entity primary key
-	 * @param publishDate the date when draft was last published
+	 * @param classNameId the class name ID of the entity
+	 * @param classPK the primary key of the entity
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
 	 date, and expando bridge attributes for the layout. For layouts
@@ -140,8 +139,7 @@ public interface LayoutLocalService
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, String typeSettings, boolean hidden, boolean system,
-			Map<Locale, String> friendlyURLMap, long referrerClassNameId,
-			long referrerClassPK, Date publishDate,
+			Map<Locale, String> friendlyURLMap, long classNameId, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -1732,20 +1730,19 @@ public interface LayoutLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the layout replacing its referrer entity class name ID and
-	 * primary key.
+	 * Updates the layout replacing its entity class name ID and primary key.
 	 *
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param layoutId the layout ID of the layout
-	 * @param referrerClassNameId the referrer entity class name ID
-	 * @param referrerClassPK the referrer entity primary key
+	 * @param classNameId the class name ID of the entity
+	 * @param classPK the primary key of the entity
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,
-			long referrerClassNameId, long referrerClassPK)
+			long classNameId, long classPK)
 		throws PortalException;
 
 	/**

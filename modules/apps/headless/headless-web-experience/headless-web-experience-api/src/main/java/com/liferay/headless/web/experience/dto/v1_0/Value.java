@@ -36,10 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Value")
 public class Value {
 
-	public ContentFieldValue[] getContentFieldValues() {
-		return contentFieldValues;
-	}
-
 	public String getData() {
 		return data;
 	}
@@ -66,23 +62,6 @@ public class Value {
 
 	public Long getStructuredContentId() {
 		return structuredContentId;
-	}
-
-	public void setContentFieldValues(ContentFieldValue[] contentFieldValues) {
-		this.contentFieldValues = contentFieldValues;
-	}
-
-	@JsonIgnore
-	public void setContentFieldValues(
-		UnsafeSupplier<ContentFieldValue[], Exception>
-			contentFieldValuesUnsafeSupplier) {
-
-		try {
-			contentFieldValues = contentFieldValuesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public void setData(String data) {
@@ -193,7 +172,7 @@ public class Value {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("{");
 
@@ -218,18 +197,11 @@ public class Value {
 		sb.append(", structuredContentId=");
 
 		sb.append(structuredContentId);
-		sb.append(", contentFieldValues=");
-
-		sb.append(contentFieldValues);
 
 		sb.append("}");
 
 		return sb.toString();
 	}
-
-	@GraphQLField
-	@JsonProperty
-	protected ContentFieldValue[] contentFieldValues;
 
 	@GraphQLField
 	@JsonProperty

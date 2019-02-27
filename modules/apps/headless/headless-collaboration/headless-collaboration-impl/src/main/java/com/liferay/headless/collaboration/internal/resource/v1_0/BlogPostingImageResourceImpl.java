@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -114,6 +115,48 @@ public class BlogPostingImageResourceImpl
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(imageObjectId);
+
+		return _toBlogPostingImage(fileEntry);
+	}
+
+	@Override
+	public BlogPostingImage patchImageObject(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception {
+
+		FileEntry existingFileEntry = _dlAppService.getFileEntry(imageObjectId);
+
+		BinaryFile binaryFile = Optional.ofNullable(
+			multipartBody.getBinaryFile("file")
+		).orElse(
+			new BinaryFile(
+				existingFileEntry.getMimeType(),
+				existingFileEntry.getFileName(),
+				existingFileEntry.getContentStream(),
+				existingFileEntry.getSize())
+		);
+
+		Optional<BlogPostingImage> optional = Optional.empty();
+
+		if (Validator.isNotNull(
+				multipartBody.getValueAsString("blogPostingImage"))) {
+
+			optional = Optional.of(
+				multipartBody.getValueAsInstance(
+					"blogPostingImage", BlogPostingImage.class));
+		}
+
+		String title = optional.map(
+			BlogPostingImage::getTitle
+		).orElseGet(
+			existingFileEntry::getTitle
+		);
+
+		FileEntry fileEntry = _dlAppService.updateFileEntry(
+			imageObjectId, binaryFile.getFileName(),
+			binaryFile.getContentType(), title, null, null,
+			DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
+			binaryFile.getSize(), new ServiceContext());
 
 		return _toBlogPostingImage(fileEntry);
 	}

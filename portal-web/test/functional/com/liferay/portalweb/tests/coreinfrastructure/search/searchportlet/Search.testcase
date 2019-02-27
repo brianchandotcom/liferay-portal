@@ -526,8 +526,6 @@ definition {
 
 	@priority = "4"
 	test SearchBlogsEntryTag {
-		property portal.suite.search.engine = "disable";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -579,8 +577,6 @@ definition {
 
 	@priority = "4"
 	test SearchBlogsEntryTagQuotes {
-		property portal.suite.search.engine = "disable";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -859,7 +855,6 @@ definition {
 
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
-		property portal.suite.search.engine = "disable";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

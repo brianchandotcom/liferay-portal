@@ -76,12 +76,10 @@ public class JavaParser {
 
 		_maxLineLength = maxLineLength;
 
-		String newContent = _trimTrailingWhitespace(content);
-
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
-		newContent = importsFormatter.format(
-			newContent, ToolsUtil.getPackagePath(file),
+		String newContent = importsFormatter.format(
+			_trimContent(content), ToolsUtil.getPackagePath(file),
 			StringUtil.replaceLast(file.getName(), ".java", StringPool.BLANK));
 
 		newContent = _parse(file, newContent);
@@ -1027,18 +1025,7 @@ public class JavaParser {
 		return parsedJavaClass;
 	}
 
-	private static String _trimLine(
-		String content, String line, int lineNumber) {
-
-		int x = _getLineStartPos(content, lineNumber);
-
-		return StringUtil.replaceFirst(
-			content, line, StringUtil.trimTrailing(line), x);
-	}
-
-	private static String _trimTrailingWhitespace(String content)
-		throws IOException {
-
+	private static String _trimContent(String content) throws IOException {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -1056,7 +1043,24 @@ public class JavaParser {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		return sb.toString();
+		String newContent = sb.toString();
+
+		while (true) {
+			if (!newContent.contains("\n\n\n")) {
+				return newContent;
+			}
+
+			newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
+		}
+	}
+
+	private static String _trimLine(
+		String content, String line, int lineNumber) {
+
+		int x = _getLineStartPos(content, lineNumber);
+
+		return StringUtil.replaceFirst(
+			content, line, StringUtil.trimTrailing(line), x);
 	}
 
 	private static ParsedJavaClass _walk(

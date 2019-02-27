@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Objects;
+import java.util.TreeMap;
 
 /**
  * @author Peter Shin
@@ -94,6 +97,8 @@ public class RESTBuilder {
 
 		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
 
+		NavigableMap<String, OpenAPIYAML> openAPIYAMLs = new TreeMap<>();
+
 		for (File file : files) {
 			OpenAPIYAML openAPIYAML = null;
 
@@ -107,6 +112,13 @@ public class RESTBuilder {
 				continue;
 			}
 
+			openAPIYAMLs.put(
+				OpenAPIUtil.getVersionDirName(openAPIYAML), openAPIYAML);
+		}
+
+		for (Map.Entry<String, OpenAPIYAML> entry1 : openAPIYAMLs.entrySet()) {
+			OpenAPIYAML openAPIYAML = entry1.getValue();
+
 			Components components = openAPIYAML.getComponents();
 
 			Map<String, Schema> schemas = components.getSchemas();
@@ -118,7 +130,7 @@ public class RESTBuilder {
 
 			context.put("openAPIYAML", openAPIYAML);
 
-			String versionDirName = OpenAPIUtil.getVersionDirName(openAPIYAML);
+			String versionDirName = entry1.getKey();
 
 			context.put("versionDirName", versionDirName);
 
@@ -126,8 +138,8 @@ public class RESTBuilder {
 			_createGraphQLQueryFile(context, versionDirName);
 			_createGraphQLServletDataFile(context, versionDirName);
 
-			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
-				String schemaName = entry.getKey();
+			for (Map.Entry<String, Schema> entry2 : schemas.entrySet()) {
+				String schemaName = entry2.getKey();
 
 				List<JavaMethodSignature> javaMethodSignatures =
 					freeMarkerTool.getResourceJavaMethodSignatures(
@@ -137,7 +149,7 @@ public class RESTBuilder {
 					continue;
 				}
 
-				Schema schema = entry.getValue();
+				Schema schema = entry2.getValue();
 
 				_putSchema(context, schema, schemaName);
 
@@ -153,15 +165,27 @@ public class RESTBuilder {
 					_createResourceTestFile(
 						context, schemaName, versionDirName);
 				}
+
+				if (Validator.isNotNull(_configYAML.getClientDir()) &&
+					Objects.equals(versionDirName, openAPIYAMLs.lastKey())) {
+
+					_createClientResourceFile(context, schemaName);
+				}
 			}
 
-			for (Map.Entry<String, Schema> entry : allSchemas.entrySet()) {
-				Schema schema = entry.getValue();
-				String schemaName = entry.getKey();
+			for (Map.Entry<String, Schema> entry2 : allSchemas.entrySet()) {
+				Schema schema = entry2.getValue();
+				String schemaName = entry2.getKey();
 
 				_putSchema(context, schema, schemaName);
 
 				_createDTOFile(context, schemaName, versionDirName);
+
+				if (Validator.isNotNull(_configYAML.getClientDir()) &&
+					Objects.equals(versionDirName, openAPIYAMLs.lastKey())) {
+
+					_createClientDTOFile(context, schemaName);
+				}
 			}
 		}
 
@@ -263,6 +287,60 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "base_resource_test_case", context));
+	}
+
+	private void _createClientDTOFile(
+			Map<String, Object> context, String schemaName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/client/dto/");
+		sb.append(schemaName);
+		sb.append(".java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "client_dto", context));
+	}
+
+	private void _createClientResourceFile(
+			Map<String, Object> context, String schemaName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/client/resource/");
+		sb.append(schemaName);
+		sb.append("Resource.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "client_resource", context));
 	}
 
 	private void _createDTOFile(

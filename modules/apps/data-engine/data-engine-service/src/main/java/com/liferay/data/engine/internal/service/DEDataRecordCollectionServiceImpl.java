@@ -509,12 +509,8 @@ public class DEDataRecordCollectionServiceImpl
 			DEDataRecordCollectionSearchRequest deDataRecordCollectionSearchRequest)
 		throws DEDataRecordCollectionException {
 
-		DEDataRecordCollectionSearchExecutor
-			deDataRecordCollectionSearchExecutor =
-				getDeDataRecordCollectionSearchExecutor();
-
 		try {
-			return deDataRecordCollectionSearchExecutor.execute(
+			return _deDataRecordCollectionSearchExecutor.execute(
 				deDataRecordCollectionSearchRequest);
 		}
 		catch (Exception e) {
@@ -617,27 +613,6 @@ public class DEDataRecordCollectionServiceImpl
 	@Override
 	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
 		return new DEDataEnginePermissionSupport(groupLocalService);
-	}
-
-	protected DEDataEngineRequestExecutor getDEDataEngineRequestExecutor() {
-		if (_deDataEngineRequestExecutor == null) {
-			_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
-				deDataDefinitionDeserializerTracker, deDataStorageTracker);
-		}
-
-		return _deDataEngineRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionSearchExecutor
-		getDeDataRecordCollectionSearchExecutor() {
-
-		if (_deDataRecordCollectionSearchExecutor == null) {
-			_deDataRecordCollectionSearchExecutor =
-				new DEDataRecordCollectionSearchExecutor(
-					getDEDataEngineRequestExecutor(), ddlRecordSetLocalService);
-		}
-
-		return _deDataRecordCollectionSearchExecutor;
 	}
 
 	protected boolean isValidationRule(

@@ -33,13 +33,17 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -109,6 +113,40 @@ public class BlogPostingImageResourceImpl
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(imageObjectId);
+
+		return _toBlogPostingImage(fileEntry);
+	}
+
+	@Override
+	public BlogPostingImage postContentSpaceBlogPostingImage(
+			Long contentSpaceId, MultipartBody multipartBody)
+		throws Exception {
+
+		Folder folder = _blogsEntryService.addAttachmentsFolder(contentSpaceId);
+
+		BlogPostingImage blogPostingImage = multipartBody.getValueAsInstance(
+			"blogPostingImage", BlogPostingImage.class);
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String binaryFileName = binaryFile.getFileName();
+
+		String title = Optional.ofNullable(
+			blogPostingImage.getTitle()
+		).orElse(
+			binaryFileName
+		);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(contentSpaceId);
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			contentSpaceId, folder.getFolderId(), binaryFileName,
+			binaryFile.getContentType(), title, null, null,
+			binaryFile.getInputStream(), binaryFile.getSize(), serviceContext);
 
 		return _toBlogPostingImage(fileEntry);
 	}

@@ -155,7 +155,7 @@ public class CTDDMTemplateLocalServiceWrapper
 			return false;
 		}
 
-		if (_ctEngineManager.isChangeTrackingEnabled(
+		if (!_ctEngineManager.isChangeTrackingEnabled(
 				ddmTemplate.getCompanyId()) ||
 			_isBasicWebContent(ddmTemplate)) {
 

@@ -278,8 +278,4 @@ definition {
 			value1 = "${structureDescription}"
 		);
 	}
-
-	macro viewTemplateValidation {
-		AssertConfirm(value1 = "Please add a template to render this structure.");
-	}
 }

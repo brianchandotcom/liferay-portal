@@ -655,7 +655,7 @@ public class LiferayPortlet extends GenericPortlet {
 
 		response.setContentType(getJSONContentType(portletRequest));
 
-		ServletResponseUtil.write(response, jsonObj.toString());
+		ServletResponseUtil.write(response, _toXSSSafeJSON(jsonObj.toString()));
 
 		response.flushBuffer();
 	}
@@ -667,7 +667,8 @@ public class LiferayPortlet extends GenericPortlet {
 
 		mimeResponse.setContentType(getJSONContentType(portletRequest));
 
-		PortletResponseUtil.write(mimeResponse, jsonObj.toString());
+		PortletResponseUtil.write(
+			mimeResponse, _toXSSSafeJSON(jsonObj.toString()));
 
 		mimeResponse.flushBuffer();
 	}
@@ -675,6 +676,10 @@ public class LiferayPortlet extends GenericPortlet {
 	protected boolean addProcessActionSuccessMessage;
 	protected boolean alwaysSendRedirect;
 	protected Set<String> validPaths;
+
+	private String _toXSSSafeJSON(String json) {
+		return StringUtil.replace(json, CharPool.LESS_THAN, "\\u003c");
+	}
 
 	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {
 		SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,

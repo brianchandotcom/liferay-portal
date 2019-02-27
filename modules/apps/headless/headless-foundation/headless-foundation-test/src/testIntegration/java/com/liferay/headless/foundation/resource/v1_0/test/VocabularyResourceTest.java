@@ -35,9 +35,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -101,24 +103,19 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		for (EntityField entityField : _getEntityFields(Type.DATE_TIME)) {
-			Date date = null;
+		Map<String, Function<Vocabulary, Date>> map =
+			getDateTimeEntityNameGetterMap();
 
+		for (EntityField entityField : _getEntityFields(Type.DATE_TIME)) {
 			String entityFieldName = entityField.getName();
 
-			if (entityFieldName.equals("dateCreated")) {
-				date = vocabulary.getDateCreated();
-			}
-			else if (entityFieldName.equals("dateModified")) {
-				date = vocabulary.getDateModified();
-			}
-			else {
-				throw new IllegalArgumentException();
-			}
+			Function<Vocabulary, Date> function = map.get(entityFieldName);
+
+			Date date = function.apply(vocabulary);
 
 			Page<Vocabulary> page = invokeGetContentSpaceVocabulariesPage(
 				testGroup.getGroupId(),
-				entityField.getName() + " eq " + dateFormat.format(date),
+				entityFieldName + " eq " + dateFormat.format(date),
 				Pagination.of(2, 1), null);
 
 			assertEquals(
@@ -147,12 +144,13 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 
 			sb.append(" eq '");
 
-			if (entityFieldName.equals("name")) {
-				sb.append(vocabulary.getName());
-			}
-			else {
-				throw new IllegalArgumentException();
-			}
+			Map<String, Function<Vocabulary, String>> map =
+				getStringEntityNameGetterMap();
+
+			Function<Vocabulary, String> function = map.get(
+				entityField.getName());
+
+			sb.append(function.apply(vocabulary));
 
 			sb.append("'");
 
@@ -330,7 +328,6 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 	}
 
 	private Collection<EntityField> _getEntityFields() throws Exception {
-
 		EntityModel entityModel =
 			((EntityModelResource)_vocabularyResource).getEntityModel(null);
 

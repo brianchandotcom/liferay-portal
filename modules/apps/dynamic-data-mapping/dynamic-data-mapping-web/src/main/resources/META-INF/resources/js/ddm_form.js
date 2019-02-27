@@ -3225,20 +3225,21 @@ AUI.add(
 							var totalLocalizations = originalField.get('localizationMap');
 
 							for (var localization in totalLocalizations) {
-								if (localization == currentLocale) {
+								if (localization === currentLocale) {
 									continue;
 								}
 
 								if (!newFieldLocalizations[localization]) {
+									var localizationValue = '';
+
 									if (newFieldLocalizations[defaultLocale]) {
-										newFieldLocalizations[localization] = newFieldLocalizations[defaultLocale];
+										localizationValue = newFieldLocalizations[defaultLocale];
 									}
-									else if (defaultLocale == field.get('displayLocale') && field.getValue()) {
-										newFieldLocalizations[localization] = field.getValue();
+									else if (defaultLocale === field.get('displayLocale') && field.getValue()) {
+										localizationValue = field.getValue();
 									}
-									else {
-										newFieldLocalizations[localization] = '';
-									}
+
+									newFieldLocalizations[localization] = localizationValue;
 								}
 							}
 

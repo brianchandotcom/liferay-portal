@@ -30,10 +30,10 @@ import org.junit.runner.RunWith;
  * @author Matthew Tambara
  */
 @RunWith(Arquillian.class)
-public class BeforeAfterTestItem {
+public class BeforeAfterTestItem extends BaseBeforeAfterTestItem {
 
 	public static void assertAndTearDown() throws IOException {
-		List<String> lines = _testItemHelper.read();
+		List<String> lines = testItemHelper.read();
 
 		Assert.assertEquals(lines.toString(), _LINES.length, lines.size());
 
@@ -44,40 +44,38 @@ public class BeforeAfterTestItem {
 
 	@Before
 	public void setUp1() throws IOException {
-		_testItemHelper.write("setUp1");
+		testItemHelper.write("setUp1");
 	}
 
 	@Before
 	public void setUp2() throws IOException {
-		_testItemHelper.write("setUp2");
+		testItemHelper.write("setUp2");
 	}
 
 	@After
 	public void tearDown1() throws IOException {
-		_testItemHelper.write("tearDown1");
+		testItemHelper.write("tearDown1");
 	}
 
 	@After
 	public void tearDown2() throws IOException {
-		_testItemHelper.write("tearDown2");
+		testItemHelper.write("tearDown2");
 	}
 
 	@Test
 	public void test1() throws IOException {
-		_testItemHelper.write("test1");
+		testItemHelper.write("test1");
 	}
 
 	@Test
 	public void test2() throws IOException {
-		_testItemHelper.write("test2");
+		testItemHelper.write("test2");
 	}
 
 	private static final String[] _LINES = {
-		"setUp2", "setUp1", "test1", "tearDown1", "tearDown2", "setUp2",
-		"setUp1", "test2", "tearDown1", "tearDown2"
+		"setUpBase", "setUp2", "setUp1", "test1", "tearDown1", "tearDown2",
+		"tearDownBase", "setUpBase", "setUp2", "setUp1", "test2", "tearDown1",
+		"tearDown2", "tearDownBase"
 	};
-
-	private static final TestItemHelper _testItemHelper = new TestItemHelper(
-		BeforeAfterTestItem.class);
 
 }

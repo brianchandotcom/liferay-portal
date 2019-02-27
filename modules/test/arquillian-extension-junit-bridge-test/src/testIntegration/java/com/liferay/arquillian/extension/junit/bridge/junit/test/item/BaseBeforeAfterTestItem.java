@@ -25,6 +25,16 @@ import org.junit.Before;
 public class BaseBeforeAfterTestItem {
 
 	@Before
+	public static void setUpOverridden() throws IOException {
+		testItemHelper.write("setUpOverriddenBase");
+	}
+
+	@After
+	public static void tearDownOverridden() throws IOException {
+		testItemHelper.write("tearDownOverriddenBase");
+	}
+
+	@Before
 	public void setUpBase() throws IOException {
 		testItemHelper.write("setUpBase");
 	}

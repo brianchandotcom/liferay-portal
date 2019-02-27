@@ -43,6 +43,16 @@ public class BeforeAfterTestItem extends BaseBeforeAfterTestItem {
 	}
 
 	@Before
+	public static void setUpOverridden() throws IOException {
+		testItemHelper.write("setUpOverriddenChild");
+	}
+
+	@After
+	public static void tearDownOverridden() throws IOException {
+		testItemHelper.write("tearDownOverriddenChild");
+	}
+
+	@Before
 	public void setUp1() throws IOException {
 		testItemHelper.write("setUp1");
 	}
@@ -73,9 +83,10 @@ public class BeforeAfterTestItem extends BaseBeforeAfterTestItem {
 	}
 
 	private static final String[] _LINES = {
-		"setUpBase", "setUp2", "setUp1", "test1", "tearDown1", "tearDown2",
-		"tearDownBase", "setUpBase", "setUp2", "setUp1", "test2", "tearDown1",
-		"tearDown2", "tearDownBase"
+		"setUpBase", "setUpOverriddenChild", "setUp2", "setUp1", "test1",
+		"tearDown1", "tearDown2", "tearDownOverriddenChild", "tearDownBase",
+		"setUpBase", "setUpOverriddenChild", "setUp2", "setUp1", "test2",
+		"tearDown1", "tearDown2", "tearDownOverriddenChild", "tearDownBase"
 	};
 
 }

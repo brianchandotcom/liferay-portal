@@ -48,7 +48,7 @@ public class BlogPostingEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
-				Field.TITLE, locale -> Field.getSortableFieldName(Field.TITLE))
+				"headline", locale -> Field.getSortableFieldName(Field.TITLE))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

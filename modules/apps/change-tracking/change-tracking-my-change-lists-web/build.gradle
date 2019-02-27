@@ -9,7 +9,6 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:application-list:application-list-taglib")
 	compileOnly project(":apps:change-tracking:change-tracking-api")
-	compileOnly project(":apps:product-navigation:product-navigation-user-personal-menu-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

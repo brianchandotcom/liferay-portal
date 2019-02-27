@@ -72,7 +72,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteImageObject() throws Exception {
+	public void testDeleteBlogPostingImage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetBlogPostingImage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -82,12 +87,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testGetImageObject() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPatchImageObject() throws Exception {
+	public void testPatchBlogPostingImage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -97,7 +97,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testPutImageObject() throws Exception {
+	public void testPutBlogPostingImage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -184,7 +184,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return false;
 	}
 
-	protected boolean invokeDeleteImageObject(Long imageObjectId)
+	protected boolean invokeDeleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -194,13 +194,15 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
 
 		return _outputObjectMapper.readValue(
 			HttpUtil.URLtoString(options), Boolean.class);
 	}
 
-	protected Http.Response invokeDeleteImageObjectResponse(Long imageObjectId)
+	protected Http.Response invokeDeleteBlogPostingImageResponse(
+			Long blogPostingImageId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -210,7 +212,41 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected BlogPostingImage invokeGetBlogPostingImage(
+			Long blogPostingImageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImage.class);
+	}
+
+	protected Http.Response invokeGetBlogPostingImageResponse(
+			Long blogPostingImageId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
 
 		HttpUtil.URLtoString(options);
 
@@ -250,7 +286,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BlogPostingImage invokeGetImageObject(Long imageObjectId)
+	protected BlogPostingImage invokePatchBlogPostingImage(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -258,13 +295,15 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
 
 		return _outputObjectMapper.readValue(
 			HttpUtil.URLtoString(options), BlogPostingImage.class);
 	}
 
-	protected Http.Response invokeGetImageObjectResponse(Long imageObjectId)
+	protected Http.Response invokePatchBlogPostingImageResponse(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -272,38 +311,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected BlogPostingImage invokePatchImageObject(
-			Long imageObjectId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options), BlogPostingImage.class);
-	}
-
-	protected Http.Response invokePatchImageObjectResponse(
-			Long imageObjectId, MultipartBody multipartBody)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_resourceURL +
-				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
 
 		HttpUtil.URLtoString(options);
 
@@ -347,8 +356,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return options.getResponse();
 	}
 
-	protected BlogPostingImage invokePutImageObject(
-			Long imageObjectId, MultipartBody multipartBody)
+	protected BlogPostingImage invokePutBlogPostingImage(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -356,7 +365,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
 
 		options.setPut(true);
 
@@ -364,8 +374,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			HttpUtil.URLtoString(options), BlogPostingImage.class);
 	}
 
-	protected Http.Response invokePutImageObjectResponse(
-			Long imageObjectId, MultipartBody multipartBody)
+	protected Http.Response invokePutBlogPostingImageResponse(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -373,7 +383,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		options.setLocation(
 			_resourceURL +
 				_toPath(
-					"/blog-posting-images/{image-object-id}", imageObjectId));
+					"/blog-posting-images/{blog-posting-image-id}",
+					blogPostingImageId));
 
 		options.setPut(true);
 

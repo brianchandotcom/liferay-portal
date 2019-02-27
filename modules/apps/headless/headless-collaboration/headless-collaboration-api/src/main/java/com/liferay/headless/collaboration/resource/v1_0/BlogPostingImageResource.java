@@ -35,25 +35,27 @@ import javax.annotation.Generated;
 @Generated("")
 public interface BlogPostingImageResource {
 
-	public boolean deleteImageObject(Long imageObjectId) throws Exception;
+	public boolean deleteBlogPostingImage(Long blogPostingImageId)
+		throws Exception;
+
+	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
+		throws Exception;
 
 	public Page<BlogPostingImage> getContentSpaceBlogPostingImagesPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
-	public BlogPostingImage getImageObject(Long imageObjectId) throws Exception;
-
-	public BlogPostingImage patchImageObject(
-			Long imageObjectId, MultipartBody multipartBody)
+	public BlogPostingImage patchBlogPostingImage(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception;
 
 	public BlogPostingImage postContentSpaceBlogPostingImage(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception;
 
-	public BlogPostingImage putImageObject(
-			Long imageObjectId, MultipartBody multipartBody)
+	public BlogPostingImage putBlogPostingImage(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

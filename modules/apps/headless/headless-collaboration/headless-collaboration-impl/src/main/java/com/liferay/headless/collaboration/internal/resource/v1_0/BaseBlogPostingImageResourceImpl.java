@@ -58,14 +58,26 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@DELETE
 	@Override
-	@Path("/blog-posting-images/{image-object-id}")
+	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public boolean deleteImageObject(
-			@PathParam("image-object-id") Long imageObjectId)
+	public boolean deleteBlogPostingImage(
+			@PathParam("blog-posting-image-id") Long blogPostingImageId)
 		throws Exception {
 
 		return false;
+	}
+
+	@GET
+	@Override
+	@Path("/blog-posting-images/{blog-posting-image-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public BlogPostingImage getBlogPostingImage(
+			@PathParam("blog-posting-image-id") Long blogPostingImageId)
+		throws Exception {
+
+		return new BlogPostingImage();
 	}
 
 	@GET
@@ -82,26 +94,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@GET
-	@Override
-	@Path("/blog-posting-images/{image-object-id}")
-	@Produces("application/json")
-	@RequiresScope("everything.read")
-	public BlogPostingImage getImageObject(
-			@PathParam("image-object-id") Long imageObjectId)
-		throws Exception {
-
-		return new BlogPostingImage();
-	}
-
 	@Consumes("multipart/form-data")
 	@Override
 	@PATCH
-	@Path("/blog-posting-images/{image-object-id}")
+	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public BlogPostingImage patchImageObject(
-			@PathParam("image-object-id") Long imageObjectId,
+	public BlogPostingImage patchBlogPostingImage(
+			@PathParam("blog-posting-image-id") Long blogPostingImageId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -124,12 +124,12 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Consumes("multipart/form-data")
 	@Override
-	@Path("/blog-posting-images/{image-object-id}")
+	@Path("/blog-posting-images/{blog-posting-image-id}")
 	@Produces("application/json")
 	@PUT
 	@RequiresScope("everything.read")
-	public BlogPostingImage putImageObject(
-			@PathParam("image-object-id") Long imageObjectId,
+	public BlogPostingImage putBlogPostingImage(
+			@PathParam("blog-posting-image-id") Long blogPostingImageId,
 			MultipartBody multipartBody)
 		throws Exception {
 

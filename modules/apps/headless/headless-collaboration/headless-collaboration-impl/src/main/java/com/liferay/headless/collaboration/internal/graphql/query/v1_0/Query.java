@@ -83,6 +83,22 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public BlogPostingImage getBlogPostingImage(
+			@GraphQLName("blog-posting-image-id") Long blogPostingImageId)
+		throws Exception {
+
+		BlogPostingImageResource blogPostingImageResource =
+			_createBlogPostingImageResource();
+
+		blogPostingImageResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		return blogPostingImageResource.getBlogPostingImage(blogPostingImageId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Comment getComment(@GraphQLName("comment-id") Long commentId)
 		throws Exception {
 
@@ -159,22 +175,6 @@ public class Query {
 				contentSpaceId, filter, Pagination.of(pageSize, page), sorts);
 
 		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public BlogPostingImage getImageObject(
-			@GraphQLName("image-object-id") Long imageObjectId)
-		throws Exception {
-
-		BlogPostingImageResource blogPostingImageResource =
-			_createBlogPostingImageResource();
-
-		blogPostingImageResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		return blogPostingImageResource.getImageObject(imageObjectId);
 	}
 
 	private static BlogPostingImageResource _createBlogPostingImageResource() {

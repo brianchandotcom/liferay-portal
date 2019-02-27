@@ -44,8 +44,8 @@ public class CTConfigurationUpdateModel {
 
 		throw new IllegalArgumentException(
 			StringBundler.concat(
-				"Invalid value ", _changeTrackingEnabled,
-				". Must be TRUE/FALSE."));
+				"Invalid changeTrackingEnabled value ", _changeTrackingEnabled,
+				". Value should be either true or false."));
 	}
 
 	@XmlElement

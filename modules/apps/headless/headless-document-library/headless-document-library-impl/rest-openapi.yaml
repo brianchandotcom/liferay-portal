@@ -130,6 +130,9 @@ components:
     Folder:
       description: https://www.schema.org/Folder
       properties:
+        contentSpaceId:
+          format: int64
+          type: integer
         dateCreated:
           format: date-time
           type: string
@@ -147,9 +150,6 @@ components:
           type: integer
         name:
           type: string
-        repositoryId:
-          format: int64
-          type: integer
       type: object
 info:
   description: ""

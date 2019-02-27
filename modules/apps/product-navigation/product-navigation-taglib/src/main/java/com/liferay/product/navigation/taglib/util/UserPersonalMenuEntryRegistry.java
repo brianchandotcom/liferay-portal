@@ -27,17 +27,19 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Pei-Jung Lan
  */
-public class UserPersonalMenuEntryRegistryUtil {
+@Component(immediate = true, service = UserPersonalMenuEntryRegistry.class)
+public class UserPersonalMenuEntryRegistry {
 
-	public static List<List<UserPersonalMenuEntry>>
+	public List<List<UserPersonalMenuEntry>>
 		getGroupedUserPersonalMenuEntries() {
 
 		SortedSet<String> personalMenuGroups = new TreeSet<>(
@@ -54,13 +56,28 @@ public class UserPersonalMenuEntryRegistryUtil {
 		return groupedUserPersonalMenuEntries;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserPersonalMenuEntryRegistryUtil.class);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, UserPersonalMenuEntry.class,
+			"(product.navigation.user.personal.menu.group=*)",
+			new UserPersonalMenuEntryServiceReferenceMapper(),
+			new UserPersonalMenuEntryOrderComparator(
+				"product.navigation.user.personal.menu.entry.order"));
+	}
 
-	private static final ServiceTrackerMap<String, List<UserPersonalMenuEntry>>
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserPersonalMenuEntryRegistry.class);
+
+	private ServiceTrackerMap<String, List<UserPersonalMenuEntry>>
 		_serviceTrackerMap;
 
-	private static class UserPersonalMenuEntryOrderComparator
+	private class UserPersonalMenuEntryOrderComparator
 		extends PropertyServiceReferenceComparator {
 
 		public UserPersonalMenuEntryOrderComparator(String propertyKey) {
@@ -77,7 +94,7 @@ public class UserPersonalMenuEntryRegistryUtil {
 
 	}
 
-	private static class UserPersonalMenuEntryServiceReferenceMapper
+	private class UserPersonalMenuEntryServiceReferenceMapper
 		implements ServiceReferenceMapper<String, UserPersonalMenuEntry> {
 
 		@Override
@@ -99,20 +116,6 @@ public class UserPersonalMenuEntryRegistryUtil {
 			}
 		}
 
-	}
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			UserPersonalMenuEntryRegistryUtil.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, UserPersonalMenuEntry.class,
-			"(product.navigation.user.personal.menu.group=*)",
-			new UserPersonalMenuEntryServiceReferenceMapper(),
-			new UserPersonalMenuEntryOrderComparator(
-				"product.navigation.user.personal.menu.entry.order"));
 	}
 
 }

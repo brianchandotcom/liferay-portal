@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Collaboration)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Collaboration)",
 		"osgi.jaxrs.name=Liferay.Headless.Collaboration.DuplicateFriendlyURLEntryExceptionMapper"
 	},
 	service = ExceptionMapper.class

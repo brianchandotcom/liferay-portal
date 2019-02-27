@@ -170,8 +170,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  referrerClassNameId the referrer entity class name ID
-	 * @param  referrerClassPK the referrer entity primary key
+	 * @param  classNameId the entity class name ID
+	 * @param  classPK the entity primary key
 	 * @param  publishDate the date when draft was last published
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
@@ -197,9 +197,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, String typeSettings, boolean hidden, boolean system,
-			Map<Locale, String> friendlyURLMap, long referrerClassNameId,
-			long referrerClassPK, Date publishDate,
-			ServiceContext serviceContext)
+			Map<Locale, String> friendlyURLMap, long classNameId, long classPK,
+			Date publishDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
@@ -259,8 +258,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setSystem(system);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
-		layout.setReferrerClassNameId(referrerClassNameId);
-		layout.setReferrerClassPK(referrerClassPK);
+		layout.setClassNameId(classNameId);
+		layout.setClassPK(classPK);
 		layout.setPublishDate(publishDate);
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
@@ -2996,28 +2995,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the layout replacing its referrer entity class name ID and
-	 * primary key.
+	 * Updates the layout replacing its entity class name ID and primary key.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the layout ID of the layout
-	 * @param  referrerClassNameId the referrer entity class name ID
-	 * @param  referrerClassPK the referrer entity primary key
+	 * @param  classNameId the entity class name ID
+	 * @param  classPK the entity primary key
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,
-			long referrerClassNameId, long referrerClassPK)
+			long classNameId, long classPK)
 		throws PortalException {
 
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		layout.setReferrerClassNameId(referrerClassNameId);
-		layout.setReferrerClassPK(referrerClassPK);
+		layout.setClassNameId(classNameId);
+		layout.setClassPK(classPK);
 
 		return layoutLocalService.updateLayout(layout);
 	}

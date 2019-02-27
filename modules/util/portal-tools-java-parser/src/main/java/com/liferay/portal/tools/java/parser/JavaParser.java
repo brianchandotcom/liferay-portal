@@ -36,8 +36,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.charset.StandardCharsets;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,16 +46,10 @@ import java.util.Objects;
  */
 public class JavaParser {
 
-	/**
-	 * Passing the file is faster than passing content, but more intrusive as it
-	 * writes the parsed content to the file if there is incorrect parsing.
-	 */
 	public static String parse(File file, int maxLineLength)
 		throws CheckstyleException, IOException {
 
-		_maxLineLength = maxLineLength;
-
-		return _parse(file, FileUtil.read(file));
+		return parse(file, FileUtil.read(file), maxLineLength);
 	}
 
 	public static String parse(File file, String content, int maxLineLength)
@@ -65,24 +57,13 @@ public class JavaParser {
 
 		_maxLineLength = maxLineLength;
 
-		return _parse(file, content);
-	}
+		String newContent = _parse(file, content);
 
-	public static String parse(String content, int maxLineLength)
-		throws CheckstyleException, IOException {
-
-		_maxLineLength = maxLineLength;
-
-		File tempFile = FileUtil.createTempFile("java");
-
-		try {
-			FileUtil.write(tempFile, content);
-
-			return _parse(tempFile, content);
+		if (!newContent.equals(content)) {
+			FileUtil.write(file, newContent);
 		}
-		finally {
-			tempFile.delete();
-		}
+
+		return newContent;
 	}
 
 	private static ParsedJavaClass _addClosingJavaTerm(
@@ -515,6 +496,22 @@ public class JavaParser {
 		return lastEnumConstantDefinitionDetailAST;
 	}
 
+	private static List<String> _getLines(String s) throws IOException {
+		List<String> lines = new ArrayList<>();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(s))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
+		}
+
+		return lines;
+	}
+
 	private static int _getLineStartPos(String content, int lineNumber) {
 		if (lineNumber <= 0) {
 			return -1;
@@ -568,8 +565,9 @@ public class JavaParser {
 	private static String _parse(File file, String content)
 		throws CheckstyleException, IOException {
 
-		FileText fileText = new FileText(
-			file.getAbsoluteFile(), StandardCharsets.UTF_8.name());
+		List<String> lines = _getLines(content);
+
+		FileText fileText = new FileText(file, lines);
 
 		FileContents fileContents = new FileContents(fileText);
 
@@ -583,8 +581,6 @@ public class JavaParser {
 			content, parsedJavaClass, fileContents);
 
 		if (!newContent.equals(content)) {
-			FileUtil.write(file, newContent);
-
 			return _parse(file, newContent);
 		}
 

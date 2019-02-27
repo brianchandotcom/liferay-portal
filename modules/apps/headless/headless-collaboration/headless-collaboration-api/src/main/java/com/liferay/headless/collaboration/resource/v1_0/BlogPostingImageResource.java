@@ -48,6 +48,10 @@ public interface BlogPostingImageResource {
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception;
 
+	public BlogPostingImage putImageObject(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

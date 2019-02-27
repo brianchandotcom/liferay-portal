@@ -152,6 +152,19 @@ public class Mutation {
 		return commentResource.putComment(commentId, comment);
 	}
 
+	@GraphQLInvokeDetached
+	public BlogPostingImage putImageObject(
+			@GraphQLName("image-object-id") Long imageObjectId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		BlogPostingImageResource blogPostingImageResource =
+			_createBlogPostingImageResource();
+
+		return blogPostingImageResource.putImageObject(
+			imageObjectId, multipartBody);
+	}
+
 	private static BlogPostingImageResource _createBlogPostingImageResource() {
 		return new BlogPostingImageResourceImpl();
 	}

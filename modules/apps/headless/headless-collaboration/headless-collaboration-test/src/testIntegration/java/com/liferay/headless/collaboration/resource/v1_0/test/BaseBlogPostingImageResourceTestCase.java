@@ -91,6 +91,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testPutImageObject() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertEquals(
 		BlogPostingImage blogPostingImage1,
 		BlogPostingImage blogPostingImage2) {
@@ -300,6 +305,41 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 					contentSpaceId));
 
 		options.setPost(true);
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected BlogPostingImage invokePutImageObject(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		options.setPut(true);
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImage.class);
+	}
+
+	protected Http.Response invokePutImageObjectResponse(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		options.setPut(true);
 
 		HttpUtil.URLtoString(options);
 

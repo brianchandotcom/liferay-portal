@@ -170,8 +170,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  classNameId the entity class name ID
-	 * @param  classPK the entity primary key
+	 * @param  classNameId the class name ID of the entity
+	 * @param  classPK the primary key of the entity
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts
@@ -2999,8 +2999,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the layout ID of the layout
-	 * @param  classNameId the entity class name ID
-	 * @param  classPK the entity primary key
+	 * @param  classNameId the class name ID of the entity
+	 * @param  classPK the primary key of the entity
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */

@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ImportsFormatter;
+import com.liferay.portal.tools.JavaImportsFormatter;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.tools.java.parser.util.DetailASTUtil;
 import com.liferay.portal.tools.java.parser.util.FileUtil;
 import com.liferay.portal.tools.java.parser.util.JavaParserUtil;
@@ -61,6 +64,12 @@ public class JavaParser {
 		_maxLineLength = maxLineLength;
 
 		String newContent = _trimTrailingWhitespace(content);
+
+		ImportsFormatter importsFormatter = new JavaImportsFormatter();
+
+		newContent = importsFormatter.format(
+			newContent, ToolsUtil.getPackagePath(file),
+			StringUtil.replaceLast(file.getName(), ".java", StringPool.BLANK));
 
 		newContent = _parse(file, newContent);
 

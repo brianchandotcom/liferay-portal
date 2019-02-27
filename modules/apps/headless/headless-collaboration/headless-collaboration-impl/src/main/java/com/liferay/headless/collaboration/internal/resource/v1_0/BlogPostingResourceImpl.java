@@ -177,9 +177,7 @@ public class BlogPostingResourceImpl
 				_createServiceContext(blogsEntry.getGroupId(), blogPosting)));
 	}
 
-	private ServiceContext _createServiceContext(
-		long groupId, BlogPosting blogPosting) {
-
+	private ServiceContext _createServiceContext(BlogPosting blogPosting) {
 		return new ServiceContext() {
 			{
 				setAddGroupPermissions(true);
@@ -187,17 +185,20 @@ public class BlogPostingResourceImpl
 
 				Long[] categoryIds = blogPosting.getCategoryIds();
 
-				if (ArrayUtil.isNotEmpty(categoryIds)) {
+				if (categoryIds == null) {
+					setAssetCategoryIds(null);
+				}
+				else {
 					setAssetCategoryIds(ArrayUtil.toArray(categoryIds));
 				}
 
-				String[] keywords = blogPosting.getKeywords();
+				setAssetTagNames(blogPosting.getKeywords());
 
-				if (ArrayUtil.isNotEmpty(keywords)) {
-					setAssetTagNames(keywords);
+				Long contentSpaceId = blogPosting.getContentSpace();
+
+				if (contentSpaceId != null) {
+					setScopeGroupId(contentSpaceId);
 				}
-
-				setScopeGroupId(groupId);
 			}
 		};
 	}

@@ -31,11 +31,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 import org.junit.internal.runners.statements.FailOnTimeout;
-import org.junit.rules.MethodRule;
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
 import org.junit.runner.manipulation.Filter;
@@ -153,9 +151,7 @@ public class Arquillian extends Runner implements Filterable {
 
 		Statement statement = _createExecutorStatement(frameworkMethod, target);
 
-		statement = _withTimeout(frameworkMethod, statement);
-
-		return _withMethodRules(statement, frameworkMethod, target);
+		return _withTimeout(frameworkMethod, statement);
 	}
 
 	private Description _describeChild(FrameworkMethod frameworkMethod) {
@@ -222,28 +218,6 @@ public class Arquillian extends Runner implements Filterable {
 				runNotifier.fireTestFinished(description);
 			}
 		}
-	}
-
-	private Statement _withMethodRules(
-		Statement statement, FrameworkMethod frameworkMethod, Object target) {
-
-		TestClass testClass = _getTestClass();
-
-		for (MethodRule methodRule :
-				testClass.getAnnotatedMethodValues(
-					target, Rule.class, MethodRule.class)) {
-
-			statement = methodRule.apply(statement, frameworkMethod, target);
-		}
-
-		for (MethodRule methodRule :
-				testClass.getAnnotatedFieldValues(
-					target, Rule.class, MethodRule.class)) {
-
-			statement = methodRule.apply(statement, frameworkMethod, target);
-		}
-
-		return statement;
 	}
 
 	private Statement _withTimeout(

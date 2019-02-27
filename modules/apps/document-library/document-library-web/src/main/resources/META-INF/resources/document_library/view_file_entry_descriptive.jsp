@@ -70,11 +70,11 @@ rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPort
 rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 %>
 
-<h5 class="text-default">
+<span class="text-default">
 	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(latestFileVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-</h5>
+</span>
 
-<h4>
+<h2 class="h5">
 	<aui:a href="<%= rowURL.toString() %>">
 		<%= latestFileVersion.getTitle() %>
 	</aui:a>
@@ -84,7 +84,7 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 			<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked" />
 		</span>
 	</c:if>
-</h4>
+</h2>
 
 <span class="h5 text-default">
 	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />

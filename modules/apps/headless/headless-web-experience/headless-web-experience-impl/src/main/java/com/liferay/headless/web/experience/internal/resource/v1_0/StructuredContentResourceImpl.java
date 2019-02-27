@@ -16,6 +16,8 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -36,6 +38,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.headless.web.experience.dto.v1_0.Categories;
 import com.liferay.headless.web.experience.dto.v1_0.ContentDocument;
 import com.liferay.headless.web.experience.dto.v1_0.ContentField;
 import com.liferay.headless.web.experience.dto.v1_0.Geo;
@@ -76,6 +79,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -104,6 +108,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -376,6 +381,26 @@ public class StructuredContentResourceImpl
 		finally {
 			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
 		}
+	}
+
+	private Categories[] _getCategories(JournalArticle journalArticle) {
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey());
+
+		Stream<AssetCategory> stream = assetCategories.stream();
+
+		return stream.map(
+			assetCategory -> new Categories() {
+				{
+					setCategoryId(assetCategory.getCategoryId());
+					setCategoryName(assetCategory.getName());
+				}
+			}
+		).toArray(
+			Categories[]::new
+		);
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
@@ -665,6 +690,7 @@ public class StructuredContentResourceImpl
 					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()));
+				categories = _getCategories(journalArticle);
 				contentFields = _toContentFields(journalArticle);
 				contentSpace = journalArticle.getGroupId();
 				contentStructureId = ddmStructure.getStructureId();
@@ -807,6 +833,9 @@ public class StructuredContentResourceImpl
 			}
 		};
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Context
 	private HttpServletRequest _contextHttpServletRequest;

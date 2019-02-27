@@ -89,19 +89,27 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	}
 
 	protected String getJAXRSLink(String methodName, Object... values) {
-		URI baseURI = contextUriInfo.getBaseUri();
+		String baseURIString = String.valueOf(
+			contextUriInfo.getBaseUri());
 
-		URI resourceURI = UriBuilder.fromResource(
-			Base${schemaName}ResourceImpl.class
-		).build();
+		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
+			baseURIString = baseURIString.substring(
+				0, baseURIString.length() - 1);
+		}
 
-		URI methodURI = UriBuilder.fromMethod(
-			Base${schemaName}ResourceImpl.class, methodName
-		).build(
-			values
-		);
+		String resourceURIString = String.valueOf(
+			UriBuilder.fromResource(
+				Base${schemaName}ResourceImpl.class
+			).build());
 
-		return baseURI.toString() + resourceURI.toString() + methodURI.toString();
+		String methodURIString = String.valueOf(
+			UriBuilder.fromMethod(
+				Base${schemaName}ResourceImpl.class, methodName
+			).build(
+				values
+			));
+
+		return baseURIString + resourceURIString + methodURIString;
 	}
 
 	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Exception> unsafeFunction) {

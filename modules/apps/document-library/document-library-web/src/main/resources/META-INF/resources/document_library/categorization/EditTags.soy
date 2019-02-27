@@ -5,6 +5,7 @@
 	{@param groupIds: list<?>}
 	{@param dataSource: string|[]|list<?>}
 	{@param loading: bool}
+	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -22,6 +23,7 @@
 					{param description: $description /}
 					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
+					{param portletNamespace: $portletNamespace /}
 					{param spritemap: $spritemap /}
 					{param _handleRadioChange: $_handleRadioChange /}
 				{/call}
@@ -57,6 +59,7 @@
 	{@param commonTags: list<?>}
 	{@param groupIds: list<?>}
 	{@param dataSource: string|[]|list<?>}
+	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -103,8 +106,8 @@
 	{/call}
 
 	{call com.liferay.asset.taglib.AssetTagsSelector.render}
-		{param id: $namespace + 'assetTagsSelector' /}
-		{param inputName: $namespace + '_hiddenInput' /}
+		{param id: $portletNamespace + 'assetTagsSelector' /}
+		{param inputName: $portletNamespace + '_hiddenInput' /}
 		{param groupIds: $groupIds /}
 		{param elementClasses: 'clay-multi-select' /}
 		{param selectedItems: $commonTags /}

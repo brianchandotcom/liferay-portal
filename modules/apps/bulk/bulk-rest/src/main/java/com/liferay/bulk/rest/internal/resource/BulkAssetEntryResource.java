@@ -36,11 +36,14 @@ import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -68,6 +71,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -129,11 +133,12 @@ public class BulkAssetEntryResource {
 	}
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
-	@Path("/tags/{classNameId}/common")
+	@Path("/tags/{groupId}/{classNameId}/common")
 	@POST
 	@Produces(ContentTypes.APPLICATION_JSON)
 	public BulkAssetEntryCommonTagsModel getBulkAssetEntryCommonTagsModel(
 		@Context User user, @Context Locale locale,
+		@PathParam("groupId") long groupId,
 		@PathParam("classNameId") long classNameId,
 		BulkAssetEntryActionModel bulkAssetEntryActionModel) {
 
@@ -159,9 +164,12 @@ public class BulkAssetEntryResource {
 				Collections.emptySet()
 			);
 
+			long[] groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
+				groupId);
+
 			return new BulkAssetEntryCommonTagsModel(
 				assetEntryBulkSelection.describe(locale),
-				new ArrayList<>(commonTags));
+				new ArrayList<>(commonTags), groupIds);
 		}
 		catch (Exception e) {
 			return new BulkAssetEntryCommonTagsModel(e);

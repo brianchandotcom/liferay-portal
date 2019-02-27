@@ -35,17 +35,11 @@ public class BeforeAfterTestItem {
 	public static void assertAndTearDown() throws IOException {
 		List<String> lines = _testItemHelper.read();
 
-		Assert.assertEquals(lines.toString(), 10, lines.size());
-		Assert.assertEquals(lines.toString(), "setUp2", lines.get(0));
-		Assert.assertEquals(lines.toString(), "setUp1", lines.get(1));
-		Assert.assertEquals(lines.toString(), "test1", lines.get(2));
-		Assert.assertEquals(lines.toString(), "tearDown1", lines.get(3));
-		Assert.assertEquals(lines.toString(), "tearDown2", lines.get(4));
-		Assert.assertEquals(lines.toString(), "setUp2", lines.get(5));
-		Assert.assertEquals(lines.toString(), "setUp1", lines.get(6));
-		Assert.assertEquals(lines.toString(), "test2", lines.get(7));
-		Assert.assertEquals(lines.toString(), "tearDown1", lines.get(8));
-		Assert.assertEquals(lines.toString(), "tearDown2", lines.get(9));
+		Assert.assertEquals(lines.toString(), _LINES.length, lines.size());
+
+		for (int i = 0; i < _LINES.length; i++) {
+			Assert.assertEquals(lines.toString(), _LINES[i], lines.get(i));
+		}
 	}
 
 	@Before
@@ -77,6 +71,11 @@ public class BeforeAfterTestItem {
 	public void test2() throws IOException {
 		_testItemHelper.write("test2");
 	}
+
+	private static final String[] _LINES = {
+		"setUp2", "setUp1", "test1", "tearDown1", "tearDown2", "setUp2",
+		"setUp1", "test2", "tearDown1", "tearDown2"
+	};
 
 	private static final TestItemHelper _testItemHelper = new TestItemHelper(
 		BeforeAfterTestItem.class);

@@ -35,16 +35,11 @@ public class BeforeAfterClassTestItem extends BaseBeforeAfterClassTestItem {
 	public static void assertAndTearDown() throws IOException {
 		List<String> lines = testItemHelper.read();
 
-		Assert.assertEquals(lines.toString(), 8, lines.size());
-		Assert.assertEquals(lines.toString(), "setUpClassBase", lines.get(0));
-		Assert.assertEquals(lines.toString(), "setUpClass2", lines.get(1));
-		Assert.assertEquals(lines.toString(), "setUpClass1", lines.get(2));
-		Assert.assertEquals(lines.toString(), "test1", lines.get(3));
-		Assert.assertEquals(lines.toString(), "test2", lines.get(4));
-		Assert.assertEquals(lines.toString(), "tearDownClass1", lines.get(5));
-		Assert.assertEquals(lines.toString(), "tearDownClass2", lines.get(6));
-		Assert.assertEquals(
-			lines.toString(), "tearDownClassBase", lines.get(7));
+		Assert.assertEquals(lines.toString(), _LINES.length, lines.size());
+
+		for (int i = 0; i < _LINES.length; i++) {
+			Assert.assertEquals(lines.toString(), _LINES[i], lines.get(i));
+		}
 	}
 
 	@BeforeClass
@@ -76,5 +71,10 @@ public class BeforeAfterClassTestItem extends BaseBeforeAfterClassTestItem {
 	public void test2() throws IOException {
 		testItemHelper.write("test2");
 	}
+
+	private static final String[] _LINES = {
+		"setUpClassBase", "setUpClass2", "setUpClass1", "test1", "test2",
+		"tearDownClass1", "tearDownClass2", "tearDownClassBase"
+	};
 
 }

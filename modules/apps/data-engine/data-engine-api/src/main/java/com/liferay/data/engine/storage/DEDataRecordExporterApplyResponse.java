@@ -14,27 +14,62 @@
 
 package com.liferay.data.engine.storage;
 
+import com.liferay.data.engine.service.DEDataRecordCollectionExportRecordsResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionGetResponse.Builder;
+
 /**
+ * Response class used as a return value for the export operation
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordExporterApplyResponse {
 
+	/**
+	 * Returns the exported content
+	 * @review
+	 * @return The exported content
+	 */
 	public String getContent() {
 		return _content;
 	}
 
+	/**
+	 * Inner builder that assembles the response.
+	 * @review
+	 */
 	public static final class Builder {
 
+		/**
+		 * Returns the builder
+		 * @param content The Data Records exported
+		 * @return the builder
+		 * @review
+		 */
 		public static Builder newBuilder(String content) {
 			return new Builder(content);
 		}
 
+		/**
+		 * Builds a response directly from a content.
+		 *
+		 * @param content the exported content
+		 * @return The response object
+		 * @review
+		 */
 		public static DEDataRecordExporterApplyResponse of(String content) {
 			return newBuilder(
 				content
 			).build();
 		}
 
+		/**
+		 * Builds the response and returns the {@link DEDataRecordExporterApplyResponse}
+		 * object.
+		 *
+		 * @return The response object
+		 * @review
+		 */
 		public DEDataRecordExporterApplyResponse build() {
 			return _deDataRecordExporterApplyResponse;
 		}

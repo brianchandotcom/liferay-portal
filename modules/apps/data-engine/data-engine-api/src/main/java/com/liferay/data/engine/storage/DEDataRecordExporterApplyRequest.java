@@ -14,34 +14,71 @@
 
 package com.liferay.data.engine.storage;
 
-import com.liferay.data.engine.model.DEDataRecord;
-
 import java.util.Collections;
 import java.util.List;
 
+import com.liferay.data.engine.model.DEDataRecord;
+
 /**
+ * Request class used to export data records from a data storage
+ *
  * @author Leonardo Barros
+ * @review
  */
 public final class DEDataRecordExporterApplyRequest {
 
+	/**
+	 * Returns the {@link DEDataRecord}s to be exported
+	 *
+	 * @return The {@link DEDataRecord}s
+	 * @review
+	 */
 	public List<DEDataRecord> getDEDataRecords() {
 		return Collections.unmodifiableList(_deDataRecords);
 	}
 
+	/**
+	 * Returns the export format
+	 *
+	 * @return The export format
+	 * @review
+	 */
 	public String getFormat() {
 		return _format;
 	}
 
+	/**
+	 * Inner builder that assembles the request
+	 * @review
+	 */
 	public static class Builder {
 
+		/**
+		 * Builder constructor that receives the data records as parameter
+		 * @param deDataRecords The Data Records to be exported
+		 * @review
+		 */
 		public static Builder newBuilder(List<DEDataRecord> deDataRecords) {
 			return new Builder(deDataRecords);
 		}
 
+		/**
+		 * Builds the request and return the {@link DEDataRecordExporterApplyRequest}
+		 * object.
+		 * @return the {@link DEDataRecordExporterApplyRequest} object.
+		 * @review
+		 */
 		public DEDataRecordExporterApplyRequest build() {
 			return _deDataRecordExporterApplyRequest;
 		}
 
+		/**
+		 * The export format
+		 *
+		 * @param format
+		 * @return the builder
+		 * @review
+		 */
 		public Builder exportTo(String format) {
 			_deDataRecordExporterApplyRequest._format = format;
 

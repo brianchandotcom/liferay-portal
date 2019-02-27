@@ -564,7 +564,7 @@ definition {
 
 	@priority = "5"
 	test ADTTagsNavigationPortlet {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Content and Application Templates,Tags";
 
 		Navigator.openSiteURL(siteName = "Test Site Name");

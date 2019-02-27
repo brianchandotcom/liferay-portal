@@ -75,10 +75,6 @@ public class SubrepositoryGitRepositoryJob
 					getBranchName());
 		}
 
-		if (!(portalGitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			throw new RuntimeException("Invalid portal Git working directory");
-		}
-
 		return portalGitWorkingDirectory;
 	}
 

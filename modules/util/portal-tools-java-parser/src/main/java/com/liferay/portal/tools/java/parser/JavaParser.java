@@ -60,7 +60,9 @@ public class JavaParser {
 
 		_maxLineLength = maxLineLength;
 
-		String newContent = _parse(file, content);
+		String newContent = _trimTrailingWhitespace(content);
+
+		newContent = _parse(file, newContent);
 
 		if (!newContent.equals(content)) {
 			FileUtil.write(file, newContent);
@@ -1010,6 +1012,29 @@ public class JavaParser {
 
 		return StringUtil.replaceFirst(
 			content, line, StringUtil.trimTrailing(line), x);
+	}
+
+	private static String _trimTrailingWhitespace(String content)
+		throws IOException {
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(StringUtil.trimTrailing(line));
+				sb.append("\n");
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private static ParsedJavaClass _walk(

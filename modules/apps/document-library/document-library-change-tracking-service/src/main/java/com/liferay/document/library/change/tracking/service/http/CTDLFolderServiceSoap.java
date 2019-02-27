@@ -16,9 +16,16 @@ package com.liferay.document.library.change.tracking.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.change.tracking.service.CTDLFolderServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.document.library.change.tracking.service.CTDLFolderServiceUtil</code> service
+ * <code>CTDLFolderServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -46,4 +53,28 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CTDLFolderServiceSoap {
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use <code>CTDLFolderServiceUtil</code> to access the ctdl folder remote service.
+	*/
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws RemoteException {
+		try {
+			int returnValue = CTDLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
+					folderId, mimeTypes, includeMountFolders, queryDefinition);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CTDLFolderServiceSoap.class);
 }

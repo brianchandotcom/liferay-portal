@@ -16,12 +16,18 @@ package com.liferay.document.library.change.tracking.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 
+import java.util.List;
+
 /**
  * @author Luiz Marins
  */
 public interface CTDLFolderFinderOverride {
 
 	public int filterCountF_FE_FS_ByG_F_M_M(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition);
+
+	public List<Object> filterFindF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, String[] mimeTypes,
 		boolean includeMountFolders, QueryDefinition<?> queryDefinition);
 

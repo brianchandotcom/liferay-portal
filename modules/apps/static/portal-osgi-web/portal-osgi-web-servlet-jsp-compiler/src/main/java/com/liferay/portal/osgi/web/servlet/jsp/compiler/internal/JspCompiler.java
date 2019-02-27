@@ -12,6 +12,7 @@ import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
@@ -40,6 +41,8 @@ import javax.servlet.ServletContext;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
+import javax.tools.FileObject;
+import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
@@ -233,6 +236,63 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
+	}
+
+	@Override
+	protected JavaFileManager getJavaFileManager(
+		JavaFileManager javaFileManager) {
+
+		return new ForwardingJavaFileManager<JavaFileManager>(javaFileManager) {
+
+			@Override
+			public JavaFileObject getJavaFileForOutput(
+				Location location, String className, JavaFileObject.Kind kind,
+				FileObject fileObject) {
+
+				return getOutputFile(
+					className,
+					URI.create(
+						"file:///" + StringUtil.replace(className, '.', '/') +
+							kind));
+			}
+
+			@Override
+			public String inferBinaryName(
+				Location location, JavaFileObject javaFileObject) {
+
+				if (javaFileObject instanceof BytecodeFile) {
+					BytecodeFile bytecodeFile = (BytecodeFile)javaFileObject;
+
+					return bytecodeFile.getClassName();
+				}
+
+				return super.inferBinaryName(location, javaFileObject);
+			}
+
+			@Override
+			public Iterable<JavaFileObject> list(
+					Location location, String packageName,
+					Set<JavaFileObject.Kind> kinds, boolean recurse)
+				throws IOException {
+
+				if ((location == StandardLocation.CLASS_PATH) &&
+					packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
+
+					Map<String, Map<String, JavaFileObject>> packageMap =
+						rtctxt.getPackageMap();
+
+					Map<String, JavaFileObject> javaFileObjectsMap =
+						packageMap.get(packageName);
+
+					if (javaFileObjectsMap != null) {
+						return javaFileObjectsMap.values();
+					}
+				}
+
+				return super.list(location, packageName, kinds, recurse);
+			}
+
+		};
 	}
 
 	@Override

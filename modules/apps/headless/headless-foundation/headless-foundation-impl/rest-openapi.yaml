@@ -1,5 +1,16 @@
 components:
     schemas:
+        AssetType:
+            description: https://www.schema.org/AssetType
+            properties:
+                required:
+                    type: boolean
+                subtype:
+                    type: string
+                type:
+                    enum: [AllAssetTypes, BlogPosting, Document, KnowledgeBaseArticle, Organization, StructuredContent, UserAccount, WebPage, WebSite, WikiPage]
+                    type: string
+            type: object
         Category:
             description: https://www.schema.org/Category
             properties:
@@ -400,6 +411,10 @@ components:
         Vocabulary:
             description: https://www.schema.org/Vocabulary
             properties:
+                assetTypes:
+                    items:
+                        $ref: "#/components/schemas/AssetType"
+                    type: array
                 availableLanguages:
                     items:
                         type: string

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.attribute.provider.internal;
+package com.liferay.frontend.taglib.clay.internal;
 
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProvider;
 import com.liferay.frontend.taglib.clay.attribute.provider.ClayComponentAttributeProviderRegistry;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(
 	immediate = true, service = ClayComponentAttributeProviderRegistry.class
 )
-public class ClayComponentAttributeProviderRegistryImpl
+public class ClayComponentAttributeProvidersProvider
 	implements ClayComponentAttributeProviderRegistry {
 
 	@Override
@@ -101,7 +101,7 @@ public class ClayComponentAttributeProviderRegistryImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClayComponentAttributeProviderRegistryImpl.class);
+		ClayComponentAttributeProvidersProvider.class);
 
 	private ServiceTrackerMap
 		<String, List<ServiceWrapper<ClayComponentAttributeProvider>>>

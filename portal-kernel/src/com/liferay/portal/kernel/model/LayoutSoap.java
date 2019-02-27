@@ -67,8 +67,8 @@ public class LayoutSoap implements Serializable {
 		soapModel.setLayoutPrototypeLinkEnabled(model.isLayoutPrototypeLinkEnabled());
 		soapModel.setSourcePrototypeLayoutUuid(model.getSourcePrototypeLayoutUuid());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
-		soapModel.setReferrerClassNameId(model.getReferrerClassNameId());
-		soapModel.setReferrerClassPK(model.getReferrerClassPK());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setPublishDate(model.getPublishDate());
 
 		return soapModel;
@@ -411,20 +411,20 @@ public class LayoutSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	public long getReferrerClassNameId() {
-		return _referrerClassNameId;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setReferrerClassNameId(long referrerClassNameId) {
-		_referrerClassNameId = referrerClassNameId;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
-	public long getReferrerClassPK() {
-		return _referrerClassPK;
+	public long getClassPK() {
+		return _classPK;
 	}
 
-	public void setReferrerClassPK(long referrerClassPK) {
-		_referrerClassPK = referrerClassPK;
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	public Date getPublishDate() {
@@ -469,7 +469,7 @@ public class LayoutSoap implements Serializable {
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
 	private Date _lastPublishDate;
-	private long _referrerClassNameId;
-	private long _referrerClassPK;
+	private long _classNameId;
+	private long _classPK;
 	private Date _publishDate;
 }

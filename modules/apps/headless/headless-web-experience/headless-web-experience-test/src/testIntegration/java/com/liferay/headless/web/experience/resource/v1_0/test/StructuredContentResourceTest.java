@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -89,6 +90,20 @@ public class StructuredContentResourceTest
 		registry.ungetService(_serviceReference);
 
 		super.tearDown();
+	}
+
+	@Override
+	protected StructuredContent randomStructuredContent() {
+		return new StructuredContent() {
+			{
+				contentSpace = testGroup.getGroupId();
+				contentStructureId = _ddmStructure.getStructureId();
+				datePublished = RandomTestUtil.nextDate();
+				description = RandomTestUtil.randomString();
+				lastReviewed = RandomTestUtil.nextDate();
+				title = RandomTestUtil.randomString();
+			}
+		};
 	}
 
 	private DDMForm _deserialize(String content) {

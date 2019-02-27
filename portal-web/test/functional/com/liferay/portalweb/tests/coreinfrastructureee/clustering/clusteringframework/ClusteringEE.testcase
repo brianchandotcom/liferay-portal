@@ -452,11 +452,6 @@ definition {
 		);
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Removed test.key from test.cache",
-			nodePort = "8080"
-		);
-
-		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Unable to deserialize object",
 			nodePort = "9080"
 		);
@@ -478,36 +473,6 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "test.key=null",
-			nodePort = "9080"
-		);
-
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-remove.groovy"
-		);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Removed test.key from test.cache",
-			nodePort = "8080"
-		);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Removed test.key from test.cache",
-			nodePort = "9080"
-		);
-
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-remove.groovy"
-		);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Removed test.key from test.cache",
-			nodePort = "8080"
-		);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Removed test.key from test.cache",
 			nodePort = "9080"
 		);
 	}

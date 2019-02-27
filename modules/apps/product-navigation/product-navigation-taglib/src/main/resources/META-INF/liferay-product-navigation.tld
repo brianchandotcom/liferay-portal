@@ -16,16 +16,4 @@
 		<tag-class>com.liferay.product.navigation.taglib.servlet.taglib.ProductNavigationControlMenuTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
-	<tag>
-		<description>Creates a dropdown menu for the user's personal menu.</description>
-		<name>user-personal-menu</name>
-		<tag-class>com.liferay.product.navigation.taglib.servlet.taglib.ProductNavigationUserPersonalMenuTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<description></description>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
 </taglib>

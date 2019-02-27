@@ -477,16 +477,18 @@ AUI.add(
 					},
 
 					_handleActionChange: function(event) {
-						var instance = this;
+						if (event.prevVal[0] != event.newVal[0]) {
+							var instance = this;
 
-						var field = event.target;
+							var field = event.target;
 
-						var fieldName = field.get('fieldName');
+							var fieldName = field.get('fieldName');
 
-						if (fieldName && fieldName.match('-target')) {
-							var index = fieldName.split('-')[0];
+							if (fieldName && fieldName.match('-target')) {
+								var index = fieldName.split('-')[0];
 
-							instance._createTargetSelect(index, event.newVal[0], null);
+								instance._createTargetSelect(index, event.newVal[0], null);
+							}
 						}
 					},
 

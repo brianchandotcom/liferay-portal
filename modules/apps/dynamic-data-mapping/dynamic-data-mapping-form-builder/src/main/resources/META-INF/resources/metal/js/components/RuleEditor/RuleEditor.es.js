@@ -1068,11 +1068,10 @@ class RuleEditor extends Component {
 			else {
 				if (fieldName !== conditions[index].operands[0].value) {
 					conditions[index].operator = '';
+					this._clearSecondOperandValue(conditions, index);
 				}
 
 				conditions[index].operands[0] = firstOperand;
-
-				this._clearSecondOperandValue(conditions, index);
 			}
 		}
 		else {

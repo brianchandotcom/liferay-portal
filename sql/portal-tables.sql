@@ -577,7 +577,10 @@ create table Layout (
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	referrerClassNameId LONG,
+	referrerClassPK LONG,
+	publishDate DATE null
 );
 
 create table LayoutBranch (

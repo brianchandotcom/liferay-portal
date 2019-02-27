@@ -79,7 +79,7 @@ public class LayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(75);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -149,6 +149,12 @@ public class LayoutCacheModel
 		sb.append(sourcePrototypeLayoutUuid);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", referrerClassNameId=");
+		sb.append(referrerClassNameId);
+		sb.append(", referrerClassPK=");
+		sb.append(referrerClassPK);
+		sb.append(", publishDate=");
+		sb.append(publishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -307,6 +313,16 @@ public class LayoutCacheModel
 			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		layoutImpl.setReferrerClassNameId(referrerClassNameId);
+		layoutImpl.setReferrerClassPK(referrerClassPK);
+
+		if (publishDate == Long.MIN_VALUE) {
+			layoutImpl.setPublishDate(null);
+		}
+		else {
+			layoutImpl.setPublishDate(new Date(publishDate));
+		}
+
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
@@ -363,6 +379,11 @@ public class LayoutCacheModel
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+
+		referrerClassNameId = objectInput.readLong();
+
+		referrerClassPK = objectInput.readLong();
+		publishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -508,6 +529,11 @@ public class LayoutCacheModel
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeLong(referrerClassNameId);
+
+		objectOutput.writeLong(referrerClassPK);
+		objectOutput.writeLong(publishDate);
 	}
 
 	public long mvccVersion;
@@ -544,5 +570,8 @@ public class LayoutCacheModel
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;
 	public long lastPublishDate;
+	public long referrerClassNameId;
+	public long referrerClassPK;
+	public long publishDate;
 
 }

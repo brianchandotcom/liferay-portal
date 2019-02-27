@@ -184,6 +184,12 @@ public class LayoutPersistenceTest {
 
 		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newLayout.setReferrerClassNameId(RandomTestUtil.nextLong());
+
+		newLayout.setReferrerClassPK(RandomTestUtil.nextLong());
+
+		newLayout.setPublishDate(RandomTestUtil.nextDate());
+
 		_layouts.add(_persistence.update(newLayout));
 
 		Layout existingLayout = _persistence.findByPrimaryKey(
@@ -253,6 +259,15 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getLastPublishDate()),
 			Time.getShortTimestamp(newLayout.getLastPublishDate()));
+		Assert.assertEquals(
+			existingLayout.getReferrerClassNameId(),
+			newLayout.getReferrerClassNameId());
+		Assert.assertEquals(
+			existingLayout.getReferrerClassPK(),
+			newLayout.getReferrerClassPK());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayout.getPublishDate()),
+			Time.getShortTimestamp(newLayout.getPublishDate()));
 	}
 
 	@Test
@@ -485,7 +500,8 @@ public class LayoutPersistenceTest {
 			"iconImageId", true, "themeId", true, "colorSchemeId", true,
 			"priority", true, "layoutPrototypeUuid", true,
 			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true, "lastPublishDate", true);
+			true, "lastPublishDate", true, "referrerClassNameId", true,
+			"referrerClassPK", true, "publishDate", true);
 	}
 
 	@Test
@@ -838,6 +854,12 @@ public class LayoutPersistenceTest {
 
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
 
+		layout.setReferrerClassNameId(RandomTestUtil.nextLong());
+
+		layout.setReferrerClassPK(RandomTestUtil.nextLong());
+
+		layout.setPublishDate(RandomTestUtil.nextDate());
+
 		_layouts.add(_persistence.update(layout));
 
 		return layout;
@@ -1120,6 +1142,12 @@ public class LayoutPersistenceTest {
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
+
+		layout.setReferrerClassNameId(RandomTestUtil.nextLong());
+
+		layout.setReferrerClassPK(RandomTestUtil.nextLong());
+
+		layout.setPublishDate(RandomTestUtil.nextDate());
 
 		if (parentPlid != null) {
 			layout.setParentPlid(parentPlid);

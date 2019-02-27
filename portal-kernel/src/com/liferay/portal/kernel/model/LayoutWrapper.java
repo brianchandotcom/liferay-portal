@@ -80,6 +80,9 @@ public class LayoutWrapper
 		attributes.put(
 			"sourcePrototypeLayoutUuid", getSourcePrototypeLayoutUuid());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
+		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("publishDate", getPublishDate());
 
 		return attributes;
 	}
@@ -291,6 +294,24 @@ public class LayoutWrapper
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
+
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
+		}
+
+		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
+
+		if (referrerClassPK != null) {
+			setReferrerClassPK(referrerClassPK);
+		}
+
+		Date publishDate = (Date)attributes.get("publishDate");
+
+		if (publishDate != null) {
+			setPublishDate(publishDate);
 		}
 	}
 
@@ -983,6 +1004,36 @@ public class LayoutWrapper
 	@Override
 	public boolean getPrivateLayout() {
 		return model.getPrivateLayout();
+	}
+
+	/**
+	 * Returns the publish date of this layout.
+	 *
+	 * @return the publish date of this layout
+	 */
+	@Override
+	public Date getPublishDate() {
+		return model.getPublishDate();
+	}
+
+	/**
+	 * Returns the referrer class name ID of this layout.
+	 *
+	 * @return the referrer class name ID of this layout
+	 */
+	@Override
+	public long getReferrerClassNameId() {
+		return model.getReferrerClassNameId();
+	}
+
+	/**
+	 * Returns the referrer class pk of this layout.
+	 *
+	 * @return the referrer class pk of this layout
+	 */
+	@Override
+	public long getReferrerClassPK() {
+		return model.getReferrerClassPK();
 	}
 
 	@Override
@@ -2025,6 +2076,36 @@ public class LayoutWrapper
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		model.setPrivateLayout(privateLayout);
+	}
+
+	/**
+	 * Sets the publish date of this layout.
+	 *
+	 * @param publishDate the publish date of this layout
+	 */
+	@Override
+	public void setPublishDate(Date publishDate) {
+		model.setPublishDate(publishDate);
+	}
+
+	/**
+	 * Sets the referrer class name ID of this layout.
+	 *
+	 * @param referrerClassNameId the referrer class name ID of this layout
+	 */
+	@Override
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		model.setReferrerClassNameId(referrerClassNameId);
+	}
+
+	/**
+	 * Sets the referrer class pk of this layout.
+	 *
+	 * @param referrerClassPK the referrer class pk of this layout
+	 */
+	@Override
+	public void setReferrerClassPK(long referrerClassPK) {
+		model.setReferrerClassPK(referrerClassPK);
 	}
 
 	/**

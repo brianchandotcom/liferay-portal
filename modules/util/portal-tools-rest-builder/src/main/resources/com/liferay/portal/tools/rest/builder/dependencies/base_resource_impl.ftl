@@ -97,19 +97,17 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				0, baseURIString.length() - 1);
 		}
 
-		String resourceURIString = String.valueOf(
-			UriBuilder.fromResource(
-				Base${schemaName}ResourceImpl.class
-			).build());
+		URI resourceURI = UriBuilder.fromResource(
+			Base${schemaName}ResourceImpl.class
+		).build();
 
-		String methodURIString = String.valueOf(
-			UriBuilder.fromMethod(
-				Base${schemaName}ResourceImpl.class, methodName
-			).build(
-				values
-			));
+		URI methodURI = UriBuilder.fromMethod(
+			Base${schemaName}ResourceImpl.class, methodName
+		).build(
+			values
+		);
 
-		return baseURIString + resourceURIString + methodURIString;
+		return baseURIString + resourceURI.toString() + methodURI.toString();
 	}
 
 	protected <T, R> List<R> transform(List<T> list, UnsafeFunction<T, R, Exception> unsafeFunction) {

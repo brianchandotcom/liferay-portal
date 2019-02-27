@@ -887,9 +887,9 @@ AUI.add(
 
 						event.preventDefault();
 
-						var saveButton = instance.one('#publish');
+						var publishButton = instance.one('#publish');
 
-						saveButton.html(Liferay.Language.get('publishing'));
+						publishButton.html(Liferay.Language.get('publishing'));
 
 						var editForm = instance.get('editForm');
 

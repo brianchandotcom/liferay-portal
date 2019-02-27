@@ -49,15 +49,16 @@ public class SaveFormInstanceMVCActionCommand
 
 	protected void doService(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			LiferayPortletURL redirectPortletURL)
+			LiferayPortletURL portletURL)
 		throws Exception {
 
-		DDMFormInstance formInstance =
+		DDMFormInstance ddmFormInstance =
 			saveFormInstanceMVCCommandHelper.saveFormInstance(
 				actionRequest, actionResponse, true);
 
-		redirectPortletURL.setParameter(
-			"formInstanceId", String.valueOf(formInstance.getFormInstanceId()));
+		portletURL.setParameter(
+			"formInstanceId",
+			String.valueOf(ddmFormInstance.getFormInstanceId()));
 	}
 
 	@Override

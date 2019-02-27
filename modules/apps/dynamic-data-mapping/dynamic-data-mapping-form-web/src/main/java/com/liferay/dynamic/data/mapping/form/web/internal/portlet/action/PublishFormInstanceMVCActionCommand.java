@@ -65,20 +65,20 @@ public class PublishFormInstanceMVCActionCommand
 	@Override
 	protected void doService(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			LiferayPortletURL redirectPortletURL)
+			LiferayPortletURL portletURL)
 		throws Exception {
 
-		DDMFormInstance formInstance =
+		DDMFormInstance ddmFormInstance =
 			saveFormInstanceMVCCommandHelper.saveFormInstance(
 				actionRequest, actionResponse, true);
 
-		boolean published = !_isFormInstancePublished(formInstance);
+		boolean published = !_isFormInstancePublished(ddmFormInstance);
 
 		updateFormInstancePermission(
-			actionRequest, formInstance.getFormInstanceId(), published);
+			actionRequest, ddmFormInstance.getFormInstanceId(), published);
 
 		DDMFormValues settingsDDMFormValues =
-			formInstance.getSettingsDDMFormValues();
+			ddmFormInstance.getSettingsDDMFormValues();
 
 		updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
 
@@ -91,28 +91,30 @@ public class PublishFormInstanceMVCActionCommand
 		}
 		else {
 			DDMFormInstanceVersion latestFormInstanceVersion =
-				formInstance.getFormInstanceVersion(formInstance.getVersion());
+				ddmFormInstance.getFormInstanceVersion(
+					ddmFormInstance.getVersion());
 
 			serviceContext.setAttribute(
 				"status", latestFormInstanceVersion.getStatus());
 		}
 
-		DDMStructure ddmStructure = formInstance.getStructure();
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-		DDMStructureVersion latestStructureVersion =
+		DDMStructureVersion latestDDMStructureVersion =
 			ddmStructure.getLatestStructureVersion();
 
-		formInstance = _formInstanceService.updateFormInstance(
-			formInstance.getFormInstanceId(), formInstance.getNameMap(),
-			formInstance.getDescriptionMap(),
-			latestStructureVersion.getDDMForm(),
-			latestStructureVersion.getDDMFormLayout(), settingsDDMFormValues,
+		ddmFormInstance = _formInstanceService.updateFormInstance(
+			ddmFormInstance.getFormInstanceId(), ddmFormInstance.getNameMap(),
+			ddmFormInstance.getDescriptionMap(),
+			latestDDMStructureVersion.getDDMForm(),
+			latestDDMStructureVersion.getDDMFormLayout(), settingsDDMFormValues,
 			serviceContext);
 
-		redirectPortletURL.setParameter(
-			"formInstanceId", String.valueOf(formInstance.getFormInstanceId()));
+		portletURL.setParameter(
+			"formInstanceId",
+			String.valueOf(ddmFormInstance.getFormInstanceId()));
 
-		redirectPortletURL.setParameter(
+		portletURL.setParameter(
 			DDMFormWebKeys.SHOW_PUBLISH_ALERT, Boolean.TRUE.toString());
 	}
 
@@ -188,10 +190,10 @@ public class PublishFormInstanceMVCActionCommand
 	private boolean _isFormInstancePublished(DDMFormInstance formInstance)
 		throws PortalException {
 
-		DDMFormInstanceSettings formInstanceSettings =
+		DDMFormInstanceSettings ddmFormInstanceSettings =
 			formInstance.getSettingsModel();
 
-		return formInstanceSettings.published();
+		return ddmFormInstanceSettings.published();
 	}
 
 	private DDMFormValuesQueryFactory _ddmFormValuesQueryFactory;

@@ -46,6 +46,15 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	}
 
 	@Override
+	public boolean isInTrash() {
+		if (super.isInTrash() || !isActive()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public DLFolder getDLFolder() throws PortalException {
 		Folder folder = getFolder();
 

@@ -148,10 +148,10 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sb.append(sourcePrototypeLayoutUuid);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
-		sb.append(", referrerClassNameId=");
-		sb.append(referrerClassNameId);
-		sb.append(", referrerClassPK=");
-		sb.append(referrerClassPK);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", publishDate=");
 		sb.append(publishDate);
 		sb.append("}");
@@ -312,8 +312,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
-		layoutImpl.setReferrerClassNameId(referrerClassNameId);
-		layoutImpl.setReferrerClassPK(referrerClassPK);
+		layoutImpl.setClassNameId(classNameId);
+		layoutImpl.setClassPK(classPK);
 
 		if (publishDate == Long.MIN_VALUE) {
 			layoutImpl.setPublishDate(null);
@@ -379,9 +379,9 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
-		referrerClassNameId = objectInput.readLong();
+		classNameId = objectInput.readLong();
 
-		referrerClassPK = objectInput.readLong();
+		classPK = objectInput.readLong();
 		publishDate = objectInput.readLong();
 	}
 
@@ -530,9 +530,9 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		objectOutput.writeLong(lastPublishDate);
 
-		objectOutput.writeLong(referrerClassNameId);
+		objectOutput.writeLong(classNameId);
 
-		objectOutput.writeLong(referrerClassPK);
+		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(publishDate);
 	}
 
@@ -570,7 +570,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;
 	public long lastPublishDate;
-	public long referrerClassNameId;
-	public long referrerClassPK;
+	public long classNameId;
+	public long classPK;
 	public long publishDate;
 }

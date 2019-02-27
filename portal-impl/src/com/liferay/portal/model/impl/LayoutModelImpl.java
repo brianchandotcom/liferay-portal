@@ -116,8 +116,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
 			{ "sourcePrototypeLayoutUuid", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP },
-			{ "referrerClassNameId", Types.BIGINT },
-			{ "referrerClassPK", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
 			{ "publishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -157,12 +157,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("layoutPrototypeLinkEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourcePrototypeLayoutUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("referrerClassNameId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("referrerClassPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("publishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null,referrerClassNameId LONG,referrerClassPK LONG,publishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null,classNameId LONG,classPK LONG,publishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -241,8 +241,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setLayoutPrototypeLinkEnabled(soapModel.isLayoutPrototypeLinkEnabled());
 		model.setSourcePrototypeLayoutUuid(soapModel.getSourcePrototypeLayoutUuid());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setReferrerClassNameId(soapModel.getReferrerClassNameId());
-		model.setReferrerClassPK(soapModel.getReferrerClassPK());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
 		model.setPublishDate(soapModel.getPublishDate());
 
 		return model;
@@ -423,10 +423,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributeSetterBiConsumers.put("sourcePrototypeLayoutUuid", (BiConsumer<Layout, String>)Layout::setSourcePrototypeLayoutUuid);
 		attributeGetterFunctions.put("lastPublishDate", Layout::getLastPublishDate);
 		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Layout, Date>)Layout::setLastPublishDate);
-		attributeGetterFunctions.put("referrerClassNameId", Layout::getReferrerClassNameId);
-		attributeSetterBiConsumers.put("referrerClassNameId", (BiConsumer<Layout, Long>)Layout::setReferrerClassNameId);
-		attributeGetterFunctions.put("referrerClassPK", Layout::getReferrerClassPK);
-		attributeSetterBiConsumers.put("referrerClassPK", (BiConsumer<Layout, Long>)Layout::setReferrerClassPK);
+		attributeGetterFunctions.put("classNameId", Layout::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Layout, Long>)Layout::setClassNameId);
+		attributeGetterFunctions.put("classPK", Layout::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<Layout, Long>)Layout::setClassPK);
 		attributeGetterFunctions.put("publishDate", Layout::getPublishDate);
 		attributeSetterBiConsumers.put("publishDate", (BiConsumer<Layout, Date>)Layout::setPublishDate);
 
@@ -1522,26 +1522,46 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@Override
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return "";
+		}
+
+		return PortalUtil.getClassName(getClassNameId());
+	}
+
+	@Override
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
 	@JSON
 	@Override
-	public long getReferrerClassNameId() {
-		return _referrerClassNameId;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
 	@Override
-	public void setReferrerClassNameId(long referrerClassNameId) {
-		_referrerClassNameId = referrerClassNameId;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
 	@JSON
 	@Override
-	public long getReferrerClassPK() {
-		return _referrerClassPK;
+	public long getClassPK() {
+		return _classPK;
 	}
 
 	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		_referrerClassPK = referrerClassPK;
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	@JSON
@@ -1578,7 +1598,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
-				Layout.class.getName()));
+				Layout.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -1788,8 +1808,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setLayoutPrototypeLinkEnabled(isLayoutPrototypeLinkEnabled());
 		layoutImpl.setSourcePrototypeLayoutUuid(getSourcePrototypeLayoutUuid());
 		layoutImpl.setLastPublishDate(getLastPublishDate());
-		layoutImpl.setReferrerClassNameId(getReferrerClassNameId());
-		layoutImpl.setReferrerClassPK(getReferrerClassPK());
+		layoutImpl.setClassNameId(getClassNameId());
+		layoutImpl.setClassPK(getClassPK());
 		layoutImpl.setPublishDate(getPublishDate());
 
 		layoutImpl.resetOriginalValues();
@@ -2113,9 +2133,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			layoutCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
-		layoutCacheModel.referrerClassNameId = getReferrerClassNameId();
+		layoutCacheModel.classNameId = getClassNameId();
 
-		layoutCacheModel.referrerClassPK = getReferrerClassPK();
+		layoutCacheModel.classPK = getClassPK();
 
 		Date publishDate = getPublishDate();
 
@@ -2253,8 +2273,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _sourcePrototypeLayoutUuid;
 	private String _originalSourcePrototypeLayoutUuid;
 	private Date _lastPublishDate;
-	private long _referrerClassNameId;
-	private long _referrerClassPK;
+	private long _classNameId;
+	private long _classPK;
 	private Date _publishDate;
 	private long _columnBitmask;
 	private Layout _escapedModel;

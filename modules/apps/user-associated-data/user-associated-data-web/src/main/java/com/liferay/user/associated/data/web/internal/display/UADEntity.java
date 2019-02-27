@@ -27,12 +27,13 @@ import java.util.List;
 public class UADEntity<T> {
 
 	public UADEntity(
-		T entity, Serializable primaryKey, String editURL, boolean userOwned,
-		String viewURL) {
+		T entity, Serializable primaryKey, String editURL, Class<?> typeClass,
+		boolean userOwned, String viewURL) {
 
 		_entity = entity;
 		_primaryKey = primaryKey;
 		_editURL = editURL;
+		_typeClass = typeClass;
 		_userOwned = userOwned;
 		_viewURL = viewURL;
 	}
@@ -73,6 +74,10 @@ public class UADEntity<T> {
 		return _primaryKey;
 	}
 
+	public Class<?> getTypeClass() {
+		return _typeClass;
+	}
+
 	public String getViewURL() {
 		return _viewURL;
 	}
@@ -85,6 +90,7 @@ public class UADEntity<T> {
 	private final String _editURL;
 	private final T _entity;
 	private final Serializable _primaryKey;
+	private final Class<?> _typeClass;
 	private final boolean _userOwned;
 	private final String _viewURL;
 

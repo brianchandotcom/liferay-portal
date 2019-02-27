@@ -34,6 +34,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyChecker;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -180,18 +181,6 @@ public class UADReviewDataHelper {
 		return searchContainer;
 	}
 
-	public String getUADRegistryKey(PortletRequest portletRequest) {
-		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
-
-		for (String key : parameterMap.keySet()) {
-			if (key.startsWith("uadRegistryKey__")) {
-				return portletRequest.getParameter(key);
-			}
-		}
-
-		return null;
-	}
-
 	public String[] getUADRegistryKeys(PortletRequest portletRequest) {
 		List<String> uadRegistryKeys = new ArrayList<>();
 
@@ -268,6 +257,7 @@ public class UADReviewDataHelper {
 		UADEntity<T> uadEntity = new UADEntity(
 			uadHierarchyDisplay.unwrap(entity),
 			uadHierarchyDisplay.getPrimaryKey(entity), editURL,
+			uadHierarchyDisplay.getTypeClass(entity),
 			uadHierarchyDisplay.isUserOwned(entity, selectedUserId), viewURL);
 
 		Map<String, Object> columnFieldValues =
@@ -292,7 +282,7 @@ public class UADReviewDataHelper {
 			entity, uadDisplay.getPrimaryKey(entity),
 			uadDisplay.getEditURL(
 				entity, liferayPortletRequest, liferayPortletResponse),
-			true, null);
+			uadDisplay.getTypeClass(), true, null);
 
 		Map<String, Object> columnFieldValues = uadDisplay.getFieldValues(
 			entity, uadDisplay.getColumnFieldNames(),

@@ -140,6 +140,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		String[] primaryKeys = ParamUtil.getStringValues(
 			actionRequest, "primaryKeys__" + entityType);
+
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey__" + entityType);
 
@@ -152,12 +153,27 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		return entities;
 	}
 
-	protected Object getEntity(ActionRequest actionRequest) throws Exception {
-		UADDisplay uadDisplay = getUADDisplay(actionRequest);
+	protected Object getEntity(ActionRequest actionRequest, String entityType)
+		throws Exception {
 
-		String primaryKey = ParamUtil.getString(actionRequest, "primaryKey");
+		UADDisplay uadDisplay = getUADDisplay(actionRequest, entityType);
+
+		String primaryKey = ParamUtil.getString(
+			actionRequest, "primaryKey__" + entityType);
 
 		return uadDisplay.get(primaryKey);
+	}
+
+	protected String getEntityType(ActionRequest actionRequest) {
+		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
+
+		for (String key : parameterMap.keySet()) {
+			if (key.startsWith("primaryKey__")) {
+				return key.substring(key.lastIndexOf("_") + 1);
+			}
+		}
+
+		return null;
 	}
 
 	protected List<String> getEntityTypes(ActionRequest actionRequest) {
@@ -166,7 +182,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
 
 		for (String key : parameterMap.keySet()) {
-			if (key.startsWith("uadRegistryKey__")) {
+			if (key.startsWith("primaryKeys__")) {
 				entityTypes.add(key.substring(key.lastIndexOf("_") + 1));
 			}
 		}
@@ -187,8 +203,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected UADAnonymizer getUADAnonymizer(ActionRequest actionRequest) {
-		return uadRegistry.getUADAnonymizer(
-			uadReviewDataHelper.getUADRegistryKey(actionRequest));
+		return uadRegistry.getUADAnonymizer(getUADRegistryKey(actionRequest));
 	}
 
 	protected UADAnonymizer getUADAnonymizer(
@@ -200,12 +215,19 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected UADDisplay getUADDisplay(ActionRequest actionRequest) {
+		return uadRegistry.getUADDisplay(getUADRegistryKey(actionRequest));
+	}
+
+	protected UADDisplay getUADDisplay(
+		ActionRequest actionRequest, String entityType) {
+
 		return uadRegistry.getUADDisplay(
-			uadReviewDataHelper.getUADRegistryKey(actionRequest));
+			ParamUtil.getString(
+				actionRequest, "uadRegistryKey__" + entityType));
 	}
 
 	protected String getUADRegistryKey(ActionRequest actionRequest) {
-		return uadReviewDataHelper.getUADRegistryKey(actionRequest);
+		return ParamUtil.getString(actionRequest, "uadRegistryKey");
 	}
 
 	@Reference

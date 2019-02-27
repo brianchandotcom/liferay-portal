@@ -14,8 +14,6 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -23,29 +21,24 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
-import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
-import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
+import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
+import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
-import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.List;
 
 /**
  * @author Samuel Trong Tran
@@ -93,14 +86,15 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 			viewUADEntitiesDisplay.setTypeClasses(
 				uadHierarchyDisplay.getTypeClasses());
 
-			long parentContainerId =
-				ParamUtil.getLong(renderRequest, "parentContainerId");
-			String className =
-				ParamUtil.getString(renderRequest, "parentContainerClass");
+			String className = ParamUtil.getString(
+				renderRequest, "parentContainerClass");
 
 			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(className);
 
 			Class<?> typeClass = uadDisplay.getTypeClass();
+
+			long parentContainerId = ParamUtil.getLong(
+				renderRequest, "parentContainerId");
 
 			viewUADEntitiesDisplay.setSearchContainer(
 				_uadReviewDataHelper.getSearchContainer(
@@ -119,9 +113,6 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 
 		return "/view_uad_hierarchy.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewUADHierarchyMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

@@ -45,12 +45,15 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
+		String entityType = getEntityType(actionRequest);
+
+		UADAnonymizer uadAnonymizer = getUADAnonymizer(
+			actionRequest, entityType);
 
 		User selectedUser = getSelectedUser(actionRequest);
 
 		uadAnonymizer.autoAnonymize(
-			getEntity(actionRequest), selectedUser.getUserId(),
+			getEntity(actionRequest, entityType), selectedUser.getUserId(),
 			_uadAnonymizerHelper.getAnonymousUser(selectedUser.getCompanyId()));
 
 		doReviewableRedirect(actionRequest, actionResponse);

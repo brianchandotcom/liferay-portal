@@ -143,8 +143,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplays[0]);
 			}
 			else {
-				String uadRegistryKey = _uadReviewDataHelper.getUADRegistryKey(
-					renderRequest);
+				String uadRegistryKey = ParamUtil.getString(
+					renderRequest, "uadRegistryKey");
 
 				if (Validator.isNull(uadRegistryKey)) {
 					uadRegistryKey =

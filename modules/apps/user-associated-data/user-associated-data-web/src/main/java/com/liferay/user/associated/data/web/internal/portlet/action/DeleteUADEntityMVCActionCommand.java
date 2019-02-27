@@ -41,9 +41,12 @@ public class DeleteUADEntityMVCActionCommand extends BaseUADMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
+		String entityType = getEntityType(actionRequest);
 
-		uadAnonymizer.delete(getEntity(actionRequest));
+		UADAnonymizer uadAnonymizer = getUADAnonymizer(
+			actionRequest, entityType);
+
+		uadAnonymizer.delete(getEntity(actionRequest, entityType));
 
 		doReviewableRedirect(actionRequest, actionResponse);
 	}

@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -18,11 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
+UADHierarchyDisplay uadHierarchyDisplay = (UADHierarchyDisplay)request.getAttribute(UADWebKeys.UAD_HIERARCHY_DISPLAY);
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
 SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
 ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadEntitySearchContainer);
+
+if (uadHierarchyDisplay != null) {
+	uadHierarchyDisplay.addPortletBreadcrumbEntries(request, renderResponse);
+}
 %>
 
 <clay:management-toolbar
@@ -37,8 +41,8 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 	for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
 	%>
 
-		<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
-		<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
+		<aui:input name="<%= "primaryKeys__" + typeClass.getSimpleName() %>" type="hidden" />
+		<aui:input name="<%= "uadRegistryKey__" + typeClass.getSimpleName() %>" type="hidden" value="<%= typeClass.getName() %>" />
 
 	<%
 	}
@@ -46,6 +50,15 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 
 	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL" />
+
+		<div id="breadcrumb">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showPortletBreadcrumb="<%= true %>"
+			/>
+		</div>
 
 		<%--<liferay-frontend:sidebar-panel
 			resourceURL="<%= entityTypeSidebarURL %>"
@@ -110,7 +123,8 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 								<liferay-ui:icon
 									cssClass="disabled"
 									image="../aui/user"
-									message="this-container-contains-items-belonging-to-the-user-but-does-not-itself-belong-to-the-user"
+									markupView="lexicon"
+									message="this-item-contains-entities-belonging-to-the-user-but-does-not-itself-belong-to-the-user"
 									toolTip="<%= true %>"
 								/>
 							</c:if>

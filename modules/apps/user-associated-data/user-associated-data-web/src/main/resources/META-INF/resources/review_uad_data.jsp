@@ -232,7 +232,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			function(event) {
 				const url = new Uri(baseURL);
 
-				url.setParameterValue('<portlet:namespace />uadRegistryKey__', event.target.value);
+				url.setParameterValue('<portlet:namespace />uadRegistryKey', event.target.value);
 
 				Liferay.Util.navigate(url.toString());
 			}

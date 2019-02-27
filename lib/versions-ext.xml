@@ -1513,6 +1513,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/commons-math3.jar</file-name>
+				<version>3.6.1</version>
+				<project-name>Commons Math</project-name>
+				<project-url>http://commons.apache.org/math</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/commons-math.jar</file-name>
 				<version>2.0.0</version>
 				<project-name>Commons Math</project-name>
@@ -1658,7 +1670,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/fontbox.jar</file-name>
-				<version>1.8.12</version>
+				<version>2.0.13</version>
 				<project-name>PDFBox</project-name>
 				<project-url>http://pdfbox.apache.org</project-url>
 				<licenses>
@@ -3296,7 +3308,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xbean.jar</file-name>
-				<version>2.5.0</version>
+				<version>3.0.2</version>
 				<project-name>XMLBeans</project-name>
 				<project-url>http://xmlbeans.apache.org</project-url>
 				<licenses>
@@ -3306,11 +3318,6 @@
 						<copyright-notice>Copyright (c) 2004-2009 The Apache Software Foundation</copyright-notice>
 					</license>
 				</licenses>
-				<comments>
-					Removed org.w3c.* because it conflicts with xml-apis.jar. Removed
-					META-INF/INDEX.LIST because of complications with class loading in
-					Windows. See LPS-9385.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/xbean-spring.jar</file-name>

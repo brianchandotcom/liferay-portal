@@ -21,7 +21,6 @@ import java.io.ObjectOutputStream;
 import org.junit.AssumptionViolatedException;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
-import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
@@ -45,12 +44,10 @@ public class JMXTestRunner implements JMXTestRunnerMBean {
 
 			jUnitCore.addListener(exceptionRunListener);
 
-			Result result = jUnitCore.run(
+			jUnitCore.run(
 				Request.method(_classLoader.loadClass(className), methodName));
 
-			if (result.getFailureCount() > 0) {
-				throwable = exceptionRunListener.getException();
-			}
+			throwable = exceptionRunListener.getException();
 		}
 		catch (Throwable t) {
 			throwable = t;

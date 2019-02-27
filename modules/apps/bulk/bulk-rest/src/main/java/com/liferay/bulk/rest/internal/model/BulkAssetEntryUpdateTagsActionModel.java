@@ -14,58 +14,19 @@
 
 package com.liferay.bulk.rest.internal.model;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Adolfo Pérez
  */
 @XmlRootElement
-public class BulkAssetEntryUpdateTagsActionModel {
+public class BulkAssetEntryUpdateTagsActionModel
+	extends BulkAssetEntryActionModel {
 
 	@XmlElement
 	public boolean getAppend() {
 		return _append;
-	}
-
-	public long getFolderId() {
-		return _folderId;
-	}
-
-	@XmlTransient
-	public Map<String, String[]> getParameterMap() {
-		String[] values = _selection.toArray(new String[_selection.size()]);
-
-		if (getRepositoryId() == 0) {
-			return Collections.singletonMap("rowIdsFileEntry", values);
-		}
-
-		Map<String, String[]> parameterMap = new HashMap<>(2);
-
-		parameterMap.put("folderId", new String[] {String.valueOf(_folderId)});
-		parameterMap.put(
-			"repositoryId", new String[] {String.valueOf(_repositoryId)});
-		parameterMap.put("rowIdsFileEntry", values);
-		parameterMap.put(
-			"selectAll", new String[] {Boolean.toString(_selectAll)});
-
-		return parameterMap;
-	}
-
-	@XmlElement
-	public long getRepositoryId() {
-		return _repositoryId;
-	}
-
-	@XmlElement
-	public List<String> getSelection() {
-		return _selection;
 	}
 
 	@XmlElement
@@ -78,28 +39,8 @@ public class BulkAssetEntryUpdateTagsActionModel {
 		return _toRemoveTagNames;
 	}
 
-	public boolean isSelectAll() {
-		return _selectAll;
-	}
-
 	public void setAppend(boolean append) {
 		_append = append;
-	}
-
-	public void setFolderId(long folderId) {
-		_folderId = folderId;
-	}
-
-	public void setRepositoryId(long repositoryId) {
-		_repositoryId = repositoryId;
-	}
-
-	public void setSelectAll(boolean selectAll) {
-		_selectAll = selectAll;
-	}
-
-	public void setSelection(List<String> selection) {
-		_selection = selection;
 	}
 
 	public void setToAddTagNames(String[] toAddTagNames) {
@@ -111,10 +52,6 @@ public class BulkAssetEntryUpdateTagsActionModel {
 	}
 
 	private boolean _append;
-	private long _folderId;
-	private long _repositoryId;
-	private boolean _selectAll;
-	private List<String> _selection;
 	private String[] _toAddTagNames;
 	private String[] _toRemoveTagNames;
 

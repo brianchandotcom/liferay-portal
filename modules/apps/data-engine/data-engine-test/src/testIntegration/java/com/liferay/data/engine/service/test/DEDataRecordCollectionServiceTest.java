@@ -4104,11 +4104,12 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataEngineTestUtil.insertDEDataRecordCollection(
-			_adminUser, _group, "nonascii£", "Name", _deDataDefinitionService,
+			_adminUser, _group, "nonascii£祝你好运",
+			"Name", _deDataDefinitionService,
 			_deDataRecordCollectionService);
 
 		List<DEDataRecordCollection> deDataRecordCollections =
-			searchDEDataRecordCollection(_group, "nonascii£");
+			searchDEDataRecordCollection(_group, "nonascii£祝你好运");
 
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,

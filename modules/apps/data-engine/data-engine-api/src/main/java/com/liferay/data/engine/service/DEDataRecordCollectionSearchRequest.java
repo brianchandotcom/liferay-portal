@@ -17,8 +17,9 @@ package com.liferay.data.engine.service;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 /**
- * This class represents a request to get a list of {@link DEDataRecordCollection}
- *
+ * This class represents a request for search and get a list of
+ * {@link DEDataRecordCollection} from database
+ * @review
  * @author Marcelo Mello
  */
 public class DEDataRecordCollectionSearchRequest {
@@ -26,6 +27,7 @@ public class DEDataRecordCollectionSearchRequest {
 	/**
 	 * Returns the company id responsible for the request
 	 * @return The company id Long
+	 * @review
 	 */
 	public long getCompanyId() {
 		return _companyId;
@@ -34,6 +36,7 @@ public class DEDataRecordCollectionSearchRequest {
 	/**
 	 * Returns the end page pagination setted for the request
 	 * @return The end page pagination Int
+	 * @review
 	 */
 	public int getEnd() {
 		return _end;
@@ -42,6 +45,7 @@ public class DEDataRecordCollectionSearchRequest {
 	/**
 	 * Returns the group id responsible for the request
 	 * @return The group id Long
+	 * @review
 	 */
 	public long getGroupId() {
 		return _groupId;
@@ -50,6 +54,7 @@ public class DEDataRecordCollectionSearchRequest {
 	/**
 	 * Returns the keywords that setted for the request
 	 * @return The keywords String
+	 * @review
 	 */
 	public String getKeywords() {
 		return _keywords;
@@ -58,6 +63,7 @@ public class DEDataRecordCollectionSearchRequest {
 	/**
 	 * Returns the start page pagination setted for the request
 	 * @return The start page pagination Int
+	 * @review
 	 */
 	public int getStart() {
 		return _start;
@@ -65,6 +71,7 @@ public class DEDataRecordCollectionSearchRequest {
 
 	/**
 	 * Inner builder that assembles the request
+	 * @review
 	 */
 	public static final class Builder {
 
@@ -72,6 +79,7 @@ public class DEDataRecordCollectionSearchRequest {
 		 * Builds the request and return the {@link DEDataRecordCollectionSearchRequest}
 		 * object.
 		 * @return the {@link DEDataRecordCollectionSearchRequest} object.
+		 * @review
 		 */
 		public DEDataRecordCollectionSearchRequest build() {
 			return _deDataRecordCollectionSearchRequest;
@@ -81,6 +89,7 @@ public class DEDataRecordCollectionSearchRequest {
 		 * The number of last page for request pagination
 		 * @param end
 		 * @return the builder
+		 * @review
 		 */
 		public Builder endingAt(int end) {
 			_deDataRecordCollectionSearchRequest._end = end;
@@ -92,6 +101,7 @@ public class DEDataRecordCollectionSearchRequest {
 		 * The keywords that request will be sought
 		 * @param keywords
 		 * @return the builder
+		 * @review
 		 */
 		public Builder havingKeywords(String keywords) {
 			_deDataRecordCollectionSearchRequest._keywords = keywords;
@@ -103,6 +113,7 @@ public class DEDataRecordCollectionSearchRequest {
 		 * The company id that request will be sought
 		 * @param companyId
 		 * @return the builder
+		 * @review
 		 */
 		public Builder inCompany(long companyId) {
 			_deDataRecordCollectionSearchRequest._companyId = companyId;
@@ -114,6 +125,7 @@ public class DEDataRecordCollectionSearchRequest {
 		 * The group id that request will be sought
 		 * @param groupId
 		 * @return the builder
+		 * @review
 		 */
 		public Builder inGroup(long groupId) {
 			_deDataRecordCollectionSearchRequest._groupId = groupId;
@@ -125,6 +137,7 @@ public class DEDataRecordCollectionSearchRequest {
 		 * The number of first page for request pagination
 		 * @param start
 		 * @return
+		 * @review
 		 */
 		public Builder startingAt(int start) {
 			_deDataRecordCollectionSearchRequest._start = start;

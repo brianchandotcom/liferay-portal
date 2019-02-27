@@ -67,7 +67,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
 
 		return _getFolderPage(
-			parentFolder.getRepositoryId(), parentFolder.getId(), pagination);
+			parentFolder.getContentSpaceId(), parentFolder.getId(), pagination);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 		Folder parentFolder = _toFolder(_dlAppService.getFolder(folderId));
 
 		return _addFolder(
-			parentFolder.getRepositoryId(), parentFolder.getId(), folder);
+			parentFolder.getContentSpaceId(), parentFolder.getId(), folder);
 	}
 
 	@Override
@@ -145,10 +145,10 @@ public class FolderResourceImpl extends BaseFolderResourceImpl {
 
 		return new Folder() {
 			{
+				contentSpaceId = folder.getGroupId();
 				dateCreated = folder.getCreateDate();
 				dateModified = folder.getModifiedDate();
 				description = folder.getDescription();
-				repositoryId = folder.getGroupId();
 				id = folder.getFolderId();
 				name = folder.getName();
 

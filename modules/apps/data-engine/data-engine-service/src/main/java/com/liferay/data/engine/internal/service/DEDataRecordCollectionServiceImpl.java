@@ -628,132 +628,6 @@ public class DEDataRecordCollectionServiceImpl
 		return _deDataEngineRequestExecutor;
 	}
 
-	protected DEDataRecordCollectionDeleteModelPermissionsRequestExecutor
-		getDEDataRecordCollectionDeleteModelPermissionsRequestExecutor() {
-
-		if (_deDataRecordCollectionDeleteModelPermissionsRequestExecutor ==
-				null) {
-
-			_deDataRecordCollectionDeleteModelPermissionsRequestExecutor =
-				new DEDataRecordCollectionDeleteModelPermissionsRequestExecutor(
-					resourcePermissionLocalService, roleLocalService);
-		}
-
-		return _deDataRecordCollectionDeleteModelPermissionsRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionDeletePermissionsRequestExecutor
-		getDEDataRecordCollectionDeletePermissionsRequestExecutor() {
-
-		if (_deDataRecordCollectionDeletePermissionsRequestExecutor == null) {
-			_deDataRecordCollectionDeletePermissionsRequestExecutor =
-				new DEDataRecordCollectionDeletePermissionsRequestExecutor(
-					resourcePermissionLocalService, roleLocalService);
-		}
-
-		return _deDataRecordCollectionDeletePermissionsRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionDeleteRecordRequestExecutor
-		getDEDataRecordCollectionDeleteRecordRequestExecutor() {
-
-		if (_deDataRecordCollectionDeleteRecordRequestExecutor == null) {
-			_deDataRecordCollectionDeleteRecordRequestExecutor =
-				new DEDataRecordCollectionDeleteRecordRequestExecutor(
-					deDataStorageTracker, ddlRecordLocalService);
-		}
-
-		return _deDataRecordCollectionDeleteRecordRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionDeleteRequestExecutor
-		getDEDataRecordCollectionDeleteRequestExecutor() {
-
-		if (_deDataRecordCollectionDeleteRequestExecutor == null) {
-			_deDataRecordCollectionDeleteRequestExecutor =
-				new DEDataRecordCollectionDeleteRequestExecutor(
-					ddlRecordSetLocalService);
-		}
-
-		return _deDataRecordCollectionDeleteRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionGetRecordRequestExecutor
-		getDEDataRecordCollectionGetRecordRequestExecutor() {
-
-		if (_deDataRecordCollectionGetRecordRequestExecutor == null) {
-			_deDataRecordCollectionGetRecordRequestExecutor =
-				new DEDataRecordCollectionGetRecordRequestExecutor(
-					getDEDataEngineRequestExecutor(), ddlRecordLocalService);
-		}
-
-		return _deDataRecordCollectionGetRecordRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionGetRequestExecutor
-		getDEDataRecordCollectionGetRequestExecutor() {
-
-		if (_deDataRecordCollectionGetRequestExecutor == null) {
-			_deDataRecordCollectionGetRequestExecutor =
-				new DEDataRecordCollectionGetRequestExecutor(
-					ddlRecordSetLocalService, getDEDataEngineRequestExecutor());
-		}
-
-		return _deDataRecordCollectionGetRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionSaveModelPermissionsRequestExecutor
-		getDEDataRecordCollectionSaveModelPermissionsRequestExecutor() {
-
-		if (_deDataRecordCollectionSaveModelPermissionsRequestExecutor ==
-				null) {
-
-			_deDataRecordCollectionSaveModelPermissionsRequestExecutor =
-				new DEDataRecordCollectionSaveModelPermissionsRequestExecutor(
-					resourcePermissionLocalService);
-		}
-
-		return _deDataRecordCollectionSaveModelPermissionsRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionSavePermissionsRequestExecutor
-		getDEDataRecordCollectionSavePermissionsRequestExecutor() {
-
-		if (_deDataRecordCollectionSavePermissionsRequestExecutor == null) {
-			_deDataRecordCollectionSavePermissionsRequestExecutor =
-				new DEDataRecordCollectionSavePermissionsRequestExecutor(
-					resourcePermissionLocalService, roleLocalService);
-		}
-
-		return _deDataRecordCollectionSavePermissionsRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionSaveRecordRequestExecutor
-		getDEDataRecordCollectionSaveRecordRequestExecutor() {
-
-		if (_deDataRecordCollectionSaveRecordRequestExecutor == null) {
-			_deDataRecordCollectionSaveRecordRequestExecutor =
-				new DEDataRecordCollectionSaveRecordRequestExecutor(
-					ddlRecordLocalService, deDataStorageTracker,
-					ddmStorageLinkLocalService, portal);
-		}
-
-		return _deDataRecordCollectionSaveRecordRequestExecutor;
-	}
-
-	protected DEDataRecordCollectionSaveRequestExecutor
-		getDEDataRecordCollectionSaveRequestExecutor() {
-
-		if (_deDataRecordCollectionSaveRequestExecutor == null) {
-			_deDataRecordCollectionSaveRequestExecutor =
-				new DEDataRecordCollectionSaveRequestExecutor(
-					getDEDataEngineRequestExecutor(), ddlRecordSetLocalService,
-					resourceLocalService);
-		}
-
-		return _deDataRecordCollectionSaveRequestExecutor;
-	}
-
 	protected DEDataRecordCollectionSearchExecutor
 		getDeDataRecordCollectionSearchExecutor() {
 
@@ -840,6 +714,10 @@ public class DEDataRecordCollectionServiceImpl
 			new DEDataRecordCollectionSaveRequestExecutor(
 				_deDataEngineRequestExecutor, ddlRecordSetLocalService,
 				resourceLocalService);
+
+		_deDataRecordCollectionSearchExecutor =
+			new DEDataRecordCollectionSearchExecutor(
+				_deDataEngineRequestExecutor, ddlRecordSetLocalService);
 	}
 
 	protected void validate(

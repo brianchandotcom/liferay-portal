@@ -36,7 +36,12 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -84,6 +89,18 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGetContentSpaceBlogPostingsPage() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceBlogPostingsPageWithFilterDateTimeEquals()
+		throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceBlogPostingsPageWithFilterStringEquals()
+		throws Exception {
 		Assert.assertTrue(true);
 	}
 
@@ -151,6 +168,21 @@ public abstract class BaseBlogPostingResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
+	protected void assertValid(BlogPosting blogPosting) {
+		boolean valid = false;
+
+		if (Objects.equals(
+				blogPosting.getContentSpace(), testGroup.getGroupId()) &&
+			(blogPosting.getDateCreated() != null) &&
+			(blogPosting.getDateModified() != null) &&
+			(blogPosting.getId() != null)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected void assertValid(Page<BlogPosting> page) {
 		boolean valid = false;
 
@@ -176,6 +208,16 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Map<String, Function<BlogPosting, Date>>
+		getDateTimeEntityNameGetterMap() {
+		return Collections.emptyMap();
+	}
+
+	protected Map<String, Function<BlogPosting, String>>
+		getStringEntityNameGetterMap() {
+		return Collections.emptyMap();
 	}
 
 	protected boolean invokeDeleteBlogPosting(Long blogPostingId)

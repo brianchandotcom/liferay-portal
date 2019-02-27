@@ -101,15 +101,15 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 							%>
 
-							<h6 class="text-default">
+							<span class="text-default">
 								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-							</h6>
+							</span>
 
-							<h5>
+							<h2 class="h5">
 								<aui:a href="<%= editURL %>">
 									<%= HtmlUtil.escape(title) %>
 								</aui:a>
-							</h5>
+							</h2>
 
 							<c:if test="<%= journalDisplayContext.isSearch() %>">
 								<h5>
@@ -117,7 +117,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 								</h5>
 							</c:if>
 
-							<h6 class="text-default">
+							<span class="text-default">
 								<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
 									<span class="label label-success text-uppercase">
 										<liferay-ui:message key="approved" />
@@ -127,7 +127,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 								<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(curArticle.getStatus()) %> text-uppercase">
 									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
 								</span>
-							</h6>
+							</span>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>
@@ -264,19 +264,19 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 							%>
 
-							<h6 class="text-default">
+							<span class="text-default">
 								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curFolder.getUserName()), createDateDescription} %>" key="x-modified-x-ago" />
-							</h6>
+							</span>
 
-							<h5>
+							<h2 class="h5">
 								<aui:a href="<%= rowURL.toString() %>">
 									<%= HtmlUtil.escape(curFolder.getName()) %>
 								</aui:a>
-							</h5>
+							</h2>
 
-							<h6 class="text-default">
+							<span class="text-default">
 								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curFolder.getStatus() %>" />
-							</h6>
+							</span>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>

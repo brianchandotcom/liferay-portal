@@ -20,7 +20,6 @@ class EditTags extends Component {
 	attached() {
 		this._getCommonTags();
 
-
 		this._bulkStatusComponent =	Liferay.component(this.portletNamespace + 'BulkStatus');
 	}
 
@@ -36,7 +35,6 @@ class EditTags extends Component {
 	 */
 	created() {
 		this.append = true;
-		this.groupIds = [20126,20135];
 
 		this.dataSource = query => (
 			fetch(
@@ -120,6 +118,7 @@ class EditTags extends Component {
 					this.loading = false;
 					this.commonTags = response.tagNames;
 					this.description = response.description;
+					this.groupIds = response.groupIds;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
 			}
@@ -264,6 +263,12 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	folderId: Config.string().required(),
+
+	/**
+	 * [groupIds description]
+	 * @type {[type]}
+	 */
+	groupIds: Config.array().value([]),
 
 	/**
 	 * Flag that indicate if loading icon must

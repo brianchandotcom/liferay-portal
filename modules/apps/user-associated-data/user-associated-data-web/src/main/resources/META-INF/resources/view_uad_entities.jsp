@@ -73,16 +73,39 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 						uadEntityHref = uadEntity.getEditURL();
 					}
 
+					Map<String, Object> rowData = new HashMap<String, Object>();
+					boolean showUserIcon = false;
+
+					if ((uadEntity.getViewURL() != null) && !uadEntity.isUserOwned()) {
+						rowData.put("actions", "view");
+						showUserIcon = true;
+					}
+					else {
+						rowData.put("actions", "anonymize,delete,edit,view");
+					}
+
+					row.setData(rowData);
+
 					for (KeyValuePair columnEntry : columnEntries) {
+						String columnEntryKey = columnEntry.getKey();
 						String cssClass = columnEntry.equals(columnEntries.get(0)) ? "table-cell-expand table-list-title" : "table-cell-expand";
 					%>
 
 						<liferay-ui:search-container-column-text
 							cssClass="<%= cssClass %>"
-							href="<%= uadEntityHref %>"
-							name="<%= columnEntry.getKey() %>"
-							value="<%= StringUtil.shorten(columnEntry.getValue(), 200) %>"
-						/>
+							name="<%= columnEntryKey %>"
+						>
+							<aui:a href="<%= uadEntityHref %>"><%= StringUtil.shorten(columnEntry.getValue(), 200) %></aui:a>
+
+							<c:if test='<%= columnEntryKey.equals("name") && showUserIcon %>'>
+								<liferay-ui:icon
+									cssClass="disabled"
+									image="../aui/user"
+									message="this-container-contains-items-belonging-to-the-user-but-does-not-itself-belong-to-the-user"
+									toolTip="<%= true %>"
+								/>
+							</c:if>
+						</liferay-ui:search-container-column-text>
 
 					<%
 					}

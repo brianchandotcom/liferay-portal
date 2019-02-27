@@ -291,8 +291,8 @@ public class UADReviewDataHelper {
 		UADEntity<T> uadEntity = new UADEntity(
 			entity, uadDisplay.getPrimaryKey(entity),
 			uadDisplay.getEditURL(
-				entity, liferayPortletRequest, liferayPortletResponse), true,
-			null);
+				entity, liferayPortletRequest, liferayPortletResponse),
+			true, null);
 
 		Map<String, Object> columnFieldValues = uadDisplay.getFieldValues(
 			entity, uadDisplay.getColumnFieldNames(),

@@ -29,7 +29,7 @@
 		/>
 	</c:if>
 
-	<c:if test="<%= uadEntity.getEditURL() != null %>">
+	<c:if test='<%= (uadEntity.getEditURL() != null) && actions.contains("edit") %>'>
 		<liferay-ui:icon
 			message="edit"
 			url="<%= uadEntity.getEditURL() %>"
@@ -40,19 +40,23 @@
 		<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="anonymize"
-		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
-		url="javascript:;"
-	/>
+	<c:if test='<%= actions.contains("anonymize") %>'>
+		<liferay-ui:icon
+			message="anonymize"
+			onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+			url="javascript:;"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
 		<portlet:param name="primaryKey" value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="delete"
-		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
-		url="javascript:;"
-	/>
+	<c:if test='<%= actions.contains("delete") %>'>
+		<liferay-ui:icon
+			message="delete"
+			onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+			url="javascript:;"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

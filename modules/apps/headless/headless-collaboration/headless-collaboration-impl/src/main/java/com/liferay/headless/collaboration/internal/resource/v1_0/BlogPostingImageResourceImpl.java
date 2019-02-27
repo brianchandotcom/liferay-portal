@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.BadRequestException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -65,7 +67,9 @@ public class BlogPostingImageResourceImpl
 	public boolean deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
-		_dlAppService.deleteFileEntry(blogPostingImageId);
+		FileEntry fileEntry = _getFileEntry(blogPostingImageId);
+
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 
 		return true;
 	}
@@ -74,7 +78,7 @@ public class BlogPostingImageResourceImpl
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(blogPostingImageId);
+		FileEntry fileEntry = _getFileEntry(blogPostingImageId);
 
 		return _toBlogPostingImage(fileEntry);
 	}
@@ -126,8 +130,7 @@ public class BlogPostingImageResourceImpl
 			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
-		FileEntry existingFileEntry = _dlAppService.getFileEntry(
-			blogPostingImageId);
+		FileEntry existingFileEntry = _getFileEntry(blogPostingImageId);
 
 		BinaryFile binaryFile = Optional.ofNullable(
 			multipartBody.getBinaryFile("file")
@@ -203,6 +206,8 @@ public class BlogPostingImageResourceImpl
 			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
+		FileEntry oldFileEntry = _getFileEntry(blogPostingImageId);
+
 		BlogPostingImage blogPostingImage = multipartBody.getValueAsInstance(
 			"blogPostingImage", BlogPostingImage.class);
 
@@ -217,12 +222,27 @@ public class BlogPostingImageResourceImpl
 		);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			blogPostingImageId, binaryFileName, binaryFile.getContentType(),
-			title, null, null, DLVersionNumberIncrease.AUTOMATIC,
-			binaryFile.getInputStream(), binaryFile.getSize(),
-			new ServiceContext());
+			oldFileEntry.getFileEntryId(), binaryFileName,
+			binaryFile.getContentType(), title, null, null,
+			DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
+			binaryFile.getSize(), new ServiceContext());
 
 		return _toBlogPostingImage(fileEntry);
+	}
+
+	private FileEntry _getFileEntry(Long fileEntryId) throws PortalException {
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		Folder folder = _blogsEntryService.addAttachmentsFolder(
+			fileEntry.getFolderId());
+
+		if (fileEntry.getFolderId() != folder.getFolderId()) {
+			throw new BadRequestException(
+				fileEntryId +
+					" does not correspond to a valid BlogPostingImage");
+		}
+
+		return fileEntry;
 	}
 
 	private BlogPostingImage _toBlogPostingImage(FileEntry fileEntry)

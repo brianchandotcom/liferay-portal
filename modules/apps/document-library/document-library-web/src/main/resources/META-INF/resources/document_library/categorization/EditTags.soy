@@ -3,7 +3,6 @@
 {template .render}
 	{@param commonTags: list<?>}
 	{@param groupIds: list<?>}
-	{@param dataSource: string|[]|list<?>}
 	{@param loading: bool}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
@@ -21,7 +20,6 @@
 					{param commonTags: $commonTags /}
 					{param groupIds: $groupIds /}
 					{param description: $description /}
-					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
 					{param portletNamespace: $portletNamespace /}
 					{param spritemap: $spritemap /}
@@ -58,7 +56,6 @@
 {template .tags}
 	{@param commonTags: list<?>}
 	{@param groupIds: list<?>}
-	{@param dataSource: string|[]|list<?>}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? description: string}
@@ -95,15 +92,6 @@
 			<small class="text-default">{msg desc=""}new-tags-replace-all-existing-tags{/msg}</small>
 		</p>
 	{/if}
-
-	{call ClayMultiSelect.render}
-		{param dataSource: $dataSource /}
-		{param elementClasses: 'clay-multi-select' /}
-		{param helpText: '' /}
-		{param label kind="text"} {msg desc=""}tags{/msg} {/param}
-		{param selectedItems: $commonTags /}
-		{param spritemap: $spritemap /}
-	{/call}
 
 	{call com.liferay.asset.taglib.AssetTagsSelector.render}
 		{param id: $portletNamespace + 'assetTagsSelector' /}

@@ -313,7 +313,6 @@ AUI.add(
 
 						if (!editTagsComponent) {
 							var pathModule = instance.get('pathModule');
-							var urlSearchTags = pathModule +'/bulk/asset/tags/' + instance._config.scopeGroupId + '/search';
 							var urlTags = pathModule + '/bulk/asset/tags/' + instance._config.scopeGroupId + '/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = pathModule + '/bulk/asset/tags/' + instance.get('classNameId');
 
@@ -328,7 +327,6 @@ AUI.add(
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
 											selectAll: bulkSelection,
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-											urlSearchTags: urlSearchTags,
 											urlTags: urlTags,
 											urlUpdateTags: urlUpdateTags
 										},

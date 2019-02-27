@@ -35,19 +35,6 @@ class EditTags extends Component {
 	 */
 	created() {
 		this.append = true;
-
-		this.dataSource = query => (
-			fetch(
-				this.urlSearchTags + '?name=' + query,
-				{
-					credentials: 'include',
-					method: 'GET'
-				}
-			)
-				.then(
-					response => response.json()
-				)
-		);
 	}
 
 	/**
@@ -332,17 +319,6 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	spritemap: Config.string().required(),
-
-	/**
-	 * Url to backend service that provides
-	 * tags search.
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	urlSearchTags: Config.string().required(),
 
 	/**
 	 * Url to backend service that provides

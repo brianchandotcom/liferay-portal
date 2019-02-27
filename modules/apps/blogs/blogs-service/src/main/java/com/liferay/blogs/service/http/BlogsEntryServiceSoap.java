@@ -64,6 +64,20 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class BlogsEntryServiceSoap {
+	public static com.liferay.portal.kernel.repository.model.FolderSoap addAttachmentsFolder(
+		long groupId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.repository.model.Folder returnValue = BlogsEntryServiceUtil.addAttachmentsFolder(groupId);
+
+			return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.blogs.model.BlogsEntrySoap addEntry(
 		String title, String subtitle, String description, String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

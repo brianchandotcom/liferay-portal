@@ -32,6 +32,13 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		_blogsEntryService = blogsEntryService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryService.addAttachmentsFolder(groupId);
+	}
+
 	/**
 	* @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(String,
 	String, String, String, int, int, int, int, int, boolean,

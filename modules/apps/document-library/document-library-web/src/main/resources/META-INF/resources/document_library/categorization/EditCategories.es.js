@@ -94,8 +94,10 @@ class EditCategories extends Component {
 		this.loading = true;
 
 		let bodyData = {
+			folderId: this.folderId,
 			repositoryId: this.repositoryId,
-			selection: this._getSelection()
+			selectAll: this.selectAll,
+			selection: this.fileEntries
 		};
 
 		this._fetchCategoriesRequest(
@@ -110,10 +112,6 @@ class EditCategories extends Component {
 				}
 			}
 		);
-	}
-
-	_getSelection() {
-		return this.selectAll ? ['all:' + this.folderId] : this.fileEntries;
 	}
 
 	/**
@@ -172,8 +170,10 @@ class EditCategories extends Component {
 
 		let bodyData = {
 			append: this.append,
+			folderId: this.folderId,
 			repositoryId: this.repositoryId,
-			selection: this._getSelection(),
+			selectAll: this.selectAll,
+			selection: this.fileEntries,
 			toAddCategoryIds: addedCategories,
 			toRemoveCategoryIds: removedCategories
 		};

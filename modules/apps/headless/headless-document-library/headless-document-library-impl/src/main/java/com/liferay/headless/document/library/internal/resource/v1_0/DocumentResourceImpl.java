@@ -179,7 +179,7 @@ public class DocumentResourceImpl
 		);
 
 		String description = optional.map(
-			Document::getTitle
+			Document::getDescription
 		).orElseGet(
 			existingFileEntry::getDescription
 		);

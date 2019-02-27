@@ -584,6 +584,7 @@ public class DEDataEngineTestUtil {
 
 	public static DEDataRecordCollection insertDEDataRecordCollection(
 			User user, Group group, String description, String name,
+			DEDataDefinitionService deDataDefinitionService,
 			DEDataRecordCollectionService deDataRecordCollectionService)
 		throws Exception {
 
@@ -600,17 +601,21 @@ public class DEDataEngineTestUtil {
 			DEDataRecordCollection deDataRecordCollection =
 				new DEDataRecordCollection();
 
+			DEDataDefinition deDataDefinition = insertDEDataDefinition(
+				user, group, deDataDefinitionService);
+
 			deDataRecordCollection.addDescription(LocaleUtil.US, description);
 			deDataRecordCollection.addName(LocaleUtil.US, name);
+			deDataRecordCollection.setDEDataDefinition(deDataDefinition);
 
 			DEDataRecordCollectionSaveRequest
 				deDataRecordCollectionSaveRequest =
 					DEDataRecordCollectionRequestBuilder.saveBuilder(
 						deDataRecordCollection
-					).inGroup(
-						group.getGroupId()
 					).onBehalfOf(
 						user.getUserId()
+					).inGroup(
+						group.getGroupId()
 					).build();
 
 			DEDataRecordCollectionSaveResponse
@@ -618,8 +623,8 @@ public class DEDataEngineTestUtil {
 					deDataRecordCollectionService.execute(
 						deDataRecordCollectionSaveRequest);
 
-			return
-				deDataRecordCollectionSaveResponse.getDEDataRecordCollection();
+			return deDataRecordCollectionSaveResponse.
+				getDEDataRecordCollection();
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

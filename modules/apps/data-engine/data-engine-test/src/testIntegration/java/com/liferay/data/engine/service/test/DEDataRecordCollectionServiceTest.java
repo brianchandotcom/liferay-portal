@@ -4027,8 +4027,8 @@ public class DEDataRecordCollectionServiceTest {
 
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
-				_adminUser, _group, _deDataDefinitionService,
-				_deDataRecordCollectionService);
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4052,7 +4052,7 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4076,7 +4076,7 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4100,11 +4100,11 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		DEDataEngineTestUtil.insertDEDataRecordCollection(
-			_adminUser, _group, "nonascii£", "Name",
+			_adminUser, _group, "nonascii£", "Name", _deDataDefinitionService,
 			_deDataRecordCollectionService);
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4128,7 +4128,7 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4152,7 +4152,7 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4176,7 +4176,7 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4200,15 +4200,15 @@ public class DEDataRecordCollectionServiceTest {
 		for (int i = 0; i < total; i++) {
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
 				_adminUser, _group, "Description" + i, "Name" + i,
-				_deDataRecordCollectionService);
+				_deDataDefinitionService, _deDataRecordCollectionService);
 		}
 
 		DEDataEngineTestUtil.insertDEDataRecordCollection(
 			_adminUser, _group, "Spaced Words", "Name",
-			_deDataRecordCollectionService);
+			_deDataDefinitionService, _deDataRecordCollectionService);
 
 		DEDataEngineTestUtil.insertDEDataRecordCollection(
-			_adminUser, _group, "Spaced ", "Name",
+			_adminUser, _group, "Spaced ", "Name", _deDataDefinitionService,
 			_deDataRecordCollectionService);
 
 		List<DEDataRecordCollection> deDataRecordCollections =
@@ -4223,6 +4223,44 @@ public class DEDataRecordCollectionServiceTest {
 
 			return null;
 		});
+	}
+
+	@Test
+	public void testSearchWithToLongString() throws Exception {
+		int total = 5;
+
+		for (int i = 0; i < total; i++) {
+			DEDataEngineTestUtil.insertDEDataRecordCollection(
+				_adminUser, _group, "y" + i, "y" + i, _deDataDefinitionService,
+				_deDataRecordCollectionService);
+		}
+
+		String longStringText =
+			"Lorem ipsum dolor sit amet, consectetur " +
+			"adipiscing elit, sed do eiusmod tempor incididunt ut labore " +
+			"et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud " +
+			"exercitation ullamco laboris nisi ut aliquip ex ea commodo " +
+			"consequat. Duis aute irure dolor in reprehenderit in voluptate " +
+			"velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
+			"sint occaecat cupidatat non proident, sunt in culpa qui officia " +
+			"deserunt mollit anim id est laborum.";
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, longStringText, "Name",
+			_deDataDefinitionService, _deDataRecordCollectionService);
+
+		List<DEDataRecordCollection> deDataRecordCollections =
+			searchDEDataRecordCollection(_group, longStringText);
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 6,
+					deDataRecordCollections.size());
+
+				return null;
+			});
 	}
 
 	@Test

@@ -48,7 +48,7 @@ public class DEDataRecordCollectionSearchExecutor {
 			deDataRecordCollectionSearchRequest.getCompanyId(),
 			deDataRecordCollectionSearchRequest.getGroupId(),
 			deDataRecordCollectionSearchRequest.getKeywords(),
-			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
+			DDLRecordSetConstants.SCOPE_ANY,
 			deDataRecordCollectionSearchRequest.getStart(),
 			deDataRecordCollectionSearchRequest.getEnd(), null);
 

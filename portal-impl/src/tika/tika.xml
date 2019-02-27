@@ -33,6 +33,7 @@
 		<parser class="org.apache.tika.parser.mat.MatParser" />
 		<parser class="org.apache.tika.parser.mbox.MboxParser" />
 		<parser class="org.apache.tika.parser.mbox.OutlookPSTParser" />
+		<parser class="org.apache.tika.parser.microsoft.ooxml.OOXMLParser" />
 		<parser class="org.apache.tika.parser.microsoft.OfficeParser" />
 		<parser class="org.apache.tika.parser.microsoft.OldExcelParser" />
 		<parser class="org.apache.tika.parser.microsoft.TNEFParser" />

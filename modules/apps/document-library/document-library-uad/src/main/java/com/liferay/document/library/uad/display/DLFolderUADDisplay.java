@@ -92,6 +92,11 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 	}
 
 	@Override
+	public Class<?> getParentContainerClass() {
+		return DLFolder.class;
+	}
+
+	@Override
 	public Serializable getParentContainerId(DLFolder dlFolder) {
 		return dlFolder.getParentFolderId();
 	}

@@ -110,6 +110,10 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	public default Class<?> getParentContainerClass() {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Returns the primary key of the parent container for the given
 	 * entity.

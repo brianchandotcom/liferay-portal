@@ -17,6 +17,7 @@ package com.liferay.document.library.uad.display;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -99,6 +100,11 @@ public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 	@Override
 	public String getName(DLFileEntry dlFileEntry, Locale locale) {
 		return dlFileEntry.getFileName();
+	}
+
+	@Override
+	public Class<?> getParentContainerClass() {
+		return DLFolder.class;
 	}
 
 	@Override

@@ -63,6 +63,11 @@ public class MBThreadUADDisplay extends BaseMBThreadUADDisplay {
 	}
 
 	@Override
+	public Class<?> getParentContainerClass() {
+		return MBCategory.class;
+	}
+
+	@Override
 	public Serializable getParentContainerId(MBThread mbThread) {
 		return mbThread.getCategoryId();
 	}

@@ -90,6 +90,11 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 	}
 
 	@Override
+	public Class<?> getParentContainerClass() {
+		return MBCategory.class;
+	}
+
+	@Override
 	public Serializable getParentContainerId(MBCategory mbCategory) {
 		return mbCategory.getParentCategoryId();
 	}

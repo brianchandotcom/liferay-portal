@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -61,6 +62,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
@@ -135,9 +137,93 @@ public class BlogPostingResourceImpl
 	}
 
 	@Override
+	public BlogPosting patchBlogPosting(
+			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception {
+
+		BlogsEntry entry = _blogsEntryService.getEntry(blogPostingId);
+
+		BlogPosting patchedBlogPosting = new BlogPosting();
+
+		patchedBlogPosting.setArticleBody(
+			Optional.ofNullable(
+				blogPosting.getArticleBody()
+			).orElse(
+				entry.getContent()
+			));
+
+		patchedBlogPosting.setAlternativeHeadline(
+			Optional.ofNullable(
+				blogPosting.getAlternativeHeadline()
+			).orElse(
+				entry.getSubtitle()
+			));
+
+		patchedBlogPosting.setCaption(
+			Optional.ofNullable(
+				blogPosting.getCaption()
+			).orElse(
+				entry.getCoverImageCaption()
+			));
+
+		patchedBlogPosting.setCategoryIds(
+			Optional.ofNullable(
+				blogPosting.getCategoryIds()
+			).orElse(
+				null
+			));
+
+		patchedBlogPosting.setDescription(
+			Optional.ofNullable(
+				blogPosting.getDescription()
+			).orElse(
+				entry.getDescription()
+			));
+
+		patchedBlogPosting.setFriendlyUrlPath(
+			Optional.ofNullable(
+				blogPosting.getFriendlyUrlPath()
+			).orElse(
+				entry.getUrlTitle()
+			));
+
+		patchedBlogPosting.setHeadline(
+			Optional.ofNullable(
+				blogPosting.getHeadline()
+			).orElse(
+				entry.getTitle()
+			));
+
+		patchedBlogPosting.setDatePublished(
+			Optional.ofNullable(
+				blogPosting.getDatePublished()
+			).orElse(
+				entry.getDisplayDate()
+			));
+
+		patchedBlogPosting.setImageId(
+			Optional.ofNullable(
+				blogPosting.getImageId()
+			).orElse(
+				null
+			));
+
+		patchedBlogPosting.setKeywords(
+			Optional.ofNullable(
+				blogPosting.getKeywords()
+			).orElse(
+				null
+			));
+
+		return putBlogPosting(blogPostingId, patchedBlogPosting);
+	}
+
+	@Override
 	public BlogPosting postContentSpaceBlogPosting(
 			Long contentSpaceId, BlogPosting blogPosting)
 		throws Exception {
+
+		blogPosting.setContentSpace(contentSpaceId);
 
 		LocalDateTime localDateTime = toLocalDateTime(
 			blogPosting.getDatePublished());
@@ -151,7 +237,7 @@ public class BlogPostingResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
 				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
-				_createServiceContext(contentSpaceId, blogPosting)));
+				_createServiceContext(blogPosting)));
 	}
 
 	@Override
@@ -161,8 +247,6 @@ public class BlogPostingResourceImpl
 
 		LocalDateTime localDateTime = toLocalDateTime(
 			blogPosting.getDatePublished());
-
-		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return _toBlogPosting(
 			_blogsEntryService.updateEntry(
@@ -174,7 +258,7 @@ public class BlogPostingResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
 				new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
-				_createServiceContext(blogsEntry.getGroupId(), blogPosting)));
+				_createServiceContext(blogPosting)));
 	}
 
 	private ServiceContext _createServiceContext(BlogPosting blogPosting) {
@@ -245,7 +329,7 @@ public class BlogPostingResourceImpl
 	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
 		Long imageId = blogPosting.getImageId();
 
-		if (Objects.equals(imageId, 0L)) {
+		if (Objects.equals(imageId, 0L) || Validator.isNull(imageId)) {
 			return null;
 		}
 

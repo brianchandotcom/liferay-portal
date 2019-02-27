@@ -13,6 +13,14 @@ definition {
 	macro enableDebugging {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In")) {
+			User.loginPG(
+				nodePort = "${nodePort}",
+				password = "test",
+				userEmailAddress = "test@liferay.com"
+			);
+		}
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -77,6 +85,14 @@ definition {
 
 	macro runGroovyScript {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
+
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In")) {
+			User.loginPG(
+				nodePort = "${nodePort}",
+				password = "test",
+				userEmailAddress = "test@liferay.com"
+			);
+		}
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

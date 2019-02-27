@@ -392,12 +392,6 @@ definition {
 			nodePort = "8080"
 		);
 
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
-
 		Clustering.enableDebugging(
 			nodePort = "9080"
 		);

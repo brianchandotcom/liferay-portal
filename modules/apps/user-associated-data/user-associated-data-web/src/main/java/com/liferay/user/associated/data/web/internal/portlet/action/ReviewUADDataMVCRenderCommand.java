@@ -124,13 +124,17 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					new UADHierarchyResultRowSplitter(
 						LocaleThreadLocal.getThemeDisplayLocale(),
 						uadHierarchyDisplay.getUADDisplays()));
+				viewUADEntitiesDisplay.setTypeClasses(
+					uadHierarchyDisplay.getTypeClasses());
+
+				Class<?> parentContainerClass =
+					uadHierarchyDisplay.getFirstContainerTypeClass();
+
 				viewUADEntitiesDisplay.setSearchContainer(
 					_uadReviewDataHelper.getSearchContainer(
 						renderRequest, liferayPortletResponse, applicationKey,
-						currentURL, groupIds, selectedUser,
-						uadHierarchyDisplay));
-				viewUADEntitiesDisplay.setTypeClasses(
-					uadHierarchyDisplay.getTypeClasses());
+						currentURL, groupIds, parentContainerClass, 0L,
+						selectedUser, uadHierarchyDisplay));
 
 				UADDisplay<?>[] uadDisplays =
 					uadHierarchyDisplay.getUADDisplays();

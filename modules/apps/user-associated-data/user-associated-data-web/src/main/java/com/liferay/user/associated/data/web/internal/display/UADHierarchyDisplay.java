@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.display.UADHierarchyDeclaration;
 
@@ -210,6 +211,10 @@ public class UADHierarchyDisplay {
 			"parentContainerId",
 			String.valueOf(uadDisplay.getPrimaryKey(unwrappedObject)));
 		renderURL.setParameter("p_u_i_d", String.valueOf(selectedUserId));
+
+		String scope = ParamUtil.getString(liferayPortletRequest, "scope");
+
+		renderURL.setParameter("scope", scope);
 
 		return renderURL.toString();
 	}

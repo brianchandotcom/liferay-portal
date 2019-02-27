@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+UADHierarchyDisplay uadHierarchyDisplay = (UADHierarchyDisplay) request.getAttribute(UADWebKeys.UAD_HIERARCHY_DISPLAY);
+
 portletDisplay.setShowBackIcon(true);
 
 PortletURL backURL = renderResponse.createRenderURL();
@@ -27,8 +29,20 @@ backURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
+
+//PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "users-and-organizations"), homeURL.toString());
 %>
 
+
 <liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
+
+<div id="breadcrumb">
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
+</div>
 
 <liferay-util:include page="/view_uad_entities.jsp" servletContext="<%= application %>" />

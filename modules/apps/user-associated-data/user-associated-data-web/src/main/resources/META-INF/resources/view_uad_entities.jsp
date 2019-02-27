@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -88,7 +89,15 @@ ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarD
 
 					for (KeyValuePair columnEntry : columnEntries) {
 						String columnEntryKey = columnEntry.getKey();
-						String cssClass = columnEntry.equals(columnEntries.get(0)) ? "table-cell-expand table-list-title" : "table-cell-expand";
+
+						String cssClass = "table-cell-expand";
+
+						if (columnEntry.equals(columnEntries.get(0))) {
+							cssClass = "table-cell-expand table-list-title";
+						}
+						else if (columnEntryKey.equals("count")) {
+							cssClass = "table-cell-expand-smallest";
+						}
 					%>
 
 						<liferay-ui:search-container-column-text

@@ -16,18 +16,36 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADConstants;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
+import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
+import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
+import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 /**
  * @author Samuel Trong Tran
@@ -47,6 +65,58 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		try {
+			User selectedUser = _selectedUserHelper.getSelectedUser(
+				renderRequest);
+
+			String applicationKey = ParamUtil.getString(
+				renderRequest, "applicationKey");
+
+			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+				new ViewUADEntitiesDisplay();
+
+			viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(renderResponse);
+
+			PortletURL currentURL = PortletURLUtil.getCurrent(
+				renderRequest, renderResponse);
+
+			UADHierarchyDisplay uadHierarchyDisplay =
+				_uadRegistry.getUADHierarchyDisplay(applicationKey);
+
+			viewUADEntitiesDisplay.setResultRowSplitter(
+				new UADHierarchyResultRowSplitter(
+					LocaleThreadLocal.getThemeDisplayLocale(),
+					uadHierarchyDisplay.getUADDisplays()));
+			viewUADEntitiesDisplay.setTypeClasses(
+				uadHierarchyDisplay.getTypeClasses());
+
+			long parentContainerId =
+				ParamUtil.getLong(renderRequest, "parentContainerId");
+			String className =
+				ParamUtil.getString(renderRequest, "parentContainerClass");
+
+			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(className);
+
+			Class<?> typeClass = uadDisplay.getTypeClass();
+
+			viewUADEntitiesDisplay.setSearchContainer(
+				_uadReviewDataHelper.getSearchContainer(
+					renderRequest, liferayPortletResponse, applicationKey,
+					currentURL, null, typeClass, parentContainerId,
+					selectedUser, uadHierarchyDisplay));
+
+			renderRequest.setAttribute(
+				UADWebKeys.UAD_HIERARCHY_DISPLAY, uadHierarchyDisplay);
+			renderRequest.setAttribute(
+				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
 		return "/view_uad_hierarchy.jsp";
 	}
 
@@ -60,6 +130,12 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 	private SelectedUserHelper _selectedUserHelper;
 
 	@Reference
+	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;
+
+	@Reference
 	private UADRegistry _uadRegistry;
+
+	@Reference
+	private UADReviewDataHelper _uadReviewDataHelper;
 
 }

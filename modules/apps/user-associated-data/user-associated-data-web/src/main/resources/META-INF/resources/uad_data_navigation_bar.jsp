@@ -1,4 +1,4 @@
-<%--
+<%@ page import="javax.portlet.PortletException" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -31,31 +31,41 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 				add(
 					navigationItem -> {
 						boolean active = servletPath.equals("/review_uad_data.jsp") || servletPath.equals("/view_uad_hierarchy.jsp");
-						String href = StringPool.BLANK;
 
-						if (!active) {
-							baseURL.setParameter("mvcRenderCommandName", "/review_uad_data");
+						PortletURL reviewDataURL = null;
 
-							href = baseURL.toString();
+						try {
+							reviewDataURL = PortletURLUtil.clone(baseURL, renderResponse);
+
+							reviewDataURL.setParameter("mvcRenderCommandName", "/review_uad_data");
+
+						}
+						catch (PortletException e) {
+							reviewDataURL = baseURL;
 						}
 
 						navigationItem.setActive(active);
-						navigationItem.setHref(href);
+						navigationItem.setHref(reviewDataURL.toString());
 						navigationItem.setLabel(LanguageUtil.get(request, "review-data"));
 					});
 				add(
 					navigationItem -> {
 						boolean active = servletPath.equals("/anonymize_nonreviewable_uad_data.jsp");
-						String href = StringPool.BLANK;
 
-						if (!active) {
-							baseURL.setParameter("mvcRenderCommandName", "/anonymize_nonreviewable_uad_data");
+						PortletURL nonreviewableDataURL = null;
 
-							href = baseURL.toString();
+						try {
+							nonreviewableDataURL = PortletURLUtil.clone(baseURL, renderResponse);
+
+							nonreviewableDataURL.setParameter("mvcRenderCommandName", "/anonymize_nonreviewable_uad_data");
+
+						}
+						catch (PortletException e) {
+							nonreviewableDataURL = baseURL;
 						}
 
 						navigationItem.setActive(active);
-						navigationItem.setHref(href);
+						navigationItem.setHref(nonreviewableDataURL.toString());
 						navigationItem.setLabel(LanguageUtil.get(request, "auto-anonymize-data"));
 					});
 			}

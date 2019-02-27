@@ -33,6 +33,7 @@ import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyChecker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -115,6 +116,7 @@ public class UADReviewDataHelper {
 			RenderRequest renderRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			String applicationKey, PortletURL currentURL, long[] groupIds,
+			Class<?> parentContainerClass, Serializable parentContainerId,
 			User selectedUser, UADHierarchyDisplay uadHierarchyDisplay)
 		throws Exception {
 
@@ -123,15 +125,13 @@ public class UADReviewDataHelper {
 			uadHierarchyDisplay.getSortingFieldNames());
 
 		try {
-			Class<?> parentContainerClass =
-				uadHierarchyDisplay.getFirstContainerTypeClass();
-
 			DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 			List entities = uadHierarchyDisplay.search(
-				parentContainerClass, 0L, selectedUser.getUserId(), groupIds,
-				displayTerms.getKeywords(), null, null,
-				searchContainer.getStart(), searchContainer.getEnd());
+				parentContainerClass, parentContainerId,
+				selectedUser.getUserId(), groupIds, displayTerms.getKeywords(),
+				null, null, searchContainer.getStart(),
+				searchContainer.getEnd());
 
 			LiferayPortletRequest liferayPortletRequest =
 				_portal.getLiferayPortletRequest(renderRequest);

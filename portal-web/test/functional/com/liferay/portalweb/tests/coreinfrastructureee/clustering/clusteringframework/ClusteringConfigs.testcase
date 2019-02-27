@@ -34,13 +34,15 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		AssertConsoleTextPresent(value1 = "JDBC_PING");
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "JDBC_PING",
+			nodePort = "8080"
+		);
 
-		var log2 = Clustering.getLogFileSpecificServer(nodePort = "9080");
-
-		if (!(contains("${log2}", "JDBC_PING"))) {
-			fail("Failed to find JDBC_PING configuration on second node.");
-		}
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "JDBC_PING",
+			nodePort = "9080"
+		);
 
 		User.loginPG(
 			nodePort = "9080",

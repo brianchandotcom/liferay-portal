@@ -16,6 +16,7 @@ package com.liferay.asset.category.property.service.impl;
 
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.base.AssetCategoryPropertyServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,10 +26,19 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
+@Component(
+	property = {
+		"json.web.service.context.name=asset",
+		"json.web.service.context.path=AssetCategoryProperty"
+	},
+	service = AopService.class
+)
 public class AssetCategoryPropertyServiceImpl
 	extends AssetCategoryPropertyServiceBaseImpl {
 

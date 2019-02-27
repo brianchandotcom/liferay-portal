@@ -20,16 +20,23 @@ import com.liferay.asset.category.property.exception.DuplicateCategoryPropertyEx
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.base.AssetCategoryPropertyLocalServiceBaseImpl;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
+@Component(
+	property = "model.class.name=com.liferay.asset.category.property.model.AssetCategoryProperty",
+	service = AopService.class
+)
 public class AssetCategoryPropertyLocalServiceImpl
 	extends AssetCategoryPropertyLocalServiceBaseImpl {
 
@@ -185,16 +192,16 @@ public class AssetCategoryPropertyLocalServiceImpl
 	}
 
 	protected void validate(String key, String value) throws PortalException {
-		if (!assetHelper.isValidWord(key)) {
+		if (!_assetHelper.isValidWord(key)) {
 			throw new CategoryPropertyKeyException("Invalid key " + key);
 		}
 
-		if (!assetHelper.isValidWord(value)) {
+		if (!_assetHelper.isValidWord(value)) {
 			throw new CategoryPropertyValueException("Invalid value " + value);
 		}
 	}
 
-	@ServiceReference(type = AssetHelper.class)
-	protected AssetHelper assetHelper;
+	@Reference
+	private AssetHelper _assetHelper;
 
 }

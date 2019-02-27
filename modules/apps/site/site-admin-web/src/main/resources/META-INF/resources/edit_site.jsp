@@ -126,16 +126,12 @@ if (layoutSetPrototypeId > 0) {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script>
+<script>
 	function <portlet:namespace />saveGroup(forceDisable) {
-		var $ = AUI.$;
-
-		var form = $(document.<portlet:namespace />fm);
-
 		<c:if test="<%= (group != null) && !group.isCompany() %>">
 			<portlet:namespace />saveLocales();
 		</c:if>
 
-		submitForm(form);
+		submitForm(document.<portlet:namespace />fm);
 	}
-</aui:script>
+</script>

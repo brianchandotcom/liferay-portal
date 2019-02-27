@@ -38,21 +38,25 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset-and-propagate" />
 	</div>
 
-	<aui:script>
-		AUI.$('#<%= randomNamespace %>resetButton').on(
-			'click',
-			function(event) {
-				<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
-				</portlet:actionURL>
+	<script>
+		var resetButton = document.getElementById('<%= randomNamespace %>resetButton');
 
-				submitForm(document.hrefFm, '<%= portletURL.toString() %>');
-			}
-		);
-	</aui:script>
+		if (resetButton) {
+			resetButton.addEventListener(
+				'click',
+				function(event) {
+					<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
+					</portlet:actionURL>
+
+					submitForm(document.hrefFm, '<%= portletURL.toString() %>');
+				}
+			);
+		}
+	</script>
 </c:if>
 
 <%

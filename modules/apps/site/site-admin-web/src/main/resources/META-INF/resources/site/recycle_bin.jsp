@@ -41,25 +41,31 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 	</aui:input>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var trashEnabledCheckbox = $('#<portlet:namespace />trashEnabled');
+<script>
+	var trashEnabledCheckbox = document.getElementById('<portlet:namespace />trashEnabled');
 
-	var trashEnabledDefault = trashEnabledCheckbox.prop('checked');
+	if (trashEnabledCheckbox) {
+		var trashEnabledDefault = trashEnabledCheckbox.checked;
 
-	trashEnabledCheckbox.on(
-		'change',
-		function(event) {
-			var trashEnabled = trashEnabledCheckbox.prop('checked');
+		trashEnabledCheckbox.addEventListener(
+			'change',
+			function(event) {
+				var trashEnabled = trashEnabledCheckbox.checked;
 
-			if (!trashEnabled && trashEnabledDefault) {
-				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
-					trashEnabledCheckbox.prop('checked', true);
+				if (!trashEnabled && trashEnabledDefault) {
+					if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "disabling-the-recycle-bin-prevents-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
+						trashEnabledCheckbox.checked = true;
 
-					trashEnabled = true;
+						trashEnabled = true;
+					}
+				}
+
+				var trashEntriesMaxAge = document.getElementById('<portlet:namespace />trashEntriesMaxAge');
+
+				if (trashEntriesMaxAge) {
+					Liferay.Util.toggleDisabled(trashEntriesMaxAge, !trashEnabled);
 				}
 			}
-
-			$('#<portlet:namespace />trashEntriesMaxAge').prop('disabled', !trashEnabled);
-		}
-	);
-</aui:script>
+		);
+	}
+</script>

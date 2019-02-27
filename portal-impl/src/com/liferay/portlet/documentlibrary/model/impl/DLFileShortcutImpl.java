@@ -113,6 +113,15 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return false;
 	}
 
+	@Override
+	public boolean isInTrash() {
+		if (super.isInTrash() || !isActive()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutImpl.class);
 

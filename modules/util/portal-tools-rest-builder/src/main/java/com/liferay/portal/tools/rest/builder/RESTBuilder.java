@@ -147,6 +147,11 @@ public class RESTBuilder {
 				_createResourceFile(context, schemaName, versionDirName);
 				_createResourceImplFile(context, schemaName, versionDirName);
 
+				if (Validator.isNotNull(_configYAML.getClientDir())) {
+					_createClientResourceFile(
+						context, schemaName, versionDirName);
+				}
+
 				if (Validator.isNotNull(_configYAML.getTestDir())) {
 					_createBaseResourceTestCaseFile(
 						context, schemaName, versionDirName);
@@ -162,6 +167,10 @@ public class RESTBuilder {
 				_putSchema(context, schema, schemaName);
 
 				_createDTOFile(context, schemaName, versionDirName);
+
+				if (Validator.isNotNull(_configYAML.getClientDir())) {
+					_createClientDTOFile(context, schemaName, versionDirName);
+				}
 			}
 		}
 
@@ -263,6 +272,66 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "base_resource_test_case", context));
+	}
+
+	private void _createClientDTOFile(
+			Map<String, Object> context, String schemaName,
+			String versionDirName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/client/dto/");
+		sb.append(versionDirName);
+		sb.append("/");
+		sb.append(schemaName);
+		sb.append(".java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "client_dto", context));
+	}
+
+	private void _createClientResourceFile(
+			Map<String, Object> context, String schemaName,
+			String versionDirName)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		sb.append(apiPackagePath.replace('.', '/'));
+
+		sb.append("/client/resource/");
+		sb.append(versionDirName);
+		sb.append("/");
+		sb.append(schemaName);
+		sb.append("Resource.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFileName, "client_resource", context));
 	}
 
 	private void _createDTOFile(

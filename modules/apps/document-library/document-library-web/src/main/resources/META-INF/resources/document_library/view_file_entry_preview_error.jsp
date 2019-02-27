@@ -32,7 +32,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 			<clay:link
 				buttonStyle="secondary"
-				href="<%= DLUtil.getDownloadURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, StringPool.BLANK) %>"
+				href="<%= DLURLHelperUtil.getDownloadURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, StringPool.BLANK) %>"
 				label='<%= LanguageUtil.get(resourceBundle, "download") %>'
 				title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 			/>

@@ -70,7 +70,7 @@ boolean versionSpecific = GetterUtil.getBoolean(request.getAttribute("file_entry
 					<clay:link
 						buttonStyle="primary"
 						elementClasses="btn-sm"
-						href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+						href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 						icon="download"
 						label='<%= LanguageUtil.get(resourceBundle, "download") %>'
 						title='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'

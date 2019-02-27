@@ -56,4 +56,9 @@
 	&:hover > .fragment-entry-link-content {
 		z-index: $fragmentEntryLinkContentHoverZIndex;
 	}
+
+	&--active lfr-editable,
+	&--hovered lfr-editable {
+		box-shadow: inset 0 0 0 1px $fragmentEntryLinkEditableFieldBorderColor;
+	}
 }

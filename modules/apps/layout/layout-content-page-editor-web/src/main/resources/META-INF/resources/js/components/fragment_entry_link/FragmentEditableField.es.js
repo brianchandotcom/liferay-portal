@@ -8,7 +8,7 @@ import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDAT
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {setIn, shouldClearFocus} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {Store} from '../../store/store.es';
+import {shouldUpdateOnChangeProperties, shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
@@ -55,6 +55,29 @@ const SAVE_CHANGES_DELAY = 1500;
 class FragmentEditableField extends Component {
 
 	/**
+	 * Gets a translated image content of a given HTML replacing
+	 * the url inside the HTML content with the translated one
+	 * @param {string} content Original HTML content
+	 * @param {string} translatedValue Translated image URL
+	 * @private
+	 * @return {string} Translated HTML
+	 * @review
+	 */
+	static _getImageContent(content, translatedValue) {
+		const wrapper = document.createElement('div');
+
+		wrapper.innerHTML = content;
+
+		const image = wrapper.querySelector('img');
+
+		if (image) {
+			image.src = translatedValue;
+		}
+
+		return wrapper.innerHTML;
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -94,38 +117,34 @@ class FragmentEditableField extends Component {
 	 * @returns {object}
 	 */
 	prepareStateForRender(state) {
-		const defaultSegmentedContent = this.editableValues[this.defaultSegmentId] ||
-			{};
-		const segmentedContent = this.editableValues[this.segmentId] ||
-			defaultSegmentedContent ||
-			{};
+		const segmentedValue = this.editableValues[this.segmentId] ||
+			this.editableValues[this.defaultSegmentId] ||
+			this.editableValues;
 
-		const translatedContent = segmentedContent[this.languageId] ||
-			defaultSegmentedContent[this.languageId] ||
-			segmentedContent[this.defaultLanguageId] ||
-			this.editableValues.defaultValue;
+		const translatedValue = segmentedValue[this.languageId] ||
+			segmentedValue[this.defaultLanguageId];
 
-		let content = Soy.toIncDom(translatedContent || this.content);
+		const value = this.editableValues.mappedField ?
+			this.editableValues.defaultValue :
+			(translatedValue || this.editableValues.defaultValue);
 
-		if (this.type === 'image' && translatedContent) {
-			const tempContent = document.createElement('div');
-
-			tempContent.innerHTML = this.content;
-
-			const tempImage = tempContent.querySelector('img');
-
-			if (tempImage) {
-				tempImage.src = translatedContent;
-			}
-
-			content = Soy.toIncDom(tempContent.innerHTML);
-		}
+		const content = Soy.toIncDom(
+			this.type === 'image' ?
+				FragmentEditableField._getImageContent(this.content, value) :
+				value
+		);
 
 		let nextState = state;
 
+		const fragmentEntryLinkEditableId = `${this.fragmentEntryLinkId}-${this.editableId}`;
+		const mapped = Boolean(this.editableValues.mappedField);
+		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
+
+		nextState = setIn(nextState, ['_mapped'], mapped);
+		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);
+		nextState = setIn(nextState, ['fragmentEntryLinkEditableId'], fragmentEntryLinkEditableId);
 		nextState = setIn(nextState, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
-		nextState = setIn(nextState, ['fragmentEntryLinkEditableId'], `${this.fragmentEntryLinkId}-${this.editableId}`);
 
 		return nextState;
 	}
@@ -152,7 +171,9 @@ class FragmentEditableField extends Component {
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		return !this._editing && Boolean(changes.activeItemId);
+		return this._editing ?
+			shouldUpdateOnChangeProperties(changes, ['languageId', 'segmentId']) :
+			shouldUpdatePureComponent(changes);
 	}
 
 	/**
@@ -424,27 +445,9 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	content: Config.string().required(),
-
-	/**
-	 * Default language id.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-	defaultLanguageId: Config.string().required(),
-
-	/**
-	 * Default segment id.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-	defaultSegmentId: Config.string().required(),
+	content: Config
+		.string()
+		.required(),
 
 	/**
 	 * Editable ID
@@ -454,7 +457,9 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	editableId: Config.string().required(),
+	editableId: Config
+		.string()
+		.required(),
 
 	/**
 	 * Editable values
@@ -464,18 +469,9 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!object}
 	 */
-	editableValues: Config.object().required(),
-
-	/**
-	 * Internal FloatingToolbar instance.
-	 * @default null
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {object|null}
-	 */
-	_floatingToolbar: Config.internal()
-		.value(null),
+	editableValues: Config
+		.object()
+		.required(),
 
 	/**
 	 * FragmentEntryLink id
@@ -485,37 +481,9 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	fragmentEntryLinkId: Config.string().required(),
-
-	/**
-	 * Currently selected language id.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-	languageId: Config.string().required(),
-
-	/**
-	 * Currently selected segment id.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-	segmentId: Config.string(),
-
-	/**
-	 * Portlet namespace
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
-	portletNamespace: Config.string().required(),
+	fragmentEntryLinkId: Config
+		.string()
+		.required(),
 
 	/**
 	 * Set of options that are sent to the processors.
@@ -525,7 +493,9 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!object}
 	 */
-	processorsOptions: Config.object().required(),
+	processorsOptions: Config
+		.object()
+		.required(),
 
 	/**
 	 * Editable type
@@ -535,17 +505,21 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	type: Config.string().required(),
+	type: Config
+		.string()
+		.required(),
 
 	/**
-	 * Store instance
-	 * @default undefined
+	 * Internal FloatingToolbar instance.
+	 * @default null
 	 * @instance
 	 * @memberOf FragmentEditableField
 	 * @review
-	 * @type {Store}
+	 * @type {object|null}
 	 */
-	store: Config.instanceOf(Store),
+	_floatingToolbar: Config
+		.internal()
+		.value(null),
 
 	/**
 	 * Flag indicating if the editable editor is active.
@@ -591,7 +565,14 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 	FragmentEditableField,
 	[
 		'activeItemId',
-		'activeItemType'
+		'activeItemType',
+		'defaultLanguageId',
+		'defaultSegmentId',
+		'hoveredItemId',
+		'hoveredItemType',
+		'languageId',
+		'portletNamespace',
+		'segmentId'
 	]
 );
 

@@ -29,6 +29,7 @@ $translationStatusListZIndex: 977;
 
 $fragmentEditableFieldActiveBorderColor: #0B5FFF;
 $fragmentEditableFieldGridAccentColor: #80ACFF;
+$fragmentEditableFieldGridMappedColor: #AF78FF;
 $fragmentEditableFieldGridDefaultColor: #A7A9BC;
 $fragmentEditableFieldGridSize: $fragmentsEditorSpacing;
 $fragmentEditableFieldGridTranslatedColor: #3DC513;
@@ -37,8 +38,9 @@ $fragmentEditableFieldHoverBorderColor: #0B5FFF;
 $fragmentEntryLinkListPadding: 28px;
 $sectionMinimumHeight: $fragmentsEditorSpacing * 20;
 
-$fragmentEntryLinkSectionBorderColor: rgba(11, 95, 255, 0.2);
-$fragmentEntryLinkColumnBorderColor: rgba(11, 95, 255, 0.2);
+$fragmentEntryLinkSectionBorderColor: fade_out(#0B5FFF, 0.8);
+$fragmentEntryLinkColumnBorderColor: fade_out(#0B5FFF, 0.8);
+$fragmentEntryLinkEditableFieldBorderColor: fade_out(#0B5FFF, 0.8);
 
 $dragSourceBackgroundColor: #E1EBFF;
 $dragSourceColor: #0B5FFF;

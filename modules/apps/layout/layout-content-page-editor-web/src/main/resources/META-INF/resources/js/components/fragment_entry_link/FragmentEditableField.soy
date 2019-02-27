@@ -9,18 +9,40 @@
 	{@param? _handleEditableBlur: any}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableHoverStart: any}
+	{@param? _mapped: bool}
+	{@param? _translated: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
+	{@param? defaultLanguageId: string}
 	{@param? editableId: string}
 	{@param? fragmentEntryLinkEditableId: string}
 	{@param? fragmentEntryLinkId: string}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? itemTypes: ?}
+	{@param? languageId: string}
 
 	{let $editableClasses kind="text"}
 		fragments-editor__editable
 
 		{if $activeItemId == $fragmentEntryLinkEditableId and $activeItemType == $itemTypes.editable}
 			{sp}fragments-editor__editable--active
+		{/if}
+
+		{if $hoveredItemId == $fragmentEntryLinkEditableId and $hoveredItemType == $itemTypes.editable}
+			{sp}fragments-editor__editable--hovered
+		{/if}
+
+		{if $languageId != $defaultLanguageId}
+			{sp}fragments-editor__editable--translating
+
+			{if $_translated}
+				{sp}fragments-editor__editable--translated
+			{/if}
+		{/if}
+
+		{if $_mapped}
+			{sp}fragments-editor__editable--mapped
 		{/if}
 	{/let}
 

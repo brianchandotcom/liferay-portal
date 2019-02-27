@@ -62,10 +62,21 @@ public class BlogPostingImageResourceImpl
 	extends BaseBlogPostingImageResourceImpl {
 
 	@Override
-	public boolean deleteImageObject(Long imageObjectId) throws Exception {
-		_dlAppService.deleteFileEntry(imageObjectId);
+	public boolean deleteBlogPostingImage(Long blogPostingImageId)
+		throws Exception {
+
+		_dlAppService.deleteFileEntry(blogPostingImageId);
 
 		return true;
+	}
+
+	@Override
+	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(blogPostingImageId);
+
+		return _toBlogPostingImage(fileEntry);
 	}
 
 	@Override
@@ -111,20 +122,12 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
-	public BlogPostingImage getImageObject(Long imageObjectId)
+	public BlogPostingImage patchBlogPostingImage(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(imageObjectId);
-
-		return _toBlogPostingImage(fileEntry);
-	}
-
-	@Override
-	public BlogPostingImage patchImageObject(
-			Long imageObjectId, MultipartBody multipartBody)
-		throws Exception {
-
-		FileEntry existingFileEntry = _dlAppService.getFileEntry(imageObjectId);
+		FileEntry existingFileEntry = _dlAppService.getFileEntry(
+			blogPostingImageId);
 
 		BinaryFile binaryFile = Optional.ofNullable(
 			multipartBody.getBinaryFile("file")
@@ -153,7 +156,7 @@ public class BlogPostingImageResourceImpl
 		);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			imageObjectId, binaryFile.getFileName(),
+			blogPostingImageId, binaryFile.getFileName(),
 			binaryFile.getContentType(), title, null, null,
 			DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
 			binaryFile.getSize(), new ServiceContext());
@@ -196,8 +199,8 @@ public class BlogPostingImageResourceImpl
 	}
 
 	@Override
-	public BlogPostingImage putImageObject(
-			Long imageObjectId, MultipartBody multipartBody)
+	public BlogPostingImage putBlogPostingImage(
+			Long blogPostingImageId, MultipartBody multipartBody)
 		throws Exception {
 
 		BlogPostingImage blogPostingImage = multipartBody.getValueAsInstance(
@@ -214,8 +217,8 @@ public class BlogPostingImageResourceImpl
 		);
 
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
-			imageObjectId, binaryFileName, binaryFile.getContentType(), title,
-			null, null, DLVersionNumberIncrease.AUTOMATIC,
+			blogPostingImageId, binaryFileName, binaryFile.getContentType(),
+			title, null, null, DLVersionNumberIncrease.AUTOMATIC,
 			binaryFile.getInputStream(), binaryFile.getSize(),
 			new ServiceContext());
 

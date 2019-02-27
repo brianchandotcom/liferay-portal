@@ -30,11 +30,11 @@ import java.util.List;
 public class DEDataRecordCollectionSearchExecutor {
 
 	public DEDataRecordCollectionSearchExecutor(
-		DEDataEngineRequestExecutor deDataEngineRequestExecutor,
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DEDataEngineRequestExecutor deDataEngineRequestExecutor) {
 
-		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 	}
 
 	public DEDataRecordCollectionSearchResponse execute(

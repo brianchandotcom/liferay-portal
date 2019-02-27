@@ -692,7 +692,7 @@ public class DEDataRecordCollectionServiceImpl
 
 		_deDataRecordCollectionSearchExecutor =
 			new DEDataRecordCollectionSearchExecutor(
-				_deDataEngineRequestExecutor, ddlRecordSetLocalService);
+				ddlRecordSetLocalService, _deDataEngineRequestExecutor);
 	}
 
 	protected void validate(

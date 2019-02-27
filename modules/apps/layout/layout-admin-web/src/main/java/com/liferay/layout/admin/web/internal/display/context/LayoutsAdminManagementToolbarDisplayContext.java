@@ -19,8 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,11 +31,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -165,30 +161,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-			{
-				addTableViewTypeItem();
-
-				ViewTypeItem viewTypeItem = new ViewTypeItem();
-
-				viewTypeItem.setActive(
-					Objects.equals(
-						_layoutsAdminDisplayContext.getDisplayStyle(),
-						"miller-columns"));
-				viewTypeItem.setIcon("columns");
-				viewTypeItem.setHref(
-					getPortletURL(), "displayStyle", "miller-columns");
-				viewTypeItem.setLabel(
-					LanguageUtil.get(
-						LocaleUtil.getMostRelevantLocale(), "columns"));
-
-				add(viewTypeItem);
-			}
-		};
-	}
-
-	@Override
 	public Boolean isSelectable() {
 		if (_layoutsAdminDisplayContext.isFirstColumn()) {
 			return false;
@@ -219,10 +191,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 		if (_layoutsAdminDisplayContext.isSearch()) {
 			return new String[] {"create-date"};
-		}
-
-		if (_layoutsAdminDisplayContext.isFlattenedView()) {
-			return new String[] {"create-date", "path"};
 		}
 
 		return super.getOrderByKeys();

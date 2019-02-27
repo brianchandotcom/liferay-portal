@@ -1113,14 +1113,6 @@ public class LayoutsAdminDisplayContext {
 		return _firstColumn;
 	}
 
-	public boolean isFlattenedView() {
-		if (Objects.equals(getDisplayStyle(), "list") || isSearch()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isPagesTab() {
 		if (Objects.equals(getTabs1(), "pages")) {
 			return true;

@@ -48,7 +48,7 @@
 	<c:choose>
 		<c:when test="<%= layoutsAdminDisplayContext.hasLayouts() %>">
 			<c:choose>
-				<c:when test="<%= layoutsAdminDisplayContext.isFlattenedView() %>">
+				<c:when test="<%= layoutsAdminDisplayContext.isSearch() %>">
 					<liferay-util:include page="/flattened_view.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>

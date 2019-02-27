@@ -968,7 +968,7 @@ AUI.add(
 
 						rows.forEach(
 							function(row) {
-								instance.gridDOM.push(row.get('node').all('.col').get('nodes'));
+								instance.gridDOM.push(row.get('cols'));
 							}
 						);
 					},

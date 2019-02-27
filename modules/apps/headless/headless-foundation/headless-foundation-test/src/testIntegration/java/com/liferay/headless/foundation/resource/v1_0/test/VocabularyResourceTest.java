@@ -18,6 +18,7 @@ import static com.liferay.portal.odata.entity.EntityField.Type;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -329,7 +330,9 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 	}
 
 	private Collection<EntityField> _getEntityFields() throws Exception {
-		EntityModel entityModel = _entityModelResource.getEntityModel(null);
+
+		EntityModel entityModel =
+			((EntityModelResource)_vocabularyResource).getEntityModel(null);
 
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
@@ -352,6 +355,6 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 	}
 
 	@Inject
-	private EntityModelResource _entityModelResource;
+	private VocabularyResource _vocabularyResource;
 
 }

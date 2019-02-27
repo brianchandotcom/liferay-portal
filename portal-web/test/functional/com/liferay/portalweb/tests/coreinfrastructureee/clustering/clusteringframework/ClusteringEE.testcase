@@ -397,7 +397,7 @@ definition {
 		);
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
 			nodePort = "8080"
 		);
 
@@ -462,7 +462,7 @@ definition {
 		);
 
 		Clustering.deployJarOnSpecificServer(
-			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar",
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
 			nodePort = "9080"
 		);
 

@@ -54,8 +54,8 @@ public class StructuredContent {
 		return comment;
 	}
 
-	public ContentFieldValue[] getContentFieldValues() {
-		return contentFieldValues;
+	public ContentField[] getContentFields() {
+		return contentFields;
 	}
 
 	public Long getContentSpace() {
@@ -171,17 +171,16 @@ public class StructuredContent {
 		}
 	}
 
-	public void setContentFieldValues(ContentFieldValue[] contentFieldValues) {
-		this.contentFieldValues = contentFieldValues;
+	public void setContentFields(ContentField[] contentFields) {
+		this.contentFields = contentFields;
 	}
 
 	@JsonIgnore
-	public void setContentFieldValues(
-		UnsafeSupplier<ContentFieldValue[], Exception>
-			contentFieldValuesUnsafeSupplier) {
+	public void setContentFields(
+		UnsafeSupplier<ContentField[], Exception> contentFieldsUnsafeSupplier) {
 
 		try {
-			contentFieldValues = contentFieldValuesUnsafeSupplier.get();
+			contentFields = contentFieldsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -398,9 +397,9 @@ public class StructuredContent {
 		sb.append(", comment=");
 
 		sb.append(comment);
-		sb.append(", contentFieldValues=");
+		sb.append(", contentFields=");
 
-		sb.append(contentFieldValues);
+		sb.append(contentFields);
 		sb.append(", contentSpace=");
 
 		sb.append(contentSpace);
@@ -461,7 +460,7 @@ public class StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected ContentFieldValue[] contentFieldValues;
+	protected ContentField[] contentFields;
 
 	@GraphQLField
 	@JsonProperty

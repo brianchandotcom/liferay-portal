@@ -32,9 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentFieldValue")
-@XmlRootElement(name = "ContentFieldValue")
-public class ContentFieldValue {
+@GraphQLName("ContentField")
+@XmlRootElement(name = "ContentField")
+public class ContentField {
 
 	public String getDataType() {
 		return dataType;
@@ -54,6 +54,10 @@ public class ContentFieldValue {
 
 	public String getName() {
 		return name;
+	}
+
+	public ContentField[] getNestedFields() {
+		return nestedFields;
 	}
 
 	public Value getValue() {
@@ -136,6 +140,22 @@ public class ContentFieldValue {
 		}
 	}
 
+	public void setNestedFields(ContentField[] nestedFields) {
+		this.nestedFields = nestedFields;
+	}
+
+	@JsonIgnore
+	public void setNestedFields(
+		UnsafeSupplier<ContentField[], Exception> nestedFieldsUnsafeSupplier) {
+
+		try {
+			nestedFields = nestedFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@JsonIgnore
 	public void setValue(UnsafeSupplier<Value, Exception> valueUnsafeSupplier) {
 		try {
@@ -151,7 +171,7 @@ public class ContentFieldValue {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("{");
 
@@ -170,6 +190,9 @@ public class ContentFieldValue {
 		sb.append(", name=");
 
 		sb.append(name);
+		sb.append(", nestedFields=");
+
+		sb.append(nestedFields);
 		sb.append(", value=");
 
 		sb.append(value);
@@ -198,6 +221,10 @@ public class ContentFieldValue {
 	@GraphQLField
 	@JsonProperty
 	protected String name;
+
+	@GraphQLField
+	@JsonProperty
+	protected ContentField[] nestedFields;
 
 	@GraphQLField
 	@JsonProperty

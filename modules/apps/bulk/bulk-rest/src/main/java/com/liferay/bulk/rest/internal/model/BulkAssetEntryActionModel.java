@@ -31,6 +31,10 @@ public class BulkAssetEntryActionModel {
 	public BulkAssetEntryActionModel() {
 	}
 
+	public long getFolderId() {
+		return _folderId;
+	}
+
 	@XmlTransient
 	public Map<String, String[]> getParameterMap() {
 		String[] values = _selection.toArray(new String[_selection.size()]);
@@ -41,9 +45,12 @@ public class BulkAssetEntryActionModel {
 
 		Map<String, String[]> parameterMap = new HashMap<>(2);
 
+		parameterMap.put("folderId", new String[] {String.valueOf(_folderId)});
 		parameterMap.put(
 			"repositoryId", new String[] {String.valueOf(_repositoryId)});
 		parameterMap.put("rowIdsFileEntry", values);
+		parameterMap.put(
+			"selectAll", new String[] {Boolean.toString(_selectAll)});
 
 		return parameterMap;
 	}
@@ -56,15 +63,29 @@ public class BulkAssetEntryActionModel {
 		return _selection;
 	}
 
+	public boolean isSelectAll() {
+		return _selectAll;
+	}
+
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
+	}
+
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
+	}
+
+	public void setSelectAll(boolean selectAll) {
+		_selectAll = selectAll;
 	}
 
 	public void setSelection(List<String> selection) {
 		_selection = selection;
 	}
 
+	private long _folderId;
 	private long _repositoryId;
+	private boolean _selectAll;
 	private List<String> _selection;
 
 }

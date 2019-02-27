@@ -145,6 +145,11 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getAvailableLanguages());
 		}
 
+		if (Validator.isNotNull(structuredContent.getCategoryIds())) {
+			existingStructuredContent.setCategoryIds(
+				structuredContent.getCategoryIds());
+		}
+
 		if (Validator.isNotNull(structuredContent.getContentSpace())) {
 			existingStructuredContent.setContentSpace(
 				structuredContent.getContentSpace());

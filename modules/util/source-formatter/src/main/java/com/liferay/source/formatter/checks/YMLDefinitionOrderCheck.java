@@ -36,7 +36,21 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = _fixIncorrectIndent(content);
+
 		return _sortDefinitions(fileName, content, StringPool.BLANK);
+	}
+
+	private String _fixIncorrectIndent(String content) {
+		Matcher matcher = _incorrectIndentPattern.matcher(content);
+
+		while (matcher.find()) {
+			content = StringUtil.replace(
+				content, matcher.group(),
+				StringUtil.replace(matcher.group(), "\n", "\n  "));
+		}
+
+		return content;
 	}
 
 	private String _sortDefinitions(
@@ -112,6 +126,9 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final Pattern _incorrectIndentPattern = Pattern.compile(
+		"^( *)[^ ].+(\n\\1- .+(\n\\1 .+)*)+", Pattern.MULTILINE);
 
 	private static class DefinitionComparator
 		implements Comparator<String>, Serializable {

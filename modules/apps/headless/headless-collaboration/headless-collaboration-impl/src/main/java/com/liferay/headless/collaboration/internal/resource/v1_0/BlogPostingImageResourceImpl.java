@@ -16,6 +16,7 @@ package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
@@ -147,6 +148,33 @@ public class BlogPostingImageResourceImpl
 			contentSpaceId, folder.getFolderId(), binaryFileName,
 			binaryFile.getContentType(), title, null, null,
 			binaryFile.getInputStream(), binaryFile.getSize(), serviceContext);
+
+		return _toBlogPostingImage(fileEntry);
+	}
+
+	@Override
+	public BlogPostingImage putImageObject(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception {
+
+		BlogPostingImage blogPostingImage = multipartBody.getValueAsInstance(
+			"blogPostingImage", BlogPostingImage.class);
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		String binaryFileName = binaryFile.getFileName();
+
+		String title = Optional.ofNullable(
+			blogPostingImage.getTitle()
+		).orElse(
+			binaryFileName
+		);
+
+		FileEntry fileEntry = _dlAppService.updateFileEntry(
+			imageObjectId, binaryFileName, binaryFile.getContentType(), title,
+			null, null, DLVersionNumberIncrease.AUTOMATIC,
+			binaryFile.getInputStream(), binaryFile.getSize(),
+			new ServiceContext());
 
 		return _toBlogPostingImage(fileEntry);
 	}

@@ -383,7 +383,7 @@ definition {
 	}
 
 	test CacheReplicationbyCopy {
-		property custom.properties = "cluster.link.enabled=true${line.separator}ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true${line.separator}ehcache.bootstrap.cache.loader.enabled=false";
+		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true";
 		property test.name.skip.portal.instance = "ClusteringEE#CacheReplicationbyCopy";
 
 		Clustering.viewClusterStatusInConsole();

@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -297,24 +296,9 @@ public class Arquillian extends Runner implements Filterable {
 				Test.class);
 
 			if (_filter != null) {
-				Iterator<FrameworkMethod> iterator =
-					frameworkMethods.iterator();
-
-				while (iterator.hasNext()) {
-					FrameworkMethod frameworkMethod = iterator.next();
-
-					if (_filter.shouldRun(_describeChild(frameworkMethod))) {
-						try {
-							_filter.apply(frameworkMethod);
-						}
-						catch (NoTestsRemainException ntre) {
-							iterator.remove();
-						}
-					}
-					else {
-						iterator.remove();
-					}
-				}
+				frameworkMethods.removeIf(
+					frameworkMethod -> !_filter.shouldRun(
+						_describeChild(frameworkMethod)));
 			}
 
 			frameworkMethods.sort(

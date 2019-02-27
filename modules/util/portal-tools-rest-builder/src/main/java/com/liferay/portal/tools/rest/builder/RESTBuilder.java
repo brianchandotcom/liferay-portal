@@ -125,7 +125,6 @@ public class RESTBuilder {
 			_createGraphQLMutationFile(context, versionDirName);
 			_createGraphQLQueryFile(context, versionDirName);
 			_createGraphQLServletDataFile(context, versionDirName);
-			_createObjectMapperContextResolver(context, versionDirName);
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 				String schemaName = entry.getKey();
@@ -374,33 +373,6 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "graphql_servlet_data", context));
-	}
-
-	private void _createObjectMapperContextResolver(
-			Map<String, Object> context, String versionDirName)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_configYAML.getImplDir());
-		sb.append("/");
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		sb.append(apiPackagePath.replace('.', '/'));
-
-		sb.append("/internal/jaxrs/context/resolver/");
-		sb.append(versionDirName);
-		sb.append("/ObjectMapperContextResolver.java");
-
-		File file = new File(sb.toString());
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFileName, "object_mapper_context_resolver", context));
 	}
 
 	private void _createPropertiesFile(

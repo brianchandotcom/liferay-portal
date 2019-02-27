@@ -1204,6 +1204,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean isFromCompletedBuild() {
+		return fromCompletedBuild;
+	}
+
+	@Override
 	public void reinvoke() {
 		reinvoke(null);
 	}
@@ -2409,7 +2414,7 @@ public abstract class BaseBuild implements Build {
 		setStatus("running");
 
 		if (parentBuild != null) {
-			fromCompletedBuild = parentBuild.isFromArchive();
+			fromCompletedBuild = parentBuild.isFromCompletedBuild();
 		}
 		else {
 			String consoleText = getConsoleText();

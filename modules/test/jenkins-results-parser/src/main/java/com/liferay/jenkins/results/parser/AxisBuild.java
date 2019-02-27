@@ -506,7 +506,7 @@ public class AxisBuild extends BaseBuild {
 		Build parentBuild = getParentBuild();
 
 		if (parentBuild != null) {
-			fromCompletedBuild = parentBuild.isFromArchive();
+			fromCompletedBuild = parentBuild.isFromCompletedBuild();
 		}
 		else {
 			String consoleText = getConsoleText();

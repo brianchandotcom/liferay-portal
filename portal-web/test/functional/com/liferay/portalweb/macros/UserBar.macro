@@ -57,17 +57,16 @@ definition {
 
 	macro signOut {
 		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
+			if (IsElementNotPresent(locator1 = "ProductMenu#PANEL_EXPANDED", key_category = "${key_category}")) {
 				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 			}
 
 			AssertVisible(
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN"
+				locator1 = "ProductMenu#PANEL_EXPANDED",
+				key_category = "${key_category}"
 			);
 
-			ScrollWebElementIntoView(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
-
-			Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
+			Click(locator1 = "UserBar#USER_SIGN_OUT");
 		}
 	}
 }

@@ -114,6 +114,14 @@ public class StructuredContentResourceTest
 			structuredContent1.getTitle(), structuredContent2.getTitle());
 	}
 
+	protected void assertValid(StructuredContent structuredContent) {
+		Assert.assertEquals(
+			structuredContent.getContentSpace(),
+			Long.valueOf(testGroup.getGroupId()));
+		Assert.assertNotNull(structuredContent.getDateCreated());
+		Assert.assertNotNull(structuredContent.getId());
+	}
+
 	@Override
 	protected StructuredContent randomStructuredContent() {
 		return new StructuredContent() {

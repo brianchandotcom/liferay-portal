@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Category Apio API
-Bundle-SymbolicName: com.liferay.category.apio.api
-Bundle-Version: 2.0.0
-Export-Package:\
-	com.liferay.category.apio.architect.identifier,\
-	com.liferay.category.apio.architect.model

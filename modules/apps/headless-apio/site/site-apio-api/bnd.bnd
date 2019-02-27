@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Site Apio API
-Bundle-SymbolicName: com.liferay.site.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.site.apio.architect.identifier

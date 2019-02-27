@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Forms Apio API
-Bundle-SymbolicName: com.liferay.forms.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.forms.apio.architect.identifier

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Keyword Apio API
-Bundle-SymbolicName: com.liferay.keyword.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.keyword.apio.architect.identifier

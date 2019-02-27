@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Address Apio API
-Bundle-SymbolicName: com.liferay.address.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.address.apio.architect.identifier

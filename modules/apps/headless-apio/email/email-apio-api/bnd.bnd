@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Email Apio API
-Bundle-SymbolicName: com.liferay.email.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.email.apio.architect.identifier

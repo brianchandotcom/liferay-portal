@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Aggregate Rating Apio API
-Bundle-SymbolicName: com.liferay.aggregate.rating.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.aggregate.rating.apio.architect.identifier

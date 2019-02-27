@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Web Url Apio Implementation
-Bundle-SymbolicName: com.liferay.web.url.apio.impl
-Bundle-Version: 2.0.0
--dsannotations-options: inherit

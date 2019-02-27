@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Vocabulary Apio Test
-Bundle-SymbolicName: com.liferay.vocabulary.apio.test
-Bundle-Version: 1.0.0
--includeresource: test-classes/integration

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Person Apio Test
-Bundle-SymbolicName: com.liferay.person.apio.test
-Bundle-Version: 2.0.0
--includeresource:\
-	test-classes/integration,\
-	@lib/assertj-core.jar

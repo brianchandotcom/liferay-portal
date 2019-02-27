@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Phone Apio Implementation
-Bundle-SymbolicName: com.liferay.phone.apio.impl
-Bundle-Version: 2.0.0
--dsannotations-options: inherit

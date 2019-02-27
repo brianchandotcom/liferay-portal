@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Phone Apio API
-Bundle-SymbolicName: com.liferay.phone.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.phone.apio.architect.identifier

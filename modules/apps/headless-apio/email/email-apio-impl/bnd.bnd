@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Email Apio Implementation
-Bundle-SymbolicName: com.liferay.email.apio.impl
-Bundle-Version: 2.0.0
--dsannotations-options: inherit

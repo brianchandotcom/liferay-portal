@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Portal Apio Test Utilities
-Bundle-SymbolicName: com.liferay.portal.apio.test.util
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.apio.test.util
-Import-Package:\
-	!com.fasterxml.jackson.*,\
-	\
-	*;resolution:=optional

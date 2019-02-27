@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Content Space Apio Implementation
-Bundle-SymbolicName: com.liferay.content.space.apio.impl
-Bundle-Version: 2.0.0
--conditionalpackage: com.liferay.content.space.apio.architect.util

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Web Url Apio API
-Bundle-SymbolicName: com.liferay.web.url.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.web.url.apio.architect.identifier

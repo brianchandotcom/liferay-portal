@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Role Apio API
-Bundle-SymbolicName: com.liferay.role.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.role.apio.identifier

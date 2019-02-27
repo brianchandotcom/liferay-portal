@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Workflow Apio Implementation
-Bundle-SymbolicName: com.liferay.workflow.apio.impl
-Bundle-Version: 2.0.0
--dsannotations-options: inherit

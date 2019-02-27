@@ -314,16 +314,6 @@ public class ToolDependencies {
 			return new ArrayList<>(_map.keySet());
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #getPortalCacheName()}
-		 */
-		@Deprecated
-		@Override
-		public String getName() {
-			return getPortalCacheName();
-		}
-
 		@Override
 		public PortalCacheManager<K, V> getPortalCacheManager() {
 			return null;

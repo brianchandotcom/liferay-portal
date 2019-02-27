@@ -59,16 +59,6 @@ public class TestPortalCache<K extends Serializable, V>
 		return keys;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCacheName()}
-	 */
-	@Deprecated
-	@Override
-	public String getName() {
-		return getPortalCacheName();
-	}
-
 	@Override
 	public String getPortalCacheName() {
 		return _portalCacheName;

@@ -62,16 +62,6 @@ public class DynamicPortalCache<K extends Serializable, V>
 		return keys;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCacheName()}
-	 */
-	@Deprecated
-	@Override
-	public String getName() {
-		return getPortalCacheName();
-	}
-
 	@Override
 	public PortalCacheManager<K, V> getPortalCacheManager() {
 		return _portalCacheManager;

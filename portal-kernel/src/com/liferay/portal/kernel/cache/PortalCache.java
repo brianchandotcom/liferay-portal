@@ -36,14 +36,6 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public List<K> getKeys();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCacheName()}
-	 */
-	@Deprecated
-	@Id
-	public String getName();
-
 	public PortalCacheManager<K, V> getPortalCacheManager();
 
 	@Id

@@ -510,11 +510,11 @@ paths:
                 $ref: "#/components/schemas/BlogPostingImage"
           description: ""
       tags: ["BlogPostingImage"]
-  "/blog-posting-images/{image-object-id}":
+  "/blog-posting-images/{blog-posting-image-id}":
     delete:
       parameters:
         - in: path
-          name: image-object-id
+          name: blog-posting-image-id
           required: true
           schema:
             format: int64
@@ -528,7 +528,7 @@ paths:
     get:
       parameters:
         - in: path
-          name: image-object-id
+          name: blog-posting-image-id
           required: true
           schema:
             format: int64
@@ -544,7 +544,7 @@ paths:
     patch:
       parameters:
         - in: path
-          name: image-object-id
+          name: blog-posting-image-id
           required: true
           schema:
             format: int64
@@ -571,7 +571,7 @@ paths:
     put:
       parameters:
         - in: path
-          name: image-object-id
+          name: blog-posting-image-id
           required: true
           schema:
             format: int64

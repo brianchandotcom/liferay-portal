@@ -296,8 +296,6 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
-
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -319,10 +317,6 @@ definition {
 			userEmailAddress = "test@liferay.com"
 		);
 
-		Page.assertNodePortPG(nodePort = "9080");
-
-		Clustering.viewClusterStatusInConsole();
-
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -338,8 +332,6 @@ definition {
 			number = "2",
 			navItem = "Live Sessions"
 		);
-
-		Page.assertNodePortPG(nodePort = "8080");
 
 		User.loginPG(
 			nodePort = "8080",
@@ -362,8 +354,6 @@ definition {
 			number = "2",
 			navItem = "Live Sessions"
 		);
-
-		Page.assertNodePortPG(nodePort = "9080");
 
 		User.logoutPG(
 			nodePort = "9080",

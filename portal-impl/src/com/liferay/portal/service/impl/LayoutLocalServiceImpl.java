@@ -172,7 +172,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         String)}.
 	 * @param  classNameId the entity class name ID
 	 * @param  classPK the entity primary key
-	 * @param  publishDate the date when draft was last published
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts
@@ -198,7 +197,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, String typeSettings, boolean hidden, boolean system,
 			Map<Locale, String> friendlyURLMap, long classNameId, long classPK,
-			Date publishDate, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
@@ -260,7 +259,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setPriority(priority);
 		layout.setClassNameId(classNameId);
 		layout.setClassPK(classPK);
-		layout.setPublishDate(publishDate);
+		layout.setPublishDate(now);
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
@@ -438,7 +437,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return addLayout(
 			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
-			system, friendlyURLMap, 0, 0, null, serviceContext);
+			system, friendlyURLMap, 0, 0, serviceContext);
 	}
 
 	/**

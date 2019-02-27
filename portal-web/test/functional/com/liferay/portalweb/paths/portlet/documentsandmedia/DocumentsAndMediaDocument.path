@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_TAGS</td>
-	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Tags')]</td>
+	<td>//dt[contains(.,'Tags')]/../dd[contains(@class,'sidebar-dd')]/span</td>
 	<td></td>
 </tr>
 <tr>

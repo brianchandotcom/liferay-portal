@@ -14,6 +14,10 @@
 
 package com.liferay.change.tracking.rest.internal.model.configuration;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,14 +31,28 @@ public class CTConfigurationUpdateModel {
 	}
 
 	public boolean isChangeTrackingEnabled() {
-		return _changeTrackingEnabled;
+		if (StringUtil.equalsIgnoreCase(
+				StringPool.TRUE, _changeTrackingEnabled)) {
+
+			return true;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					StringPool.FALSE, _changeTrackingEnabled)) {
+
+			return false;
+		}
+
+		throw new IllegalArgumentException(
+			StringBundler.concat(
+				"Invalid value ", _changeTrackingEnabled,
+				". Must be TRUE/FALSE."));
 	}
 
 	@XmlElement
-	public void setChangeTrackingEnabled(boolean changeTrackingEnabled) {
+	public void setChangeTrackingEnabled(String changeTrackingEnabled) {
 		_changeTrackingEnabled = changeTrackingEnabled;
 	}
 
-	private boolean _changeTrackingEnabled;
+	private String _changeTrackingEnabled;
 
 }

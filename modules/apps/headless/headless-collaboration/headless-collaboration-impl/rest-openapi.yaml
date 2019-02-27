@@ -541,6 +541,33 @@ paths:
                 $ref: "#/components/schemas/BlogPostingImage"
           description: ""
       tags: ["BlogPostingImage"]
+    patch:
+      parameters:
+        - in: path
+          name: image-object-id
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                blogPostingImage:
+                  $ref: "#/components/schemas/BlogPostingImage"
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPostingImage"
+          description: ""
+      tags: ["BlogPostingImage"]
     put:
       parameters:
         - in: path

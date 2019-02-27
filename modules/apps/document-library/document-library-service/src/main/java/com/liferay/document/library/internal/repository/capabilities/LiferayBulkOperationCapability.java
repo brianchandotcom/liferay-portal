@@ -119,6 +119,10 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		public void performAction(DLFileEntry dlFileEntry)
 			throws PortalException {
 
+			if (dlFileEntry.isInTrash()) {
+				return;
+			}
+
 			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 
 			fileEntry.execute(_repositoryModelOperation);
@@ -139,7 +143,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 
 		@Override
 		public void performAction(DLFolder dlFolder) throws PortalException {
-			if (dlFolder.isMountPoint()) {
+			if (dlFolder.isMountPoint() || dlFolder.isInTrash()) {
 				return;
 			}
 

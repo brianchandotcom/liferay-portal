@@ -122,6 +122,8 @@ definition {
 
 		Button.clickSave();
 
+		Pause(locator1 = "2000");
+
 		if ("${organizationName}" == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
 

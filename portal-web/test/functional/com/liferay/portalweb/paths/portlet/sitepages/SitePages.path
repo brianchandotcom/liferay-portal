@@ -18,27 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DISPLAY_STYLE-->
-<tr>
-	<td>DISPLAY_STYLE</td>
-	<td>//button[@data-title='Display Style' or @title='Display Style']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_STYLE_ITEM</td>
-	<td>//a[contains(@class,'dropdown-item') and contains(.,'${key_displayStyle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_STYLE_ITEM_ACTIVE</td>
-	<td>//a[contains(@class,'dropdown-item') and contains(@class,'active') and contains(.,'${key_displayStyle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_GROUP_ITEM-->
 <tr>
 	<td>LIST_GROUP_ITEM</td>

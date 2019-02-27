@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextP
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonMappingExceptionMapper;
@@ -75,6 +76,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(InvalidFormatExceptionMapper.class);
 		featureContext.register(MultipartBodyMessageBodyReader.class);
 		featureContext.register(NoSuchModelExceptionMapper.class);
+		featureContext.register(ObjectMapperContextResolver.class);
 		featureContext.register(PaginationContextProvider.class);
 		featureContext.register(PortalExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);

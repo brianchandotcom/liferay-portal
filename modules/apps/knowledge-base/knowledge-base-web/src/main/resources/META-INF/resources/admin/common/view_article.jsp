@@ -167,3 +167,9 @@ if (portletTitleBasedNavigation) {
 		<liferay-util:include page="/admin/common/article_child.jsp" servletContext="<%= application %>" />
 	</div>
 </div>
+
+<%
+	List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(KBArticle.class.getName(), kbArticle.getClassPK());
+
+	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+%>

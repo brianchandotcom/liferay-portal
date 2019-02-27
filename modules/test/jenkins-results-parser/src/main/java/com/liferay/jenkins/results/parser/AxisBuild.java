@@ -417,6 +417,11 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	protected Pattern getBuildURLPattern() {
+		return buildURLPattern;
+	}
+
+	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return _FAILURE_MESSAGE_GENERATORS;
 	}
@@ -451,11 +456,6 @@ public class AxisBuild extends BaseBuild {
 			String.valueOf(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",
 			"stop.properties");
-	}
-
-	@Override
-	protected Pattern getBuildURLPattern() {
-		return buildURLPattern;
 	}
 
 	@Override

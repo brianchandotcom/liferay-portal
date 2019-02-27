@@ -1684,6 +1684,10 @@ public abstract class BaseBuild implements Build {
 		return Collections.emptyList();
 	}
 
+	protected Pattern getArchiveBuildURLPattern() {
+		return _archiveBuildURLPattern;
+	}
+
 	protected String getBaseGitRepositoryType() {
 		if (jobName.startsWith("test-subrepository-acceptance-pullrequest")) {
 			return getBaseGitRepositoryName();
@@ -1809,6 +1813,10 @@ public abstract class BaseBuild implements Build {
 		return Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
+	}
+
+	protected Pattern getBuildURLPattern() {
+		return _buildURLPattern;
 	}
 
 	protected int getDownstreamBuildCountByResult(String result) {
@@ -2361,14 +2369,6 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected Pattern getArchiveBuildURLPattern() {
-		return _archiveBuildURLPattern;
-	}
-
-	protected Pattern getBuildURLPattern() {
-		return _buildURLPattern;
-	}
-
 	protected void setBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
@@ -2546,17 +2546,6 @@ public abstract class BaseBuild implements Build {
 	protected static final String UPSTREAM_FAILURES_JOB_BASE_URL =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
-	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"(", Pattern.quote("${dependencies.url}"), "|",
-			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
-			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
-			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
-			".*/(?<buildNumber>\\d+)/?"));
-	private static final Pattern _buildURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
-			"\\d+)/?"));
 	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
 		"[\\'\\\"].*[\\'\\\"] started at (?<url>.+)\\.");
 	protected static final Pattern invocationURLPattern = Pattern.compile(
@@ -2721,6 +2710,18 @@ public abstract class BaseBuild implements Build {
 	};
 
 	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
+
+	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"(", Pattern.quote("${dependencies.url}"), "|",
+			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
+			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
+			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
+			".*/(?<buildNumber>\\d+)/?"));
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
+			"\\d+)/?"));
 
 	static {
 		Properties properties = null;

@@ -1038,6 +1038,48 @@ public interface LayoutModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the referrer class name ID of this layout.
+	 *
+	 * @return the referrer class name ID of this layout
+	 */
+	public long getReferrerClassNameId();
+
+	/**
+	 * Sets the referrer class name ID of this layout.
+	 *
+	 * @param referrerClassNameId the referrer class name ID of this layout
+	 */
+	public void setReferrerClassNameId(long referrerClassNameId);
+
+	/**
+	 * Returns the referrer class pk of this layout.
+	 *
+	 * @return the referrer class pk of this layout
+	 */
+	public long getReferrerClassPK();
+
+	/**
+	 * Sets the referrer class pk of this layout.
+	 *
+	 * @param referrerClassPK the referrer class pk of this layout
+	 */
+	public void setReferrerClassPK(long referrerClassPK);
+
+	/**
+	 * Returns the publish date of this layout.
+	 *
+	 * @return the publish date of this layout
+	 */
+	public Date getPublishDate();
+
+	/**
+	 * Sets the publish date of this layout.
+	 *
+	 * @param publishDate the publish date of this layout
+	 */
+	public void setPublishDate(Date publishDate);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

@@ -709,6 +709,9 @@
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />
 		<field name="sourcePrototypeLayoutUuid" type="String" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="referrerClassNameId" type="long" />
+		<field name="referrerClassPK" type="long" />
+		<field name="publishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutBranch">
 		<field name="mvccVersion" type="long" />

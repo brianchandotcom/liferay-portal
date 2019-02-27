@@ -266,19 +266,6 @@ public class BatchBuild extends BaseBuild {
 				continue;
 			}
 
-			Pattern buildURLPattern = null;
-
-			if (fromArchive) {
-				buildURLPattern = AxisBuild.archiveBuildURLPattern;
-			}
-			else {
-				buildURLPattern = AxisBuild.buildURLPattern;
-			}
-
-			Matcher axisBuildURLMatcher = buildURLPattern.matcher(axisBuildURL);
-
-			axisBuildURLMatcher.find();
-
 			JSONObject resultJSONObject = childReportJSONObject.optJSONObject(
 				"result");
 
@@ -291,6 +278,19 @@ public class BatchBuild extends BaseBuild {
 			if (suitesJSONArray == null) {
 				continue;
 			}
+
+			Pattern buildURLPattern = null;
+
+			if (fromArchive) {
+				buildURLPattern = AxisBuild.archiveBuildURLPattern;
+			}
+			else {
+				buildURLPattern = AxisBuild.buildURLPattern;
+			}
+
+			Matcher axisBuildURLMatcher = buildURLPattern.matcher(axisBuildURL);
+
+			axisBuildURLMatcher.find();
 
 			String axisVariable = axisBuildURLMatcher.group("axisVariable");
 

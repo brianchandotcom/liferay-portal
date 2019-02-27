@@ -39,6 +39,7 @@ import com.liferay.registry.ServiceReference;
 import java.io.InputStream;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
@@ -90,6 +91,27 @@ public class StructuredContentResourceTest
 		registry.ungetService(_serviceReference);
 
 		super.tearDown();
+	}
+
+	@Override
+	protected void assertEquals(
+		StructuredContent structuredContent1,
+		StructuredContent structuredContent2) {
+
+		Assert.assertEquals(
+			structuredContent1.getContentSpace(),
+			structuredContent2.getContentSpace());
+
+		Assert.assertEquals(
+			structuredContent1.getContentStructureId(),
+			structuredContent2.getContentStructureId());
+
+		Assert.assertEquals(
+			structuredContent1.getDescription(),
+			structuredContent2.getDescription());
+
+		Assert.assertEquals(
+			structuredContent1.getTitle(), structuredContent2.getTitle());
 	}
 
 	@Override

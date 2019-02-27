@@ -2,6 +2,7 @@
 
 {template .render}
 	{@param commonTags: list<?>}
+	{@param groupIds: list<?>}
 	{@param dataSource: string|[]|list<?>}
 	{@param loading: bool}
 	{@param spritemap: string}
@@ -17,6 +18,7 @@
 			{else}
 				{call .tags}
 					{param commonTags: $commonTags /}
+					{param groupIds: $groupIds /}
 					{param description: $description /}
 					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
@@ -53,6 +55,7 @@
 
 {template .tags}
 	{@param commonTags: list<?>}
+	{@param groupIds: list<?>}
 	{@param dataSource: string|[]|list<?>}
 	{@param spritemap: string}
 	{@param? description: string}
@@ -95,6 +98,15 @@
 		{param elementClasses: 'clay-multi-select' /}
 		{param helpText: '' /}
 		{param label kind="text"} {msg desc=""}tags{/msg} {/param}
+		{param selectedItems: $commonTags /}
+		{param spritemap: $spritemap /}
+	{/call}
+
+	{call com.liferay.asset.taglib.AssetTagsSelector.render}
+		{param id: $namespace + 'assetTagsSelector' /}
+		{param inputName: $namespace + '_hiddenInput' /}
+		{param groupIds: $groupIds /}
+		{param elementClasses: 'clay-multi-select' /}
 		{param selectedItems: $commonTags /}
 		{param spritemap: $spritemap /}
 	{/call}

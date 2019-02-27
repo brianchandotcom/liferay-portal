@@ -20,6 +20,7 @@ class EditTags extends Component {
 	attached() {
 		this._getCommonTags();
 
+
 		this._bulkStatusComponent =	Liferay.component(this.portletNamespace + 'BulkStatus');
 	}
 
@@ -35,6 +36,7 @@ class EditTags extends Component {
 	 */
 	created() {
 		this.append = true;
+		this.groupIds = [20126,20135];
 
 		this.dataSource = query => (
 			fetch(

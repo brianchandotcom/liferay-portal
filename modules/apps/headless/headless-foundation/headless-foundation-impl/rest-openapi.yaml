@@ -19,10 +19,6 @@ components:
           allOf:
             - $ref: "#/components/schemas/Creator"
           readOnly: true
-        creatorId:
-          format: int64
-          type: integer
-          writeOnly: true
         dateCreated:
           format: date-time
           type: string

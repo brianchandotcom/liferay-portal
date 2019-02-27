@@ -42,6 +42,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -91,6 +92,73 @@ public class StructuredContentResourceTest
 		registry.ungetService(_serviceReference);
 
 		super.tearDown();
+	}
+
+	@Override
+	@Test
+	public void testDeleteStructuredContent() throws Exception {
+		StructuredContent postStructuredContent =
+			invokePostContentSpaceStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent());
+
+		assertResponseCode(
+			200,
+			invokeDeleteStructuredContentResponse(
+				postStructuredContent.getId()));
+
+		assertResponseCode(
+			404,
+			invokeGetStructuredContentResponse(postStructuredContent.getId()));
+
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContent() throws Exception {
+		StructuredContent postStructuredContent =
+			invokePostContentSpaceStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent());
+
+		StructuredContent getStructuredContent = invokeGetStructuredContent(
+			postStructuredContent.getId());
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	@Override
+	@Test
+	public void testPostContentSpaceStructuredContent() throws Exception {
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			invokePostContentSpaceStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent);
+
+		assertEquals(randomStructuredContent, postStructuredContent);
+		assertValid(postStructuredContent);
+	}
+
+	@Override
+	@Test
+	public void testPutStructuredContent() throws Exception {
+		StructuredContent postStructuredContent =
+			invokePostContentSpaceStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent());
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		StructuredContent putStructuredContent = invokePutStructuredContent(
+			postStructuredContent.getId(), randomStructuredContent);
+
+		assertEquals(randomStructuredContent, putStructuredContent);
+		assertValid(putStructuredContent);
+
+		StructuredContent getStructuredContent = invokeGetStructuredContent(
+			putStructuredContent.getId());
+
+		assertEquals(randomStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
 	}
 
 	@Override

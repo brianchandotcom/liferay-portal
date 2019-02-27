@@ -1444,6 +1444,7 @@
 		<field name="parentUserGroupId" type="long" />
 		<field name="name" type="String">
 			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String">

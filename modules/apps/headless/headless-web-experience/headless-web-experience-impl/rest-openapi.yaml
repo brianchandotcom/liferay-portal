@@ -214,10 +214,12 @@ components:
                 type: string
             type: object
           type: array
-        comment:
+        categoryIds:
           items:
-            $ref: "#/components/schemas/Comment"
+            format: int64
+            type: integer
           type: array
+          writeOnly: true
         contentFields:
           items:
             $ref: "#/components/schemas/ContentField"

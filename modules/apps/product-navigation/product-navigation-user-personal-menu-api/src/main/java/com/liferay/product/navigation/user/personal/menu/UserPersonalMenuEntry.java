@@ -54,10 +54,10 @@ public interface UserPersonalMenuEntry {
 	 *
 	 * @param  request the servlet request used to create a portlet's URL
 	 * @return the portlet's URL used to render a target portlet
+	 * @throws PortalException if a portal exception occurred
 	 * @review
 	 */
-	public String getPortletURL(HttpServletRequest request)
-		throws PortalException;
+	public String getPortletURL(HttpServletRequest request) throws Exception;
 
 	/**
 	 * Returns <code>true</code> if the entry should be displayed in the
@@ -66,9 +66,12 @@ public interface UserPersonalMenuEntry {
 	 * @param  permissionChecker the permission checker
 	 * @return <code>true</code> if the entry should be displayed in the user
 	 *         personal menu; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
 	 * @review
 	 */
-	public default boolean isShow(PermissionChecker permissionChecker) {
+	public default boolean isShow(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return true;
 	}
 

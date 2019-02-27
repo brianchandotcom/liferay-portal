@@ -123,7 +123,7 @@ const INITIAL_STATE = {
 	 */
 	defaultSegmentId: Config
 		.string()
-		.required(),
+		.value(''),
 
 	/**
 	 * URL for removing fragment entries of the underlying model.

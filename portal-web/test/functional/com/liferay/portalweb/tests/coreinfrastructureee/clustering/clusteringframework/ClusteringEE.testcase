@@ -401,6 +401,11 @@ definition {
 			nodePort = "8080"
 		);
 
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			nodePort = "8080"
+		);
+
 		Clustering.runGroovyScript(
 			nodePort = "8080",
 			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
@@ -458,6 +463,11 @@ definition {
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.1.jar",
+			nodePort = "9080"
+		);
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
 			nodePort = "9080"
 		);
 

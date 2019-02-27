@@ -317,6 +317,29 @@ public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 	}
 
 	@Override
+	protected Map<String, Function<Vocabulary, Date>>
+		getDateTimeEntityNameGetterMap() {
+
+		return new HashMap<String, Function<Vocabulary, Date>>() {
+			{
+				put("dateCreated", Vocabulary::getDateCreated);
+				put("dateModified", Vocabulary::getDateModified);
+			}
+		};
+	}
+
+	@Override
+	protected Map<String, Function<Vocabulary, String>>
+		getStringEntityNameGetterMap() {
+
+		return new HashMap<String, Function<Vocabulary, String>>() {
+			{
+				put("name", Vocabulary::getName);
+			}
+		};
+	}
+
+	@Override
 	protected Vocabulary randomVocabulary() {
 		return new Vocabulary() {
 			{

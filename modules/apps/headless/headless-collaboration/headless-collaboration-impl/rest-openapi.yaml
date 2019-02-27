@@ -497,7 +497,7 @@ paths:
             schema:
               type: object
               properties:
-                document:
+                blogPostingImage:
                   $ref: "#/components/schemas/BlogPostingImage"
                 file:
                   type: string

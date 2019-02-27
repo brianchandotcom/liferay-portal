@@ -1,4 +1,4 @@
-import {addClasses, contains, removeClasses} from 'metal-dom';
+import {contains} from 'metal-dom';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
@@ -27,7 +27,6 @@ class FragmentEntryLinkContent extends Component {
 	created() {
 		this._handleOpenStyleTooltip = this._handleOpenStyleTooltip.bind(this);
 		this._handleStyleChanged = this._handleStyleChanged.bind(this);
-		this._updateEditableStatus = this._updateEditableStatus.bind(this);
 	}
 
 	/**
@@ -120,7 +119,7 @@ class FragmentEntryLinkContent extends Component {
 				defaultSegmentId: this.defaultSegmentId,
 				languageId: this.languageId,
 				segmentId: this.segmentId,
-				updateFunctions: [this._updateEditableStatus]
+				updateFunctions: []
 			}
 		);
 	}
@@ -234,8 +233,6 @@ class FragmentEntryLinkContent extends Component {
 				return new FragmentEditableField(
 					{
 						content: editable.innerHTML,
-						defaultLanguageId: this.defaultLanguageId,
-						defaultSegmentId: this.defaultSegmentId,
 						editableId: editable.id,
 						editableValues,
 						element: editable,
@@ -245,15 +242,12 @@ class FragmentEntryLinkContent extends Component {
 						},
 
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
-						languageId: this.languageId,
-						portletNamespace: this.portletNamespace,
 
 						processorsOptions: {
 							defaultEditorConfiguration,
 							imageSelectorURL: this.imageSelectorURL
 						},
 
-						segmentId: this.segmentId,
 						showMapping: this.showMapping,
 						store: this.store,
 						type: editable.getAttribute('type')
@@ -363,7 +357,7 @@ class FragmentEntryLinkContent extends Component {
 							defaultSegmentId: this.defaultSegmentId,
 							languageId: this.languageId,
 							segmentId: this.segmentId,
-							updateFunctions: [this._updateEditableStatus]
+							updateFunctions: []
 						}
 					);
 				}
@@ -415,36 +409,6 @@ class FragmentEntryLinkContent extends Component {
 				);
 			}
 		);
-	}
-
-	/**
-	 * Flags a DOM editable section as translated or untranslated compared to
-	 * the stored default value for that same editable id.
-	 * @param {string} editableId The editable id
-	 * @param {string} value The value for the editable section
-	 * @param {string} defaultValue
-	 * @param {string} mappedField
-	 * @private
-	 * @review
-	 */
-	_updateEditableStatus(editableId, value, defaultValue, mappedField) {
-		const element = this.element.querySelector(`lfr-editable[data-editable-id="${editableId}"]`);
-
-		if (element) {
-			removeClasses(
-				element,
-				'mapped',
-				'translated',
-				'unmapped',
-				'untranslated'
-			);
-
-			const mapped = Boolean(mappedField);
-			const translated = Boolean(!mappedField && value);
-
-			addClasses(element, mapped ? 'mapped' : 'unmapped');
-			addClasses(element, translated ? 'translated' : 'untranslated');
-		}
 	}
 
 }

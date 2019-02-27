@@ -228,7 +228,6 @@ public class CategoryResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(assetCategory.getUserId()));
-				creatorId = assetCategory.getUserId();
 				dateCreated = assetCategory.getCreateDate();
 				dateModified = assetCategory.getModifiedDate();
 				description = assetCategory.getDescription(

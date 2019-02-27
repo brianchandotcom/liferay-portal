@@ -6107,7 +6107,10 @@ public class ServiceBuilder {
 			List<EntityColumn> databaseRegularEntityColumns =
 				entity.getDatabaseRegularEntityColumns();
 
-			databaseRegularEntityColumns.add(headEntityColumn);
+			int index = databaseRegularEntityColumns.indexOf(
+				new EntityColumn("headId"));
+
+			databaseRegularEntityColumns.add(index + 1, headEntityColumn);
 
 			List<EntityColumn> entityFinderColumns =
 				entity.getFinderEntityColumns();

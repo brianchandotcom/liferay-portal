@@ -17,6 +17,7 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
+import com.liferay.headless.foundation.internal.dto.v1_0.util.ContentLanguageUtil;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
@@ -45,6 +46,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -111,8 +115,16 @@ public class VocabularyResourceImpl
 
 	@Override
 	public Vocabulary getVocabulary(Long vocabularyId) throws Exception {
-		return _toVocabulary(
-			_assetVocabularyService.getVocabulary(vocabularyId));
+		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+			vocabularyId);
+
+		ContentLanguageUtil.addContentLanguageHeader(
+			vocabulary.getAvailableLanguageIds(),
+			vocabulary.getDefaultLanguageId(),
+			contextAcceptLanguage.getPreferredLocale(),
+			_contextHttpServletResponse);
+
+		return _toVocabulary(vocabulary);
 	}
 
 	@Override
@@ -183,6 +195,9 @@ public class VocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Context
+	private HttpServletResponse _contextHttpServletResponse;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

@@ -76,24 +76,19 @@ public class UserPersonalMenuDropdownItemsProvider {
 
 		return new DropdownItemList() {
 			{
-				for (UserPersonalMenuEntry userPersonalMenuEntry :
-						userPersonalMenuEntries) {
-
+				for (UserPersonalMenuEntry entry : userPersonalMenuEntries) {
 					try {
-						if (!userPersonalMenuEntry.isShow(permissionChecker)) {
-							continue;
+						if (entry.isShow(permissionChecker)) {
+							add(
+								SafeConsumer.ignore(
+									dropdownItem -> {
+										dropdownItem.setHref(
+											entry.getPortletURL(_request));
+										dropdownItem.setLabel(
+											entry.getLabel(
+												themeDisplay.getLocale()));
+									}));
 						}
-
-						add(
-							SafeConsumer.ignore(
-								dropdownItem -> {
-									dropdownItem.setHref(
-										userPersonalMenuEntry.getPortletURL(
-											_request));
-									dropdownItem.setLabel(
-										userPersonalMenuEntry.getLabel(
-											themeDisplay.getLocale()));
-								}));
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

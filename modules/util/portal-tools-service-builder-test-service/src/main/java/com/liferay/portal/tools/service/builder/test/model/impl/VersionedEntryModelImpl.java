@@ -65,21 +65,21 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "headId", Types.BIGINT },
+			{ "head", Types.BOOLEAN },
 			{ "versionedEntryId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "head", Types.BOOLEAN }
+			{ "groupId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("versionedEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table VersionedEntry (mvccVersion LONG default 0 not null,headId LONG,versionedEntryId LONG not null primary key,groupId LONG,head BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table VersionedEntry (mvccVersion LONG default 0 not null,headId LONG,head BOOLEAN,versionedEntryId LONG not null primary key,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table VersionedEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY versionedEntry.versionedEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY VersionedEntry.versionedEntryId ASC";
@@ -477,13 +477,13 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 
 		versionedEntryModelImpl._setOriginalHeadId = false;
 
-		versionedEntryModelImpl._originalGroupId = versionedEntryModelImpl._groupId;
-
-		versionedEntryModelImpl._setOriginalGroupId = false;
-
 		versionedEntryModelImpl._originalHead = versionedEntryModelImpl._head;
 
 		versionedEntryModelImpl._setOriginalHead = false;
+
+		versionedEntryModelImpl._originalGroupId = versionedEntryModelImpl._groupId;
+
+		versionedEntryModelImpl._setOriginalGroupId = false;
 
 		versionedEntryModelImpl._columnBitmask = 0;
 	}
@@ -496,11 +496,11 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 
 		versionedEntryCacheModel.headId = getHeadId();
 
+		versionedEntryCacheModel.head = isHead();
+
 		versionedEntryCacheModel.versionedEntryId = getVersionedEntryId();
 
 		versionedEntryCacheModel.groupId = getGroupId();
-
-		versionedEntryCacheModel.head = isHead();
 
 		return versionedEntryCacheModel;
 	}
@@ -568,13 +568,13 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 	private long _headId;
 	private long _originalHeadId;
 	private boolean _setOriginalHeadId;
+	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private long _versionedEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private long _columnBitmask;
 	private VersionedEntry _escapedModel;
 }

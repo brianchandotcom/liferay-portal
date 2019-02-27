@@ -65,27 +65,27 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "headId", Types.BIGINT },
+			{ "head", Types.BOOLEAN },
 			{ "lvEntryLocalizationId", Types.BIGINT },
 			{ "lvEntryId", Types.BIGINT },
 			{ "languageId", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "content", Types.VARCHAR },
-			{ "head", Types.BOOLEAN }
+			{ "content", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lvEntryLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LVEntryLocalization (mvccVersion LONG default 0 not null,headId LONG,lvEntryLocalizationId LONG not null primary key,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null,head BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LVEntryLocalization (mvccVersion LONG default 0 not null,headId LONG,head BOOLEAN,lvEntryLocalizationId LONG not null primary key,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LVEntryLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY lvEntryLocalization.lvEntryLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LVEntryLocalization.lvEntryLocalizationId ASC";
@@ -608,15 +608,15 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 
 		lvEntryLocalizationModelImpl._setOriginalHeadId = false;
 
+		lvEntryLocalizationModelImpl._originalHead = lvEntryLocalizationModelImpl._head;
+
+		lvEntryLocalizationModelImpl._setOriginalHead = false;
+
 		lvEntryLocalizationModelImpl._originalLvEntryId = lvEntryLocalizationModelImpl._lvEntryId;
 
 		lvEntryLocalizationModelImpl._setOriginalLvEntryId = false;
 
 		lvEntryLocalizationModelImpl._originalLanguageId = lvEntryLocalizationModelImpl._languageId;
-
-		lvEntryLocalizationModelImpl._originalHead = lvEntryLocalizationModelImpl._head;
-
-		lvEntryLocalizationModelImpl._setOriginalHead = false;
 
 		lvEntryLocalizationModelImpl._columnBitmask = 0;
 	}
@@ -628,6 +628,8 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 		lvEntryLocalizationCacheModel.mvccVersion = getMvccVersion();
 
 		lvEntryLocalizationCacheModel.headId = getHeadId();
+
+		lvEntryLocalizationCacheModel.head = isHead();
 
 		lvEntryLocalizationCacheModel.lvEntryLocalizationId = getLvEntryLocalizationId();
 
@@ -656,8 +658,6 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 		if ((content != null) && (content.length() == 0)) {
 			lvEntryLocalizationCacheModel.content = null;
 		}
-
-		lvEntryLocalizationCacheModel.head = isHead();
 
 		return lvEntryLocalizationCacheModel;
 	}
@@ -727,6 +727,9 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 	private long _headId;
 	private long _originalHeadId;
 	private boolean _setOriginalHeadId;
+	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private long _lvEntryLocalizationId;
 	private long _lvEntryId;
 	private long _originalLvEntryId;
@@ -735,9 +738,6 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 	private String _originalLanguageId;
 	private String _title;
 	private String _content;
-	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private long _columnBitmask;
 	private LVEntryLocalization _escapedModel;
 }

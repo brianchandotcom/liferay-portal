@@ -7,22 +7,22 @@ create table LVEntry (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	headId LONG,
+	head BOOLEAN,
 	defaultLanguageId VARCHAR(75) null,
 	lvEntryId LONG not null primary key,
 	groupId LONG,
-	uniqueGroupKey VARCHAR(75) null,
-	head BOOLEAN
+	uniqueGroupKey VARCHAR(75) null
 );
 
 create table LVEntryLocalization (
 	mvccVersion LONG default 0 not null,
 	headId LONG,
+	head BOOLEAN,
 	lvEntryLocalizationId LONG not null primary key,
 	lvEntryId LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
-	content VARCHAR(75) null,
-	head BOOLEAN
+	content VARCHAR(75) null
 );
 
 create table LVEntryLocalizationVersion (
@@ -69,9 +69,9 @@ create table UADPartialEntry (
 create table VersionedEntry (
 	mvccVersion LONG default 0 not null,
 	headId LONG,
+	head BOOLEAN,
 	versionedEntryId LONG not null primary key,
-	groupId LONG,
-	head BOOLEAN
+	groupId LONG
 );
 
 create table VersionedEntryVersion (

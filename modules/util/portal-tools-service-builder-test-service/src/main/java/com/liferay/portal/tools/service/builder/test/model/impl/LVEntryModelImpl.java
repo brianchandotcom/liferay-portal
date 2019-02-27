@@ -70,11 +70,11 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "headId", Types.BIGINT },
+			{ "head", Types.BOOLEAN },
 			{ "defaultLanguageId", Types.VARCHAR },
 			{ "lvEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "uniqueGroupKey", Types.VARCHAR },
-			{ "head", Types.BOOLEAN }
+			{ "uniqueGroupKey", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -82,14 +82,14 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("headId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lvEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uniqueGroupKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("head", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null,head BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LVEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY lvEntry.lvEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LVEntry.lvEntryId ASC";
@@ -744,15 +744,15 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 
 		lvEntryModelImpl._setOriginalHeadId = false;
 
+		lvEntryModelImpl._originalHead = lvEntryModelImpl._head;
+
+		lvEntryModelImpl._setOriginalHead = false;
+
 		lvEntryModelImpl._originalGroupId = lvEntryModelImpl._groupId;
 
 		lvEntryModelImpl._setOriginalGroupId = false;
 
 		lvEntryModelImpl._originalUniqueGroupKey = lvEntryModelImpl._uniqueGroupKey;
-
-		lvEntryModelImpl._originalHead = lvEntryModelImpl._head;
-
-		lvEntryModelImpl._setOriginalHead = false;
 
 		lvEntryModelImpl._columnBitmask = 0;
 	}
@@ -773,6 +773,8 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 
 		lvEntryCacheModel.headId = getHeadId();
 
+		lvEntryCacheModel.head = isHead();
+
 		lvEntryCacheModel.defaultLanguageId = getDefaultLanguageId();
 
 		String defaultLanguageId = lvEntryCacheModel.defaultLanguageId;
@@ -792,8 +794,6 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 		if ((uniqueGroupKey != null) && (uniqueGroupKey.length() == 0)) {
 			lvEntryCacheModel.uniqueGroupKey = null;
 		}
-
-		lvEntryCacheModel.head = isHead();
 
 		return lvEntryCacheModel;
 	}
@@ -863,6 +863,9 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 	private long _headId;
 	private long _originalHeadId;
 	private boolean _setOriginalHeadId;
+	private boolean _head;
+	private boolean _originalHead;
+	private boolean _setOriginalHead;
 	private String _defaultLanguageId;
 	private long _lvEntryId;
 	private long _groupId;
@@ -870,9 +873,6 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 	private boolean _setOriginalGroupId;
 	private String _uniqueGroupKey;
 	private String _originalUniqueGroupKey;
-	private boolean _head;
-	private boolean _originalHead;
-	private boolean _setOriginalHead;
 	private long _columnBitmask;
 	private LVEntry _escapedModel;
 }

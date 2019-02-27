@@ -102,6 +102,7 @@ public class LVEntryLocalizationCacheModel implements CacheModel<LVEntryLocaliza
 
 		lvEntryLocalizationImpl.setMvccVersion(mvccVersion);
 		lvEntryLocalizationImpl.setHeadId(headId);
+		lvEntryLocalizationImpl.setHead(head);
 		lvEntryLocalizationImpl.setLvEntryLocalizationId(lvEntryLocalizationId);
 		lvEntryLocalizationImpl.setLvEntryId(lvEntryId);
 
@@ -126,8 +127,6 @@ public class LVEntryLocalizationCacheModel implements CacheModel<LVEntryLocaliza
 			lvEntryLocalizationImpl.setContent(content);
 		}
 
-		lvEntryLocalizationImpl.setHead(head);
-
 		lvEntryLocalizationImpl.resetOriginalValues();
 
 		return lvEntryLocalizationImpl;
@@ -139,14 +138,14 @@ public class LVEntryLocalizationCacheModel implements CacheModel<LVEntryLocaliza
 
 		headId = objectInput.readLong();
 
+		head = objectInput.readBoolean();
+
 		lvEntryLocalizationId = objectInput.readLong();
 
 		lvEntryId = objectInput.readLong();
 		languageId = objectInput.readUTF();
 		title = objectInput.readUTF();
 		content = objectInput.readUTF();
-
-		head = objectInput.readBoolean();
 	}
 
 	@Override
@@ -155,6 +154,8 @@ public class LVEntryLocalizationCacheModel implements CacheModel<LVEntryLocaliza
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(headId);
+
+		objectOutput.writeBoolean(head);
 
 		objectOutput.writeLong(lvEntryLocalizationId);
 
@@ -180,16 +181,14 @@ public class LVEntryLocalizationCacheModel implements CacheModel<LVEntryLocaliza
 		else {
 			objectOutput.writeUTF(content);
 		}
-
-		objectOutput.writeBoolean(head);
 	}
 
 	public long mvccVersion;
 	public long headId;
+	public boolean head;
 	public long lvEntryLocalizationId;
 	public long lvEntryId;
 	public String languageId;
 	public String title;
 	public String content;
-	public boolean head;
 }

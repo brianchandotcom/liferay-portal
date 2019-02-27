@@ -87,6 +87,29 @@ public abstract class BaseVocabularyResourceTestCase {
 	}
 
 	@Test
+	public void testGetContentSpaceVocabulariesPageWithFilterDateTimeEquals()
+		throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithFilterStringEquals()
+		throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithPagination()
+		throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetContentSpaceVocabulariesPageWithSort() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetVocabulary() throws Exception {
 		Assert.assertTrue(true);
 	}

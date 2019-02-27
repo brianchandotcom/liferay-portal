@@ -2361,6 +2361,14 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected Pattern getArchiveBuildURLPattern() {
+		return _archiveBuildURLPattern;
+	}
+
+	protected Pattern getBuildURLPattern() {
+		return _buildURLPattern;
+	}
+
 	protected void setBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
@@ -2389,9 +2397,13 @@ public abstract class BaseBuild implements Build {
 			fromArchive = false;
 		}
 
+		Pattern buildURLPattern = getBuildURLPattern();
+
 		Matcher matcher = buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
+			Pattern archiveBuildURLPattern = getArchiveBuildURLPattern();
+
 			matcher = archiveBuildURLPattern.matcher(buildURL);
 
 			if (!matcher.find()) {
@@ -2534,14 +2546,14 @@ public abstract class BaseBuild implements Build {
 	protected static final String UPSTREAM_FAILURES_JOB_BASE_URL =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
-	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
+	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"(", Pattern.quote("${dependencies.url}"), "|",
 			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
 			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
 			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
 			".*/(?<buildNumber>\\d+)/?"));
-	protected static final Pattern buildURLPattern = Pattern.compile(
+	private static final Pattern _buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
 			"\\d+)/?"));

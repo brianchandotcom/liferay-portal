@@ -454,75 +454,21 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	protected Pattern getBuildURLPattern() {
+		return buildURLPattern;
+	}
+
+	@Override
 	protected void setBuildURL(String buildURL) {
-		try {
-			buildURL = JenkinsResultsParserUtil.decode(buildURL);
-		}
-		catch (UnsupportedEncodingException uee) {
-			throw new IllegalArgumentException(
-				"Unable to decode " + buildURL, uee);
-		}
-
-		try {
-			String archiveMarkerContent = JenkinsResultsParserUtil.toString(
-				buildURL + "/archive-marker", false, 0, 0, 0);
-
-			if ((archiveMarkerContent != null) &&
-				!archiveMarkerContent.isEmpty()) {
-
-				fromArchive = true;
-			}
-			else {
-				fromArchive = false;
-			}
-		}
-		catch (IOException ioe) {
-			fromArchive = false;
-		}
+		super.setBuildURL(buildURL);
 
 		Matcher matcher = buildURLPattern.matcher(buildURL);
 
-		if (!matcher.find()) {
-			matcher = archiveBuildURLPattern.matcher(buildURL);
-
-			if (!matcher.find()) {
-				throw new IllegalArgumentException(
-					"Invalid build URL " + buildURL);
-			}
-
-			archiveName = matcher.group("archiveName");
-		}
+		matcher.find();
 
 		axisVariable = matcher.group("axisVariable");
-		jobName = matcher.group("jobName");
-		setJenkinsMaster(new JenkinsMaster(matcher.group("master")));
-
-		setBuildNumber(Integer.parseInt(matcher.group("buildNumber")));
-
-		loadParametersFromBuildJSONObject();
-
-		setStatus("running");
-
-		Build parentBuild = getParentBuild();
-
-		if (parentBuild != null) {
-			fromCompletedBuild = parentBuild.isFromCompletedBuild();
-		}
-		else {
-			String consoleText = getConsoleText();
-
-			fromCompletedBuild = consoleText.contains("stop-current-job:");
-		}
 	}
 
-	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"(", Pattern.quote("${dependencies.url}"), "|",
-			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE), "|",
-			Pattern.quote(JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP),
-			")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)/",
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/",
-			"(?<buildNumber>\\d+)/?"));
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/",

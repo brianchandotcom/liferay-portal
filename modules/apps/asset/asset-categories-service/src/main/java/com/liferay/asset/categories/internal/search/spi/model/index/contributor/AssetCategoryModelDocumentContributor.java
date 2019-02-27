@@ -79,7 +79,6 @@ public class AssetCategoryModelDocumentContributor
 
 		document.addKeyword(
 			"leftCategoryId", assetCategory.getLeftCategoryId());
-
 		document.addLocalizedKeyword(
 			"localized_title",
 			_populateMap(assetCategory, assetCategory.getTitleMap()), true,

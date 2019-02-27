@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -80,6 +81,15 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	service = AopService.class
 )
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
+
+	@Override
+	public Folder addAttachmentsFolder(long groupId) throws PortalException {
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_ENTRY);
+
+		return blogsEntryLocalService.addAttachmentsFolder(
+			getUserId(), groupId);
+	}
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(String,

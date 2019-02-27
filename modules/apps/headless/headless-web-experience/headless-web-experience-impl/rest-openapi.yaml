@@ -61,8 +61,8 @@ components:
         title:
           type: string
       type: object
-    ContentFieldValue:
-      description: https://www.schema.org/ContentFieldValue
+    ContentField:
+      description: https://www.schema.org/ContentField
       properties:
         dataType:
           type: string
@@ -75,6 +75,10 @@ components:
           type: string
         name:
           type: string
+        nestedFields:
+          items:
+            $ref: "#/components/schemas/ContentField"
+          type: array
         value:
           properties:
             data:
@@ -109,10 +113,6 @@ components:
               format: int64
               type: integer
               writeOnly: true
-            contentFieldValues:
-              items:
-                $ref: "#/components/schemas/ContentFieldValue"
-              type: array
           type: object
     ContentStructure:
       description: https://www.schema.org/ContentStructure
@@ -218,9 +218,9 @@ components:
           items:
             $ref: "#/components/schemas/Comment"
           type: array
-        contentFieldValues:
+        contentFields:
           items:
-            $ref: "#/components/schemas/ContentFieldValue"
+            $ref: "#/components/schemas/ContentField"
           type: array
         contentSpace:
           format: int64

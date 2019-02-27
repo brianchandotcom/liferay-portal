@@ -56,6 +56,10 @@ body .ddm-user-view-content {
 	font-weight: 500;
 }
 
+.lfr-ddm-form-field-container label {
+	padding-right: 40px;
+}
+
 .lfr-ddm-form-container {
 	word-break: normal;
 
@@ -201,10 +205,6 @@ body .ddm-user-view-content {
 
 .liferay-ddm-form-field-paragraph {
 	font-size: 14px;
-}
-
-.liferay-ddm-form-field-text > label {
-	padding-right: 40px;
 }
 
 .liferay-ddm-form-field-numeric {
@@ -484,6 +484,12 @@ body .ddm-user-view-content {
 
 .form-check-inline .custom-control-label {
 	line-height: 24px;
+}
+
+.liferay-ddm-form-builder-sidebar-content {
+	label {
+		padding-right: 0;
+	}
 }
 
 .liferay-ddm-form-field-radio {

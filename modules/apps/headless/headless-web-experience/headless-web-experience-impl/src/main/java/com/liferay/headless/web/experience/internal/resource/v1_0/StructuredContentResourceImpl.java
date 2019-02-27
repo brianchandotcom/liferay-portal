@@ -17,7 +17,9 @@ package com.liferay.headless.web.experience.internal.resource.v1_0;
 import static com.liferay.portal.vulcan.util.LocalDateTimeUtil.toLocalDateTime;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -81,6 +83,7 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -709,6 +712,11 @@ public class StructuredContentResourceImpl
 				description = journalArticle.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				id = journalArticle.getResourcePrimKey();
+				keywords = ListUtil.toArray(
+					_assetTagLocalService.getTags(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey()),
+					AssetTag.NAME_ACCESSOR);
 				lastReviewed = journalArticle.getReviewDate();
 				renderedContentsURL = _getRenderedContentsURLs(
 					ddmStructure, journalArticle);
@@ -842,6 +850,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Context
 	private HttpServletRequest _contextHttpServletRequest;

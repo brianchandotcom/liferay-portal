@@ -1323,7 +1323,7 @@ create table UserGroup (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentUserGroupId LONG,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	description STRING null,
 	addedByLDAPImport BOOLEAN
 );

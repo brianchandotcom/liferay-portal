@@ -476,4 +476,64 @@ definition {
 			nodePort = "9080"
 		);
 	}
+
+	test CacheBootstrapLoader {
+		property custom.properties = "ehcache.bootstrap.cache.loader.enabled=false${line.separator}ehcache.bootstrap.cache.loader.properties.test.cache=bootstrapAsynchronously=false";
+		property test.name.skip.portal.instance = "ClusteringEE#CacheBootstrapLoader";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Clustering.enableDebugging(
+			nodePort = "8080"
+		);
+
+		Clustering.enableDebugging(
+			nodePort = "9080"
+		);
+
+		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			nodePort = "8080"
+		);
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			nodePort = "8080"
+		);
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Put test.key into test.cache",
+			nodePort = "8080"
+		);
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Unable to deserialize object",
+			nodePort = "9080"
+		);
+
+		Clustering.deployJarOnSpecificServer(
+			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
+			nodePort = "9080"
+		);
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
+			nodePort = "9080"
+		);
+
+		Clustering.runGroovyScript(
+			nodePort = "9080",
+			scriptFile = "groovy-script-portal-cache-get.groovy"
+		);
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "test.key=test.value",
+			nodePort = "9080"
+		);
+	}
 }

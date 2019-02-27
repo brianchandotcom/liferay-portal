@@ -191,7 +191,6 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK, boolean active,
 			boolean addDefaultExperience, int start, int end,
 			OrderByComparator<SegmentsExperience> orderByComparator)
-
 		throws PortalException {
 
 		if (addDefaultExperience) {
@@ -222,7 +221,6 @@ public class SegmentsExperienceLocalServiceImpl
 			long classPK, boolean active, boolean addDefaultExperience,
 			int start, int end,
 			OrderByComparator<SegmentsExperience> orderByComparator)
-
 		throws PortalException {
 
 		if (addDefaultExperience) {
@@ -240,7 +238,6 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long[] segmentsEntryIds, long classNameId,
 			long classPK, boolean active, int start, int end,
 			OrderByComparator<SegmentsExperience> orderByComparator)
-
 		throws PortalException {
 
 		return segmentsExperienceLocalService.getSegmentsExperiences(
@@ -251,7 +248,6 @@ public class SegmentsExperienceLocalServiceImpl
 	@Override
 	public int getSegmentsExperiencesCount(
 			long groupId, long classNameId, long classPK, boolean active)
-
 		throws PortalException {
 
 		return segmentsExperienceLocalService.getSegmentsExperiencesCount(

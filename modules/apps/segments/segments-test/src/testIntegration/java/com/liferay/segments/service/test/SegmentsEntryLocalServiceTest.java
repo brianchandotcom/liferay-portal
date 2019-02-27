@@ -115,11 +115,9 @@ public class SegmentsEntryLocalServiceTest {
 
 		try {
 			SegmentsTestUtil.addSegmentsEntry(childGroup.getGroupId(), key);
-
 		}
 		finally {
 			_groupLocalService.deleteGroup(childGroup.getGroupId());
-
 		}
 	}
 

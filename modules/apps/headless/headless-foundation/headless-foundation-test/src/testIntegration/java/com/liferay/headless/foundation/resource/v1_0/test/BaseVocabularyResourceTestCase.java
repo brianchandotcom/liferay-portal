@@ -36,7 +36,11 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -161,6 +165,16 @@ public abstract class BaseVocabularyResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected Map<String, Function<Vocabulary, Date>>
+		getDateTimeEntityNameGetterMap() {
+		return Collections.emptyMap();
+	}
+
+	protected Map<String, Function<Vocabulary, String>>
+		getStringEntityNameGetterMap() {
+		return Collections.emptyMap();
 	}
 
 	protected boolean equals(Vocabulary vocabulary1, Vocabulary vocabulary2) {

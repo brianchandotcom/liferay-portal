@@ -962,13 +962,22 @@ AUI.add(
 
 					_formatGridLayout: function() {
 						var instance = this;
-						var rows = instance.get('layouts')[instance._getActiveLayoutIndex()].get('rows');
 
 						instance.gridDOM = [];
 
+						var layouts = instance.get('layouts');
+
+						var activeLayoutIndex = instance._getActiveLayoutIndex();
+
+						var activeLayout = layouts[activeLayoutIndex];
+
+						var rows = activeLayout.get('rows');
+
 						rows.forEach(
 							function(row) {
-								instance.gridDOM.push(row.get('cols'));
+								var cols = row.get('cols');
+
+								instance.gridDOM.push(cols);
 							}
 						);
 					},

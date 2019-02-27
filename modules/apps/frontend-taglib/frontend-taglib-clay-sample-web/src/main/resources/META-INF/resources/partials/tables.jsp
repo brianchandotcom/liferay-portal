@@ -18,6 +18,14 @@
 
 <blockquote><p>Tables are lists of properties of items arranged as rows and columns. Each table cell can use a custom renderer so that its data can be displayed in the best way.</p></blockquote>
 
+<h3>TABLE USING DISPLAY CONTEXT</h3>
+
 <clay:table
 	displayContext="<%= tablesDisplayContext %>"
+/>
+
+<h3>TABLE USING CONTRIBUTOR</h3>
+
+<clay:table
+	contributorKey="SampleTable"
 />

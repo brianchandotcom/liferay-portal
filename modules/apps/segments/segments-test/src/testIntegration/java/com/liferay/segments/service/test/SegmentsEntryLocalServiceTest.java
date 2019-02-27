@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -38,6 +37,7 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +66,8 @@ public class SegmentsEntryLocalServiceTest {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		_group = GroupTestUtil.addGroup();
+
+		_groups.add(_group);
 	}
 
 	@Test
@@ -113,12 +115,9 @@ public class SegmentsEntryLocalServiceTest {
 
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
-		try {
-			SegmentsTestUtil.addSegmentsEntry(childGroup.getGroupId(), key);
-		}
-		finally {
-			_groupLocalService.deleteGroup(childGroup.getGroupId());
-		}
+		_groups.add(0, childGroup);
+
+		SegmentsTestUtil.addSegmentsEntry(childGroup.getGroupId(), key);
 	}
 
 	@Test
@@ -197,6 +196,8 @@ public class SegmentsEntryLocalServiceTest {
 
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
+		_groups.add(0, childGroup);
+
 		int segmentsEntriesCount =
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
 				childGroup.getGroupId(), true);
@@ -208,8 +209,6 @@ public class SegmentsEntryLocalServiceTest {
 				childGroup.getGroupId(), false);
 
 		Assert.assertEquals(0, segmentsEntriesCount);
-
-		_groupLocalService.deleteGroup(childGroup);
 	}
 
 	@Test
@@ -220,6 +219,8 @@ public class SegmentsEntryLocalServiceTest {
 			_group.getGroupId());
 
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+
+		_groups.add(0, childGroup);
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
@@ -233,8 +234,6 @@ public class SegmentsEntryLocalServiceTest {
 			QueryUtil.ALL_POS, null);
 
 		Assert.assertFalse(segmentsEntries.contains(segmentsEntry));
-
-		_groupLocalService.deleteGroup(childGroup);
 	}
 
 	@Test
@@ -296,11 +295,10 @@ public class SegmentsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject
-	private GroupLocalService _groupLocalService;
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

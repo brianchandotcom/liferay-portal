@@ -67,7 +67,6 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 	var container = A.one('#<portlet:namespace />smallImageContainer');
 
 	var selectSmallImageType = function(index) {
-		debugger;
 		if (index === 1) {
 			A.one('.lfr-journal-small-image-content-url').show();
 			A.one('.lfr-journal-small-image-content-file').hide();

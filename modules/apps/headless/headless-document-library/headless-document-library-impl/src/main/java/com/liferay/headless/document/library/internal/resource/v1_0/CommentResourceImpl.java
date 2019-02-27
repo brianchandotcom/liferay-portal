@@ -71,7 +71,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/comment.properties",
-	scope = ServiceScope.PROTOTYPE, service = CommentResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {CommentResource.class, EntityModelResource.class}
 )
 public class CommentResourceImpl
 	extends BaseCommentResourceImpl implements EntityModelResource {

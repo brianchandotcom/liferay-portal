@@ -47,12 +47,12 @@ public class BulkAssetEntryCommonTagsModel {
 		return _description;
 	}
 
-	public String getStatus() {
-		return _status;
-	}
-
 	public long[] getGroupIds() {
 		return _groupIds;
+	}
+
+	public String getStatus() {
+		return _status;
 	}
 
 	public List<String> getTagNames() {
@@ -63,12 +63,12 @@ public class BulkAssetEntryCommonTagsModel {
 		_description = description;
 	}
 
-	public void setStatus(String status) {
-		_status = status;
-	}
-
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
+	}
+
+	public void setStatus(String status) {
+		_status = status;
 	}
 
 	public void setTagNames(List<String> tagNames) {
@@ -76,8 +76,8 @@ public class BulkAssetEntryCommonTagsModel {
 	}
 
 	private String _description;
-	private String _status;
 	private long[] _groupIds;
+	private String _status;
 	private List<String> _tagNames;
 
 }

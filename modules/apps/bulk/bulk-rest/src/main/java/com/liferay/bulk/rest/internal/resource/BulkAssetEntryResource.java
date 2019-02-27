@@ -176,26 +176,6 @@ public class BulkAssetEntryResource {
 		}
 	}
 
-	@GET
-	@Path("/tags/{groupId}/search")
-	@Produces(ContentTypes.APPLICATION_JSON)
-	public List<String> searchTags(
-			@PathParam("groupId") long groupId, @QueryParam("name") String name)
-		throws PortalException {
-
-		List<AssetTag> assetTags = _assetTagService.getTags(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
-			"%" + name + "%", 0, 20);
-
-		Stream<AssetTag> stream = assetTags.stream();
-
-		return stream.map(
-			AssetTag::getName
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	@Consumes(ContentTypes.APPLICATION_JSON)
 	@Path("/categories/{classNameId}")
 	@POST

@@ -50,6 +50,8 @@ definition {
 			uploadFrom = "dependencies"
 		);
 
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
 		Organization.viewCP(
 			orgName = "Space Program Academy of Continuing Education",
 			orgType = "Organization"

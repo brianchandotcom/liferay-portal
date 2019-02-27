@@ -50,8 +50,8 @@ public class StructuredContent {
 		return categories;
 	}
 
-	public Comment[] getComment() {
-		return comment;
+	public Long[] getCategoryIds() {
+		return categoryIds;
 	}
 
 	public ContentFieldValue[] getContentFieldValues() {
@@ -155,16 +155,16 @@ public class StructuredContent {
 		}
 	}
 
-	public void setComment(Comment[] comment) {
-		this.comment = comment;
+	public void setCategoryIds(Long[] categoryIds) {
+		this.categoryIds = categoryIds;
 	}
 
 	@JsonIgnore
-	public void setComment(
-		UnsafeSupplier<Comment[], Exception> commentUnsafeSupplier) {
+	public void setCategoryIds(
+		UnsafeSupplier<Long[], Exception> categoryIdsUnsafeSupplier) {
 
 		try {
-			comment = commentUnsafeSupplier.get();
+			categoryIds = categoryIdsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -395,9 +395,9 @@ public class StructuredContent {
 		sb.append(", categories=");
 
 		sb.append(categories);
-		sb.append(", comment=");
+		sb.append(", categoryIds=");
 
-		sb.append(comment);
+		sb.append(categoryIds);
 		sb.append(", contentFieldValues=");
 
 		sb.append(contentFieldValues);
@@ -457,7 +457,7 @@ public class StructuredContent {
 
 	@GraphQLField
 	@JsonProperty
-	protected Comment[] comment;
+	protected Long[] categoryIds;
 
 	@GraphQLField
 	@JsonProperty

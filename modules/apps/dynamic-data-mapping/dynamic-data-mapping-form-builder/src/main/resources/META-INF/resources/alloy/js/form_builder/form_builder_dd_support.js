@@ -107,7 +107,7 @@ AUI.add(
 							function(cols, indexRow) {
 								cols.forEach(
 									function(col, indexCol) {
-										if (fieldColumnStart._node.id == col._node.id) {
+										if (fieldColumnStart.attr('id') == col.get('node').attr('id')) {
 											positions.positionRowStart = indexRow;
 											positions.positionColumnStart = indexCol;
 										}
@@ -116,7 +116,7 @@ AUI.add(
 
 								cols.forEach(
 									function(col, indexCol) {
-										if (fieldColumnEnd._node.id == col._node.id) {
+										if (fieldColumnEnd.attr('id') == col.get('node').attr('id')) {
 											positions.positionRowEnd = indexRow;
 											positions.positionColumnEnd = indexCol;
 										}

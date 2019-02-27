@@ -113,7 +113,14 @@ public class SegmentsEntryLocalServiceTest {
 
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
-		SegmentsTestUtil.addSegmentsEntry(childGroup.getGroupId(), key);
+		try {
+			SegmentsTestUtil.addSegmentsEntry(childGroup.getGroupId(), key);
+
+		}
+		finally {
+			_groupLocalService.deleteGroup(childGroup.getGroupId());
+
+		}
 	}
 
 	@Test

@@ -30,51 +30,51 @@ import org.junit.runner.RunWith;
  * @author Shuyang Zhou
  */
 @RunWith(Arquillian.class)
-public class BeforeAfterClassTestItem {
+public class BeforeAfterClassTestItem extends BaseBeforeAfterClassTestItem {
 
 	public static void assertAndTearDown() throws IOException {
-		List<String> lines = _testItemHelper.read();
+		List<String> lines = testItemHelper.read();
 
-		Assert.assertEquals(lines.toString(), 6, lines.size());
-		Assert.assertEquals(lines.toString(), "setUpClass2", lines.get(0));
-		Assert.assertEquals(lines.toString(), "setUpClass1", lines.get(1));
-		Assert.assertEquals(lines.toString(), "test1", lines.get(2));
-		Assert.assertEquals(lines.toString(), "test2", lines.get(3));
-		Assert.assertEquals(lines.toString(), "tearDownClass1", lines.get(4));
-		Assert.assertEquals(lines.toString(), "tearDownClass2", lines.get(5));
+		Assert.assertEquals(lines.toString(), 8, lines.size());
+		Assert.assertEquals(lines.toString(), "setUpClassBase", lines.get(0));
+		Assert.assertEquals(lines.toString(), "setUpClass2", lines.get(1));
+		Assert.assertEquals(lines.toString(), "setUpClass1", lines.get(2));
+		Assert.assertEquals(lines.toString(), "test1", lines.get(3));
+		Assert.assertEquals(lines.toString(), "test2", lines.get(4));
+		Assert.assertEquals(lines.toString(), "tearDownClass1", lines.get(5));
+		Assert.assertEquals(lines.toString(), "tearDownClass2", lines.get(6));
+		Assert.assertEquals(
+			lines.toString(), "tearDownClassBase", lines.get(7));
 	}
 
 	@BeforeClass
 	public static void setUpClass1() throws IOException {
-		_testItemHelper.write("setUpClass1");
+		testItemHelper.write("setUpClass1");
 	}
 
 	@BeforeClass
 	public static void setUpClass2() throws IOException {
-		_testItemHelper.write("setUpClass2");
+		testItemHelper.write("setUpClass2");
 	}
 
 	@AfterClass
 	public static void tearDownClass1() throws IOException {
-		_testItemHelper.write("tearDownClass1");
+		testItemHelper.write("tearDownClass1");
 	}
 
 	@AfterClass
 	public static void tearDownClass2() throws IOException {
-		_testItemHelper.write("tearDownClass2");
+		testItemHelper.write("tearDownClass2");
 	}
 
 	@Test
 	public void test1() throws IOException {
-		_testItemHelper.write("test1");
+		testItemHelper.write("test1");
 	}
 
 	@Test
 	public void test2() throws IOException {
-		_testItemHelper.write("test2");
+		testItemHelper.write("test2");
 	}
-
-	private static final TestItemHelper _testItemHelper = new TestItemHelper(
-		BeforeAfterClassTestItem.class);
 
 }

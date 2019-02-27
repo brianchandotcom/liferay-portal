@@ -104,10 +104,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -213,8 +216,12 @@ public class StructuredContentResourceImpl
 	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception {
 
-		return _toStructuredContent(
-			_journalArticleService.getLatestArticle(structuredContentId));
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		_addContentLanguageHeader(journalArticle);
+
+		return _toStructuredContent(journalArticle);
 	}
 
 	@Override
@@ -341,6 +348,24 @@ public class StructuredContentResourceImpl
 				null,
 				_getServiceContext(
 					journalArticle.getGroupId(), structuredContent)));
+	}
+
+	private void _addContentLanguageHeader(JournalArticle journalArticle) {
+		Locale contentLocale = Stream.of(
+			journalArticle.getAvailableLanguageIds()
+		).map(
+			LocaleUtil::fromLanguageId
+		).filter(
+			locale -> LocaleUtil.equals(
+				locale, contextAcceptLanguage.getPreferredLocale())
+		).findFirst(
+		).orElse(
+			LocaleUtil.fromLanguageId(journalArticle.getDefaultLanguageId())
+		);
+
+		_contextHttpServletResponse.addHeader(
+			HttpHeaders.CONTENT_LANGUAGE,
+			LocaleUtil.toW3cLanguageId(contentLocale));
 	}
 
 	private String _createJournalArticleContent(
@@ -827,6 +852,9 @@ public class StructuredContentResourceImpl
 
 	@Context
 	private HttpServletRequest _contextHttpServletRequest;
+
+	@Context
+	private HttpServletResponse _contextHttpServletResponse;
 
 	@Reference
 	private DDM _ddm;

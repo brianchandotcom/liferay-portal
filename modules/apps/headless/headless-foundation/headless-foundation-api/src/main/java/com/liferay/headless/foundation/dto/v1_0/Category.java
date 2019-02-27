@@ -46,10 +46,6 @@ public class Category {
 		return creator;
 	}
 
-	public Long getCreatorId() {
-		return creatorId;
-	}
-
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -112,22 +108,6 @@ public class Category {
 
 		try {
 			creator = creatorUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public void setCreatorId(Long creatorId) {
-		this.creatorId = creatorId;
-	}
-
-	@JsonIgnore
-	public void setCreatorId(
-		UnsafeSupplier<Long, Exception> creatorIdUnsafeSupplier) {
-
-		try {
-			creatorId = creatorIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -277,7 +257,7 @@ public class Category {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(26);
+		StringBundler sb = new StringBundler(24);
 
 		sb.append("{");
 
@@ -290,9 +270,6 @@ public class Category {
 		sb.append(", creator=");
 
 		sb.append(creator);
-		sb.append(", creatorId=");
-
-		sb.append(creatorId);
 		sb.append(", dateCreated=");
 
 		sb.append(dateCreated);
@@ -330,10 +307,6 @@ public class Category {
 	@GraphQLField
 	@JsonProperty
 	protected Creator creator;
-
-	@GraphQLField
-	@JsonProperty
-	protected Long creatorId;
 
 	@GraphQLField
 	@JsonProperty

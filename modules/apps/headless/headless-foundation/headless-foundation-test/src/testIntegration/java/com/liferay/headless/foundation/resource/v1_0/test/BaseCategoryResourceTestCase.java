@@ -420,7 +420,6 @@ public abstract class BaseCategoryResourceTestCase {
 	protected Category randomCategory() {
 		return new Category() {
 			{
-				creatorId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();

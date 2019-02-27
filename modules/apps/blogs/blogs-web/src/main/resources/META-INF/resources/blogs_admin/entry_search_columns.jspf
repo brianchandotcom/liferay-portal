@@ -31,11 +31,11 @@
 			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 			%>
 
-			<h5 class="text-default">
+			<span class="text-default">
 				<liferay-ui:message arguments="<%= new String[] {entry.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
-			</h5>
+			</span>
 
-			<h4>
+			<h2 class="h5">
 				<c:choose>
 					<c:when test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 						<aui:a href="<%= rowURL.toString() %>">
@@ -46,11 +46,11 @@
 						<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>
 					</c:otherwise>
 				</c:choose>
-			</h4>
+			</h2>
 
-			<h5 class="text-default">
+			<span class="text-default">
 				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-			</h5>
+			</span>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>

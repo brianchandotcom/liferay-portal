@@ -43,13 +43,13 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 			%>
 
-			<h5 class="text-default">
+			<span class="text-default">
 				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), createDateDescription} %>" key="x-created-x-ago" />
-			</h5>
+			</span>
 
-			<h4>
+			<h2 class="h5">
 				<%= HtmlUtil.escape(fileEntry.getTitle()) %>
-			</h4>
+			</h2>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>

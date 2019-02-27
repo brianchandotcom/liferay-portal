@@ -578,8 +578,8 @@ create table Layout (
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
 	lastPublishDate DATE null,
-	referrerClassNameId LONG,
-	referrerClassPK LONG,
+	classNameId LONG,
+	classPK LONG,
 	publishDate DATE null
 );
 

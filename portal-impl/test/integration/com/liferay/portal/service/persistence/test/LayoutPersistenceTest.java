@@ -184,9 +184,9 @@ public class LayoutPersistenceTest {
 
 		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
 
-		newLayout.setReferrerClassNameId(RandomTestUtil.nextLong());
+		newLayout.setClassNameId(RandomTestUtil.nextLong());
 
-		newLayout.setReferrerClassPK(RandomTestUtil.nextLong());
+		newLayout.setClassPK(RandomTestUtil.nextLong());
 
 		newLayout.setPublishDate(RandomTestUtil.nextDate());
 
@@ -260,11 +260,9 @@ public class LayoutPersistenceTest {
 			Time.getShortTimestamp(existingLayout.getLastPublishDate()),
 			Time.getShortTimestamp(newLayout.getLastPublishDate()));
 		Assert.assertEquals(
-			existingLayout.getReferrerClassNameId(),
-			newLayout.getReferrerClassNameId());
+			existingLayout.getClassNameId(), newLayout.getClassNameId());
 		Assert.assertEquals(
-			existingLayout.getReferrerClassPK(),
-			newLayout.getReferrerClassPK());
+			existingLayout.getClassPK(), newLayout.getClassPK());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getPublishDate()),
 			Time.getShortTimestamp(newLayout.getPublishDate()));
@@ -500,8 +498,8 @@ public class LayoutPersistenceTest {
 			"iconImageId", true, "themeId", true, "colorSchemeId", true,
 			"priority", true, "layoutPrototypeUuid", true,
 			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true, "lastPublishDate", true, "referrerClassNameId", true,
-			"referrerClassPK", true, "publishDate", true);
+			true, "lastPublishDate", true, "classNameId", true, "classPK", true,
+			"publishDate", true);
 	}
 
 	@Test
@@ -854,9 +852,9 @@ public class LayoutPersistenceTest {
 
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
 
-		layout.setReferrerClassNameId(RandomTestUtil.nextLong());
+		layout.setClassNameId(RandomTestUtil.nextLong());
 
-		layout.setReferrerClassPK(RandomTestUtil.nextLong());
+		layout.setClassPK(RandomTestUtil.nextLong());
 
 		layout.setPublishDate(RandomTestUtil.nextDate());
 
@@ -1143,9 +1141,9 @@ public class LayoutPersistenceTest {
 
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
 
-		layout.setReferrerClassNameId(RandomTestUtil.nextLong());
+		layout.setClassNameId(RandomTestUtil.nextLong());
 
-		layout.setReferrerClassPK(RandomTestUtil.nextLong());
+		layout.setClassPK(RandomTestUtil.nextLong());
 
 		layout.setPublishDate(RandomTestUtil.nextDate());
 

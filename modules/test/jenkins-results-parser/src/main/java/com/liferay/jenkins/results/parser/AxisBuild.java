@@ -417,6 +417,13 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	protected void extractBuildURLComponents(Matcher matcher) {
+		super.extractBuildURLComponents(matcher);
+
+		axisVariable = matcher.group("axisVariable");
+	}
+
+	@Override
 	protected Pattern getBuildURLPattern() {
 		return buildURLPattern;
 	}
@@ -456,17 +463,6 @@ public class AxisBuild extends BaseBuild {
 			String.valueOf(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",
 			"stop.properties");
-	}
-
-	@Override
-	protected void setBuildURL(String buildURL) {
-		super.setBuildURL(buildURL);
-
-		Matcher matcher = buildURLPattern.matcher(buildURL);
-
-		matcher.find();
-
-		axisVariable = matcher.group("axisVariable");
 	}
 
 	protected static final Pattern buildURLPattern = Pattern.compile(

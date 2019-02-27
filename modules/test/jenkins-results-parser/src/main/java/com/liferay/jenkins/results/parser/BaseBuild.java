@@ -1647,6 +1647,12 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected void extractBuildURLComponents(Matcher matcher) {
+		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
+		setJenkinsMaster(new JenkinsMaster(matcher.group("master")));
+		setJobName(matcher.group("jobName"));
+	}
+
 	protected void findDownstreamBuilds() {
 		List<String> foundDownstreamBuildURLs = new ArrayList<>(
 			findDownstreamBuildsInConsoleText());
@@ -2414,10 +2420,7 @@ public abstract class BaseBuild implements Build {
 			archiveName = matcher.group("archiveName");
 		}
 
-		setJobName(matcher.group("jobName"));
-		setJenkinsMaster(new JenkinsMaster(matcher.group("master")));
-
-		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
+		extractBuildURLComponents(matcher);
 
 		loadParametersFromBuildJSONObject();
 

@@ -44,6 +44,10 @@ public interface BlogPostingImageResource {
 
 	public BlogPostingImage getImageObject(Long imageObjectId) throws Exception;
 
+	public BlogPostingImage patchImageObject(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception;
+
 	public BlogPostingImage postContentSpaceBlogPostingImage(
 			Long contentSpaceId, MultipartBody multipartBody)
 		throws Exception;

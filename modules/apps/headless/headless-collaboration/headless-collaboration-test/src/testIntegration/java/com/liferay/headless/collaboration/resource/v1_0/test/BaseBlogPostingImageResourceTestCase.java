@@ -87,6 +87,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
+	public void testPatchImageObject() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostContentSpaceBlogPostingImage() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -260,6 +265,37 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	protected Http.Response invokeGetImageObjectResponse(Long imageObjectId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected BlogPostingImage invokePatchImageObject(
+			Long imageObjectId, MultipartBody multipartBody)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_resourceURL +
+				_toPath(
+					"/blog-posting-images/{image-object-id}", imageObjectId));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options), BlogPostingImage.class);
+	}
+
+	protected Http.Response invokePatchImageObjectResponse(
+			Long imageObjectId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

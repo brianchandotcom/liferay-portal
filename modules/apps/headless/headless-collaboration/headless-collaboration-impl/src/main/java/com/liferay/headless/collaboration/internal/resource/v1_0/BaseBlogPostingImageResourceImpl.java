@@ -37,6 +37,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -88,6 +89,20 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@RequiresScope("everything.read")
 	public BlogPostingImage getImageObject(
 			@PathParam("image-object-id") Long imageObjectId)
+		throws Exception {
+
+		return new BlogPostingImage();
+	}
+
+	@Consumes("multipart/form-data")
+	@Override
+	@PATCH
+	@Path("/blog-posting-images/{image-object-id}")
+	@Produces("application/json")
+	@RequiresScope("everything.read")
+	public BlogPostingImage patchImageObject(
+			@PathParam("image-object-id") Long imageObjectId,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return new BlogPostingImage();

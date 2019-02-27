@@ -79,6 +79,19 @@ public class Mutation {
 		return blogPostingResource.patchBlogPosting(blogPostingId, blogPosting);
 	}
 
+	@GraphQLInvokeDetached
+	public BlogPostingImage patchImageObject(
+			@GraphQLName("image-object-id") Long imageObjectId,
+			@GraphQLName("MultipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		BlogPostingImageResource blogPostingImageResource =
+			_createBlogPostingImageResource();
+
+		return blogPostingImageResource.patchImageObject(
+			imageObjectId, multipartBody);
+	}
+
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public Comment postBlogPostingComment(

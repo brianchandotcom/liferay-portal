@@ -283,9 +283,6 @@ public class BlogPostingResourceImpl
 				articleBody = blogsEntry.getContent();
 				caption = blogsEntry.getCoverImageCaption();
 				categories = _getCategories(blogsEntry);
-				categoryIds = ArrayUtil.toArray(
-					_assetCategoryLocalService.getCategoryIds(
-						BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 				contentSpace = blogsEntry.getGroupId();
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
@@ -299,7 +296,6 @@ public class BlogPostingResourceImpl
 				headline = blogsEntry.getTitle();
 				id = blogsEntry.getEntryId();
 				image = _getImage(blogsEntry);
-				imageId = blogsEntry.getCoverImageFileEntryId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),

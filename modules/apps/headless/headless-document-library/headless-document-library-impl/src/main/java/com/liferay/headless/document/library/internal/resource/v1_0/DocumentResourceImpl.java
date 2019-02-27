@@ -434,10 +434,6 @@ public class DocumentResourceImpl
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
 				categories = _getCategories(fileEntry);
-				categoryIds = ArrayUtil.toArray(
-					_assetCategoryLocalService.getCategoryIds(
-						DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId()));
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);

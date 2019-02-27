@@ -55,10 +55,23 @@ public class JavaParser {
 	public static String parse(File file, int maxLineLength)
 		throws CheckstyleException, IOException {
 
-		return parse(file, FileUtil.read(file), maxLineLength);
+		return parse(file, maxLineLength, true);
+	}
+
+	public static String parse(File file, int maxLineLength, boolean writeFile)
+		throws CheckstyleException, IOException {
+
+		return parse(file, FileUtil.read(file), maxLineLength, writeFile);
 	}
 
 	public static String parse(File file, String content, int maxLineLength)
+		throws CheckstyleException, IOException {
+
+		return parse(file, content, maxLineLength, true);
+	}
+
+	public static String parse(
+			File file, String content, int maxLineLength, boolean writeFile)
 		throws CheckstyleException, IOException {
 
 		_maxLineLength = maxLineLength;
@@ -73,7 +86,7 @@ public class JavaParser {
 
 		newContent = _parse(file, newContent);
 
-		if (!newContent.equals(content)) {
+		if (writeFile && !newContent.equals(content)) {
 			FileUtil.write(file, newContent);
 		}
 

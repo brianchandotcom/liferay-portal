@@ -50,7 +50,7 @@ definition {
 		GogoShell.executeCommand(commandName = "system:check");
 
 		for (var outputContent : list "Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found") {
-			GogoShell.viewOutPut(outputContent = "${outputContent}");
+			GogoShell.viewOutput(outputContent = "${outputContent}");
 		}
 	}
 }

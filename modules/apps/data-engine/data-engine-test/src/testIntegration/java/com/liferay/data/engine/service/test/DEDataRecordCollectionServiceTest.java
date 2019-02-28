@@ -4104,9 +4104,8 @@ public class DEDataRecordCollectionServiceTest {
 		}
 
 		DEDataEngineTestUtil.insertDEDataRecordCollection(
-			_adminUser, _group, "nonascii£祝你好运",
-			"Name", _deDataDefinitionService,
-			_deDataRecordCollectionService);
+			_adminUser, _group, "nonascii£祝你好运", "Name",
+			_deDataDefinitionService, _deDataRecordCollectionService);
 
 		List<DEDataRecordCollection> deDataRecordCollections =
 			searchDEDataRecordCollection(_group, "nonascii£祝你好运");
@@ -4506,11 +4505,6 @@ public class DEDataRecordCollectionServiceTest {
 		return deDataRecordCollectionListRecordResponse.getDEDataRecords();
 	}
 
-	protected void setUpPermissionThreadLocal() throws Exception {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-	}
-
 	protected List<DEDataRecordCollection> searchDEDataRecordCollection(
 			Group group, String keywords)
 		throws Exception {
@@ -4533,6 +4527,11 @@ public class DEDataRecordCollectionServiceTest {
 
 		return
 			deDataRecordCollectionSearchResponse.getDeDataRecordCollections();
+	}
+
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@DeleteAfterTestRun

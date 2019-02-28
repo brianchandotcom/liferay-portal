@@ -105,11 +105,11 @@ public class PortletConfigurationTemplatesDisplayContext {
 		OrderByComparator orderByComparator = null;
 
 		if (Objects.equals(getOrderByCol(), "modified-date")) {
-			orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
-		}
-		else {
 			orderByComparator = new ArchivedSettingsModifiedDateComparator(
 				orderByAsc);
+		}
+		else {
+			orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
 		}
 
 		archivedSettingsSearch.setOrderByComparator(orderByComparator);

@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -172,15 +170,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
-
-		if (assetEntry == null) {
-			String noSuchAssetEntryMessage = _getNoSuchAssetEntryMessage(
-				className, classPK);
-
-			throw new PortalException(noSuchAssetEntryMessage);
-		}
 
 		discussionPermission.checkSubscribePermission(
 			assetEntry.getCompanyId(), assetEntry.getGroupId(), className,
@@ -215,15 +206,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
-
-		if (assetEntry == null) {
-			String noSuchAssetEntryMessage = _getNoSuchAssetEntryMessage(
-				className, classPK);
-
-			throw new PortalException(noSuchAssetEntryMessage);
-		}
 
 		if (commentId <= 0) {
 
@@ -321,17 +305,6 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		}
 
 		return discussionPermission;
-	}
-
-	private String _getNoSuchAssetEntryMessage(String className, long classPK) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("No asset entry exists with class name ");
-		sb.append(className);
-		sb.append(" and class PK ");
-		sb.append(classPK);
-
-		return sb.toString();
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;

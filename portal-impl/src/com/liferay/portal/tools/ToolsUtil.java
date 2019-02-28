@@ -455,26 +455,6 @@ public class ToolsUtil {
 
 		// Beautify
 
-		String jalopyIgnoreStart = "/* @start-ignoring-jalopy@ */";
-
-		int start = content.indexOf(jalopyIgnoreStart);
-
-		String jalopyIgnoreEnd = "/* @stop-ignoring-jalopy@ */";
-
-		String jalopyIgnoreBody = null;
-
-		if (start != -1) {
-			start += jalopyIgnoreStart.length();
-
-			int end = content.indexOf(jalopyIgnoreEnd);
-
-			if (end != -1) {
-				jalopyIgnoreBody = content.substring(start, end);
-
-				content = content.substring(0, start) + content.substring(end);
-			}
-		}
-
 		StringBuffer sb = new StringBuffer();
 
 		Jalopy jalopy = new Jalopy();
@@ -552,18 +532,6 @@ public class ToolsUtil {
 		boolean formatSuccess = jalopy.format();
 
 		String newContent = sb.toString();
-
-		if (jalopyIgnoreBody != null) {
-			start = newContent.indexOf(jalopyIgnoreStart);
-
-			start = newContent.lastIndexOf('\n', start);
-
-			int end = newContent.indexOf(jalopyIgnoreEnd);
-
-			newContent =
-				newContent.substring(0, start) + jalopyIgnoreBody +
-					newContent.substring(end + jalopyIgnoreEnd.length());
-		}
 
 		// Remove double blank lines after the package or last import
 

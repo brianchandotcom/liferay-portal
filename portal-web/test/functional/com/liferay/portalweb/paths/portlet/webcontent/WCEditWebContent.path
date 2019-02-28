@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>VERSION</td>
-	<td>//span[@class='workflow-version']/span[@class='workflow-value']</td>
+	<td>//div[contains(@class,'article-version')]/b</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,6 +81,11 @@
 <tr>
 	<td>VIDEO_BUTTON</td>
 	<td>//a[@title='Video']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//div[contains(@class,'status')]/span[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

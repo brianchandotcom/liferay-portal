@@ -17,6 +17,7 @@ package com.liferay.change.tracking;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -94,6 +95,18 @@ public interface CTManager {
 		long userId, long classNameId, long classPK);
 
 	/**
+	 * Returns the change entry aggregate containing the given change entry and
+	 * associated with the given change entry collection.
+	 *
+	 * @param  ctEntry a model change entry
+	 * @param  ctCollection a model change entry collection
+	 * @return the change entry aggregate containing the given change entry and
+	 *         associated with the given change entry collection.
+	 */
+	public Optional<CTEntryAggregate> getCTEntryAggregate(
+		CTEntry ctEntry, CTCollection ctCollection);
+
+	/**
 	 * Retrieves the latest model change in the context of the current user's
 	 * active change collection.
 	 *
@@ -167,6 +180,18 @@ public interface CTManager {
 	 */
 	public Optional<CTEntry> getProductionCTCollectionCTEntryOptional(
 		long userId, long classNameId, long classPK);
+
+	/**
+	 * Returns the list of change related change entries associated with the
+	 * given change entry collection.
+	 *
+	 * @param  ctEntry a model change entry
+	 * @param  ctCollection a model change entry collection
+	 * @return the list of change related change entries associated with the
+	 *         given change entry collection.
+	 */
+	public List<CTEntry> getRelatedCTEntries(
+		CTEntry ctEntry, CTCollection ctCollection);
 
 	/**
 	 * Indicates whether an add or update is in progress for a model. This will

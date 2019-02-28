@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -141,6 +142,27 @@ public class CTManagerImpl implements CTManager {
 			companyId, ctCollectionId, classNameId, classPK);
 
 		return Optional.ofNullable(ctEntry);
+	}
+
+	@Override
+	public Optional<CTEntryAggregate> getCTEntryAggregate(
+		CTEntry ctEntry, CTCollection ctCollection) {
+
+		if ((ctEntry == null) || !ctEntry.hasCTEntryAggregate()) {
+			return Optional.empty();
+		}
+
+		List<CTEntryAggregate> ctEntryCTEntryAggregates =
+			ctEntry.getCTEntryAggregates();
+
+		Stream<CTEntryAggregate> ctEntryAggregateStream =
+			ctEntryCTEntryAggregates.parallelStream();
+
+		return ctEntryAggregateStream.filter(
+			ctEntryAggregate ->
+				ctEntryAggregate.getCtCollectionId() ==
+					ctCollection.getCtCollectionId()
+		).findAny();
 	}
 
 	@Override
@@ -300,6 +322,24 @@ public class CTManagerImpl implements CTManager {
 			companyId, ctCollectionId, classNameId, classPK);
 
 		return Optional.ofNullable(ctEntry);
+	}
+
+	@Override
+	public List<CTEntry> getRelatedCTEntries(
+		CTEntry ctEntry, CTCollection ctCollection) {
+
+		Optional<CTEntryAggregate> ctEntryAggregateOptional =
+			getCTEntryAggregate(ctEntry, ctCollection);
+
+		List<CTEntry> ctEntries = ctEntryAggregateOptional.map(
+			CTEntryAggregate::getRelatedCTEntries
+		).orElse(
+			new ArrayList<>()
+		);
+
+		ctEntries.removeIf(ctEntry::equals);
+
+		return ctEntries;
 	}
 
 	@Override

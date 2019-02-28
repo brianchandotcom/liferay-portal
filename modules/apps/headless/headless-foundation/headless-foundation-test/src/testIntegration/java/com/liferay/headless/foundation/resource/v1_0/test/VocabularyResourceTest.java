@@ -29,14 +29,12 @@ import java.util.Objects;
 import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class VocabularyResourceTest extends BaseVocabularyResourceTestCase {
 

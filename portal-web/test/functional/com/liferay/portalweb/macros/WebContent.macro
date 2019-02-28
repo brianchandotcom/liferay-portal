@@ -238,8 +238,6 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		SelectFrame(value1 = "relative=top");
-
 		var key_assetTitle = "${webContentTitle}";
 
 		AssertTextEquals(
@@ -1187,8 +1185,6 @@ definition {
 	macro publishViaWCD {
 		Button.clickPublish();
 
-		SelectFrameTop();
-
 		AssertVisible(locator1 = "WCD#WEB_CONTENT_CONTENT");
 	}
 
@@ -1196,8 +1192,6 @@ definition {
 		Button.clickSaveAsDraft();
 
 		Pause(locator1 = "5000");
-
-		SelectFrame(value1 = "relative=top");
 
 		Refresh();
 

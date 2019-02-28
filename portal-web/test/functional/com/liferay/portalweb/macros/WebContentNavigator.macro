@@ -56,8 +56,6 @@ definition {
 			value1 = "${structureName}"
 		);
 
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
-
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}
 

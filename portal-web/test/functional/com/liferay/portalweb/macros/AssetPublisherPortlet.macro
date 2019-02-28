@@ -3,8 +3,6 @@ definition {
 		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
 
 		MenuItem.click(menuItem = "${assetType}");
-
-		IFrame.selectConfigurationFrame();
 	}
 
 	macro assertSiteScopeSearch {

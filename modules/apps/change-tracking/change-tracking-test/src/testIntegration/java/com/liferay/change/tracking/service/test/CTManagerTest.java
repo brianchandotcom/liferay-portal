@@ -42,6 +42,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -553,6 +554,75 @@ public class CTManagerTest {
 			CTConstants.CT_CHANGE_TYPE_ADDITION);
 
 		Assert.assertFalse("Optional is present", ctEntryOptional.isPresent());
+	}
+
+	@Test
+	public void testRegisterModelChangeWhenCTEntryAggregate() throws Exception {
+		Optional<CTEntry> ctEntryOptionalA = _ctManager.registerModelChange(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			_TEST_VERSION_CLASS_ENTITY_ID, 0L,
+			CTConstants.CT_CHANGE_TYPE_ADDITION);
+
+		Assert.assertTrue(ctEntryOptionalA.isPresent());
+
+		CTEntry ctEntryA = ctEntryOptionalA.get();
+
+		Optional<CTEntry> ctEntryOptionalB = _ctManager.registerModelChange(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION);
+
+		Assert.assertTrue(ctEntryOptionalB.isPresent());
+
+		CTEntry ctEntryB = ctEntryOptionalB.get();
+
+		Optional<CTEntryAggregate> ctEntryAggregateOptional =
+			_ctManager.addRelatedCTEntry(_user.getUserId(), ctEntryA, ctEntryB);
+
+		Assert.assertTrue(ctEntryAggregateOptional.isPresent());
+
+		Optional<CTEntry> ctEntryOptionalC = _ctManager.registerModelChange(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION);
+
+		Assert.assertTrue(ctEntryOptionalC.isPresent());
+
+		CTEntry ctEntryC = ctEntryOptionalC.get();
+
+		Assert.assertTrue(ctEntryA.hasCTEntryAggregate());
+		Assert.assertTrue(ctEntryB.hasCTEntryAggregate());
+		Assert.assertTrue(ctEntryC.hasCTEntryAggregate());
+
+		List<CTEntryAggregate> ctEntryAggregatesA =
+			ctEntryA.getCTEntryAggregates();
+
+		Assert.assertEquals(
+			"There must be two change tracking entry aggregates", 2,
+			ctEntryAggregatesA.size());
+
+		List<CTEntryAggregate> ctEntryAggregatesB =
+			ctEntryB.getCTEntryAggregates();
+
+		Assert.assertEquals(
+			"There must be two change tracking entry aggregates", 1,
+			ctEntryAggregatesB.size());
+
+		List<CTEntryAggregate> ctEntryAggregatesC =
+			ctEntryC.getCTEntryAggregates();
+
+		Assert.assertEquals(
+			"There must be two change tracking entry aggregates", 1,
+			ctEntryAggregatesC.size());
+
+		HashSet<CTEntryAggregate> ctEntryAAggregatesSet = new HashSet<>(
+			ctEntryAggregatesA);
+
+		Assert.assertTrue(
+			ctEntryAAggregatesSet.contains(ctEntryAggregatesB.get(0)));
+		Assert.assertTrue(
+			ctEntryAAggregatesSet.contains(ctEntryAggregatesC.get(0)));
+
+		Assert.assertNotEquals(
+			ctEntryAggregatesB.get(0), ctEntryAggregatesC.get(0));
 	}
 
 	private static final long _TEST_RESOURCE_CLASS_ENTITY_ID = 1L;

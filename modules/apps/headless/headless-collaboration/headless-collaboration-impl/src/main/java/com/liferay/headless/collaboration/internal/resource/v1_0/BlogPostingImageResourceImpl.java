@@ -15,7 +15,6 @@
 package com.liferay.headless.collaboration.internal.resource.v1_0;
 
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -27,8 +26,9 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -88,11 +88,14 @@ public class BlogPostingImageResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		List<FileEntry> fileEntries = new ArrayList<>();
+
 		Folder folder = _blogsEntryService.addAttachmentsFolder(contentSpaceId);
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(DLFileEntry.class),
-			pagination,
+		Indexer<Folder> indexer = _indexerRegistry.getIndexer(Folder.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -102,13 +105,14 @@ public class BlogPostingImageResourceImpl
 						Field.FOLDER_ID, String.valueOf(folder.getFolderId())),
 					BooleanClauseOccur.MUST);
 			},
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
-			_searchResultPermissionFilterFactory, sorts);
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
+			},
+			sorts);
 
-		List<FileEntry> fileEntries = new ArrayList<>();
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Hits hits = indexer.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			long fileEntryId = GetterUtil.getLong(
@@ -121,7 +125,7 @@ public class BlogPostingImageResourceImpl
 
 		return Page.of(
 			transform(fileEntries, this::_toBlogPostingImage), pagination,
-			fileEntries.size());
+			indexer.searchCount(searchContext));
 	}
 
 	@Override
@@ -263,9 +267,5 @@ public class BlogPostingImageResourceImpl
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 }

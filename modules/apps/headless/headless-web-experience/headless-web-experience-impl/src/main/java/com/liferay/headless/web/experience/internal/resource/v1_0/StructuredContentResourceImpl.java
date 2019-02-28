@@ -68,8 +68,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -152,9 +153,11 @@ public class StructuredContentResourceImpl
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(JournalArticle.class),
-			pagination,
+		Indexer<JournalArticle> indexer = _indexerRegistry.getIndexer(
+			JournalArticle.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination,
 			booleanQuery -> {
 				if (contentStructureId != null) {
 					BooleanFilter booleanFilter =
@@ -166,21 +169,23 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ARTICLE_ID, Field.SCOPE_GROUP_ID),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-				searchContext.setAttribute("head", Boolean.TRUE);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(
+					Field.ARTICLE_ID, Field.SCOPE_GROUP_ID);
 			},
-			_searchResultPermissionFilterFactory, sorts);
+			sorts);
+
+		searchContext.setAttribute(
+			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		searchContext.setAttribute("head", Boolean.TRUE);
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Hits hits = indexer.search(searchContext);
 
 		return Page.of(
 			transform(
 				_journalHelper.getArticles(hits), this::_toStructuredContent),
-			pagination, hits.getLength());
+			pagination, indexer.searchCount(searchContext));
 	}
 
 	@Override
@@ -867,10 +872,6 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

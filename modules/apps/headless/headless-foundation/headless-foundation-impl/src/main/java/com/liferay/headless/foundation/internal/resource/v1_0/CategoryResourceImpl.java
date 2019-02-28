@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -218,15 +219,19 @@ public class CategoryResourceImpl
 
 		List<AssetCategory> assetCategories = new ArrayList<>();
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(AssetCategory.class),
-			pagination, booleanQueryConsumer,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ASSET_CATEGORY_ID),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
+		Indexer<AssetCategory> indexer = _indexerRegistry.getIndexer(
+			AssetCategory.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination, booleanQueryConsumer,
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ASSET_CATEGORY_ID);
 			},
-			_searchResultPermissionFilterFactory, sorts);
+			sorts);
+
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Hits hits = indexer.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			AssetCategory assetCategory = _assetCategoryService.getCategory(
@@ -237,7 +242,7 @@ public class CategoryResourceImpl
 
 		return Page.of(
 			transform(assetCategories, this::_toCategory), pagination,
-			assetCategories.size());
+			indexer.searchCount(searchContext));
 	}
 
 	private Category _toCategory(AssetCategory assetCategory) throws Exception {
@@ -312,10 +317,6 @@ public class CategoryResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

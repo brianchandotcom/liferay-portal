@@ -24,8 +24,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -65,20 +67,23 @@ public class ContentStructureResourceImpl
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(DDMStructure.class),
-			pagination,
+		Indexer<DDMStructure> indexer = IndexerRegistryUtil.getIndexer(
+			DDMStructure.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination,
 			booleanQuery -> {
 			},
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
 			},
-			_searchResultPermissionFilterFactory, sorts);
+			sorts);
+
+		searchContext.setAttribute("searchPermissionContext", StringPool.BLANK);
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+		searchContext.setGroupIds(new long[] {contentSpaceId});
+
+		Hits hits = indexer.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			DDMStructure ddmStructure = _ddmStructureService.getStructure(
@@ -89,7 +94,7 @@ public class ContentStructureResourceImpl
 
 		return Page.of(
 			transform(ddmStructures, this::_toContentStructure), pagination,
-			ddmStructures.size());
+			indexer.searchCount(searchContext));
 	}
 
 	@Override
@@ -124,10 +129,6 @@ public class ContentStructureResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

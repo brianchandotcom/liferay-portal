@@ -258,15 +258,19 @@ public class ResourceOpenAPIParser {
 					String parameterType = OpenAPIParserUtil.getJavaDataType(
 						javaDataTypeMap, content.getSchema());
 
-					String parameterName = StringUtil.lowerCaseFirstLetter(
-						parameterType);
+					String simpleClassName = parameterType.substring(
+						parameterType.lastIndexOf(".") + 1);
 
-					if (StringUtil.equals(parameterType, "Long")) {
+					String parameterName = StringUtil.lowerCaseFirstLetter(
+						simpleClassName);
+
+					if (StringUtil.equals(simpleClassName, "Long")) {
 						parameterName = "referenceId";
 					}
 
 					javaMethodParameters.add(
-						new JavaMethodParameter(parameterName, parameterType));
+						new JavaMethodParameter(
+							parameterName, simpleClassName));
 				}
 			}
 			else {
@@ -376,7 +380,7 @@ public class ResourceOpenAPIParser {
 			urls.add("");
 		}
 
-		if (_isGetToSameSchema(httpMethod, returnType, "Page<" + schemaName)) {
+		if (_isGetToSameSchema(httpMethod, returnType, schemaName)) {
 			urls.add(TextFormatter.formatPlural(schemaName));
 		}
 
@@ -519,8 +523,15 @@ public class ResourceOpenAPIParser {
 	private static boolean _isGetToSameSchema(
 		String httpMethod, String returnType, String schemaName) {
 
-		if (httpMethod.equals("get") && returnType.startsWith(schemaName)) {
-			return true;
+		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
+			String className = returnType.substring(5, returnType.length() - 1);
+
+			String simpleClassName = className.substring(
+				className.lastIndexOf(".") + 1);
+
+			if (Objects.equals(simpleClassName, schemaName)) {
+				return true;
+			}
 		}
 
 		return false;

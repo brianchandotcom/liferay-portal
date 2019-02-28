@@ -669,11 +669,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
 			if (entityFieldName.equals("${javaMethodParameter.parameterName}")) {
-				<#if stringUtil.equals(javaMethodParameter.parameterType, "Date")>
+				<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
 					sb.append(_dateFormat.format(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()));
 
 					return sb.toString();
-				<#elseif stringUtil.equals(javaMethodParameter.parameterType, "String")>
+				<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
 					sb.append("'");
 					sb.append(String.valueOf(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()));
 					sb.append("'");
@@ -691,12 +691,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected ${schemaName} random${schemaName}() {
 		return new ${schemaName}() {
 			{
-				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
+				<#assign randomDataTypes = ["java.lang.Boolean", "java.lang.Double", "java.lang.Long", "java.lang.String"] />
 
 				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
 					<#if randomDataTypes?seq_contains(javaMethodParameter.parameterType)>
 						${javaMethodParameter.parameterName} = RandomTestUtil.random${javaMethodParameter.parameterType}();
-					<#elseif stringUtil.equals(javaMethodParameter.parameterType, "Date")>
+					<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
 						${javaMethodParameter.parameterName} = RandomTestUtil.nextDate();
 					</#if>
 				</#list>

@@ -237,15 +237,24 @@ public class OpenAPIParserUtil {
 	}
 
 	public static String getSimpleClassName(String type) {
-		if (type.endsWith("[]")) {
-			return type.substring(0, type.length() - 2);
+		String simpleClassName = type;
+
+		if (simpleClassName.endsWith("[]")) {
+			simpleClassName = simpleClassName.substring(
+				0, simpleClassName.length() - 2);
 		}
 
-		if (type.endsWith(">")) {
-			return type.substring(0, type.indexOf("<"));
+		if (simpleClassName.endsWith(">")) {
+			simpleClassName = simpleClassName.substring(
+				0, simpleClassName.indexOf("<"));
 		}
 
-		return type;
+		if (simpleClassName.indexOf('.') != -1) {
+			simpleClassName = simpleClassName.substring(
+				simpleClassName.lastIndexOf(".") + 1);
+		}
+
+		return simpleClassName;
 	}
 
 	public static boolean hasHTTPMethod(

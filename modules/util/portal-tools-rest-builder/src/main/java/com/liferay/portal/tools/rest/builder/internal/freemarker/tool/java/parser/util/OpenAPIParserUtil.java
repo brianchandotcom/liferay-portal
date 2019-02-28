@@ -443,6 +443,15 @@ public class OpenAPIParserUtil {
 					new AbstractMap.SimpleImmutableEntry<>(
 						"string", "password"),
 					String.class.getName());
+
+				// Liferay
+
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("number", null),
+					Double.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("string", "uri"),
+					String.class.getName());
 			}
 		};
 

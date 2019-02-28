@@ -91,7 +91,7 @@ public class OpenAPIParserUtil {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	public static String getJavaMethodParameterType(Schema schema) {
+	public static String getJavaDataType(Schema schema) {
 		Items items = schema.getItems();
 		String type = schema.getType();
 

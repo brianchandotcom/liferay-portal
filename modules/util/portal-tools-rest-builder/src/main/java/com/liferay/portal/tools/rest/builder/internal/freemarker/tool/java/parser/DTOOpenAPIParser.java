@@ -104,7 +104,7 @@ public class DTOOpenAPIParser {
 			return StringUtil.upperCaseFirstLetter(propertySchemaName);
 		}
 
-		return OpenAPIParserUtil.getJavaMethodParameterType(propertySchema);
+		return OpenAPIParserUtil.getJavaDataType(propertySchema);
 	}
 
 }

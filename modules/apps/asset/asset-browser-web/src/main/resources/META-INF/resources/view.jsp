@@ -137,7 +137,7 @@
 					/>
 
 					<liferay-ui:search-container-column-text
-						name="user-name"
+						name="author"
 						value="<%= PortalUtil.getUserName(assetEntry) %>"
 					/>
 

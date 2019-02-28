@@ -108,6 +108,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_SHOW_FULL_CONTENT</td>
+	<td>//div[@class='asset-abstract'][contains(.,'${key_assetTitle}')]//a[contains(.,'Show Full Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_VIEW_IN_CONTEXT</td>
+	<td>//div[@class='asset-abstract'][contains(.,'${key_assetTitle}')]//a[contains(.,'View in Context')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

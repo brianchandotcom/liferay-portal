@@ -798,7 +798,9 @@ definition {
 		var key_assetContent = "${entryContent}";
 		var key_assetTitle = "${assetTitle}";
 
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${entryTitle}");
+		AssetPublisherPortlet.clickShowFullContent(
+			assetTitle = "${entryTitle}"
+		);
 
 		AssertTextEquals(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
@@ -937,6 +939,10 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
 			value1 = "${entryContent}"
+		);
+
+		AssetPublisherPortlet.clickShowFullContent(
+			assetTitle = "${entryTitle}"
 		);
 
 		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${entryTitle}");

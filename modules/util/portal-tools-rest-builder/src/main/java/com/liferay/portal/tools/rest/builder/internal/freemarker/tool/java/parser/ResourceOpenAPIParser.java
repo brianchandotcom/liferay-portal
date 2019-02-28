@@ -362,11 +362,11 @@ public class ResourceOpenAPIParser {
 		Operation operation, String path, String returnType,
 		String schemaName) {
 
-		List<String> urls = new ArrayList<>();
+		List<String> methodNameSegments = new ArrayList<>();
 
 		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
 
-		urls.add(httpMethod);
+		methodNameSegments.add(httpMethod);
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -381,7 +381,8 @@ public class ResourceOpenAPIParser {
 		for (Parameter parameter : parameters) {
 			String name = parameter.getName();
 
-			urls.add(CamelCaseUtil.toCamelCase(name.replace("-id", ""), true));
+			methodNameSegments.add(
+				CamelCaseUtil.toCamelCase(name.replace("-id", ""), true));
 		}
 
 		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
@@ -391,35 +392,41 @@ public class ResourceOpenAPIParser {
 				className.lastIndexOf(".") + 1);
 
 			if (Objects.equals(simpleClassName, schemaName)) {
-				urls.add(TextFormatter.formatPlural(schemaName));
+				methodNameSegments.add(TextFormatter.formatPlural(schemaName));
 			}
 		}
 
 		String[] pathSegments = path.split("/");
 
 		if (httpMethod.equals("post") &&
-			(pathSegments.length > (urls.size() + parameters.size()))) {
+			(pathSegments.length >
+				(methodNameSegments.size() + parameters.size()))) {
 
-			String pathSegment = pathSegments[urls.size() + parameters.size()];
+			String pathSegment = pathSegments[
+				methodNameSegments.size() + parameters.size()];
 
 			String text = CamelCaseUtil.toCamelCase(pathSegment, true);
 
 			if (text.equals(TextFormatter.formatPlural(schemaName))) {
-				urls.add(schemaName);
+				methodNameSegments.add(schemaName);
 			}
 		}
 
-		if (pathSegments.length > (urls.size() + parameters.size())) {
-			String pathSegment = pathSegments[urls.size() + parameters.size()];
+		if (pathSegments.length >
+				(methodNameSegments.size() + parameters.size())) {
 
-			urls.add(CamelCaseUtil.toCamelCase(pathSegment, true));
+			String pathSegment = pathSegments[
+				methodNameSegments.size() + parameters.size()];
+
+			methodNameSegments.add(
+				CamelCaseUtil.toCamelCase(pathSegment, true));
 		}
 
 		if (StringUtil.startsWith(returnType, "Page<")) {
-			urls.add("Page");
+			methodNameSegments.add("Page");
 		}
 
-		return String.join("", urls);
+		return String.join("", methodNameSegments);
 	}
 
 	private static String _getParameterAnnotation(

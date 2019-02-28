@@ -24,6 +24,8 @@ classes {
 }
 
 dependencies {
+	compile group: "com.liferay.commerce", name: "com.liferay.commerce.product.api", version: "5.0.0"
+	compile group: "com.liferay.commerce", name: "com.liferay.commerce.product.service", version: "1.1.6"
 	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	compile group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
 	compile project(":apps:asset:asset-entry-rel-service")

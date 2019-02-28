@@ -28,6 +28,20 @@ import com.liferay.blogs.model.BlogsStatsUserModel;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPDefinitionLocalizationModel;
+import com.liferay.commerce.product.model.CPDefinitionModel;
+import com.liferay.commerce.product.model.CPFriendlyURLEntryModel;
+import com.liferay.commerce.product.model.CPInstanceModel;
+import com.liferay.commerce.product.model.CPTaxCategoryModel;
+import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CProductModel;
+import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl;
+import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
+import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl;
+import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
+import com.liferay.commerce.product.model.impl.CPTaxCategoryModelImpl;
+import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -241,6 +255,8 @@ import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.text.Format;
@@ -352,6 +368,7 @@ public class DataFactory {
 
 		initAssetCategoryModels();
 		initAssetTagModels();
+		initCommerceProductModels();
 		initCompanyModel();
 		initDLFileEntryTypeModel();
 		initGroupModels();
@@ -530,6 +547,32 @@ public class DataFactory {
 
 	public long getCounterNext() {
 		return _counter.get();
+	}
+
+	public List<CPDefinitionLocalizationModel>
+		getCPDefinitionLocalizationModels() {
+
+		return new ArrayList<>(_cpDefinitionLocalizationModels);
+	}
+
+	public List<CPDefinitionModel> getCPDefinitionModels() {
+		return new ArrayList<>(_cpDefinitionModels);
+	}
+
+	public List<CPFriendlyURLEntryModel> getCPFriendlyURLEntryModels() {
+		return new ArrayList<>(_cpFriendlyURLEntryModels);
+	}
+
+	public List<CPInstanceModel> getCPInstanceModels() {
+		return new ArrayList<>(_cpInstanceModels);
+	}
+
+	public List<CProductModel> getCProductModels() {
+		return new ArrayList<>(_cProductModels);
+	}
+
+	public List<CPTaxCategoryModel> getCPTaxCategoryModels() {
+		return new ArrayList<>(_cpTaxCategoryModels);
 	}
 
 	public Writer getCSVWriter(String csvFileName) {
@@ -894,6 +937,69 @@ public class DataFactory {
 		}
 	}
 
+	public void initCommerceProductModels() {
+		CPTaxCategoryModel cpTaxCategoryModel = newCPTaxCategoryModel(
+			_guestGroupId, "Normal Product");
+
+		_cpTaxCategoryModels = Collections.singletonList(cpTaxCategoryModel);
+
+		_cProductModels = new ArrayList<>(_maxCProductCount);
+
+		int cpDefinitionCount = _maxCProductCount * _maxCPDefinitionCount;
+
+		_cpDefinitionLocalizationModels = new ArrayList<>(cpDefinitionCount);
+		_cpDefinitionModels = new ArrayList<>(cpDefinitionCount);
+		_cpFriendlyURLEntryModels = new ArrayList<>(cpDefinitionCount);
+		_cpInstanceModels = new ArrayList<>(
+			cpDefinitionCount * _maxCPInstanceCount);
+
+		for (int productIndex = 0; productIndex < _maxCProductCount;
+			 productIndex++) {
+
+			long[] cpDefinitionIds = new long[_maxCPDefinitionCount];
+
+			for (int i = 0; i < _maxCPDefinitionCount; i++) {
+				cpDefinitionIds[i] = _counter.get();
+			}
+
+			long cProductId = _counter.get();
+
+			CProductModel cProductModel = newCProductModel(
+				_guestGroupId, cProductId,
+				cpDefinitionIds[_maxCPDefinitionCount - 1]);
+
+			_cProductModels.add(cProductModel);
+
+			for (int definitionIndex = 0;
+				 definitionIndex < _maxCPDefinitionCount;
+				 definitionIndex++) {
+
+				long cpDefinitionId = cpDefinitionIds[definitionIndex];
+
+				_cpDefinitionLocalizationModels.add(
+					newCPDefinitionLocalizationModel(cpDefinitionId));
+
+				CPDefinitionModel cpDefinitionModel = newCPDefinitionModel(
+					_guestGroupId, cpDefinitionId, cProductId,
+					cpTaxCategoryModel.getCPTaxCategoryId(),
+					definitionIndex + 1);
+
+				_cpDefinitionModels.add(cpDefinitionModel);
+
+				_cpFriendlyURLEntryModels.add(
+					newCPFriendlyURLEntryModel(cProductModel));
+
+				for (int instanceIndex = 0; instanceIndex < _maxCPInstanceCount;
+					 instanceIndex++) {
+
+					_cpInstanceModels.add(
+						newCPInstanceModel(
+							_guestGroupId, cpDefinitionId, instanceIndex));
+				}
+			}
+		}
+	}
+
 	public void initCompanyModel() {
 		_companyModel = new CompanyModelImpl();
 
@@ -951,6 +1057,14 @@ public class DataFactory {
 			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.blogs.entry.count"));
+		_maxCPDefinitionCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.commerce.product.definition.count"));
+		_maxCPInstanceCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.commerce.product.instance.count"));
+		_maxCProductCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.commerce.product.count"));
 		_maxDDLCustomFieldCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
 		_maxDDLRecordCount = GetterUtil.getInteger(
@@ -2512,6 +2626,10 @@ public class DataFactory {
 			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(
 			newLayoutModel(
+				groupId, "commerce_product", "",
+				CPPortletKeys.CP_CONTENT_WEB + ","));
+		layoutModels.add(
+			newLayoutModel(
 				groupId, "document_library", "",
 				DLPortletKeys.DOCUMENT_LIBRARY + ","));
 		layoutModels.add(
@@ -3180,6 +3298,207 @@ public class DataFactory {
 		blogsEntryModel.setStatusDate(new Date());
 
 		return blogsEntryModel;
+	}
+
+	protected CPDefinitionLocalizationModel newCPDefinitionLocalizationModel(
+		long cpDefinitionId) {
+
+		CPDefinitionLocalizationModel cpDefinitionLocalizationModel =
+			new CPDefinitionLocalizationModelImpl();
+
+		cpDefinitionLocalizationModel.setCpDefinitionLocalizationId(
+			_counter.get());
+		cpDefinitionLocalizationModel.setCompanyId(_companyId);
+		cpDefinitionLocalizationModel.setCPDefinitionId(cpDefinitionId);
+		cpDefinitionLocalizationModel.setLanguageId("en_US");
+		cpDefinitionLocalizationModel.setName("Definition " + cpDefinitionId);
+		cpDefinitionLocalizationModel.setShortDescription(
+			"Short description for definition " + cpDefinitionId);
+		cpDefinitionLocalizationModel.setDescription(
+			"A longer and more verbose description for definition with ID " +
+				cpDefinitionId);
+		cpDefinitionLocalizationModel.setMetaTitle(
+			"A meta-title for definition " + cpDefinitionId);
+		cpDefinitionLocalizationModel.setMetaDescription(
+			"A meta-description for definition " + cpDefinitionId);
+		cpDefinitionLocalizationModel.setMetaKeywords(
+			"Meta-keywords for definition " + cpDefinitionId);
+
+		return cpDefinitionLocalizationModel;
+	}
+
+	protected CPDefinitionModel newCPDefinitionModel(
+		long groupId, long cpDefinitionId, long cProductId,
+		long cpTaxCategoryId, int version) {
+
+		CPDefinitionModel cpDefinitionModel = new CPDefinitionModelImpl();
+
+		cpDefinitionModel.setUuid(SequentialUUID.generate());
+		cpDefinitionModel.setCPDefinitionId(cpDefinitionId);
+		cpDefinitionModel.setGroupId(groupId);
+		cpDefinitionModel.setCompanyId(_companyId);
+		cpDefinitionModel.setUserId(_sampleUserId);
+		cpDefinitionModel.setUserName(_SAMPLE_USER_NAME);
+		cpDefinitionModel.setCreateDate(new Date());
+		cpDefinitionModel.setModifiedDate(new Date());
+		cpDefinitionModel.setCProductId(cProductId);
+		cpDefinitionModel.setCPTaxCategoryId(cpTaxCategoryId);
+		cpDefinitionModel.setProductTypeName("simple");
+		cpDefinitionModel.setAvailableIndividually(true);
+		cpDefinitionModel.setIgnoreSKUCombinations(true);
+		cpDefinitionModel.setShippable(true);
+		cpDefinitionModel.setFreeShipping(false);
+		cpDefinitionModel.setShipSeparately(true);
+		cpDefinitionModel.setShippingExtraPrice(3.0);
+		cpDefinitionModel.setWidth(0);
+		cpDefinitionModel.setHeight(0);
+		cpDefinitionModel.setDepth(0);
+		cpDefinitionModel.setWeight(0);
+		cpDefinitionModel.setTaxExempt(false);
+		cpDefinitionModel.setTelcoOrElectronics(false);
+		cpDefinitionModel.setDDMStructureKey(null);
+		cpDefinitionModel.setPublished(true);
+		cpDefinitionModel.setDisplayDate(new Date());
+		cpDefinitionModel.setExpirationDate(null);
+		cpDefinitionModel.setLastPublishDate(null);
+		cpDefinitionModel.setSubscriptionEnabled(false);
+		cpDefinitionModel.setSubscriptionLength(0);
+		cpDefinitionModel.setSubscriptionType(null);
+		cpDefinitionModel.setSubscriptionTypeSettings(null);
+		cpDefinitionModel.setMaxSubscriptionCycles(0);
+		cpDefinitionModel.setVersion(version);
+		cpDefinitionModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+		cpDefinitionModel.setStatusByUserId(_sampleUserId);
+		cpDefinitionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpDefinitionModel.setStatusDate(new Date());
+
+		return cpDefinitionModel;
+	}
+
+	protected CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
+		CProductModel cProductModel) {
+
+		return newCPFriendlyURLEntryModel(
+			cProductModel.getGroupId(), getClassNameId(CProduct.class),
+			cProductModel.getCProductId(),
+			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				"Definition " + cProductModel.getPublishedCPDefinitionId()));
+	}
+
+	protected CPFriendlyURLEntryModel newCPFriendlyURLEntryModel(
+		long groupId, long classNameId, long classPK, String urlTitle) {
+
+		CPFriendlyURLEntryModel cpFriendlyURLEntryModel =
+			new CPFriendlyURLEntryModelImpl();
+
+		cpFriendlyURLEntryModel.setUuid(SequentialUUID.generate());
+		cpFriendlyURLEntryModel.setCPFriendlyURLEntryId(_counter.get());
+		cpFriendlyURLEntryModel.setGroupId(groupId);
+		cpFriendlyURLEntryModel.setCompanyId(_companyId);
+		cpFriendlyURLEntryModel.setUserId(_sampleUserId);
+		cpFriendlyURLEntryModel.setUserName(_SAMPLE_USER_NAME);
+		cpFriendlyURLEntryModel.setCreateDate(new Date());
+		cpFriendlyURLEntryModel.setModifiedDate(new Date());
+		cpFriendlyURLEntryModel.setClassNameId(classNameId);
+		cpFriendlyURLEntryModel.setClassPK(classPK);
+		cpFriendlyURLEntryModel.setLanguageId("en_US");
+		cpFriendlyURLEntryModel.setUrlTitle(urlTitle);
+		cpFriendlyURLEntryModel.setMain(true);
+
+		return cpFriendlyURLEntryModel;
+	}
+
+	protected CPInstanceModel newCPInstanceModel(
+		long groupId, long cpDefinitionId, int index) {
+
+		CPInstanceModel cpInstanceModel = new CPInstanceModelImpl();
+
+		cpInstanceModel.setUuid(SequentialUUID.generate());
+		cpInstanceModel.setCPInstanceId(_counter.get());
+		cpInstanceModel.setGroupId(groupId);
+		cpInstanceModel.setCompanyId(_companyId);
+		cpInstanceModel.setUserId(_sampleUserId);
+		cpInstanceModel.setUserName(_SAMPLE_USER_NAME);
+		cpInstanceModel.setCreateDate(new Date());
+		cpInstanceModel.setModifiedDate(new Date());
+		cpInstanceModel.setCPDefinitionId(cpDefinitionId);
+		cpInstanceModel.setCPInstanceUuid(SequentialUUID.generate());
+
+		String instanceKey = cpDefinitionId + StringPool.POUND + index;
+
+		cpInstanceModel.setSku("SKU" + instanceKey);
+		cpInstanceModel.setGtin("GTIN" + instanceKey);
+		cpInstanceModel.setManufacturerPartNumber("MPN" + instanceKey);
+
+		cpInstanceModel.setPurchasable(true);
+		cpInstanceModel.setJson("[]");
+		cpInstanceModel.setWidth(index * 2 + 1);
+		cpInstanceModel.setHeight(index + 5);
+		cpInstanceModel.setDepth(index);
+		cpInstanceModel.setWeight(index * 3 + 1);
+		cpInstanceModel.setPrice(BigDecimal.valueOf(index + 10.1));
+		cpInstanceModel.setPromoPrice(BigDecimal.valueOf(index + 9.2));
+		cpInstanceModel.setCost(BigDecimal.valueOf(index + 6.4));
+		cpInstanceModel.setPublished(true);
+		cpInstanceModel.setDisplayDate(new Date());
+		cpInstanceModel.setExpirationDate(null);
+		cpInstanceModel.setLastPublishDate(null);
+		cpInstanceModel.setOverrideSubscriptionInfo(false);
+		cpInstanceModel.setSubscriptionEnabled(false);
+		cpInstanceModel.setSubscriptionLength(0);
+		cpInstanceModel.setSubscriptionType(null);
+		cpInstanceModel.setSubscriptionTypeSettings(null);
+		cpInstanceModel.setMaxSubscriptionCycles(0);
+		cpInstanceModel.setStatus(WorkflowConstants.STATUS_APPROVED);
+		cpInstanceModel.setStatusByUserId(_sampleUserId);
+		cpInstanceModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		cpInstanceModel.setStatusDate(new Date());
+
+		return cpInstanceModel;
+	}
+
+	protected CProductModel newCProductModel(
+		long groupId, long cProductId, long publishedCPDefinitionId) {
+
+		CProductModel cProductModel = new CProductModelImpl();
+
+		cProductModel.setUuid(SequentialUUID.generate());
+		cProductModel.setCProductId(cProductId);
+		cProductModel.setGroupId(groupId);
+		cProductModel.setCompanyId(_companyId);
+		cProductModel.setUserId(_sampleUserId);
+		cProductModel.setUserName(_SAMPLE_USER_NAME);
+		cProductModel.setCreateDate(new Date());
+		cProductModel.setModifiedDate(new Date());
+		cProductModel.setPublishedCPDefinitionId(publishedCPDefinitionId);
+		cProductModel.setLatestVersion(_maxCPDefinitionCount);
+
+		return cProductModel;
+	}
+
+	protected CPTaxCategoryModel newCPTaxCategoryModel(
+		long groupId, String name) {
+
+		CPTaxCategoryModel cpTaxCategoryModel = new CPTaxCategoryModelImpl();
+
+		cpTaxCategoryModel.setCPTaxCategoryId(_counter.get());
+		cpTaxCategoryModel.setGroupId(groupId);
+		cpTaxCategoryModel.setCompanyId(_companyId);
+		cpTaxCategoryModel.setUserId(_sampleUserId);
+		cpTaxCategoryModel.setUserName(_SAMPLE_USER_NAME);
+		cpTaxCategoryModel.setCreateDate(new Date());
+		cpTaxCategoryModel.setModifiedDate(new Date());
+
+		name = StringBundler.concat(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales",
+			"=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">",
+			name, "</Name></root>");
+
+		cpTaxCategoryModel.setName(name);
+
+		cpTaxCategoryModel.setDescription(null);
+
+		return cpTaxCategoryModel;
 	}
 
 	protected DDMContentModel newDDMContentModel(
@@ -3865,6 +4184,12 @@ public class DataFactory {
 	private final long _companyId;
 	private CompanyModel _companyModel;
 	private final SimpleCounter _counter;
+	private List<CPDefinitionLocalizationModel> _cpDefinitionLocalizationModels;
+	private List<CPDefinitionModel> _cpDefinitionModels;
+	private List<CPFriendlyURLEntryModel> _cpFriendlyURLEntryModels;
+	private List<CPInstanceModel> _cpInstanceModels;
+	private List<CProductModel> _cProductModels;
+	private List<CPTaxCategoryModel> _cpTaxCategoryModels;
 	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreferencesImpl;
@@ -3906,6 +4231,9 @@ public class DataFactory {
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
+	private int _maxCPDefinitionCount;
+	private int _maxCPInstanceCount;
+	private int _maxCProductCount;
 	private int _maxDDLCustomFieldCount;
 	private int _maxDDLRecordCount;
 	private int _maxDDLRecordSetCount;

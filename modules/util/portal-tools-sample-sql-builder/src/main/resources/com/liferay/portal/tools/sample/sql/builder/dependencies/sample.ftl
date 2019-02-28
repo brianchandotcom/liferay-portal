@@ -16,6 +16,8 @@
 
 <#include "release.ftl">
 
+<#include "commerce_product.ftl">
+
 <#include "counters.ftl">
 
 COMMIT_TRANSACTION

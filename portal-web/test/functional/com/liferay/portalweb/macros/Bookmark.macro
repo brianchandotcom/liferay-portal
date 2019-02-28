@@ -21,8 +21,6 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
-
 		PortletEntry.inputName(name = "${bookmarkName}");
 
 		Type(locator1 = "TextInput#URL", value1 = "${bookmarkURL}");
@@ -539,7 +537,7 @@ definition {
 			assetTitle = "${bookmarkName}"
 		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${bookmarkName}"
 		);

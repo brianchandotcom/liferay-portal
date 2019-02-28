@@ -926,7 +926,7 @@ definition {
 			assetTitle = "${assetTitle}"
 		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${assetTitle}"
 		);

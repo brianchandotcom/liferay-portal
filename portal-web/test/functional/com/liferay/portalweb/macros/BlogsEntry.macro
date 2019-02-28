@@ -802,7 +802,7 @@ definition {
 			assetTitle = "${entryTitle}"
 		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${entryTitle}"
 		);
@@ -949,7 +949,7 @@ definition {
 
 		AssertVisible(locator1 = "Icon#SHARE");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "${entryTitle}"
 		);

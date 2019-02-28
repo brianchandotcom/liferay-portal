@@ -373,7 +373,13 @@ public class ResourceOpenAPIParser {
 		Stream<Parameter> stream = parameters.stream();
 
 		parameters = stream.filter(
-			parameter -> StringUtil.equals(parameter.getIn(), "path")
+			parameter -> {
+				if (StringUtil.equals(parameter.getIn(), "path")) {
+					return true;
+				}
+
+				return false;
+			}
 		).collect(
 			Collectors.toList()
 		);

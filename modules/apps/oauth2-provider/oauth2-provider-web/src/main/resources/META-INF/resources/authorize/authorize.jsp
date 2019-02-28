@@ -132,22 +132,43 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 
 							<aui:button id="cancel" type="submit" value="cancel" />
 
-							<aui:script>
-								$('#<portlet:namespace />allow').on(
-									'click',
-									function() {
-										document.<portlet:namespace/>fm.oauthDecision.value='allow';
-										document.<portlet:namespace/>fm.submit();
-									}
-								);
-								$('#<portlet:namespace />cancel').on(
-									'click',
-									function() {
-										document.<portlet:namespace/>fm.oauthDecision.value='deny';
-										document.<portlet:namespace/>fm.submit();
-									}
-								);
-							</aui:script>
+							<script>
+								var allowButton = document.getElementById('<portlet:namespace />allow');
+
+								if (allowButton) {
+									allowButton.addEventListener(
+										'click',
+										function() {
+											Liferay.Util.postForm(
+												document.<portlet:namespace/>fm,
+												{
+													data: {
+														oauthDecision: 'allow'
+													}
+												}
+											);
+										}
+									);
+								}
+
+								var cancelButton = document.getElementById('<portlet:namespace />cancel');
+
+								if (cancelButton) {
+									cancelButton.addEventListener(
+										'click',
+										function() {
+											Liferay.Util.postForm(
+												document.<portlet:namespace/>fm,
+												{
+													data: {
+														oauthDecision: 'deny'
+													}
+												}
+											);
+										}
+									);
+								}
+							</script>
 						</div>
 					</c:otherwise>
 				</c:choose>

@@ -125,18 +125,22 @@ renderResponse.setTitle(oAuth2Application.getName());
 					<aui:button cssClass="remove-access" id="removeAccess" value="remove-access" />
 					<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" value="cancel" />
 				</p>
-
-				<aui:script>
-					$('#<portlet:namespace />removeAccess').on(
-						'click',
-						function() {
-							if (confirm('<%= UnicodeLanguageUtil.format(request, "x-will-no-longer-have-access-to-your-account-removed-access-cannot-be-recovered", new String[] {oAuth2Application.getName()}) %>')) {
-								document.<portlet:namespace/>fm.submit();
-							}
-						}
-					);
-				</aui:script>
 			</div>
 		</aui:fieldset-group>
 	</aui:form>
 </div>
+
+<script>
+	var removeAccessButton = document.getElementById('<portlet:namespace />removeAccess');
+
+	if (removeAccessButton) {
+		removeAccessButton.addEventListener(
+			'click',
+			function() {
+				if (confirm('<%= UnicodeLanguageUtil.format(request, "x-will-no-longer-have-access-to-your-account-removed-access-cannot-be-recovered", new String[] {oAuth2Application.getName()}) %>')) {
+					document.<portlet:namespace/>fm.submit();
+				}
+			}
+		);
+	}
+</script>

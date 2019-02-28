@@ -365,14 +365,19 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	}
 
 	<portlet:namespace />updateRedirectURIs = function(required) {
-		var redirectURIsLabel = $('#<portlet:namespace />redirectURIs').parent().children()[0];
-		var lexiconIconParent = redirectURIsLabel.children[0];
+		var redirectURIsLabel = document.getElementById('<portlet:namespace />redirectURIs').parentNode.firstElementChild;
 
-		if (required) {
-			lexiconIconParent.style="visibility:visible;";
-		}
-		else {
-			lexiconIconParent.style="visibility:hidden;";
+		if (redirectURIsLabel) {
+			var lexiconIconParent = redirectURIsLabel.firstElementChild;
+
+			if (lexiconIconParent) {
+				if (required) {
+					lexiconIconParent.style="visibility:visible;";
+				}
+				else {
+					lexiconIconParent.style="visibility:hidden;";
+				}
+			}
 		}
 	}
 

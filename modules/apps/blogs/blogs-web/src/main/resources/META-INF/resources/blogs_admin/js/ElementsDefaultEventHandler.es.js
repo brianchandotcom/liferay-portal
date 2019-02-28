@@ -31,7 +31,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	publishToLive(itemData) {
-		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-publish-the-selected-blogs-entry'))) {
+		if (confirm(Liferay.Language.get('are-you-sure-you-want-to-publish-to-live'))) {
 			this._send(itemData.publishEntryURL);
 		}
 	}

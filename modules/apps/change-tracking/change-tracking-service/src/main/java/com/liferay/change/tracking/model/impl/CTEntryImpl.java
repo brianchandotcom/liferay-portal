@@ -31,7 +31,7 @@ public class CTEntryImpl extends CTEntryBaseImpl {
 	}
 
 	@Override
-	public List<CTEntryAggregate> getCTEntryBAggregates() {
+	public List<CTEntryAggregate> getCTEntryAggregates() {
 		return CTEntryAggregateLocalServiceUtil.getCTEntryCTEntryAggregates(
 			getCtEntryId());
 	}

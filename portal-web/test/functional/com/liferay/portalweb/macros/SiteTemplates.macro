@@ -73,7 +73,9 @@ definition {
 			);
 		}
 		else {
-			Card.clickSitePagesCardLink(cardName = "${rowEntry}");
+			LexiconCard.clickCard(
+				card = "${rowEntry}"
+			);
 		}
 
 		SelectFrame(locator1 = "IFrame#DIALOG");

@@ -67,6 +67,8 @@ public class LayoutLocalServiceUtil {
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
 	 {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param classNameId the class name ID of the entity
+	 * @param classPK the primary key of the entity
 	 * @param nameMap the layout's locales and localized names
 	 * @param titleMap the layout's locales and localized titles
 	 * @param descriptionMap the layout's locales and localized descriptions
@@ -83,8 +85,6 @@ public class LayoutLocalServiceUtil {
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 String)}.
-	 * @param classNameId the class name ID of the entity
-	 * @param classPK the primary key of the entity
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
 	 date, and expando bridge attributes for the layout. For layouts
@@ -103,7 +103,7 @@ public class LayoutLocalServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.Layout addLayout(
 			long userId, long groupId, boolean privateLayout,
-			long parentLayoutId,
+			long parentLayoutId, long classNameId, long classPK,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
@@ -111,13 +111,13 @@ public class LayoutLocalServiceUtil {
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
-			long classNameId, long classPK, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addLayout(
-			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
-			system, friendlyURLMap, classNameId, classPK, serviceContext);
+			userId, groupId, privateLayout, parentLayoutId, classNameId,
+			classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
 	}
 
 	/**

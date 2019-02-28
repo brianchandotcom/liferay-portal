@@ -111,6 +111,10 @@ public class LayoutCacheModel
 		sb.append(layoutId);
 		sb.append(", parentLayoutId=");
 		sb.append(parentLayoutId);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -147,14 +151,10 @@ public class LayoutCacheModel
 		sb.append(layoutPrototypeLinkEnabled);
 		sb.append(", sourcePrototypeLayoutUuid=");
 		sb.append(sourcePrototypeLayoutUuid);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
 		sb.append(", publishDate=");
 		sb.append(publishDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -205,6 +205,8 @@ public class LayoutCacheModel
 		layoutImpl.setPrivateLayout(privateLayout);
 		layoutImpl.setLayoutId(layoutId);
 		layoutImpl.setParentLayoutId(parentLayoutId);
+		layoutImpl.setClassNameId(classNameId);
+		layoutImpl.setClassPK(classPK);
 
 		if (name == null) {
 			layoutImpl.setName("");
@@ -306,21 +308,18 @@ public class LayoutCacheModel
 			layoutImpl.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 		}
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			layoutImpl.setLastPublishDate(null);
-		}
-		else {
-			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		layoutImpl.setClassNameId(classNameId);
-		layoutImpl.setClassPK(classPK);
-
 		if (publishDate == Long.MIN_VALUE) {
 			layoutImpl.setPublishDate(null);
 		}
 		else {
 			layoutImpl.setPublishDate(new Date(publishDate));
+		}
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			layoutImpl.setLastPublishDate(null);
+		}
+		else {
+			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
 		layoutImpl.resetOriginalValues();
@@ -355,6 +354,10 @@ public class LayoutCacheModel
 		layoutId = objectInput.readLong();
 
 		parentLayoutId = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -378,12 +381,8 @@ public class LayoutCacheModel
 
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
-		lastPublishDate = objectInput.readLong();
-
-		classNameId = objectInput.readLong();
-
-		classPK = objectInput.readLong();
 		publishDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -426,6 +425,10 @@ public class LayoutCacheModel
 		objectOutput.writeLong(layoutId);
 
 		objectOutput.writeLong(parentLayoutId);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -528,12 +531,8 @@ public class LayoutCacheModel
 			objectOutput.writeUTF(sourcePrototypeLayoutUuid);
 		}
 
-		objectOutput.writeLong(lastPublishDate);
-
-		objectOutput.writeLong(classNameId);
-
-		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(publishDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -551,6 +550,8 @@ public class LayoutCacheModel
 	public boolean privateLayout;
 	public long layoutId;
 	public long parentLayoutId;
+	public long classNameId;
+	public long classPK;
 	public String name;
 	public String title;
 	public String description;
@@ -569,9 +570,7 @@ public class LayoutCacheModel
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;
-	public long lastPublishDate;
-	public long classNameId;
-	public long classPK;
 	public long publishDate;
+	public long lastPublishDate;
 
 }

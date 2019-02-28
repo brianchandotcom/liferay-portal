@@ -59,6 +59,8 @@ public class LayoutWrapper
 		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -79,10 +81,8 @@ public class LayoutWrapper
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
 		attributes.put(
 			"sourcePrototypeLayoutUuid", getSourcePrototypeLayoutUuid());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
 		attributes.put("publishDate", getPublishDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -177,6 +177,18 @@ public class LayoutWrapper
 
 		if (parentLayoutId != null) {
 			setParentLayoutId(parentLayoutId);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		String name = (String)attributes.get("name");
@@ -290,28 +302,16 @@ public class LayoutWrapper
 			setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 		}
 
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
 		Date publishDate = (Date)attributes.get("publishDate");
 
 		if (publishDate != null) {
 			setPublishDate(publishDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 

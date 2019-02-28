@@ -311,6 +311,48 @@ public interface LayoutModel
 	public void setParentLayoutId(long parentLayoutId);
 
 	/**
+	 * Returns the fully qualified class name of this layout.
+	 *
+	 * @return the fully qualified class name of this layout
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this layout.
+	 *
+	 * @return the class name ID of this layout
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this layout.
+	 *
+	 * @param classNameId the class name ID of this layout
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class pk of this layout.
+	 *
+	 * @return the class pk of this layout
+	 */
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this layout.
+	 *
+	 * @param classPK the class pk of this layout
+	 */
+	@Override
+	public void setClassPK(long classPK);
+
+	/**
 	 * Returns the name of this layout.
 	 *
 	 * @return the name of this layout
@@ -1023,6 +1065,20 @@ public interface LayoutModel
 	public void setSourcePrototypeLayoutUuid(String sourcePrototypeLayoutUuid);
 
 	/**
+	 * Returns the publish date of this layout.
+	 *
+	 * @return the publish date of this layout
+	 */
+	public Date getPublishDate();
+
+	/**
+	 * Sets the publish date of this layout.
+	 *
+	 * @param publishDate the publish date of this layout
+	 */
+	public void setPublishDate(Date publishDate);
+
+	/**
 	 * Returns the last publish date of this layout.
 	 *
 	 * @return the last publish date of this layout
@@ -1037,62 +1093,6 @@ public interface LayoutModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
-	 * Returns the fully qualified class name of this layout.
-	 *
-	 * @return the fully qualified class name of this layout
-	 */
-	@Override
-	public String getClassName();
-
-	public void setClassName(String className);
-
-	/**
-	 * Returns the class name ID of this layout.
-	 *
-	 * @return the class name ID of this layout
-	 */
-	@Override
-	public long getClassNameId();
-
-	/**
-	 * Sets the class name ID of this layout.
-	 *
-	 * @param classNameId the class name ID of this layout
-	 */
-	@Override
-	public void setClassNameId(long classNameId);
-
-	/**
-	 * Returns the class pk of this layout.
-	 *
-	 * @return the class pk of this layout
-	 */
-	@Override
-	public long getClassPK();
-
-	/**
-	 * Sets the class pk of this layout.
-	 *
-	 * @param classPK the class pk of this layout
-	 */
-	@Override
-	public void setClassPK(long classPK);
-
-	/**
-	 * Returns the publish date of this layout.
-	 *
-	 * @return the publish date of this layout
-	 */
-	public Date getPublishDate();
-
-	/**
-	 * Sets the publish date of this layout.
-	 *
-	 * @param publishDate the publish date of this layout
-	 */
-	public void setPublishDate(Date publishDate);
 
 	@Override
 	public String[] getAvailableLanguageIds();

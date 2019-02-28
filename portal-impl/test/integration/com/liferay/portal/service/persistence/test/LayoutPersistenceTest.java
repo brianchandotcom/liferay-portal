@@ -146,6 +146,10 @@ public class LayoutPersistenceTest {
 
 		newLayout.setParentLayoutId(RandomTestUtil.nextLong());
 
+		newLayout.setClassNameId(RandomTestUtil.nextLong());
+
+		newLayout.setClassPK(RandomTestUtil.nextLong());
+
 		newLayout.setName(RandomTestUtil.randomString());
 
 		newLayout.setTitle(RandomTestUtil.randomString());
@@ -182,13 +186,9 @@ public class LayoutPersistenceTest {
 
 		newLayout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
-		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
-
-		newLayout.setClassNameId(RandomTestUtil.nextLong());
-
-		newLayout.setClassPK(RandomTestUtil.nextLong());
-
 		newLayout.setPublishDate(RandomTestUtil.nextDate());
+
+		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_layouts.add(_persistence.update(newLayout));
 
@@ -224,6 +224,10 @@ public class LayoutPersistenceTest {
 			existingLayout.getLayoutId(), newLayout.getLayoutId());
 		Assert.assertEquals(
 			existingLayout.getParentLayoutId(), newLayout.getParentLayoutId());
+		Assert.assertEquals(
+			existingLayout.getClassNameId(), newLayout.getClassNameId());
+		Assert.assertEquals(
+			existingLayout.getClassPK(), newLayout.getClassPK());
 		Assert.assertEquals(existingLayout.getName(), newLayout.getName());
 		Assert.assertEquals(existingLayout.getTitle(), newLayout.getTitle());
 		Assert.assertEquals(
@@ -257,15 +261,11 @@ public class LayoutPersistenceTest {
 			existingLayout.getSourcePrototypeLayoutUuid(),
 			newLayout.getSourcePrototypeLayoutUuid());
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingLayout.getLastPublishDate()),
-			Time.getShortTimestamp(newLayout.getLastPublishDate()));
-		Assert.assertEquals(
-			existingLayout.getClassNameId(), newLayout.getClassNameId());
-		Assert.assertEquals(
-			existingLayout.getClassPK(), newLayout.getClassPK());
-		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getPublishDate()),
 			Time.getShortTimestamp(newLayout.getPublishDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayout.getLastPublishDate()),
+			Time.getShortTimestamp(newLayout.getLastPublishDate()));
 	}
 
 	@Test
@@ -492,14 +492,14 @@ public class LayoutPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "parentPlid", true,
 			"leftPlid", true, "rightPlid", true, "privateLayout", true,
-			"layoutId", true, "parentLayoutId", true, "name", true, "title",
-			true, "description", true, "keywords", true, "robots", true, "type",
-			true, "hidden", true, "system", true, "friendlyURL", true,
-			"iconImageId", true, "themeId", true, "colorSchemeId", true,
-			"priority", true, "layoutPrototypeUuid", true,
-			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true, "lastPublishDate", true, "classNameId", true, "classPK", true,
-			"publishDate", true);
+			"layoutId", true, "parentLayoutId", true, "classNameId", true,
+			"classPK", true, "name", true, "title", true, "description", true,
+			"keywords", true, "robots", true, "type", true, "hidden", true,
+			"system", true, "friendlyURL", true, "iconImageId", true, "themeId",
+			true, "colorSchemeId", true, "priority", true,
+			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
+			"sourcePrototypeLayoutUuid", true, "publishDate", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -814,6 +814,10 @@ public class LayoutPersistenceTest {
 
 		layout.setParentLayoutId(RandomTestUtil.nextLong());
 
+		layout.setClassNameId(RandomTestUtil.nextLong());
+
+		layout.setClassPK(RandomTestUtil.nextLong());
+
 		layout.setName(RandomTestUtil.randomString());
 
 		layout.setTitle(RandomTestUtil.randomString());
@@ -850,13 +854,9 @@ public class LayoutPersistenceTest {
 
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
-		layout.setLastPublishDate(RandomTestUtil.nextDate());
-
-		layout.setClassNameId(RandomTestUtil.nextLong());
-
-		layout.setClassPK(RandomTestUtil.nextLong());
-
 		layout.setPublishDate(RandomTestUtil.nextDate());
+
+		layout.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_layouts.add(_persistence.update(layout));
 
@@ -1103,6 +1103,10 @@ public class LayoutPersistenceTest {
 
 		layout.setParentLayoutId(RandomTestUtil.nextLong());
 
+		layout.setClassNameId(RandomTestUtil.nextLong());
+
+		layout.setClassPK(RandomTestUtil.nextLong());
+
 		layout.setName(RandomTestUtil.randomString());
 
 		layout.setTitle(RandomTestUtil.randomString());
@@ -1139,13 +1143,9 @@ public class LayoutPersistenceTest {
 
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
-		layout.setLastPublishDate(RandomTestUtil.nextDate());
-
-		layout.setClassNameId(RandomTestUtil.nextLong());
-
-		layout.setClassPK(RandomTestUtil.nextLong());
-
 		layout.setPublishDate(RandomTestUtil.nextDate());
+
+		layout.setLastPublishDate(RandomTestUtil.nextDate());
 
 		if (parentPlid != null) {
 			layout.setParentPlid(parentPlid);

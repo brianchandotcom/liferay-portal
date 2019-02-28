@@ -81,9 +81,9 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 						%>
 
-						<h5 class="text-default">
+						<span class="text-default">
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbTemplate.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-						</h5>
+						</span>
 
 						<liferay-portlet:renderURL var="editURL">
 							<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
@@ -91,11 +91,11 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 							<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<h4>
+						<h2 class="h5">
 							<aui:a href="<%= editURL.toString() %>">
 								<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
 							</aui:a>
-						</h4>
+						</h2>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

@@ -29,12 +29,12 @@ definition {
 
 		Panel.expandPanel(panel = "Attachments");
 
-		AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+		AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
 		var key_attachmentFileName = "${mbAttachmentFile}";
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${mbAttachmentFile}"
 		);
 
@@ -50,12 +50,12 @@ definition {
 
 		Panel.expandPanel(panel = "Attachments");
 
-		AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+		AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
 		var key_attachmentFileName = "${mbThreadAttachment}";
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${mbThreadAttachment}"
 		);
 
@@ -126,12 +126,12 @@ definition {
 
 		Panel.expandPanel(panel = "Attachments");
 
-		AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+		AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
 		var key_attachmentFileName = "${mbThreadAttachment}";
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${mbThreadAttachment}"
 		);
 
@@ -632,12 +632,12 @@ definition {
 			AssertClick(locator1 = "Panel#ENTRY_ATTACHMENTS", value1 = "Attachments");
 		}
 
-		AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+		AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
 		var key_attachmentFileName = "${mbThreadAttachment}";
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${mbThreadAttachment}"
 		);
 

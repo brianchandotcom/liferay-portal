@@ -158,7 +158,7 @@ definition {
 			for (var dmDocumentFile : list "${dmDocumentFileList}") {
 				var key_dmDocumentFile = "${dmDocumentFile}";
 
-				AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+				AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
 				if ("${uploadTempFile}" == "true") {
 					SikuliUploadTempFile(
@@ -167,8 +167,8 @@ definition {
 					);
 				}
 				else {
-					SikuliUploadCommonFile(
-						locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+					UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+						locator1 = "TextInput#FILE",
 						value1 = "${dmDocumentFile}"
 					);
 				}

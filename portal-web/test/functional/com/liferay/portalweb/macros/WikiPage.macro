@@ -41,12 +41,10 @@ definition {
 
 		AssertVisible(locator1 = "Button#SELECT_FILES");
 
-		Click(locator1 = "Button#SELECT_FILES");
-
 		var key_attachmentFileName = "${attachmentFileName}";
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${attachmentFileName}"
 		);
 

@@ -205,13 +205,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
-		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
-
-		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
-
 		if ("${uploadFrom}" == "dependencies") {
-			SikuliUploadCommonFile(
-				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
 				value1 = "${larFileName}"
 			);
 		}
@@ -305,17 +301,13 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
-
-		Pause(locator1 = "13000");
-
-		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
+		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
 		Pause(locator1 = "13000");
 
 		if ("${uploadFrom}" == "dependencies") {
-			SikuliUploadCommonFile(
-				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
 				value1 = "${larFileName}"
 			);
 		}

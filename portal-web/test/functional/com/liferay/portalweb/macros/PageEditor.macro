@@ -26,12 +26,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
+		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
-		SikuliClick(locator1 = "OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG");
-
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${fileName}"
 		);
 

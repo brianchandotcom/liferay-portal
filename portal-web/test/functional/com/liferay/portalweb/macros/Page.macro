@@ -387,10 +387,10 @@ definition {
 
 		SelectFrame(locator1 = "SitePages#LOGO_UPLOAD_IMAGE_IFRAME");
 
-		AssertClick(locator1 = "SitePages#LOGO_UPLOAD_IMAGE_BUTTON", value1 = "Select");
+		AssertElementPresent(locator1 = "SitePages#LOGO_UPLOAD_IMAGE_BUTTON");
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${logoFile}"
 		);
 

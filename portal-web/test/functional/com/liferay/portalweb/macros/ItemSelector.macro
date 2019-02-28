@@ -178,13 +178,12 @@ definition {
 			value1 = "${navTab}"
 		);
 
-		AssertClick(
-			locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE",
-			value1 = "Select File"
+		AssertElementPresent(
+			locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE"
 		);
 
-		SikuliUploadCommonFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${uploadFileName}"
 		);
 

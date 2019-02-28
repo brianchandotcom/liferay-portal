@@ -436,10 +436,10 @@ definition {
 		Panel.expandPanel(panel = "Attachments");
 
 		for (var mbThreadAttachment : list "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4") {
-			AssertClick(locator1 = "Button#SELECT_FILES", value1 = "Select Files");
+			AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
-			SikuliUploadCommonFile(
-				locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
 				value1 = "${mbThreadAttachment}"
 			);
 

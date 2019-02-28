@@ -147,10 +147,19 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent>
-			getContentSpaceContentStructureStructuredContentsPage(
-				Long contentSpaceId, Long contentStructureId, Filter filter,
-				Pagination pagination, Sort[] sorts)
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return getContentStructureStructuredContentsPage(
+			contentSpaceId, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<StructuredContent> getContentStructureStructuredContentsPage(
+			Long contentStructureId, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		Indexer<JournalArticle> indexer = _indexerRegistry.getIndexer(
@@ -186,16 +195,6 @@ public class StructuredContentResourceImpl
 			transform(
 				_journalHelper.getArticles(hits), this::_toStructuredContent),
 			pagination, indexer.searchCount(searchContext));
-	}
-
-	@Override
-	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			Long contentSpaceId, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		return getContentSpaceContentStructureStructuredContentsPage(
-			contentSpaceId, null, filter, pagination, sorts);
 	}
 
 	@Override

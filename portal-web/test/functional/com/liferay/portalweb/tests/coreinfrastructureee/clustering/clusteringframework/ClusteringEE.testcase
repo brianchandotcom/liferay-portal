@@ -426,9 +426,9 @@ definition {
 			scriptFile = "groovy-script-portal-cache-get.groovy"
 		);
 
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "test.cache is empty",
-			nodePort = "9080"
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "test.cache is empty"
 		);
 
 		Clustering.runGroovyScript(
@@ -471,8 +471,18 @@ definition {
 			scriptFile = "groovy-script-portal-cache-get.groovy"
 		);
 
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "test.key=null"
+		);
+
+		Clustering.runGroovyScript(
+			nodePort = "8080",
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
+		);
+
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "test.key=null",
+			expectedText = "Put test.key into test.cache",
 			nodePort = "9080"
 		);
 	}

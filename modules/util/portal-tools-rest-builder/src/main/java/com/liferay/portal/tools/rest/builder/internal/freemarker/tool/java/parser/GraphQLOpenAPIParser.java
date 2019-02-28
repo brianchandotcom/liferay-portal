@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -26,6 +28,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -120,12 +123,13 @@ public class GraphQLOpenAPIParser {
 
 			String parameterType = javaMethodParameter.getParameterType();
 
-			if (Objects.equals(parameterType, "Pagination")) {
+			if (Objects.equals(parameterType, Pagination.class.getName())) {
 				javaMethodParameters.add(
-					new JavaMethodParameter("pageSize", "int"));
+					new JavaMethodParameter(
+						"pageSize", Integer.class.getName()));
 
 				javaMethodParameters.add(
-					new JavaMethodParameter("page", "int"));
+					new JavaMethodParameter("page", Integer.class.getName()));
 			}
 			else {
 				javaMethodParameters.add(javaMethodParameter);
@@ -156,8 +160,20 @@ public class GraphQLOpenAPIParser {
 
 			String returnType = resourceJavaMethodSignature.getReturnType();
 
-			if (returnType.startsWith("Page<")) {
-				returnType = "Collection<".concat(returnType.substring(5));
+			if (returnType.startsWith(Page.class.getName() + "<")) {
+				String pageClassName = Page.class.getName();
+
+				String className = returnType.substring(
+					pageClassName.length() + 1, returnType.length() - 1);
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(Collection.class.getName());
+				sb.append("<");
+				sb.append(className);
+				sb.append(">");
+
+				returnType = sb.toString();
 			}
 
 			List<JavaMethodParameter> javaMethodParameters =

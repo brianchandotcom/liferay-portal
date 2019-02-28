@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -21,8 +23,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
+import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
@@ -73,7 +79,9 @@ public class ResourceOpenAPIParser {
 						javaDataTypeMap, operation);
 					List<String> tags = operation.getTags();
 
-					if (!_isSchemaMethod(schemaName, tags, returnType)) {
+					if (!_isSchemaMethod(
+							javaDataTypeMap, returnType, schemaName, tags)) {
+
 						return;
 					}
 
@@ -209,7 +217,7 @@ public class ResourceOpenAPIParser {
 
 		if (parameterNames.contains("filter")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"filter", "Filter");
+				"filter", Filter.class.getName());
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
@@ -218,14 +226,14 @@ public class ResourceOpenAPIParser {
 			parameterNames.contains("pageSize")) {
 
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"pagination", "Pagination");
+				"pagination", Pagination.class.getName());
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
 
 		if (parameterNames.contains("sort")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"sorts", "Sort[]");
+				"sorts", Sort.class.getName() + "[]");
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
@@ -240,7 +248,7 @@ public class ResourceOpenAPIParser {
 			for (Map.Entry<String, Content> entry : contents.entrySet()) {
 				if (Objects.equals(entry.getKey(), "multipart/form-data")) {
 					multipartBodyJavaMethodParameter = new JavaMethodParameter(
-						"multipartBody", "MultipartBody");
+						"multipartBody", MultipartBody.class.getName());
 				}
 			}
 
@@ -249,19 +257,23 @@ public class ResourceOpenAPIParser {
 					String parameterType = OpenAPIParserUtil.getJavaDataType(
 						javaDataTypeMap, content.getSchema());
 
-					String simpleClassName = parameterType.substring(
-						parameterType.lastIndexOf(".") + 1);
-
-					String parameterName = StringUtil.lowerCaseFirstLetter(
-						simpleClassName);
-
-					if (StringUtil.equals(simpleClassName, "Long")) {
-						parameterName = "referenceId";
+					if (Long.class.isInstance(parameterType)) {
+						javaMethodParameters.add(
+							new JavaMethodParameter(
+								"referenceId", parameterType));
 					}
+					else {
+						String simpleClassName = parameterType.substring(
+							parameterType.lastIndexOf(".") + 1);
 
-					javaMethodParameters.add(
-						new JavaMethodParameter(
-							parameterName, simpleClassName));
+						String parameterName = StringUtil.lowerCaseFirstLetter(
+							simpleClassName);
+
+						javaMethodParameters.add(
+							new JavaMethodParameter(
+								parameterName,
+								javaDataTypeMap.get(simpleClassName)));
+					}
 				}
 			}
 			else {
@@ -384,7 +396,9 @@ public class ResourceOpenAPIParser {
 			methodNameSegments.add(StringUtil.upperCaseFirstLetter(text));
 		}
 
-		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
+		if (httpMethod.equals("get") &&
+			returnType.startsWith(Page.class.getName() + "<")) {
+
 			String className = returnType.substring(5, returnType.length() - 1);
 
 			String simpleClassName = className.substring(
@@ -401,8 +415,8 @@ public class ResourceOpenAPIParser {
 			(pathSegments.length >
 				(methodNameSegments.size() + parameters.size()))) {
 
-			String pathSegment = pathSegments[
-				methodNameSegments.size() + parameters.size()];
+			String pathSegment =
+				pathSegments[methodNameSegments.size() + parameters.size()];
 
 			String text = CamelCaseUtil.toCamelCase(pathSegment);
 
@@ -416,15 +430,15 @@ public class ResourceOpenAPIParser {
 		if (pathSegments.length >
 				(methodNameSegments.size() + parameters.size())) {
 
-			String pathSegment = pathSegments[
-				methodNameSegments.size() + parameters.size()];
+			String pathSegment =
+				pathSegments[methodNameSegments.size() + parameters.size()];
 
 			String text = CamelCaseUtil.toCamelCase(pathSegment);
 
 			methodNameSegments.add(StringUtil.upperCaseFirstLetter(text));
 		}
 
-		if (StringUtil.startsWith(returnType, "Page<")) {
+		if (StringUtil.startsWith(returnType, Page.class.getName() + "<")) {
 			methodNameSegments.add("Page");
 		}
 
@@ -444,20 +458,20 @@ public class ResourceOpenAPIParser {
 
 		String parameterType = javaMethodParameter.getParameterType();
 
-		if (Objects.equals(parameterType, "Filter") &&
+		if (Objects.equals(parameterType, Filter.class.getName()) &&
 			parameterNames.contains("filter")) {
 
 			return "@Context";
 		}
 
-		if (Objects.equals(parameterType, "Pagination") &&
+		if (Objects.equals(parameterType, Pagination.class.getName()) &&
 			parameterNames.contains("page") &&
 			parameterNames.contains("pageSize")) {
 
 			return "@Context";
 		}
 
-		if (Objects.equals(parameterType, "Sort[]") &&
+		if (Objects.equals(parameterType, Sort.class.getName() + "[]") &&
 			parameterNames.contains("sort")) {
 
 			return "@Context";
@@ -497,7 +511,7 @@ public class ResourceOpenAPIParser {
 		Map<String, Response> responses = operation.getResponses();
 
 		if (responses.isEmpty()) {
-			return "boolean";
+			return Boolean.class.getName();
 		}
 
 		for (Response response : responses.values()) {
@@ -514,14 +528,18 @@ public class ResourceOpenAPIParser {
 					continue;
 				}
 
-				String javaDataType = OpenAPIParserUtil.getJavaDataType(
+				String returnType = OpenAPIParserUtil.getJavaDataType(
 					javaDataTypeMap, schema);
 
-				if (javaDataType.endsWith("[]")) {
-					String s = javaDataType.substring(
-						0, javaDataType.length() - 2);
+				if (returnType.endsWith("[]")) {
+					StringBuilder sb = new StringBuilder();
 
-					return "Page<" + s + ">";
+					sb.append(Page.class.getName());
+					sb.append("<");
+					sb.append(returnType.substring(0, returnType.length() - 2));
+					sb.append(">");
+
+					return sb.toString();
 				}
 
 				String schemaReference = schema.getReference();
@@ -537,15 +555,16 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		if (Objects.equals(OpenAPIParserUtil.getHTTPMethod(operation), "get")) {
-			return "String";
+		if (Get.class.isInstance(operation)) {
+			return String.class.getName();
 		}
 
-		return "boolean";
+		return Boolean.class.getName();
 	}
 
 	private static boolean _isSchemaMethod(
-		String schemaName, List<String> tags, String returnType) {
+		Map<String, String> javaDataTypeMap, String returnType,
+		String schemaName, List<String> tags) {
 
 		if (!tags.isEmpty()) {
 			if (tags.contains(schemaName)) {
@@ -555,12 +574,21 @@ public class ResourceOpenAPIParser {
 			return false;
 		}
 
-		if (returnType.equals(schemaName) ||
-			((returnType.length() == schemaName.length() + 6) &&
-			 returnType.startsWith("Page<") && returnType.endsWith(">") &&
-			 returnType.regionMatches(5, schemaName, 0, schemaName.length()))) {
-
+		if (returnType.equals(javaDataTypeMap.get(schemaName))) {
 			return true;
+		}
+
+		if (returnType.startsWith(Page.class.getName() + "<") &&
+			returnType.endsWith(">")) {
+
+			String pageClassName = Page.class.getName();
+
+			String className = returnType.substring(
+				pageClassName.length() + 1, returnType.length() - 1);
+
+			if (className.equals(javaDataTypeMap.get(schemaName))) {
+				return true;
+			}
 		}
 
 		return false;

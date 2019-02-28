@@ -58,9 +58,9 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
-			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
+			<#if stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;
-			<#elseif stringUtil.equals(javaMethodSignature.returnType, "String")>
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
 				return StringPool.BLANK;
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());

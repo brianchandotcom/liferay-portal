@@ -31,6 +31,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -484,7 +485,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#assign
 				hasFilterAndSorts = true
 				invokeArguments = invokeArguments?replace("filter", "filterString")?replace("sorts", "sortString")
-				invokeParameters = invokeParameters?replace("Filter filter", "String filterString")?replace("Sort[] sorts", "String sortString")
+				invokeParameters = invokeParameters?replace("com.liferay.portal.kernel.search.filter.Filter filter", "String filterString")?replace("com.liferay.portal.kernel.search.Sort[] sorts", "String sortString")
 			/>
 		</#if>
 

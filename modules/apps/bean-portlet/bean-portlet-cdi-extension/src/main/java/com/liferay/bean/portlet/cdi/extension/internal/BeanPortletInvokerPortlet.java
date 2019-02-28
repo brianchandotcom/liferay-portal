@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
@@ -149,6 +150,8 @@ public class BeanPortletInvokerPortlet
 
 		Method method = beanMethod.getMethod();
 
+		String include = null;
+
 		MethodType methodType = beanMethod.getMethodType();
 
 		if (methodType == MethodType.ACTION) {
@@ -168,10 +171,25 @@ public class BeanPortletInvokerPortlet
 				beanMethod.invoke(args);
 			}
 		}
-		else if (methodType == MethodType.RENDER) {
-			RenderRequest renderRequest = (RenderRequest)args[0];
+		else if (methodType == MethodType.HEADER) {
+			PortletRequest portletRequest = (PortletRequest)args[0];
 
-			PortletMode portletMode = renderRequest.getPortletMode();
+			PortletMode portletMode = portletRequest.getPortletMode();
+
+			PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+
+			if ((beanMethodPortletMode == null) ||
+				portletMode.equals(beanMethodPortletMode)) {
+
+				beanMethod.invoke(args);
+
+				include = methodType.getInclude(method);
+			}
+		}
+		else if (methodType == MethodType.RENDER) {
+			PortletRequest portletRequest = (PortletRequest)args[0];
+
+			PortletMode portletMode = portletRequest.getPortletMode();
 
 			PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
 
@@ -192,6 +210,8 @@ public class BeanPortletInvokerPortlet
 				else {
 					beanMethod.invoke(args);
 				}
+
+				include = methodType.getInclude(method);
 			}
 		}
 		else if ((methodType == MethodType.SERVE_RESOURCE) &&
@@ -206,14 +226,20 @@ public class BeanPortletInvokerPortlet
 
 				writer.write(markup);
 			}
+
+			include = methodType.getInclude(method);
 		}
 		else {
 			beanMethod.invoke(args);
 		}
 
-		String include = methodType.getInclude(method);
+		PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
 
-		if (Validator.isNotNull(include)) {
+		if (Validator.isNotNull(include) &&
+			((beanMethodPortletMode == null) ||
+			 beanMethodPortletMode.equals(
+				 ((PortletRequest)args[0]).getPortletMode()))) {
+
 			PortletContext portletContext = _portletConfig.getPortletContext();
 
 			PortletRequestDispatcher portletRequestDispatcher =

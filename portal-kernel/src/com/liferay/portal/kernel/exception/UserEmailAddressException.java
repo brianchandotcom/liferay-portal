@@ -80,17 +80,33 @@ public class UserEmailAddressException extends PortalException {
 
 	public static class MustNotBeDuplicate extends UserEmailAddressException {
 
-		public MustNotBeDuplicate(long userId, String emailAddress) {
+		public MustNotBeDuplicate(long companyId, String emailAddress) {
 			super(
 				String.format(
-					"Email address %s must not be duplicate but is already " +
-						"used by user %s",
-					emailAddress, userId));
+					"User {companyId = %s, emailAddress = %s} can't be " +
+						"created as the email address is already in use.",
+					companyId, emailAddress));
 
+			this.companyId = companyId;
+			this.emailAddress = emailAddress;
+			this.userId = 0;
+		}
+
+		public MustNotBeDuplicate(
+			long companyId, long userId, String emailAddress) {
+
+			super(
+				String.format(
+					"Email address %s can not be set for user  " +
+						"{companyId = %s, userId = %s} as it's already in use.",
+					emailAddress, companyId, userId));
+
+			this.companyId = companyId;
 			this.userId = userId;
 			this.emailAddress = emailAddress;
 		}
 
+		public final long companyId;
 		public String emailAddress;
 		public final long userId;
 

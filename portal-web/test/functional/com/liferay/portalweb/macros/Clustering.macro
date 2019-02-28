@@ -8,6 +8,8 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=${liferayDependencyJars} -Dapp.server.bundle.index=${bundleIndex}"
 		);
+
+		Pause(locator1 = "10000");
 	}
 
 	macro enableDebugging {

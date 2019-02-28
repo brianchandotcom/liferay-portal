@@ -122,6 +122,27 @@ public class GitUtil {
 		return fileNames;
 	}
 
+	public static List<String> getModifiedLastDayFileNames(String baseDirName)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git diff --diff-filter=AMR --name-only --stat @{last.day}");
+
+		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {
+				fileNames.add(getFileName(line, gitLevel));
+			}
+		}
+
+		return fileNames;
+	}
+
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 

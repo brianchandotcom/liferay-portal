@@ -21,6 +21,8 @@ definition {
 
 		SelectFrameTop();
 
+		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
+
 		PortletEntry.inputName(name = "${bookmarkName}");
 
 		Type(locator1 = "TextInput#URL", value1 = "${bookmarkURL}");
@@ -542,7 +544,9 @@ definition {
 			value1 = "${bookmarkName}"
 		);
 
-		Click(locator1 = "Link#VIEW_IN_CONTEXT");
+		Click(
+			locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK"
+		);
 
 		SelectWindow(
 			locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay"

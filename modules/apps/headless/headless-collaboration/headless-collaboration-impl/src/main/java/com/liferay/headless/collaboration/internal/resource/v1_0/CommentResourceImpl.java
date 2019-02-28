@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -222,14 +222,16 @@ public class CommentResourceImpl
 	private Page<Comment> _getComments(
 			Long parentCommentId, Filter filter, Pagination pagination,
 			Sort[] sorts)
-		throws SearchException {
+		throws Exception {
 
 		List<com.liferay.portal.kernel.comment.Comment> comments =
 			new ArrayList<>();
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(MBMessage.class),
-			pagination,
+		Indexer<MBMessage> indexer = _indexerRegistry.getIndexer(
+			MBMessage.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -240,15 +242,15 @@ public class CommentResourceImpl
 					BooleanClauseOccur.MUST);
 			},
 			queryConfig -> {
-				queryConfig.setSelectedFieldNames(Field.CLASS_PK);
+				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
 			},
-			searchContext -> {
-				searchContext.setAttribute("discussion", Boolean.TRUE);
-				searchContext.setAttribute(
-					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			_searchResultPermissionFilterFactory, sorts);
+			sorts);
+
+		searchContext.setAttribute("discussion", Boolean.TRUE);
+		searchContext.setAttribute("searchPermissionContext", StringPool.BLANK);
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Hits hits = indexer.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			com.liferay.portal.kernel.comment.Comment comment =
@@ -261,7 +263,7 @@ public class CommentResourceImpl
 		return Page.of(
 			transform(
 				comments, comment -> CommentUtil.toComment(comment, _portal)),
-			pagination, comments.size());
+			pagination, indexer.searchCount(searchContext));
 	}
 
 	private DiscussionPermission _getDiscussionPermission() {
@@ -319,9 +321,5 @@ public class CommentResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 }

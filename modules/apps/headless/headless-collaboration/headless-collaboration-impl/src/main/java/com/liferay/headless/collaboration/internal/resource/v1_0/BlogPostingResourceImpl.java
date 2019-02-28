@@ -35,8 +35,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -101,19 +102,23 @@ public class BlogPostingResourceImpl
 
 		List<BlogsEntry> blogEntries = new ArrayList<>();
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(BlogsEntry.class),
-			pagination,
+		Indexer<BlogsEntry> indexer = _indexerRegistry.getIndexer(
+			BlogsEntry.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination,
 			booleanQuery -> {
 			},
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
 			},
-			_searchResultPermissionFilterFactory, sorts);
+			sorts);
+
+		searchContext.setAttribute(
+			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Hits hits = indexer.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			BlogsEntry blogsEntry = _blogsEntryService.getEntry(
@@ -124,7 +129,7 @@ public class BlogPostingResourceImpl
 
 		return Page.of(
 			transform(blogEntries, this::_toBlogPosting), pagination,
-			blogEntries.size());
+			indexer.searchCount(searchContext));
 	}
 
 	@Override
@@ -331,10 +336,6 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

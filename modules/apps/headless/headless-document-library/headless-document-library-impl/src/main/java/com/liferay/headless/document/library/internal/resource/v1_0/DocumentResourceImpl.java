@@ -43,8 +43,9 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -333,14 +334,19 @@ public class DocumentResourceImpl
 
 		List<FileEntry> fileEntries = new ArrayList<>();
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(DLFileEntry.class),
-			pagination, booleanQueryConsumer,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
-			_searchResultPermissionFilterFactory, sorts);
+		Indexer<DLFileEntry> indexer = _indexerRegistry.getIndexer(
+			DLFileEntry.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination, booleanQueryConsumer,
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
+			},
+			sorts);
+
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Hits hits = indexer.search(searchContext);
 
 		for (com.liferay.portal.kernel.search.Document document :
 				hits.getDocs()) {
@@ -355,7 +361,7 @@ public class DocumentResourceImpl
 
 		return Page.of(
 			transform(fileEntries, this::_toDocument), pagination,
-			fileEntries.size());
+			indexer.searchCount(searchContext));
 	}
 
 	private <T, S> T _getValue(
@@ -462,10 +468,6 @@ public class DocumentResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

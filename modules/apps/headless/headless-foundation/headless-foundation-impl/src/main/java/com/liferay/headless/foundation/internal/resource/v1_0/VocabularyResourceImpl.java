@@ -23,8 +23,9 @@ import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -81,18 +82,22 @@ public class VocabularyResourceImpl
 
 		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
-		Hits hits = SearchUtil.getHits(
-			filter, _indexerRegistry.nullSafeGetIndexer(AssetVocabulary.class),
-			pagination,
+		Indexer<AssetVocabulary> indexer = _indexerRegistry.getIndexer(
+			AssetVocabulary.class);
+
+		SearchContext searchContext = SearchUtil.createSearchContext(
+			filter, pagination,
 			booleanQuery -> {
 			},
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ASSET_VOCABULARY_ID),
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {contentSpaceId});
+			queryConfig -> {
+				queryConfig.setSelectedFieldNames(Field.ASSET_VOCABULARY_ID);
 			},
-			_searchResultPermissionFilterFactory, sorts);
+			sorts);
+
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+		searchContext.setGroupIds(new long[] {contentSpaceId});
+
+		Hits hits = indexer.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			AssetVocabulary assetVocabulary =
@@ -105,7 +110,7 @@ public class VocabularyResourceImpl
 
 		return Page.of(
 			transform(assetVocabularies, this::_toVocabulary), pagination,
-			assetVocabularies.size());
+			indexer.searchCount(searchContext));
 	}
 
 	@Override
@@ -203,10 +208,6 @@ public class VocabularyResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

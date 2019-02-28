@@ -1,4 +1,3 @@
-import {PAGE_CHANGE} from './RouterConstants';
 import React from 'react';
 
 /**
@@ -6,30 +5,28 @@ import React from 'react';
  * @extends React.Component
  */
 export default class Link extends React.Component {
-	render() {
-		const {className, query, text, title, to, type} = this.props;
+	getUrl() {
+		const {query = {}, title, to} = this.props;
 
-		const emitEvent = path => () => {
-			document.dispatchEvent(
-				new CustomEvent(PAGE_CHANGE, {
-					bubbles: true,
-					detail: {
-						path,
-						query,
-						title
-					}
-				})
-			);
-		};
+		if (title) {
+			query['_title'] = title;
+		}
+
+		query['_path'] = to;
+
+		const url = Object.keys(query).reduce(
+			(old, key) => `${old}&${key}=${query[key]}`,
+			''
+		);
+
+		return `#${url}`;
+	}
+
+	render() {
+		const {className, text, type} = this.props;
 
 		return (
-			<a
-				className={className}
-				data-senna-off
-				href={`#${to}`}
-				onClick={emitEvent(to)}
-				type={type}
-			>
+			<a className={className} data-senna-off href={this.getUrl()} type={type}>
 				{text}
 			</a>
 		);

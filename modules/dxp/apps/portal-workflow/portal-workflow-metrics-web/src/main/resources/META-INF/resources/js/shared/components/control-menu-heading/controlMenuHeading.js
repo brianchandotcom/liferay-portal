@@ -1,5 +1,3 @@
-import {PAGE_CHANGE} from '../router/RouterConstants';
-
 /**
  * @memberof shared/components
  * @module controlMenuHeading
@@ -13,19 +11,6 @@ export default ({backPath, title}) => {
 	const headerTitle = document.getElementsByClassName(
 		'control-menu-level-1-heading'
 	)[0];
-	const emitEvent = function() {
-		const path = this.getAttribute('data-path');
-
-		document.dispatchEvent(
-			new CustomEvent(PAGE_CHANGE, {
-				bubbles: true,
-				detail: {
-					path,
-					title: ''
-				}
-			})
-		);
-	};
 
 	headerTitle.innerHTML = title;
 
@@ -39,7 +24,7 @@ export default ({backPath, title}) => {
 		backMenu = document.createElement('li');
 		backMenu.className = 'control-menu-nav-item metric-control-menu-heading';
 		backMenu.innerHTML = `
-			<a class="back-url-link control-menu-icon" href="#" data-senna-off>
+			<a class="back-url-link control-menu-icon" href="javascript:history.back();" data-senna-off>
 				<span class="icon-monospaced">
 					<svg class="lexicon-icon lexicon-icon-${iconName}" focusable="false" role="presentation">
 						<use href="${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg#${iconName}"/>
@@ -47,8 +32,6 @@ export default ({backPath, title}) => {
 				</span>
 			</a>`;
 
-		backMenu.setAttribute('data-path', backPath);
-		backMenu.addEventListener('click', emitEvent.bind(backMenu));
 		menuHeader.appendChild(backMenu);
 	}
 	else {

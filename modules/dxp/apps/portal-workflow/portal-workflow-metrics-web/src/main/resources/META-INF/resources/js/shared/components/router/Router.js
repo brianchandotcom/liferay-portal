@@ -10,45 +10,81 @@ import React from 'react';
 export default class Router extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {path: props.defautPath, query: {}};
+		const url = String(document.location);
+
+		this.state = {
+			firstUrl: url,
+			lastUrl: url,
+			path: props.defautPath,
+			query: {}
+		};
 	}
 
 	componentDidMount() {
-		const changePage = ({detail: {path, query, title}}) => {
-			const {defautPath, paths} = this.props;
-			const {path: lastPath} = this.state;
-			const isFirstPage = path === defautPath;
-			const pathToFind = isFirstPage ? defautPath : path;
-			const componentRender = paths.find(router => router.path === pathToFind);
-
-			if (componentRender) {
-				if (!title) {
-					({title} = componentRender);
-				}
-
-				if (isFirstPage) {
-					controlMenuHeading({title});
-				}
-				else {
-					controlMenuHeading({backPath: lastPath, title});
-				}
-			}
-
-			this.setState({path, query});
-		};
-
-		document.addEventListener(PAGE_CHANGE, changePage.bind(this));
+		window.addEventListener(PAGE_CHANGE, this.changePage);
 
 		this.unsub = () => {
-			document.removeEventListener(PAGE_CHANGE, changePage.bind(this));
+			window.removeEventListener(PAGE_CHANGE, this.changePage);
 		};
 	}
 
 	componentWillUnmount() {
-		if (this.unsub) {
-			this.unsub();
-			this.unsub = null;
+		this.unsub();
+		this.unsub = null;
+	}
+
+	getQuery() {
+		const url = String(document.location);
+
+		return url
+			.substring(url.lastIndexOf('#') + 1)
+			.split('&')
+			.filter(key => key !== '')
+			.reduce((query, pairKey) => {
+				const splitedKey = pairKey.split('=');
+
+				query[splitedKey[0]] = splitedKey[1];
+
+				return query;
+			}, {});
+	}
+
+	onPageChanged() {
+		const query = this.getQuery();
+
+		const {_path: path} = query;
+		let {_title: title} = query;
+
+		const {defautPath, paths} = this.props;
+		const {lastUrl} = this.state;
+
+		const isFirstPage = path ? false : true;
+
+		const pathToFind = isFirstPage ? defautPath : path;
+
+		const componentRender = paths.find(router => router.path === pathToFind);
+
+		if (componentRender) {
+			if (!title) {
+				({title} = componentRender);
+			}
+
+			if (isFirstPage) {
+				controlMenuHeading({title});
+			}
+			else {
+				controlMenuHeading({backPath: lastUrl, title});
+			}
 		}
+
+		delete query['_path'];
+		delete query['_title'];
+
+		this.setState({
+			lastUrl: String(document.location),
+			path: pathToFind,
+			query
+		});
 	}
 
 	render() {

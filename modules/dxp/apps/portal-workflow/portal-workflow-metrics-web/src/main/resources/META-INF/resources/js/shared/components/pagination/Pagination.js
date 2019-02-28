@@ -7,8 +7,8 @@ import React from 'react';
  * @memberof shared/components
  * */
 export default class Pagination extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 
 		this.state = {
 			activePage: 0,
@@ -17,27 +17,21 @@ export default class Pagination extends React.Component {
 	}
 
 	@autobind
-	goToPage(page) {
-		const {entry, pageClickHandler} = this.props;
-		const start = page * entry;
+	goToPage(activePage) {
+		const {onSelectPage} = this.props;
 
-		const size = entry;
-
-		pageClickHandler({page, size, start});
-
-		this.setState({activePage: page});
+		onSelectPage(activePage);
+		this.setState({activePage});
 	}
 
 	render() {
-		const {entry, start, totalCount} = this.props;
-		const activePage = start === 0 ? start : this.state.activePage;
-
-		const pages = Math.ceil(totalCount / entry);
-
+		const {page, pageSize, totalCount} = this.props;
+		const activePage = page === 1 ? page : this.state.activePage;
+		const lastPage = Math.ceil(totalCount / pageSize);
 		const renderPages = () => {
 			const rows = [];
 
-			for (let i = 0; i < pages; i++) {
+			for (let i = 1; i <= lastPage; i++) {
 				rows.push(
 					<PageItem
 						active={i === activePage ? true : false}
@@ -53,11 +47,11 @@ export default class Pagination extends React.Component {
 
 		return (
 			<ul className="pagination pull-right">
-				<PageItem onChangePage={this.goToPage} page={0} type="prev" />
+				<PageItem onChangePage={this.goToPage} page={1} type="prev" />
 
 				{renderPages()}
 
-				<PageItem onChangePage={this.goToPage} page={pages - 1} type="next" />
+				<PageItem onChangePage={this.goToPage} page={lastPage} type="next" />
 			</ul>
 		);
 	}

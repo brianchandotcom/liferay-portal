@@ -7,7 +7,7 @@ import React from 'react';
  * */
 export default class ProcessListTable extends React.Component {
 	render() {
-		const {processes} = this.props;
+		const {items} = this.props;
 
 		return (
 			<div className="table-responsive">
@@ -42,7 +42,7 @@ export default class ProcessListTable extends React.Component {
 					</thead>
 
 					<tbody>
-						{processes.map((process, index) => (
+						{items.map((process, index) => (
 							<ProcessListItem {...process} key={index} />
 						))}
 					</tbody>

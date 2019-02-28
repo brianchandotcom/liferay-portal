@@ -7,6 +7,10 @@ import SummaryCard from './SummaryCard';
  * @memberof open-processes-summary
  * */
 export default class OpenProcessesSummary extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		const CHART_DATA = {
 			columns: [

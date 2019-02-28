@@ -41,7 +41,7 @@ export default class PageItem extends React.Component {
 
 			return (
 				<a className="page-link" href={`#${page}`}>
-					{page + 1}
+					{page}
 				</a>
 			);
 		};

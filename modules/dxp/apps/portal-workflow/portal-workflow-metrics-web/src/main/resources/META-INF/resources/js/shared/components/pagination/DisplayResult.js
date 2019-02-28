@@ -7,14 +7,16 @@ import {sub} from '../../util/lang';
  * */
 export default class DisplayResult extends React.Component {
 	render() {
-		const {count, start, total} = this.props;
+		const {page, pageCount, pageSize, totalCount} = this.props;
+		const firstItem = pageSize * (page - 1) + 1;
+		const lastItem = firstItem + pageCount - 1;
 
 		return (
 			<div className="pagination-results">
 				{`${sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
-					start + 1,
-					start + count,
-					total
+					firstItem,
+					lastItem,
+					totalCount
 				])}`}
 			</div>
 		);

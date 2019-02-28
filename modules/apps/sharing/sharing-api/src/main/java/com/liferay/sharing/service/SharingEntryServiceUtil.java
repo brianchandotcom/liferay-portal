@@ -128,6 +128,21 @@ public class SharingEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.liferay.sharing.model.SharingEntry>
+			getSharingEntries(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSharingEntries(classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.sharing.model.SharingEntry>
+			getSharingEntries(
+				long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSharingEntries(classNameId, classPK, start, end);
+	}
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *

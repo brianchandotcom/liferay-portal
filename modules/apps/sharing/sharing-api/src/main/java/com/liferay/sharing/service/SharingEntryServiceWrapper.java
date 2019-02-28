@@ -124,6 +124,24 @@ public class SharingEntryServiceWrapper
 		return _sharingEntryService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry>
+			getSharingEntries(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.getSharingEntries(classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry>
+			getSharingEntries(
+				long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.getSharingEntries(
+			classNameId, classPK, start, end);
+	}
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *

@@ -261,6 +261,50 @@ public class CTManagerTest {
 	}
 
 	@Test
+	public void testGetCTEntryAggregate() throws Exception {
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getActiveCTCollectionOptional(_user.getUserId());
+
+		Assert.assertTrue(ctCollectionOptional.isPresent());
+
+		long ctCollectionId = ctCollectionOptional.map(
+			CTCollection::getCtCollectionId
+		).get();
+
+		CTEntry ownerCTEntry = _ctEntryLocalService.addCTEntry(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
+
+		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION,
+			ctCollectionId, new ServiceContext());
+
+		Optional<CTEntryAggregate> ctEntryAggregateOptionalA =
+			_ctManager.addRelatedCTEntry(
+				_user.getUserId(), ownerCTEntry, ctEntry);
+
+		Assert.assertTrue(ctEntryAggregateOptionalA.isPresent());
+
+		Optional<CTEntryAggregate> ctEntryAggregateOptionalB =
+			_ctManager.getCTEntryAggregate(ctEntry, ctCollectionOptional.get());
+
+		Assert.assertTrue(ctEntryAggregateOptionalB.isPresent());
+		Assert.assertEquals(
+			ctEntryAggregateOptionalA, ctEntryAggregateOptionalB);
+
+		Optional<CTEntryAggregate> ctEntryAggregateOptionalC =
+			_ctManager.getCTEntryAggregate(
+				ownerCTEntry, ctCollectionOptional.get());
+
+		Assert.assertTrue(ctEntryAggregateOptionalC.isPresent());
+		Assert.assertEquals(
+			ctEntryAggregateOptionalA, ctEntryAggregateOptionalC);
+	}
+
+	@Test
 	public void testGetLatestModelChangeCTEntryOptional() throws Exception {
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.getActiveCTCollectionOptional(_user.getUserId());
@@ -441,6 +485,40 @@ public class CTManagerTest {
 		Assert.assertFalse(
 			"Change tracking entry must not exist",
 			ctEntryOptional.isPresent());
+	}
+
+	@Test
+	public void testGetRelatedCTEntries() throws Exception {
+		Optional<CTCollection> ctCollectionOptional =
+			_ctEngineManager.getActiveCTCollectionOptional(_user.getUserId());
+
+		Assert.assertTrue(ctCollectionOptional.isPresent());
+
+		long ctCollectionId = ctCollectionOptional.map(
+			CTCollection::getCtCollectionId
+		).get();
+
+		CTEntry ownerCTEntry = _ctEntryLocalService.addCTEntry(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
+			CTConstants.CT_CHANGE_TYPE_ADDITION, ctCollectionId,
+			new ServiceContext());
+
+		CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
+			_user.getUserId(), _testVersionClassClassName.getClassNameId(),
+			RandomTestUtil.nextLong(), 1L, CTConstants.CT_CHANGE_TYPE_ADDITION,
+			ctCollectionId, new ServiceContext());
+
+		_ctManager.addRelatedCTEntry(_user.getUserId(), ownerCTEntry, ctEntry);
+
+		List<CTEntry> relatedCTEntries = _ctManager.getRelatedCTEntries(
+			ctEntry, ctCollectionOptional.get());
+
+		Assert.assertTrue(ListUtil.isNotEmpty(relatedCTEntries));
+		Assert.assertEquals(
+			"There must be one related change entry", 1,
+			relatedCTEntries.size());
+		Assert.assertEquals(ownerCTEntry, relatedCTEntries.get(0));
 	}
 
 	@Test

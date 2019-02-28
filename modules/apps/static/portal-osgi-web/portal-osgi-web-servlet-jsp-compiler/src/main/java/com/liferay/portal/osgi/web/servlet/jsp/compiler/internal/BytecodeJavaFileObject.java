@@ -14,6 +14,9 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -21,25 +24,17 @@ import java.io.OutputStream;
 
 import java.net.URI;
 
-import javax.tools.SimpleJavaFileObject;
-
 /**
  * @author Dante Wang
  */
-public class BytecodeJavaFileObject extends SimpleJavaFileObject {
+public class BytecodeJavaFileObject extends BaseJavaFileObject {
 
-	public BytecodeJavaFileObject(URI uri, String className) {
-		super(uri, Kind.CLASS);
-
-		_className = className;
+	public BytecodeJavaFileObject(String className) {
+		super(Kind.CLASS, className);
 	}
 
 	public byte[] getBytecode() {
 		return _bytecode;
-	}
-
-	public String getClassName() {
-		return _className;
 	}
 
 	@Override
@@ -58,7 +53,17 @@ public class BytecodeJavaFileObject extends SimpleJavaFileObject {
 		};
 	}
 
+	@Override
+	public URI toUri() {
+		return URI.create(
+			"file:///".concat(
+				StringUtil.replace(
+					className, CharPool.PERIOD, CharPool.FORWARD_SLASH)
+			).concat(
+				String.valueOf(kind)
+			));
+	}
+
 	private byte[] _bytecode;
-	private final String _className;
 
 }

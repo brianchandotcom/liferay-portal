@@ -493,9 +493,7 @@ public class DefaultDLPortletToolbarContributor
 		addPortletTitleAddDocumentMenuItems(
 			menuItems, folder, themeDisplay, portletRequest);
 
-		MenuItem lastMenuItem = menuItems.get(menuItems.size() - 1);
-
-		lastMenuItem.setSeparator(true);
+		MenuItem lastStaticMenuItem = menuItems.get(menuItems.size() - 1);
 
 		for (DLPortletToolbarContributorContext
 				dlPortletToolbarContributorContext :
@@ -504,6 +502,10 @@ public class DefaultDLPortletToolbarContributor
 			dlPortletToolbarContributorContext.updatePortletTitleMenuItems(
 				menuItems, folder, themeDisplay, portletRequest,
 				portletResponse);
+		}
+
+		if (lastStaticMenuItem != menuItems.get(menuItems.size() - 1)) {
+			lastStaticMenuItem.setSeparator(true);
 		}
 
 		return menuItems;

@@ -21,12 +21,15 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
+import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * @author Peter Shin
@@ -58,10 +61,32 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
+		ConfigYAML configYAML, final String graphQLType,
+		OpenAPIYAML openAPIYAML) {
+
+		Predicate<Operation> predicate = new Predicate<Operation>() {
+
+			@Override
+			public boolean test(Operation operation) {
+				if (Objects.equals(graphQLType, "mutation") &&
+					!Get.class.isInstance(operation)) {
+
+					return true;
+				}
+
+				if (Objects.equals(graphQLType, "query") &&
+					Get.class.isInstance(operation)) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+		};
 
 		return GraphQLOpenAPIParser.getJavaMethodSignatures(
-			configYAML, graphQLType, openAPIYAML);
+			configYAML, openAPIYAML, predicate);
 	}
 
 	public String getGraphQLMethodAnnotations(

@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 /**
  * @author Peter Shin
@@ -42,7 +43,8 @@ import java.util.TreeSet;
 public class GraphQLOpenAPIParser {
 
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
+		Predicate<Operation> predicate) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
@@ -53,7 +55,7 @@ public class GraphQLOpenAPIParser {
 		for (String schemaName : schemas.keySet()) {
 			javaMethodSignatures.addAll(
 				_getJavaMethodSignatures(
-					configYAML, graphQLType, openAPIYAML, schemaName));
+					configYAML, openAPIYAML, predicate, schemaName));
 		}
 
 		return javaMethodSignatures;
@@ -134,8 +136,8 @@ public class GraphQLOpenAPIParser {
 	}
 
 	private static List<JavaMethodSignature> _getJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
-		String schemaName) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
+		Predicate<Operation> predicate, String schemaName) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
@@ -148,7 +150,7 @@ public class GraphQLOpenAPIParser {
 
 			Operation operation = resourceJavaMethodSignature.getOperation();
 
-			if (!_isGraphQLMethod(graphQLType, operation)) {
+			if (!predicate.test(operation)) {
 				continue;
 			}
 
@@ -227,26 +229,6 @@ public class GraphQLOpenAPIParser {
 		sb.append("\")");
 
 		return sb.toString();
-	}
-
-	private static boolean _isGraphQLMethod(
-		String graphQLType, Operation operation) {
-
-		String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
-
-		if (Objects.equals(graphQLType, "mutation") &&
-			!Objects.equals(httpMethod, "get")) {
-
-			return true;
-		}
-
-		if (Objects.equals(graphQLType, "query") &&
-			Objects.equals(httpMethod, "get")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

@@ -876,7 +876,7 @@ definition {
 			url = "${baseURL}/web/site-name-staging/-/${friendlyUrl}"
 		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "Web Content Title"
 		);
@@ -889,7 +889,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${baseURL}/web/site-name/-/${friendlyUrl}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",
 			value1 = "Web Content Title"
 		);

@@ -152,7 +152,7 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 		if (_isOwnerOrAdmin(classNameId, classPK)) {
 			return sharingEntryLocalService.getSharingEntries(
-				classNameId, classPK);
+				classNameId, classPK, start, end);
 		}
 
 		return sharingEntryLocalService.getFromUserSharingEntries(

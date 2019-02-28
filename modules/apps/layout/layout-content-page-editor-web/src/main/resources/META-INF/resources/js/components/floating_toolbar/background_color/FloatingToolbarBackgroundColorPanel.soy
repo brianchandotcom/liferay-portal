@@ -9,7 +9,6 @@
 			backgroundColorCssClass: string
 		]
 	]}
-	{@param? backgroundColorCssClass: ?}
 	{@param? themeColorsCssClasses: ?}
 	{@param? _handleBackgroundColorButtonClick: any}
 	{@param? _handleClearButtonClick: any}
@@ -19,47 +18,18 @@
 			{msg desc=""}background-color{/msg}
 		</label>
 
-		<div class="palette-container" id="floatingToolbarBackgroundColorPanelPalette">
-			<ul class="list-unstyled palette-items-container">
-				{let $selectedBackgroundColorCssClass kind="text"}
-					{if $backgroundColorCssClass}
-						{$backgroundColorCssClass}
-					{elseif $item.config and $item.config.backgroundColorCssClass}
-						{$item.config.backgroundColorCssClass}
-					{/if}
-				{/let}
+		{let $selectedBackgroundColorCssClass kind="text"}
+			{if $item.config and $item.config.backgroundColorCssClass}
+				{$item.config.backgroundColorCssClass}
+			{/if}
+		{/let}
 
-				{foreach $themeColorsCssClass in $themeColorsCssClasses}
-					{let $paletteItemClasses kind="text"}
-						palette-item
-
-						{if $themeColorsCssClass == $selectedBackgroundColorCssClass}
-							{sp}palette-item-selected
-						{/if}
-					{/let}
-
-					<li class="{$paletteItemClasses}">
-						{let $wrapperClasses kind="text"}
-							bg-palette-{$themeColorsCssClass}
-							{sp}btn
-							{sp}btn-sm
-							{sp}btn-unstyled
-							{sp}palette-item-inner
-							{sp}p-1
-							{sp}rounded-circle
-						{/let}
-
-						<button
-							class="{$wrapperClasses}"
-							data-background-color-css-class="{$themeColorsCssClass}"
-							data-onclick="{$_handleBackgroundColorButtonClick}"
-							type="button"
-						>
-						</button>
-					</li>
-				{/foreach}
-			</ul>
-		</div>
+		{call com.liferay.layout.content.page.editor.web.FloatingToolbarColorPicker.render}
+			{param colors: $themeColorsCssClasses /}
+			{param events: ['colorClicked': $_handleBackgroundColorButtonClick ] /}
+			{param id: 'floatingToolbarBackgroundColorPanelPalette' /}
+			{param selectedColor: $selectedBackgroundColorCssClass /}
+		{/call}
 
 		<button
 			class="btn btn-secondary btn-sm"

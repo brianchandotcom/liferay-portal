@@ -82,20 +82,20 @@ class FragmentEntryLinkListSection extends Component {
 	 * @review
 	 */
 	_createFloatingToolbar() {
+		const config = {
+			anchorElement: this.element,
+			item: this.row,
+			itemId: this.rowId,
+			panels: FLOATING_TOOLBAR_PANELS,
+			portalElement: document.body,
+			store: this.store
+		};
+
 		if (this._floatingToolbar) {
-			this._floatingToolbar.forceUpdate();
+			this._floatingToolbar.setState(config);
 		}
 		else {
-			this._floatingToolbar = new FloatingToolbar(
-				{
-					anchorElement: this.element,
-					item: this.row,
-					itemId: this.rowId,
-					panels: FLOATING_TOOLBAR_PANELS,
-					portalElement: document.body,
-					store: this.store
-				}
-			);
+			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
 

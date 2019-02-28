@@ -1,8 +1,8 @@
-import {addClasses, removeClasses} from 'metal-dom';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
 import {ITEM_CONFIG_KEYS} from '../../../utils/constants';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
@@ -34,18 +34,9 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	 * @review
 	 */
 	_handleBackgroundColorButtonClick(event) {
-		const button = event.delegateTarget;
-		const paletteItemSelected = this.element.querySelector('.palette-item-selected');
-
-		if (paletteItemSelected) {
-			removeClasses(paletteItemSelected, 'palette-item-selected');
-		}
-
-		addClasses(button.parentNode, 'palette-item-selected');
-
 		this._updateSectionConfig(
 			{
-				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: button.dataset.backgroundColorCssClass
+				[ITEM_CONFIG_KEYS.backgroundColorCssClass]: event.color
 			}
 		);
 	}

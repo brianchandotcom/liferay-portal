@@ -1954,15 +1954,16 @@ definition {
 		);
 	}
 
-	macro viewStructureWithWorkflowCP {
+	macro viewStructureWithWorkflowPendingCP {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
 			webContentTitle = "${webContentTitle}"
 		);
 
-		AssertTextEquals(
-			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "Pending (${workflowTask})"
+		key_status = "Pending";
+
+		AssertElementPresent(
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS"
 		);
 
 		AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${webContentTitle}");

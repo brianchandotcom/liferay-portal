@@ -129,9 +129,8 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.viewStructureWithWorkflowCP(
-			webContentTitle = "WC WebContent Title",
-			workflowTask = "Review"
+		WebContent.viewStructureWithWorkflowPendingCP(
+			webContentTitle = "WC WebContent Title"
 		);
 
 		Navigator.openURL();

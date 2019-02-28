@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,6 +42,23 @@ public class CTDLFolderServiceWrapper extends DLFolderServiceWrapper {
 
 	public CTDLFolderServiceWrapper(DLFolderService dlFolderService) {
 		super(dlFolderService);
+	}
+
+	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (!_isChangeTrackingEnabled(groupId)) {
+			return super.getFoldersAndFileEntriesAndFileShortcuts(
+				groupId, folderId, mimeTypes, includeMountFolders,
+				queryDefinition);
+		}
+
+		return _ctDLFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
+
 	}
 
 	@Override

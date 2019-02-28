@@ -91,7 +91,9 @@ public class OpenAPIParserUtil {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	public static String getJavaDataType(Schema schema) {
+	public static String getJavaDataType(
+		Map<String, String> javaDataTypeMap, Schema schema) {
+
 		Items items = schema.getItems();
 		String type = schema.getType();
 
@@ -107,12 +109,14 @@ public class OpenAPIParserUtil {
 						itemsType, itemsFormat));
 
 				if (javaDataType == null) {
-					javaDataType = StringUtil.upperCaseFirstLetter(itemsType);
+					javaDataType = javaDataTypeMap.get(
+						StringUtil.upperCaseFirstLetter(itemsType));
 				}
 			}
 
 			if (items.getReference() != null) {
-				javaDataType = getComponentType(items.getReference());
+				javaDataType = javaDataTypeMap.get(
+					getComponentType(items.getReference()));
 			}
 
 			return javaDataType + "[]";
@@ -124,7 +128,8 @@ public class OpenAPIParserUtil {
 					type, schema.getFormat()));
 
 			if (javaDataType == null) {
-				javaDataType = StringUtil.upperCaseFirstLetter(type);
+				javaDataType = javaDataTypeMap.get(
+					StringUtil.upperCaseFirstLetter(type));
 			}
 
 			return javaDataType;
@@ -146,7 +151,50 @@ public class OpenAPIParserUtil {
 			return "Object";
 		}
 
-		return getComponentType(schema.getReference());
+		return javaDataTypeMap.get(getComponentType(schema.getReference()));
+	}
+
+	public static Map<String, String> getJavaDataTypeMap(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML) {
+
+		Map<String, Schema> allSchemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+		Map<String, String> javaDataTypeMap = new HashMap<>();
+
+		for (String schemaName : allSchemas.keySet()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(configYAML.getApiPackagePath());
+			sb.append(".dto.");
+			sb.append(OpenAPIUtil.escapeVersion(openAPIYAML));
+			sb.append('.');
+			sb.append(schemaName);
+
+			javaDataTypeMap.put(schemaName, sb.toString());
+
+			sb.setLength(0);
+
+			sb.append(configYAML.getApiPackagePath());
+			sb.append(".resource.");
+			sb.append(OpenAPIUtil.escapeVersion(openAPIYAML));
+			sb.append('.');
+			sb.append(schemaName);
+			sb.append("Resource");
+
+			javaDataTypeMap.put(schemaName + "Resource", sb.toString());
+
+			sb.setLength(0);
+
+			sb.append(configYAML.getApiPackagePath());
+			sb.append(".internal.resource.");
+			sb.append(OpenAPIUtil.escapeVersion(openAPIYAML));
+			sb.append('.');
+			sb.append(schemaName);
+			sb.append("ResourceImpl");
+
+			javaDataTypeMap.put(schemaName + "ResourceImpl", sb.toString());
+		}
+
+		return javaDataTypeMap;
 	}
 
 	public static String getParameter(

@@ -306,7 +306,7 @@ public class OpenAPIParserUtil {
 
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("number", null),
-					Double.class.getName());
+					Number.class.getName());
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("string", "uri"),
 					String.class.getName());

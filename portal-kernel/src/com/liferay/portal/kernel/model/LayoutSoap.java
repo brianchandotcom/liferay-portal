@@ -49,6 +49,8 @@ public class LayoutSoap implements Serializable {
 		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
 		soapModel.setParentLayoutId(model.getParentLayoutId());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
@@ -69,10 +71,8 @@ public class LayoutSoap implements Serializable {
 			model.isLayoutPrototypeLinkEnabled());
 		soapModel.setSourcePrototypeLayoutUuid(
 			model.getSourcePrototypeLayoutUuid());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
-		soapModel.setClassNameId(model.getClassNameId());
-		soapModel.setClassPK(model.getClassPK());
 		soapModel.setPublishDate(model.getPublishDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -249,6 +249,22 @@ public class LayoutSoap implements Serializable {
 		_parentLayoutId = parentLayoutId;
 	}
 
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -407,36 +423,20 @@ public class LayoutSoap implements Serializable {
 		_sourcePrototypeLayoutUuid = sourcePrototypeLayoutUuid;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
-	public long getClassNameId() {
-		return _classNameId;
-	}
-
-	public void setClassNameId(long classNameId) {
-		_classNameId = classNameId;
-	}
-
-	public long getClassPK() {
-		return _classPK;
-	}
-
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
 	public Date getPublishDate() {
 		return _publishDate;
 	}
 
 	public void setPublishDate(Date publishDate) {
 		_publishDate = publishDate;
+	}
+
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	private long _mvccVersion;
@@ -454,6 +454,8 @@ public class LayoutSoap implements Serializable {
 	private boolean _privateLayout;
 	private long _layoutId;
 	private long _parentLayoutId;
+	private long _classNameId;
+	private long _classPK;
 	private String _name;
 	private String _title;
 	private String _description;
@@ -472,9 +474,7 @@ public class LayoutSoap implements Serializable {
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
-	private Date _lastPublishDate;
-	private long _classNameId;
-	private long _classPK;
 	private Date _publishDate;
+	private Date _lastPublishDate;
 
 }

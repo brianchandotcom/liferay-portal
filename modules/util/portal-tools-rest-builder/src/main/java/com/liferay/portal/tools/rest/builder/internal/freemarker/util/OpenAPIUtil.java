@@ -16,16 +16,22 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
+import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
+import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,6 +98,14 @@ public class OpenAPIUtil {
 		}
 
 		return allSchemas;
+	}
+
+	public static List<JavaMethodSignature> getJavaMethodSignatures(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
+		Predicate<Operation> predicate) {
+
+		return GraphQLOpenAPIParser.getJavaMethodSignatures(
+			configYAML, openAPIYAML, predicate);
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

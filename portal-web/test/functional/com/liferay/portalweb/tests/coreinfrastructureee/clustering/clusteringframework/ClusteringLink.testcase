@@ -1,4 +1,4 @@
-@component-name = "portal-performance-and-fault-tolerance-ee"
+@component-name = "portal-clustering"
 definition {
 	property portal.release = "true";
 	property portal.upstream = "true";

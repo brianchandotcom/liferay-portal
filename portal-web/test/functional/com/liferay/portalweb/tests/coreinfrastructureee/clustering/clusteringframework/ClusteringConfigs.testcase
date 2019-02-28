@@ -1,4 +1,4 @@
-@component-name = "portal-performance-and-fault-tolerance-ee"
+@component-name = "portal-clustering"
 definition {
 	property app.server.bundles.size = "1";
 	property cluster.enabled = "true";

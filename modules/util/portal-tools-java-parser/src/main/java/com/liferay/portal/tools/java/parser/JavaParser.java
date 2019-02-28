@@ -182,6 +182,11 @@ public class JavaParser {
 			if (StringUtil.startsWith(StringUtil.trim(text), CharPool.STAR)) {
 				javadoc = true;
 			}
+			else if (actualCommentIndent.equals(expectedCommentIndent)) {
+				precedingCommentToken = precedingCommentToken.getHiddenBefore();
+
+				continue;
+			}
 
 			int end =
 				precedingCommentToken.getLine() + StringUtil.count(text, "\n");

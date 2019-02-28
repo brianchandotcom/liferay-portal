@@ -164,6 +164,21 @@ public abstract class BaseBlogPostingResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
+	protected void assertValid(BlogPosting blogPosting) {
+		boolean valid = false;
+
+		if (Objects.equals(
+				blogPosting.getContentSpace(), testGroup.getGroupId()) &&
+			(blogPosting.getDateCreated() != null) &&
+			(blogPosting.getDateModified() != null) &&
+			(blogPosting.getId() != null)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected void assertValid(Page<BlogPosting> page) {
 		boolean valid = false;
 

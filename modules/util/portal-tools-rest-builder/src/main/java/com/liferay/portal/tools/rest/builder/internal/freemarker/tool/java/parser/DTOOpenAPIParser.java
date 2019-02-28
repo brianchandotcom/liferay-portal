@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
@@ -61,8 +62,8 @@ public class DTOOpenAPIParser {
 
 			String parameterName = CamelCaseUtil.toCamelCase(
 				propertySchemaName, false);
-			String parameterType = OpenAPIParserUtil.getJavaMethodParameterType(
-				propertySchemaName, propertySchema);
+			String parameterType = _getParameterType(
+				propertySchema, propertySchemaName);
 
 			javaMethodParameters.add(
 				new JavaMethodParameter(parameterName, parameterType));
@@ -85,6 +86,25 @@ public class DTOOpenAPIParser {
 		return getJavaMethodParameters(
 			configYAML, openAPIYAML, schemas.get(schemaName),
 			fullyQualifiedNames);
+	}
+
+	private static String _getParameterType(
+		Schema propertySchema, String propertySchemaName) {
+
+		Items items = propertySchema.getItems();
+		String type = propertySchema.getType();
+
+		if (StringUtil.equals(type, "array") && (items != null) &&
+			StringUtil.equalsIgnoreCase(items.getType(), "object")) {
+
+			return StringUtil.upperCaseFirstLetter(propertySchemaName) + "[]";
+		}
+
+		if (StringUtil.equalsIgnoreCase(type, "object")) {
+			return StringUtil.upperCaseFirstLetter(propertySchemaName);
+		}
+
+		return OpenAPIParserUtil.getJavaMethodParameterType(propertySchema);
 	}
 
 }

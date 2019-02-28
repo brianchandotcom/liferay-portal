@@ -91,61 +91,37 @@ public class OpenAPIParserUtil {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	public static String getJavaMethodParameterType(
-		String propertySchemaName, Schema schema) {
-
+	public static String getJavaMethodParameterType(Schema schema) {
 		Items items = schema.getItems();
 		String type = schema.getType();
 
 		if (StringUtil.equals(type, "array") && (items != null)) {
+			String javaDataType = null;
+
 			if (items.getType() != null) {
 				String itemsFormat = items.getFormat();
 				String itemsType = items.getType();
 
-				String javaDataType = null;
-
-				if (StringUtil.equalsIgnoreCase(itemsType, "object") &&
-					(propertySchemaName != null)) {
-
-					javaDataType = StringUtil.upperCaseFirstLetter(
-						propertySchemaName);
-				}
-				else {
-					javaDataType = _openAPIDataTypeMap.get(
-						new AbstractMap.SimpleImmutableEntry<>(
-							itemsType, itemsFormat));
-				}
+				javaDataType = _openAPIDataTypeMap.get(
+					new AbstractMap.SimpleImmutableEntry<>(
+						itemsType, itemsFormat));
 
 				if (javaDataType == null) {
 					javaDataType = StringUtil.upperCaseFirstLetter(itemsType);
 				}
-
-				return javaDataType + "[]";
 			}
 
 			if (items.getReference() != null) {
-				return getComponentType(items.getReference()) + "[]";
+				javaDataType = getComponentType(items.getReference());
 			}
 
-			if (items.getPropertySchemas() != null) {
-				return StringUtil.upperCaseFirstLetter(propertySchemaName);
-			}
+			return javaDataType + "[]";
 		}
 
 		if (type != null) {
-			String javaDataType = null;
-
-			if (StringUtil.equalsIgnoreCase(type, "object") &&
-				(propertySchemaName != null)) {
-
-				javaDataType = StringUtil.upperCaseFirstLetter(
-					propertySchemaName);
-			}
-			else {
-				javaDataType = _openAPIDataTypeMap.get(
-					new AbstractMap.SimpleImmutableEntry<>(
-						type, schema.getFormat()));
-			}
+			String javaDataType = _openAPIDataTypeMap.get(
+				new AbstractMap.SimpleImmutableEntry<>(
+					type, schema.getFormat()));
 
 			if (javaDataType == null) {
 				javaDataType = StringUtil.upperCaseFirstLetter(type);

@@ -278,7 +278,7 @@ definition {
 	macro addMultiplePG {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		MenuItem.click(menuItem = "Multiple Documents");
+		MenuItem.click(menuItem = "Multiple Files Upload");
 
 		if (isSet(dmDocumentFileList)) {
 			for (var dmDocumentFile : list "${dmDocumentFileList}") {
@@ -2103,7 +2103,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Repository");
 
-		MenuItem.viewPresent(menuItem = "Multiple Documents");
+		MenuItem.viewPresent(menuItem = "Multiple Files Upload");
 
 		MenuItem.viewPresent(menuItem = "File Upload");
 

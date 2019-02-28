@@ -493,6 +493,10 @@ public class DefaultDLPortletToolbarContributor
 		addPortletTitleAddDocumentMenuItems(
 			menuItems, folder, themeDisplay, portletRequest);
 
+		MenuItem lastMenuItem = menuItems.get(menuItems.size() - 1);
+
+		lastMenuItem.setSeparator(true);
+
 		for (DLPortletToolbarContributorContext
 				dlPortletToolbarContributorContext :
 					_dlPortletToolbarContributorContexts) {

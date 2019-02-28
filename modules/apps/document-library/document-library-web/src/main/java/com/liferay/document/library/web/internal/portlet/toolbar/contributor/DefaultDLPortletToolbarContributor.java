@@ -223,7 +223,7 @@ public class DefaultDLPortletToolbarContributor
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest),
-				"multiple-documents"));
+				"multiple-files-upload"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

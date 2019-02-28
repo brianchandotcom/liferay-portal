@@ -26,6 +26,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,6 +37,9 @@ public class CTDLFolderFinderOverrideImpl
 
 	public static final String COUNT_FE_BY_G_F =
 		CTDLFolderFinderOverride.class.getName() + ".countFE_ByG_F";
+
+	public static final String FIND_FE_BY_G_F =
+		CTDLFolderFinderOverride.class.getName() + ".findFE_ByG_F";
 
 	@Override
 	public int filterCountF_FE_FS_ByG_F_M_M(
@@ -48,12 +52,36 @@ public class CTDLFolderFinderOverrideImpl
 	}
 
 	@Override
-	protected void doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
-		QueryPos qPos, QueryDefinition<?> queryDefinition, long groupId,
+	public List<Object> filterFindF_FE_FS_ByG_F_M_M(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition) {
+
+		return doFindF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition,
+			true);
+	}
+
+	@Override
+	protected String doGetFileEntriesSQL(QueryDefinition<?> queryDefinition) {
+		return _customSQL.get(
+			getClass(), FIND_FE_BY_G_F, queryDefinition,
+			DLFileVersionImpl.TABLE_NAME);
+	}
+
+	@Override
+	protected String doGetFileVersionSQL(QueryDefinition<?> queryDefinition) {
+		return _customSQL.get(
+			getClass(), COUNT_FE_BY_G_F, queryDefinition,
+			DLFileVersionImpl.TABLE_NAME);
+	}
+
+	@Override
+	protected void setFileVersionQueryParameters(
+		QueryDefinition<?> queryDefinition, QueryPos qPos, long groupId,
 		long folderId, String[] mimeTypes) {
 
-		super.doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
-			qPos, queryDefinition, groupId, folderId, mimeTypes);
+		super.setFileVersionQueryParameters(
+			queryDefinition, qPos, groupId, folderId, mimeTypes);
 
 		long userId = queryDefinition.getOwnerUserId();
 		Group group = _groupLocalService.fetchGroup(groupId);
@@ -73,13 +101,6 @@ public class CTDLFolderFinderOverrideImpl
 		qPos.add(userId);
 		qPos.add(ctCollection.getCtCollectionId());
 		qPos.add(productionCollection.getCtCollectionId());
-	}
-
-	@Override
-	protected String doGetFileVersionSql(QueryDefinition<?> queryDefinition) {
-		return _customSQL.get(
-			getClass(), COUNT_FE_BY_G_F, queryDefinition,
-			DLFileVersionImpl.TABLE_NAME);
 	}
 
 	@ServiceReference(type = CTEngineManager.class)

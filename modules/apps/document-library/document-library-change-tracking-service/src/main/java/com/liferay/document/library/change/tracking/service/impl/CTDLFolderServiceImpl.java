@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * The implementation of the ctdl folder remote service.
  *
@@ -39,6 +42,29 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
  * @see CTDLFolderServiceBaseImpl
  */
 public class CTDLFolderServiceImpl extends CTDLFolderServiceBaseImpl {
+
+	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		if (!ModelResourcePermissionHelper.contains(
+				_dlFolderModelResourcePermission, getPermissionChecker(),
+				groupId, folderId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
+
+		return _dlFolderFinder.filterFindF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
 
 	/**
 	 * NOTE FOR DEVELOPERS:

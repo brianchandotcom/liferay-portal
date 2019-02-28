@@ -29,4 +29,33 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.change.tracking.service.persistence.CTDLFolderFinderOverride.findFE_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate AS createDate, DLFileEntry.modifiedDate AS modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, 0 AS fileShortcutId, 0 AS modelFolder
+			FROM
+				DLFileEntry
+			[$JOIN$]
+			JOIN
+				CTEntry ON
+					CTEntry.classPK = DLFileVersion.fileVersionId
+			JOIN
+				CTCollections_CTEntries ON
+					CTEntry.ctEntryId = CTCollections_CTEntries.ctEntryId
+			JOIN
+				CTCollection ON
+					CTCollections_CTEntries.ctCollectionId = CTCollection.ctCollectionId
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_ENTRY_FOLDER_ID$] AND
+				(
+					(
+						(CTCollection.userId = ?) AND
+						(CTCollection.ctCollectionId = ?)
+					) OR
+	 			 	(CTCollection.ctCollectionId = ?)
+				)
+		]]>
+	</sql>
 </custom-sql>

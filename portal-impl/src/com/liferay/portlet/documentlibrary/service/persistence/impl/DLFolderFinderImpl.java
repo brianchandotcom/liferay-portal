@@ -306,8 +306,8 @@ public class DLFolderFinderImpl
 			qPos.add(queryDefinition.getStatus());
 			qPos.add(folderId);
 
-			doCountF_FE_FS_ByG_F_M_M_setFileVersionParameters(
-				qPos, queryDefinition, groupId, folderId, mimeTypes);
+			setFileVersionQueryParameters(
+				queryDefinition, qPos, groupId, folderId, mimeTypes);
 
 			qPos.add(groupId);
 			qPos.add(true);
@@ -506,8 +506,7 @@ public class DLFolderFinderImpl
 			sb.append(" UNION ALL ");
 
 			sql = getFileEntriesSQL(
-				FIND_FE_BY_G_F, groupId, mimeTypes, queryDefinition,
-				inlineSQLHelper);
+				groupId, mimeTypes, queryDefinition, inlineSQLHelper);
 
 			sb.append(sql);
 
@@ -553,21 +552,9 @@ public class DLFolderFinderImpl
 
 			qPos.add(queryDefinition.getStatus());
 			qPos.add(folderId);
-			qPos.add(groupId);
-			qPos.add(queryDefinition.getStatus());
 
-			if ((queryDefinition.getOwnerUserId() > 0) &&
-				queryDefinition.isIncludeOwner()) {
-
-				qPos.add(queryDefinition.getOwnerUserId());
-				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
-			}
-
-			qPos.add(folderId);
-
-			if (mimeTypes != null) {
-				qPos.add(mimeTypes);
-			}
+			setFileVersionQueryParameters(
+				queryDefinition, qPos, groupId, folderId, mimeTypes);
 
 			qPos.add(groupId);
 			qPos.add(true);
@@ -634,8 +621,7 @@ public class DLFolderFinderImpl
 			sb.append("SELECT * FROM (");
 
 			String sql = getFileEntriesSQL(
-				FIND_FE_BY_G_F, groupId, null, queryDefinition,
-				inlineSQLHelper);
+				groupId, null, queryDefinition, inlineSQLHelper);
 
 			sb.append(sql);
 
@@ -707,17 +693,21 @@ public class DLFolderFinderImpl
 		}
 	}
 
-	protected String doGetFileVersionSql(QueryDefinition<?> queryDefinition) {
+	protected String doGetFileEntriesSQL(QueryDefinition<?> queryDefinition) {
+		return CustomSQLUtil.get(
+			FIND_FE_BY_G_F, queryDefinition, DLFileVersionImpl.TABLE_NAME);
+	}
+
+	protected String doGetFileVersionSQL(QueryDefinition<?> queryDefinition) {
 		return CustomSQLUtil.get(
 			COUNT_FE_BY_G_F, queryDefinition, DLFileVersionImpl.TABLE_NAME);
 	}
 
 	protected String getFileEntriesSQL(
-		String id, long groupId, String[] mimeTypes,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		long groupId, String[] mimeTypes, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
 
-		String sql = CustomSQLUtil.get(
-			id, queryDefinition, DLFileVersionImpl.TABLE_NAME);
+		String sql = doGetFileEntriesSQL(queryDefinition);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -789,7 +779,7 @@ public class DLFolderFinderImpl
 		long groupId, String[] mimeTypes, QueryDefinition<?> queryDefinition,
 		boolean inlineSQLHelper) {
 
-		String sql = doGetFileVersionSql(queryDefinition);
+		String sql = doGetFileVersionSQL(queryDefinition);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -866,6 +856,27 @@ public class DLFolderFinderImpl
 		}
 
 		return false;
+	}
+
+	protected void setFileVersionQueryParameters(
+		QueryDefinition<?> queryDefinition, QueryPos qPos, long groupId,
+		long folderId, String[] mimeTypes) {
+
+		qPos.add(groupId);
+		qPos.add(queryDefinition.getStatus());
+
+		if ((queryDefinition.getOwnerUserId() > 0) &&
+			queryDefinition.isIncludeOwner()) {
+
+			qPos.add(queryDefinition.getOwnerUserId());
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+		}
+
+		qPos.add(folderId);
+
+		if (mimeTypes != null) {
+			qPos.add(mimeTypes);
+		}
 	}
 
 	protected String updateSQL(

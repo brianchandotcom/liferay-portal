@@ -157,9 +157,9 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 				if (!newDefinition.equals(definition)) {
 					content = StringUtil.replaceFirst(
 						content, definition, newDefinition);
-				}
 
-				definition = newDefinition;
+					definition = newDefinition;
+				}
 			}
 
 			String newDefinition = _formatDefinition(
@@ -181,22 +181,21 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		while (matcher.find()) {
 			String s = matcher.group();
 
-			String[] lines = s.split("\n");
-
-			if (lines.length <= 1) {
+			if (!s.contains("\n")) {
 				continue;
 			}
 
-			StringBundler sb = new StringBundler();
+			String[] lines = s.split("\n");
+
+			StringBundler sb = new StringBundler(lines.length * 2);
 
 			sb.append(lines[0]);
+			sb.append("\n");
 
 			for (int i = 1; i < lines.length; i++) {
-				sb.append(StringPool.NEW_LINE);
 				sb.append(lines[i].substring(2));
+				sb.append("\n");
 			}
-
-			sb.append(StringPool.NEW_LINE);
 
 			content = StringUtil.replaceFirst(
 				content, matcher.group(), sb.toString());

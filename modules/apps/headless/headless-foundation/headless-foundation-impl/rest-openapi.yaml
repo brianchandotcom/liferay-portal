@@ -1,1444 +1,1444 @@
 components:
-  schemas:
-    Category:
-      description: https://www.schema.org/Category
-      properties:
-        availableLanguages:
-          items:
-            type: string
-          type: array
-        parentCategory:
-          properties:
-            id:
-              format: int64
-              type: integer
-            name:
-              type: string
-          type: object
-        creator:
-          allOf:
-            - $ref: "#/components/schemas/Creator"
-          readOnly: true
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        description:
-          type: string
-        hasCategories:
-          type: boolean
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-        parentVocabulary:
-          properties:
-            id:
-              format: int64
-              type: integer
-            name:
-              type: string
-          readOnly: true
-          type: object
-        parentVocabularyId:
-          format: int64
-          type: integer
-          writeOnly: true
-      type: object
-    Creator:
-      description: https://www.schema.org/Creator
-      properties:
-        additionalName:
-          type: string
-        familyName:
-          type: string
-        givenName:
-          type: string
-        id:
-          format: int64
-          type: integer
-        image:
-          format: uri
-          type: string
-        name:
-          type: string
-        profileURL:
-          format: uri
-          type: string
-      type: object
-    Email:
-      description: https://www.schema.org/Email
-      properties:
-        email:
-          type: string
-        id:
-          format: int64
-          type: integer
-        type:
-          type: string
-      type: object
-    Keyword:
-      description: https://www.schema.org/Keyword
-      properties:
-        contentSpace:
-          format: int64
-          type: integer
-        creator:
-          $ref: "#/components/schemas/Creator"
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        id:
-          format: int64
-          type: integer
-        keywordUsageCount:
-          type: number
-        name:
-          type: string
-      type: object
-    Organization:
-      description: https://www.schema.org/Organization
-      properties:
-        comment:
-          type: string
-        contactInformation:
-          description: https://www.schema.org/ContactInformation
-          properties:
-            address:
-              items:
-                $ref: "#/components/schemas/PostalAddress"
-              readOnly: true
-              type: array
-            addressIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-            email:
-              items:
-                $ref: "#/components/schemas/Email"
-              readOnly: true
-              type: array
-            emailIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-            id:
-              format: int64
-              type: integer
-            telephone:
-              items:
-                $ref: "#/components/schemas/Phone"
-              readOnly: true
-              type: array
-            telephoneIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-            webUrl:
-              items:
-                $ref: "#/components/schemas/WebUrl"
-              readOnly: true
-              type: array
-            webUrlIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-          type: object
-        id:
-          format: int64
-          type: integer
-        location:
-          description: https://www.schema.org/PostalAddress
-          properties:
-            addressCountry:
-              type: string
-            addressRegion:
-              type: string
-            id:
-              format: int64
-              type: integer
-          type: object
-        logo:
-          format: uri
-          type: string
-        members:
-          items:
-            $ref: "#/components/schemas/UserAccount"
-          readOnly: true
-          type: array
-        membersIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
-        name:
-          type: string
-        parentOrganization:
-          allOf:
-            - $ref: "#/components/schemas/Organization"
-          readOnly: true
-        parentOrganizationId:
-          format: int64
-          type: integer
-          writeOnly: true
-        services:
-          description: https://www.schema.org/Service
-          items:
+    schemas:
+        Category:
+            description: https://www.schema.org/Category
             properties:
-              hoursAvailable:
-                description: https://www.schema.org/OpeningHoursSpecification
-                items:
-                  properties:
-                    closes:
-                      type: string
-                    dayOfWeek:
-                      type: string
-                    id:
-                      format: int64
-                      type: integer
-                    opens:
-                      type: string
-                  type: object
-                type: array
-              id:
-                format: int64
-                type: integer
-              serviceType:
-                type: string
+                availableLanguages:
+                    items:
+                        type: string
+                    type: array
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                hasCategories:
+                    type: boolean
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                parentCategory:
+                    properties:
+                        id:
+                            format: int64
+                            type: integer
+                        name:
+                            type: string
+                    type: object
+                parentVocabulary:
+                    properties:
+                        id:
+                            format: int64
+                            type: integer
+                        name:
+                            type: string
+                    readOnly: true
+                    type: object
+                parentVocabularyId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
             type: object
-          type: array
-        subOrganization:
-          items:
-            $ref: "#/components/schemas/Organization"
-          readOnly: true
-          type: array
-        subOrganizationIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
-      type: object
-    Phone:
-      description: https://www.schema.org/Phone
-      properties:
-        extension:
-          type: string
-        id:
-          format: int64
-          type: integer
-        phoneNumber:
-          type: string
-        phoneType:
-          type: string
-      type: object
-    PostalAddress:
-      description: https://www.schema.org/PostalAddress
-      properties:
-        addressCountry:
-          type: string
-        addressLocality:
-          type: string
-        addressRegion:
-          type: string
-        addressType:
-          type: string
-        id:
-          format: int64
-          type: integer
-        postalCode:
-          type: string
-        streetAddressLine1:
-          type: string
-        streetAddressLine2:
-          type: string
-        streetAddressLine3:
-          type: string
-      type: object
-    Role:
-      description: https://www.schema.org/Role
-      properties:
-        availableLanguages:
-          items:
-            type: string
-          type: array
-        creator:
-          $ref: "#/components/schemas/Creator"
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        description:
-          type: string
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-        roleType:
-          type: string
-      type: object
-    Segment:
-      description: "https://schema.org/Audience"
-      properties:
-        active:
-          type: boolean
-        criteria:
-          type: string
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-        source:
-          type: string
-      type: object
-    UserAccount:
-      description: https://www.schema.org/UserAccount
-      properties:
-        additionalName:
-          type: string
-        alternateName:
-          type: string
-        birthDate:
-          format: date-time
-          type: string
-        contactInformation:
-          description: https://www.schema.org/ContactInformation
-          properties:
-            address:
-              items:
-                $ref: "#/components/schemas/PostalAddress"
-              readOnly: true
-              type: array
-            addressIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-            email:
-              items:
-                $ref: "#/components/schemas/Email"
-              readOnly: true
-              type: array
-            emailIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-            facebook:
-              type: string
-            id:
-              format: int64
-              type: integer
-            jabber:
-              type: string
-            skype:
-              type: string
-            sms:
-              type: string
-            telephone:
-              items:
-                $ref: "#/components/schemas/Phone"
-              readOnly: true
-              type: array
-            telephoneIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-            twitter:
-              type: string
-            webUrl:
-              items:
-                $ref: "#/components/schemas/WebUrl"
-              readOnly: true
-              type: array
-            webUrlIds:
-              items:
-                format: int64
-                type: integer
-              type: array
-              writeOnly: true
-          type: object
-        dashboardURL:
-          type: string
-        email:
-          type: string
-        familyName:
-          type: string
-        givenName:
-          type: string
-        honorificPrefix:
-          type: string
-        honorificSuffix:
-          type: string
-        id:
-          format: int64
-          type: integer
-        image:
-          format: uri
-          type: string
-        jobTitle:
-          type: string
-        myOrganizations:
-          items:
-            $ref: "#/components/schemas/Organization"
-          readOnly: true
-          type: array
-        myOrganizationsIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
-        name:
-          type: string
-        profileURL:
-          type: string
-        roles:
-          items:
-            $ref: "#/components/schemas/Role"
-          readOnly: true
-          type: array
-        rolesIds:
-          items:
-            format: int64
-            type: integer
-          type: array
-          writeOnly: true
-        tasksAssignedToMe:
-          items:
-            format: uri
-            type: string
-          type: array
-        tasksAssignedToMyRoles:
-          items:
-            format: uri
-            type: string
-          type: array
-      type: object
-    Vocabulary:
-      description: https://www.schema.org/Vocabulary
-      properties:
-        availableLanguages:
-          items:
-            type: string
-          type: array
-        contentSpace:
-          format: int64
-          type: integer
-        creator:
-          $ref: "#/components/schemas/Creator"
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        description:
-          type: string
-        hasCategories:
-          type: boolean
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-      type: object
-    WebUrl:
-      description: https://www.schema.org/WebUrl
-      properties:
-        id:
-          format: int64
-          type: integer
-        url:
-          type: string
-        urlType:
-          type: string
-      type: object
+        Creator:
+            description: https://www.schema.org/Creator
+            properties:
+                additionalName:
+                    type: string
+                familyName:
+                    type: string
+                givenName:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                image:
+                    format: uri
+                    type: string
+                name:
+                    type: string
+                profileURL:
+                    format: uri
+                    type: string
+            type: object
+        Email:
+            description: https://www.schema.org/Email
+            properties:
+                email:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                type:
+                    type: string
+            type: object
+        Keyword:
+            description: https://www.schema.org/Keyword
+            properties:
+                contentSpace:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                keywordUsageCount:
+                    type: number
+                name:
+                    type: string
+            type: object
+        Organization:
+            description: https://www.schema.org/Organization
+            properties:
+                comment:
+                    type: string
+                contactInformation:
+                    description: https://www.schema.org/ContactInformation
+                    properties:
+                        address:
+                            items:
+                                $ref: "#/components/schemas/PostalAddress"
+                            readOnly: true
+                            type: array
+                        addressIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                        email:
+                            items:
+                                $ref: "#/components/schemas/Email"
+                            readOnly: true
+                            type: array
+                        emailIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                        id:
+                            format: int64
+                            type: integer
+                        telephone:
+                            items:
+                                $ref: "#/components/schemas/Phone"
+                            readOnly: true
+                            type: array
+                        telephoneIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                        webUrl:
+                            items:
+                                $ref: "#/components/schemas/WebUrl"
+                            readOnly: true
+                            type: array
+                        webUrlIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                    type: object
+                id:
+                    format: int64
+                    type: integer
+                location:
+                    description: https://www.schema.org/PostalAddress
+                    properties:
+                        addressCountry:
+                            type: string
+                        addressRegion:
+                            type: string
+                        id:
+                            format: int64
+                            type: integer
+                    type: object
+                logo:
+                    format: uri
+                    type: string
+                members:
+                    items:
+                        $ref: "#/components/schemas/UserAccount"
+                    readOnly: true
+                    type: array
+                membersIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                name:
+                    type: string
+                parentOrganization:
+                    allOf:
+                        - $ref: "#/components/schemas/Organization"
+                    readOnly: true
+                parentOrganizationId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                services:
+                    description: https://www.schema.org/Service
+                    items:
+                        properties:
+                            hoursAvailable:
+                                description: https://www.schema.org/OpeningHoursSpecification
+                                items:
+                                    properties:
+                                        closes:
+                                            type: string
+                                        dayOfWeek:
+                                            type: string
+                                        id:
+                                            format: int64
+                                            type: integer
+                                        opens:
+                                            type: string
+                                    type: object
+                                type: array
+                            id:
+                                format: int64
+                                type: integer
+                            serviceType:
+                                type: string
+                        type: object
+                    type: array
+                subOrganization:
+                    items:
+                        $ref: "#/components/schemas/Organization"
+                    readOnly: true
+                    type: array
+                subOrganizationIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+            type: object
+        Phone:
+            description: https://www.schema.org/Phone
+            properties:
+                extension:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                phoneNumber:
+                    type: string
+                phoneType:
+                    type: string
+            type: object
+        PostalAddress:
+            description: https://www.schema.org/PostalAddress
+            properties:
+                addressCountry:
+                    type: string
+                addressLocality:
+                    type: string
+                addressRegion:
+                    type: string
+                addressType:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                postalCode:
+                    type: string
+                streetAddressLine1:
+                    type: string
+                streetAddressLine2:
+                    type: string
+                streetAddressLine3:
+                    type: string
+            type: object
+        Role:
+            description: https://www.schema.org/Role
+            properties:
+                availableLanguages:
+                    items:
+                        type: string
+                    type: array
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                roleType:
+                    type: string
+            type: object
+        Segment:
+            description: "https://schema.org/Audience"
+            properties:
+                active:
+                    type: boolean
+                criteria:
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                source:
+                    type: string
+            type: object
+        UserAccount:
+            description: https://www.schema.org/UserAccount
+            properties:
+                additionalName:
+                    type: string
+                alternateName:
+                    type: string
+                birthDate:
+                    format: date-time
+                    type: string
+                contactInformation:
+                    description: https://www.schema.org/ContactInformation
+                    properties:
+                        address:
+                            items:
+                                $ref: "#/components/schemas/PostalAddress"
+                            readOnly: true
+                            type: array
+                        addressIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                        email:
+                            items:
+                                $ref: "#/components/schemas/Email"
+                            readOnly: true
+                            type: array
+                        emailIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                        facebook:
+                            type: string
+                        id:
+                            format: int64
+                            type: integer
+                        jabber:
+                            type: string
+                        skype:
+                            type: string
+                        sms:
+                            type: string
+                        telephone:
+                            items:
+                                $ref: "#/components/schemas/Phone"
+                            readOnly: true
+                            type: array
+                        telephoneIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                        twitter:
+                            type: string
+                        webUrl:
+                            items:
+                                $ref: "#/components/schemas/WebUrl"
+                            readOnly: true
+                            type: array
+                        webUrlIds:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                            writeOnly: true
+                    type: object
+                dashboardURL:
+                    type: string
+                email:
+                    type: string
+                familyName:
+                    type: string
+                givenName:
+                    type: string
+                honorificPrefix:
+                    type: string
+                honorificSuffix:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                image:
+                    format: uri
+                    type: string
+                jobTitle:
+                    type: string
+                myOrganizations:
+                    items:
+                        $ref: "#/components/schemas/Organization"
+                    readOnly: true
+                    type: array
+                myOrganizationsIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                name:
+                    type: string
+                profileURL:
+                    type: string
+                roles:
+                    items:
+                        $ref: "#/components/schemas/Role"
+                    readOnly: true
+                    type: array
+                rolesIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                tasksAssignedToMe:
+                    items:
+                        format: uri
+                        type: string
+                    type: array
+                tasksAssignedToMyRoles:
+                    items:
+                        format: uri
+                        type: string
+                    type: array
+            type: object
+        Vocabulary:
+            description: https://www.schema.org/Vocabulary
+            properties:
+                availableLanguages:
+                    items:
+                        type: string
+                    type: array
+                contentSpace:
+                    format: int64
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                hasCategories:
+                    type: boolean
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
+        WebUrl:
+            description: https://www.schema.org/WebUrl
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                url:
+                    type: string
+                urlType:
+                    type: string
+            type: object
 info:
-  description: ""
-  title: ""
-  version: v1.0
+    description: ""
+    title: ""
+    version: v1.0
 openapi: 3.0.1
 paths:
-  "/addresses":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: generic-parent-id
-          required: true
-          schema:
-            type: object
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/PostalAddress"
-                type: array
-          description: ""
-      tags: ["PostalAddress"]
-  "/addresses/{address-id}":
-    get:
-      parameters:
-        - in: path
-          name: address-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PostalAddress"
-          description: ""
-      tags: ["PostalAddress"]
-  "/categories/{category-id}":
-    delete:
-      parameters:
-        - in: path
-          name: category-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        204:
-          content:
-            application/json: {}
-          description: ""
-      tags: ["Category"]
-    get:
-      parameters:
-        - in: path
-          name: category-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-      tags: ["Category"]
-    put:
-      parameters:
-        - in: path
-          name: category-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Category"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-      tags: ["Category"]
-  "/categories/{category-id}/categories":
-    get:
-      parameters:
-        - in: path
-          name: category-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: query
-          name: filter
-          schema:
-            type: string
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: query
-          name: sort
-          schema:
-            type: string
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Category"
-                type: array
-          description: ""
-      tags: ["Category"]
-    post:
-      parameters:
-        - in: path
-          name: category-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Category"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-      tags: ["Category"]
-  "/content-spaces/{content-space-id}/keywords":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: query
-          name: filter
-          schema:
-            type: string
-        - in: query
-          name: sort
-          schema:
-            type: string
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Keyword"
-                type: array
-          description: ""
-      tags: ["Keyword"]
-    post:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Keyword"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Keyword"
-          description: ""
-      tags: ["Keyword"]
-  "/content-spaces/{content-space-id}/vocabularies":
-    get:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: query
-          name: filter
-          schema:
-            type: string
-        - in: query
-          name: sort
-          schema:
-            type: string
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Vocabulary"
-                type: array
-          description: ""
-      tags: ["Vocabulary"]
-    post:
-      parameters:
-        - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Vocabulary"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Vocabulary"
-          description: ""
-      tags: ["Vocabulary"]
-  "/emails":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: generic-parent-id
-          required: true
-          schema:
-            type: object
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Email"
-                type: array
-          description: ""
-      tags: ["Email"]
-  "/emails/{email-id}":
-    get:
-      parameters:
-        - in: path
-          name: email-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Email"
-          description: ""
-      tags: ["Email"]
-  "/keywords/{keyword-id}":
-    delete:
-      parameters:
-        - in: path
-          name: keyword-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        204:
-          content:
-            application/json: {}
-          description: ""
-      tags: ["Keyword"]
-    get:
-      parameters:
-        - in: path
-          name: keyword-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Keyword"
-          description: ""
-      tags: ["Keyword"]
-    put:
-      parameters:
-        - in: path
-          name: keyword-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Keyword"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Keyword"
-          description: ""
-      tags: ["Keyword"]
-  "/my-user-accounts/{my-user-account-id}":
-    get:
-      parameters:
-        - in: path
-          name: my-user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserAccount"
-          description: ""
-      tags: ["UserAccount"]
-  "/my-user-accounts/{my-user-account-id}/organizations":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: my-user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Organization"
-                type: array
-          description: ""
-      tags: ["Organization"]
-  "/my-user-accounts/{my-user-account-id}/roles":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: my-user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Role"
-                type: array
-          description: ""
-      tags: ["Role"]
-  "/organizations":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Organization"
-                type: array
-          description: ""
-      tags: ["Organization"]
-  "/organizations/{organization-id}":
-    get:
-      parameters:
-        - in: path
-          name: organization-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Organization"
-          description: ""
-      tags: ["Organization"]
-  "/organizations/{organization-id}/organizations":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: organization-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Organization"
-                type: array
-          description: ""
-      tags: ["Organization"]
-  "/organizations/{organization-id}/user-accounts":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: organization-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/UserAccount"
-                type: array
-          description: ""
-      tags: ["UserAccount"]
-  "/phones":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: generic-parent-id
-          required: true
-          schema:
-            type: object
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Phone"
-                type: array
-          description: ""
-      tags: ["Phone"]
-  "/phones/{phone-id}":
-    get:
-      parameters:
-        - in: path
-          name: phone-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Phone"
-          description: ""
-      tags: ["Phone"]
-  "/roles":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Role"
-                type: array
-          description: ""
-      tags: ["Role"]
-  "/roles/{role-id}":
-    get:
-      parameters:
-        - in: path
-          name: role-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Role"
-          description: ""
-      tags: ["Role"]
-  "/user-accounts":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: query
-          name: fullnamequery
-          schema:
-            type: string
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/UserAccount"
-                type: array
-          description: ""
-      tags: ["UserAccount"]
-    post:
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserAccount"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserAccount"
-          description: ""
-      tags: ["UserAccount"]
-  "/user-accounts/{user-account-id}":
-    delete:
-      parameters:
-        - in: path
-          name: user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        204:
-          content:
-            application/json: {}
-          description: ""
-      tags: ["UserAccount"]
-    get:
-      parameters:
-        - in: path
-          name: user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserAccount"
-          description: ""
-      tags: ["UserAccount"]
-    put:
-      parameters:
-        - in: path
-          name: user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserAccount"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserAccount"
-          description: ""
-      tags: ["UserAccount"]
-  "/user-accounts/{user-account-id}/organizations":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Organization"
-                type: array
-          description: ""
-      tags: ["Organization"]
-  "/user-accounts/{user-account-id}/roles":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: user-account-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Role"
-                type: array
-          description: ""
-      tags: ["Role"]
-  "/user-accounts/{user-id}/segments":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: user-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Segment"
-                type: array
-          description: ""
-      tags: ["Segment"]
-  "/vocabularies/{vocabulary-id}":
-    delete:
-      parameters:
-        - in: path
-          name: vocabulary-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        204:
-          content:
-            application/json: {}
-          description: ""
-      tags: ["Vocabulary"]
-    get:
-      parameters:
-        - in: path
-          name: vocabulary-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Vocabulary"
-          description: ""
-      tags: ["Vocabulary"]
-    put:
-      parameters:
-        - in: path
-          name: vocabulary-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Vocabulary"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Vocabulary"
-          description: ""
-      tags: ["Vocabulary"]
-  "/vocabularies/{vocabulary-id}/categories":
-    get:
-      parameters:
-        - in: query
-          name: filter
-          schema:
-            type: string
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: query
-          name: sort
-          schema:
-            type: string
-        - in: path
-          name: vocabulary-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Category"
-                type: array
-          description: ""
-      tags: ["Category"]
-    post:
-      parameters:
-        - in: path
-          name: vocabulary-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Category"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Category"
-          description: ""
-      tags: ["Category"]
-  "/web-sites/{web-site-id}/user-accounts":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: web-site-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/UserAccount"
-                type: array
-          description: ""
-      tags: ["UserAccount"]
-  "/web-urls":
-    get:
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          schema:
-            type: integer
-        - in: path
-          name: generic-parent-id
-          required: true
-          schema:
-            type: object
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/WebUrl"
-                type: array
-          description: ""
-      tags: ["WebUrl"]
-  "/web-urls/{web-url-id}":
-    get:
-      parameters:
-        - in: path
-          name: web-url-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/WebUrl"
-          description: ""
-      tags: ["WebUrl"]
+    "/addresses":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: generic-parent-id
+                  required: true
+                  schema:
+                      type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                    description: ""
+            tags: ["PostalAddress"]
+    "/addresses/{address-id}":
+        get:
+            parameters:
+                - in: path
+                  name: address-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                    description: ""
+            tags: ["PostalAddress"]
+    "/categories/{category-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: category-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Category"]
+        get:
+            parameters:
+                - in: path
+                  name: category-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                    description: ""
+            tags: ["Category"]
+        put:
+            parameters:
+                - in: path
+                  name: category-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Category"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                    description: ""
+            tags: ["Category"]
+    "/categories/{category-id}/categories":
+        get:
+            parameters:
+                - in: path
+                  name: category-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Category"
+                                type: array
+                    description: ""
+            tags: ["Category"]
+        post:
+            parameters:
+                - in: path
+                  name: category-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Category"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                    description: ""
+            tags: ["Category"]
+    "/content-spaces/{content-space-id}/keywords":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                    description: ""
+            tags: ["Keyword"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
+    "/content-spaces/{content-space-id}/vocabularies":
+        get:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Vocabulary"
+                                type: array
+                    description: ""
+            tags: ["Vocabulary"]
+        post:
+            parameters:
+                - in: path
+                  name: content-space-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Vocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Vocabulary"
+                    description: ""
+            tags: ["Vocabulary"]
+    "/emails":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: generic-parent-id
+                  required: true
+                  schema:
+                      type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Email"
+                                type: array
+                    description: ""
+            tags: ["Email"]
+    "/emails/{email-id}":
+        get:
+            parameters:
+                - in: path
+                  name: email-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Email"
+                    description: ""
+            tags: ["Email"]
+    "/keywords/{keyword-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: keyword-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Keyword"]
+        get:
+            parameters:
+                - in: path
+                  name: keyword-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
+        put:
+            parameters:
+                - in: path
+                  name: keyword-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
+    "/my-user-accounts/{my-user-account-id}":
+        get:
+            parameters:
+                - in: path
+                  name: my-user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description: ""
+            tags: ["UserAccount"]
+    "/my-user-accounts/{my-user-account-id}/organizations":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: my-user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description: ""
+            tags: ["Organization"]
+    "/my-user-accounts/{my-user-account-id}/roles":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: my-user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Role"
+                                type: array
+                    description: ""
+            tags: ["Role"]
+    "/organizations":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description: ""
+            tags: ["Organization"]
+    "/organizations/{organization-id}":
+        get:
+            parameters:
+                - in: path
+                  name: organization-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                    description: ""
+            tags: ["Organization"]
+    "/organizations/{organization-id}/organizations":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: organization-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description: ""
+            tags: ["Organization"]
+    "/organizations/{organization-id}/user-accounts":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: organization-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                    description: ""
+            tags: ["UserAccount"]
+    "/phones":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: generic-parent-id
+                  required: true
+                  schema:
+                      type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                    description: ""
+            tags: ["Phone"]
+    "/phones/{phone-id}":
+        get:
+            parameters:
+                - in: path
+                  name: phone-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
+                    description: ""
+            tags: ["Phone"]
+    "/roles":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Role"
+                                type: array
+                    description: ""
+            tags: ["Role"]
+    "/roles/{role-id}":
+        get:
+            parameters:
+                - in: path
+                  name: role-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                    description: ""
+            tags: ["Role"]
+    "/user-accounts":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: fullnamequery
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                    description: ""
+            tags: ["UserAccount"]
+        post:
+            parameters: []
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description: ""
+            tags: ["UserAccount"]
+    "/user-accounts/{user-account-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["UserAccount"]
+        get:
+            parameters:
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description: ""
+            tags: ["UserAccount"]
+        put:
+            parameters:
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description: ""
+            tags: ["UserAccount"]
+    "/user-accounts/{user-account-id}/organizations":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
+                    description: ""
+            tags: ["Organization"]
+    "/user-accounts/{user-account-id}/roles":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-account-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Role"
+                                type: array
+                    description: ""
+            tags: ["Role"]
+    "/user-accounts/{user-id}/segments":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: user-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Segment"
+                                type: array
+                    description: ""
+            tags: ["Segment"]
+    "/vocabularies/{vocabulary-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: vocabulary-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Vocabulary"]
+        get:
+            parameters:
+                - in: path
+                  name: vocabulary-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Vocabulary"
+                    description: ""
+            tags: ["Vocabulary"]
+        put:
+            parameters:
+                - in: path
+                  name: vocabulary-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Vocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Vocabulary"
+                    description: ""
+            tags: ["Vocabulary"]
+    "/vocabularies/{vocabulary-id}/categories":
+        get:
+            parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: path
+                  name: vocabulary-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Category"
+                                type: array
+                    description: ""
+            tags: ["Category"]
+        post:
+            parameters:
+                - in: path
+                  name: vocabulary-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Category"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                    description: ""
+            tags: ["Category"]
+    "/web-sites/{web-site-id}/user-accounts":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: web-site-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                    description: ""
+            tags: ["UserAccount"]
+    "/web-urls":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: path
+                  name: generic-parent-id
+                  required: true
+                  schema:
+                      type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                    description: ""
+            tags: ["WebUrl"]
+    "/web-urls/{web-url-id}":
+        get:
+            parameters:
+                - in: path
+                  name: web-url-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WebUrl"
+                    description: ""
+            tags: ["WebUrl"]

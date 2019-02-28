@@ -15,6 +15,7 @@
 	{@param? activeItemType: string}
 	{@param? defaultLanguageId: string}
 	{@param? editableId: string}
+	{@param? editableValues: ?}
 	{@param? fragmentEntryLinkEditableId: string}
 	{@param? fragmentEntryLinkId: string}
 	{@param? hoveredItemId: string}
@@ -43,6 +44,22 @@
 
 		{if $_mapped}
 			{sp}fragments-editor__editable--mapped
+		{/if}
+
+		{if $editableValues.config}
+			{if $type == 'html' or $type == 'rich-text' or $type == 'text'}
+				{if $editableValues.config.textAlignment}
+					{sp}text-{$editableValues.config.textAlignment}
+				{/if}
+
+				{if $editableValues.config.textColor}
+					{sp}text-palette-{$editableValues.config.textColor}
+				{/if}
+
+				{if $editableValues.config.textStyle}
+					{sp}text-{$editableValues.config.textStyle}
+				{/if}
+			{/if}
 		{/if}
 	{/let}
 

@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
 import {CLEAR_ACTIVE_ITEM, OPEN_MAPPING_FIELDS_DIALOG, UPDATE_ACTIVE_ITEM, UPDATE_EDITABLE_VALUE, UPDATE_HOVERED_ITEM, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
@@ -22,6 +23,8 @@ const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 const FLOATING_TOOLBAR_EDIT_PANEL_ID = 'edit';
 
+const FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID = 'text_properties';
+
 const FLOATING_TOOLBAR_MAP_PANEL_ID = 'map';
 
 /**
@@ -34,6 +37,24 @@ const FLOATING_TOOLBAR_PANELS = [
 		icon: 'pencil',
 		panelId: FLOATING_TOOLBAR_EDIT_PANEL_ID,
 		title: Liferay.Language.get('edit')
+	},
+	{
+		icon: 'bolt',
+		panelId: FLOATING_TOOLBAR_MAP_PANEL_ID,
+		title: Liferay.Language.get('map')
+	}
+];
+
+/**
+ * List of available panels after mapping
+ * @review
+ * @type {object[]}
+ */
+const FLOATING_TOOLBAR_PANELS_MAPPED = [
+	{
+		icon: 'pencil',
+		panelId: FLOATING_TOOLBAR_TEXT_PROPERTIES_PANEL_ID,
+		title: Liferay.Language.get('text-properties')
 	},
 	{
 		icon: 'bolt',
@@ -182,23 +203,26 @@ class FragmentEditableField extends Component {
 	 * @review
 	 */
 	_createFloatingToolbar() {
+		const config = {
+			anchorElement: this.element,
+			events: {
+				panelSelected: this._handleFloatingToolbarPanelSelected
+			},
+			item: {
+				editableValues: this.editableValues,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			},
+			itemId: this.editableId,
+			panels: this.editableValues.mappedField === '' ? FLOATING_TOOLBAR_PANELS : FLOATING_TOOLBAR_PANELS_MAPPED,
+			portalElement: document.body,
+			store: this.store
+		};
+
 		if (this._floatingToolbar) {
-			this._floatingToolbar.forceUpdate();
+			this._floatingToolbar.setState(config);
 		}
 		else {
-			this._floatingToolbar = new FloatingToolbar(
-				{
-					anchorElement: this.element,
-					events: {
-						panelSelected: this._handleFloatingToolbarPanelSelected
-					},
-					item: this.editableId,
-					itemId: this.editableId,
-					panels: FLOATING_TOOLBAR_PANELS,
-					portalElement: document.body,
-					store: this.store
-				}
-			);
+			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
 
@@ -362,14 +386,14 @@ class FragmentEditableField extends Component {
 	}
 
 	_handleFloatingToolbarPanelSelected(event, data) {
-		event.preventDefault();
-
 		const {panelId} = data;
 
 		if (panelId === FLOATING_TOOLBAR_EDIT_PANEL_ID) {
+			event.preventDefault();
 			this._enableEditor();
 		}
 		else if (panelId === FLOATING_TOOLBAR_MAP_PANEL_ID) {
+			event.preventDefault();
 			this.store
 				.dispatchAction(
 					OPEN_MAPPING_FIELDS_DIALOG,
@@ -505,9 +529,7 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	type: Config
-		.string()
-		.required(),
+	type: Config.oneOf(['html', 'image', 'rich-text', 'text']).required(),
 
 	/**
 	 * Internal FloatingToolbar instance.

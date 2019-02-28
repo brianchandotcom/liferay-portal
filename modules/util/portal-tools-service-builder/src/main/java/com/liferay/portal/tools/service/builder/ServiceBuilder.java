@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.XMLSafeReader;
 
@@ -2154,7 +2155,7 @@ public class ServiceBuilder {
 				entity.getUADOutputPath(), "/uad/anonymizer/Base",
 				entity.getName(), "UADAnonymizer.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createBaseUADDisplay(Entity entity) throws Exception {
@@ -2169,7 +2170,7 @@ public class ServiceBuilder {
 				entity.getUADOutputPath(), "/uad/display/Base",
 				entity.getName(), "UADDisplay.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createBaseUADExporter(Entity entity) throws Exception {
@@ -2184,7 +2185,7 @@ public class ServiceBuilder {
 				entity.getUADOutputPath(), "/uad/exporter/Base",
 				entity.getName(), "UADExporter.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createBlobModels(Entity entity) throws Exception {
@@ -2208,9 +2209,7 @@ public class ServiceBuilder {
 					_serviceOutputPath, "/model/", entity.getName(),
 					blobEntityColumn.getMethodName(), "BlobModel.java"));
 
-			_write(
-				blobModelFile, content, _author, _jalopySettings,
-				_modifiedFileNames);
+			_write(blobModelFile, content, _modifiedFileNames);
 		}
 	}
 
@@ -2232,7 +2231,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/service/persistence/",
 				entity.getPKClassName(), ".java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createExceptions(List<String> exceptions) throws Exception {
@@ -2397,8 +2396,7 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_serviceOutputPath, "/model/", entity.getName(), ".java"));
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
@@ -2419,8 +2417,7 @@ public class ServiceBuilder {
 				_outputPath, "/model/impl/", entity.getName(),
 				"BaseImpl.java"));
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createExtendedModelImpl(Entity entity) throws Exception {
@@ -2446,9 +2443,7 @@ public class ServiceBuilder {
 			ToolsUtil.writeFileRaw(modelFile, content, _modifiedFileNames);
 		}
 		else {
-			_write(
-				modelFile, content, _author, _jalopySettings,
-				_modifiedFileNames);
+			_write(modelFile, content, _modifiedFileNames);
 		}
 	}
 
@@ -2478,7 +2473,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/service/persistence/", entity.getName(),
 				"Finder.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createFinderBaseImpl(Entity entity) throws Exception {
@@ -2527,7 +2522,7 @@ public class ServiceBuilder {
 				_outputPath, "/service/persistence/impl/", entity.getName(),
 				"FinderBaseImpl.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createFinderUtil(Entity entity) throws Exception {
@@ -2556,7 +2551,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/service/persistence/", entity.getName(),
 				"FinderUtil.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createHbm(Entity entity) {
@@ -2725,9 +2720,7 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_serviceOutputPath, "/model/", entity.getName(), "Model.java"));
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames,
-			_apiPackagePath + ".model");
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
@@ -2749,8 +2742,7 @@ public class ServiceBuilder {
 				_outputPath, "/model/impl/", entity.getName(),
 				"CacheModel.java"));
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createModelHintsXml() throws Exception {
@@ -2835,8 +2827,7 @@ public class ServiceBuilder {
 				_outputPath, "/model/impl/", entity.getName(),
 				"ModelImpl.java"));
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createModelSoap(Entity entity) throws Exception {
@@ -2856,8 +2847,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplModelSoap, context);
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createModelWrapper(Entity entity) throws Exception {
@@ -2896,8 +2886,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/model/", entity.getName(),
 				"Wrapper.java"));
 
-		_write(
-			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(modelFile, content, _modifiedFileNames);
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
@@ -2921,7 +2910,7 @@ public class ServiceBuilder {
 
 			String content = _processTemplate(_tplPersistence, context);
 
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+			_write(file, content, _modifiedFileNames);
 		}
 		else {
 			System.out.println("Removing " + file);
@@ -2945,7 +2934,7 @@ public class ServiceBuilder {
 		String content = _processTemplate(
 			_tplPersistenceConstants, _getContext());
 
-		_write(file, content, AUTHOR, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
@@ -2970,7 +2959,7 @@ public class ServiceBuilder {
 
 			String content = _processTemplate(_tplPersistenceImpl, context);
 
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+			_write(file, content, _modifiedFileNames);
 		}
 		else {
 			System.out.println("Removing " + file);
@@ -3017,7 +3006,7 @@ public class ServiceBuilder {
 
 			String content = _processTemplate(_tplPersistenceTest, context);
 
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+			_write(file, content, _modifiedFileNames);
 		}
 
 		file = new File(
@@ -3053,7 +3042,7 @@ public class ServiceBuilder {
 
 			String content = _processTemplate(_tplPersistenceUtil, context);
 
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+			_write(file, content, _modifiedFileNames);
 		}
 		else {
 			System.out.println("Removing " + file);
@@ -3181,7 +3170,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/service/", entity.getName(),
 				_getSessionTypeName(sessionType), "Service.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceBaseImpl(Entity entity, int sessionType)
@@ -3211,7 +3200,7 @@ public class ServiceBuilder {
 				_outputPath, "/service/base/", entity.getName(),
 				_getSessionTypeName(sessionType), "ServiceBaseImpl.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceFactory(Entity entity, int sessionType) {
@@ -3259,7 +3248,7 @@ public class ServiceBuilder {
 				_outputPath, "/service/http/", entity.getName(),
 				"ServiceHttp.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceImpl(Entity entity, int sessionType)
@@ -3281,7 +3270,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplServiceImpl, context);
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServicePropsUtil() throws Exception {
@@ -3315,7 +3304,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplServicePropsUtil, context);
 
-		_write(file, content, AUTHOR, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceSoap(Entity entity) throws Exception {
@@ -3338,7 +3327,7 @@ public class ServiceBuilder {
 				_outputPath, "/service/http/", entity.getName(),
 				"ServiceSoap.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceUtil(Entity entity, int sessionType)
@@ -3364,7 +3353,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/service/", entity.getName(),
 				_getSessionTypeName(sessionType), "ServiceUtil.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceWrapper(Entity entity, int sessionType)
@@ -3390,7 +3379,7 @@ public class ServiceBuilder {
 				_serviceOutputPath, "/service/", entity.getName(),
 				_getSessionTypeName(sessionType), "ServiceWrapper.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createServletContextUtil() throws Exception {
@@ -3405,7 +3394,7 @@ public class ServiceBuilder {
 		File file = new File(
 			_serviceOutputPath + "/service/ServletContextUtil.java");
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createSpringXml() throws Exception {
@@ -3987,7 +3976,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplUADAnonymizer, context);
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createUADBnd(String uadApplicationName) throws Exception {
@@ -4045,7 +4034,7 @@ public class ServiceBuilder {
 				entity.getUADOutputPath(), "/uad/constants/",
 				uadApplicationName, "UADConstants.java"));
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createUADDisplay(Entity entity) throws Exception {
@@ -4064,7 +4053,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplUADDisplay, context);
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _createUADExporter(Entity entity) throws Exception {
@@ -4083,7 +4072,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplUADExporter, context);
 
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		_write(file, content, _modifiedFileNames);
 	}
 
 	private void _deleteFile(String fileName) {
@@ -4306,21 +4295,6 @@ public class ServiceBuilder {
 		}
 
 		return columnLengths;
-	}
-
-	private String _getCommercialCopyright() throws IOException {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		String resourceName = _TPL_ROOT + "copyright-commercial.txt";
-
-		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
-
-		String content = StringUtil.read(inputStream);
-
-		return StringUtil.replace(
-			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private Properties _getCompatProperties(String version) throws IOException {
@@ -4797,6 +4771,21 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				"No entity column exist with column database name ",
 				columnDBName, " for entity ", entity.getName()));
+	}
+
+	private String _getFileContent(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		String resourceName = _TPL_ROOT + fileName;
+
+		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
+
+		String content = StringUtil.read(inputStream);
+
+		return StringUtil.replace(
+			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {
@@ -6107,10 +6096,7 @@ public class ServiceBuilder {
 			List<EntityColumn> databaseRegularEntityColumns =
 				entity.getDatabaseRegularEntityColumns();
 
-			int index = databaseRegularEntityColumns.indexOf(
-				new EntityColumn("headId"));
-
-			databaseRegularEntityColumns.add(index + 1, headEntityColumn);
+			databaseRegularEntityColumns.add(headEntityColumn);
 
 			List<EntityColumn> entityFinderColumns =
 				entity.getFinderEntityColumns();
@@ -7026,31 +7012,28 @@ public class ServiceBuilder {
 	}
 
 	private void _write(
-			File file, String content, String author,
-			Map<String, Object> jalopySettings, Set<String> modifiedFileNames)
-		throws IOException {
-
-		_write(file, content, author, jalopySettings, modifiedFileNames, null);
-	}
-
-	private void _write(
-			File file, String content, String author,
-			Map<String, Object> jalopySettings, Set<String> modifiedFileNames,
-			String packagePath)
-		throws IOException {
+			File file, String content, Set<String> modifiedFileNames)
+		throws Exception {
 
 		String header = null;
 
 		if (_commercialPlugin) {
-			header = _getCommercialCopyright();
+			header = _getFileContent("copyright-commercial.txt");
+		}
+		else {
+			header = _getFileContent("copyright.txt");
 		}
 
-		ToolsUtil.writeFile(
-			file, content, header, author, jalopySettings, modifiedFileNames,
-			packagePath);
+		content = header + "\n\n" + content;
+
+		ToolsUtil.writeFileRaw(
+			file, JavaParser.parse(file, content, _MAX_LINE_LENGTH, false),
+			modifiedFileNames);
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
+
+	private static final int _MAX_LINE_LENGTH = 80;
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 
@@ -7076,8 +7059,6 @@ public class ServiceBuilder {
 		StringBundler.concat(
 			"public .* get.*", Pattern.quote("("), "|public boolean is.*",
 			Pattern.quote("(")));
-	private static final Map<String, Object> _jalopySettings =
-		Collections.singletonMap("failOnFormatError", (Object)Boolean.TRUE);
 	private static Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 

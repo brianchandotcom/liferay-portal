@@ -160,8 +160,10 @@ public class BeanPortletInvokerPortlet
 			String actionName = actionParameters.getValue(
 				ActionRequest.ACTION_NAME);
 
-			if ((actionName == null) ||
-				actionName.equals(beanMethod.getActionName())) {
+			String beanMethodActionName = beanMethod.getActionName();
+
+			if (Validator.isNull(beanMethodActionName) ||
+				beanMethodActionName.equals(actionName)) {
 
 				beanMethod.invoke(args);
 			}

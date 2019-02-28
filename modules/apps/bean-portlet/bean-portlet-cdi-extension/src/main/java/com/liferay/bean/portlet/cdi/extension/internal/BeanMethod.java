@@ -15,6 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
@@ -83,7 +84,7 @@ public class BeanMethod implements Comparable<BeanMethod> {
 		if (actionMethod != null) {
 			String actionName = actionMethod.actionName();
 
-			if (actionName != null) {
+			if (Validator.isNotNull(actionName)) {
 				return actionName;
 			}
 		}

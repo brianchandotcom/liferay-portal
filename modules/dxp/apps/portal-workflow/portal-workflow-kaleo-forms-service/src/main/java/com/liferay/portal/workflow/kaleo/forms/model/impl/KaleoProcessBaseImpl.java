@@ -32,8 +32,9 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceU
  * @generated
  */
 @ProviderType
-public abstract class KaleoProcessBaseImpl extends KaleoProcessModelImpl
-	implements KaleoProcess {
+public abstract class KaleoProcessBaseImpl
+	extends KaleoProcessModelImpl implements KaleoProcess {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class KaleoProcessBaseImpl extends KaleoProcessModelImpl
 			KaleoProcessLocalServiceUtil.updateKaleoProcess(this);
 		}
 	}
+
 }

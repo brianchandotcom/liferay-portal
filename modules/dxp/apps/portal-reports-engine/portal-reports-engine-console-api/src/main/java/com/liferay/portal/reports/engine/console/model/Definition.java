@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DefinitionModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl")
+@ImplementationClassName(
+	"com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl"
+)
 @ProviderType
 public interface Definition extends DefinitionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Definition, Long> DEFINITION_ID_ACCESSOR = new Accessor<Definition, Long>() {
+	public static final Accessor<Definition, Long> DEFINITION_ID_ACCESSOR =
+		new Accessor<Definition, Long>() {
+
 			@Override
 			public Long get(Definition definition) {
 				return definition.getDefinitionId();
@@ -50,10 +55,12 @@ public interface Definition extends DefinitionModel, PersistedModel {
 			public Class<Definition> getTypeClass() {
 				return Definition.class;
 			}
+
 		};
 
 	public String getAttachmentsDir();
 
 	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

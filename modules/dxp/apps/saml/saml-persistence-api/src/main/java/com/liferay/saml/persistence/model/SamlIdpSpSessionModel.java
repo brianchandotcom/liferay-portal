@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlIdpSpSessionModel extends AuditedModel,
-	BaseModel<SamlIdpSpSession>, ShardedModel {
+public interface SamlIdpSpSessionModel
+	extends AuditedModel, BaseModel<SamlIdpSpSession>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -226,4 +227,5 @@ public interface SamlIdpSpSessionModel extends AuditedModel,
 	 * @param nameIdValue the name ID value of this saml idp sp session
 	 */
 	public void setNameIdValue(String nameIdValue);
+
 }

@@ -36,8 +36,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoProcessModel extends BaseModel<KaleoProcess>, GroupedModel,
-	ShardedModel, StagedAuditedModel {
+public interface KaleoProcessModel
+	extends BaseModel<KaleoProcess>, GroupedModel, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -258,4 +260,5 @@ public interface KaleoProcessModel extends BaseModel<KaleoProcess>, GroupedModel
 	 * @param workflowDefinitionVersion the workflow definition version of this kaleo process
 	 */
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion);
+
 }

@@ -43,23 +43,33 @@ import java.util.List;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=reports", "json.web.service.context.path=Entry"}, service = EntryService.class)
+@OSGiBeanProperties(
+	property = {
+		"json.web.service.context.name=reports",
+		"json.web.service.context.path=Entry"
+	},
+	service = EntryService.class
+)
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface EntryService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryServiceUtil} to access the entry remote service. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Entry addEntry(long groupId, long definitionId, String format,
-		boolean schedulerRequest, Date startDate, Date endDate,
-		boolean repeating, String recurrence, String emailNotifications,
-		String emailDelivery, String portletId, String pageURL,
-		String reportName, String reportParameters,
-		ServiceContext serviceContext) throws PortalException;
+	public Entry addEntry(
+			long groupId, long definitionId, String format,
+			boolean schedulerRequest, Date startDate, Date endDate,
+			boolean repeating, String recurrence, String emailNotifications,
+			String emailDelivery, String portletId, String pageURL,
+			String reportName, String reportParameters,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteAttachment(long companyId, long entryId, String fileName)
 		throws PortalException;
@@ -67,26 +77,30 @@ public interface EntryService extends BaseService {
 	public Entry deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Entry> getEntries(long groupId, String definitionName,
-		String userName, Date createDateGT, Date createDateLT,
-		boolean andSearch, int start, int end,
-		OrderByComparator orderByComparator) throws PortalException;
+	public List<Entry> getEntries(
+			long groupId, String definitionName, String userName,
+			Date createDateGT, Date createDateLT, boolean andSearch, int start,
+			int end, OrderByComparator orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long groupId, String definitionName,
-		String userName, Date createDateGT, Date createDateLT, boolean andSearch)
+	public int getEntriesCount(
+			long groupId, String definitionName, String userName,
+			Date createDateGT, Date createDateLT, boolean andSearch)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public void sendEmails(long entryId, String fileName,
-		String[] emailAddresses, boolean notification)
+	public void sendEmails(
+			long entryId, String fileName, String[] emailAddresses,
+			boolean notification)
 		throws PortalException;
 
 	public void unscheduleEntry(long entryId) throws PortalException;
+
 }

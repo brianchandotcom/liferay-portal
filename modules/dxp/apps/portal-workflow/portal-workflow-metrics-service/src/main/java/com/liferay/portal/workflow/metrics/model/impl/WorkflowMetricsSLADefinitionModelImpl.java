@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -61,33 +58,31 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<WorkflowMetricsSLADefinition>
+public class WorkflowMetricsSLADefinitionModelImpl
+	extends BaseModelImpl<WorkflowMetricsSLADefinition>
 	implements WorkflowMetricsSLADefinitionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla definition model instance should use the <code>WorkflowMetricsSLADefinition</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "WorkflowMetricsSLADefinition";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "workflowMetricsSLADefinitionId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "duration", Types.BIGINT },
-			{ "processId", Types.BIGINT },
-			{ "pauseNodeNames", Types.VARCHAR },
-			{ "startNodeNames", Types.VARCHAR },
-			{ "stopNodeNames", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"workflowMetricsSLADefinitionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"duration", Types.BIGINT}, {"processId", Types.BIGINT},
+		{"pauseNodeNames", Types.VARCHAR}, {"startNodeNames", Types.VARCHAR},
+		{"stopNodeNames", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -108,30 +103,55 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		TABLE_COLUMNS_MAP.put("stopNodeNames", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,duration LONG,processId LONG,pauseNodeNames VARCHAR(75) null,startNodeNames VARCHAR(75) null,stopNodeNames VARCHAR(75) null)";
-	public static final String TABLE_SQL_DROP = "drop table WorkflowMetricsSLADefinition";
-	public static final String ORDER_BY_JPQL = " ORDER BY workflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY WorkflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,duration LONG,processId LONG,pauseNodeNames VARCHAR(75) null,startNodeNames VARCHAR(75) null,stopNodeNames VARCHAR(75) null)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table WorkflowMetricsSLADefinition";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY workflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY WorkflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long PROCESSID_COLUMN_BITMASK = 8L;
+
 	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"));
+
+	public static final long WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK =
+		32L;
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"lock.expiration.time.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"));
 
 	public WorkflowMetricsSLADefinitionModelImpl() {
 	}
@@ -170,15 +190,18 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<WorkflowMetricsSLADefinition, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WorkflowMetricsSLADefinition, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<WorkflowMetricsSLADefinition, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<WorkflowMetricsSLADefinition, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<WorkflowMetricsSLADefinition, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WorkflowMetricsSLADefinition, Object>
+				attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply(
 					(WorkflowMetricsSLADefinition)this));
 		}
@@ -191,76 +214,155 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<WorkflowMetricsSLADefinition, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<WorkflowMetricsSLADefinition, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<WorkflowMetricsSLADefinition, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<WorkflowMetricsSLADefinition, Object>
+				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
+					attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((WorkflowMetricsSLADefinition)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(WorkflowMetricsSLADefinition)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<WorkflowMetricsSLADefinition, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<WorkflowMetricsSLADefinition, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<WorkflowMetricsSLADefinition, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<WorkflowMetricsSLADefinition, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WorkflowMetricsSLADefinition, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WorkflowMetricsSLADefinition, Object>> _attributeSetterBiConsumers;
+	private static final Map
+		<String, Function<WorkflowMetricsSLADefinition, Object>>
+			_attributeGetterFunctions;
+	private static final Map
+		<String, BiConsumer<WorkflowMetricsSLADefinition, Object>>
+			_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<WorkflowMetricsSLADefinition, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<WorkflowMetricsSLADefinition, Object>>();
-		Map<String, BiConsumer<WorkflowMetricsSLADefinition, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<WorkflowMetricsSLADefinition, ?>>();
+		Map<String, Function<WorkflowMetricsSLADefinition, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<WorkflowMetricsSLADefinition, Object>>();
+		Map<String, BiConsumer<WorkflowMetricsSLADefinition, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap
+					<String, BiConsumer<WorkflowMetricsSLADefinition, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", WorkflowMetricsSLADefinition::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", WorkflowMetricsSLADefinition::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setUuid);
+		attributeGetterFunctions.put(
+			"workflowMetricsSLADefinitionId",
+			WorkflowMetricsSLADefinition::getWorkflowMetricsSLADefinitionId);
+		attributeSetterBiConsumers.put(
+			"workflowMetricsSLADefinitionId",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::
+					setWorkflowMetricsSLADefinitionId);
+		attributeGetterFunctions.put(
+			"groupId", WorkflowMetricsSLADefinition::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", WorkflowMetricsSLADefinition::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::setCompanyId);
+		attributeGetterFunctions.put(
+			"userId", WorkflowMetricsSLADefinition::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::setUserId);
+		attributeGetterFunctions.put(
+			"userName", WorkflowMetricsSLADefinition::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", WorkflowMetricsSLADefinition::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<WorkflowMetricsSLADefinition, Date>)
+				WorkflowMetricsSLADefinition::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", WorkflowMetricsSLADefinition::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<WorkflowMetricsSLADefinition, Date>)
+				WorkflowMetricsSLADefinition::setModifiedDate);
+		attributeGetterFunctions.put(
+			"name", WorkflowMetricsSLADefinition::getName);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setName);
+		attributeGetterFunctions.put(
+			"description", WorkflowMetricsSLADefinition::getDescription);
+		attributeSetterBiConsumers.put(
+			"description",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setDescription);
+		attributeGetterFunctions.put(
+			"duration", WorkflowMetricsSLADefinition::getDuration);
+		attributeSetterBiConsumers.put(
+			"duration",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::setDuration);
+		attributeGetterFunctions.put(
+			"processId", WorkflowMetricsSLADefinition::getProcessId);
+		attributeSetterBiConsumers.put(
+			"processId",
+			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
+				WorkflowMetricsSLADefinition::setProcessId);
+		attributeGetterFunctions.put(
+			"pauseNodeNames", WorkflowMetricsSLADefinition::getPauseNodeNames);
+		attributeSetterBiConsumers.put(
+			"pauseNodeNames",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setPauseNodeNames);
+		attributeGetterFunctions.put(
+			"startNodeNames", WorkflowMetricsSLADefinition::getStartNodeNames);
+		attributeSetterBiConsumers.put(
+			"startNodeNames",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setStartNodeNames);
+		attributeGetterFunctions.put(
+			"stopNodeNames", WorkflowMetricsSLADefinition::getStopNodeNames);
+		attributeSetterBiConsumers.put(
+			"stopNodeNames",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setStopNodeNames);
 
-		attributeGetterFunctions.put("mvccVersion", WorkflowMetricsSLADefinition::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setMvccVersion);
-		attributeGetterFunctions.put("uuid", WorkflowMetricsSLADefinition::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setUuid);
-		attributeGetterFunctions.put("workflowMetricsSLADefinitionId", WorkflowMetricsSLADefinition::getWorkflowMetricsSLADefinitionId);
-		attributeSetterBiConsumers.put("workflowMetricsSLADefinitionId", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setWorkflowMetricsSLADefinitionId);
-		attributeGetterFunctions.put("groupId", WorkflowMetricsSLADefinition::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setGroupId);
-		attributeGetterFunctions.put("companyId", WorkflowMetricsSLADefinition::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setCompanyId);
-		attributeGetterFunctions.put("userId", WorkflowMetricsSLADefinition::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setUserId);
-		attributeGetterFunctions.put("userName", WorkflowMetricsSLADefinition::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setUserName);
-		attributeGetterFunctions.put("createDate", WorkflowMetricsSLADefinition::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<WorkflowMetricsSLADefinition, Date>)WorkflowMetricsSLADefinition::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", WorkflowMetricsSLADefinition::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<WorkflowMetricsSLADefinition, Date>)WorkflowMetricsSLADefinition::setModifiedDate);
-		attributeGetterFunctions.put("name", WorkflowMetricsSLADefinition::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setName);
-		attributeGetterFunctions.put("description", WorkflowMetricsSLADefinition::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setDescription);
-		attributeGetterFunctions.put("duration", WorkflowMetricsSLADefinition::getDuration);
-		attributeSetterBiConsumers.put("duration", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setDuration);
-		attributeGetterFunctions.put("processId", WorkflowMetricsSLADefinition::getProcessId);
-		attributeSetterBiConsumers.put("processId", (BiConsumer<WorkflowMetricsSLADefinition, Long>)WorkflowMetricsSLADefinition::setProcessId);
-		attributeGetterFunctions.put("pauseNodeNames", WorkflowMetricsSLADefinition::getPauseNodeNames);
-		attributeSetterBiConsumers.put("pauseNodeNames", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setPauseNodeNames);
-		attributeGetterFunctions.put("startNodeNames", WorkflowMetricsSLADefinition::getStartNodeNames);
-		attributeSetterBiConsumers.put("startNodeNames", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setStartNodeNames);
-		attributeGetterFunctions.put("stopNodeNames", WorkflowMetricsSLADefinition::getStopNodeNames);
-		attributeSetterBiConsumers.put("stopNodeNames", (BiConsumer<WorkflowMetricsSLADefinition, String>)WorkflowMetricsSLADefinition::setStopNodeNames);
-
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -306,6 +408,7 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	@Override
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
+
 		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
 	}
 
@@ -539,7 +642,8 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
+		return new StagedModelType(
+			PortalUtil.getClassNameId(
 				WorkflowMetricsSLADefinition.class.getName()));
 	}
 
@@ -549,8 +653,9 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			WorkflowMetricsSLADefinition.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), WorkflowMetricsSLADefinition.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -563,8 +668,10 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	@Override
 	public WorkflowMetricsSLADefinition toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WorkflowMetricsSLADefinition)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel =
+				(WorkflowMetricsSLADefinition)ProxyUtil.newProxyInstance(
+					_classLoader, _escapedModelInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -572,11 +679,13 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public Object clone() {
-		WorkflowMetricsSLADefinitionImpl workflowMetricsSLADefinitionImpl = new WorkflowMetricsSLADefinitionImpl();
+		WorkflowMetricsSLADefinitionImpl workflowMetricsSLADefinitionImpl =
+			new WorkflowMetricsSLADefinitionImpl();
 
 		workflowMetricsSLADefinitionImpl.setMvccVersion(getMvccVersion());
 		workflowMetricsSLADefinitionImpl.setUuid(getUuid());
-		workflowMetricsSLADefinitionImpl.setWorkflowMetricsSLADefinitionId(getWorkflowMetricsSLADefinitionId());
+		workflowMetricsSLADefinitionImpl.setWorkflowMetricsSLADefinitionId(
+			getWorkflowMetricsSLADefinitionId());
 		workflowMetricsSLADefinitionImpl.setGroupId(getGroupId());
 		workflowMetricsSLADefinitionImpl.setCompanyId(getCompanyId());
 		workflowMetricsSLADefinitionImpl.setUserId(getUserId());
@@ -599,6 +708,7 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	@Override
 	public int compareTo(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
 		long primaryKey = workflowMetricsSLADefinition.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
@@ -622,7 +732,8 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 			return false;
 		}
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = (WorkflowMetricsSLADefinition)obj;
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			(WorkflowMetricsSLADefinition)obj;
 
 		long primaryKey = workflowMetricsSLADefinition.getPrimaryKey();
 
@@ -651,24 +762,29 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public void resetOriginalValues() {
-		WorkflowMetricsSLADefinitionModelImpl workflowMetricsSLADefinitionModelImpl =
-			this;
+		WorkflowMetricsSLADefinitionModelImpl
+			workflowMetricsSLADefinitionModelImpl = this;
 
-		workflowMetricsSLADefinitionModelImpl._originalUuid = workflowMetricsSLADefinitionModelImpl._uuid;
+		workflowMetricsSLADefinitionModelImpl._originalUuid =
+			workflowMetricsSLADefinitionModelImpl._uuid;
 
-		workflowMetricsSLADefinitionModelImpl._originalGroupId = workflowMetricsSLADefinitionModelImpl._groupId;
+		workflowMetricsSLADefinitionModelImpl._originalGroupId =
+			workflowMetricsSLADefinitionModelImpl._groupId;
 
 		workflowMetricsSLADefinitionModelImpl._setOriginalGroupId = false;
 
-		workflowMetricsSLADefinitionModelImpl._originalCompanyId = workflowMetricsSLADefinitionModelImpl._companyId;
+		workflowMetricsSLADefinitionModelImpl._originalCompanyId =
+			workflowMetricsSLADefinitionModelImpl._companyId;
 
 		workflowMetricsSLADefinitionModelImpl._setOriginalCompanyId = false;
 
 		workflowMetricsSLADefinitionModelImpl._setModifiedDate = false;
 
-		workflowMetricsSLADefinitionModelImpl._originalName = workflowMetricsSLADefinitionModelImpl._name;
+		workflowMetricsSLADefinitionModelImpl._originalName =
+			workflowMetricsSLADefinitionModelImpl._name;
 
-		workflowMetricsSLADefinitionModelImpl._originalProcessId = workflowMetricsSLADefinitionModelImpl._processId;
+		workflowMetricsSLADefinitionModelImpl._originalProcessId =
+			workflowMetricsSLADefinitionModelImpl._processId;
 
 		workflowMetricsSLADefinitionModelImpl._setOriginalProcessId = false;
 
@@ -677,8 +793,9 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public CacheModel<WorkflowMetricsSLADefinition> toCacheModel() {
-		WorkflowMetricsSLADefinitionCacheModel workflowMetricsSLADefinitionCacheModel =
-			new WorkflowMetricsSLADefinitionCacheModel();
+		WorkflowMetricsSLADefinitionCacheModel
+			workflowMetricsSLADefinitionCacheModel =
+				new WorkflowMetricsSLADefinitionCacheModel();
 
 		workflowMetricsSLADefinitionCacheModel.mvccVersion = getMvccVersion();
 
@@ -690,7 +807,8 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 			workflowMetricsSLADefinitionCacheModel.uuid = null;
 		}
 
-		workflowMetricsSLADefinitionCacheModel.workflowMetricsSLADefinitionId = getWorkflowMetricsSLADefinitionId();
+		workflowMetricsSLADefinitionCacheModel.workflowMetricsSLADefinitionId =
+			getWorkflowMetricsSLADefinitionId();
 
 		workflowMetricsSLADefinitionCacheModel.groupId = getGroupId();
 
@@ -709,7 +827,8 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
-			workflowMetricsSLADefinitionCacheModel.createDate = createDate.getTime();
+			workflowMetricsSLADefinitionCacheModel.createDate =
+				createDate.getTime();
 		}
 		else {
 			workflowMetricsSLADefinitionCacheModel.createDate = Long.MIN_VALUE;
@@ -718,10 +837,12 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
-			workflowMetricsSLADefinitionCacheModel.modifiedDate = modifiedDate.getTime();
+			workflowMetricsSLADefinitionCacheModel.modifiedDate =
+				modifiedDate.getTime();
 		}
 		else {
-			workflowMetricsSLADefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
+			workflowMetricsSLADefinitionCacheModel.modifiedDate =
+				Long.MIN_VALUE;
 		}
 
 		workflowMetricsSLADefinitionCacheModel.name = getName();
@@ -744,25 +865,31 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 		workflowMetricsSLADefinitionCacheModel.processId = getProcessId();
 
-		workflowMetricsSLADefinitionCacheModel.pauseNodeNames = getPauseNodeNames();
+		workflowMetricsSLADefinitionCacheModel.pauseNodeNames =
+			getPauseNodeNames();
 
-		String pauseNodeNames = workflowMetricsSLADefinitionCacheModel.pauseNodeNames;
+		String pauseNodeNames =
+			workflowMetricsSLADefinitionCacheModel.pauseNodeNames;
 
 		if ((pauseNodeNames != null) && (pauseNodeNames.length() == 0)) {
 			workflowMetricsSLADefinitionCacheModel.pauseNodeNames = null;
 		}
 
-		workflowMetricsSLADefinitionCacheModel.startNodeNames = getStartNodeNames();
+		workflowMetricsSLADefinitionCacheModel.startNodeNames =
+			getStartNodeNames();
 
-		String startNodeNames = workflowMetricsSLADefinitionCacheModel.startNodeNames;
+		String startNodeNames =
+			workflowMetricsSLADefinitionCacheModel.startNodeNames;
 
 		if ((startNodeNames != null) && (startNodeNames.length() == 0)) {
 			workflowMetricsSLADefinitionCacheModel.startNodeNames = null;
 		}
 
-		workflowMetricsSLADefinitionCacheModel.stopNodeNames = getStopNodeNames();
+		workflowMetricsSLADefinitionCacheModel.stopNodeNames =
+			getStopNodeNames();
 
-		String stopNodeNames = workflowMetricsSLADefinitionCacheModel.stopNodeNames;
+		String stopNodeNames =
+			workflowMetricsSLADefinitionCacheModel.stopNodeNames;
 
 		if ((stopNodeNames != null) && (stopNodeNames.length() == 0)) {
 			workflowMetricsSLADefinitionCacheModel.stopNodeNames = null;
@@ -773,22 +900,25 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public String toString() {
-		Map<String, Function<WorkflowMetricsSLADefinition, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WorkflowMetricsSLADefinition, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<WorkflowMetricsSLADefinition, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<WorkflowMetricsSLADefinition, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<WorkflowMetricsSLADefinition, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WorkflowMetricsSLADefinition, Object>
+				attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeGetterFunction.apply(
+			sb.append(
+				attributeGetterFunction.apply(
 					(WorkflowMetricsSLADefinition)this));
 			sb.append(", ");
 		}
@@ -804,25 +934,28 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<WorkflowMetricsSLADefinition, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WorkflowMetricsSLADefinition, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<WorkflowMetricsSLADefinition, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<WorkflowMetricsSLADefinition, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<WorkflowMetricsSLADefinition, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WorkflowMetricsSLADefinition, Object>
+				attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply(
+			sb.append(
+				attributeGetterFunction.apply(
 					(WorkflowMetricsSLADefinition)this));
 			sb.append("]]></column-value></column>");
 		}
@@ -832,10 +965,12 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = WorkflowMetricsSLADefinition.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		WorkflowMetricsSLADefinition.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			WorkflowMetricsSLADefinition.class, ModelWrapper.class
-		};
+		WorkflowMetricsSLADefinition.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -863,4 +998,5 @@ public class WorkflowMetricsSLADefinitionModelImpl extends BaseModelImpl<Workflo
 	private String _stopNodeNames;
 	private long _columnBitmask;
 	private WorkflowMetricsSLADefinition _escapedModel;
+
 }

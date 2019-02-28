@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnectionModel;
 
@@ -59,36 +56,33 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnection>
+public class SamlSpIdpConnectionModelImpl
+	extends BaseModelImpl<SamlSpIdpConnection>
 	implements SamlSpIdpConnectionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp idp connection model instance should use the <code>SamlSpIdpConnection</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SamlSpIdpConnection";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "samlSpIdpConnectionId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "samlIdpEntityId", Types.VARCHAR },
-			{ "assertionSignatureRequired", Types.BOOLEAN },
-			{ "clockSkew", Types.BIGINT },
-			{ "enabled", Types.BOOLEAN },
-			{ "forceAuthn", Types.BOOLEAN },
-			{ "ldapImportEnabled", Types.BOOLEAN },
-			{ "metadataUrl", Types.VARCHAR },
-			{ "metadataXml", Types.CLOB },
-			{ "metadataUpdatedDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
-			{ "nameIdFormat", Types.VARCHAR },
-			{ "signAuthnRequest", Types.BOOLEAN },
-			{ "userAttributeMappings", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"samlSpIdpConnectionId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"samlIdpEntityId", Types.VARCHAR},
+		{"assertionSignatureRequired", Types.BOOLEAN},
+		{"clockSkew", Types.BIGINT}, {"enabled", Types.BOOLEAN},
+		{"forceAuthn", Types.BOOLEAN}, {"ldapImportEnabled", Types.BOOLEAN},
+		{"metadataUrl", Types.VARCHAR}, {"metadataXml", Types.CLOB},
+		{"metadataUpdatedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"nameIdFormat", Types.VARCHAR}, {"signAuthnRequest", Types.BOOLEAN},
+		{"userAttributeMappings", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("samlSpIdpConnectionId", Types.BIGINT);
@@ -112,27 +106,48 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		TABLE_COLUMNS_MAP.put("userAttributeMappings", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SamlSpIdpConnection (samlSpIdpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpEntityId VARCHAR(1024) null,assertionSignatureRequired BOOLEAN,clockSkew LONG,enabled BOOLEAN,forceAuthn BOOLEAN,ldapImportEnabled BOOLEAN,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,metadataUpdatedDate DATE null,name VARCHAR(75) null,nameIdFormat VARCHAR(1024) null,signAuthnRequest BOOLEAN,userAttributeMappings STRING null)";
-	public static final String TABLE_SQL_DROP = "drop table SamlSpIdpConnection";
-	public static final String ORDER_BY_JPQL = " ORDER BY samlSpIdpConnection.samlSpIdpConnectionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SamlSpIdpConnection.samlSpIdpConnectionId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table SamlSpIdpConnection (samlSpIdpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpEntityId VARCHAR(1024) null,assertionSignatureRequired BOOLEAN,clockSkew LONG,enabled BOOLEAN,forceAuthn BOOLEAN,ldapImportEnabled BOOLEAN,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,metadataUpdatedDate DATE null,name VARCHAR(75) null,nameIdFormat VARCHAR(1024) null,signAuthnRequest BOOLEAN,userAttributeMappings STRING null)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table SamlSpIdpConnection";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY samlSpIdpConnection.samlSpIdpConnectionId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SamlSpIdpConnection.samlSpIdpConnectionId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.saml.persistence.model.SamlSpIdpConnection"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.saml.persistence.model.SamlSpIdpConnection"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlSpIdpConnection"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.saml.persistence.model.SamlSpIdpConnection"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.saml.persistence.model.SamlSpIdpConnection"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlSpIdpConnection"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long SAMLIDPENTITYID_COLUMN_BITMASK = 2L;
+
 	public static final long SAMLSPIDPCONNECTIONID_COLUMN_BITMASK = 4L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.saml.persistence.model.SamlSpIdpConnection"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"lock.expiration.time.com.liferay.saml.persistence.model.SamlSpIdpConnection"));
 
 	public SamlSpIdpConnectionModelImpl() {
 	}
@@ -171,14 +186,18 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SamlSpIdpConnection, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SamlSpIdpConnection, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SamlSpIdpConnection, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlSpIdpConnection, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlSpIdpConnection, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlSpIdpConnection, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SamlSpIdpConnection)this));
 		}
 
@@ -190,81 +209,168 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SamlSpIdpConnection, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SamlSpIdpConnection, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SamlSpIdpConnection, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SamlSpIdpConnection, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SamlSpIdpConnection)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SamlSpIdpConnection)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SamlSpIdpConnection, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SamlSpIdpConnection, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SamlSpIdpConnection, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SamlSpIdpConnection, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SamlSpIdpConnection, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SamlSpIdpConnection, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SamlSpIdpConnection, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SamlSpIdpConnection, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SamlSpIdpConnection, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SamlSpIdpConnection, Object>>();
-		Map<String, BiConsumer<SamlSpIdpConnection, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SamlSpIdpConnection, ?>>();
+		Map<String, Function<SamlSpIdpConnection, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<SamlSpIdpConnection, Object>>();
+		Map<String, BiConsumer<SamlSpIdpConnection, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<SamlSpIdpConnection, ?>>();
 
-
-		attributeGetterFunctions.put("samlSpIdpConnectionId", SamlSpIdpConnection::getSamlSpIdpConnectionId);
-		attributeSetterBiConsumers.put("samlSpIdpConnectionId", (BiConsumer<SamlSpIdpConnection, Long>)SamlSpIdpConnection::setSamlSpIdpConnectionId);
-		attributeGetterFunctions.put("companyId", SamlSpIdpConnection::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SamlSpIdpConnection, Long>)SamlSpIdpConnection::setCompanyId);
+		attributeGetterFunctions.put(
+			"samlSpIdpConnectionId",
+			SamlSpIdpConnection::getSamlSpIdpConnectionId);
+		attributeSetterBiConsumers.put(
+			"samlSpIdpConnectionId",
+			(BiConsumer<SamlSpIdpConnection, Long>)
+				SamlSpIdpConnection::setSamlSpIdpConnectionId);
+		attributeGetterFunctions.put(
+			"companyId", SamlSpIdpConnection::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SamlSpIdpConnection, Long>)
+				SamlSpIdpConnection::setCompanyId);
 		attributeGetterFunctions.put("userId", SamlSpIdpConnection::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<SamlSpIdpConnection, Long>)SamlSpIdpConnection::setUserId);
-		attributeGetterFunctions.put("userName", SamlSpIdpConnection::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setUserName);
-		attributeGetterFunctions.put("createDate", SamlSpIdpConnection::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SamlSpIdpConnection, Date>)SamlSpIdpConnection::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", SamlSpIdpConnection::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SamlSpIdpConnection, Date>)SamlSpIdpConnection::setModifiedDate);
-		attributeGetterFunctions.put("samlIdpEntityId", SamlSpIdpConnection::getSamlIdpEntityId);
-		attributeSetterBiConsumers.put("samlIdpEntityId", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setSamlIdpEntityId);
-		attributeGetterFunctions.put("assertionSignatureRequired", SamlSpIdpConnection::getAssertionSignatureRequired);
-		attributeSetterBiConsumers.put("assertionSignatureRequired", (BiConsumer<SamlSpIdpConnection, Boolean>)SamlSpIdpConnection::setAssertionSignatureRequired);
-		attributeGetterFunctions.put("clockSkew", SamlSpIdpConnection::getClockSkew);
-		attributeSetterBiConsumers.put("clockSkew", (BiConsumer<SamlSpIdpConnection, Long>)SamlSpIdpConnection::setClockSkew);
-		attributeGetterFunctions.put("enabled", SamlSpIdpConnection::getEnabled);
-		attributeSetterBiConsumers.put("enabled", (BiConsumer<SamlSpIdpConnection, Boolean>)SamlSpIdpConnection::setEnabled);
-		attributeGetterFunctions.put("forceAuthn", SamlSpIdpConnection::getForceAuthn);
-		attributeSetterBiConsumers.put("forceAuthn", (BiConsumer<SamlSpIdpConnection, Boolean>)SamlSpIdpConnection::setForceAuthn);
-		attributeGetterFunctions.put("ldapImportEnabled", SamlSpIdpConnection::getLdapImportEnabled);
-		attributeSetterBiConsumers.put("ldapImportEnabled", (BiConsumer<SamlSpIdpConnection, Boolean>)SamlSpIdpConnection::setLdapImportEnabled);
-		attributeGetterFunctions.put("metadataUrl", SamlSpIdpConnection::getMetadataUrl);
-		attributeSetterBiConsumers.put("metadataUrl", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setMetadataUrl);
-		attributeGetterFunctions.put("metadataXml", SamlSpIdpConnection::getMetadataXml);
-		attributeSetterBiConsumers.put("metadataXml", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setMetadataXml);
-		attributeGetterFunctions.put("metadataUpdatedDate", SamlSpIdpConnection::getMetadataUpdatedDate);
-		attributeSetterBiConsumers.put("metadataUpdatedDate", (BiConsumer<SamlSpIdpConnection, Date>)SamlSpIdpConnection::setMetadataUpdatedDate);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<SamlSpIdpConnection, Long>)
+				SamlSpIdpConnection::setUserId);
+		attributeGetterFunctions.put(
+			"userName", SamlSpIdpConnection::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", SamlSpIdpConnection::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SamlSpIdpConnection, Date>)
+				SamlSpIdpConnection::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", SamlSpIdpConnection::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<SamlSpIdpConnection, Date>)
+				SamlSpIdpConnection::setModifiedDate);
+		attributeGetterFunctions.put(
+			"samlIdpEntityId", SamlSpIdpConnection::getSamlIdpEntityId);
+		attributeSetterBiConsumers.put(
+			"samlIdpEntityId",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setSamlIdpEntityId);
+		attributeGetterFunctions.put(
+			"assertionSignatureRequired",
+			SamlSpIdpConnection::getAssertionSignatureRequired);
+		attributeSetterBiConsumers.put(
+			"assertionSignatureRequired",
+			(BiConsumer<SamlSpIdpConnection, Boolean>)
+				SamlSpIdpConnection::setAssertionSignatureRequired);
+		attributeGetterFunctions.put(
+			"clockSkew", SamlSpIdpConnection::getClockSkew);
+		attributeSetterBiConsumers.put(
+			"clockSkew",
+			(BiConsumer<SamlSpIdpConnection, Long>)
+				SamlSpIdpConnection::setClockSkew);
+		attributeGetterFunctions.put(
+			"enabled", SamlSpIdpConnection::getEnabled);
+		attributeSetterBiConsumers.put(
+			"enabled",
+			(BiConsumer<SamlSpIdpConnection, Boolean>)
+				SamlSpIdpConnection::setEnabled);
+		attributeGetterFunctions.put(
+			"forceAuthn", SamlSpIdpConnection::getForceAuthn);
+		attributeSetterBiConsumers.put(
+			"forceAuthn",
+			(BiConsumer<SamlSpIdpConnection, Boolean>)
+				SamlSpIdpConnection::setForceAuthn);
+		attributeGetterFunctions.put(
+			"ldapImportEnabled", SamlSpIdpConnection::getLdapImportEnabled);
+		attributeSetterBiConsumers.put(
+			"ldapImportEnabled",
+			(BiConsumer<SamlSpIdpConnection, Boolean>)
+				SamlSpIdpConnection::setLdapImportEnabled);
+		attributeGetterFunctions.put(
+			"metadataUrl", SamlSpIdpConnection::getMetadataUrl);
+		attributeSetterBiConsumers.put(
+			"metadataUrl",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setMetadataUrl);
+		attributeGetterFunctions.put(
+			"metadataXml", SamlSpIdpConnection::getMetadataXml);
+		attributeSetterBiConsumers.put(
+			"metadataXml",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setMetadataXml);
+		attributeGetterFunctions.put(
+			"metadataUpdatedDate", SamlSpIdpConnection::getMetadataUpdatedDate);
+		attributeSetterBiConsumers.put(
+			"metadataUpdatedDate",
+			(BiConsumer<SamlSpIdpConnection, Date>)
+				SamlSpIdpConnection::setMetadataUpdatedDate);
 		attributeGetterFunctions.put("name", SamlSpIdpConnection::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setName);
-		attributeGetterFunctions.put("nameIdFormat", SamlSpIdpConnection::getNameIdFormat);
-		attributeSetterBiConsumers.put("nameIdFormat", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setNameIdFormat);
-		attributeGetterFunctions.put("signAuthnRequest", SamlSpIdpConnection::getSignAuthnRequest);
-		attributeSetterBiConsumers.put("signAuthnRequest", (BiConsumer<SamlSpIdpConnection, Boolean>)SamlSpIdpConnection::setSignAuthnRequest);
-		attributeGetterFunctions.put("userAttributeMappings", SamlSpIdpConnection::getUserAttributeMappings);
-		attributeSetterBiConsumers.put("userAttributeMappings", (BiConsumer<SamlSpIdpConnection, String>)SamlSpIdpConnection::setUserAttributeMappings);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setName);
+		attributeGetterFunctions.put(
+			"nameIdFormat", SamlSpIdpConnection::getNameIdFormat);
+		attributeSetterBiConsumers.put(
+			"nameIdFormat",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setNameIdFormat);
+		attributeGetterFunctions.put(
+			"signAuthnRequest", SamlSpIdpConnection::getSignAuthnRequest);
+		attributeSetterBiConsumers.put(
+			"signAuthnRequest",
+			(BiConsumer<SamlSpIdpConnection, Boolean>)
+				SamlSpIdpConnection::setSignAuthnRequest);
+		attributeGetterFunctions.put(
+			"userAttributeMappings",
+			SamlSpIdpConnection::getUserAttributeMappings);
+		attributeSetterBiConsumers.put(
+			"userAttributeMappings",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setUserAttributeMappings);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -404,6 +510,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public void setAssertionSignatureRequired(
 		boolean assertionSignatureRequired) {
+
 		_assertionSignatureRequired = assertionSignatureRequired;
 	}
 
@@ -568,8 +675,9 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SamlSpIdpConnection.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SamlSpIdpConnection.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -582,8 +690,9 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public SamlSpIdpConnection toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlSpIdpConnection)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SamlSpIdpConnection)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -591,27 +700,32 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 
 	@Override
 	public Object clone() {
-		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl = new SamlSpIdpConnectionImpl();
+		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl =
+			new SamlSpIdpConnectionImpl();
 
-		samlSpIdpConnectionImpl.setSamlSpIdpConnectionId(getSamlSpIdpConnectionId());
+		samlSpIdpConnectionImpl.setSamlSpIdpConnectionId(
+			getSamlSpIdpConnectionId());
 		samlSpIdpConnectionImpl.setCompanyId(getCompanyId());
 		samlSpIdpConnectionImpl.setUserId(getUserId());
 		samlSpIdpConnectionImpl.setUserName(getUserName());
 		samlSpIdpConnectionImpl.setCreateDate(getCreateDate());
 		samlSpIdpConnectionImpl.setModifiedDate(getModifiedDate());
 		samlSpIdpConnectionImpl.setSamlIdpEntityId(getSamlIdpEntityId());
-		samlSpIdpConnectionImpl.setAssertionSignatureRequired(isAssertionSignatureRequired());
+		samlSpIdpConnectionImpl.setAssertionSignatureRequired(
+			isAssertionSignatureRequired());
 		samlSpIdpConnectionImpl.setClockSkew(getClockSkew());
 		samlSpIdpConnectionImpl.setEnabled(isEnabled());
 		samlSpIdpConnectionImpl.setForceAuthn(isForceAuthn());
 		samlSpIdpConnectionImpl.setLdapImportEnabled(isLdapImportEnabled());
 		samlSpIdpConnectionImpl.setMetadataUrl(getMetadataUrl());
 		samlSpIdpConnectionImpl.setMetadataXml(getMetadataXml());
-		samlSpIdpConnectionImpl.setMetadataUpdatedDate(getMetadataUpdatedDate());
+		samlSpIdpConnectionImpl.setMetadataUpdatedDate(
+			getMetadataUpdatedDate());
 		samlSpIdpConnectionImpl.setName(getName());
 		samlSpIdpConnectionImpl.setNameIdFormat(getNameIdFormat());
 		samlSpIdpConnectionImpl.setSignAuthnRequest(isSignAuthnRequest());
-		samlSpIdpConnectionImpl.setUserAttributeMappings(getUserAttributeMappings());
+		samlSpIdpConnectionImpl.setUserAttributeMappings(
+			getUserAttributeMappings());
 
 		samlSpIdpConnectionImpl.resetOriginalValues();
 
@@ -674,22 +788,26 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	public void resetOriginalValues() {
 		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl = this;
 
-		samlSpIdpConnectionModelImpl._originalCompanyId = samlSpIdpConnectionModelImpl._companyId;
+		samlSpIdpConnectionModelImpl._originalCompanyId =
+			samlSpIdpConnectionModelImpl._companyId;
 
 		samlSpIdpConnectionModelImpl._setOriginalCompanyId = false;
 
 		samlSpIdpConnectionModelImpl._setModifiedDate = false;
 
-		samlSpIdpConnectionModelImpl._originalSamlIdpEntityId = samlSpIdpConnectionModelImpl._samlIdpEntityId;
+		samlSpIdpConnectionModelImpl._originalSamlIdpEntityId =
+			samlSpIdpConnectionModelImpl._samlIdpEntityId;
 
 		samlSpIdpConnectionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<SamlSpIdpConnection> toCacheModel() {
-		SamlSpIdpConnectionCacheModel samlSpIdpConnectionCacheModel = new SamlSpIdpConnectionCacheModel();
+		SamlSpIdpConnectionCacheModel samlSpIdpConnectionCacheModel =
+			new SamlSpIdpConnectionCacheModel();
 
-		samlSpIdpConnectionCacheModel.samlSpIdpConnectionId = getSamlSpIdpConnectionId();
+		samlSpIdpConnectionCacheModel.samlSpIdpConnectionId =
+			getSamlSpIdpConnectionId();
 
 		samlSpIdpConnectionCacheModel.companyId = getCompanyId();
 
@@ -729,7 +847,8 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 			samlSpIdpConnectionCacheModel.samlIdpEntityId = null;
 		}
 
-		samlSpIdpConnectionCacheModel.assertionSignatureRequired = isAssertionSignatureRequired();
+		samlSpIdpConnectionCacheModel.assertionSignatureRequired =
+			isAssertionSignatureRequired();
 
 		samlSpIdpConnectionCacheModel.clockSkew = getClockSkew();
 
@@ -758,7 +877,8 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		Date metadataUpdatedDate = getMetadataUpdatedDate();
 
 		if (metadataUpdatedDate != null) {
-			samlSpIdpConnectionCacheModel.metadataUpdatedDate = metadataUpdatedDate.getTime();
+			samlSpIdpConnectionCacheModel.metadataUpdatedDate =
+				metadataUpdatedDate.getTime();
 		}
 		else {
 			samlSpIdpConnectionCacheModel.metadataUpdatedDate = Long.MIN_VALUE;
@@ -782,12 +902,15 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 
 		samlSpIdpConnectionCacheModel.signAuthnRequest = isSignAuthnRequest();
 
-		samlSpIdpConnectionCacheModel.userAttributeMappings = getUserAttributeMappings();
+		samlSpIdpConnectionCacheModel.userAttributeMappings =
+			getUserAttributeMappings();
 
-		String userAttributeMappings = samlSpIdpConnectionCacheModel.userAttributeMappings;
+		String userAttributeMappings =
+			samlSpIdpConnectionCacheModel.userAttributeMappings;
 
 		if ((userAttributeMappings != null) &&
-				(userAttributeMappings.length() == 0)) {
+			(userAttributeMappings.length() == 0)) {
+
 			samlSpIdpConnectionCacheModel.userAttributeMappings = null;
 		}
 
@@ -796,17 +919,20 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 
 	@Override
 	public String toString() {
-		Map<String, Function<SamlSpIdpConnection, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SamlSpIdpConnection, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SamlSpIdpConnection, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlSpIdpConnection, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlSpIdpConnection, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlSpIdpConnection, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -825,19 +951,22 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SamlSpIdpConnection, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SamlSpIdpConnection, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SamlSpIdpConnection, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlSpIdpConnection, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlSpIdpConnection, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlSpIdpConnection, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -851,10 +980,12 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SamlSpIdpConnection.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SamlSpIdpConnection.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SamlSpIdpConnection.class, ModelWrapper.class
-		};
+		SamlSpIdpConnection.class, ModelWrapper.class
+	};
+
 	private long _samlSpIdpConnectionId;
 	private long _companyId;
 	private long _originalCompanyId;
@@ -880,4 +1011,5 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	private String _userAttributeMappings;
 	private long _columnBitmask;
 	private SamlSpIdpConnection _escapedModel;
+
 }

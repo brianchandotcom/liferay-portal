@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlIdpSpConnectionModel extends AuditedModel,
-	BaseModel<SamlIdpSpConnection>, ShardedModel {
+public interface SamlIdpSpConnectionModel
+	extends AuditedModel, BaseModel<SamlIdpSpConnection>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -364,4 +365,5 @@ public interface SamlIdpSpConnectionModel extends AuditedModel,
 	 * @param nameIdFormat the name ID format of this saml idp sp connection
 	 */
 	public void setNameIdFormat(String nameIdFormat);
+
 }

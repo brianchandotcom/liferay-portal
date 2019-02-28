@@ -51,64 +51,68 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface SPIDefinitionLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface SPIDefinitionLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionLocalServiceUtil} to access the spi definition local service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SPIDefinition addSPIDefinition(long userId, String name,
-		String connectorAddress, int connectorPort, String description,
-		String jvmArguments, String portletIds, String servletContextNames,
-		String typeSettings, ServiceContext serviceContext)
+	public SPIDefinition addSPIDefinition(
+			long userId, String name, String connectorAddress,
+			int connectorPort, String description, String jvmArguments,
+			String portletIds, String servletContextNames, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Adds the spi definition to the database. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was added
-	*/
+	 * Adds the spi definition to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param spiDefinition the spi definition
+	 * @return the spi definition that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SPIDefinition addSPIDefinition(SPIDefinition spiDefinition);
 
 	/**
-	* Creates a new spi definition with the primary key. Does not add the spi definition to the database.
-	*
-	* @param spiDefinitionId the primary key for the new spi definition
-	* @return the new spi definition
-	*/
+	 * Creates a new spi definition with the primary key. Does not add the spi definition to the database.
+	 *
+	 * @param spiDefinitionId the primary key for the new spi definition
+	 * @return the new spi definition
+	 */
 	@Transactional(enabled = false)
 	public SPIDefinition createSPIDefinition(long spiDefinitionId);
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	* Deletes the spi definition with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinitionId the primary key of the spi definition
-	* @return the spi definition that was removed
-	* @throws PortalException if a spi definition with the primary key could not be found
-	*/
+	 * Deletes the spi definition with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param spiDefinitionId the primary key of the spi definition
+	 * @return the spi definition that was removed
+	 * @throws PortalException if a spi definition with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public SPIDefinition deleteSPIDefinition(long spiDefinitionId)
 		throws PortalException;
 
 	/**
-	* Deletes the spi definition from the database. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was removed
-	* @throws PortalException
-	*/
+	 * Deletes the spi definition from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param spiDefinition the spi definition
+	 * @return the spi definition that was removed
+	 * @throws PortalException
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public SPIDefinition deleteSPIDefinition(SPIDefinition spiDefinition)
 		throws PortalException;
@@ -117,66 +121,67 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SPIDefinition fetchSPIDefinition(long spiDefinitionId);
@@ -188,10 +193,10 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -203,12 +208,12 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public Tuple getPortletIdsAndServletContextNames();
 
 	/**
-	* Returns the spi definition with the primary key.
-	*
-	* @param spiDefinitionId the primary key of the spi definition
-	* @return the spi definition
-	* @throws PortalException if a spi definition with the primary key could not be found
-	*/
+	 * Returns the spi definition with the primary key.
+	 *
+	 * @param spiDefinitionId the primary key of the spi definition
+	 * @return the spi definition
+	 * @throws PortalException if a spi definition with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SPIDefinition getSPIDefinition(long spiDefinitionId)
 		throws PortalException;
@@ -221,16 +226,16 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public List<SPIDefinition> getSPIDefinitions();
 
 	/**
-	* Returns a range of all the spi definitions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of spi definitions
-	* @param end the upper bound of the range of spi definitions (not inclusive)
-	* @return the range of spi definitions
-	*/
+	 * Returns a range of all the spi definitions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of spi definitions
+	 * @param end the upper bound of the range of spi definitions (not inclusive)
+	 * @return the range of spi definitions
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SPIDefinition> getSPIDefinitions(int start, int end);
 
@@ -238,13 +243,14 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public List<SPIDefinition> getSPIDefinitions(long companyId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SPIDefinition> getSPIDefinitions(long companyId, int[] statuses);
+	public List<SPIDefinition> getSPIDefinitions(
+		long companyId, int[] statuses);
 
 	/**
-	* Returns the number of spi definitions.
-	*
-	* @return the number of spi definitions
-	*/
+	 * Returns the number of spi definitions.
+	 *
+	 * @return the number of spi definitions
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSPIDefinitionsCount();
 
@@ -254,8 +260,9 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public long startSPIinBackground(long userId, long spiDefinitionId)
 		throws PortalException;
 
-	public long startSPIinBackground(long userId, long spiDefinitionId,
-		boolean automatedRestart) throws PortalException;
+	public long startSPIinBackground(
+			long userId, long spiDefinitionId, boolean automatedRestart)
+		throws PortalException;
 
 	@Clusterable
 	public void stopSPI(long spiDefinitionId) throws PortalException;
@@ -263,25 +270,29 @@ public interface SPIDefinitionLocalService extends BaseLocalService,
 	public long stopSPIinBackground(long userId, long spiDefinitionId)
 		throws PortalException;
 
-	public SPIDefinition updateSPIDefinition(long spiDefinitionId, int status,
-		String statusMessage) throws PortalException;
+	public SPIDefinition updateSPIDefinition(
+			long spiDefinitionId, int status, String statusMessage)
+		throws PortalException;
 
-	public SPIDefinition updateSPIDefinition(long userId, long spiDefinitionId,
-		String connectorAddress, int connectorPort, String description,
-		String jvmArguments, String portletIds, String servletContextNames,
-		String typeSettings, ServiceContext serviceContext)
+	public SPIDefinition updateSPIDefinition(
+			long userId, long spiDefinitionId, String connectorAddress,
+			int connectorPort, String description, String jvmArguments,
+			String portletIds, String servletContextNames, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param spiDefinition the spi definition
-	* @return the spi definition that was updated
-	*/
+	 * Updates the spi definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param spiDefinition the spi definition
+	 * @return the spi definition that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SPIDefinition updateSPIDefinition(SPIDefinition spiDefinition);
 
-	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
-		String typeSettings, ServiceContext serviceContext)
+	public SPIDefinition updateTypeSettings(
+			long userId, long spiDefinitionId, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

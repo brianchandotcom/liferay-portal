@@ -24,6 +24,7 @@ import com.liferay.portal.reports.engine.console.service.persistence.EntryPersis
  * @generated
  */
 public class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
+
 	public EntryFinderBaseImpl() {
 		setModelClass(Entry.class);
 	}
@@ -48,4 +49,5 @@ public class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 
 	@BeanReference(type = EntryPersistence.class)
 	protected EntryPersistence entryPersistence;
+
 }

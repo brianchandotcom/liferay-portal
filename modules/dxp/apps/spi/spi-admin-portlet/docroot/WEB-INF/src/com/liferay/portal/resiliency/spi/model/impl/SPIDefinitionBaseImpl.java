@@ -32,8 +32,9 @@ import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SPIDefinitionBaseImpl extends SPIDefinitionModelImpl
-	implements SPIDefinition {
+public abstract class SPIDefinitionBaseImpl
+	extends SPIDefinitionModelImpl implements SPIDefinition {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SPIDefinitionBaseImpl extends SPIDefinitionModelImpl
 			SPIDefinitionLocalServiceUtil.updateSPIDefinition(this);
 		}
 	}
+
 }

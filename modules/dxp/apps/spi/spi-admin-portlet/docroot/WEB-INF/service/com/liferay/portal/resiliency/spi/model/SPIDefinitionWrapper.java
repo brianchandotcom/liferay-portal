@@ -33,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
+public class SPIDefinitionWrapper
+	extends BaseModelWrapper<SPIDefinition>
 	implements SPIDefinition, ModelWrapper<SPIDefinition> {
+
 	public SPIDefinitionWrapper(SPIDefinition spiDefinition) {
 		super(spiDefinition);
 	}
@@ -138,7 +140,7 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 		}
 
 		String servletContextNames = (String)attributes.get(
-				"servletContextNames");
+			"servletContextNames");
 
 		if (servletContextNames != null) {
 			setServletContextNames(servletContextNames);
@@ -179,50 +181,50 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the company ID of this spi definition.
-	*
-	* @return the company ID of this spi definition
-	*/
+	 * Returns the company ID of this spi definition.
+	 *
+	 * @return the company ID of this spi definition
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the connector address of this spi definition.
-	*
-	* @return the connector address of this spi definition
-	*/
+	 * Returns the connector address of this spi definition.
+	 *
+	 * @return the connector address of this spi definition
+	 */
 	@Override
 	public String getConnectorAddress() {
 		return model.getConnectorAddress();
 	}
 
 	/**
-	* Returns the connector port of this spi definition.
-	*
-	* @return the connector port of this spi definition
-	*/
+	 * Returns the connector port of this spi definition.
+	 *
+	 * @return the connector port of this spi definition
+	 */
 	@Override
 	public int getConnectorPort() {
 		return model.getConnectorPort();
 	}
 
 	/**
-	* Returns the create date of this spi definition.
-	*
-	* @return the create date of this spi definition
-	*/
+	 * Returns the create date of this spi definition.
+	 *
+	 * @return the create date of this spi definition
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the description of this spi definition.
-	*
-	* @return the description of this spi definition
-	*/
+	 * Returns the description of this spi definition.
+	 *
+	 * @return the description of this spi definition
+	 */
 	@Override
 	public String getDescription() {
 		return model.getDescription();
@@ -234,10 +236,10 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the jvm arguments of this spi definition.
-	*
-	* @return the jvm arguments of this spi definition
-	*/
+	 * Returns the jvm arguments of this spi definition.
+	 *
+	 * @return the jvm arguments of this spi definition
+	 */
 	@Override
 	public String getJvmArguments() {
 		return model.getJvmArguments();
@@ -259,20 +261,20 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the modified date of this spi definition.
-	*
-	* @return the modified date of this spi definition
-	*/
+	 * Returns the modified date of this spi definition.
+	 *
+	 * @return the modified date of this spi definition
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this spi definition.
-	*
-	* @return the name of this spi definition
-	*/
+	 * Returns the name of this spi definition.
+	 *
+	 * @return the name of this spi definition
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
@@ -294,20 +296,20 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the portlet IDs of this spi definition.
-	*
-	* @return the portlet IDs of this spi definition
-	*/
+	 * Returns the portlet IDs of this spi definition.
+	 *
+	 * @return the portlet IDs of this spi definition
+	 */
 	@Override
 	public String getPortletIds() {
 		return model.getPortletIds();
 	}
 
 	/**
-	* Returns the primary key of this spi definition.
-	*
-	* @return the primary key of this spi definition
-	*/
+	 * Returns the primary key of this spi definition.
+	 *
+	 * @return the primary key of this spi definition
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -324,10 +326,10 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the servlet context names of this spi definition.
-	*
-	* @return the servlet context names of this spi definition
-	*/
+	 * Returns the servlet context names of this spi definition.
+	 *
+	 * @return the servlet context names of this spi definition
+	 */
 	@Override
 	public String getServletContextNames() {
 		return model.getServletContextNames();
@@ -344,20 +346,20 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the spi definition ID of this spi definition.
-	*
-	* @return the spi definition ID of this spi definition
-	*/
+	 * Returns the spi definition ID of this spi definition.
+	 *
+	 * @return the spi definition ID of this spi definition
+	 */
 	@Override
 	public long getSpiDefinitionId() {
 		return model.getSpiDefinitionId();
 	}
 
 	/**
-	* Returns the status of this spi definition.
-	*
-	* @return the status of this spi definition
-	*/
+	 * Returns the status of this spi definition.
+	 *
+	 * @return the status of this spi definition
+	 */
 	@Override
 	public int getStatus() {
 		return model.getStatus();
@@ -369,27 +371,29 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the status message of this spi definition.
-	*
-	* @return the status message of this spi definition
-	*/
+	 * Returns the status message of this spi definition.
+	 *
+	 * @return the status message of this spi definition
+	 */
 	@Override
 	public String getStatusMessage() {
 		return model.getStatusMessage();
 	}
 
 	/**
-	* Returns the type settings of this spi definition.
-	*
-	* @return the type settings of this spi definition
-	*/
+	 * Returns the type settings of this spi definition.
+	 *
+	 * @return the type settings of this spi definition
+	 */
 	@Override
 	public String getTypeSettings() {
 		return model.getTypeSettings();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties() {
+
 		return model.getTypeSettingsProperties();
 	}
 
@@ -404,30 +408,30 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Returns the user ID of this spi definition.
-	*
-	* @return the user ID of this spi definition
-	*/
+	 * Returns the user ID of this spi definition.
+	 *
+	 * @return the user ID of this spi definition
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this spi definition.
-	*
-	* @return the user name of this spi definition
-	*/
+	 * Returns the user name of this spi definition.
+	 *
+	 * @return the user name of this spi definition
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this spi definition.
-	*
-	* @return the user uuid of this spi definition
-	*/
+	 * Returns the user uuid of this spi definition.
+	 *
+	 * @return the user uuid of this spi definition
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -444,60 +448,60 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Sets the company ID of this spi definition.
-	*
-	* @param companyId the company ID of this spi definition
-	*/
+	 * Sets the company ID of this spi definition.
+	 *
+	 * @param companyId the company ID of this spi definition
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the connector address of this spi definition.
-	*
-	* @param connectorAddress the connector address of this spi definition
-	*/
+	 * Sets the connector address of this spi definition.
+	 *
+	 * @param connectorAddress the connector address of this spi definition
+	 */
 	@Override
 	public void setConnectorAddress(String connectorAddress) {
 		model.setConnectorAddress(connectorAddress);
 	}
 
 	/**
-	* Sets the connector port of this spi definition.
-	*
-	* @param connectorPort the connector port of this spi definition
-	*/
+	 * Sets the connector port of this spi definition.
+	 *
+	 * @param connectorPort the connector port of this spi definition
+	 */
 	@Override
 	public void setConnectorPort(int connectorPort) {
 		model.setConnectorPort(connectorPort);
 	}
 
 	/**
-	* Sets the create date of this spi definition.
-	*
-	* @param createDate the create date of this spi definition
-	*/
+	 * Sets the create date of this spi definition.
+	 *
+	 * @param createDate the create date of this spi definition
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the description of this spi definition.
-	*
-	* @param description the description of this spi definition
-	*/
+	 * Sets the description of this spi definition.
+	 *
+	 * @param description the description of this spi definition
+	 */
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	* Sets the jvm arguments of this spi definition.
-	*
-	* @param jvmArguments the jvm arguments of this spi definition
-	*/
+	 * Sets the jvm arguments of this spi definition.
+	 *
+	 * @param jvmArguments the jvm arguments of this spi definition
+	 */
 	@Override
 	public void setJvmArguments(String jvmArguments) {
 		model.setJvmArguments(jvmArguments);
@@ -509,20 +513,20 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Sets the modified date of this spi definition.
-	*
-	* @param modifiedDate the modified date of this spi definition
-	*/
+	 * Sets the modified date of this spi definition.
+	 *
+	 * @param modifiedDate the modified date of this spi definition
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this spi definition.
-	*
-	* @param name the name of this spi definition
-	*/
+	 * Sets the name of this spi definition.
+	 *
+	 * @param name the name of this spi definition
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
@@ -539,20 +543,20 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Sets the portlet IDs of this spi definition.
-	*
-	* @param portletIds the portlet IDs of this spi definition
-	*/
+	 * Sets the portlet IDs of this spi definition.
+	 *
+	 * @param portletIds the portlet IDs of this spi definition
+	 */
 	@Override
 	public void setPortletIds(String portletIds) {
 		model.setPortletIds(portletIds);
 	}
 
 	/**
-	* Sets the primary key of this spi definition.
-	*
-	* @param primaryKey the primary key of this spi definition
-	*/
+	 * Sets the primary key of this spi definition.
+	 *
+	 * @param primaryKey the primary key of this spi definition
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
@@ -564,50 +568,50 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	}
 
 	/**
-	* Sets the servlet context names of this spi definition.
-	*
-	* @param servletContextNames the servlet context names of this spi definition
-	*/
+	 * Sets the servlet context names of this spi definition.
+	 *
+	 * @param servletContextNames the servlet context names of this spi definition
+	 */
 	@Override
 	public void setServletContextNames(String servletContextNames) {
 		model.setServletContextNames(servletContextNames);
 	}
 
 	/**
-	* Sets the spi definition ID of this spi definition.
-	*
-	* @param spiDefinitionId the spi definition ID of this spi definition
-	*/
+	 * Sets the spi definition ID of this spi definition.
+	 *
+	 * @param spiDefinitionId the spi definition ID of this spi definition
+	 */
 	@Override
 	public void setSpiDefinitionId(long spiDefinitionId) {
 		model.setSpiDefinitionId(spiDefinitionId);
 	}
 
 	/**
-	* Sets the status of this spi definition.
-	*
-	* @param status the status of this spi definition
-	*/
+	 * Sets the status of this spi definition.
+	 *
+	 * @param status the status of this spi definition
+	 */
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	* Sets the status message of this spi definition.
-	*
-	* @param statusMessage the status message of this spi definition
-	*/
+	 * Sets the status message of this spi definition.
+	 *
+	 * @param statusMessage the status message of this spi definition
+	 */
 	@Override
 	public void setStatusMessage(String statusMessage) {
 		model.setStatusMessage(statusMessage);
 	}
 
 	/**
-	* Sets the type settings of this spi definition.
-	*
-	* @param typeSettings the type settings of this spi definition
-	*/
+	 * Sets the type settings of this spi definition.
+	 *
+	 * @param typeSettings the type settings of this spi definition
+	 */
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
@@ -615,35 +619,37 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 
 	@Override
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties) {
+
 		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
-	* Sets the user ID of this spi definition.
-	*
-	* @param userId the user ID of this spi definition
-	*/
+	 * Sets the user ID of this spi definition.
+	 *
+	 * @param userId the user ID of this spi definition
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this spi definition.
-	*
-	* @param userName the user name of this spi definition
-	*/
+	 * Sets the user name of this spi definition.
+	 *
+	 * @param userName the user name of this spi definition
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this spi definition.
-	*
-	* @param userUuid the user uuid of this spi definition
-	*/
+	 * Sets the user uuid of this spi definition.
+	 *
+	 * @param userUuid the user uuid of this spi definition
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -653,4 +659,5 @@ public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
 	protected SPIDefinitionWrapper wrap(SPIDefinition spiDefinition) {
 		return new SPIDefinitionWrapper(spiDefinition);
 	}
+
 }

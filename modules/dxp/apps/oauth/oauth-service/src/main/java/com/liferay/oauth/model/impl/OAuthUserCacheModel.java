@@ -17,10 +17,8 @@ package com.liferay.oauth.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.model.OAuthUser;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
-	Externalizable {
+public class OAuthUserCacheModel
+	implements CacheModel<OAuthUser>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -157,8 +156,7 @@ public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(oAuthUserId);
 
 		objectOutput.writeLong(companyId);
@@ -201,4 +199,5 @@ public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
 	public long oAuthApplicationId;
 	public String accessToken;
 	public String accessSecret;
+
 }

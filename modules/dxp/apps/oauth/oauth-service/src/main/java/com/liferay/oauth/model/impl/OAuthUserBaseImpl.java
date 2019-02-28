@@ -32,8 +32,9 @@ import com.liferay.oauth.service.OAuthUserLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class OAuthUserBaseImpl extends OAuthUserModelImpl
-	implements OAuthUser {
+public abstract class OAuthUserBaseImpl
+	extends OAuthUserModelImpl implements OAuthUser {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class OAuthUserBaseImpl extends OAuthUserModelImpl
 			OAuthUserLocalServiceUtil.updateOAuthUser(this);
 		}
 	}
+
 }

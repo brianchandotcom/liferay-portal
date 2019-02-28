@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class SamlSpAuthRequestSoap implements Serializable {
+
 	public static SamlSpAuthRequestSoap toSoapModel(SamlSpAuthRequest model) {
 		SamlSpAuthRequestSoap soapModel = new SamlSpAuthRequestSoap();
 
@@ -44,7 +45,9 @@ public class SamlSpAuthRequestSoap implements Serializable {
 
 	public static SamlSpAuthRequestSoap[] toSoapModels(
 		SamlSpAuthRequest[] models) {
-		SamlSpAuthRequestSoap[] soapModels = new SamlSpAuthRequestSoap[models.length];
+
+		SamlSpAuthRequestSoap[] soapModels =
+			new SamlSpAuthRequestSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -55,10 +58,12 @@ public class SamlSpAuthRequestSoap implements Serializable {
 
 	public static SamlSpAuthRequestSoap[][] toSoapModels(
 		SamlSpAuthRequest[][] models) {
+
 		SamlSpAuthRequestSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SamlSpAuthRequestSoap[models.length][models[0].length];
+			soapModels =
+				new SamlSpAuthRequestSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SamlSpAuthRequestSoap[0][0];
@@ -73,7 +78,9 @@ public class SamlSpAuthRequestSoap implements Serializable {
 
 	public static SamlSpAuthRequestSoap[] toSoapModels(
 		List<SamlSpAuthRequest> models) {
-		List<SamlSpAuthRequestSoap> soapModels = new ArrayList<SamlSpAuthRequestSoap>(models.size());
+
+		List<SamlSpAuthRequestSoap> soapModels =
+			new ArrayList<SamlSpAuthRequestSoap>(models.size());
 
 		for (SamlSpAuthRequest model : models) {
 			soapModels.add(toSoapModel(model));
@@ -138,4 +145,5 @@ public class SamlSpAuthRequestSoap implements Serializable {
 	private Date _createDate;
 	private String _samlIdpEntityId;
 	private String _samlSpAuthRequestKey;
+
 }

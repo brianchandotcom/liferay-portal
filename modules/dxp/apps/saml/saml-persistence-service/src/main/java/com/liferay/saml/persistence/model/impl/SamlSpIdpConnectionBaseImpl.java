@@ -34,6 +34,7 @@ import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalServiceUtil;
 @ProviderType
 public abstract class SamlSpIdpConnectionBaseImpl
 	extends SamlSpIdpConnectionModelImpl implements SamlSpIdpConnection {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SamlSpIdpConnectionBaseImpl
 			SamlSpIdpConnectionLocalServiceUtil.updateSamlSpIdpConnection(this);
 		}
 	}
+
 }

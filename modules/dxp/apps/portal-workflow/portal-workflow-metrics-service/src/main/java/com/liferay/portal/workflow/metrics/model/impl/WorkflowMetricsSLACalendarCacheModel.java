@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar;
@@ -37,8 +36,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<WorkflowMetricsSLACalendar>,
-	Externalizable, MVCCModel {
+public class WorkflowMetricsSLACalendarCacheModel
+	implements CacheModel<WorkflowMetricsSLACalendar>, Externalizable,
+			   MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,11 +50,15 @@ public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<Workflow
 			return false;
 		}
 
-		WorkflowMetricsSLACalendarCacheModel workflowMetricsSLACalendarCacheModel =
-			(WorkflowMetricsSLACalendarCacheModel)obj;
+		WorkflowMetricsSLACalendarCacheModel
+			workflowMetricsSLACalendarCacheModel =
+				(WorkflowMetricsSLACalendarCacheModel)obj;
 
-		if ((workflowMetricsSLACalendarId == workflowMetricsSLACalendarCacheModel.workflowMetricsSLACalendarId) &&
-				(mvccVersion == workflowMetricsSLACalendarCacheModel.mvccVersion)) {
+		if ((workflowMetricsSLACalendarId ==
+				workflowMetricsSLACalendarCacheModel.
+					workflowMetricsSLACalendarId) &&
+			(mvccVersion == workflowMetricsSLACalendarCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -106,7 +111,8 @@ public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<Workflow
 
 	@Override
 	public WorkflowMetricsSLACalendar toEntityModel() {
-		WorkflowMetricsSLACalendarImpl workflowMetricsSLACalendarImpl = new WorkflowMetricsSLACalendarImpl();
+		WorkflowMetricsSLACalendarImpl workflowMetricsSLACalendarImpl =
+			new WorkflowMetricsSLACalendarImpl();
 
 		workflowMetricsSLACalendarImpl.setMvccVersion(mvccVersion);
 
@@ -117,7 +123,8 @@ public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<Workflow
 			workflowMetricsSLACalendarImpl.setUuid(uuid);
 		}
 
-		workflowMetricsSLACalendarImpl.setWorkflowMetricsSLACalendarId(workflowMetricsSLACalendarId);
+		workflowMetricsSLACalendarImpl.setWorkflowMetricsSLACalendarId(
+			workflowMetricsSLACalendarId);
 		workflowMetricsSLACalendarImpl.setGroupId(groupId);
 		workflowMetricsSLACalendarImpl.setCompanyId(companyId);
 		workflowMetricsSLACalendarImpl.setUserId(userId);
@@ -140,8 +147,8 @@ public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<Workflow
 			workflowMetricsSLACalendarImpl.setModifiedDate(null);
 		}
 		else {
-			workflowMetricsSLACalendarImpl.setModifiedDate(new Date(
-					modifiedDate));
+			workflowMetricsSLACalendarImpl.setModifiedDate(
+				new Date(modifiedDate));
 		}
 
 		workflowMetricsSLACalendarImpl.resetOriginalValues();
@@ -167,8 +174,7 @@ public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<Workflow
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -206,4 +212,5 @@ public class WorkflowMetricsSLACalendarCacheModel implements CacheModel<Workflow
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+
 }

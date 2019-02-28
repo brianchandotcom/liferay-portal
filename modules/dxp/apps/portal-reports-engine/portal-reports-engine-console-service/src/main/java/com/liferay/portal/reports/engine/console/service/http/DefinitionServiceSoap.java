@@ -63,49 +63,18 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class DefinitionServiceSoap {
-	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap deleteDefinition(
-		long definitionId) throws RemoteException {
-		try {
-			com.liferay.portal.reports.engine.console.model.Definition returnValue =
-				DefinitionServiceUtil.deleteDefinition(definitionId);
 
-			return com.liferay.portal.reports.engine.console.model.DefinitionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap getDefinition(
-		long definitionId) throws RemoteException {
-		try {
-			com.liferay.portal.reports.engine.console.model.Definition returnValue =
-				DefinitionServiceUtil.getDefinition(definitionId);
-
-			return com.liferay.portal.reports.engine.console.model.DefinitionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap[] getDefinitions(
-		long groupId, String definitionName, String description,
-		String sourceId, String reportName, boolean andSearch, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap
+			deleteDefinition(long definitionId)
 		throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.reports.engine.console.model.Definition> returnValue =
-				DefinitionServiceUtil.getDefinitions(groupId, definitionName,
-					description, sourceId, reportName, andSearch, start, end,
-					orderByComparator);
 
-			return com.liferay.portal.reports.engine.console.model.DefinitionSoap.toSoapModels(returnValue);
+		try {
+			com.liferay.portal.reports.engine.console.model.Definition
+				returnValue = DefinitionServiceUtil.deleteDefinition(
+					definitionId);
+
+			return com.liferay.portal.reports.engine.console.model.
+				DefinitionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -114,12 +83,60 @@ public class DefinitionServiceSoap {
 		}
 	}
 
-	public static int getDefinitionsCount(long groupId, String definitionName,
-		String description, String sourceId, String reportName,
-		boolean andSearch) throws RemoteException {
+	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap
+			getDefinition(long definitionId)
+		throws RemoteException {
+
 		try {
-			int returnValue = DefinitionServiceUtil.getDefinitionsCount(groupId,
-					definitionName, description, sourceId, reportName, andSearch);
+			com.liferay.portal.reports.engine.console.model.Definition
+				returnValue = DefinitionServiceUtil.getDefinition(definitionId);
+
+			return com.liferay.portal.reports.engine.console.model.
+				DefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.portal.reports.engine.console.model.DefinitionSoap[]
+				getDefinitions(
+					long groupId, String definitionName, String description,
+					String sourceId, String reportName, boolean andSearch,
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						orderByComparator)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.portal.reports.engine.console.model.Definition>
+					returnValue = DefinitionServiceUtil.getDefinitions(
+						groupId, definitionName, description, sourceId,
+						reportName, andSearch, start, end, orderByComparator);
+
+			return com.liferay.portal.reports.engine.console.model.
+				DefinitionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getDefinitionsCount(
+			long groupId, String definitionName, String description,
+			String sourceId, String reportName, boolean andSearch)
+		throws RemoteException {
+
+		try {
+			int returnValue = DefinitionServiceUtil.getDefinitionsCount(
+				groupId, definitionName, description, sourceId, reportName,
+				andSearch);
 
 			return returnValue;
 		}
@@ -130,5 +147,7 @@ public class DefinitionServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefinitionServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		DefinitionServiceSoap.class);
+
 }

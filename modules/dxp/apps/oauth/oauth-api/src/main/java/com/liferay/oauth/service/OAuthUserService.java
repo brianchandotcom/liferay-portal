@@ -17,7 +17,6 @@ package com.liferay.oauth.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.model.OAuthUser;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -39,27 +38,37 @@ import com.liferay.portal.kernel.transaction.Transactional;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=oauth", "json.web.service.context.path=OAuthUser"}, service = OAuthUserService.class)
+@OSGiBeanProperties(
+	property = {
+		"json.web.service.context.name=oauth",
+		"json.web.service.context.path=OAuthUser"
+	},
+	service = OAuthUserService.class
+)
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface OAuthUserService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthUserServiceUtil} to access the o auth user remote service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthUser addOAuthUser(String consumerKey,
-		ServiceContext serviceContext) throws PortalException;
+	public OAuthUser addOAuthUser(
+			String consumerKey, ServiceContext serviceContext)
+		throws PortalException;
 
 	public OAuthUser deleteOAuthUser(long oAuthApplicationId)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
+
 }

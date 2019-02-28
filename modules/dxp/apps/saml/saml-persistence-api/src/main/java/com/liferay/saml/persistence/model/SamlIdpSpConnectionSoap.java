@@ -30,7 +30,10 @@ import java.util.List;
  */
 @ProviderType
 public class SamlIdpSpConnectionSoap implements Serializable {
-	public static SamlIdpSpConnectionSoap toSoapModel(SamlIdpSpConnection model) {
+
+	public static SamlIdpSpConnectionSoap toSoapModel(
+		SamlIdpSpConnection model) {
+
 		SamlIdpSpConnectionSoap soapModel = new SamlIdpSpConnectionSoap();
 
 		soapModel.setSamlIdpSpConnectionId(model.getSamlIdpSpConnectionId());
@@ -43,7 +46,8 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		soapModel.setAssertionLifetime(model.getAssertionLifetime());
 		soapModel.setAttributeNames(model.getAttributeNames());
 		soapModel.setAttributesEnabled(model.isAttributesEnabled());
-		soapModel.setAttributesNamespaceEnabled(model.isAttributesNamespaceEnabled());
+		soapModel.setAttributesNamespaceEnabled(
+			model.isAttributesNamespaceEnabled());
 		soapModel.setEnabled(model.isEnabled());
 		soapModel.setMetadataUrl(model.getMetadataUrl());
 		soapModel.setMetadataXml(model.getMetadataXml());
@@ -57,7 +61,9 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 
 	public static SamlIdpSpConnectionSoap[] toSoapModels(
 		SamlIdpSpConnection[] models) {
-		SamlIdpSpConnectionSoap[] soapModels = new SamlIdpSpConnectionSoap[models.length];
+
+		SamlIdpSpConnectionSoap[] soapModels =
+			new SamlIdpSpConnectionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -68,10 +74,12 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 
 	public static SamlIdpSpConnectionSoap[][] toSoapModels(
 		SamlIdpSpConnection[][] models) {
+
 		SamlIdpSpConnectionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SamlIdpSpConnectionSoap[models.length][models[0].length];
+			soapModels =
+				new SamlIdpSpConnectionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SamlIdpSpConnectionSoap[0][0];
@@ -86,13 +94,16 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 
 	public static SamlIdpSpConnectionSoap[] toSoapModels(
 		List<SamlIdpSpConnection> models) {
-		List<SamlIdpSpConnectionSoap> soapModels = new ArrayList<SamlIdpSpConnectionSoap>(models.size());
+
+		List<SamlIdpSpConnectionSoap> soapModels =
+			new ArrayList<SamlIdpSpConnectionSoap>(models.size());
 
 		for (SamlIdpSpConnection model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SamlIdpSpConnectionSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new SamlIdpSpConnectionSoap[soapModels.size()]);
 	}
 
 	public SamlIdpSpConnectionSoap() {
@@ -200,6 +211,7 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 
 	public void setAttributesNamespaceEnabled(
 		boolean attributesNamespaceEnabled) {
+
 		_attributesNamespaceEnabled = attributesNamespaceEnabled;
 	}
 
@@ -281,4 +293,5 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 	private String _name;
 	private String _nameIdAttribute;
 	private String _nameIdFormat;
+
 }

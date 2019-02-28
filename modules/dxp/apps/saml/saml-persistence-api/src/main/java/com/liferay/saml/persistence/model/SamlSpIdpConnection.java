@@ -27,30 +27,37 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SamlSpIdpConnectionModel
  * @generated
  */
-@ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlSpIdpConnectionImpl")
+@ImplementationClassName(
+	"com.liferay.saml.persistence.model.impl.SamlSpIdpConnectionImpl"
+)
 @ProviderType
-public interface SamlSpIdpConnection extends SamlSpIdpConnectionModel,
-	PersistedModel {
+public interface SamlSpIdpConnection
+	extends SamlSpIdpConnectionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpIdpConnectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SamlSpIdpConnection, Long> SAML_SP_IDP_CONNECTION_ID_ACCESSOR =
-		new Accessor<SamlSpIdpConnection, Long>() {
-			@Override
-			public Long get(SamlSpIdpConnection samlSpIdpConnection) {
-				return samlSpIdpConnection.getSamlSpIdpConnectionId();
-			}
+	public static final Accessor<SamlSpIdpConnection, Long>
+		SAML_SP_IDP_CONNECTION_ID_ACCESSOR =
+			new Accessor<SamlSpIdpConnection, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(SamlSpIdpConnection samlSpIdpConnection) {
+					return samlSpIdpConnection.getSamlSpIdpConnectionId();
+				}
 
-			@Override
-			public Class<SamlSpIdpConnection> getTypeClass() {
-				return SamlSpIdpConnection.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<SamlSpIdpConnection> getTypeClass() {
+					return SamlSpIdpConnection.class;
+				}
+
+			};
+
 }

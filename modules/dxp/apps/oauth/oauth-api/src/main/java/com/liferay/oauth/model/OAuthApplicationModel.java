@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OAuthApplicationModel extends AuditedModel,
-	BaseModel<OAuthApplication>, ShardedModel {
+public interface OAuthApplicationModel
+	extends AuditedModel, BaseModel<OAuthApplication>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -306,4 +307,5 @@ public interface OAuthApplicationModel extends AuditedModel,
 	 * @param websiteURL the website url of this o auth application
 	 */
 	public void setWebsiteURL(String websiteURL);
+
 }

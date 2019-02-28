@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class KaleoProcessLinkSoap implements Serializable {
+
 	public static KaleoProcessLinkSoap toSoapModel(KaleoProcessLink model) {
 		KaleoProcessLinkSoap soapModel = new KaleoProcessLinkSoap();
 
@@ -40,8 +41,11 @@ public class KaleoProcessLinkSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static KaleoProcessLinkSoap[] toSoapModels(KaleoProcessLink[] models) {
-		KaleoProcessLinkSoap[] soapModels = new KaleoProcessLinkSoap[models.length];
+	public static KaleoProcessLinkSoap[] toSoapModels(
+		KaleoProcessLink[] models) {
+
+		KaleoProcessLinkSoap[] soapModels =
+			new KaleoProcessLinkSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -52,10 +56,12 @@ public class KaleoProcessLinkSoap implements Serializable {
 
 	public static KaleoProcessLinkSoap[][] toSoapModels(
 		KaleoProcessLink[][] models) {
+
 		KaleoProcessLinkSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new KaleoProcessLinkSoap[models.length][models[0].length];
+			soapModels =
+				new KaleoProcessLinkSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new KaleoProcessLinkSoap[0][0];
@@ -70,7 +76,9 @@ public class KaleoProcessLinkSoap implements Serializable {
 
 	public static KaleoProcessLinkSoap[] toSoapModels(
 		List<KaleoProcessLink> models) {
-		List<KaleoProcessLinkSoap> soapModels = new ArrayList<KaleoProcessLinkSoap>(models.size());
+
+		List<KaleoProcessLinkSoap> soapModels =
+			new ArrayList<KaleoProcessLinkSoap>(models.size());
 
 		for (KaleoProcessLink model : models) {
 			soapModels.add(toSoapModel(model));
@@ -126,4 +134,5 @@ public class KaleoProcessLinkSoap implements Serializable {
 	private long _kaleoProcessId;
 	private String _workflowTaskName;
 	private long _DDMTemplateId;
+
 }

@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class SamlIdpSsoSessionSoap implements Serializable {
+
 	public static SamlIdpSsoSessionSoap toSoapModel(SamlIdpSsoSession model) {
 		SamlIdpSsoSessionSoap soapModel = new SamlIdpSsoSessionSoap();
 
@@ -46,7 +47,9 @@ public class SamlIdpSsoSessionSoap implements Serializable {
 
 	public static SamlIdpSsoSessionSoap[] toSoapModels(
 		SamlIdpSsoSession[] models) {
-		SamlIdpSsoSessionSoap[] soapModels = new SamlIdpSsoSessionSoap[models.length];
+
+		SamlIdpSsoSessionSoap[] soapModels =
+			new SamlIdpSsoSessionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,10 +60,12 @@ public class SamlIdpSsoSessionSoap implements Serializable {
 
 	public static SamlIdpSsoSessionSoap[][] toSoapModels(
 		SamlIdpSsoSession[][] models) {
+
 		SamlIdpSsoSessionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SamlIdpSsoSessionSoap[models.length][models[0].length];
+			soapModels =
+				new SamlIdpSsoSessionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SamlIdpSsoSessionSoap[0][0];
@@ -75,7 +80,9 @@ public class SamlIdpSsoSessionSoap implements Serializable {
 
 	public static SamlIdpSsoSessionSoap[] toSoapModels(
 		List<SamlIdpSsoSession> models) {
-		List<SamlIdpSsoSessionSoap> soapModels = new ArrayList<SamlIdpSsoSessionSoap>(models.size());
+
+		List<SamlIdpSsoSessionSoap> soapModels =
+			new ArrayList<SamlIdpSsoSessionSoap>(models.size());
 
 		for (SamlIdpSsoSession model : models) {
 			soapModels.add(toSoapModel(model));
@@ -158,4 +165,5 @@ public class SamlIdpSsoSessionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _samlIdpSsoSessionKey;
+
 }

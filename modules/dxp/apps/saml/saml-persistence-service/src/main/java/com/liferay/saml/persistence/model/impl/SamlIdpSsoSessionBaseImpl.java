@@ -34,6 +34,7 @@ import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalServiceUtil;
 @ProviderType
 public abstract class SamlIdpSsoSessionBaseImpl
 	extends SamlIdpSsoSessionModelImpl implements SamlIdpSsoSession {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SamlIdpSsoSessionBaseImpl
 			SamlIdpSsoSessionLocalServiceUtil.updateSamlIdpSsoSession(this);
 		}
 	}
+
 }

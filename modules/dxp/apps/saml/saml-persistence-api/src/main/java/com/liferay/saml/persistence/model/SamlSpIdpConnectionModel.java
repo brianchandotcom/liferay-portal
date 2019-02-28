@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlSpIdpConnectionModel extends AuditedModel,
-	BaseModel<SamlSpIdpConnection>, ShardedModel {
+public interface SamlSpIdpConnectionModel
+	extends AuditedModel, BaseModel<SamlSpIdpConnection>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -391,4 +392,5 @@ public interface SamlSpIdpConnectionModel extends AuditedModel,
 	 * @param userAttributeMappings the user attribute mappings of this saml sp idp connection
 	 */
 	public void setUserAttributeMappings(String userAttributeMappings);
+
 }

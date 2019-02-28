@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.model.SamlSpMessageModel;
 
@@ -56,23 +53,25 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
-	implements SamlSpMessageModel {
+public class SamlSpMessageModelImpl
+	extends BaseModelImpl<SamlSpMessage> implements SamlSpMessageModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp message model instance should use the <code>SamlSpMessage</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SamlSpMessage";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "samlSpMessageId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "createDate", Types.TIMESTAMP },
-			{ "samlIdpEntityId", Types.VARCHAR },
-			{ "samlIdpResponseKey", Types.VARCHAR },
-			{ "expirationDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"samlSpMessageId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"samlIdpEntityId", Types.VARCHAR},
+		{"samlIdpResponseKey", Types.VARCHAR},
+		{"expirationDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("samlSpMessageId", Types.BIGINT);
@@ -83,28 +82,49 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SamlSpMessage (samlSpMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlIdpResponseKey VARCHAR(75) null,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SamlSpMessage (samlSpMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlIdpResponseKey VARCHAR(75) null,expirationDate DATE null)";
+
 	public static final String TABLE_SQL_DROP = "drop table SamlSpMessage";
-	public static final String ORDER_BY_JPQL = " ORDER BY samlSpMessage.samlSpMessageId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SamlSpMessage.samlSpMessageId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY samlSpMessage.samlSpMessageId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SamlSpMessage.samlSpMessageId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.saml.persistence.model.SamlSpMessage"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.saml.persistence.model.SamlSpMessage"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlSpMessage"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.saml.persistence.model.SamlSpMessage"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.saml.persistence.model.SamlSpMessage"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlSpMessage"),
+		true);
+
 	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 1L;
+
 	public static final long SAMLIDPENTITYID_COLUMN_BITMASK = 2L;
+
 	public static final long SAMLIDPRESPONSEKEY_COLUMN_BITMASK = 4L;
+
 	public static final long SAMLSPMESSAGEID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.saml.persistence.model.SamlSpMessage"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"lock.expiration.time.com.liferay.saml.persistence.model.SamlSpMessage"));
 
 	public SamlSpMessageModelImpl() {
 	}
@@ -143,13 +163,18 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SamlSpMessage, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlSpMessage, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlSpMessage, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlSpMessage, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SamlSpMessage)this));
 		}
 
@@ -161,53 +186,81 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SamlSpMessage, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SamlSpMessage, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SamlSpMessage, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SamlSpMessage, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SamlSpMessage)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SamlSpMessage)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SamlSpMessage, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SamlSpMessage, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SamlSpMessage, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SamlSpMessage, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SamlSpMessage, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SamlSpMessage, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SamlSpMessage, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SamlSpMessage, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SamlSpMessage, Object>>();
-		Map<String, BiConsumer<SamlSpMessage, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SamlSpMessage, ?>>();
+		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SamlSpMessage, Object>>();
+		Map<String, BiConsumer<SamlSpMessage, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SamlSpMessage, ?>>();
 
-
-		attributeGetterFunctions.put("samlSpMessageId", SamlSpMessage::getSamlSpMessageId);
-		attributeSetterBiConsumers.put("samlSpMessageId", (BiConsumer<SamlSpMessage, Long>)SamlSpMessage::setSamlSpMessageId);
+		attributeGetterFunctions.put(
+			"samlSpMessageId", SamlSpMessage::getSamlSpMessageId);
+		attributeSetterBiConsumers.put(
+			"samlSpMessageId",
+			(BiConsumer<SamlSpMessage, Long>)SamlSpMessage::setSamlSpMessageId);
 		attributeGetterFunctions.put("companyId", SamlSpMessage::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SamlSpMessage, Long>)SamlSpMessage::setCompanyId);
-		attributeGetterFunctions.put("createDate", SamlSpMessage::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SamlSpMessage, Date>)SamlSpMessage::setCreateDate);
-		attributeGetterFunctions.put("samlIdpEntityId", SamlSpMessage::getSamlIdpEntityId);
-		attributeSetterBiConsumers.put("samlIdpEntityId", (BiConsumer<SamlSpMessage, String>)SamlSpMessage::setSamlIdpEntityId);
-		attributeGetterFunctions.put("samlIdpResponseKey", SamlSpMessage::getSamlIdpResponseKey);
-		attributeSetterBiConsumers.put("samlIdpResponseKey", (BiConsumer<SamlSpMessage, String>)SamlSpMessage::setSamlIdpResponseKey);
-		attributeGetterFunctions.put("expirationDate", SamlSpMessage::getExpirationDate);
-		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<SamlSpMessage, Date>)SamlSpMessage::setExpirationDate);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SamlSpMessage, Long>)SamlSpMessage::setCompanyId);
+		attributeGetterFunctions.put(
+			"createDate", SamlSpMessage::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SamlSpMessage, Date>)SamlSpMessage::setCreateDate);
+		attributeGetterFunctions.put(
+			"samlIdpEntityId", SamlSpMessage::getSamlIdpEntityId);
+		attributeSetterBiConsumers.put(
+			"samlIdpEntityId",
+			(BiConsumer<SamlSpMessage, String>)
+				SamlSpMessage::setSamlIdpEntityId);
+		attributeGetterFunctions.put(
+			"samlIdpResponseKey", SamlSpMessage::getSamlIdpResponseKey);
+		attributeSetterBiConsumers.put(
+			"samlIdpResponseKey",
+			(BiConsumer<SamlSpMessage, String>)
+				SamlSpMessage::setSamlIdpResponseKey);
+		attributeGetterFunctions.put(
+			"expirationDate", SamlSpMessage::getExpirationDate);
+		attributeSetterBiConsumers.put(
+			"expirationDate",
+			(BiConsumer<SamlSpMessage, Date>)SamlSpMessage::setExpirationDate);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -316,8 +369,8 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SamlSpMessage.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SamlSpMessage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -330,8 +383,9 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 	@Override
 	public SamlSpMessage toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlSpMessage)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SamlSpMessage)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -409,18 +463,22 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 	public void resetOriginalValues() {
 		SamlSpMessageModelImpl samlSpMessageModelImpl = this;
 
-		samlSpMessageModelImpl._originalSamlIdpEntityId = samlSpMessageModelImpl._samlIdpEntityId;
+		samlSpMessageModelImpl._originalSamlIdpEntityId =
+			samlSpMessageModelImpl._samlIdpEntityId;
 
-		samlSpMessageModelImpl._originalSamlIdpResponseKey = samlSpMessageModelImpl._samlIdpResponseKey;
+		samlSpMessageModelImpl._originalSamlIdpResponseKey =
+			samlSpMessageModelImpl._samlIdpResponseKey;
 
-		samlSpMessageModelImpl._originalExpirationDate = samlSpMessageModelImpl._expirationDate;
+		samlSpMessageModelImpl._originalExpirationDate =
+			samlSpMessageModelImpl._expirationDate;
 
 		samlSpMessageModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<SamlSpMessage> toCacheModel() {
-		SamlSpMessageCacheModel samlSpMessageCacheModel = new SamlSpMessageCacheModel();
+		SamlSpMessageCacheModel samlSpMessageCacheModel =
+			new SamlSpMessageCacheModel();
 
 		samlSpMessageCacheModel.samlSpMessageId = getSamlSpMessageId();
 
@@ -447,7 +505,9 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 
 		String samlIdpResponseKey = samlSpMessageCacheModel.samlIdpResponseKey;
 
-		if ((samlIdpResponseKey != null) && (samlIdpResponseKey.length() == 0)) {
+		if ((samlIdpResponseKey != null) &&
+			(samlIdpResponseKey.length() == 0)) {
+
 			samlSpMessageCacheModel.samlIdpResponseKey = null;
 		}
 
@@ -465,16 +525,20 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 
 	@Override
 	public String toString() {
-		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SamlSpMessage, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlSpMessage, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlSpMessage, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlSpMessage, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -493,18 +557,22 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SamlSpMessage, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SamlSpMessage, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlSpMessage, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlSpMessage, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlSpMessage, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -518,10 +586,12 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SamlSpMessage.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SamlSpMessage.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SamlSpMessage.class, ModelWrapper.class
-		};
+		SamlSpMessage.class, ModelWrapper.class
+	};
+
 	private long _samlSpMessageId;
 	private long _companyId;
 	private Date _createDate;
@@ -533,4 +603,5 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 	private Date _originalExpirationDate;
 	private long _columnBitmask;
 	private SamlSpMessage _escapedModel;
+
 }

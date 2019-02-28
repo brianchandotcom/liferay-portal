@@ -35,6 +35,7 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLoc
 public abstract class WorkflowMetricsSLACalendarBaseImpl
 	extends WorkflowMetricsSLACalendarModelImpl
 	implements WorkflowMetricsSLACalendar {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,13 @@ public abstract class WorkflowMetricsSLACalendarBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			WorkflowMetricsSLACalendarLocalServiceUtil.addWorkflowMetricsSLACalendar(this);
+			WorkflowMetricsSLACalendarLocalServiceUtil.
+				addWorkflowMetricsSLACalendar(this);
 		}
 		else {
-			WorkflowMetricsSLACalendarLocalServiceUtil.updateWorkflowMetricsSLACalendar(this);
+			WorkflowMetricsSLACalendarLocalServiceUtil.
+				updateWorkflowMetricsSLACalendar(this);
 		}
 	}
+
 }

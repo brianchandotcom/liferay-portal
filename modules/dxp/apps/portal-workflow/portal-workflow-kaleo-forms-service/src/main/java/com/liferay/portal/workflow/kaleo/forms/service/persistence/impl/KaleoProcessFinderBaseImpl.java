@@ -27,7 +27,9 @@ import java.util.Set;
  * @author Marcellus Tavares
  * @generated
  */
-public class KaleoProcessFinderBaseImpl extends BasePersistenceImpl<KaleoProcess> {
+public class KaleoProcessFinderBaseImpl
+	extends BasePersistenceImpl<KaleoProcess> {
+
 	public KaleoProcessFinderBaseImpl() {
 		setModelClass(KaleoProcess.class);
 	}
@@ -53,10 +55,14 @@ public class KaleoProcessFinderBaseImpl extends BasePersistenceImpl<KaleoProcess
 	 */
 	public void setKaleoProcessPersistence(
 		KaleoProcessPersistence kaleoProcessPersistence) {
+
 		this.kaleoProcessPersistence = kaleoProcessPersistence;
 	}
 
 	@BeanReference(type = KaleoProcessPersistence.class)
 	protected KaleoProcessPersistence kaleoProcessPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(KaleoProcessFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoProcessFinderBaseImpl.class);
+
 }

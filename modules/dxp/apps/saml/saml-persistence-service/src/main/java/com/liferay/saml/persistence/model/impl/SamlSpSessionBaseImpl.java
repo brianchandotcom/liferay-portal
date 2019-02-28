@@ -32,8 +32,9 @@ import com.liferay.saml.persistence.service.SamlSpSessionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SamlSpSessionBaseImpl extends SamlSpSessionModelImpl
-	implements SamlSpSession {
+public abstract class SamlSpSessionBaseImpl
+	extends SamlSpSessionModelImpl implements SamlSpSession {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SamlSpSessionBaseImpl extends SamlSpSessionModelImpl
 			SamlSpSessionLocalServiceUtil.updateSamlSpSession(this);
 		}
 	}
+
 }

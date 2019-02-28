@@ -37,8 +37,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WorkflowMetricsSLACalendarModel extends BaseModel<WorkflowMetricsSLACalendar>,
-	GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+public interface WorkflowMetricsSLACalendarModel
+	extends BaseModel<WorkflowMetricsSLACalendar>, GroupedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -219,4 +221,5 @@ public interface WorkflowMetricsSLACalendarModel extends BaseModel<WorkflowMetri
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.resiliency.spi.service.base;
 
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -44,8 +43,10 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl
  * @generated
  */
-public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
+public abstract class SPIDefinitionServiceBaseImpl
+	extends BaseServiceImpl
 	implements SPIDefinitionService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,7 +58,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the spi definition local service
 	 */
-	public com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService getSPIDefinitionLocalService() {
+	public com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService
+		getSPIDefinitionLocalService() {
+
 		return spiDefinitionLocalService;
 	}
 
@@ -67,7 +70,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param spiDefinitionLocalService the spi definition local service
 	 */
 	public void setSPIDefinitionLocalService(
-		com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService spiDefinitionLocalService) {
+		com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService
+			spiDefinitionLocalService) {
+
 		this.spiDefinitionLocalService = spiDefinitionLocalService;
 	}
 
@@ -87,6 +92,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setSPIDefinitionService(
 		SPIDefinitionService spiDefinitionService) {
+
 		this.spiDefinitionService = spiDefinitionService;
 	}
 
@@ -106,6 +112,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setSPIDefinitionPersistence(
 		SPIDefinitionPersistence spiDefinitionPersistence) {
+
 		this.spiDefinitionPersistence = spiDefinitionPersistence;
 	}
 
@@ -114,7 +121,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -124,7 +133,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -133,7 +144,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -143,7 +156,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -152,7 +167,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
+	public com.liferay.portal.kernel.service.ClassNameService
+		getClassNameService() {
+
 		return classNameService;
 	}
 
@@ -163,6 +180,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
+
 		this.classNameService = classNameService;
 	}
 
@@ -182,6 +200,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -190,7 +209,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -200,7 +221,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -209,7 +232,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -220,6 +245,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -239,6 +265,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
+
 		this.userService = userService;
 	}
 
@@ -265,7 +292,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the expando row local service
 	 */
-	public com.liferay.expando.kernel.service.ExpandoRowLocalService getExpandoRowLocalService() {
+	public com.liferay.expando.kernel.service.ExpandoRowLocalService
+		getExpandoRowLocalService() {
+
 		return expandoRowLocalService;
 	}
 
@@ -275,7 +304,9 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param expandoRowLocalService the expando row local service
 	 */
 	public void setExpandoRowLocalService(
-		com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService) {
+		com.liferay.expando.kernel.service.ExpandoRowLocalService
+			expandoRowLocalService) {
+
 		this.expandoRowLocalService = expandoRowLocalService;
 	}
 
@@ -295,6 +326,7 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setExpandoRowPersistence(
 		ExpandoRowPersistence expandoRowPersistence) {
+
 		this.expandoRowPersistence = expandoRowPersistence;
 	}
 
@@ -336,8 +368,8 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -346,30 +378,65 @@ public abstract class SPIDefinitionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService.class)
-	protected com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService spiDefinitionLocalService;
+	@BeanReference(
+		type = com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService.class
+	)
+	protected
+		com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalService
+			spiDefinitionLocalService;
+
 	@BeanReference(type = SPIDefinitionService.class)
 	protected SPIDefinitionService spiDefinitionService;
+
 	@BeanReference(type = SPIDefinitionPersistence.class)
 	protected SPIDefinitionPersistence spiDefinitionPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
-	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameService
+		classNameService;
+
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
+
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class)
-	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
+
+	@BeanReference(
+		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class
+	)
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
 	@BeanReference(type = ExpandoRowPersistence.class)
 	protected ExpandoRowPersistence expandoRowPersistence;
+
 }

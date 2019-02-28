@@ -39,8 +39,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface SourceModel extends BaseModel<Source>, LocalizedModel,
-	ShardedModel, StagedGroupedModel {
+public interface SourceModel
+	extends BaseModel<Source>, LocalizedModel, ShardedModel,
+			StagedGroupedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -392,4 +394,5 @@ public interface SourceModel extends BaseModel<Source>, LocalizedModel,
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
+
 }

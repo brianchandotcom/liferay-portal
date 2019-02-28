@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,15 +38,6 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,16 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class WorkflowMetricsSLADefinitionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
 				"com.liferay.portal.workflow.metrics.service"));
 
 	@Before
@@ -81,7 +82,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<WorkflowMetricsSLADefinition> iterator = _workflowMetricsSLADefinitions.iterator();
+		Iterator<WorkflowMetricsSLADefinition> iterator =
+			_workflowMetricsSLADefinitions.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -94,7 +96,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = _persistence.create(pk);
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			_persistence.create(pk);
 
 		Assert.assertNotNull(workflowMetricsSLADefinition);
 
@@ -103,11 +106,14 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
 		_persistence.remove(newWorkflowMetricsSLADefinition);
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition = _persistence.fetchByPrimaryKey(newWorkflowMetricsSLADefinition.getPrimaryKey());
+		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+			_persistence.fetchByPrimaryKey(
+				newWorkflowMetricsSLADefinition.getPrimaryKey());
 
 		Assert.assertNull(existingWorkflowMetricsSLADefinition);
 	}
@@ -121,9 +127,11 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = _persistence.create(pk);
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			_persistence.create(pk);
 
-		newWorkflowMetricsSLADefinition.setMvccVersion(RandomTestUtil.nextLong());
+		newWorkflowMetricsSLADefinition.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		newWorkflowMetricsSLADefinition.setUuid(RandomTestUtil.randomString());
 
@@ -133,66 +141,93 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		newWorkflowMetricsSLADefinition.setUserId(RandomTestUtil.nextLong());
 
-		newWorkflowMetricsSLADefinition.setUserName(RandomTestUtil.randomString());
+		newWorkflowMetricsSLADefinition.setUserName(
+			RandomTestUtil.randomString());
 
-		newWorkflowMetricsSLADefinition.setCreateDate(RandomTestUtil.nextDate());
+		newWorkflowMetricsSLADefinition.setCreateDate(
+			RandomTestUtil.nextDate());
 
-		newWorkflowMetricsSLADefinition.setModifiedDate(RandomTestUtil.nextDate());
+		newWorkflowMetricsSLADefinition.setModifiedDate(
+			RandomTestUtil.nextDate());
 
 		newWorkflowMetricsSLADefinition.setName(RandomTestUtil.randomString());
 
-		newWorkflowMetricsSLADefinition.setDescription(RandomTestUtil.randomString());
+		newWorkflowMetricsSLADefinition.setDescription(
+			RandomTestUtil.randomString());
 
 		newWorkflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
 
 		newWorkflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
-		newWorkflowMetricsSLADefinition.setPauseNodeNames(RandomTestUtil.randomString());
+		newWorkflowMetricsSLADefinition.setPauseNodeNames(
+			RandomTestUtil.randomString());
 
-		newWorkflowMetricsSLADefinition.setStartNodeNames(RandomTestUtil.randomString());
+		newWorkflowMetricsSLADefinition.setStartNodeNames(
+			RandomTestUtil.randomString());
 
-		newWorkflowMetricsSLADefinition.setStopNodeNames(RandomTestUtil.randomString());
+		newWorkflowMetricsSLADefinition.setStopNodeNames(
+			RandomTestUtil.randomString());
 
-		_workflowMetricsSLADefinitions.add(_persistence.update(
-				newWorkflowMetricsSLADefinition));
+		_workflowMetricsSLADefinitions.add(
+			_persistence.update(newWorkflowMetricsSLADefinition));
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition = _persistence.findByPrimaryKey(newWorkflowMetricsSLADefinition.getPrimaryKey());
+		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+			_persistence.findByPrimaryKey(
+				newWorkflowMetricsSLADefinition.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getMvccVersion(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getMvccVersion(),
 			newWorkflowMetricsSLADefinition.getMvccVersion());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getUuid(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getUuid(),
 			newWorkflowMetricsSLADefinition.getUuid());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
-			newWorkflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getGroupId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.
+				getWorkflowMetricsSLADefinitionId(),
+			newWorkflowMetricsSLADefinition.
+				getWorkflowMetricsSLADefinitionId());
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getGroupId(),
 			newWorkflowMetricsSLADefinition.getGroupId());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getCompanyId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getCompanyId(),
 			newWorkflowMetricsSLADefinition.getCompanyId());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getUserId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getUserId(),
 			newWorkflowMetricsSLADefinition.getUserId());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getUserName(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getUserName(),
 			newWorkflowMetricsSLADefinition.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingWorkflowMetricsSLADefinition.getCreateDate()),
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLADefinition.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingWorkflowMetricsSLADefinition.getModifiedDate()),
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLADefinition.getModifiedDate()));
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getName(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getName(),
 			newWorkflowMetricsSLADefinition.getName());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getDescription(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getDescription(),
 			newWorkflowMetricsSLADefinition.getDescription());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getDuration(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getDuration(),
 			newWorkflowMetricsSLADefinition.getDuration());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getProcessId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getProcessId(),
 			newWorkflowMetricsSLADefinition.getProcessId());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getPauseNodeNames(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getPauseNodeNames(),
 			newWorkflowMetricsSLADefinition.getPauseNodeNames());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getStartNodeNames(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getStartNodeNames(),
 			newWorkflowMetricsSLADefinition.getStartNodeNames());
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition.getStopNodeNames(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getStopNodeNames(),
 			newWorkflowMetricsSLADefinition.getStopNodeNames());
 	}
 
@@ -225,16 +260,16 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@Test
 	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_P(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_N_P() throws Exception {
-		_persistence.countByC_N_P(RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextLong());
+		_persistence.countByC_N_P(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
 
 		_persistence.countByC_N_P(0L, "null", 0L);
 
@@ -243,11 +278,15 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition = _persistence.findByPrimaryKey(newWorkflowMetricsSLADefinition.getPrimaryKey());
+		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+			_persistence.findByPrimaryKey(
+				newWorkflowMetricsSLADefinition.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition,
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition,
 			newWorkflowMetricsSLADefinition);
 	}
 
@@ -260,13 +299,15 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
-	protected OrderByComparator<WorkflowMetricsSLADefinition> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("WorkflowMetricsSLADefinition",
-			"mvccVersion", true, "uuid", true,
+	protected OrderByComparator<WorkflowMetricsSLADefinition>
+		getOrderByComparator() {
+
+		return OrderByComparatorFactoryUtil.create(
+			"WorkflowMetricsSLADefinition", "mvccVersion", true, "uuid", true,
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
@@ -276,11 +317,15 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition = _persistence.fetchByPrimaryKey(newWorkflowMetricsSLADefinition.getPrimaryKey());
+		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+			_persistence.fetchByPrimaryKey(
+				newWorkflowMetricsSLADefinition.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition,
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition,
 			newWorkflowMetricsSLADefinition);
 	}
 
@@ -288,7 +333,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLADefinition missingWorkflowMetricsSLADefinition = _persistence.fetchByPrimaryKey(pk);
+		WorkflowMetricsSLADefinition missingWorkflowMetricsSLADefinition =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingWorkflowMetricsSLADefinition);
 	}
@@ -296,22 +342,28 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition1 = addWorkflowMetricsSLADefinition();
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition2 = addWorkflowMetricsSLADefinition();
+
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition1 =
+			addWorkflowMetricsSLADefinition();
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition2 =
+			addWorkflowMetricsSLADefinition();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newWorkflowMetricsSLADefinition1.getPrimaryKey());
 		primaryKeys.add(newWorkflowMetricsSLADefinition2.getPrimaryKey());
 
-		Map<Serializable, WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLADefinition>
+			workflowMetricsSLADefinitions = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(2, workflowMetricsSLADefinitions.size());
-		Assert.assertEquals(newWorkflowMetricsSLADefinition1,
+		Assert.assertEquals(
+			newWorkflowMetricsSLADefinition1,
 			workflowMetricsSLADefinitions.get(
 				newWorkflowMetricsSLADefinition1.getPrimaryKey()));
-		Assert.assertEquals(newWorkflowMetricsSLADefinition2,
+		Assert.assertEquals(
+			newWorkflowMetricsSLADefinition2,
 			workflowMetricsSLADefinitions.get(
 				newWorkflowMetricsSLADefinition2.getPrimaryKey()));
 	}
@@ -319,6 +371,7 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -328,8 +381,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLADefinition>
+			workflowMetricsSLADefinitions = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertTrue(workflowMetricsSLADefinitions.isEmpty());
 	}
@@ -337,7 +391,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -346,40 +402,44 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		primaryKeys.add(newWorkflowMetricsSLADefinition.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLADefinition>
+			workflowMetricsSLADefinitions = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(1, workflowMetricsSLADefinitions.size());
-		Assert.assertEquals(newWorkflowMetricsSLADefinition,
+		Assert.assertEquals(
+			newWorkflowMetricsSLADefinition,
 			workflowMetricsSLADefinitions.get(
 				newWorkflowMetricsSLADefinition.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLADefinition>
+			workflowMetricsSLADefinitions = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertTrue(workflowMetricsSLADefinitions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newWorkflowMetricsSLADefinition.getPrimaryKey());
 
-		Map<Serializable, WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLADefinition>
+			workflowMetricsSLADefinitions = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(1, workflowMetricsSLADefinitions.size());
-		Assert.assertEquals(newWorkflowMetricsSLADefinition,
+		Assert.assertEquals(
+			newWorkflowMetricsSLADefinition,
 			workflowMetricsSLADefinitions.get(
 				newWorkflowMetricsSLADefinition.getPrimaryKey()));
 	}
@@ -388,16 +448,23 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = WorkflowMetricsSLADefinitionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			WorkflowMetricsSLADefinitionLocalServiceUtil.
+				getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WorkflowMetricsSLADefinition>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<WorkflowMetricsSLADefinition>() {
+
 				@Override
 				public void performAction(
 					WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
 					Assert.assertNotNull(workflowMetricsSLADefinition);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -406,56 +473,65 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLADefinition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLADefinition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
 				"workflowMetricsSLADefinitionId",
-				newWorkflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId()));
+				newWorkflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
 
-		List<WorkflowMetricsSLADefinition> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WorkflowMetricsSLADefinition> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition = result.get(0);
+		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+			result.get(0);
 
-		Assert.assertEquals(existingWorkflowMetricsSLADefinition,
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition,
 			newWorkflowMetricsSLADefinition);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLADefinition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLADefinition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
 				"workflowMetricsSLADefinitionId", RandomTestUtil.nextLong()));
 
-		List<WorkflowMetricsSLADefinition> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WorkflowMetricsSLADefinition> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLADefinition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLADefinition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"workflowMetricsSLADefinitionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("workflowMetricsSLADefinitionId"));
 
-		Object newWorkflowMetricsSLADefinitionId = newWorkflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId();
+		Object newWorkflowMetricsSLADefinitionId =
+			newWorkflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
 				"workflowMetricsSLADefinitionId",
-				new Object[] { newWorkflowMetricsSLADefinitionId }));
+				new Object[] {newWorkflowMetricsSLADefinitionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -463,21 +539,23 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		Object existingWorkflowMetricsSLADefinitionId = result.get(0);
 
-		Assert.assertEquals(existingWorkflowMetricsSLADefinitionId,
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinitionId,
 			newWorkflowMetricsSLADefinitionId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLADefinition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLADefinition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"workflowMetricsSLADefinitionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("workflowMetricsSLADefinitionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
 				"workflowMetricsSLADefinitionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -486,35 +564,40 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition = addWorkflowMetricsSLADefinition();
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
 
 		_persistence.clearCache();
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition = _persistence.findByPrimaryKey(newWorkflowMetricsSLADefinition.getPrimaryKey());
+		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+			_persistence.findByPrimaryKey(
+				newWorkflowMetricsSLADefinition.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingWorkflowMetricsSLADefinition.getUuid(),
 				ReflectionTestUtil.invoke(
 					existingWorkflowMetricsSLADefinition, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(
-				existingWorkflowMetricsSLADefinition.getGroupId()),
+		Assert.assertEquals(
+			Long.valueOf(existingWorkflowMetricsSLADefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingWorkflowMetricsSLADefinition, "getOriginalGroupId",
 				new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(
-				existingWorkflowMetricsSLADefinition.getCompanyId()),
+		Assert.assertEquals(
+			Long.valueOf(existingWorkflowMetricsSLADefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingWorkflowMetricsSLADefinition, "getOriginalCompanyId",
 				new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingWorkflowMetricsSLADefinition.getName(),
 				ReflectionTestUtil.invoke(
 					existingWorkflowMetricsSLADefinition, "getOriginalName",
 					new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(
-				existingWorkflowMetricsSLADefinition.getProcessId()),
+		Assert.assertEquals(
+			Long.valueOf(existingWorkflowMetricsSLADefinition.getProcessId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingWorkflowMetricsSLADefinition, "getOriginalProcessId",
 				new Class<?>[0]));
@@ -522,9 +605,11 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 	protected WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition()
 		throws Exception {
+
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = _persistence.create(pk);
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			_persistence.create(pk);
 
 		workflowMetricsSLADefinition.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -544,25 +629,31 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		workflowMetricsSLADefinition.setName(RandomTestUtil.randomString());
 
-		workflowMetricsSLADefinition.setDescription(RandomTestUtil.randomString());
+		workflowMetricsSLADefinition.setDescription(
+			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
 
 		workflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
-		workflowMetricsSLADefinition.setPauseNodeNames(RandomTestUtil.randomString());
+		workflowMetricsSLADefinition.setPauseNodeNames(
+			RandomTestUtil.randomString());
 
-		workflowMetricsSLADefinition.setStartNodeNames(RandomTestUtil.randomString());
+		workflowMetricsSLADefinition.setStartNodeNames(
+			RandomTestUtil.randomString());
 
-		workflowMetricsSLADefinition.setStopNodeNames(RandomTestUtil.randomString());
+		workflowMetricsSLADefinition.setStopNodeNames(
+			RandomTestUtil.randomString());
 
-		_workflowMetricsSLADefinitions.add(_persistence.update(
-				workflowMetricsSLADefinition));
+		_workflowMetricsSLADefinitions.add(
+			_persistence.update(workflowMetricsSLADefinition));
 
 		return workflowMetricsSLADefinition;
 	}
 
-	private List<WorkflowMetricsSLADefinition> _workflowMetricsSLADefinitions = new ArrayList<WorkflowMetricsSLADefinition>();
+	private List<WorkflowMetricsSLADefinition> _workflowMetricsSLADefinitions =
+		new ArrayList<WorkflowMetricsSLADefinition>();
 	private WorkflowMetricsSLADefinitionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

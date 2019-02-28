@@ -17,7 +17,6 @@ package com.liferay.oauth.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.model.OAuthApplication;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -41,20 +40,29 @@ import java.io.InputStream;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=oauth", "json.web.service.context.path=OAuthApplication"}, service = OAuthApplicationService.class)
+@OSGiBeanProperties(
+	property = {
+		"json.web.service.context.name=oauth",
+		"json.web.service.context.path=OAuthApplication"
+	},
+	service = OAuthApplicationService.class
+)
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface OAuthApplicationService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationServiceUtil} to access the o auth application remote service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthApplication addOAuthApplication(String name,
-		String description, int accessLevel, boolean shareableAccessToken,
-		String callbackURI, String websiteURL, ServiceContext serviceContext)
+	public OAuthApplication addOAuthApplication(
+			String name, String description, int accessLevel,
+			boolean shareableAccessToken, String callbackURI, String websiteURL,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteLogo(long oAuthApplicationId) throws PortalException;
@@ -63,17 +71,20 @@ public interface OAuthApplicationService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public OAuthApplication updateLogo(long oAuthApplicationId,
-		InputStream inputStream) throws PortalException;
-
-	public OAuthApplication updateOAuthApplication(long oAuthApplicationId,
-		String name, String description, boolean shareableAccessToken,
-		String callbackURI, String websiteURL, ServiceContext serviceContext)
+	public OAuthApplication updateLogo(
+			long oAuthApplicationId, InputStream inputStream)
 		throws PortalException;
+
+	public OAuthApplication updateOAuthApplication(
+			long oAuthApplicationId, String name, String description,
+			boolean shareableAccessToken, String callbackURI, String websiteURL,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

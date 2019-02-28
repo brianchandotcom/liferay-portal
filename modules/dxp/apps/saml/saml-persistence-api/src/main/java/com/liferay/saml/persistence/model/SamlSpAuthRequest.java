@@ -27,29 +27,37 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SamlSpAuthRequestModel
  * @generated
  */
-@ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl")
+@ImplementationClassName(
+	"com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl"
+)
 @ProviderType
-public interface SamlSpAuthRequest extends SamlSpAuthRequestModel, PersistedModel {
+public interface SamlSpAuthRequest
+	extends SamlSpAuthRequestModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SamlSpAuthRequest, Long> SAML_SP_AUTHN_REQUEST_ID_ACCESSOR =
-		new Accessor<SamlSpAuthRequest, Long>() {
-			@Override
-			public Long get(SamlSpAuthRequest samlSpAuthRequest) {
-				return samlSpAuthRequest.getSamlSpAuthnRequestId();
-			}
+	public static final Accessor<SamlSpAuthRequest, Long>
+		SAML_SP_AUTHN_REQUEST_ID_ACCESSOR =
+			new Accessor<SamlSpAuthRequest, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(SamlSpAuthRequest samlSpAuthRequest) {
+					return samlSpAuthRequest.getSamlSpAuthnRequestId();
+				}
 
-			@Override
-			public Class<SamlSpAuthRequest> getTypeClass() {
-				return SamlSpAuthRequest.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<SamlSpAuthRequest> getTypeClass() {
+					return SamlSpAuthRequest.class;
+				}
+
+			};
+
 }

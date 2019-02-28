@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OAuthUserModel extends AuditedModel, BaseModel<OAuthUser>,
-	ShardedModel {
+public interface OAuthUserModel
+	extends AuditedModel, BaseModel<OAuthUser>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -225,4 +226,5 @@ public interface OAuthUserModel extends AuditedModel, BaseModel<OAuthUser>,
 	 * @param accessSecret the access secret of this o auth user
 	 */
 	public void setAccessSecret(String accessSecret);
+
 }

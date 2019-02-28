@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -61,26 +58,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowMetricsSLACalendar>
+public class WorkflowMetricsSLACalendarModelImpl
+	extends BaseModelImpl<WorkflowMetricsSLACalendar>
 	implements WorkflowMetricsSLACalendarModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla calendar model instance should use the <code>WorkflowMetricsSLACalendar</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "WorkflowMetricsSLACalendar";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "workflowMetricsSLACalendarId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"workflowMetricsSLACalendarId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -94,28 +92,50 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WorkflowMetricsSLACalendar (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLACalendarId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
-	public static final String TABLE_SQL_DROP = "drop table WorkflowMetricsSLACalendar";
-	public static final String ORDER_BY_JPQL = " ORDER BY workflowMetricsSLACalendar.workflowMetricsSLACalendarId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY WorkflowMetricsSLACalendar.workflowMetricsSLACalendarId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table WorkflowMetricsSLACalendar (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLACalendarId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table WorkflowMetricsSLACalendar";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY workflowMetricsSLACalendar.workflowMetricsSLACalendarId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY WorkflowMetricsSLACalendar.workflowMetricsSLACalendarId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long UUID_COLUMN_BITMASK = 4L;
+
 	public static final long WORKFLOWMETRICSSLACALENDARID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
+			"lock.expiration.time.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACalendar"));
 
 	public WorkflowMetricsSLACalendarModelImpl() {
 	}
@@ -154,16 +174,20 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<WorkflowMetricsSLACalendar, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WorkflowMetricsSLACalendar, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<WorkflowMetricsSLACalendar, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<WorkflowMetricsSLACalendar, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<WorkflowMetricsSLACalendar, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WorkflowMetricsSLACalendar, Object>
+				attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((WorkflowMetricsSLACalendar)this));
+			attributes.put(
+				attributeName,
+				attributeGetterFunction.apply(
+					(WorkflowMetricsSLACalendar)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -174,62 +198,112 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<WorkflowMetricsSLACalendar, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<WorkflowMetricsSLACalendar, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<WorkflowMetricsSLACalendar, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<WorkflowMetricsSLACalendar, Object>
+				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
+					attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((WorkflowMetricsSLACalendar)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(WorkflowMetricsSLACalendar)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<WorkflowMetricsSLACalendar, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<WorkflowMetricsSLACalendar, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<WorkflowMetricsSLACalendar, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<WorkflowMetricsSLACalendar, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<WorkflowMetricsSLACalendar, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<WorkflowMetricsSLACalendar, Object>> _attributeSetterBiConsumers;
+	private static final Map
+		<String, Function<WorkflowMetricsSLACalendar, Object>>
+			_attributeGetterFunctions;
+	private static final Map
+		<String, BiConsumer<WorkflowMetricsSLACalendar, Object>>
+			_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<WorkflowMetricsSLACalendar, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<WorkflowMetricsSLACalendar, Object>>();
-		Map<String, BiConsumer<WorkflowMetricsSLACalendar, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<WorkflowMetricsSLACalendar, ?>>();
+		Map<String, Function<WorkflowMetricsSLACalendar, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<WorkflowMetricsSLACalendar, Object>>();
+		Map<String, BiConsumer<WorkflowMetricsSLACalendar, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap
+					<String, BiConsumer<WorkflowMetricsSLACalendar, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", WorkflowMetricsSLACalendar::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<WorkflowMetricsSLACalendar, Long>)
+				WorkflowMetricsSLACalendar::setMvccVersion);
+		attributeGetterFunctions.put(
+			"uuid", WorkflowMetricsSLACalendar::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<WorkflowMetricsSLACalendar, String>)
+				WorkflowMetricsSLACalendar::setUuid);
+		attributeGetterFunctions.put(
+			"workflowMetricsSLACalendarId",
+			WorkflowMetricsSLACalendar::getWorkflowMetricsSLACalendarId);
+		attributeSetterBiConsumers.put(
+			"workflowMetricsSLACalendarId",
+			(BiConsumer<WorkflowMetricsSLACalendar, Long>)
+				WorkflowMetricsSLACalendar::setWorkflowMetricsSLACalendarId);
+		attributeGetterFunctions.put(
+			"groupId", WorkflowMetricsSLACalendar::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<WorkflowMetricsSLACalendar, Long>)
+				WorkflowMetricsSLACalendar::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", WorkflowMetricsSLACalendar::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<WorkflowMetricsSLACalendar, Long>)
+				WorkflowMetricsSLACalendar::setCompanyId);
+		attributeGetterFunctions.put(
+			"userId", WorkflowMetricsSLACalendar::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<WorkflowMetricsSLACalendar, Long>)
+				WorkflowMetricsSLACalendar::setUserId);
+		attributeGetterFunctions.put(
+			"userName", WorkflowMetricsSLACalendar::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<WorkflowMetricsSLACalendar, String>)
+				WorkflowMetricsSLACalendar::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", WorkflowMetricsSLACalendar::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<WorkflowMetricsSLACalendar, Date>)
+				WorkflowMetricsSLACalendar::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", WorkflowMetricsSLACalendar::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<WorkflowMetricsSLACalendar, Date>)
+				WorkflowMetricsSLACalendar::setModifiedDate);
 
-		attributeGetterFunctions.put("mvccVersion", WorkflowMetricsSLACalendar::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<WorkflowMetricsSLACalendar, Long>)WorkflowMetricsSLACalendar::setMvccVersion);
-		attributeGetterFunctions.put("uuid", WorkflowMetricsSLACalendar::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<WorkflowMetricsSLACalendar, String>)WorkflowMetricsSLACalendar::setUuid);
-		attributeGetterFunctions.put("workflowMetricsSLACalendarId", WorkflowMetricsSLACalendar::getWorkflowMetricsSLACalendarId);
-		attributeSetterBiConsumers.put("workflowMetricsSLACalendarId", (BiConsumer<WorkflowMetricsSLACalendar, Long>)WorkflowMetricsSLACalendar::setWorkflowMetricsSLACalendarId);
-		attributeGetterFunctions.put("groupId", WorkflowMetricsSLACalendar::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<WorkflowMetricsSLACalendar, Long>)WorkflowMetricsSLACalendar::setGroupId);
-		attributeGetterFunctions.put("companyId", WorkflowMetricsSLACalendar::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<WorkflowMetricsSLACalendar, Long>)WorkflowMetricsSLACalendar::setCompanyId);
-		attributeGetterFunctions.put("userId", WorkflowMetricsSLACalendar::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<WorkflowMetricsSLACalendar, Long>)WorkflowMetricsSLACalendar::setUserId);
-		attributeGetterFunctions.put("userName", WorkflowMetricsSLACalendar::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<WorkflowMetricsSLACalendar, String>)WorkflowMetricsSLACalendar::setUserName);
-		attributeGetterFunctions.put("createDate", WorkflowMetricsSLACalendar::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<WorkflowMetricsSLACalendar, Date>)WorkflowMetricsSLACalendar::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", WorkflowMetricsSLACalendar::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<WorkflowMetricsSLACalendar, Date>)WorkflowMetricsSLACalendar::setModifiedDate);
-
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -275,6 +349,7 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 	@Override
 	public void setWorkflowMetricsSLACalendarId(
 		long workflowMetricsSLACalendarId) {
+
 		_workflowMetricsSLACalendarId = workflowMetricsSLACalendarId;
 	}
 
@@ -391,7 +466,8 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
+		return new StagedModelType(
+			PortalUtil.getClassNameId(
 				WorkflowMetricsSLACalendar.class.getName()));
 	}
 
@@ -401,8 +477,9 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			WorkflowMetricsSLACalendar.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), WorkflowMetricsSLACalendar.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -415,8 +492,10 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 	@Override
 	public WorkflowMetricsSLACalendar toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (WorkflowMetricsSLACalendar)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel =
+				(WorkflowMetricsSLACalendar)ProxyUtil.newProxyInstance(
+					_classLoader, _escapedModelInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -424,11 +503,13 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public Object clone() {
-		WorkflowMetricsSLACalendarImpl workflowMetricsSLACalendarImpl = new WorkflowMetricsSLACalendarImpl();
+		WorkflowMetricsSLACalendarImpl workflowMetricsSLACalendarImpl =
+			new WorkflowMetricsSLACalendarImpl();
 
 		workflowMetricsSLACalendarImpl.setMvccVersion(getMvccVersion());
 		workflowMetricsSLACalendarImpl.setUuid(getUuid());
-		workflowMetricsSLACalendarImpl.setWorkflowMetricsSLACalendarId(getWorkflowMetricsSLACalendarId());
+		workflowMetricsSLACalendarImpl.setWorkflowMetricsSLACalendarId(
+			getWorkflowMetricsSLACalendarId());
 		workflowMetricsSLACalendarImpl.setGroupId(getGroupId());
 		workflowMetricsSLACalendarImpl.setCompanyId(getCompanyId());
 		workflowMetricsSLACalendarImpl.setUserId(getUserId());
@@ -442,7 +523,9 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 	}
 
 	@Override
-	public int compareTo(WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
+	public int compareTo(
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
+
 		long primaryKey = workflowMetricsSLACalendar.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
@@ -466,7 +549,8 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 			return false;
 		}
 
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = (WorkflowMetricsSLACalendar)obj;
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			(WorkflowMetricsSLACalendar)obj;
 
 		long primaryKey = workflowMetricsSLACalendar.getPrimaryKey();
 
@@ -495,15 +579,19 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public void resetOriginalValues() {
-		WorkflowMetricsSLACalendarModelImpl workflowMetricsSLACalendarModelImpl = this;
+		WorkflowMetricsSLACalendarModelImpl
+			workflowMetricsSLACalendarModelImpl = this;
 
-		workflowMetricsSLACalendarModelImpl._originalUuid = workflowMetricsSLACalendarModelImpl._uuid;
+		workflowMetricsSLACalendarModelImpl._originalUuid =
+			workflowMetricsSLACalendarModelImpl._uuid;
 
-		workflowMetricsSLACalendarModelImpl._originalGroupId = workflowMetricsSLACalendarModelImpl._groupId;
+		workflowMetricsSLACalendarModelImpl._originalGroupId =
+			workflowMetricsSLACalendarModelImpl._groupId;
 
 		workflowMetricsSLACalendarModelImpl._setOriginalGroupId = false;
 
-		workflowMetricsSLACalendarModelImpl._originalCompanyId = workflowMetricsSLACalendarModelImpl._companyId;
+		workflowMetricsSLACalendarModelImpl._originalCompanyId =
+			workflowMetricsSLACalendarModelImpl._companyId;
 
 		workflowMetricsSLACalendarModelImpl._setOriginalCompanyId = false;
 
@@ -514,8 +602,9 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public CacheModel<WorkflowMetricsSLACalendar> toCacheModel() {
-		WorkflowMetricsSLACalendarCacheModel workflowMetricsSLACalendarCacheModel =
-			new WorkflowMetricsSLACalendarCacheModel();
+		WorkflowMetricsSLACalendarCacheModel
+			workflowMetricsSLACalendarCacheModel =
+				new WorkflowMetricsSLACalendarCacheModel();
 
 		workflowMetricsSLACalendarCacheModel.mvccVersion = getMvccVersion();
 
@@ -527,7 +616,8 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 			workflowMetricsSLACalendarCacheModel.uuid = null;
 		}
 
-		workflowMetricsSLACalendarCacheModel.workflowMetricsSLACalendarId = getWorkflowMetricsSLACalendarId();
+		workflowMetricsSLACalendarCacheModel.workflowMetricsSLACalendarId =
+			getWorkflowMetricsSLACalendarId();
 
 		workflowMetricsSLACalendarCacheModel.groupId = getGroupId();
 
@@ -546,7 +636,8 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
-			workflowMetricsSLACalendarCacheModel.createDate = createDate.getTime();
+			workflowMetricsSLACalendarCacheModel.createDate =
+				createDate.getTime();
 		}
 		else {
 			workflowMetricsSLACalendarCacheModel.createDate = Long.MIN_VALUE;
@@ -555,7 +646,8 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
-			workflowMetricsSLACalendarCacheModel.modifiedDate = modifiedDate.getTime();
+			workflowMetricsSLACalendarCacheModel.modifiedDate =
+				modifiedDate.getTime();
 		}
 		else {
 			workflowMetricsSLACalendarCacheModel.modifiedDate = Long.MIN_VALUE;
@@ -566,22 +658,25 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public String toString() {
-		Map<String, Function<WorkflowMetricsSLACalendar, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WorkflowMetricsSLACalendar, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<WorkflowMetricsSLACalendar, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<WorkflowMetricsSLACalendar, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<WorkflowMetricsSLACalendar, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WorkflowMetricsSLACalendar, Object>
+				attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeGetterFunction.apply(
+			sb.append(
+				attributeGetterFunction.apply(
 					(WorkflowMetricsSLACalendar)this));
 			sb.append(", ");
 		}
@@ -597,25 +692,28 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<WorkflowMetricsSLACalendar, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<WorkflowMetricsSLACalendar, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<WorkflowMetricsSLACalendar, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<WorkflowMetricsSLACalendar, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<WorkflowMetricsSLACalendar, Object> attributeGetterFunction =
-				entry.getValue();
+			Function<WorkflowMetricsSLACalendar, Object>
+				attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply(
+			sb.append(
+				attributeGetterFunction.apply(
 					(WorkflowMetricsSLACalendar)this));
 			sb.append("]]></column-value></column>");
 		}
@@ -625,10 +723,12 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = WorkflowMetricsSLACalendar.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		WorkflowMetricsSLACalendar.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			WorkflowMetricsSLACalendar.class, ModelWrapper.class
-		};
+		WorkflowMetricsSLACalendar.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -646,4 +746,5 @@ public class WorkflowMetricsSLACalendarModelImpl extends BaseModelImpl<WorkflowM
 	private boolean _setModifiedDate;
 	private long _columnBitmask;
 	private WorkflowMetricsSLACalendar _escapedModel;
+
 }

@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class SamlSpSessionSoap implements Serializable {
+
 	public static SamlSpSessionSoap toSoapModel(SamlSpSession model) {
 		SamlSpSessionSoap soapModel = new SamlSpSessionSoap();
 
@@ -81,7 +82,8 @@ public class SamlSpSessionSoap implements Serializable {
 	}
 
 	public static SamlSpSessionSoap[] toSoapModels(List<SamlSpSession> models) {
-		List<SamlSpSessionSoap> soapModels = new ArrayList<SamlSpSessionSoap>(models.size());
+		List<SamlSpSessionSoap> soapModels = new ArrayList<SamlSpSessionSoap>(
+			models.size());
 
 		for (SamlSpSession model : models) {
 			soapModels.add(toSoapModel(model));
@@ -249,4 +251,5 @@ public class SamlSpSessionSoap implements Serializable {
 	private String _nameIdValue;
 	private String _sessionIndex;
 	private boolean _terminated;
+
 }

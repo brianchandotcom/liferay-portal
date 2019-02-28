@@ -17,7 +17,6 @@ package com.liferay.portal.resiliency.spi.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -68,18 +67,24 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinition>
+public class SPIDefinitionPersistenceImpl
+	extends BasePersistenceImpl<SPIDefinition>
 	implements SPIDefinitionPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SPIDefinitionUtil</code> to access the spi definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = SPIDefinitionImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		SPIDefinitionImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -95,8 +100,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public List<SPIDefinition> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -112,8 +117,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByCompanyId(long companyId, int start,
-		int end) {
+	public List<SPIDefinition> findByCompanyId(
+		long companyId, int start, int end) {
+
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -131,8 +137,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<SPIDefinition> orderByComparator) {
+	public List<SPIDefinition> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
+
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
@@ -151,29 +159,34 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<SPIDefinition> orderByComparator,
+	public List<SPIDefinition> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId };
+			finderArgs = new Object[] {companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+			finderArgs = new Object[] {
+				companyId, start, end, orderByComparator
+			};
 		}
 
 		List<SPIDefinition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SPIDefinition>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SPIDefinition spiDefinition : list) {
@@ -190,8 +203,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -202,11 +215,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SPIDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -224,16 +236,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -262,11 +274,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition findByCompanyId_First(long companyId,
-		OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition findByCompanyId_First(
+			long companyId, OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
-		SPIDefinition spiDefinition = fetchByCompanyId_First(companyId,
-				orderByComparator);
+
+		SPIDefinition spiDefinition = fetchByCompanyId_First(
+			companyId, orderByComparator);
 
 		if (spiDefinition != null) {
 			return spiDefinition;
@@ -292,10 +305,11 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the first matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByCompanyId_First(long companyId,
-		OrderByComparator<SPIDefinition> orderByComparator) {
-		List<SPIDefinition> list = findByCompanyId(companyId, 0, 1,
-				orderByComparator);
+	public SPIDefinition fetchByCompanyId_First(
+		long companyId, OrderByComparator<SPIDefinition> orderByComparator) {
+
+		List<SPIDefinition> list = findByCompanyId(
+			companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -313,11 +327,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition findByCompanyId_Last(long companyId,
-		OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition findByCompanyId_Last(
+			long companyId, OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
-		SPIDefinition spiDefinition = fetchByCompanyId_Last(companyId,
-				orderByComparator);
+
+		SPIDefinition spiDefinition = fetchByCompanyId_Last(
+			companyId, orderByComparator);
 
 		if (spiDefinition != null) {
 			return spiDefinition;
@@ -343,16 +358,17 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the last matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByCompanyId_Last(long companyId,
-		OrderByComparator<SPIDefinition> orderByComparator) {
+	public SPIDefinition fetchByCompanyId_Last(
+		long companyId, OrderByComparator<SPIDefinition> orderByComparator) {
+
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SPIDefinition> list = findByCompanyId(companyId, count - 1, count,
-				orderByComparator);
+		List<SPIDefinition> list = findByCompanyId(
+			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -371,9 +387,11 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a spi definition with the primary key could not be found
 	 */
 	@Override
-	public SPIDefinition[] findByCompanyId_PrevAndNext(long spiDefinitionId,
-		long companyId, OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition[] findByCompanyId_PrevAndNext(
+			long spiDefinitionId, long companyId,
+			OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		SPIDefinition spiDefinition = findByPrimaryKey(spiDefinitionId);
 
 		Session session = null;
@@ -383,13 +401,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SPIDefinition[] array = new SPIDefinitionImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(session, spiDefinition,
-					companyId, orderByComparator, true);
+			array[0] = getByCompanyId_PrevAndNext(
+				session, spiDefinition, companyId, orderByComparator, true);
 
 			array[1] = spiDefinition;
 
-			array[2] = getByCompanyId_PrevAndNext(session, spiDefinition,
-					companyId, orderByComparator, false);
+			array[2] = getByCompanyId_PrevAndNext(
+				session, spiDefinition, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -401,14 +419,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 	}
 
-	protected SPIDefinition getByCompanyId_PrevAndNext(Session session,
-		SPIDefinition spiDefinition, long companyId,
+	protected SPIDefinition getByCompanyId_PrevAndNext(
+		Session session, SPIDefinition spiDefinition, long companyId,
 		OrderByComparator<SPIDefinition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -420,7 +439,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -490,8 +510,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					spiDefinition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						spiDefinition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -514,8 +536,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public List<SPIDefinition> filterFindByCompanyId(long companyId) {
-		return filterFindByCompanyId(companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return filterFindByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -531,8 +553,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the range of matching spi definitions that the user has permission to view
 	 */
 	@Override
-	public List<SPIDefinition> filterFindByCompanyId(long companyId, int start,
-		int end) {
+	public List<SPIDefinition> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
 		return filterFindByCompanyId(companyId, start, end, null);
 	}
 
@@ -550,8 +573,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions that the user has permission to view
 	 */
 	@Override
-	public List<SPIDefinition> filterFindByCompanyId(long companyId, int start,
-		int end, OrderByComparator<SPIDefinition> orderByComparator) {
+	public List<SPIDefinition> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -559,8 +584,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(3 +
-					(orderByComparator.getOrderByFields().length * 2));
+			query = new StringBundler(
+				3 + (orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
 			query = new StringBundler(4);
@@ -570,23 +595,25 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 			}
 			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 			}
 		}
 		else {
@@ -598,9 +625,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -620,8 +647,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			qPos.add(companyId);
 
-			return (List<SPIDefinition>)QueryUtil.list(q, getDialect(), start,
-				end);
+			return (List<SPIDefinition>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -642,12 +669,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public SPIDefinition[] filterFindByCompanyId_PrevAndNext(
-		long spiDefinitionId, long companyId,
-		OrderByComparator<SPIDefinition> orderByComparator)
+			long spiDefinitionId, long companyId,
+			OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId_PrevAndNext(spiDefinitionId, companyId,
-				orderByComparator);
+			return findByCompanyId_PrevAndNext(
+				spiDefinitionId, companyId, orderByComparator);
 		}
 
 		SPIDefinition spiDefinition = findByPrimaryKey(spiDefinitionId);
@@ -659,13 +687,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SPIDefinition[] array = new SPIDefinitionImpl[3];
 
-			array[0] = filterGetByCompanyId_PrevAndNext(session, spiDefinition,
-					companyId, orderByComparator, true);
+			array[0] = filterGetByCompanyId_PrevAndNext(
+				session, spiDefinition, companyId, orderByComparator, true);
 
 			array[1] = spiDefinition;
 
-			array[2] = filterGetByCompanyId_PrevAndNext(session, spiDefinition,
-					companyId, orderByComparator, false);
+			array[2] = filterGetByCompanyId_PrevAndNext(
+				session, spiDefinition, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -677,14 +705,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 	}
 
-	protected SPIDefinition filterGetByCompanyId_PrevAndNext(Session session,
-		SPIDefinition spiDefinition, long companyId,
+	protected SPIDefinition filterGetByCompanyId_PrevAndNext(
+		Session session, SPIDefinition spiDefinition, long companyId,
 		OrderByComparator<SPIDefinition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -695,17 +724,20 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -713,12 +745,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
 				}
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -745,12 +781,14 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
 				}
 
 				if ((i + 1) < orderByFields.length) {
@@ -780,9 +818,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -801,8 +839,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					spiDefinition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						spiDefinition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -824,8 +864,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SPIDefinition spiDefinition : findByCompanyId(companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SPIDefinition spiDefinition :
+				findByCompanyId(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(spiDefinition);
 		}
 	}
@@ -840,10 +882,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Object[] finderArgs = new Object[] { companyId };
+		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -900,9 +942,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -911,8 +953,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -930,7 +972,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "spiDefinition.companyId = ?";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
+		"spiDefinition.companyId = ?";
+
 	private FinderPath _finderPathFetchByC_N;
 	private FinderPath _finderPathCountByC_N;
 
@@ -945,6 +989,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition findByC_N(long companyId, String name)
 		throws NoSuchDefinitionException {
+
 		SPIDefinition spiDefinition = fetchByC_N(companyId, name);
 
 		if (spiDefinition == null) {
@@ -991,24 +1036,26 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByC_N(long companyId, String name,
-		boolean retrieveFromCache) {
+	public SPIDefinition fetchByC_N(
+		long companyId, String name, boolean retrieveFromCache) {
+
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] { companyId, name };
+		Object[] finderArgs = new Object[] {companyId, name};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_N,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_N, finderArgs, this);
 		}
 
 		if (result instanceof SPIDefinition) {
 			SPIDefinition spiDefinition = (SPIDefinition)result;
 
 			if ((companyId != spiDefinition.getCompanyId()) ||
-					!Objects.equals(name, spiDefinition.getName())) {
+				!Objects.equals(name, spiDefinition.getName())) {
+
 				result = null;
 			}
 		}
@@ -1051,8 +1098,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				List<SPIDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_N,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_N, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -1061,8 +1108,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"SPIDefinitionPersistenceImpl.fetchByC_N(long, String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -1101,6 +1148,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition removeByC_N(long companyId, String name)
 		throws NoSuchDefinitionException {
+
 		SPIDefinition spiDefinition = findByC_N(companyId, name);
 
 		return remove(spiDefinition);
@@ -1119,10 +1167,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 		FinderPath finderPath = _finderPathCountByC_N;
 
-		Object[] finderArgs = new Object[] { companyId, name };
+		Object[] finderArgs = new Object[] {companyId, name};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1176,9 +1224,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "spiDefinition.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_N_NAME_2 = "spiDefinition.name = ?";
-	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(spiDefinition.name IS NULL OR spiDefinition.name = '')";
+	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
+		"spiDefinition.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_2 =
+		"spiDefinition.name = ?";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_3 =
+		"(spiDefinition.name IS NULL OR spiDefinition.name = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
 	private FinderPath _finderPathCountByC_S;
@@ -1193,8 +1247,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public List<SPIDefinition> findByC_S(long companyId, int status) {
-		return findByC_S(companyId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_S(
+			companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1211,8 +1265,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByC_S(long companyId, int status, int start,
-		int end) {
+	public List<SPIDefinition> findByC_S(
+		long companyId, int status, int start, int end) {
+
 		return findByC_S(companyId, status, start, end, null);
 	}
 
@@ -1231,9 +1286,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator<SPIDefinition> orderByComparator) {
-		return findByC_S(companyId, status, start, end, orderByComparator, true);
+	public List<SPIDefinition> findByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
+
+		return findByC_S(
+			companyId, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1252,38 +1310,40 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByC_S(long companyId, int status, int start,
-		int end, OrderByComparator<SPIDefinition> orderByComparator,
+	public List<SPIDefinition> findByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_S;
-			finderArgs = new Object[] { companyId, status };
+			finderArgs = new Object[] {companyId, status};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
-					companyId, status,
-					
-					start, end, orderByComparator
-				};
+				companyId, status, start, end, orderByComparator
+			};
 		}
 
 		List<SPIDefinition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SPIDefinition>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SPIDefinition spiDefinition : list) {
 					if ((companyId != spiDefinition.getCompanyId()) ||
-							(status != spiDefinition.getStatus())) {
+						(status != spiDefinition.getStatus())) {
+
 						list = null;
 
 						break;
@@ -1296,8 +1356,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1310,11 +1370,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SPIDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1334,16 +1393,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1373,11 +1432,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition findByC_S_First(long companyId, int status,
-		OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition findByC_S_First(
+			long companyId, int status,
+			OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
-		SPIDefinition spiDefinition = fetchByC_S_First(companyId, status,
-				orderByComparator);
+
+		SPIDefinition spiDefinition = fetchByC_S_First(
+			companyId, status, orderByComparator);
 
 		if (spiDefinition != null) {
 			return spiDefinition;
@@ -1407,10 +1468,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the first matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByC_S_First(long companyId, int status,
+	public SPIDefinition fetchByC_S_First(
+		long companyId, int status,
 		OrderByComparator<SPIDefinition> orderByComparator) {
-		List<SPIDefinition> list = findByC_S(companyId, status, 0, 1,
-				orderByComparator);
+
+		List<SPIDefinition> list = findByC_S(
+			companyId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1429,11 +1492,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition findByC_S_Last(long companyId, int status,
-		OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition findByC_S_Last(
+			long companyId, int status,
+			OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
-		SPIDefinition spiDefinition = fetchByC_S_Last(companyId, status,
-				orderByComparator);
+
+		SPIDefinition spiDefinition = fetchByC_S_Last(
+			companyId, status, orderByComparator);
 
 		if (spiDefinition != null) {
 			return spiDefinition;
@@ -1463,16 +1528,18 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the last matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByC_S_Last(long companyId, int status,
+	public SPIDefinition fetchByC_S_Last(
+		long companyId, int status,
 		OrderByComparator<SPIDefinition> orderByComparator) {
+
 		int count = countByC_S(companyId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SPIDefinition> list = findByC_S(companyId, status, count - 1,
-				count, orderByComparator);
+		List<SPIDefinition> list = findByC_S(
+			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1492,10 +1559,11 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a spi definition with the primary key could not be found
 	 */
 	@Override
-	public SPIDefinition[] findByC_S_PrevAndNext(long spiDefinitionId,
-		long companyId, int status,
-		OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition[] findByC_S_PrevAndNext(
+			long spiDefinitionId, long companyId, int status,
+			OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		SPIDefinition spiDefinition = findByPrimaryKey(spiDefinitionId);
 
 		Session session = null;
@@ -1505,13 +1573,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SPIDefinition[] array = new SPIDefinitionImpl[3];
 
-			array[0] = getByC_S_PrevAndNext(session, spiDefinition, companyId,
-					status, orderByComparator, true);
+			array[0] = getByC_S_PrevAndNext(
+				session, spiDefinition, companyId, status, orderByComparator,
+				true);
 
 			array[1] = spiDefinition;
 
-			array[2] = getByC_S_PrevAndNext(session, spiDefinition, companyId,
-					status, orderByComparator, false);
+			array[2] = getByC_S_PrevAndNext(
+				session, spiDefinition, companyId, status, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -1523,14 +1593,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 	}
 
-	protected SPIDefinition getByC_S_PrevAndNext(Session session,
-		SPIDefinition spiDefinition, long companyId, int status,
-		OrderByComparator<SPIDefinition> orderByComparator, boolean previous) {
+	protected SPIDefinition getByC_S_PrevAndNext(
+		Session session, SPIDefinition spiDefinition, long companyId,
+		int status, OrderByComparator<SPIDefinition> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1544,7 +1616,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1616,8 +1689,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					spiDefinition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						spiDefinition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1641,8 +1716,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public List<SPIDefinition> filterFindByC_S(long companyId, int status) {
-		return filterFindByC_S(companyId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return filterFindByC_S(
+			companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1659,8 +1734,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the range of matching spi definitions that the user has permission to view
 	 */
 	@Override
-	public List<SPIDefinition> filterFindByC_S(long companyId, int status,
-		int start, int end) {
+	public List<SPIDefinition> filterFindByC_S(
+		long companyId, int status, int start, int end) {
+
 		return filterFindByC_S(companyId, status, start, end, null);
 	}
 
@@ -1679,8 +1755,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions that the user has permission to view
 	 */
 	@Override
-	public List<SPIDefinition> filterFindByC_S(long companyId, int status,
-		int start, int end, OrderByComparator<SPIDefinition> orderByComparator) {
+	public List<SPIDefinition> filterFindByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByC_S(companyId, status, start, end, orderByComparator);
 		}
@@ -1688,8 +1766,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByFields().length * 2));
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
 			query = new StringBundler(5);
@@ -1699,7 +1777,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
@@ -1707,17 +1786,18 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 			}
 			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 			}
 		}
 		else {
@@ -1729,9 +1809,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -1753,8 +1833,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			qPos.add(status);
 
-			return (List<SPIDefinition>)QueryUtil.list(q, getDialect(), start,
-				end);
+			return (List<SPIDefinition>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -1775,13 +1855,14 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @throws NoSuchDefinitionException if a spi definition with the primary key could not be found
 	 */
 	@Override
-	public SPIDefinition[] filterFindByC_S_PrevAndNext(long spiDefinitionId,
-		long companyId, int status,
-		OrderByComparator<SPIDefinition> orderByComparator)
+	public SPIDefinition[] filterFindByC_S_PrevAndNext(
+			long spiDefinitionId, long companyId, int status,
+			OrderByComparator<SPIDefinition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_S_PrevAndNext(spiDefinitionId, companyId, status,
-				orderByComparator);
+			return findByC_S_PrevAndNext(
+				spiDefinitionId, companyId, status, orderByComparator);
 		}
 
 		SPIDefinition spiDefinition = findByPrimaryKey(spiDefinitionId);
@@ -1793,13 +1874,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SPIDefinition[] array = new SPIDefinitionImpl[3];
 
-			array[0] = filterGetByC_S_PrevAndNext(session, spiDefinition,
-					companyId, status, orderByComparator, true);
+			array[0] = filterGetByC_S_PrevAndNext(
+				session, spiDefinition, companyId, status, orderByComparator,
+				true);
 
 			array[1] = spiDefinition;
 
-			array[2] = filterGetByC_S_PrevAndNext(session, spiDefinition,
-					companyId, status, orderByComparator, false);
+			array[2] = filterGetByC_S_PrevAndNext(
+				session, spiDefinition, companyId, status, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -1811,14 +1894,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 	}
 
-	protected SPIDefinition filterGetByC_S_PrevAndNext(Session session,
-		SPIDefinition spiDefinition, long companyId, int status,
-		OrderByComparator<SPIDefinition> orderByComparator, boolean previous) {
+	protected SPIDefinition filterGetByC_S_PrevAndNext(
+		Session session, SPIDefinition spiDefinition, long companyId,
+		int status, OrderByComparator<SPIDefinition> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1829,7 +1914,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
@@ -1837,11 +1923,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1849,12 +1937,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
 				}
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -1881,12 +1973,14 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
 				}
 
 				if ((i + 1) < orderByFields.length) {
@@ -1916,9 +2010,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -1939,8 +2033,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					spiDefinition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						spiDefinition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1964,8 +2060,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public List<SPIDefinition> filterFindByC_S(long companyId, int[] statuses) {
-		return filterFindByC_S(companyId, statuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return filterFindByC_S(
+			companyId, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1982,8 +2078,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the range of matching spi definitions that the user has permission to view
 	 */
 	@Override
-	public List<SPIDefinition> filterFindByC_S(long companyId, int[] statuses,
-		int start, int end) {
+	public List<SPIDefinition> filterFindByC_S(
+		long companyId, int[] statuses, int start, int end) {
+
 		return filterFindByC_S(companyId, statuses, start, end, null);
 	}
 
@@ -2002,10 +2099,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions that the user has permission to view
 	 */
 	@Override
-	public List<SPIDefinition> filterFindByC_S(long companyId, int[] statuses,
-		int start, int end, OrderByComparator<SPIDefinition> orderByComparator) {
+	public List<SPIDefinition> filterFindByC_S(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_S(companyId, statuses, start, end, orderByComparator);
+			return findByC_S(
+				companyId, statuses, start, end, orderByComparator);
 		}
 
 		if (statuses == null) {
@@ -2023,7 +2123,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
@@ -2040,21 +2141,23 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(")");
 		}
 
-		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 			}
 			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 			}
 		}
 		else {
@@ -2066,9 +2169,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2088,8 +2191,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			qPos.add(companyId);
 
-			return (List<SPIDefinition>)QueryUtil.list(q, getDialect(), start,
-				end);
+			return (List<SPIDefinition>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -2112,8 +2215,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public List<SPIDefinition> findByC_S(long companyId, int[] statuses) {
-		return findByC_S(companyId, statuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_S(
+			companyId, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2130,8 +2233,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByC_S(long companyId, int[] statuses,
-		int start, int end) {
+	public List<SPIDefinition> findByC_S(
+		long companyId, int[] statuses, int start, int end) {
+
 		return findByC_S(companyId, statuses, start, end, null);
 	}
 
@@ -2150,10 +2254,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByC_S(long companyId, int[] statuses,
-		int start, int end, OrderByComparator<SPIDefinition> orderByComparator) {
-		return findByC_S(companyId, statuses, start, end, orderByComparator,
-			true);
+	public List<SPIDefinition> findByC_S(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
+
+		return findByC_S(
+			companyId, statuses, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2172,9 +2278,11 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findByC_S(long companyId, int[] statuses,
-		int start, int end, OrderByComparator<SPIDefinition> orderByComparator,
+	public List<SPIDefinition> findByC_S(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		if (statuses == null) {
 			statuses = new int[0];
 		}
@@ -2185,37 +2293,38 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 
 		if (statuses.length == 1) {
-			return findByC_S(companyId, statuses[0], start, end,
-				orderByComparator);
+			return findByC_S(
+				companyId, statuses[0], start, end, orderByComparator);
 		}
 
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderArgs = new Object[] { companyId, StringUtil.merge(statuses) };
+			finderArgs = new Object[] {companyId, StringUtil.merge(statuses)};
 		}
 		else {
 			finderArgs = new Object[] {
-					companyId, StringUtil.merge(statuses),
-					
-					start, end, orderByComparator
-				};
+				companyId, StringUtil.merge(statuses), start, end,
+				orderByComparator
+			};
 		}
 
 		List<SPIDefinition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SPIDefinition>)FinderCacheUtil.getResult(_finderPathWithPaginationFindByC_S,
-					finderArgs, this);
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
+				_finderPathWithPaginationFindByC_S, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SPIDefinition spiDefinition : list) {
 					if ((companyId != spiDefinition.getCompanyId()) ||
-							!ArrayUtil.contains(statuses,
-								spiDefinition.getStatus())) {
+						!ArrayUtil.contains(
+							statuses, spiDefinition.getStatus())) {
+
 						list = null;
 
 						break;
@@ -2243,15 +2352,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				query.append(")");
 			}
 
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SPIDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2269,26 +2378,26 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(_finderPathWithPaginationFindByC_S,
-					finderArgs, list);
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByC_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathWithPaginationFindByC_S,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByC_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -2308,8 +2417,11 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public void removeByC_S(long companyId, int status) {
-		for (SPIDefinition spiDefinition : findByC_S(companyId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SPIDefinition spiDefinition :
+				findByC_S(
+					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(spiDefinition);
 		}
 	}
@@ -2325,10 +2437,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	public int countByC_S(long companyId, int status) {
 		FinderPath finderPath = _finderPathCountByC_S;
 
-		Object[] finderArgs = new Object[] { companyId, status };
+		Object[] finderArgs = new Object[] {companyId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2389,10 +2501,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			Arrays.sort(statuses);
 		}
 
-		Object[] finderArgs = new Object[] { companyId, StringUtil.merge(statuses) };
+		Object[] finderArgs = new Object[] {
+			companyId, StringUtil.merge(statuses)
+		};
 
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathWithPaginationCountByC_S,
-				finderArgs, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathWithPaginationCountByC_S, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -2413,8 +2527,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				query.append(")");
 			}
 
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
 
 			String sql = query.toString();
 
@@ -2431,12 +2546,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathWithPaginationCountByC_S,
-					finderArgs, count);
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationCountByC_S, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathWithPaginationCountByC_S,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationCountByC_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -2469,9 +2584,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2480,8 +2595,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -2541,12 +2656,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			query.append(")");
 		}
 
-		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+		query.setStringAt(
+			removeConjunction(query.stringAt(query.index() - 1)),
 			query.index() - 1);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				SPIDefinition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), SPIDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
 
@@ -2555,8 +2671,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -2574,9 +2690,15 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		}
 	}
 
-	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "spiDefinition.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "spiDefinition.status = ?";
-	private static final String _FINDER_COLUMN_C_S_STATUS_7 = "spiDefinition.status IN (";
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
+		"spiDefinition.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
+		"spiDefinition.status = ?";
+
+	private static final String _FINDER_COLUMN_C_S_STATUS_7 =
+		"spiDefinition.status IN (";
+
 	private FinderPath _finderPathFetchByCA_CP;
 	private FinderPath _finderPathCountByCA_CP;
 
@@ -2591,8 +2713,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition findByCA_CP(String connectorAddress, int connectorPort)
 		throws NoSuchDefinitionException {
-		SPIDefinition spiDefinition = fetchByCA_CP(connectorAddress,
-				connectorPort);
+
+		SPIDefinition spiDefinition = fetchByCA_CP(
+			connectorAddress, connectorPort);
 
 		if (spiDefinition == null) {
 			StringBundler msg = new StringBundler(6);
@@ -2625,7 +2748,9 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByCA_CP(String connectorAddress, int connectorPort) {
+	public SPIDefinition fetchByCA_CP(
+		String connectorAddress, int connectorPort) {
+
 		return fetchByCA_CP(connectorAddress, connectorPort, true);
 	}
 
@@ -2638,25 +2763,27 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByCA_CP(String connectorAddress,
-		int connectorPort, boolean retrieveFromCache) {
+	public SPIDefinition fetchByCA_CP(
+		String connectorAddress, int connectorPort, boolean retrieveFromCache) {
+
 		connectorAddress = Objects.toString(connectorAddress, "");
 
-		Object[] finderArgs = new Object[] { connectorAddress, connectorPort };
+		Object[] finderArgs = new Object[] {connectorAddress, connectorPort};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByCA_CP,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByCA_CP, finderArgs, this);
 		}
 
 		if (result instanceof SPIDefinition) {
 			SPIDefinition spiDefinition = (SPIDefinition)result;
 
-			if (!Objects.equals(connectorAddress,
-						spiDefinition.getConnectorAddress()) ||
-					(connectorPort != spiDefinition.getConnectorPort())) {
+			if (!Objects.equals(
+					connectorAddress, spiDefinition.getConnectorAddress()) ||
+				(connectorPort != spiDefinition.getConnectorPort())) {
+
 				result = null;
 			}
 		}
@@ -2699,8 +2826,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				List<SPIDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByCA_CP,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByCA_CP, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -2709,8 +2836,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"SPIDefinitionPersistenceImpl.fetchByCA_CP(String, int, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -2722,7 +2849,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByCA_CP, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByCA_CP, finderArgs);
 
 				throw processException(e);
 			}
@@ -2747,10 +2875,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the spi definition that was removed
 	 */
 	@Override
-	public SPIDefinition removeByCA_CP(String connectorAddress,
-		int connectorPort) throws NoSuchDefinitionException {
-		SPIDefinition spiDefinition = findByCA_CP(connectorAddress,
-				connectorPort);
+	public SPIDefinition removeByCA_CP(
+			String connectorAddress, int connectorPort)
+		throws NoSuchDefinitionException {
+
+		SPIDefinition spiDefinition = findByCA_CP(
+			connectorAddress, connectorPort);
 
 		return remove(spiDefinition);
 	}
@@ -2768,10 +2898,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 		FinderPath finderPath = _finderPathCountByCA_CP;
 
-		Object[] finderArgs = new Object[] { connectorAddress, connectorPort };
+		Object[] finderArgs = new Object[] {connectorAddress, connectorPort};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2825,9 +2955,14 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CA_CP_CONNECTORADDRESS_2 = "spiDefinition.connectorAddress = ? AND ";
-	private static final String _FINDER_COLUMN_CA_CP_CONNECTORADDRESS_3 = "(spiDefinition.connectorAddress IS NULL OR spiDefinition.connectorAddress = '') AND ";
-	private static final String _FINDER_COLUMN_CA_CP_CONNECTORPORT_2 = "spiDefinition.connectorPort = ?";
+	private static final String _FINDER_COLUMN_CA_CP_CONNECTORADDRESS_2 =
+		"spiDefinition.connectorAddress = ? AND ";
+
+	private static final String _FINDER_COLUMN_CA_CP_CONNECTORADDRESS_3 =
+		"(spiDefinition.connectorAddress IS NULL OR spiDefinition.connectorAddress = '') AND ";
+
+	private static final String _FINDER_COLUMN_CA_CP_CONNECTORPORT_2 =
+		"spiDefinition.connectorPort = ?";
 
 	public SPIDefinitionPersistenceImpl() {
 		setModelClass(SPIDefinition.class);
@@ -2844,19 +2979,25 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public void cacheResult(SPIDefinition spiDefinition) {
-		EntityCacheUtil.putResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			SPIDefinitionImpl.class, spiDefinition.getPrimaryKey(),
 			spiDefinition);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_N,
-			new Object[] { spiDefinition.getCompanyId(), spiDefinition.getName() },
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_N,
+			new Object[] {
+				spiDefinition.getCompanyId(), spiDefinition.getName()
+			},
 			spiDefinition);
 
-		FinderCacheUtil.putResult(_finderPathFetchByCA_CP,
+		FinderCacheUtil.putResult(
+			_finderPathFetchByCA_CP,
 			new Object[] {
 				spiDefinition.getConnectorAddress(),
 				spiDefinition.getConnectorPort()
-			}, spiDefinition);
+			},
+			spiDefinition);
 
 		spiDefinition.resetOriginalValues();
 	}
@@ -2870,8 +3011,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	public void cacheResult(List<SPIDefinition> spiDefinitions) {
 		for (SPIDefinition spiDefinition : spiDefinitions) {
 			if (EntityCacheUtil.getResult(
-						SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						SPIDefinitionImpl.class, spiDefinition.getPrimaryKey()) == null) {
+					SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+					SPIDefinitionImpl.class, spiDefinition.getPrimaryKey()) ==
+						null) {
+
 				cacheResult(spiDefinition);
 			}
 			else {
@@ -2905,7 +3048,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public void clearCache(SPIDefinition spiDefinition) {
-		EntityCacheUtil.removeResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.removeResult(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			SPIDefinitionImpl.class, spiDefinition.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2920,54 +3064,59 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (SPIDefinition spiDefinition : spiDefinitions) {
-			EntityCacheUtil.removeResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			EntityCacheUtil.removeResult(
+				SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 				SPIDefinitionImpl.class, spiDefinition.getPrimaryKey());
 
-			clearUniqueFindersCache((SPIDefinitionModelImpl)spiDefinition, true);
+			clearUniqueFindersCache(
+				(SPIDefinitionModelImpl)spiDefinition, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
 		SPIDefinitionModelImpl spiDefinitionModelImpl) {
-		Object[] args = new Object[] {
-				spiDefinitionModelImpl.getCompanyId(),
-				spiDefinitionModelImpl.getName()
-			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_N, args, Long.valueOf(1),
-			false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_N, args,
-			spiDefinitionModelImpl, false);
+		Object[] args = new Object[] {
+			spiDefinitionModelImpl.getCompanyId(),
+			spiDefinitionModelImpl.getName()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_N, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_N, args, spiDefinitionModelImpl, false);
 
 		args = new Object[] {
-				spiDefinitionModelImpl.getConnectorAddress(),
-				spiDefinitionModelImpl.getConnectorPort()
-			};
+			spiDefinitionModelImpl.getConnectorAddress(),
+			spiDefinitionModelImpl.getConnectorPort()
+		};
 
-		FinderCacheUtil.putResult(_finderPathCountByCA_CP, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByCA_CP, args,
-			spiDefinitionModelImpl, false);
+		FinderCacheUtil.putResult(
+			_finderPathCountByCA_CP, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByCA_CP, args, spiDefinitionModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		SPIDefinitionModelImpl spiDefinitionModelImpl, boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					spiDefinitionModelImpl.getCompanyId(),
-					spiDefinitionModelImpl.getName()
-				};
+				spiDefinitionModelImpl.getCompanyId(),
+				spiDefinitionModelImpl.getName()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_N, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_N, args);
 		}
 
 		if ((spiDefinitionModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_N.getColumnBitmask()) != 0) {
+			 _finderPathFetchByC_N.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					spiDefinitionModelImpl.getOriginalCompanyId(),
-					spiDefinitionModelImpl.getOriginalName()
-				};
+				spiDefinitionModelImpl.getOriginalCompanyId(),
+				spiDefinitionModelImpl.getOriginalName()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_N, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_N, args);
@@ -2975,20 +3124,21 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					spiDefinitionModelImpl.getConnectorAddress(),
-					spiDefinitionModelImpl.getConnectorPort()
-				};
+				spiDefinitionModelImpl.getConnectorAddress(),
+				spiDefinitionModelImpl.getConnectorPort()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByCA_CP, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByCA_CP, args);
 		}
 
 		if ((spiDefinitionModelImpl.getColumnBitmask() &
-				_finderPathFetchByCA_CP.getColumnBitmask()) != 0) {
+			 _finderPathFetchByCA_CP.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					spiDefinitionModelImpl.getOriginalConnectorAddress(),
-					spiDefinitionModelImpl.getOriginalConnectorPort()
-				};
+				spiDefinitionModelImpl.getOriginalConnectorAddress(),
+				spiDefinitionModelImpl.getOriginalConnectorPort()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByCA_CP, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByCA_CP, args);
@@ -3023,6 +3173,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition remove(long spiDefinitionId)
 		throws NoSuchDefinitionException {
+
 		return remove((Serializable)spiDefinitionId);
 	}
 
@@ -3036,21 +3187,22 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition remove(Serializable primaryKey)
 		throws NoSuchDefinitionException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			SPIDefinition spiDefinition = (SPIDefinition)session.get(SPIDefinitionImpl.class,
-					primaryKey);
+			SPIDefinition spiDefinition = (SPIDefinition)session.get(
+				SPIDefinitionImpl.class, primaryKey);
 
 			if (spiDefinition == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchDefinitionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchDefinitionException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(spiDefinition);
@@ -3074,8 +3226,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			session = openSession();
 
 			if (!session.contains(spiDefinition)) {
-				spiDefinition = (SPIDefinition)session.get(SPIDefinitionImpl.class,
-						spiDefinition.getPrimaryKeyObj());
+				spiDefinition = (SPIDefinition)session.get(
+					SPIDefinitionImpl.class, spiDefinition.getPrimaryKeyObj());
 			}
 
 			if (spiDefinition != null) {
@@ -3104,21 +3256,24 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(spiDefinition.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(spiDefinition);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					spiDefinition);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in spiDefinition proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom SPIDefinition implementation " +
-				spiDefinition.getClass());
+					spiDefinition.getClass());
 		}
 
-		SPIDefinitionModelImpl spiDefinitionModelImpl = (SPIDefinitionModelImpl)spiDefinition;
+		SPIDefinitionModelImpl spiDefinitionModelImpl =
+			(SPIDefinitionModelImpl)spiDefinition;
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -3136,8 +3291,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				spiDefinition.setModifiedDate(now);
 			}
 			else {
-				spiDefinition.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				spiDefinition.setModifiedDate(
+					serviceContext.getModifiedDate(now));
 			}
 		}
 
@@ -3165,71 +3320,78 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!SPIDefinitionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { spiDefinitionModelImpl.getCompanyId() };
+		else if (isNew) {
+			Object[] args = new Object[] {
+				spiDefinitionModelImpl.getCompanyId()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-				args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByCompanyId, args);
 
 			args = new Object[] {
+				spiDefinitionModelImpl.getCompanyId(),
+				spiDefinitionModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_S, args);
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((spiDefinitionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCompanyId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					spiDefinitionModelImpl.getOriginalCompanyId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
+
+				args = new Object[] {spiDefinitionModelImpl.getCompanyId()};
+
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
+			}
+
+			if ((spiDefinitionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_S.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					spiDefinitionModelImpl.getOriginalCompanyId(),
+					spiDefinitionModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_S, args);
+
+				args = new Object[] {
 					spiDefinitionModelImpl.getCompanyId(),
 					spiDefinitionModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_S,
-				args);
-
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((spiDefinitionModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						spiDefinitionModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
-
-				args = new Object[] { spiDefinitionModelImpl.getCompanyId() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
-			}
-
-			if ((spiDefinitionModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						spiDefinitionModelImpl.getOriginalCompanyId(),
-						spiDefinitionModelImpl.getOriginalStatus()
-					};
-
 				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_S,
-					args);
-
-				args = new Object[] {
-						spiDefinitionModelImpl.getCompanyId(),
-						spiDefinitionModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_S,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_S, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			SPIDefinitionImpl.class, spiDefinition.getPrimaryKey(),
 			spiDefinition, false);
 
@@ -3251,6 +3413,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchDefinitionException {
+
 		SPIDefinition spiDefinition = fetchByPrimaryKey(primaryKey);
 
 		if (spiDefinition == null) {
@@ -3258,8 +3421,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchDefinitionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchDefinitionException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return spiDefinition;
@@ -3275,6 +3438,7 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	@Override
 	public SPIDefinition findByPrimaryKey(long spiDefinitionId)
 		throws NoSuchDefinitionException {
+
 		return findByPrimaryKey((Serializable)spiDefinitionId);
 	}
 
@@ -3328,8 +3492,10 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findAll(int start, int end,
+	public List<SPIDefinition> findAll(
+		int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -3347,29 +3513,31 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * @return the ordered range of spi definitions
 	 */
 	@Override
-	public List<SPIDefinition> findAll(int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator,
+	public List<SPIDefinition> findAll(
+		int start, int end, OrderByComparator<SPIDefinition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SPIDefinition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SPIDefinition>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3377,13 +3545,13 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_SPIDEFINITION);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -3403,16 +3571,16 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SPIDefinition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SPIDefinition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3450,8 +3618,8 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3463,12 +3631,12 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -3504,99 +3672,106 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 	 * Initializes the spi definition persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
-		_finderPathCountAll = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-				new String[] {
-					Long.class.getName(),
-					
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCompanyId", new String[] {Long.class.getName()},
+			SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()});
+
+		_finderPathFetchByC_N = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+			SPIDefinitionModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_N = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathWithPaginationFindByC_S = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-				new String[] { Long.class.getName() },
-				SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+			SPIDefinitionModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathCountByCompanyId = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByC_S = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
-		_finderPathFetchByC_N = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByC_N",
-				new String[] { Long.class.getName(), String.class.getName() },
-				SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-				SPIDefinitionModelImpl.NAME_COLUMN_BITMASK);
+		_finderPathWithPaginationCountByC_S = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
-		_finderPathCountByC_N = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
-				new String[] { Long.class.getName(), String.class.getName() });
+		_finderPathFetchByCA_CP = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
+			SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByCA_CP",
+			new String[] {String.class.getName(), Integer.class.getName()},
+			SPIDefinitionModelImpl.CONNECTORADDRESS_COLUMN_BITMASK |
+			SPIDefinitionModelImpl.CONNECTORPORT_COLUMN_BITMASK);
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-				new String[] { Long.class.getName(), Integer.class.getName() },
-				SPIDefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-				SPIDefinitionModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-				new String[] { Long.class.getName(), Integer.class.getName() });
-
-		_finderPathWithPaginationCountByC_S = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
-				new String[] { Long.class.getName(), Integer.class.getName() });
-
-		_finderPathFetchByCA_CP = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED,
-				SPIDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByCA_CP",
-				new String[] { String.class.getName(), Integer.class.getName() },
-				SPIDefinitionModelImpl.CONNECTORADDRESS_COLUMN_BITMASK |
-				SPIDefinitionModelImpl.CONNECTORPORT_COLUMN_BITMASK);
-
-		_finderPathCountByCA_CP = new FinderPath(SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_CP",
-				new String[] { String.class.getName(), Integer.class.getName() });
+		_finderPathCountByCA_CP = new FinderPath(
+			SPIDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			SPIDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCA_CP",
+			new String[] {String.class.getName(), Integer.class.getName()});
 	}
 
 	public void destroy() {
@@ -3608,22 +3783,51 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	private static final String _SQL_SELECT_SPIDEFINITION = "SELECT spiDefinition FROM SPIDefinition spiDefinition";
-	private static final String _SQL_SELECT_SPIDEFINITION_WHERE = "SELECT spiDefinition FROM SPIDefinition spiDefinition WHERE ";
-	private static final String _SQL_COUNT_SPIDEFINITION = "SELECT COUNT(spiDefinition) FROM SPIDefinition spiDefinition";
-	private static final String _SQL_COUNT_SPIDEFINITION_WHERE = "SELECT COUNT(spiDefinition) FROM SPIDefinition spiDefinition WHERE ";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "spiDefinition.spiDefinitionId";
-	private static final String _FILTER_SQL_SELECT_SPIDEFINITION_WHERE = "SELECT DISTINCT {spiDefinition.*} FROM SPIDefinition spiDefinition WHERE ";
-	private static final String _FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {SPIDefinition.*} FROM (SELECT DISTINCT spiDefinition.spiDefinitionId FROM SPIDefinition spiDefinition WHERE ";
-	private static final String _FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN SPIDefinition ON TEMP_TABLE.spiDefinitionId = SPIDefinition.spiDefinitionId";
-	private static final String _FILTER_SQL_COUNT_SPIDEFINITION_WHERE = "SELECT COUNT(DISTINCT spiDefinition.spiDefinitionId) AS COUNT_VALUE FROM SPIDefinition spiDefinition WHERE ";
+
+	private static final String _SQL_SELECT_SPIDEFINITION =
+		"SELECT spiDefinition FROM SPIDefinition spiDefinition";
+
+	private static final String _SQL_SELECT_SPIDEFINITION_WHERE =
+		"SELECT spiDefinition FROM SPIDefinition spiDefinition WHERE ";
+
+	private static final String _SQL_COUNT_SPIDEFINITION =
+		"SELECT COUNT(spiDefinition) FROM SPIDefinition spiDefinition";
+
+	private static final String _SQL_COUNT_SPIDEFINITION_WHERE =
+		"SELECT COUNT(spiDefinition) FROM SPIDefinition spiDefinition WHERE ";
+
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"spiDefinition.spiDefinitionId";
+
+	private static final String _FILTER_SQL_SELECT_SPIDEFINITION_WHERE =
+		"SELECT DISTINCT {spiDefinition.*} FROM SPIDefinition spiDefinition WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {SPIDefinition.*} FROM (SELECT DISTINCT spiDefinition.spiDefinitionId FROM SPIDefinition spiDefinition WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_SPIDEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN SPIDefinition ON TEMP_TABLE.spiDefinitionId = SPIDefinition.spiDefinitionId";
+
+	private static final String _FILTER_SQL_COUNT_SPIDEFINITION_WHERE =
+		"SELECT COUNT(DISTINCT spiDefinition.spiDefinitionId) AS COUNT_VALUE FROM SPIDefinition spiDefinition WHERE ";
+
 	private static final String _FILTER_ENTITY_ALIAS = "spiDefinition";
+
 	private static final String _FILTER_ENTITY_TABLE = "SPIDefinition";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "spiDefinition.";
+
 	private static final String _ORDER_BY_ENTITY_TABLE = "SPIDefinition.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SPIDefinition exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SPIDefinition exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(SPIDefinitionPersistenceImpl.class);
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No SPIDefinition exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No SPIDefinition exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SPIDefinitionPersistenceImpl.class);
+
 }

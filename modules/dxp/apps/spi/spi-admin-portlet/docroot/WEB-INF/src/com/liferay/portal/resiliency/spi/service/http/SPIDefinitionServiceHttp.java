@@ -53,20 +53,25 @@ import com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil;
  */
 @ProviderType
 public class SPIDefinitionServiceHttp {
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition addSPIDefinition(
-		HttpPrincipal httpPrincipal, String name, String connectorAddress,
-		int connectorPort, String description, String jvmArguments,
-		String portletIds, String servletContextNames, String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"addSPIDefinition", _addSPIDefinitionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					connectorAddress, connectorPort, description, jvmArguments,
-					portletIds, servletContextNames, typeSettings,
-					serviceContext);
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
+			addSPIDefinition(
+				HttpPrincipal httpPrincipal, String name,
+				String connectorAddress, int connectorPort, String description,
+				String jvmArguments, String portletIds,
+				String servletContextNames, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "addSPIDefinition",
+				_addSPIDefinitionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, name, connectorAddress, connectorPort, description,
+				jvmArguments, portletIds, servletContextNames, typeSettings,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -74,14 +79,19 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)returnObj;
+			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -90,15 +100,18 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition deleteSPIDefinition(
-		HttpPrincipal httpPrincipal, long spiDefinitionId)
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
+			deleteSPIDefinition(
+				HttpPrincipal httpPrincipal, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"deleteSPIDefinition", _deleteSPIDefinitionParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "deleteSPIDefinition",
+				_deleteSPIDefinitionParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId);
 
 			Object returnObj = null;
 
@@ -106,14 +119,19 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)returnObj;
+			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -122,13 +140,15 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.util.Tuple getPortletIdsAndServletContextNames(
-		HttpPrincipal httpPrincipal)
+	public static com.liferay.portal.kernel.util.Tuple
+			getPortletIdsAndServletContextNames(HttpPrincipal httpPrincipal)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"getPortletIdsAndServletContextNames",
-					_getPortletIdsAndServletContextNamesParameterTypes2);
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class,
+				"getPortletIdsAndServletContextNames",
+				_getPortletIdsAndServletContextNamesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -138,11 +158,15 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.util.Tuple)returnObj;
@@ -154,15 +178,17 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		HttpPrincipal httpPrincipal, long spiDefinitionId)
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
+			getSPIDefinition(HttpPrincipal httpPrincipal, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"getSPIDefinition", _getSPIDefinitionParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "getSPIDefinition",
+				_getSPIDefinitionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId);
 
 			Object returnObj = null;
 
@@ -170,14 +196,19 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)returnObj;
+			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -186,15 +217,18 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition getSPIDefinition(
-		HttpPrincipal httpPrincipal, long companyId, String name)
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
+			getSPIDefinition(
+				HttpPrincipal httpPrincipal, long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"getSPIDefinition", _getSPIDefinitionParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, name);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "getSPIDefinition",
+				_getSPIDefinitionParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, name);
 
 			Object returnObj = null;
 
@@ -202,14 +236,19 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)returnObj;
+			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -218,12 +257,15 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.resiliency.spi.model.SPIDefinition> getSPIDefinitions(
-		HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List
+		<com.liferay.portal.resiliency.spi.model.SPIDefinition>
+				getSPIDefinitions(HttpPrincipal httpPrincipal)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
 		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"getSPIDefinitions", _getSPIDefinitionsParameterTypes5);
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "getSPIDefinitions",
+				_getSPIDefinitionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -233,14 +275,20 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (java.util.List<com.liferay.portal.resiliency.spi.model.SPIDefinition>)returnObj;
+			return (java.util.List
+				<com.liferay.portal.resiliency.spi.model.SPIDefinition>)
+					returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -249,25 +297,31 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static void startSPI(HttpPrincipal httpPrincipal,
-		long spiDefinitionId)
+	public static void startSPI(
+			HttpPrincipal httpPrincipal, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"startSPI", _startSPIParameterTypes6);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "startSPI",
+				_startSPIParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -277,15 +331,17 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static long startSPIinBackground(HttpPrincipal httpPrincipal,
-		long spiDefinitionId)
+	public static long startSPIinBackground(
+			HttpPrincipal httpPrincipal, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"startSPIinBackground", _startSPIinBackgroundParameterTypes7);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "startSPIinBackground",
+				_startSPIinBackgroundParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId);
 
 			Object returnObj = null;
 
@@ -293,11 +349,15 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return ((Long)returnObj).longValue();
@@ -309,24 +369,31 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static void stopSPI(HttpPrincipal httpPrincipal, long spiDefinitionId)
+	public static void stopSPI(
+			HttpPrincipal httpPrincipal, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"stopSPI", _stopSPIParameterTypes8);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "stopSPI",
+				_stopSPIParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -336,15 +403,17 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static long stopSPIinBackground(HttpPrincipal httpPrincipal,
-		long spiDefinitionId)
+	public static long stopSPIinBackground(
+			HttpPrincipal httpPrincipal, long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"stopSPIinBackground", _stopSPIinBackgroundParameterTypes9);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "stopSPIinBackground",
+				_stopSPIinBackgroundParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId);
 
 			Object returnObj = null;
 
@@ -352,11 +421,15 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return ((Long)returnObj).longValue();
@@ -368,21 +441,24 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateSPIDefinition(
-		HttpPrincipal httpPrincipal, long spiDefinitionId,
-		String connectorAddress, int connectorPort, String description,
-		String jvmArguments, String portletIds, String servletContextNames,
-		String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
+			updateSPIDefinition(
+				HttpPrincipal httpPrincipal, long spiDefinitionId,
+				String connectorAddress, int connectorPort, String description,
+				String jvmArguments, String portletIds,
+				String servletContextNames, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"updateSPIDefinition", _updateSPIDefinitionParameterTypes10);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					spiDefinitionId, connectorAddress, connectorPort,
-					description, jvmArguments, portletIds, servletContextNames,
-					typeSettings, serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "updateSPIDefinition",
+				_updateSPIDefinitionParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, spiDefinitionId, connectorAddress, connectorPort,
+				description, jvmArguments, portletIds, servletContextNames,
+				typeSettings, serviceContext);
 
 			Object returnObj = null;
 
@@ -390,14 +466,19 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)returnObj;
+			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -406,17 +487,21 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.resiliency.spi.model.SPIDefinition updateTypeSettings(
-		HttpPrincipal httpPrincipal, long userId, long spiDefinitionId,
-		String recoveryOptions,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
+			updateTypeSettings(
+				HttpPrincipal httpPrincipal, long userId, long spiDefinitionId,
+				String recoveryOptions,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SPIDefinitionServiceUtil.class,
-					"updateTypeSettings", _updateTypeSettingsParameterTypes11);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					spiDefinitionId, recoveryOptions, serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SPIDefinitionServiceUtil.class, "updateTypeSettings",
+				_updateTypeSettingsParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, spiDefinitionId, recoveryOptions,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -424,14 +509,19 @@ public class SPIDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)returnObj;
+			return (com.liferay.portal.resiliency.spi.model.SPIDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -440,45 +530,45 @@ public class SPIDefinitionServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SPIDefinitionServiceHttp.class);
-	private static final Class<?>[] _addSPIDefinitionParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		SPIDefinitionServiceHttp.class);
+
+	private static final Class<?>[] _addSPIDefinitionParameterTypes0 =
+		new Class[] {
 			String.class, String.class, int.class, String.class, String.class,
 			String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteSPIDefinitionParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getPortletIdsAndServletContextNamesParameterTypes2 =
-		new Class[] {  };
-	private static final Class<?>[] _getSPIDefinitionParameterTypes3 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getSPIDefinitionParameterTypes4 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[] _getSPIDefinitionsParameterTypes5 = new Class[] {
-			
-		};
+	private static final Class<?>[] _deleteSPIDefinitionParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[]
+		_getPortletIdsAndServletContextNamesParameterTypes2 = new Class[] {};
+	private static final Class<?>[] _getSPIDefinitionParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getSPIDefinitionParameterTypes4 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _getSPIDefinitionsParameterTypes5 =
+		new Class[] {};
 	private static final Class<?>[] _startSPIParameterTypes6 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _startSPIinBackgroundParameterTypes7 = new Class[] {
-			long.class
-		};
+		long.class
+	};
+	private static final Class<?>[] _startSPIinBackgroundParameterTypes7 =
+		new Class[] {long.class};
 	private static final Class<?>[] _stopSPIParameterTypes8 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _stopSPIinBackgroundParameterTypes9 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _updateSPIDefinitionParameterTypes10 = new Class[] {
+		long.class
+	};
+	private static final Class<?>[] _stopSPIinBackgroundParameterTypes9 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateSPIDefinitionParameterTypes10 =
+		new Class[] {
 			long.class, String.class, int.class, String.class, String.class,
 			String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateTypeSettingsParameterTypes11 = new Class[] {
+	private static final Class<?>[] _updateTypeSettingsParameterTypes11 =
+		new Class[] {
 			long.class, long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+
 }

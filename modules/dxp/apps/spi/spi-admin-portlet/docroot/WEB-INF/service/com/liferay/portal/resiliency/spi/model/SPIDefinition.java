@@ -27,16 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SPIDefinitionModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl")
+@ImplementationClassName(
+	"com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl"
+)
 @ProviderType
 public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SPIDefinition, Long> SPI_DEFINITION_ID_ACCESSOR =
-		new Accessor<SPIDefinition, Long>() {
+	public static final Accessor<SPIDefinition, Long>
+		SPI_DEFINITION_ID_ACCESSOR = new Accessor<SPIDefinition, Long>() {
+
 			@Override
 			public Long get(SPIDefinition spiDefinition) {
 				return spiDefinition.getSpiDefinitionId();
@@ -51,6 +55,7 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 			public Class<SPIDefinition> getTypeClass() {
 				return SPIDefinition.class;
 			}
+
 		};
 
 	public void deleteBaseDir();
@@ -83,7 +88,8 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 
 	public String getStatusLabel();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties();
 
 	public String getTypeSettingsProperty(String key);
 
@@ -100,5 +106,7 @@ public interface SPIDefinition extends SPIDefinitionModel, PersistedModel {
 	public void setRestartAttempts(int restartAttempts);
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties);
+
 }

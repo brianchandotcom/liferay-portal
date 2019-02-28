@@ -30,27 +30,34 @@ import java.util.List;
  */
 @ProviderType
 public class WorkflowMetricsSLAConditionSoap implements Serializable {
+
 	public static WorkflowMetricsSLAConditionSoap toSoapModel(
 		WorkflowMetricsSLACondition model) {
-		WorkflowMetricsSLAConditionSoap soapModel = new WorkflowMetricsSLAConditionSoap();
+
+		WorkflowMetricsSLAConditionSoap soapModel =
+			new WorkflowMetricsSLAConditionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setWorkflowMetricsSLAConditionId(model.getWorkflowMetricsSLAConditionId());
+		soapModel.setWorkflowMetricsSLAConditionId(
+			model.getWorkflowMetricsSLAConditionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setWorkflowMetricsSLADefinitionId(model.getWorkflowMetricsSLADefinitionId());
+		soapModel.setWorkflowMetricsSLADefinitionId(
+			model.getWorkflowMetricsSLADefinitionId());
 
 		return soapModel;
 	}
 
 	public static WorkflowMetricsSLAConditionSoap[] toSoapModels(
 		WorkflowMetricsSLACondition[] models) {
-		WorkflowMetricsSLAConditionSoap[] soapModels = new WorkflowMetricsSLAConditionSoap[models.length];
+
+		WorkflowMetricsSLAConditionSoap[] soapModels =
+			new WorkflowMetricsSLAConditionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -61,10 +68,12 @@ public class WorkflowMetricsSLAConditionSoap implements Serializable {
 
 	public static WorkflowMetricsSLAConditionSoap[][] toSoapModels(
 		WorkflowMetricsSLACondition[][] models) {
+
 		WorkflowMetricsSLAConditionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new WorkflowMetricsSLAConditionSoap[models.length][models[0].length];
+			soapModels = new WorkflowMetricsSLAConditionSoap
+				[models.length][models[0].length];
 		}
 		else {
 			soapModels = new WorkflowMetricsSLAConditionSoap[0][0];
@@ -79,13 +88,16 @@ public class WorkflowMetricsSLAConditionSoap implements Serializable {
 
 	public static WorkflowMetricsSLAConditionSoap[] toSoapModels(
 		List<WorkflowMetricsSLACondition> models) {
-		List<WorkflowMetricsSLAConditionSoap> soapModels = new ArrayList<WorkflowMetricsSLAConditionSoap>(models.size());
+
+		List<WorkflowMetricsSLAConditionSoap> soapModels =
+			new ArrayList<WorkflowMetricsSLAConditionSoap>(models.size());
 
 		for (WorkflowMetricsSLACondition model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new WorkflowMetricsSLAConditionSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new WorkflowMetricsSLAConditionSoap[soapModels.size()]);
 	}
 
 	public WorkflowMetricsSLAConditionSoap() {
@@ -121,6 +133,7 @@ public class WorkflowMetricsSLAConditionSoap implements Serializable {
 
 	public void setWorkflowMetricsSLAConditionId(
 		long workflowMetricsSLAConditionId) {
+
 		_workflowMetricsSLAConditionId = workflowMetricsSLAConditionId;
 	}
 
@@ -178,6 +191,7 @@ public class WorkflowMetricsSLAConditionSoap implements Serializable {
 
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
+
 		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
 	}
 
@@ -191,4 +205,5 @@ public class WorkflowMetricsSLAConditionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _workflowMetricsSLADefinitionId;
+
 }

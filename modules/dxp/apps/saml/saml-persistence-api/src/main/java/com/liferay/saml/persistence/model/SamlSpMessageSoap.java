@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class SamlSpMessageSoap implements Serializable {
+
 	public static SamlSpMessageSoap toSoapModel(SamlSpMessage model) {
 		SamlSpMessageSoap soapModel = new SamlSpMessageSoap();
 
@@ -71,7 +72,8 @@ public class SamlSpMessageSoap implements Serializable {
 	}
 
 	public static SamlSpMessageSoap[] toSoapModels(List<SamlSpMessage> models) {
-		List<SamlSpMessageSoap> soapModels = new ArrayList<SamlSpMessageSoap>(models.size());
+		List<SamlSpMessageSoap> soapModels = new ArrayList<SamlSpMessageSoap>(
+			models.size());
 
 		for (SamlSpMessage model : models) {
 			soapModels.add(toSoapModel(model));
@@ -145,4 +147,5 @@ public class SamlSpMessageSoap implements Serializable {
 	private String _samlIdpEntityId;
 	private String _samlIdpResponseKey;
 	private Date _expirationDate;
+
 }

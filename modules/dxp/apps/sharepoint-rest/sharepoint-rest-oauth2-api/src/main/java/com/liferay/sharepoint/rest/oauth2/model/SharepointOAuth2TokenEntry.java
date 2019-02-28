@@ -27,31 +27,40 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SharepointOAuth2TokenEntryModel
  * @generated
  */
-@ImplementationClassName("com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl")
+@ImplementationClassName(
+	"com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl"
+)
 @ProviderType
 public interface SharepointOAuth2TokenEntry
 	extends SharepointOAuth2TokenEntryModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SharepointOAuth2TokenEntry, Long> SHAREPOINT_O_AUTH2_TOKEN_ENTRY_ID_ACCESSOR =
-		new Accessor<SharepointOAuth2TokenEntry, Long>() {
-			@Override
-			public Long get(
-				SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-				return sharepointOAuth2TokenEntry.getSharepointOAuth2TokenEntryId();
-			}
+	public static final Accessor<SharepointOAuth2TokenEntry, Long>
+		SHAREPOINT_O_AUTH2_TOKEN_ENTRY_ID_ACCESSOR =
+			new Accessor<SharepointOAuth2TokenEntry, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(
+					SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 
-			@Override
-			public Class<SharepointOAuth2TokenEntry> getTypeClass() {
-				return SharepointOAuth2TokenEntry.class;
-			}
-		};
+					return sharepointOAuth2TokenEntry.
+						getSharepointOAuth2TokenEntryId();
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<SharepointOAuth2TokenEntry> getTypeClass() {
+					return SharepointOAuth2TokenEntry.class;
+				}
+
+			};
+
 }

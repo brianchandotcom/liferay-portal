@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class SourceSoap implements Serializable {
+
 	public static SourceSoap toSoapModel(Source model) {
 		SourceSoap soapModel = new SourceSoap();
 
@@ -225,4 +226,5 @@ public class SourceSoap implements Serializable {
 	private String _driverUrl;
 	private String _driverUserName;
 	private String _driverPassword;
+
 }

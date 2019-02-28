@@ -37,8 +37,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WorkflowMetricsSLADefinitionModel extends BaseModel<WorkflowMetricsSLADefinition>,
-	GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+public interface WorkflowMetricsSLADefinitionModel
+	extends BaseModel<WorkflowMetricsSLADefinition>, GroupedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -322,4 +324,5 @@ public interface WorkflowMetricsSLADefinitionModel extends BaseModel<WorkflowMet
 	 * @param stopNodeNames the stop node names of this workflow metrics sla definition
 	 */
 	public void setStopNodeNames(String stopNodeNames);
+
 }

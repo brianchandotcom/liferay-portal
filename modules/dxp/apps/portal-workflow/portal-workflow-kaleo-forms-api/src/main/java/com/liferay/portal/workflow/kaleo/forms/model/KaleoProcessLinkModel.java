@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.BaseModel;
  */
 @ProviderType
 public interface KaleoProcessLinkModel extends BaseModel<KaleoProcessLink> {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -108,4 +109,5 @@ public interface KaleoProcessLinkModel extends BaseModel<KaleoProcessLink> {
 	 * @param DDMTemplateId the ddm template ID of this kaleo process link
 	 */
 	public void setDDMTemplateId(long DDMTemplateId);
+
 }

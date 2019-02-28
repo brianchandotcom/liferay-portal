@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -33,21 +32,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-
 import com.liferay.saml.persistence.exception.NoSuchSpMessageException;
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.service.SamlSpMessageLocalServiceUtil;
 import com.liferay.saml.persistence.service.persistence.SamlSpMessagePersistence;
 import com.liferay.saml.persistence.service.persistence.SamlSpMessageUtil;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -59,17 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class SamlSpMessagePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
-				"com.liferay.saml.persistence.service"));
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.saml.persistence.service"));
 
 	@Before
 	public void setUp() {
@@ -108,7 +107,8 @@ public class SamlSpMessagePersistenceTest {
 
 		_persistence.remove(newSamlSpMessage);
 
-		SamlSpMessage existingSamlSpMessage = _persistence.fetchByPrimaryKey(newSamlSpMessage.getPrimaryKey());
+		SamlSpMessage existingSamlSpMessage = _persistence.fetchByPrimaryKey(
+			newSamlSpMessage.getPrimaryKey());
 
 		Assert.assertNull(existingSamlSpMessage);
 	}
@@ -136,21 +136,26 @@ public class SamlSpMessagePersistenceTest {
 
 		_samlSpMessages.add(_persistence.update(newSamlSpMessage));
 
-		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(newSamlSpMessage.getPrimaryKey());
+		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(
+			newSamlSpMessage.getPrimaryKey());
 
-		Assert.assertEquals(existingSamlSpMessage.getSamlSpMessageId(),
+		Assert.assertEquals(
+			existingSamlSpMessage.getSamlSpMessageId(),
 			newSamlSpMessage.getSamlSpMessageId());
-		Assert.assertEquals(existingSamlSpMessage.getCompanyId(),
+		Assert.assertEquals(
+			existingSamlSpMessage.getCompanyId(),
 			newSamlSpMessage.getCompanyId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSamlSpMessage.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSamlSpMessage.getCreateDate()),
 			Time.getShortTimestamp(newSamlSpMessage.getCreateDate()));
-		Assert.assertEquals(existingSamlSpMessage.getSamlIdpEntityId(),
+		Assert.assertEquals(
+			existingSamlSpMessage.getSamlIdpEntityId(),
 			newSamlSpMessage.getSamlIdpEntityId());
-		Assert.assertEquals(existingSamlSpMessage.getSamlIdpResponseKey(),
+		Assert.assertEquals(
+			existingSamlSpMessage.getSamlIdpResponseKey(),
 			newSamlSpMessage.getSamlIdpResponseKey());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSamlSpMessage.getExpirationDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSamlSpMessage.getExpirationDate()),
 			Time.getShortTimestamp(newSamlSpMessage.getExpirationDate()));
 	}
 
@@ -174,7 +179,8 @@ public class SamlSpMessagePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
-		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(newSamlSpMessage.getPrimaryKey());
+		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(
+			newSamlSpMessage.getPrimaryKey());
 
 		Assert.assertEquals(existingSamlSpMessage, newSamlSpMessage);
 	}
@@ -188,22 +194,23 @@ public class SamlSpMessagePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SamlSpMessage> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SamlSpMessage",
-			"samlSpMessageId", true, "companyId", true, "createDate", true,
-			"samlIdpEntityId", true, "samlIdpResponseKey", true,
-			"expirationDate", true);
+		return OrderByComparatorFactoryUtil.create(
+			"SamlSpMessage", "samlSpMessageId", true, "companyId", true,
+			"createDate", true, "samlIdpEntityId", true, "samlIdpResponseKey",
+			true, "expirationDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
-		SamlSpMessage existingSamlSpMessage = _persistence.fetchByPrimaryKey(newSamlSpMessage.getPrimaryKey());
+		SamlSpMessage existingSamlSpMessage = _persistence.fetchByPrimaryKey(
+			newSamlSpMessage.getPrimaryKey());
 
 		Assert.assertEquals(existingSamlSpMessage, newSamlSpMessage);
 	}
@@ -220,6 +227,7 @@ public class SamlSpMessagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		SamlSpMessage newSamlSpMessage1 = addSamlSpMessage();
 		SamlSpMessage newSamlSpMessage2 = addSamlSpMessage();
 
@@ -228,18 +236,22 @@ public class SamlSpMessagePersistenceTest {
 		primaryKeys.add(newSamlSpMessage1.getPrimaryKey());
 		primaryKeys.add(newSamlSpMessage2.getPrimaryKey());
 
-		Map<Serializable, SamlSpMessage> samlSpMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpMessage> samlSpMessages =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, samlSpMessages.size());
-		Assert.assertEquals(newSamlSpMessage1,
+		Assert.assertEquals(
+			newSamlSpMessage1,
 			samlSpMessages.get(newSamlSpMessage1.getPrimaryKey()));
-		Assert.assertEquals(newSamlSpMessage2,
+		Assert.assertEquals(
+			newSamlSpMessage2,
 			samlSpMessages.get(newSamlSpMessage2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -249,7 +261,8 @@ public class SamlSpMessagePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SamlSpMessage> samlSpMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpMessage> samlSpMessages =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(samlSpMessages.isEmpty());
 	}
@@ -257,6 +270,7 @@ public class SamlSpMessagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
 		long pk = RandomTestUtil.nextLong();
@@ -266,36 +280,39 @@ public class SamlSpMessagePersistenceTest {
 		primaryKeys.add(newSamlSpMessage.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SamlSpMessage> samlSpMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpMessage> samlSpMessages =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, samlSpMessages.size());
-		Assert.assertEquals(newSamlSpMessage,
+		Assert.assertEquals(
+			newSamlSpMessage,
 			samlSpMessages.get(newSamlSpMessage.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SamlSpMessage> samlSpMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpMessage> samlSpMessages =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(samlSpMessages.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSamlSpMessage.getPrimaryKey());
 
-		Map<Serializable, SamlSpMessage> samlSpMessages = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpMessage> samlSpMessages =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, samlSpMessages.size());
-		Assert.assertEquals(newSamlSpMessage,
+		Assert.assertEquals(
+			newSamlSpMessage,
 			samlSpMessages.get(newSamlSpMessage.getPrimaryKey()));
 	}
 
@@ -303,15 +320,19 @@ public class SamlSpMessagePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = SamlSpMessageLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			SamlSpMessageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SamlSpMessage>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<SamlSpMessage>() {
+
 				@Override
 				public void performAction(SamlSpMessage samlSpMessage) {
 					Assert.assertNotNull(samlSpMessage);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -320,17 +341,18 @@ public class SamlSpMessagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpMessage.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpMessage.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("samlSpMessageId",
-				newSamlSpMessage.getSamlSpMessageId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpMessageId", newSamlSpMessage.getSamlSpMessageId()));
 
-		List<SamlSpMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SamlSpMessage> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -341,32 +363,34 @@ public class SamlSpMessagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpMessage.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpMessage.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("samlSpMessageId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpMessageId", RandomTestUtil.nextLong()));
 
-		List<SamlSpMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SamlSpMessage> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		SamlSpMessage newSamlSpMessage = addSamlSpMessage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpMessage.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpMessage.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"samlSpMessageId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("samlSpMessageId"));
 
 		Object newSamlSpMessageId = newSamlSpMessage.getSamlSpMessageId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("samlSpMessageId",
-				new Object[] { newSamlSpMessageId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"samlSpMessageId", new Object[] {newSamlSpMessageId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -379,14 +403,15 @@ public class SamlSpMessagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpMessage.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpMessage.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"samlSpMessageId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("samlSpMessageId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("samlSpMessageId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"samlSpMessageId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -399,16 +424,21 @@ public class SamlSpMessagePersistenceTest {
 
 		_persistence.clearCache();
 
-		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(newSamlSpMessage.getPrimaryKey());
+		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(
+			newSamlSpMessage.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingSamlSpMessage.getSamlIdpEntityId(),
-				ReflectionTestUtil.invoke(existingSamlSpMessage,
-					"getOriginalSamlIdpEntityId", new Class<?>[0])));
-		Assert.assertTrue(Objects.equals(
+				ReflectionTestUtil.invoke(
+					existingSamlSpMessage, "getOriginalSamlIdpEntityId",
+					new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
 				existingSamlSpMessage.getSamlIdpResponseKey(),
-				ReflectionTestUtil.invoke(existingSamlSpMessage,
-					"getOriginalSamlIdpResponseKey", new Class<?>[0])));
+				ReflectionTestUtil.invoke(
+					existingSamlSpMessage, "getOriginalSamlIdpResponseKey",
+					new Class<?>[0])));
 	}
 
 	protected SamlSpMessage addSamlSpMessage() throws Exception {
@@ -431,7 +461,9 @@ public class SamlSpMessagePersistenceTest {
 		return samlSpMessage;
 	}
 
-	private List<SamlSpMessage> _samlSpMessages = new ArrayList<SamlSpMessage>();
+	private List<SamlSpMessage> _samlSpMessages =
+		new ArrayList<SamlSpMessage>();
 	private SamlSpMessagePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.reports.engine.console.service.EntryLocalServiceUtil;
  */
 @ProviderType
 public abstract class EntryBaseImpl extends EntryModelImpl implements Entry {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class EntryBaseImpl extends EntryModelImpl implements Entry {
 			EntryLocalServiceUtil.updateEntry(this);
 		}
 	}
+
 }

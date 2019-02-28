@@ -30,11 +30,15 @@ import java.util.List;
  */
 @ProviderType
 public class SharepointOAuth2TokenEntrySoap implements Serializable {
+
 	public static SharepointOAuth2TokenEntrySoap toSoapModel(
 		SharepointOAuth2TokenEntry model) {
-		SharepointOAuth2TokenEntrySoap soapModel = new SharepointOAuth2TokenEntrySoap();
 
-		soapModel.setSharepointOAuth2TokenEntryId(model.getSharepointOAuth2TokenEntryId());
+		SharepointOAuth2TokenEntrySoap soapModel =
+			new SharepointOAuth2TokenEntrySoap();
+
+		soapModel.setSharepointOAuth2TokenEntryId(
+			model.getSharepointOAuth2TokenEntryId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -48,7 +52,9 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 
 	public static SharepointOAuth2TokenEntrySoap[] toSoapModels(
 		SharepointOAuth2TokenEntry[] models) {
-		SharepointOAuth2TokenEntrySoap[] soapModels = new SharepointOAuth2TokenEntrySoap[models.length];
+
+		SharepointOAuth2TokenEntrySoap[] soapModels =
+			new SharepointOAuth2TokenEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,10 +65,13 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 
 	public static SharepointOAuth2TokenEntrySoap[][] toSoapModels(
 		SharepointOAuth2TokenEntry[][] models) {
+
 		SharepointOAuth2TokenEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SharepointOAuth2TokenEntrySoap[models.length][models[0].length];
+			soapModels =
+				new SharepointOAuth2TokenEntrySoap
+					[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SharepointOAuth2TokenEntrySoap[0][0];
@@ -77,13 +86,16 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 
 	public static SharepointOAuth2TokenEntrySoap[] toSoapModels(
 		List<SharepointOAuth2TokenEntry> models) {
-		List<SharepointOAuth2TokenEntrySoap> soapModels = new ArrayList<SharepointOAuth2TokenEntrySoap>(models.size());
+
+		List<SharepointOAuth2TokenEntrySoap> soapModels =
+			new ArrayList<SharepointOAuth2TokenEntrySoap>(models.size());
 
 		for (SharepointOAuth2TokenEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SharepointOAuth2TokenEntrySoap[soapModels.size()]);
+		return soapModels.toArray(
+			new SharepointOAuth2TokenEntrySoap[soapModels.size()]);
 	}
 
 	public SharepointOAuth2TokenEntrySoap() {
@@ -103,6 +115,7 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 
 	public void setSharepointOAuth2TokenEntryId(
 		long sharepointOAuth2TokenEntryId) {
+
 		_sharepointOAuth2TokenEntryId = sharepointOAuth2TokenEntryId;
 	}
 
@@ -170,4 +183,5 @@ public class SharepointOAuth2TokenEntrySoap implements Serializable {
 	private String _configurationPid;
 	private Date _expirationDate;
 	private String _refreshToken;
+
 }

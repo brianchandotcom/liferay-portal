@@ -27,31 +27,40 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see WorkflowMetricsSLADefinitionModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl")
+@ImplementationClassName(
+	"com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl"
+)
 @ProviderType
 public interface WorkflowMetricsSLADefinition
 	extends WorkflowMetricsSLADefinitionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WorkflowMetricsSLADefinition, Long> WORKFLOW_METRICS_SLA_DEFINITION_ID_ACCESSOR =
-		new Accessor<WorkflowMetricsSLADefinition, Long>() {
-			@Override
-			public Long get(
-				WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
-				return workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId();
-			}
+	public static final Accessor<WorkflowMetricsSLADefinition, Long>
+		WORKFLOW_METRICS_SLA_DEFINITION_ID_ACCESSOR =
+			new Accessor<WorkflowMetricsSLADefinition, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(
+					WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-			@Override
-			public Class<WorkflowMetricsSLADefinition> getTypeClass() {
-				return WorkflowMetricsSLADefinition.class;
-			}
-		};
+					return workflowMetricsSLADefinition.
+						getWorkflowMetricsSLADefinitionId();
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<WorkflowMetricsSLADefinition> getTypeClass() {
+					return WorkflowMetricsSLADefinition.class;
+				}
+
+			};
+
 }

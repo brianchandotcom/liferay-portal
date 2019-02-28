@@ -29,29 +29,35 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.oauth.model.impl.OAuthApplicationImpl")
 @ProviderType
-public interface OAuthApplication extends OAuthApplicationModel, PersistedModel {
+public interface OAuthApplication
+	extends OAuthApplicationModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.model.impl.OAuthApplicationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuthApplication, Long> O_AUTH_APPLICATION_ID_ACCESSOR =
-		new Accessor<OAuthApplication, Long>() {
-			@Override
-			public Long get(OAuthApplication oAuthApplication) {
-				return oAuthApplication.getOAuthApplicationId();
-			}
+	public static final Accessor<OAuthApplication, Long>
+		O_AUTH_APPLICATION_ID_ACCESSOR =
+			new Accessor<OAuthApplication, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(OAuthApplication oAuthApplication) {
+					return oAuthApplication.getOAuthApplicationId();
+				}
 
-			@Override
-			public Class<OAuthApplication> getTypeClass() {
-				return OAuthApplication.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<OAuthApplication> getTypeClass() {
+					return OAuthApplication.class;
+				}
+
+			};
 
 	public String getAccessLevelLabel();
+
 }

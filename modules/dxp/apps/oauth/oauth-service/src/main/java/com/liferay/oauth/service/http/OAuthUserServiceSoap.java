@@ -17,7 +17,6 @@ package com.liferay.oauth.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.service.OAuthUserServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -64,15 +63,18 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class OAuthUserServiceSoap {
-	public static com.liferay.oauth.model.OAuthUserSoap addOAuthUser(
-		String consumerKey,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.oauth.model.OAuthUser returnValue = OAuthUserServiceUtil.addOAuthUser(consumerKey,
-					serviceContext);
 
-			return com.liferay.oauth.model.OAuthUserSoap.toSoapModel(returnValue);
+	public static com.liferay.oauth.model.OAuthUserSoap addOAuthUser(
+			String consumerKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.oauth.model.OAuthUser returnValue =
+				OAuthUserServiceUtil.addOAuthUser(consumerKey, serviceContext);
+
+			return com.liferay.oauth.model.OAuthUserSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -82,11 +84,15 @@ public class OAuthUserServiceSoap {
 	}
 
 	public static com.liferay.oauth.model.OAuthUserSoap deleteOAuthUser(
-		long oAuthApplicationId) throws RemoteException {
-		try {
-			com.liferay.oauth.model.OAuthUser returnValue = OAuthUserServiceUtil.deleteOAuthUser(oAuthApplicationId);
+			long oAuthApplicationId)
+		throws RemoteException {
 
-			return com.liferay.oauth.model.OAuthUserSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.oauth.model.OAuthUser returnValue =
+				OAuthUserServiceUtil.deleteOAuthUser(oAuthApplicationId);
+
+			return com.liferay.oauth.model.OAuthUserSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -96,4 +102,5 @@ public class OAuthUserServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(OAuthUserServiceSoap.class);
+
 }

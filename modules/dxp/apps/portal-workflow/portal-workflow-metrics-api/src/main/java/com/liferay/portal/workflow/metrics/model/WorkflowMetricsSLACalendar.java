@@ -27,31 +27,40 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see WorkflowMetricsSLACalendarModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl")
+@ImplementationClassName(
+	"com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl"
+)
 @ProviderType
 public interface WorkflowMetricsSLACalendar
 	extends WorkflowMetricsSLACalendarModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLACalendarImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WorkflowMetricsSLACalendar, Long> WORKFLOW_METRICS_SLA_CALENDAR_ID_ACCESSOR =
-		new Accessor<WorkflowMetricsSLACalendar, Long>() {
-			@Override
-			public Long get(
-				WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
-				return workflowMetricsSLACalendar.getWorkflowMetricsSLACalendarId();
-			}
+	public static final Accessor<WorkflowMetricsSLACalendar, Long>
+		WORKFLOW_METRICS_SLA_CALENDAR_ID_ACCESSOR =
+			new Accessor<WorkflowMetricsSLACalendar, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(
+					WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
 
-			@Override
-			public Class<WorkflowMetricsSLACalendar> getTypeClass() {
-				return WorkflowMetricsSLACalendar.class;
-			}
-		};
+					return workflowMetricsSLACalendar.
+						getWorkflowMetricsSLACalendarId();
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<WorkflowMetricsSLACalendar> getTypeClass() {
+					return WorkflowMetricsSLACalendar.class;
+				}
+
+			};
+
 }

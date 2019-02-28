@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -69,16 +68,21 @@ import java.util.Set;
 public class WorkflowMetricsSLACalendarPersistenceImpl
 	extends BasePersistenceImpl<WorkflowMetricsSLACalendar>
 	implements WorkflowMetricsSLACalendarPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>WorkflowMetricsSLACalendarUtil</code> to access the workflow metrics sla calendar persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = WorkflowMetricsSLACalendarImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		WorkflowMetricsSLACalendarImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -110,8 +114,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the range of matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid(String uuid, int start,
-		int end) {
+	public List<WorkflowMetricsSLACalendar> findByUuid(
+		String uuid, int start, int end) {
+
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -129,8 +134,10 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the ordered range of matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid(String uuid, int start,
-		int end, OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
+	public List<WorkflowMetricsSLACalendar> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
+
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
@@ -149,10 +156,11 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the ordered range of matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid(String uuid, int start,
-		int end,
+	public List<WorkflowMetricsSLACalendar> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator,
 		boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -160,24 +168,27 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] { uuid };
+			finderArgs = new Object[] {uuid};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<WorkflowMetricsSLACalendar> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<WorkflowMetricsSLACalendar>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<WorkflowMetricsSLACalendar>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : list) {
+				for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+						list) {
+
 					if (!uuid.equals(workflowMetricsSLACalendar.getUuid())) {
 						list = null;
 
@@ -191,8 +202,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -212,11 +223,10 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(WorkflowMetricsSLACalendarModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -236,16 +246,16 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				}
 
 				if (!pagination) {
-					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -274,11 +284,13 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @throws NoSuchSLACalendarException if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar findByUuid_First(String uuid,
-		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
+	public WorkflowMetricsSLACalendar findByUuid_First(
+			String uuid,
+			OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByUuid_First(uuid,
-				orderByComparator);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			fetchByUuid_First(uuid, orderByComparator);
 
 		if (workflowMetricsSLACalendar != null) {
 			return workflowMetricsSLACalendar;
@@ -304,10 +316,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the first matching workflow metrics sla calendar, or <code>null</code> if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar fetchByUuid_First(String uuid,
+	public WorkflowMetricsSLACalendar fetchByUuid_First(
+		String uuid,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
-		List<WorkflowMetricsSLACalendar> list = findByUuid(uuid, 0, 1,
-				orderByComparator);
+
+		List<WorkflowMetricsSLACalendar> list = findByUuid(
+			uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -325,11 +339,13 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @throws NoSuchSLACalendarException if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar findByUuid_Last(String uuid,
-		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
+	public WorkflowMetricsSLACalendar findByUuid_Last(
+			String uuid,
+			OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByUuid_Last(uuid,
-				orderByComparator);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			fetchByUuid_Last(uuid, orderByComparator);
 
 		if (workflowMetricsSLACalendar != null) {
 			return workflowMetricsSLACalendar;
@@ -355,16 +371,18 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the last matching workflow metrics sla calendar, or <code>null</code> if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar fetchByUuid_Last(String uuid,
+	public WorkflowMetricsSLACalendar fetchByUuid_Last(
+		String uuid,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<WorkflowMetricsSLACalendar> list = findByUuid(uuid, count - 1,
-				count, orderByComparator);
+		List<WorkflowMetricsSLACalendar> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -384,27 +402,32 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public WorkflowMetricsSLACalendar[] findByUuid_PrevAndNext(
-		long workflowMetricsSLACalendarId, String uuid,
-		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
+			long workflowMetricsSLACalendarId, String uuid,
+			OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
 		throws NoSuchSLACalendarException {
+
 		uuid = Objects.toString(uuid, "");
 
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = findByPrimaryKey(workflowMetricsSLACalendarId);
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			findByPrimaryKey(workflowMetricsSLACalendarId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			WorkflowMetricsSLACalendar[] array = new WorkflowMetricsSLACalendarImpl[3];
+			WorkflowMetricsSLACalendar[] array =
+				new WorkflowMetricsSLACalendarImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session,
-					workflowMetricsSLACalendar, uuid, orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, workflowMetricsSLACalendar, uuid, orderByComparator,
+				true);
 
 			array[1] = workflowMetricsSLACalendar;
 
-			array[2] = getByUuid_PrevAndNext(session,
-					workflowMetricsSLACalendar, uuid, orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, workflowMetricsSLACalendar, uuid, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -421,11 +444,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		String uuid,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator,
 		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -446,7 +470,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -518,8 +543,10 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					workflowMetricsSLACalendar)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						workflowMetricsSLACalendar)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -541,8 +568,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : findByUuid(
-				uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(workflowMetricsSLACalendar);
 		}
 	}
@@ -559,7 +587,7 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 
 		FinderPath finderPath = _finderPathCountByUuid;
 
-		Object[] finderArgs = new Object[] { uuid };
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -611,8 +639,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "workflowMetricsSLACalendar.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(workflowMetricsSLACalendar.uuid IS NULL OR workflowMetricsSLACalendar.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"workflowMetricsSLACalendar.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(workflowMetricsSLACalendar.uuid IS NULL OR workflowMetricsSLACalendar.uuid = '')";
+
 	private FinderPath _finderPathFetchByUUID_G;
 	private FinderPath _finderPathCountByUUID_G;
 
@@ -627,8 +659,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar findByUUID_G(String uuid, long groupId)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByUUID_G(uuid,
-				groupId);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByUUID_G(
+			uuid, groupId);
 
 		if (workflowMetricsSLACalendar == null) {
 			StringBundler msg = new StringBundler(6);
@@ -674,24 +707,27 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the matching workflow metrics sla calendar, or <code>null</code> if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
+	public WorkflowMetricsSLACalendar fetchByUUID_G(
+		String uuid, long groupId, boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(_finderPathFetchByUUID_G,
-					finderArgs, this);
+			result = finderCache.getResult(
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof WorkflowMetricsSLACalendar) {
-			WorkflowMetricsSLACalendar workflowMetricsSLACalendar = (WorkflowMetricsSLACalendar)result;
+			WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+				(WorkflowMetricsSLACalendar)result;
 
 			if (!Objects.equals(uuid, workflowMetricsSLACalendar.getUuid()) ||
-					(groupId != workflowMetricsSLACalendar.getGroupId())) {
+				(groupId != workflowMetricsSLACalendar.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -734,11 +770,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				List<WorkflowMetricsSLACalendar> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(_finderPathFetchByUUID_G, finderArgs,
-						list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
-					WorkflowMetricsSLACalendar workflowMetricsSLACalendar = list.get(0);
+					WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+						list.get(0);
 
 					result = workflowMetricsSLACalendar;
 
@@ -773,8 +810,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar removeByUUID_G(String uuid, long groupId)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = findByUUID_G(uuid,
-				groupId);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = findByUUID_G(
+			uuid, groupId);
 
 		return remove(workflowMetricsSLACalendar);
 	}
@@ -792,7 +830,7 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 
 		FinderPath finderPath = _finderPathCountByUUID_G;
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -848,9 +886,15 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "workflowMetricsSLACalendar.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(workflowMetricsSLACalendar.uuid IS NULL OR workflowMetricsSLACalendar.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "workflowMetricsSLACalendar.groupId = ?";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"workflowMetricsSLACalendar.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(workflowMetricsSLACalendar.uuid IS NULL OR workflowMetricsSLACalendar.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"workflowMetricsSLACalendar.groupId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -863,10 +907,11 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid_C(String uuid,
-		long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public List<WorkflowMetricsSLACalendar> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -883,8 +928,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the range of matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid_C(String uuid,
-		long companyId, int start, int end) {
+	public List<WorkflowMetricsSLACalendar> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -903,10 +949,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the ordered range of matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid_C(String uuid,
-		long companyId, int start, int end,
+	public List<WorkflowMetricsSLACalendar> findByUuid_C(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -925,10 +973,11 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the ordered range of matching workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findByUuid_C(String uuid,
-		long companyId, int start, int end,
+	public List<WorkflowMetricsSLACalendar> findByUuid_C(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator,
 		boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -936,30 +985,33 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
 		List<WorkflowMetricsSLACalendar> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<WorkflowMetricsSLACalendar>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<WorkflowMetricsSLACalendar>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : list) {
+				for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+						list) {
+
 					if (!uuid.equals(workflowMetricsSLACalendar.getUuid()) ||
-							(companyId != workflowMetricsSLACalendar.getCompanyId())) {
+						(companyId !=
+							workflowMetricsSLACalendar.getCompanyId())) {
+
 						list = null;
 
 						break;
@@ -972,8 +1024,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -995,11 +1047,10 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(WorkflowMetricsSLACalendarModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1021,16 +1072,16 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1060,12 +1111,13 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @throws NoSuchSLACalendarException if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar findByUuid_C_First(String uuid,
-		long companyId,
-		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
+	public WorkflowMetricsSLACalendar findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByUuid_C_First(uuid,
-				companyId, orderByComparator);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (workflowMetricsSLACalendar != null) {
 			return workflowMetricsSLACalendar;
@@ -1095,11 +1147,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the first matching workflow metrics sla calendar, or <code>null</code> if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar fetchByUuid_C_First(String uuid,
-		long companyId,
+	public WorkflowMetricsSLACalendar fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
-		List<WorkflowMetricsSLACalendar> list = findByUuid_C(uuid, companyId,
-				0, 1, orderByComparator);
+
+		List<WorkflowMetricsSLACalendar> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1118,12 +1171,13 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @throws NoSuchSLACalendarException if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar findByUuid_C_Last(String uuid,
-		long companyId,
-		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
+	public WorkflowMetricsSLACalendar findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByUuid_C_Last(uuid,
-				companyId, orderByComparator);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (workflowMetricsSLACalendar != null) {
 			return workflowMetricsSLACalendar;
@@ -1153,17 +1207,18 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the last matching workflow metrics sla calendar, or <code>null</code> if a matching workflow metrics sla calendar could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar fetchByUuid_C_Last(String uuid,
-		long companyId,
+	public WorkflowMetricsSLACalendar fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<WorkflowMetricsSLACalendar> list = findByUuid_C(uuid, companyId,
-				count - 1, count, orderByComparator);
+		List<WorkflowMetricsSLACalendar> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1184,29 +1239,32 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public WorkflowMetricsSLACalendar[] findByUuid_C_PrevAndNext(
-		long workflowMetricsSLACalendarId, String uuid, long companyId,
-		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
+			long workflowMetricsSLACalendarId, String uuid, long companyId,
+			OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator)
 		throws NoSuchSLACalendarException {
+
 		uuid = Objects.toString(uuid, "");
 
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = findByPrimaryKey(workflowMetricsSLACalendarId);
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			findByPrimaryKey(workflowMetricsSLACalendarId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			WorkflowMetricsSLACalendar[] array = new WorkflowMetricsSLACalendarImpl[3];
+			WorkflowMetricsSLACalendar[] array =
+				new WorkflowMetricsSLACalendarImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session,
-					workflowMetricsSLACalendar, uuid, companyId,
-					orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, workflowMetricsSLACalendar, uuid, companyId,
+				orderByComparator, true);
 
 			array[1] = workflowMetricsSLACalendar;
 
-			array[2] = getByUuid_C_PrevAndNext(session,
-					workflowMetricsSLACalendar, uuid, companyId,
-					orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, workflowMetricsSLACalendar, uuid, companyId,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -1223,11 +1281,12 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator,
 		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1250,7 +1309,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1324,8 +1384,10 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					workflowMetricsSLACalendar)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						workflowMetricsSLACalendar)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1348,8 +1410,11 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : findByUuid_C(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(workflowMetricsSLACalendar);
 		}
 	}
@@ -1367,7 +1432,7 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 
 		FinderPath finderPath = _finderPathCountByUuid_C;
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1423,16 +1488,22 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "workflowMetricsSLACalendar.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(workflowMetricsSLACalendar.uuid IS NULL OR workflowMetricsSLACalendar.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "workflowMetricsSLACalendar.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"workflowMetricsSLACalendar.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(workflowMetricsSLACalendar.uuid IS NULL OR workflowMetricsSLACalendar.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"workflowMetricsSLACalendar.companyId = ?";
 
 	public WorkflowMetricsSLACalendarPersistenceImpl() {
 		setModelClass(WorkflowMetricsSLACalendar.class);
 
 		setModelImplClass(WorkflowMetricsSLACalendarImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED);
+		setEntityCacheEnabled(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1443,16 +1514,20 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public void cacheResult(
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
-		entityCache.putResult(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+
+		entityCache.putResult(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowMetricsSLACalendarImpl.class,
 			workflowMetricsSLACalendar.getPrimaryKey(),
 			workflowMetricsSLACalendar);
 
-		finderCache.putResult(_finderPathFetchByUUID_G,
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
 			new Object[] {
 				workflowMetricsSLACalendar.getUuid(),
 				workflowMetricsSLACalendar.getGroupId()
-			}, workflowMetricsSLACalendar);
+			},
+			workflowMetricsSLACalendar);
 
 		workflowMetricsSLACalendar.resetOriginalValues();
 	}
@@ -1465,11 +1540,15 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public void cacheResult(
 		List<WorkflowMetricsSLACalendar> workflowMetricsSLACalendars) {
-		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : workflowMetricsSLACalendars) {
+
+		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+				workflowMetricsSLACalendars) {
+
 			if (entityCache.getResult(
-						WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-						WorkflowMetricsSLACalendarImpl.class,
-						workflowMetricsSLACalendar.getPrimaryKey()) == null) {
+					WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+					WorkflowMetricsSLACalendarImpl.class,
+					workflowMetricsSLACalendar.getPrimaryKey()) == null) {
+
 				cacheResult(workflowMetricsSLACalendar);
 			}
 			else {
@@ -1504,65 +1583,78 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public void clearCache(
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
-		entityCache.removeResult(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+
+		entityCache.removeResult(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowMetricsSLACalendarImpl.class,
 			workflowMetricsSLACalendar.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((WorkflowMetricsSLACalendarModelImpl)workflowMetricsSLACalendar,
+		clearUniqueFindersCache(
+			(WorkflowMetricsSLACalendarModelImpl)workflowMetricsSLACalendar,
 			true);
 	}
 
 	@Override
 	public void clearCache(
 		List<WorkflowMetricsSLACalendar> workflowMetricsSLACalendars) {
+
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : workflowMetricsSLACalendars) {
-			entityCache.removeResult(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+				workflowMetricsSLACalendars) {
+
+			entityCache.removeResult(
+				WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
 				WorkflowMetricsSLACalendarImpl.class,
 				workflowMetricsSLACalendar.getPrimaryKey());
 
-			clearUniqueFindersCache((WorkflowMetricsSLACalendarModelImpl)workflowMetricsSLACalendar,
+			clearUniqueFindersCache(
+				(WorkflowMetricsSLACalendarModelImpl)workflowMetricsSLACalendar,
 				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		WorkflowMetricsSLACalendarModelImpl workflowMetricsSLACalendarModelImpl) {
-		Object[] args = new Object[] {
-				workflowMetricsSLACalendarModelImpl.getUuid(),
-				workflowMetricsSLACalendarModelImpl.getGroupId()
-			};
+		WorkflowMetricsSLACalendarModelImpl
+			workflowMetricsSLACalendarModelImpl) {
 
-		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1),
+		Object[] args = new Object[] {
+			workflowMetricsSLACalendarModelImpl.getUuid(),
+			workflowMetricsSLACalendarModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, workflowMetricsSLACalendarModelImpl,
 			false);
-		finderCache.putResult(_finderPathFetchByUUID_G, args,
-			workflowMetricsSLACalendarModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		WorkflowMetricsSLACalendarModelImpl workflowMetricsSLACalendarModelImpl,
 		boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					workflowMetricsSLACalendarModelImpl.getUuid(),
-					workflowMetricsSLACalendarModelImpl.getGroupId()
-				};
+				workflowMetricsSLACalendarModelImpl.getUuid(),
+				workflowMetricsSLACalendarModelImpl.getGroupId()
+			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((workflowMetricsSLACalendarModelImpl.getColumnBitmask() &
-				_finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					workflowMetricsSLACalendarModelImpl.getOriginalUuid(),
-					workflowMetricsSLACalendarModelImpl.getOriginalGroupId()
-				};
+				workflowMetricsSLACalendarModelImpl.getOriginalUuid(),
+				workflowMetricsSLACalendarModelImpl.getOriginalGroupId()
+			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
@@ -1576,8 +1668,11 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the new workflow metrics sla calendar
 	 */
 	@Override
-	public WorkflowMetricsSLACalendar create(long workflowMetricsSLACalendarId) {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = new WorkflowMetricsSLACalendarImpl();
+	public WorkflowMetricsSLACalendar create(
+		long workflowMetricsSLACalendarId) {
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			new WorkflowMetricsSLACalendarImpl();
 
 		workflowMetricsSLACalendar.setNew(true);
 		workflowMetricsSLACalendar.setPrimaryKey(workflowMetricsSLACalendarId);
@@ -1601,6 +1696,7 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar remove(long workflowMetricsSLACalendarId)
 		throws NoSuchSLACalendarException {
+
 		return remove((Serializable)workflowMetricsSLACalendarId);
 	}
 
@@ -1614,21 +1710,23 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar remove(Serializable primaryKey)
 		throws NoSuchSLACalendarException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			WorkflowMetricsSLACalendar workflowMetricsSLACalendar = (WorkflowMetricsSLACalendar)session.get(WorkflowMetricsSLACalendarImpl.class,
-					primaryKey);
+			WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+				(WorkflowMetricsSLACalendar)session.get(
+					WorkflowMetricsSLACalendarImpl.class, primaryKey);
 
 			if (workflowMetricsSLACalendar == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchSLACalendarException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchSLACalendarException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(workflowMetricsSLACalendar);
@@ -1647,13 +1745,16 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	protected WorkflowMetricsSLACalendar removeImpl(
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			if (!session.contains(workflowMetricsSLACalendar)) {
-				workflowMetricsSLACalendar = (WorkflowMetricsSLACalendar)session.get(WorkflowMetricsSLACalendarImpl.class,
+				workflowMetricsSLACalendar =
+					(WorkflowMetricsSLACalendar)session.get(
+						WorkflowMetricsSLACalendarImpl.class,
 						workflowMetricsSLACalendar.getPrimaryKeyObj());
 			}
 
@@ -1678,25 +1779,31 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar updateImpl(
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
+
 		boolean isNew = workflowMetricsSLACalendar.isNew();
 
-		if (!(workflowMetricsSLACalendar instanceof WorkflowMetricsSLACalendarModelImpl)) {
+		if (!(workflowMetricsSLACalendar instanceof
+				WorkflowMetricsSLACalendarModelImpl)) {
+
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(workflowMetricsSLACalendar.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(workflowMetricsSLACalendar);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					workflowMetricsSLACalendar);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in workflowMetricsSLACalendar proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom WorkflowMetricsSLACalendar implementation " +
-				workflowMetricsSLACalendar.getClass());
+					workflowMetricsSLACalendar.getClass());
 		}
 
-		WorkflowMetricsSLACalendarModelImpl workflowMetricsSLACalendarModelImpl = (WorkflowMetricsSLACalendarModelImpl)workflowMetricsSLACalendar;
+		WorkflowMetricsSLACalendarModelImpl
+			workflowMetricsSLACalendarModelImpl =
+				(WorkflowMetricsSLACalendarModelImpl)workflowMetricsSLACalendar;
 
 		if (Validator.isNull(workflowMetricsSLACalendar.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -1704,7 +1811,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			workflowMetricsSLACalendar.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -1713,8 +1821,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				workflowMetricsSLACalendar.setCreateDate(now);
 			}
 			else {
-				workflowMetricsSLACalendar.setCreateDate(serviceContext.getCreateDate(
-						now));
+				workflowMetricsSLACalendar.setCreateDate(
+					serviceContext.getCreateDate(now));
 			}
 		}
 
@@ -1723,8 +1831,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				workflowMetricsSLACalendar.setModifiedDate(now);
 			}
 			else {
-				workflowMetricsSLACalendar.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				workflowMetricsSLACalendar.setModifiedDate(
+					serviceContext.getModifiedDate(now));
 			}
 		}
 
@@ -1739,7 +1847,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				workflowMetricsSLACalendar.setNew(false);
 			}
 			else {
-				workflowMetricsSLACalendar = (WorkflowMetricsSLACalendar)session.merge(workflowMetricsSLACalendar);
+				workflowMetricsSLACalendar =
+					(WorkflowMetricsSLACalendar)session.merge(
+						workflowMetricsSLACalendar);
 			}
 		}
 		catch (Exception e) {
@@ -1754,73 +1864,76 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 		if (!WorkflowMetricsSLACalendarModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
+		else if (isNew) {
 			Object[] args = new Object[] {
+				workflowMetricsSLACalendarModelImpl.getUuid()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
+
+			args = new Object[] {
+				workflowMetricsSLACalendarModelImpl.getUuid(),
+				workflowMetricsSLACalendarModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((workflowMetricsSLACalendarModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					workflowMetricsSLACalendarModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {
 					workflowMetricsSLACalendarModelImpl.getUuid()
 				};
 
-			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
-				args);
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
 
-			args = new Object[] {
+			if ((workflowMetricsSLACalendarModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					workflowMetricsSLACalendarModelImpl.getOriginalUuid(),
+					workflowMetricsSLACalendarModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					workflowMetricsSLACalendarModelImpl.getUuid(),
 					workflowMetricsSLACalendarModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-				args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((workflowMetricsSLACalendarModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						workflowMetricsSLACalendarModelImpl.getOriginalUuid()
-					};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-
-				args = new Object[] {
-						workflowMetricsSLACalendarModelImpl.getUuid()
-					};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-			}
-
-			if ((workflowMetricsSLACalendarModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						workflowMetricsSLACalendarModelImpl.getOriginalUuid(),
-						workflowMetricsSLACalendarModelImpl.getOriginalCompanyId()
-					};
-
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-
-				args = new Object[] {
-						workflowMetricsSLACalendarModelImpl.getUuid(),
-						workflowMetricsSLACalendarModelImpl.getCompanyId()
-					};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 		}
 
-		entityCache.putResult(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowMetricsSLACalendarImpl.class,
 			workflowMetricsSLACalendar.getPrimaryKey(),
 			workflowMetricsSLACalendar, false);
@@ -1843,15 +1956,17 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchSLACalendarException {
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = fetchByPrimaryKey(primaryKey);
+
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			fetchByPrimaryKey(primaryKey);
 
 		if (workflowMetricsSLACalendar == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchSLACalendarException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchSLACalendarException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return workflowMetricsSLACalendar;
@@ -1866,7 +1981,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public WorkflowMetricsSLACalendar findByPrimaryKey(
-		long workflowMetricsSLACalendarId) throws NoSuchSLACalendarException {
+			long workflowMetricsSLACalendarId)
+		throws NoSuchSLACalendarException {
+
 		return findByPrimaryKey((Serializable)workflowMetricsSLACalendarId);
 	}
 
@@ -1879,6 +1996,7 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	@Override
 	public WorkflowMetricsSLACalendar fetchByPrimaryKey(
 		long workflowMetricsSLACalendarId) {
+
 		return fetchByPrimaryKey((Serializable)workflowMetricsSLACalendarId);
 	}
 
@@ -1921,8 +2039,10 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the ordered range of workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findAll(int start, int end,
+	public List<WorkflowMetricsSLACalendar> findAll(
+		int start, int end,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -1940,29 +2060,32 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * @return the ordered range of workflow metrics sla calendars
 	 */
 	@Override
-	public List<WorkflowMetricsSLACalendar> findAll(int start, int end,
+	public List<WorkflowMetricsSLACalendar> findAll(
+		int start, int end,
 		OrderByComparator<WorkflowMetricsSLACalendar> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<WorkflowMetricsSLACalendar> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<WorkflowMetricsSLACalendar>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<WorkflowMetricsSLACalendar>)finderCache.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1970,13 +2093,13 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_WORKFLOWMETRICSSLACALENDAR);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1984,7 +2107,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				sql = _SQL_SELECT_WORKFLOWMETRICSSLACALENDAR;
 
 				if (pagination) {
-					sql = sql.concat(WorkflowMetricsSLACalendarModelImpl.ORDER_BY_JPQL);
+					sql = sql.concat(
+						WorkflowMetricsSLACalendarModelImpl.ORDER_BY_JPQL);
 				}
 			}
 
@@ -1996,16 +2120,16 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<WorkflowMetricsSLACalendar>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2031,7 +2155,9 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public void removeAll() {
-		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar : findAll()) {
+		for (WorkflowMetricsSLACalendar workflowMetricsSLACalendar :
+				findAll()) {
+
 			remove(workflowMetricsSLACalendar);
 		}
 	}
@@ -2043,8 +2169,8 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2052,15 +2178,17 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_WORKFLOWMETRICSSLACALENDAR);
+				Query q = session.createQuery(
+					_SQL_COUNT_WORKFLOWMETRICSSLACALENDAR);
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2101,83 +2229,91 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 	 * Initializes the workflow metrics sla calendar persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countAll", new String[0]);
+		_finderPathCountAll = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-				new String[] {
-					String.class.getName(),
-					
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			WorkflowMetricsSLACalendarModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			WorkflowMetricsSLACalendarModelImpl.UUID_COLUMN_BITMASK |
+			WorkflowMetricsSLACalendarModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-				new String[] { String.class.getName() },
-				WorkflowMetricsSLACalendarModelImpl.UUID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			WorkflowMetricsSLACalendarModelImpl.UUID_COLUMN_BITMASK |
+			WorkflowMetricsSLACalendarModelImpl.COMPANYID_COLUMN_BITMASK);
 
-		_finderPathCountByUuid = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByUuid", new String[] { String.class.getName() });
-
-		_finderPathFetchByUUID_G = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByUUID_G",
-				new String[] { String.class.getName(), Long.class.getName() },
-				WorkflowMetricsSLACalendarModelImpl.UUID_COLUMN_BITMASK |
-				WorkflowMetricsSLACalendarModelImpl.GROUPID_COLUMN_BITMASK);
-
-		_finderPathCountByUUID_G = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByUUID_G",
-				new String[] { String.class.getName(), Long.class.getName() });
-
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-				new String[] {
-					String.class.getName(), Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() },
-				WorkflowMetricsSLACalendarModelImpl.UUID_COLUMN_BITMASK |
-				WorkflowMetricsSLACalendarModelImpl.COMPANYID_COLUMN_BITMASK);
-
-		_finderPathCountByUuid_C = new FinderPath(WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
-				WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() });
+		_finderPathCountByUuid_C = new FinderPath(
+			WorkflowMetricsSLACalendarModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLACalendarModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -2189,19 +2325,38 @@ public class WorkflowMetricsSLACalendarPersistenceImpl
 
 	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
+
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_WORKFLOWMETRICSSLACALENDAR = "SELECT workflowMetricsSLACalendar FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar";
-	private static final String _SQL_SELECT_WORKFLOWMETRICSSLACALENDAR_WHERE = "SELECT workflowMetricsSLACalendar FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar WHERE ";
-	private static final String _SQL_COUNT_WORKFLOWMETRICSSLACALENDAR = "SELECT COUNT(workflowMetricsSLACalendar) FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar";
-	private static final String _SQL_COUNT_WORKFLOWMETRICSSLACALENDAR_WHERE = "SELECT COUNT(workflowMetricsSLACalendar) FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar WHERE ";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "workflowMetricsSLACalendar.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WorkflowMetricsSLACalendar exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WorkflowMetricsSLACalendar exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(WorkflowMetricsSLACalendarPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _SQL_SELECT_WORKFLOWMETRICSSLACALENDAR =
+		"SELECT workflowMetricsSLACalendar FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar";
+
+	private static final String _SQL_SELECT_WORKFLOWMETRICSSLACALENDAR_WHERE =
+		"SELECT workflowMetricsSLACalendar FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar WHERE ";
+
+	private static final String _SQL_COUNT_WORKFLOWMETRICSSLACALENDAR =
+		"SELECT COUNT(workflowMetricsSLACalendar) FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar";
+
+	private static final String _SQL_COUNT_WORKFLOWMETRICSSLACALENDAR_WHERE =
+		"SELECT COUNT(workflowMetricsSLACalendar) FROM WorkflowMetricsSLACalendar workflowMetricsSLACalendar WHERE ";
+
+	private static final String _ORDER_BY_ENTITY_ALIAS =
+		"workflowMetricsSLACalendar.";
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No WorkflowMetricsSLACalendar exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No WorkflowMetricsSLACalendar exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowMetricsSLACalendarPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

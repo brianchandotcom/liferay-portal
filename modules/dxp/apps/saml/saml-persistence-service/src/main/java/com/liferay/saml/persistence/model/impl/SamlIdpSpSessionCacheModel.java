@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
-	Externalizable {
+public class SamlIdpSpSessionCacheModel
+	implements CacheModel<SamlIdpSpSession>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +48,12 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 			return false;
 		}
 
-		SamlIdpSpSessionCacheModel samlIdpSpSessionCacheModel = (SamlIdpSpSessionCacheModel)obj;
+		SamlIdpSpSessionCacheModel samlIdpSpSessionCacheModel =
+			(SamlIdpSpSessionCacheModel)obj;
 
-		if (samlIdpSpSessionId == samlIdpSpSessionCacheModel.samlIdpSpSessionId) {
+		if (samlIdpSpSessionId ==
+				samlIdpSpSessionCacheModel.samlIdpSpSessionId) {
+
 			return true;
 		}
 
@@ -167,8 +169,7 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(samlIdpSpSessionId);
 
 		objectOutput.writeLong(companyId);
@@ -219,4 +220,5 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 	public String samlSpEntityId;
 	public String nameIdFormat;
 	public String nameIdValue;
+
 }

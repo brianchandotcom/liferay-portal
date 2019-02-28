@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 
 import java.io.Serializable;
@@ -50,10 +49,13 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface SamlIdpSsoSessionLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,53 +63,54 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the saml idp sso session to the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSession the saml idp sso session
-	* @return the saml idp sso session that was added
-	*/
+	 * Adds the saml idp sso session to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param samlIdpSsoSession the saml idp sso session
+	 * @return the saml idp sso session that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlIdpSsoSession addSamlIdpSsoSession(
 		SamlIdpSsoSession samlIdpSsoSession);
 
-	public SamlIdpSsoSession addSamlIdpSsoSession(String samlIdpSsoSessionKey,
-		ServiceContext serviceContext) throws PortalException;
+	public SamlIdpSsoSession addSamlIdpSsoSession(
+			String samlIdpSsoSessionKey, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
-	* Creates a new saml idp sso session with the primary key. Does not add the saml idp sso session to the database.
-	*
-	* @param samlIdpSsoSessionId the primary key for the new saml idp sso session
-	* @return the new saml idp sso session
-	*/
+	 * Creates a new saml idp sso session with the primary key. Does not add the saml idp sso session to the database.
+	 *
+	 * @param samlIdpSsoSessionId the primary key for the new saml idp sso session
+	 * @return the new saml idp sso session
+	 */
 	@Transactional(enabled = false)
 	public SamlIdpSsoSession createSamlIdpSsoSession(long samlIdpSsoSessionId);
 
 	public void deleteExpiredSamlIdpSsoSessions();
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	* Deletes the saml idp sso session with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSessionId the primary key of the saml idp sso session
-	* @return the saml idp sso session that was removed
-	* @throws PortalException if a saml idp sso session with the primary key could not be found
-	*/
+	 * Deletes the saml idp sso session with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param samlIdpSsoSessionId the primary key of the saml idp sso session
+	 * @return the saml idp sso session that was removed
+	 * @throws PortalException if a saml idp sso session with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public SamlIdpSsoSession deleteSamlIdpSsoSession(long samlIdpSsoSessionId)
 		throws PortalException;
 
 	/**
-	* Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSession the saml idp sso session
-	* @return the saml idp sso session that was removed
-	*/
+	 * Deletes the saml idp sso session from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param samlIdpSsoSession the saml idp sso session
+	 * @return the saml idp sso session that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public SamlIdpSsoSession deleteSamlIdpSsoSession(
 		SamlIdpSsoSession samlIdpSsoSession);
@@ -116,66 +119,67 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlIdpSsoSession fetchSamlIdpSso(String samlIdpSsoSessionKey);
@@ -190,10 +194,10 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -206,35 +210,35 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the saml idp sso session with the primary key.
-	*
-	* @param samlIdpSsoSessionId the primary key of the saml idp sso session
-	* @return the saml idp sso session
-	* @throws PortalException if a saml idp sso session with the primary key could not be found
-	*/
+	 * Returns the saml idp sso session with the primary key.
+	 *
+	 * @param samlIdpSsoSessionId the primary key of the saml idp sso session
+	 * @return the saml idp sso session
+	 * @throws PortalException if a saml idp sso session with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SamlIdpSsoSession getSamlIdpSsoSession(long samlIdpSsoSessionId)
 		throws PortalException;
 
 	/**
-	* Returns a range of all the saml idp sso sessions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of saml idp sso sessions
-	* @param end the upper bound of the range of saml idp sso sessions (not inclusive)
-	* @return the range of saml idp sso sessions
-	*/
+	 * Returns a range of all the saml idp sso sessions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of saml idp sso sessions
+	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
+	 * @return the range of saml idp sso sessions
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SamlIdpSsoSession> getSamlIdpSsoSessions(int start, int end);
 
 	/**
-	* Returns the number of saml idp sso sessions.
-	*
-	* @return the number of saml idp sso sessions
-	*/
+	 * Returns the number of saml idp sso sessions.
+	 *
+	 * @return the number of saml idp sso sessions
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSamlIdpSsoSessionsCount();
 
@@ -242,12 +246,13 @@ public interface SamlIdpSsoSessionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the saml idp sso session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param samlIdpSsoSession the saml idp sso session
-	* @return the saml idp sso session that was updated
-	*/
+	 * Updates the saml idp sso session in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param samlIdpSsoSession the saml idp sso session
+	 * @return the saml idp sso session that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SamlIdpSsoSession updateSamlIdpSsoSession(
 		SamlIdpSsoSession samlIdpSsoSession);
+
 }

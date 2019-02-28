@@ -35,6 +35,7 @@ import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLoca
 public abstract class SharepointOAuth2TokenEntryBaseImpl
 	extends SharepointOAuth2TokenEntryModelImpl
 	implements SharepointOAuth2TokenEntry {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,13 @@ public abstract class SharepointOAuth2TokenEntryBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			SharepointOAuth2TokenEntryLocalServiceUtil.addSharepointOAuth2TokenEntry(this);
+			SharepointOAuth2TokenEntryLocalServiceUtil.
+				addSharepointOAuth2TokenEntry(this);
 		}
 		else {
-			SharepointOAuth2TokenEntryLocalServiceUtil.updateSharepointOAuth2TokenEntry(this);
+			SharepointOAuth2TokenEntryLocalServiceUtil.
+				updateSharepointOAuth2TokenEntry(this);
 		}
 	}
+
 }

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
@@ -36,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
-	Externalizable {
+public class KaleoProcessCacheModel
+	implements CacheModel<KaleoProcess>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -48,7 +48,8 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 			return false;
 		}
 
-		KaleoProcessCacheModel kaleoProcessCacheModel = (KaleoProcessCacheModel)obj;
+		KaleoProcessCacheModel kaleoProcessCacheModel =
+			(KaleoProcessCacheModel)obj;
 
 		if (kaleoProcessId == kaleoProcessCacheModel.kaleoProcessId) {
 			return true;
@@ -142,7 +143,8 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 			kaleoProcessImpl.setWorkflowDefinitionName(workflowDefinitionName);
 		}
 
-		kaleoProcessImpl.setWorkflowDefinitionVersion(workflowDefinitionVersion);
+		kaleoProcessImpl.setWorkflowDefinitionVersion(
+			workflowDefinitionVersion);
 
 		kaleoProcessImpl.resetOriginalValues();
 
@@ -173,8 +175,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -226,4 +227,5 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	public long DDMTemplateId;
 	public String workflowDefinitionName;
 	public int workflowDefinitionVersion;
+
 }

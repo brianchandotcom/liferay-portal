@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -33,21 +32,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-
 import com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil;
 import com.liferay.saml.persistence.service.persistence.SamlSpAuthRequestPersistence;
 import com.liferay.saml.persistence.service.persistence.SamlSpAuthRequestUtil;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -59,17 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class SamlSpAuthRequestPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
-				"com.liferay.saml.persistence.service"));
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.saml.persistence.service"));
 
 	@Before
 	public void setUp() {
@@ -108,7 +107,9 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		_persistence.remove(newSamlSpAuthRequest);
 
-		SamlSpAuthRequest existingSamlSpAuthRequest = _persistence.fetchByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
+		SamlSpAuthRequest existingSamlSpAuthRequest =
+			_persistence.fetchByPrimaryKey(
+				newSamlSpAuthRequest.getPrimaryKey());
 
 		Assert.assertNull(existingSamlSpAuthRequest);
 	}
@@ -130,22 +131,28 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		newSamlSpAuthRequest.setSamlIdpEntityId(RandomTestUtil.randomString());
 
-		newSamlSpAuthRequest.setSamlSpAuthRequestKey(RandomTestUtil.randomString());
+		newSamlSpAuthRequest.setSamlSpAuthRequestKey(
+			RandomTestUtil.randomString());
 
 		_samlSpAuthRequests.add(_persistence.update(newSamlSpAuthRequest));
 
-		SamlSpAuthRequest existingSamlSpAuthRequest = _persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
+		SamlSpAuthRequest existingSamlSpAuthRequest =
+			_persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
 
-		Assert.assertEquals(existingSamlSpAuthRequest.getSamlSpAuthnRequestId(),
+		Assert.assertEquals(
+			existingSamlSpAuthRequest.getSamlSpAuthnRequestId(),
 			newSamlSpAuthRequest.getSamlSpAuthnRequestId());
-		Assert.assertEquals(existingSamlSpAuthRequest.getCompanyId(),
+		Assert.assertEquals(
+			existingSamlSpAuthRequest.getCompanyId(),
 			newSamlSpAuthRequest.getCompanyId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSamlSpAuthRequest.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSamlSpAuthRequest.getCreateDate()),
 			Time.getShortTimestamp(newSamlSpAuthRequest.getCreateDate()));
-		Assert.assertEquals(existingSamlSpAuthRequest.getSamlIdpEntityId(),
+		Assert.assertEquals(
+			existingSamlSpAuthRequest.getSamlIdpEntityId(),
 			newSamlSpAuthRequest.getSamlIdpEntityId());
-		Assert.assertEquals(existingSamlSpAuthRequest.getSamlSpAuthRequestKey(),
+		Assert.assertEquals(
+			existingSamlSpAuthRequest.getSamlSpAuthRequestKey(),
 			newSamlSpAuthRequest.getSamlSpAuthRequestKey());
 	}
 
@@ -169,7 +176,8 @@ public class SamlSpAuthRequestPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SamlSpAuthRequest newSamlSpAuthRequest = addSamlSpAuthRequest();
 
-		SamlSpAuthRequest existingSamlSpAuthRequest = _persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
+		SamlSpAuthRequest existingSamlSpAuthRequest =
+			_persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
 
 		Assert.assertEquals(existingSamlSpAuthRequest, newSamlSpAuthRequest);
 	}
@@ -183,21 +191,24 @@ public class SamlSpAuthRequestPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SamlSpAuthRequest> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SamlSpAuthRequest",
-			"samlSpAuthnRequestId", true, "companyId", true, "createDate",
-			true, "samlIdpEntityId", true, "samlSpAuthRequestKey", true);
+		return OrderByComparatorFactoryUtil.create(
+			"SamlSpAuthRequest", "samlSpAuthnRequestId", true, "companyId",
+			true, "createDate", true, "samlIdpEntityId", true,
+			"samlSpAuthRequestKey", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SamlSpAuthRequest newSamlSpAuthRequest = addSamlSpAuthRequest();
 
-		SamlSpAuthRequest existingSamlSpAuthRequest = _persistence.fetchByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
+		SamlSpAuthRequest existingSamlSpAuthRequest =
+			_persistence.fetchByPrimaryKey(
+				newSamlSpAuthRequest.getPrimaryKey());
 
 		Assert.assertEquals(existingSamlSpAuthRequest, newSamlSpAuthRequest);
 	}
@@ -206,7 +217,8 @@ public class SamlSpAuthRequestPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		SamlSpAuthRequest missingSamlSpAuthRequest = _persistence.fetchByPrimaryKey(pk);
+		SamlSpAuthRequest missingSamlSpAuthRequest =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingSamlSpAuthRequest);
 	}
@@ -214,6 +226,7 @@ public class SamlSpAuthRequestPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		SamlSpAuthRequest newSamlSpAuthRequest1 = addSamlSpAuthRequest();
 		SamlSpAuthRequest newSamlSpAuthRequest2 = addSamlSpAuthRequest();
 
@@ -222,18 +235,22 @@ public class SamlSpAuthRequestPersistenceTest {
 		primaryKeys.add(newSamlSpAuthRequest1.getPrimaryKey());
 		primaryKeys.add(newSamlSpAuthRequest2.getPrimaryKey());
 
-		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, samlSpAuthRequests.size());
-		Assert.assertEquals(newSamlSpAuthRequest1,
+		Assert.assertEquals(
+			newSamlSpAuthRequest1,
 			samlSpAuthRequests.get(newSamlSpAuthRequest1.getPrimaryKey()));
-		Assert.assertEquals(newSamlSpAuthRequest2,
+		Assert.assertEquals(
+			newSamlSpAuthRequest2,
 			samlSpAuthRequests.get(newSamlSpAuthRequest2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -243,7 +260,8 @@ public class SamlSpAuthRequestPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(samlSpAuthRequests.isEmpty());
 	}
@@ -251,6 +269,7 @@ public class SamlSpAuthRequestPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		SamlSpAuthRequest newSamlSpAuthRequest = addSamlSpAuthRequest();
 
 		long pk = RandomTestUtil.nextLong();
@@ -260,36 +279,39 @@ public class SamlSpAuthRequestPersistenceTest {
 		primaryKeys.add(newSamlSpAuthRequest.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, samlSpAuthRequests.size());
-		Assert.assertEquals(newSamlSpAuthRequest,
+		Assert.assertEquals(
+			newSamlSpAuthRequest,
 			samlSpAuthRequests.get(newSamlSpAuthRequest.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(samlSpAuthRequests.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		SamlSpAuthRequest newSamlSpAuthRequest = addSamlSpAuthRequest();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSamlSpAuthRequest.getPrimaryKey());
 
-		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SamlSpAuthRequest> samlSpAuthRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, samlSpAuthRequests.size());
-		Assert.assertEquals(newSamlSpAuthRequest,
+		Assert.assertEquals(
+			newSamlSpAuthRequest,
 			samlSpAuthRequests.get(newSamlSpAuthRequest.getPrimaryKey()));
 	}
 
@@ -297,15 +319,20 @@ public class SamlSpAuthRequestPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = SamlSpAuthRequestLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			SamlSpAuthRequestLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SamlSpAuthRequest>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<SamlSpAuthRequest>() {
+
 				@Override
 				public void performAction(SamlSpAuthRequest samlSpAuthRequest) {
 					Assert.assertNotNull(samlSpAuthRequest);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -314,17 +341,19 @@ public class SamlSpAuthRequestPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		SamlSpAuthRequest newSamlSpAuthRequest = addSamlSpAuthRequest();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpAuthRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpAuthRequest.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("samlSpAuthnRequestId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpAuthnRequestId",
 				newSamlSpAuthRequest.getSamlSpAuthnRequestId()));
 
-		List<SamlSpAuthRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SamlSpAuthRequest> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -335,32 +364,36 @@ public class SamlSpAuthRequestPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpAuthRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpAuthRequest.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("samlSpAuthnRequestId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpAuthnRequestId", RandomTestUtil.nextLong()));
 
-		List<SamlSpAuthRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SamlSpAuthRequest> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		SamlSpAuthRequest newSamlSpAuthRequest = addSamlSpAuthRequest();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpAuthRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpAuthRequest.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"samlSpAuthnRequestId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("samlSpAuthnRequestId"));
 
-		Object newSamlSpAuthnRequestId = newSamlSpAuthRequest.getSamlSpAuthnRequestId();
+		Object newSamlSpAuthnRequestId =
+			newSamlSpAuthRequest.getSamlSpAuthnRequestId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("samlSpAuthnRequestId",
-				new Object[] { newSamlSpAuthnRequestId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"samlSpAuthnRequestId",
+				new Object[] {newSamlSpAuthnRequestId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -368,20 +401,22 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		Object existingSamlSpAuthnRequestId = result.get(0);
 
-		Assert.assertEquals(existingSamlSpAuthnRequestId,
-			newSamlSpAuthnRequestId);
+		Assert.assertEquals(
+			existingSamlSpAuthnRequestId, newSamlSpAuthnRequestId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SamlSpAuthRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpAuthRequest.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"samlSpAuthnRequestId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("samlSpAuthnRequestId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("samlSpAuthnRequestId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"samlSpAuthnRequestId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -394,20 +429,24 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		_persistence.clearCache();
 
-		SamlSpAuthRequest existingSamlSpAuthRequest = _persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
+		SamlSpAuthRequest existingSamlSpAuthRequest =
+			_persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingSamlSpAuthRequest.getSamlIdpEntityId(),
-				ReflectionTestUtil.invoke(existingSamlSpAuthRequest,
-					"getOriginalSamlIdpEntityId", new Class<?>[0])));
-		Assert.assertTrue(Objects.equals(
+				ReflectionTestUtil.invoke(
+					existingSamlSpAuthRequest, "getOriginalSamlIdpEntityId",
+					new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
 				existingSamlSpAuthRequest.getSamlSpAuthRequestKey(),
-				ReflectionTestUtil.invoke(existingSamlSpAuthRequest,
+				ReflectionTestUtil.invoke(
+					existingSamlSpAuthRequest,
 					"getOriginalSamlSpAuthRequestKey", new Class<?>[0])));
 	}
 
-	protected SamlSpAuthRequest addSamlSpAuthRequest()
-		throws Exception {
+	protected SamlSpAuthRequest addSamlSpAuthRequest() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		SamlSpAuthRequest samlSpAuthRequest = _persistence.create(pk);
@@ -418,14 +457,17 @@ public class SamlSpAuthRequestPersistenceTest {
 
 		samlSpAuthRequest.setSamlIdpEntityId(RandomTestUtil.randomString());
 
-		samlSpAuthRequest.setSamlSpAuthRequestKey(RandomTestUtil.randomString());
+		samlSpAuthRequest.setSamlSpAuthRequestKey(
+			RandomTestUtil.randomString());
 
 		_samlSpAuthRequests.add(_persistence.update(samlSpAuthRequest));
 
 		return samlSpAuthRequest;
 	}
 
-	private List<SamlSpAuthRequest> _samlSpAuthRequests = new ArrayList<SamlSpAuthRequest>();
+	private List<SamlSpAuthRequest> _samlSpAuthRequests =
+		new ArrayList<SamlSpAuthRequest>();
 	private SamlSpAuthRequestPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

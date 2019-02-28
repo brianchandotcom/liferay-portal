@@ -34,8 +34,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlSpAuthRequestModel extends BaseModel<SamlSpAuthRequest>,
-	ShardedModel {
+public interface SamlSpAuthRequestModel
+	extends BaseModel<SamlSpAuthRequest>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -129,4 +130,5 @@ public interface SamlSpAuthRequestModel extends BaseModel<SamlSpAuthRequest>,
 	 * @param samlSpAuthRequestKey the saml sp auth request key of this saml sp auth request
 	 */
 	public void setSamlSpAuthRequestKey(String samlSpAuthRequestKey);
+
 }

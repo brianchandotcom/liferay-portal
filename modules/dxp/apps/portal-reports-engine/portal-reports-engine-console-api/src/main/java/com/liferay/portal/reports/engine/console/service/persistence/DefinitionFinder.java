@@ -22,20 +22,31 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface DefinitionFinder {
-	public int countByG_S_N_D_RN(long groupId, String name, String description,
-		long sourceId, String reportName, boolean andOperator);
 
-	public int filterCountByG_S_N_D_RN(long groupId, String name,
-		String description, long sourceId, String reportName,
-		boolean andOperator);
-
-	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> filterFindByG_S_N_D_RN(
+	public int countByG_S_N_D_RN(
 		long groupId, String name, String description, long sourceId,
-		String reportName, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Definition> orderByComparator);
+		String reportName, boolean andOperator);
 
-	public java.util.List<com.liferay.portal.reports.engine.console.model.Definition> findByG_S_N_D_RN(
+	public int filterCountByG_S_N_D_RN(
 		long groupId, String name, String description, long sourceId,
-		String reportName, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.reports.engine.console.model.Definition> orderByComparator);
+		String reportName, boolean andOperator);
+
+	public java.util.List
+		<com.liferay.portal.reports.engine.console.model.Definition>
+			filterFindByG_S_N_D_RN(
+				long groupId, String name, String description, long sourceId,
+				String reportName, boolean andOperator, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.reports.engine.console.model.Definition>
+						orderByComparator);
+
+	public java.util.List
+		<com.liferay.portal.reports.engine.console.model.Definition>
+			findByG_S_N_D_RN(
+				long groupId, String name, String description, long sourceId,
+				String reportName, boolean andOperator, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.reports.engine.console.model.Definition>
+						orderByComparator);
+
 }

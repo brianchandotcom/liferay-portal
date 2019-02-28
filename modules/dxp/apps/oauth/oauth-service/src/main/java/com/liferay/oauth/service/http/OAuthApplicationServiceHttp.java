@@ -17,7 +17,6 @@ package com.liferay.oauth.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.service.OAuthApplicationServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -54,19 +53,22 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class OAuthApplicationServiceHttp {
-	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
-		HttpPrincipal httpPrincipal, String name, String description,
-		int accessLevel, boolean shareableAccessToken, String callbackURI,
-		String websiteURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthApplicationServiceUtil.class,
-					"addOAuthApplication", _addOAuthApplicationParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					description, accessLevel, shareableAccessToken,
-					callbackURI, websiteURL, serviceContext);
+	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
+			HttpPrincipal httpPrincipal, String name, String description,
+			int accessLevel, boolean shareableAccessToken, String callbackURI,
+			String websiteURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthApplicationServiceUtil.class, "addOAuthApplication",
+				_addOAuthApplicationParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, name, description, accessLevel, shareableAccessToken,
+				callbackURI, websiteURL, serviceContext);
 
 			Object returnObj = null;
 
@@ -74,11 +76,15 @@ public class OAuthApplicationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.oauth.model.OAuthApplication)returnObj;
@@ -90,25 +96,31 @@ public class OAuthApplicationServiceHttp {
 		}
 	}
 
-	public static void deleteLogo(HttpPrincipal httpPrincipal,
-		long oAuthApplicationId)
+	public static void deleteLogo(
+			HttpPrincipal httpPrincipal, long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthApplicationServiceUtil.class,
-					"deleteLogo", _deleteLogoParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					oAuthApplicationId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthApplicationServiceUtil.class, "deleteLogo",
+				_deleteLogoParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, oAuthApplicationId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -118,16 +130,18 @@ public class OAuthApplicationServiceHttp {
 		}
 	}
 
-	public static com.liferay.oauth.model.OAuthApplication deleteOAuthApplication(
-		HttpPrincipal httpPrincipal, long oAuthApplicationId)
+	public static com.liferay.oauth.model.OAuthApplication
+			deleteOAuthApplication(
+				HttpPrincipal httpPrincipal, long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthApplicationServiceUtil.class,
-					"deleteOAuthApplication",
-					_deleteOAuthApplicationParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					oAuthApplicationId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthApplicationServiceUtil.class, "deleteOAuthApplication",
+				_deleteOAuthApplicationParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, oAuthApplicationId);
 
 			Object returnObj = null;
 
@@ -135,11 +149,15 @@ public class OAuthApplicationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.oauth.model.OAuthApplication)returnObj;
@@ -152,15 +170,17 @@ public class OAuthApplicationServiceHttp {
 	}
 
 	public static com.liferay.oauth.model.OAuthApplication updateLogo(
-		HttpPrincipal httpPrincipal, long oAuthApplicationId,
-		java.io.InputStream inputStream)
+			HttpPrincipal httpPrincipal, long oAuthApplicationId,
+			java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthApplicationServiceUtil.class,
-					"updateLogo", _updateLogoParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					oAuthApplicationId, inputStream);
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthApplicationServiceUtil.class, "updateLogo",
+				_updateLogoParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, oAuthApplicationId, inputStream);
 
 			Object returnObj = null;
 
@@ -168,11 +188,15 @@ public class OAuthApplicationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.oauth.model.OAuthApplication)returnObj;
@@ -184,21 +208,22 @@ public class OAuthApplicationServiceHttp {
 		}
 	}
 
-	public static com.liferay.oauth.model.OAuthApplication updateOAuthApplication(
-		HttpPrincipal httpPrincipal, long oAuthApplicationId, String name,
-		String description, boolean shareableAccessToken, String callbackURI,
-		String websiteURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.oauth.model.OAuthApplication
+			updateOAuthApplication(
+				HttpPrincipal httpPrincipal, long oAuthApplicationId,
+				String name, String description, boolean shareableAccessToken,
+				String callbackURI, String websiteURL,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthApplicationServiceUtil.class,
-					"updateOAuthApplication",
-					_updateOAuthApplicationParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					oAuthApplicationId, name, description,
-					shareableAccessToken, callbackURI, websiteURL,
-					serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthApplicationServiceUtil.class, "updateOAuthApplication",
+				_updateOAuthApplicationParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, oAuthApplicationId, name, description,
+				shareableAccessToken, callbackURI, websiteURL, serviceContext);
 
 			Object returnObj = null;
 
@@ -206,11 +231,15 @@ public class OAuthApplicationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.oauth.model.OAuthApplication)returnObj;
@@ -222,22 +251,26 @@ public class OAuthApplicationServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OAuthApplicationServiceHttp.class);
-	private static final Class<?>[] _addOAuthApplicationParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		OAuthApplicationServiceHttp.class);
+
+	private static final Class<?>[] _addOAuthApplicationParameterTypes0 =
+		new Class[] {
 			String.class, String.class, int.class, boolean.class, String.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLogoParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _deleteOAuthApplicationParameterTypes2 = new Class[] {
-			long.class
-		};
+		long.class
+	};
+	private static final Class<?>[] _deleteOAuthApplicationParameterTypes2 =
+		new Class[] {long.class};
 	private static final Class<?>[] _updateLogoParameterTypes3 = new Class[] {
-			long.class, java.io.InputStream.class
-		};
-	private static final Class<?>[] _updateOAuthApplicationParameterTypes4 = new Class[] {
+		long.class, java.io.InputStream.class
+	};
+	private static final Class<?>[] _updateOAuthApplicationParameterTypes4 =
+		new Class[] {
 			long.class, String.class, String.class, boolean.class, String.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
+
 }

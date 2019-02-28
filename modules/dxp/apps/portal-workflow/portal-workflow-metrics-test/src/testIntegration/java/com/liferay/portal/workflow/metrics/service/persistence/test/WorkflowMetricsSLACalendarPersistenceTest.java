@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,15 +38,6 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLoc
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLACalendarPersistence;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLACalendarUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,16 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class WorkflowMetricsSLACalendarPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
 				"com.liferay.portal.workflow.metrics.service"));
 
 	@Before
@@ -81,7 +82,8 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<WorkflowMetricsSLACalendar> iterator = _workflowMetricsSLACalendars.iterator();
+		Iterator<WorkflowMetricsSLACalendar> iterator =
+			_workflowMetricsSLACalendars.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -94,7 +96,8 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = _persistence.create(pk);
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			_persistence.create(pk);
 
 		Assert.assertNotNull(workflowMetricsSLACalendar);
 
@@ -103,11 +106,14 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
 		_persistence.remove(newWorkflowMetricsSLACalendar);
 
-		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar = _persistence.fetchByPrimaryKey(newWorkflowMetricsSLACalendar.getPrimaryKey());
+		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar =
+			_persistence.fetchByPrimaryKey(
+				newWorkflowMetricsSLACalendar.getPrimaryKey());
 
 		Assert.assertNull(existingWorkflowMetricsSLACalendar);
 	}
@@ -121,7 +127,8 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = _persistence.create(pk);
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			_persistence.create(pk);
 
 		newWorkflowMetricsSLACalendar.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -133,36 +140,50 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 		newWorkflowMetricsSLACalendar.setUserId(RandomTestUtil.nextLong());
 
-		newWorkflowMetricsSLACalendar.setUserName(RandomTestUtil.randomString());
+		newWorkflowMetricsSLACalendar.setUserName(
+			RandomTestUtil.randomString());
 
 		newWorkflowMetricsSLACalendar.setCreateDate(RandomTestUtil.nextDate());
 
-		newWorkflowMetricsSLACalendar.setModifiedDate(RandomTestUtil.nextDate());
+		newWorkflowMetricsSLACalendar.setModifiedDate(
+			RandomTestUtil.nextDate());
 
-		_workflowMetricsSLACalendars.add(_persistence.update(
-				newWorkflowMetricsSLACalendar));
+		_workflowMetricsSLACalendars.add(
+			_persistence.update(newWorkflowMetricsSLACalendar));
 
-		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar = _persistence.findByPrimaryKey(newWorkflowMetricsSLACalendar.getPrimaryKey());
+		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar =
+			_persistence.findByPrimaryKey(
+				newWorkflowMetricsSLACalendar.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getMvccVersion(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.getMvccVersion(),
 			newWorkflowMetricsSLACalendar.getMvccVersion());
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getUuid(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.getUuid(),
 			newWorkflowMetricsSLACalendar.getUuid());
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getWorkflowMetricsSLACalendarId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.
+				getWorkflowMetricsSLACalendarId(),
 			newWorkflowMetricsSLACalendar.getWorkflowMetricsSLACalendarId());
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getGroupId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.getGroupId(),
 			newWorkflowMetricsSLACalendar.getGroupId());
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getCompanyId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.getCompanyId(),
 			newWorkflowMetricsSLACalendar.getCompanyId());
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getUserId(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.getUserId(),
 			newWorkflowMetricsSLACalendar.getUserId());
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar.getUserName(),
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar.getUserName(),
 			newWorkflowMetricsSLACalendar.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingWorkflowMetricsSLACalendar.getCreateDate()),
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLACalendar.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingWorkflowMetricsSLACalendar.getModifiedDate()),
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLACalendar.getModifiedDate()));
@@ -197,12 +218,15 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
-		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar = _persistence.findByPrimaryKey(newWorkflowMetricsSLACalendar.getPrimaryKey());
+		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar =
+			_persistence.findByPrimaryKey(
+				newWorkflowMetricsSLACalendar.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar,
-			newWorkflowMetricsSLACalendar);
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar, newWorkflowMetricsSLACalendar);
 	}
 
 	@Test(expected = NoSuchSLACalendarException.class)
@@ -214,32 +238,39 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
-	protected OrderByComparator<WorkflowMetricsSLACalendar> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("WorkflowMetricsSLACalendar",
-			"mvccVersion", true, "uuid", true, "workflowMetricsSLACalendarId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true);
+	protected OrderByComparator<WorkflowMetricsSLACalendar>
+		getOrderByComparator() {
+
+		return OrderByComparatorFactoryUtil.create(
+			"WorkflowMetricsSLACalendar", "mvccVersion", true, "uuid", true,
+			"workflowMetricsSLACalendarId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
-		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar = _persistence.fetchByPrimaryKey(newWorkflowMetricsSLACalendar.getPrimaryKey());
+		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar =
+			_persistence.fetchByPrimaryKey(
+				newWorkflowMetricsSLACalendar.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar,
-			newWorkflowMetricsSLACalendar);
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar, newWorkflowMetricsSLACalendar);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLACalendar missingWorkflowMetricsSLACalendar = _persistence.fetchByPrimaryKey(pk);
+		WorkflowMetricsSLACalendar missingWorkflowMetricsSLACalendar =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingWorkflowMetricsSLACalendar);
 	}
@@ -247,22 +278,28 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar1 = addWorkflowMetricsSLACalendar();
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar2 = addWorkflowMetricsSLACalendar();
+
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar1 =
+			addWorkflowMetricsSLACalendar();
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar2 =
+			addWorkflowMetricsSLACalendar();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newWorkflowMetricsSLACalendar1.getPrimaryKey());
 		primaryKeys.add(newWorkflowMetricsSLACalendar2.getPrimaryKey());
 
-		Map<Serializable, WorkflowMetricsSLACalendar> workflowMetricsSLACalendars =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLACalendar>
+			workflowMetricsSLACalendars = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(2, workflowMetricsSLACalendars.size());
-		Assert.assertEquals(newWorkflowMetricsSLACalendar1,
+		Assert.assertEquals(
+			newWorkflowMetricsSLACalendar1,
 			workflowMetricsSLACalendars.get(
 				newWorkflowMetricsSLACalendar1.getPrimaryKey()));
-		Assert.assertEquals(newWorkflowMetricsSLACalendar2,
+		Assert.assertEquals(
+			newWorkflowMetricsSLACalendar2,
 			workflowMetricsSLACalendars.get(
 				newWorkflowMetricsSLACalendar2.getPrimaryKey()));
 	}
@@ -270,6 +307,7 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -279,8 +317,9 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, WorkflowMetricsSLACalendar> workflowMetricsSLACalendars =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLACalendar>
+			workflowMetricsSLACalendars = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertTrue(workflowMetricsSLACalendars.isEmpty());
 	}
@@ -288,7 +327,9 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -297,40 +338,44 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 		primaryKeys.add(newWorkflowMetricsSLACalendar.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, WorkflowMetricsSLACalendar> workflowMetricsSLACalendars =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLACalendar>
+			workflowMetricsSLACalendars = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(1, workflowMetricsSLACalendars.size());
-		Assert.assertEquals(newWorkflowMetricsSLACalendar,
+		Assert.assertEquals(
+			newWorkflowMetricsSLACalendar,
 			workflowMetricsSLACalendars.get(
 				newWorkflowMetricsSLACalendar.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, WorkflowMetricsSLACalendar> workflowMetricsSLACalendars =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLACalendar>
+			workflowMetricsSLACalendars = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertTrue(workflowMetricsSLACalendars.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newWorkflowMetricsSLACalendar.getPrimaryKey());
 
-		Map<Serializable, WorkflowMetricsSLACalendar> workflowMetricsSLACalendars =
-			_persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, WorkflowMetricsSLACalendar>
+			workflowMetricsSLACalendars = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(1, workflowMetricsSLACalendars.size());
-		Assert.assertEquals(newWorkflowMetricsSLACalendar,
+		Assert.assertEquals(
+			newWorkflowMetricsSLACalendar,
 			workflowMetricsSLACalendars.get(
 				newWorkflowMetricsSLACalendar.getPrimaryKey()));
 	}
@@ -339,16 +384,23 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = WorkflowMetricsSLACalendarLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			WorkflowMetricsSLACalendarLocalServiceUtil.
+				getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WorkflowMetricsSLACalendar>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<WorkflowMetricsSLACalendar>() {
+
 				@Override
 				public void performAction(
 					WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
+
 					Assert.assertNotNull(workflowMetricsSLACalendar);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -357,56 +409,64 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLACalendar.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLACalendar.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
 				"workflowMetricsSLACalendarId",
-				newWorkflowMetricsSLACalendar.getWorkflowMetricsSLACalendarId()));
+				newWorkflowMetricsSLACalendar.
+					getWorkflowMetricsSLACalendarId()));
 
-		List<WorkflowMetricsSLACalendar> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WorkflowMetricsSLACalendar> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar = result.get(0);
+		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar =
+			result.get(0);
 
-		Assert.assertEquals(existingWorkflowMetricsSLACalendar,
-			newWorkflowMetricsSLACalendar);
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendar, newWorkflowMetricsSLACalendar);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLACalendar.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLACalendar.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
 				"workflowMetricsSLACalendarId", RandomTestUtil.nextLong()));
 
-		List<WorkflowMetricsSLACalendar> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WorkflowMetricsSLACalendar> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLACalendar.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLACalendar.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"workflowMetricsSLACalendarId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("workflowMetricsSLACalendarId"));
 
-		Object newWorkflowMetricsSLACalendarId = newWorkflowMetricsSLACalendar.getWorkflowMetricsSLACalendarId();
+		Object newWorkflowMetricsSLACalendarId =
+			newWorkflowMetricsSLACalendar.getWorkflowMetricsSLACalendarId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
 				"workflowMetricsSLACalendarId",
-				new Object[] { newWorkflowMetricsSLACalendarId }));
+				new Object[] {newWorkflowMetricsSLACalendarId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -414,21 +474,23 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 		Object existingWorkflowMetricsSLACalendarId = result.get(0);
 
-		Assert.assertEquals(existingWorkflowMetricsSLACalendarId,
+		Assert.assertEquals(
+			existingWorkflowMetricsSLACalendarId,
 			newWorkflowMetricsSLACalendarId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLACalendar.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLACalendar.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"workflowMetricsSLACalendarId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("workflowMetricsSLACalendarId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
 				"workflowMetricsSLACalendarId",
-				new Object[] { RandomTestUtil.nextLong() }));
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -437,18 +499,23 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar = addWorkflowMetricsSLACalendar();
+		WorkflowMetricsSLACalendar newWorkflowMetricsSLACalendar =
+			addWorkflowMetricsSLACalendar();
 
 		_persistence.clearCache();
 
-		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar = _persistence.findByPrimaryKey(newWorkflowMetricsSLACalendar.getPrimaryKey());
+		WorkflowMetricsSLACalendar existingWorkflowMetricsSLACalendar =
+			_persistence.findByPrimaryKey(
+				newWorkflowMetricsSLACalendar.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingWorkflowMetricsSLACalendar.getUuid(),
-				ReflectionTestUtil.invoke(existingWorkflowMetricsSLACalendar,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(
-				existingWorkflowMetricsSLACalendar.getGroupId()),
+				ReflectionTestUtil.invoke(
+					existingWorkflowMetricsSLACalendar, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingWorkflowMetricsSLACalendar.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				existingWorkflowMetricsSLACalendar, "getOriginalGroupId",
 				new Class<?>[0]));
@@ -456,9 +523,11 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 	protected WorkflowMetricsSLACalendar addWorkflowMetricsSLACalendar()
 		throws Exception {
+
 		long pk = RandomTestUtil.nextLong();
 
-		WorkflowMetricsSLACalendar workflowMetricsSLACalendar = _persistence.create(pk);
+		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
+			_persistence.create(pk);
 
 		workflowMetricsSLACalendar.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -476,13 +545,15 @@ public class WorkflowMetricsSLACalendarPersistenceTest {
 
 		workflowMetricsSLACalendar.setModifiedDate(RandomTestUtil.nextDate());
 
-		_workflowMetricsSLACalendars.add(_persistence.update(
-				workflowMetricsSLACalendar));
+		_workflowMetricsSLACalendars.add(
+			_persistence.update(workflowMetricsSLACalendar));
 
 		return workflowMetricsSLACalendar;
 	}
 
-	private List<WorkflowMetricsSLACalendar> _workflowMetricsSLACalendars = new ArrayList<WorkflowMetricsSLACalendar>();
+	private List<WorkflowMetricsSLACalendar> _workflowMetricsSLACalendars =
+		new ArrayList<WorkflowMetricsSLACalendar>();
 	private WorkflowMetricsSLACalendarPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

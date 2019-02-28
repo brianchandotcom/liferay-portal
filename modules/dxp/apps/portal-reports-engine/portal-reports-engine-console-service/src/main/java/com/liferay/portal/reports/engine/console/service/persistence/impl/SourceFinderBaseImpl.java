@@ -28,6 +28,7 @@ import java.util.Set;
  * @generated
  */
 public class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
+
 	public SourceFinderBaseImpl() {
 		setModelClass(Source.class);
 	}
@@ -57,5 +58,8 @@ public class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
 
 	@BeanReference(type = SourcePersistence.class)
 	protected SourcePersistence sourcePersistence;
-	private static final Log _log = LogFactoryUtil.getLog(SourceFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SourceFinderBaseImpl.class);
+
 }

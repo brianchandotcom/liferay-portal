@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -74,7 +73,9 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WorkflowMetricsSLAConditionLocalService, IdentifiableOSGiService {
+	implements WorkflowMetricsSLAConditionLocalService,
+			   IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,9 +92,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Override
 	public WorkflowMetricsSLACondition addWorkflowMetricsSLACondition(
 		WorkflowMetricsSLACondition workflowMetricsSLACondition) {
+
 		workflowMetricsSLACondition.setNew(true);
 
-		return workflowMetricsSLAConditionPersistence.update(workflowMetricsSLACondition);
+		return workflowMetricsSLAConditionPersistence.update(
+			workflowMetricsSLACondition);
 	}
 
 	/**
@@ -106,7 +109,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public WorkflowMetricsSLACondition createWorkflowMetricsSLACondition(
 		long workflowMetricsSLAConditionId) {
-		return workflowMetricsSLAConditionPersistence.create(workflowMetricsSLAConditionId);
+
+		return workflowMetricsSLAConditionPersistence.create(
+			workflowMetricsSLAConditionId);
 	}
 
 	/**
@@ -119,8 +124,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public WorkflowMetricsSLACondition deleteWorkflowMetricsSLACondition(
-		long workflowMetricsSLAConditionId) throws PortalException {
-		return workflowMetricsSLAConditionPersistence.remove(workflowMetricsSLAConditionId);
+			long workflowMetricsSLAConditionId)
+		throws PortalException {
+
+		return workflowMetricsSLAConditionPersistence.remove(
+			workflowMetricsSLAConditionId);
 	}
 
 	/**
@@ -133,15 +141,17 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Override
 	public WorkflowMetricsSLACondition deleteWorkflowMetricsSLACondition(
 		WorkflowMetricsSLACondition workflowMetricsSLACondition) {
-		return workflowMetricsSLAConditionPersistence.remove(workflowMetricsSLACondition);
+
+		return workflowMetricsSLAConditionPersistence.remove(
+			workflowMetricsSLACondition);
 	}
 
 	@Override
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(WorkflowMetricsSLACondition.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLACondition.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -152,7 +162,8 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return workflowMetricsSLAConditionPersistence.findWithDynamicQuery(dynamicQuery);
+		return workflowMetricsSLAConditionPersistence.findWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -168,10 +179,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return workflowMetricsSLAConditionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return workflowMetricsSLAConditionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -188,10 +200,12 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return workflowMetricsSLAConditionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return workflowMetricsSLAConditionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -202,7 +216,8 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return workflowMetricsSLAConditionPersistence.countWithDynamicQuery(dynamicQuery);
+		return workflowMetricsSLAConditionPersistence.countWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -213,16 +228,19 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return workflowMetricsSLAConditionPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return workflowMetricsSLAConditionPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public WorkflowMetricsSLACondition fetchWorkflowMetricsSLACondition(
 		long workflowMetricsSLAConditionId) {
-		return workflowMetricsSLAConditionPersistence.fetchByPrimaryKey(workflowMetricsSLAConditionId);
+
+		return workflowMetricsSLAConditionPersistence.fetchByPrimaryKey(
+			workflowMetricsSLAConditionId);
 	}
 
 	/**
@@ -233,10 +251,12 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @return the matching workflow metrics sla condition, or <code>null</code> if a matching workflow metrics sla condition could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACondition fetchWorkflowMetricsSLAConditionByUuidAndGroupId(
-		String uuid, long groupId) {
-		return workflowMetricsSLAConditionPersistence.fetchByUUID_G(uuid,
-			groupId);
+	public WorkflowMetricsSLACondition
+		fetchWorkflowMetricsSLAConditionByUuidAndGroupId(
+			String uuid, long groupId) {
+
+		return workflowMetricsSLAConditionPersistence.fetchByUUID_G(
+			uuid, groupId);
 	}
 
 	/**
@@ -248,15 +268,20 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 */
 	@Override
 	public WorkflowMetricsSLACondition getWorkflowMetricsSLACondition(
-		long workflowMetricsSLAConditionId) throws PortalException {
-		return workflowMetricsSLAConditionPersistence.findByPrimaryKey(workflowMetricsSLAConditionId);
+			long workflowMetricsSLAConditionId)
+		throws PortalException {
+
+		return workflowMetricsSLAConditionPersistence.findByPrimaryKey(
+			workflowMetricsSLAConditionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(workflowMetricsSLAConditionLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			workflowMetricsSLAConditionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WorkflowMetricsSLACondition.class);
 
@@ -267,12 +292,17 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(workflowMetricsSLAConditionLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			workflowMetricsSLAConditionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(WorkflowMetricsSLACondition.class);
+		indexableActionableDynamicQuery.setModelClass(
+			WorkflowMetricsSLACondition.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"workflowMetricsSLAConditionId");
@@ -282,7 +312,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(workflowMetricsSLAConditionLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			workflowMetricsSLAConditionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WorkflowMetricsSLACondition.class);
 
@@ -293,50 +325,66 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(stagedModelType,
-						modelAdditionCount);
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
 
-					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
-							stagedModelType);
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
 
-					manifestSummary.addModelDeletionCount(stagedModelType,
-						modelDeletionCount);
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
 
 					return modelAdditionCount;
 				}
+
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
 				}
+
 			});
 
-		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WorkflowMetricsSLACondition>() {
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<WorkflowMetricsSLACondition>() {
+
 				@Override
 				public void performAction(
-					WorkflowMetricsSLACondition workflowMetricsSLACondition)
+						WorkflowMetricsSLACondition workflowMetricsSLACondition)
 					throws PortalException {
-					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						workflowMetricsSLACondition);
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, workflowMetricsSLACondition);
 				}
+
 			});
-		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
 				PortalUtil.getClassNameId(
 					WorkflowMetricsSLACondition.class.getName())));
 
@@ -349,13 +397,18 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return workflowMetricsSLAConditionLocalService.deleteWorkflowMetricsSLACondition((WorkflowMetricsSLACondition)persistedModel);
+
+		return workflowMetricsSLAConditionLocalService.
+			deleteWorkflowMetricsSLACondition(
+				(WorkflowMetricsSLACondition)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-		return workflowMetricsSLAConditionPersistence.findByPrimaryKey(primaryKeyObj);
+
+		return workflowMetricsSLAConditionPersistence.findByPrimaryKey(
+			primaryKeyObj);
 	}
 
 	/**
@@ -366,10 +419,12 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @return the matching workflow metrics sla conditions, or an empty list if no matches were found
 	 */
 	@Override
-	public List<WorkflowMetricsSLACondition> getWorkflowMetricsSLAConditionsByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return workflowMetricsSLAConditionPersistence.findByUuid_C(uuid,
-			companyId);
+	public List<WorkflowMetricsSLACondition>
+		getWorkflowMetricsSLAConditionsByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return workflowMetricsSLAConditionPersistence.findByUuid_C(
+			uuid, companyId);
 	}
 
 	/**
@@ -383,11 +438,13 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @return the range of matching workflow metrics sla conditions, or an empty list if no matches were found
 	 */
 	@Override
-	public List<WorkflowMetricsSLACondition> getWorkflowMetricsSLAConditionsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<WorkflowMetricsSLACondition> orderByComparator) {
-		return workflowMetricsSLAConditionPersistence.findByUuid_C(uuid,
-			companyId, start, end, orderByComparator);
+	public List<WorkflowMetricsSLACondition>
+		getWorkflowMetricsSLAConditionsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<WorkflowMetricsSLACondition> orderByComparator) {
+
+		return workflowMetricsSLAConditionPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -399,9 +456,13 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @throws PortalException if a matching workflow metrics sla condition could not be found
 	 */
 	@Override
-	public WorkflowMetricsSLACondition getWorkflowMetricsSLAConditionByUuidAndGroupId(
-		String uuid, long groupId) throws PortalException {
-		return workflowMetricsSLAConditionPersistence.findByUUID_G(uuid, groupId);
+	public WorkflowMetricsSLACondition
+			getWorkflowMetricsSLAConditionByUuidAndGroupId(
+				String uuid, long groupId)
+		throws PortalException {
+
+		return workflowMetricsSLAConditionPersistence.findByUUID_G(
+			uuid, groupId);
 	}
 
 	/**
@@ -418,6 +479,7 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Override
 	public List<WorkflowMetricsSLACondition> getWorkflowMetricsSLAConditions(
 		int start, int end) {
+
 		return workflowMetricsSLAConditionPersistence.findAll(start, end);
 	}
 
@@ -441,7 +503,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	@Override
 	public WorkflowMetricsSLACondition updateWorkflowMetricsSLACondition(
 		WorkflowMetricsSLACondition workflowMetricsSLACondition) {
-		return workflowMetricsSLAConditionPersistence.update(workflowMetricsSLACondition);
+
+		return workflowMetricsSLAConditionPersistence.update(
+			workflowMetricsSLACondition);
 	}
 
 	/**
@@ -449,7 +513,10 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the workflow metrics sla calendar local service
 	 */
-	public com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService getWorkflowMetricsSLACalendarLocalService() {
+	public com.liferay.portal.workflow.metrics.service.
+		WorkflowMetricsSLACalendarLocalService
+			getWorkflowMetricsSLACalendarLocalService() {
+
 		return workflowMetricsSLACalendarLocalService;
 	}
 
@@ -459,8 +526,12 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param workflowMetricsSLACalendarLocalService the workflow metrics sla calendar local service
 	 */
 	public void setWorkflowMetricsSLACalendarLocalService(
-		com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService workflowMetricsSLACalendarLocalService) {
-		this.workflowMetricsSLACalendarLocalService = workflowMetricsSLACalendarLocalService;
+		com.liferay.portal.workflow.metrics.service.
+			WorkflowMetricsSLACalendarLocalService
+				workflowMetricsSLACalendarLocalService) {
+
+		this.workflowMetricsSLACalendarLocalService =
+			workflowMetricsSLACalendarLocalService;
 	}
 
 	/**
@@ -468,7 +539,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the workflow metrics sla calendar persistence
 	 */
-	public WorkflowMetricsSLACalendarPersistence getWorkflowMetricsSLACalendarPersistence() {
+	public WorkflowMetricsSLACalendarPersistence
+		getWorkflowMetricsSLACalendarPersistence() {
+
 		return workflowMetricsSLACalendarPersistence;
 	}
 
@@ -478,8 +551,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param workflowMetricsSLACalendarPersistence the workflow metrics sla calendar persistence
 	 */
 	public void setWorkflowMetricsSLACalendarPersistence(
-		WorkflowMetricsSLACalendarPersistence workflowMetricsSLACalendarPersistence) {
-		this.workflowMetricsSLACalendarPersistence = workflowMetricsSLACalendarPersistence;
+		WorkflowMetricsSLACalendarPersistence
+			workflowMetricsSLACalendarPersistence) {
+
+		this.workflowMetricsSLACalendarPersistence =
+			workflowMetricsSLACalendarPersistence;
 	}
 
 	/**
@@ -487,7 +563,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the workflow metrics sla condition local service
 	 */
-	public WorkflowMetricsSLAConditionLocalService getWorkflowMetricsSLAConditionLocalService() {
+	public WorkflowMetricsSLAConditionLocalService
+		getWorkflowMetricsSLAConditionLocalService() {
+
 		return workflowMetricsSLAConditionLocalService;
 	}
 
@@ -497,8 +575,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param workflowMetricsSLAConditionLocalService the workflow metrics sla condition local service
 	 */
 	public void setWorkflowMetricsSLAConditionLocalService(
-		WorkflowMetricsSLAConditionLocalService workflowMetricsSLAConditionLocalService) {
-		this.workflowMetricsSLAConditionLocalService = workflowMetricsSLAConditionLocalService;
+		WorkflowMetricsSLAConditionLocalService
+			workflowMetricsSLAConditionLocalService) {
+
+		this.workflowMetricsSLAConditionLocalService =
+			workflowMetricsSLAConditionLocalService;
 	}
 
 	/**
@@ -506,7 +587,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the workflow metrics sla condition persistence
 	 */
-	public WorkflowMetricsSLAConditionPersistence getWorkflowMetricsSLAConditionPersistence() {
+	public WorkflowMetricsSLAConditionPersistence
+		getWorkflowMetricsSLAConditionPersistence() {
+
 		return workflowMetricsSLAConditionPersistence;
 	}
 
@@ -516,8 +599,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param workflowMetricsSLAConditionPersistence the workflow metrics sla condition persistence
 	 */
 	public void setWorkflowMetricsSLAConditionPersistence(
-		WorkflowMetricsSLAConditionPersistence workflowMetricsSLAConditionPersistence) {
-		this.workflowMetricsSLAConditionPersistence = workflowMetricsSLAConditionPersistence;
+		WorkflowMetricsSLAConditionPersistence
+			workflowMetricsSLAConditionPersistence) {
+
+		this.workflowMetricsSLAConditionPersistence =
+			workflowMetricsSLAConditionPersistence;
 	}
 
 	/**
@@ -525,7 +611,10 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the workflow metrics sla definition local service
 	 */
-	public com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService getWorkflowMetricsSLADefinitionLocalService() {
+	public com.liferay.portal.workflow.metrics.service.
+		WorkflowMetricsSLADefinitionLocalService
+			getWorkflowMetricsSLADefinitionLocalService() {
+
 		return workflowMetricsSLADefinitionLocalService;
 	}
 
@@ -535,8 +624,12 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param workflowMetricsSLADefinitionLocalService the workflow metrics sla definition local service
 	 */
 	public void setWorkflowMetricsSLADefinitionLocalService(
-		com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService workflowMetricsSLADefinitionLocalService) {
-		this.workflowMetricsSLADefinitionLocalService = workflowMetricsSLADefinitionLocalService;
+		com.liferay.portal.workflow.metrics.service.
+			WorkflowMetricsSLADefinitionLocalService
+				workflowMetricsSLADefinitionLocalService) {
+
+		this.workflowMetricsSLADefinitionLocalService =
+			workflowMetricsSLADefinitionLocalService;
 	}
 
 	/**
@@ -544,7 +637,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the workflow metrics sla definition persistence
 	 */
-	public WorkflowMetricsSLADefinitionPersistence getWorkflowMetricsSLADefinitionPersistence() {
+	public WorkflowMetricsSLADefinitionPersistence
+		getWorkflowMetricsSLADefinitionPersistence() {
+
 		return workflowMetricsSLADefinitionPersistence;
 	}
 
@@ -554,8 +649,11 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param workflowMetricsSLADefinitionPersistence the workflow metrics sla definition persistence
 	 */
 	public void setWorkflowMetricsSLADefinitionPersistence(
-		WorkflowMetricsSLADefinitionPersistence workflowMetricsSLADefinitionPersistence) {
-		this.workflowMetricsSLADefinitionPersistence = workflowMetricsSLADefinitionPersistence;
+		WorkflowMetricsSLADefinitionPersistence
+			workflowMetricsSLADefinitionPersistence) {
+
+		this.workflowMetricsSLADefinitionPersistence =
+			workflowMetricsSLADefinitionPersistence;
 	}
 
 	/**
@@ -563,7 +661,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -573,7 +673,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -582,7 +684,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -592,7 +696,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -612,6 +718,7 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -620,7 +727,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -630,7 +739,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -639,7 +750,9 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -650,6 +763,7 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -672,7 +786,8 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACondition",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACondition",
 			workflowMetricsSLAConditionLocalService);
 	}
 
@@ -706,15 +821,16 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = workflowMetricsSLAConditionPersistence.getDataSource();
+			DataSource dataSource =
+				workflowMetricsSLAConditionPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -723,30 +839,68 @@ public abstract class WorkflowMetricsSLAConditionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService.class)
-	protected com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService workflowMetricsSLACalendarLocalService;
+	@BeanReference(
+		type = com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLACalendarLocalService.class
+	)
+	protected com.liferay.portal.workflow.metrics.service.
+		WorkflowMetricsSLACalendarLocalService
+			workflowMetricsSLACalendarLocalService;
+
 	@BeanReference(type = WorkflowMetricsSLACalendarPersistence.class)
-	protected WorkflowMetricsSLACalendarPersistence workflowMetricsSLACalendarPersistence;
+	protected WorkflowMetricsSLACalendarPersistence
+		workflowMetricsSLACalendarPersistence;
+
 	@BeanReference(type = WorkflowMetricsSLAConditionLocalService.class)
-	protected WorkflowMetricsSLAConditionLocalService workflowMetricsSLAConditionLocalService;
+	protected WorkflowMetricsSLAConditionLocalService
+		workflowMetricsSLAConditionLocalService;
+
 	@BeanReference(type = WorkflowMetricsSLAConditionPersistence.class)
-	protected WorkflowMetricsSLAConditionPersistence workflowMetricsSLAConditionPersistence;
-	@BeanReference(type = com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService.class)
-	protected com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService workflowMetricsSLADefinitionLocalService;
+	protected WorkflowMetricsSLAConditionPersistence
+		workflowMetricsSLAConditionPersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService.class
+	)
+	protected com.liferay.portal.workflow.metrics.service.
+		WorkflowMetricsSLADefinitionLocalService
+			workflowMetricsSLADefinitionLocalService;
+
 	@BeanReference(type = WorkflowMetricsSLADefinitionPersistence.class)
-	protected WorkflowMetricsSLADefinitionPersistence workflowMetricsSLADefinitionPersistence;
-	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	protected WorkflowMetricsSLADefinitionPersistence
+		workflowMetricsSLADefinitionPersistence;
+
+	@ServiceReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

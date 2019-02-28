@@ -42,32 +42,36 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface SPIDefinitionService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public SPIDefinition addSPIDefinition(String name, String connectorAddress,
-		int connectorPort, String description, String jvmArguments,
-		String portletIds, String servletContextNames, String typeSettings,
-		ServiceContext serviceContext) throws PortalException;
+	public SPIDefinition addSPIDefinition(
+			String name, String connectorAddress, int connectorPort,
+			String description, String jvmArguments, String portletIds,
+			String servletContextNames, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public SPIDefinition deleteSPIDefinition(long spiDefinitionId)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Tuple getPortletIdsAndServletContextNames()
-		throws PortalException;
+	public Tuple getPortletIdsAndServletContextNames() throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SPIDefinition getSPIDefinition(long spiDefinitionId)
@@ -90,13 +94,16 @@ public interface SPIDefinitionService extends BaseService {
 	public long stopSPIinBackground(long spiDefinitionId)
 		throws PortalException;
 
-	public SPIDefinition updateSPIDefinition(long spiDefinitionId,
-		String connectorAddress, int connectorPort, String description,
-		String jvmArguments, String portletIds, String servletContextNames,
-		String typeSettings, ServiceContext serviceContext)
+	public SPIDefinition updateSPIDefinition(
+			long spiDefinitionId, String connectorAddress, int connectorPort,
+			String description, String jvmArguments, String portletIds,
+			String servletContextNames, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException;
 
-	public SPIDefinition updateTypeSettings(long userId, long spiDefinitionId,
-		String recoveryOptions, ServiceContext serviceContext)
+	public SPIDefinition updateTypeSettings(
+			long userId, long spiDefinitionId, String recoveryOptions,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

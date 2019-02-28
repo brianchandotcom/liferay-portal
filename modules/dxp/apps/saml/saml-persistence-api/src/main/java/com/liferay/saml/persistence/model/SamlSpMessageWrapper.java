@@ -33,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SamlSpMessageWrapper extends BaseModelWrapper<SamlSpMessage>
+public class SamlSpMessageWrapper
+	extends BaseModelWrapper<SamlSpMessage>
 	implements SamlSpMessage, ModelWrapper<SamlSpMessage> {
+
 	public SamlSpMessageWrapper(SamlSpMessage samlSpMessage) {
 		super(samlSpMessage);
 	}
@@ -79,7 +81,8 @@ public class SamlSpMessageWrapper extends BaseModelWrapper<SamlSpMessage>
 			setSamlIdpEntityId(samlIdpEntityId);
 		}
 
-		String samlIdpResponseKey = (String)attributes.get("samlIdpResponseKey");
+		String samlIdpResponseKey = (String)attributes.get(
+			"samlIdpResponseKey");
 
 		if (samlIdpResponseKey != null) {
 			setSamlIdpResponseKey(samlIdpResponseKey);
@@ -93,70 +96,70 @@ public class SamlSpMessageWrapper extends BaseModelWrapper<SamlSpMessage>
 	}
 
 	/**
-	* Returns the company ID of this saml sp message.
-	*
-	* @return the company ID of this saml sp message
-	*/
+	 * Returns the company ID of this saml sp message.
+	 *
+	 * @return the company ID of this saml sp message
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this saml sp message.
-	*
-	* @return the create date of this saml sp message
-	*/
+	 * Returns the create date of this saml sp message.
+	 *
+	 * @return the create date of this saml sp message
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the expiration date of this saml sp message.
-	*
-	* @return the expiration date of this saml sp message
-	*/
+	 * Returns the expiration date of this saml sp message.
+	 *
+	 * @return the expiration date of this saml sp message
+	 */
 	@Override
 	public Date getExpirationDate() {
 		return model.getExpirationDate();
 	}
 
 	/**
-	* Returns the primary key of this saml sp message.
-	*
-	* @return the primary key of this saml sp message
-	*/
+	 * Returns the primary key of this saml sp message.
+	 *
+	 * @return the primary key of this saml sp message
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the saml idp entity ID of this saml sp message.
-	*
-	* @return the saml idp entity ID of this saml sp message
-	*/
+	 * Returns the saml idp entity ID of this saml sp message.
+	 *
+	 * @return the saml idp entity ID of this saml sp message
+	 */
 	@Override
 	public String getSamlIdpEntityId() {
 		return model.getSamlIdpEntityId();
 	}
 
 	/**
-	* Returns the saml idp response key of this saml sp message.
-	*
-	* @return the saml idp response key of this saml sp message
-	*/
+	 * Returns the saml idp response key of this saml sp message.
+	 *
+	 * @return the saml idp response key of this saml sp message
+	 */
 	@Override
 	public String getSamlIdpResponseKey() {
 		return model.getSamlIdpResponseKey();
 	}
 
 	/**
-	* Returns the saml sp message ID of this saml sp message.
-	*
-	* @return the saml sp message ID of this saml sp message
-	*/
+	 * Returns the saml sp message ID of this saml sp message.
+	 *
+	 * @return the saml sp message ID of this saml sp message
+	 */
 	@Override
 	public long getSamlSpMessageId() {
 		return model.getSamlSpMessageId();
@@ -173,70 +176,70 @@ public class SamlSpMessageWrapper extends BaseModelWrapper<SamlSpMessage>
 	}
 
 	/**
-	* Sets the company ID of this saml sp message.
-	*
-	* @param companyId the company ID of this saml sp message
-	*/
+	 * Sets the company ID of this saml sp message.
+	 *
+	 * @param companyId the company ID of this saml sp message
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this saml sp message.
-	*
-	* @param createDate the create date of this saml sp message
-	*/
+	 * Sets the create date of this saml sp message.
+	 *
+	 * @param createDate the create date of this saml sp message
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the expiration date of this saml sp message.
-	*
-	* @param expirationDate the expiration date of this saml sp message
-	*/
+	 * Sets the expiration date of this saml sp message.
+	 *
+	 * @param expirationDate the expiration date of this saml sp message
+	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		model.setExpirationDate(expirationDate);
 	}
 
 	/**
-	* Sets the primary key of this saml sp message.
-	*
-	* @param primaryKey the primary key of this saml sp message
-	*/
+	 * Sets the primary key of this saml sp message.
+	 *
+	 * @param primaryKey the primary key of this saml sp message
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the saml idp entity ID of this saml sp message.
-	*
-	* @param samlIdpEntityId the saml idp entity ID of this saml sp message
-	*/
+	 * Sets the saml idp entity ID of this saml sp message.
+	 *
+	 * @param samlIdpEntityId the saml idp entity ID of this saml sp message
+	 */
 	@Override
 	public void setSamlIdpEntityId(String samlIdpEntityId) {
 		model.setSamlIdpEntityId(samlIdpEntityId);
 	}
 
 	/**
-	* Sets the saml idp response key of this saml sp message.
-	*
-	* @param samlIdpResponseKey the saml idp response key of this saml sp message
-	*/
+	 * Sets the saml idp response key of this saml sp message.
+	 *
+	 * @param samlIdpResponseKey the saml idp response key of this saml sp message
+	 */
 	@Override
 	public void setSamlIdpResponseKey(String samlIdpResponseKey) {
 		model.setSamlIdpResponseKey(samlIdpResponseKey);
 	}
 
 	/**
-	* Sets the saml sp message ID of this saml sp message.
-	*
-	* @param samlSpMessageId the saml sp message ID of this saml sp message
-	*/
+	 * Sets the saml sp message ID of this saml sp message.
+	 *
+	 * @param samlSpMessageId the saml sp message ID of this saml sp message
+	 */
 	@Override
 	public void setSamlSpMessageId(long samlSpMessageId) {
 		model.setSamlSpMessageId(samlSpMessageId);
@@ -246,4 +249,5 @@ public class SamlSpMessageWrapper extends BaseModelWrapper<SamlSpMessage>
 	protected SamlSpMessageWrapper wrap(SamlSpMessage samlSpMessage) {
 		return new SamlSpMessageWrapper(samlSpMessage);
 	}
+
 }

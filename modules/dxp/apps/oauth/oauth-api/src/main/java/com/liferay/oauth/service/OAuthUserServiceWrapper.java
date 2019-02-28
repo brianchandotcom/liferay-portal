@@ -26,31 +26,35 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class OAuthUserServiceWrapper implements OAuthUserService,
-	ServiceWrapper<OAuthUserService> {
+public class OAuthUserServiceWrapper
+	implements OAuthUserService, ServiceWrapper<OAuthUserService> {
+
 	public OAuthUserServiceWrapper(OAuthUserService oAuthUserService) {
 		_oAuthUserService = oAuthUserService;
 	}
 
 	@Override
-	public com.liferay.oauth.model.OAuthUser addOAuthUser(String consumerKey,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.oauth.model.OAuthUser addOAuthUser(
+			String consumerKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _oAuthUserService.addOAuthUser(consumerKey, serviceContext);
 	}
 
 	@Override
 	public com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-		long oAuthApplicationId)
+			long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _oAuthUserService.deleteOAuthUser(oAuthApplicationId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _oAuthUserService.getOSGiServiceIdentifier();
@@ -67,4 +71,5 @@ public class OAuthUserServiceWrapper implements OAuthUserService,
 	}
 
 	private OAuthUserService _oAuthUserService;
+
 }

@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession>,
-	Externalizable {
+public class SamlIdpSsoSessionCacheModel
+	implements CacheModel<SamlIdpSsoSession>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +48,12 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 			return false;
 		}
 
-		SamlIdpSsoSessionCacheModel samlIdpSsoSessionCacheModel = (SamlIdpSsoSessionCacheModel)obj;
+		SamlIdpSsoSessionCacheModel samlIdpSsoSessionCacheModel =
+			(SamlIdpSsoSessionCacheModel)obj;
 
-		if (samlIdpSsoSessionId == samlIdpSsoSessionCacheModel.samlIdpSsoSessionId) {
+		if (samlIdpSsoSessionId ==
+				samlIdpSsoSessionCacheModel.samlIdpSsoSessionId) {
+
 			return true;
 		}
 
@@ -88,7 +90,8 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 
 	@Override
 	public SamlIdpSsoSession toEntityModel() {
-		SamlIdpSsoSessionImpl samlIdpSsoSessionImpl = new SamlIdpSsoSessionImpl();
+		SamlIdpSsoSessionImpl samlIdpSsoSessionImpl =
+			new SamlIdpSsoSessionImpl();
 
 		samlIdpSsoSessionImpl.setSamlIdpSsoSessionId(samlIdpSsoSessionId);
 		samlIdpSsoSessionImpl.setCompanyId(companyId);
@@ -141,8 +144,7 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(samlIdpSsoSessionId);
 
 		objectOutput.writeLong(companyId);
@@ -174,4 +176,5 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 	public long createDate;
 	public long modifiedDate;
 	public String samlIdpSsoSessionKey;
+
 }

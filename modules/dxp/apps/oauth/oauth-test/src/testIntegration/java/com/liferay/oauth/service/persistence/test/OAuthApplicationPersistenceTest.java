@@ -15,13 +15,11 @@
 package com.liferay.oauth.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.oauth.exception.NoSuchApplicationException;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.service.OAuthApplicationLocalServiceUtil;
 import com.liferay.oauth.service.persistence.OAuthApplicationPersistence;
 import com.liferay.oauth.service.persistence.OAuthApplicationUtil;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -40,15 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -59,17 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class OAuthApplicationPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
-				"com.liferay.oauth.service"));
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.oauth.service"));
 
 	@Before
 	public void setUp() {
@@ -108,7 +107,8 @@ public class OAuthApplicationPersistenceTest {
 
 		_persistence.remove(newOAuthApplication);
 
-		OAuthApplication existingOAuthApplication = _persistence.fetchByPrimaryKey(newOAuthApplication.getPrimaryKey());
+		OAuthApplication existingOAuthApplication =
+			_persistence.fetchByPrimaryKey(newOAuthApplication.getPrimaryKey());
 
 		Assert.assertNull(existingOAuthApplication);
 	}
@@ -146,7 +146,8 @@ public class OAuthApplicationPersistenceTest {
 
 		newOAuthApplication.setLogoId(RandomTestUtil.nextLong());
 
-		newOAuthApplication.setShareableAccessToken(RandomTestUtil.randomBoolean());
+		newOAuthApplication.setShareableAccessToken(
+			RandomTestUtil.randomBoolean());
 
 		newOAuthApplication.setCallbackURI(RandomTestUtil.randomString());
 
@@ -154,39 +155,52 @@ public class OAuthApplicationPersistenceTest {
 
 		_oAuthApplications.add(_persistence.update(newOAuthApplication));
 
-		OAuthApplication existingOAuthApplication = _persistence.findByPrimaryKey(newOAuthApplication.getPrimaryKey());
+		OAuthApplication existingOAuthApplication =
+			_persistence.findByPrimaryKey(newOAuthApplication.getPrimaryKey());
 
-		Assert.assertEquals(existingOAuthApplication.getOAuthApplicationId(),
+		Assert.assertEquals(
+			existingOAuthApplication.getOAuthApplicationId(),
 			newOAuthApplication.getOAuthApplicationId());
-		Assert.assertEquals(existingOAuthApplication.getCompanyId(),
+		Assert.assertEquals(
+			existingOAuthApplication.getCompanyId(),
 			newOAuthApplication.getCompanyId());
-		Assert.assertEquals(existingOAuthApplication.getUserId(),
+		Assert.assertEquals(
+			existingOAuthApplication.getUserId(),
 			newOAuthApplication.getUserId());
-		Assert.assertEquals(existingOAuthApplication.getUserName(),
+		Assert.assertEquals(
+			existingOAuthApplication.getUserName(),
 			newOAuthApplication.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingOAuthApplication.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingOAuthApplication.getCreateDate()),
 			Time.getShortTimestamp(newOAuthApplication.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingOAuthApplication.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingOAuthApplication.getModifiedDate()),
 			Time.getShortTimestamp(newOAuthApplication.getModifiedDate()));
-		Assert.assertEquals(existingOAuthApplication.getName(),
-			newOAuthApplication.getName());
-		Assert.assertEquals(existingOAuthApplication.getDescription(),
+		Assert.assertEquals(
+			existingOAuthApplication.getName(), newOAuthApplication.getName());
+		Assert.assertEquals(
+			existingOAuthApplication.getDescription(),
 			newOAuthApplication.getDescription());
-		Assert.assertEquals(existingOAuthApplication.getConsumerKey(),
+		Assert.assertEquals(
+			existingOAuthApplication.getConsumerKey(),
 			newOAuthApplication.getConsumerKey());
-		Assert.assertEquals(existingOAuthApplication.getConsumerSecret(),
+		Assert.assertEquals(
+			existingOAuthApplication.getConsumerSecret(),
 			newOAuthApplication.getConsumerSecret());
-		Assert.assertEquals(existingOAuthApplication.getAccessLevel(),
+		Assert.assertEquals(
+			existingOAuthApplication.getAccessLevel(),
 			newOAuthApplication.getAccessLevel());
-		Assert.assertEquals(existingOAuthApplication.getLogoId(),
+		Assert.assertEquals(
+			existingOAuthApplication.getLogoId(),
 			newOAuthApplication.getLogoId());
-		Assert.assertEquals(existingOAuthApplication.isShareableAccessToken(),
+		Assert.assertEquals(
+			existingOAuthApplication.isShareableAccessToken(),
 			newOAuthApplication.isShareableAccessToken());
-		Assert.assertEquals(existingOAuthApplication.getCallbackURI(),
+		Assert.assertEquals(
+			existingOAuthApplication.getCallbackURI(),
 			newOAuthApplication.getCallbackURI());
-		Assert.assertEquals(existingOAuthApplication.getWebsiteURL(),
+		Assert.assertEquals(
+			existingOAuthApplication.getWebsiteURL(),
 			newOAuthApplication.getWebsiteURL());
 	}
 
@@ -235,7 +249,8 @@ public class OAuthApplicationPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		OAuthApplication newOAuthApplication = addOAuthApplication();
 
-		OAuthApplication existingOAuthApplication = _persistence.findByPrimaryKey(newOAuthApplication.getPrimaryKey());
+		OAuthApplication existingOAuthApplication =
+			_persistence.findByPrimaryKey(newOAuthApplication.getPrimaryKey());
 
 		Assert.assertEquals(existingOAuthApplication, newOAuthApplication);
 	}
@@ -249,24 +264,26 @@ public class OAuthApplicationPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<OAuthApplication> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("OAuth_OAuthApplication",
-			"oAuthApplicationId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "consumerKey", true, "consumerSecret",
-			true, "accessLevel", true, "logoId", true, "shareableAccessToken",
-			true, "callbackURI", true, "websiteURL", true);
+		return OrderByComparatorFactoryUtil.create(
+			"OAuth_OAuthApplication", "oAuthApplicationId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true,
+			"consumerKey", true, "consumerSecret", true, "accessLevel", true,
+			"logoId", true, "shareableAccessToken", true, "callbackURI", true,
+			"websiteURL", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		OAuthApplication newOAuthApplication = addOAuthApplication();
 
-		OAuthApplication existingOAuthApplication = _persistence.fetchByPrimaryKey(newOAuthApplication.getPrimaryKey());
+		OAuthApplication existingOAuthApplication =
+			_persistence.fetchByPrimaryKey(newOAuthApplication.getPrimaryKey());
 
 		Assert.assertEquals(existingOAuthApplication, newOAuthApplication);
 	}
@@ -275,7 +292,8 @@ public class OAuthApplicationPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		OAuthApplication missingOAuthApplication = _persistence.fetchByPrimaryKey(pk);
+		OAuthApplication missingOAuthApplication =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingOAuthApplication);
 	}
@@ -283,6 +301,7 @@ public class OAuthApplicationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		OAuthApplication newOAuthApplication1 = addOAuthApplication();
 		OAuthApplication newOAuthApplication2 = addOAuthApplication();
 
@@ -291,18 +310,22 @@ public class OAuthApplicationPersistenceTest {
 		primaryKeys.add(newOAuthApplication1.getPrimaryKey());
 		primaryKeys.add(newOAuthApplication2.getPrimaryKey());
 
-		Map<Serializable, OAuthApplication> oAuthApplications = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OAuthApplication> oAuthApplications =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, oAuthApplications.size());
-		Assert.assertEquals(newOAuthApplication1,
+		Assert.assertEquals(
+			newOAuthApplication1,
 			oAuthApplications.get(newOAuthApplication1.getPrimaryKey()));
-		Assert.assertEquals(newOAuthApplication2,
+		Assert.assertEquals(
+			newOAuthApplication2,
 			oAuthApplications.get(newOAuthApplication2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -312,7 +335,8 @@ public class OAuthApplicationPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, OAuthApplication> oAuthApplications = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OAuthApplication> oAuthApplications =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(oAuthApplications.isEmpty());
 	}
@@ -320,6 +344,7 @@ public class OAuthApplicationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		OAuthApplication newOAuthApplication = addOAuthApplication();
 
 		long pk = RandomTestUtil.nextLong();
@@ -329,36 +354,39 @@ public class OAuthApplicationPersistenceTest {
 		primaryKeys.add(newOAuthApplication.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, OAuthApplication> oAuthApplications = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OAuthApplication> oAuthApplications =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, oAuthApplications.size());
-		Assert.assertEquals(newOAuthApplication,
+		Assert.assertEquals(
+			newOAuthApplication,
 			oAuthApplications.get(newOAuthApplication.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OAuthApplication> oAuthApplications = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OAuthApplication> oAuthApplications =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(oAuthApplications.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		OAuthApplication newOAuthApplication = addOAuthApplication();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newOAuthApplication.getPrimaryKey());
 
-		Map<Serializable, OAuthApplication> oAuthApplications = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OAuthApplication> oAuthApplications =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, oAuthApplications.size());
-		Assert.assertEquals(newOAuthApplication,
+		Assert.assertEquals(
+			newOAuthApplication,
 			oAuthApplications.get(newOAuthApplication.getPrimaryKey()));
 	}
 
@@ -366,15 +394,19 @@ public class OAuthApplicationPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = OAuthApplicationLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			OAuthApplicationLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<OAuthApplication>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<OAuthApplication>() {
+
 				@Override
 				public void performAction(OAuthApplication oAuthApplication) {
 					Assert.assertNotNull(oAuthApplication);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -383,17 +415,19 @@ public class OAuthApplicationPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		OAuthApplication newOAuthApplication = addOAuthApplication();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OAuthApplication.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OAuthApplication.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("oAuthApplicationId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"oAuthApplicationId",
 				newOAuthApplication.getOAuthApplicationId()));
 
-		List<OAuthApplication> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<OAuthApplication> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -404,32 +438,35 @@ public class OAuthApplicationPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OAuthApplication.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OAuthApplication.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("oAuthApplicationId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"oAuthApplicationId", RandomTestUtil.nextLong()));
 
-		List<OAuthApplication> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<OAuthApplication> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		OAuthApplication newOAuthApplication = addOAuthApplication();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OAuthApplication.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OAuthApplication.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"oAuthApplicationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("oAuthApplicationId"));
 
-		Object newOAuthApplicationId = newOAuthApplication.getOAuthApplicationId();
+		Object newOAuthApplicationId =
+			newOAuthApplication.getOAuthApplicationId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("oAuthApplicationId",
-				new Object[] { newOAuthApplicationId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"oAuthApplicationId", new Object[] {newOAuthApplicationId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -442,14 +479,16 @@ public class OAuthApplicationPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OAuthApplication.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OAuthApplication.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"oAuthApplicationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("oAuthApplicationId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("oAuthApplicationId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"oAuthApplicationId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -462,12 +501,15 @@ public class OAuthApplicationPersistenceTest {
 
 		_persistence.clearCache();
 
-		OAuthApplication existingOAuthApplication = _persistence.findByPrimaryKey(newOAuthApplication.getPrimaryKey());
+		OAuthApplication existingOAuthApplication =
+			_persistence.findByPrimaryKey(newOAuthApplication.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingOAuthApplication.getConsumerKey(),
-				ReflectionTestUtil.invoke(existingOAuthApplication,
-					"getOriginalConsumerKey", new Class<?>[0])));
+				ReflectionTestUtil.invoke(
+					existingOAuthApplication, "getOriginalConsumerKey",
+					new Class<?>[0])));
 	}
 
 	protected OAuthApplication addOAuthApplication() throws Exception {
@@ -497,7 +539,8 @@ public class OAuthApplicationPersistenceTest {
 
 		oAuthApplication.setLogoId(RandomTestUtil.nextLong());
 
-		oAuthApplication.setShareableAccessToken(RandomTestUtil.randomBoolean());
+		oAuthApplication.setShareableAccessToken(
+			RandomTestUtil.randomBoolean());
 
 		oAuthApplication.setCallbackURI(RandomTestUtil.randomString());
 
@@ -508,7 +551,9 @@ public class OAuthApplicationPersistenceTest {
 		return oAuthApplication;
 	}
 
-	private List<OAuthApplication> _oAuthApplications = new ArrayList<OAuthApplication>();
+	private List<OAuthApplication> _oAuthApplications =
+		new ArrayList<OAuthApplication>();
 	private OAuthApplicationPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

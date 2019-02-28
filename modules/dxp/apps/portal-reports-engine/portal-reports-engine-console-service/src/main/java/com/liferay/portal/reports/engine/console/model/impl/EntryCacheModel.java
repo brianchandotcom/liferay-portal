@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.reports.engine.console.model.Entry;
 
@@ -37,6 +36,7 @@ import java.util.Date;
  */
 @ProviderType
 public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -262,8 +262,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(entryId);
 
 		objectOutput.writeLong(groupId);
@@ -375,4 +374,5 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public String reportParameters;
 	public String status;
 	public String errorMessage;
+
 }

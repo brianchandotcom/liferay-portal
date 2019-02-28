@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class DefinitionSoap implements Serializable {
+
 	public static DefinitionSoap toSoapModel(Definition model) {
 		DefinitionSoap soapModel = new DefinitionSoap();
 
@@ -79,7 +80,8 @@ public class DefinitionSoap implements Serializable {
 	}
 
 	public static DefinitionSoap[] toSoapModels(List<Definition> models) {
-		List<DefinitionSoap> soapModels = new ArrayList<DefinitionSoap>(models.size());
+		List<DefinitionSoap> soapModels = new ArrayList<DefinitionSoap>(
+			models.size());
 
 		for (Definition model : models) {
 			soapModels.add(toSoapModel(model));
@@ -225,4 +227,5 @@ public class DefinitionSoap implements Serializable {
 	private String _reportName;
 	private String _reportParameters;
 	private Date _lastPublishDate;
+
 }

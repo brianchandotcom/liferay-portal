@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class KaleoProcessSoap implements Serializable {
+
 	public static KaleoProcessSoap toSoapModel(KaleoProcess model) {
 		KaleoProcessSoap soapModel = new KaleoProcessSoap();
 
@@ -44,7 +45,8 @@ public class KaleoProcessSoap implements Serializable {
 		soapModel.setDDLRecordSetId(model.getDDLRecordSetId());
 		soapModel.setDDMTemplateId(model.getDDMTemplateId());
 		soapModel.setWorkflowDefinitionName(model.getWorkflowDefinitionName());
-		soapModel.setWorkflowDefinitionVersion(model.getWorkflowDefinitionVersion());
+		soapModel.setWorkflowDefinitionVersion(
+			model.getWorkflowDefinitionVersion());
 
 		return soapModel;
 	}
@@ -77,7 +79,8 @@ public class KaleoProcessSoap implements Serializable {
 	}
 
 	public static KaleoProcessSoap[] toSoapModels(List<KaleoProcess> models) {
-		List<KaleoProcessSoap> soapModels = new ArrayList<KaleoProcessSoap>(models.size());
+		List<KaleoProcessSoap> soapModels = new ArrayList<KaleoProcessSoap>(
+			models.size());
 
 		for (KaleoProcess model : models) {
 			soapModels.add(toSoapModel(model));
@@ -205,4 +208,5 @@ public class KaleoProcessSoap implements Serializable {
 	private long _DDMTemplateId;
 	private String _workflowDefinitionName;
 	private int _workflowDefinitionVersion;
+
 }

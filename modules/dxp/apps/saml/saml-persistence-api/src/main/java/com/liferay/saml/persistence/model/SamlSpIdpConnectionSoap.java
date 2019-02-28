@@ -30,7 +30,10 @@ import java.util.List;
  */
 @ProviderType
 public class SamlSpIdpConnectionSoap implements Serializable {
-	public static SamlSpIdpConnectionSoap toSoapModel(SamlSpIdpConnection model) {
+
+	public static SamlSpIdpConnectionSoap toSoapModel(
+		SamlSpIdpConnection model) {
+
 		SamlSpIdpConnectionSoap soapModel = new SamlSpIdpConnectionSoap();
 
 		soapModel.setSamlSpIdpConnectionId(model.getSamlSpIdpConnectionId());
@@ -40,7 +43,8 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setSamlIdpEntityId(model.getSamlIdpEntityId());
-		soapModel.setAssertionSignatureRequired(model.isAssertionSignatureRequired());
+		soapModel.setAssertionSignatureRequired(
+			model.isAssertionSignatureRequired());
 		soapModel.setClockSkew(model.getClockSkew());
 		soapModel.setEnabled(model.isEnabled());
 		soapModel.setForceAuthn(model.isForceAuthn());
@@ -58,7 +62,9 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 
 	public static SamlSpIdpConnectionSoap[] toSoapModels(
 		SamlSpIdpConnection[] models) {
-		SamlSpIdpConnectionSoap[] soapModels = new SamlSpIdpConnectionSoap[models.length];
+
+		SamlSpIdpConnectionSoap[] soapModels =
+			new SamlSpIdpConnectionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -69,10 +75,12 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 
 	public static SamlSpIdpConnectionSoap[][] toSoapModels(
 		SamlSpIdpConnection[][] models) {
+
 		SamlSpIdpConnectionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SamlSpIdpConnectionSoap[models.length][models[0].length];
+			soapModels =
+				new SamlSpIdpConnectionSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SamlSpIdpConnectionSoap[0][0];
@@ -87,13 +95,16 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 
 	public static SamlSpIdpConnectionSoap[] toSoapModels(
 		List<SamlSpIdpConnection> models) {
-		List<SamlSpIdpConnectionSoap> soapModels = new ArrayList<SamlSpIdpConnectionSoap>(models.size());
+
+		List<SamlSpIdpConnectionSoap> soapModels =
+			new ArrayList<SamlSpIdpConnectionSoap>(models.size());
 
 		for (SamlSpIdpConnection model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SamlSpIdpConnectionSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new SamlSpIdpConnectionSoap[soapModels.size()]);
 	}
 
 	public SamlSpIdpConnectionSoap() {
@@ -173,6 +184,7 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 
 	public void setAssertionSignatureRequired(
 		boolean assertionSignatureRequired) {
+
 		_assertionSignatureRequired = assertionSignatureRequired;
 	}
 
@@ -299,4 +311,5 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 	private String _nameIdFormat;
 	private boolean _signAuthnRequest;
 	private String _userAttributeMappings;
+
 }

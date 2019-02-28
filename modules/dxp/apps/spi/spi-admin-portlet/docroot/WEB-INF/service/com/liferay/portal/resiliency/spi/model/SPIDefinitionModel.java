@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SPIDefinitionModel extends AuditedModel,
-	BaseModel<SPIDefinition>, ShardedModel {
+public interface SPIDefinitionModel
+	extends AuditedModel, BaseModel<SPIDefinition>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -315,4 +316,5 @@ public interface SPIDefinitionModel extends AuditedModel,
 	 * @param statusMessage the status message of this spi definition
 	 */
 	public void setStatusMessage(String statusMessage);
+
 }

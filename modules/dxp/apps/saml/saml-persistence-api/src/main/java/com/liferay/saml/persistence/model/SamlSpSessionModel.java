@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlSpSessionModel extends AuditedModel,
-	BaseModel<SamlSpSession>, ShardedModel {
+public interface SamlSpSessionModel
+	extends AuditedModel, BaseModel<SamlSpSession>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -323,4 +324,5 @@ public interface SamlSpSessionModel extends AuditedModel,
 	 * @param terminated the terminated of this saml sp session
 	 */
 	public void setTerminated(boolean terminated);
+
 }

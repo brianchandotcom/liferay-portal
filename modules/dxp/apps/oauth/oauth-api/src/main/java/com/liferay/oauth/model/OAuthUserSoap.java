@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class OAuthUserSoap implements Serializable {
+
 	public static OAuthUserSoap toSoapModel(OAuthUser model) {
 		OAuthUserSoap soapModel = new OAuthUserSoap();
 
@@ -74,7 +75,8 @@ public class OAuthUserSoap implements Serializable {
 	}
 
 	public static OAuthUserSoap[] toSoapModels(List<OAuthUser> models) {
-		List<OAuthUserSoap> soapModels = new ArrayList<OAuthUserSoap>(models.size());
+		List<OAuthUserSoap> soapModels = new ArrayList<OAuthUserSoap>(
+			models.size());
 
 		for (OAuthUser model : models) {
 			soapModels.add(toSoapModel(model));
@@ -175,4 +177,5 @@ public class OAuthUserSoap implements Serializable {
 	private long _oAuthApplicationId;
 	private String _accessToken;
 	private String _accessSecret;
+
 }

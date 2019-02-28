@@ -27,16 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SamlSpSessionModel
  * @generated
  */
-@ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlSpSessionImpl")
+@ImplementationClassName(
+	"com.liferay.saml.persistence.model.impl.SamlSpSessionImpl"
+)
 @ProviderType
 public interface SamlSpSession extends SamlSpSessionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpSessionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SamlSpSession, Long> SAML_SP_SESSION_ID_ACCESSOR =
-		new Accessor<SamlSpSession, Long>() {
+	public static final Accessor<SamlSpSession, Long>
+		SAML_SP_SESSION_ID_ACCESSOR = new Accessor<SamlSpSession, Long>() {
+
 			@Override
 			public Long get(SamlSpSession samlSpSession) {
 				return samlSpSession.getSamlSpSessionId();
@@ -51,5 +55,7 @@ public interface SamlSpSession extends SamlSpSessionModel, PersistedModel {
 			public Class<SamlSpSession> getTypeClass() {
 				return SamlSpSession.class;
 			}
+
 		};
+
 }

@@ -35,6 +35,7 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLAConditionLo
 public abstract class WorkflowMetricsSLAConditionBaseImpl
 	extends WorkflowMetricsSLAConditionModelImpl
 	implements WorkflowMetricsSLACondition {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,13 @@ public abstract class WorkflowMetricsSLAConditionBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			WorkflowMetricsSLAConditionLocalServiceUtil.addWorkflowMetricsSLACondition(this);
+			WorkflowMetricsSLAConditionLocalServiceUtil.
+				addWorkflowMetricsSLACondition(this);
 		}
 		else {
-			WorkflowMetricsSLAConditionLocalServiceUtil.updateWorkflowMetricsSLACondition(this);
+			WorkflowMetricsSLAConditionLocalServiceUtil.
+				updateWorkflowMetricsSLACondition(this);
 		}
 	}
+
 }

@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class SPIDefinitionSoap implements Serializable {
+
 	public static SPIDefinitionSoap toSoapModel(SPIDefinition model) {
 		SPIDefinitionSoap soapModel = new SPIDefinitionSoap();
 
@@ -81,7 +82,8 @@ public class SPIDefinitionSoap implements Serializable {
 	}
 
 	public static SPIDefinitionSoap[] toSoapModels(List<SPIDefinition> models) {
-		List<SPIDefinitionSoap> soapModels = new ArrayList<SPIDefinitionSoap>(models.size());
+		List<SPIDefinitionSoap> soapModels = new ArrayList<SPIDefinitionSoap>(
+			models.size());
 
 		for (SPIDefinition model : models) {
 			soapModels.add(toSoapModel(model));
@@ -245,4 +247,5 @@ public class SPIDefinitionSoap implements Serializable {
 	private String _typeSettings;
 	private int _status;
 	private String _statusMessage;
+
 }

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
@@ -37,8 +36,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<WorkflowMetricsSLADefinition>,
-	Externalizable, MVCCModel {
+public class WorkflowMetricsSLADefinitionCacheModel
+	implements CacheModel<WorkflowMetricsSLADefinition>, Externalizable,
+			   MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,11 +50,16 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 			return false;
 		}
 
-		WorkflowMetricsSLADefinitionCacheModel workflowMetricsSLADefinitionCacheModel =
-			(WorkflowMetricsSLADefinitionCacheModel)obj;
+		WorkflowMetricsSLADefinitionCacheModel
+			workflowMetricsSLADefinitionCacheModel =
+				(WorkflowMetricsSLADefinitionCacheModel)obj;
 
-		if ((workflowMetricsSLADefinitionId == workflowMetricsSLADefinitionCacheModel.workflowMetricsSLADefinitionId) &&
-				(mvccVersion == workflowMetricsSLADefinitionCacheModel.mvccVersion)) {
+		if ((workflowMetricsSLADefinitionId ==
+				workflowMetricsSLADefinitionCacheModel.
+					workflowMetricsSLADefinitionId) &&
+			(mvccVersion ==
+				workflowMetricsSLADefinitionCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -120,7 +126,8 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 
 	@Override
 	public WorkflowMetricsSLADefinition toEntityModel() {
-		WorkflowMetricsSLADefinitionImpl workflowMetricsSLADefinitionImpl = new WorkflowMetricsSLADefinitionImpl();
+		WorkflowMetricsSLADefinitionImpl workflowMetricsSLADefinitionImpl =
+			new WorkflowMetricsSLADefinitionImpl();
 
 		workflowMetricsSLADefinitionImpl.setMvccVersion(mvccVersion);
 
@@ -131,7 +138,8 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 			workflowMetricsSLADefinitionImpl.setUuid(uuid);
 		}
 
-		workflowMetricsSLADefinitionImpl.setWorkflowMetricsSLADefinitionId(workflowMetricsSLADefinitionId);
+		workflowMetricsSLADefinitionImpl.setWorkflowMetricsSLADefinitionId(
+			workflowMetricsSLADefinitionId);
 		workflowMetricsSLADefinitionImpl.setGroupId(groupId);
 		workflowMetricsSLADefinitionImpl.setCompanyId(companyId);
 		workflowMetricsSLADefinitionImpl.setUserId(userId);
@@ -147,15 +155,16 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 			workflowMetricsSLADefinitionImpl.setCreateDate(null);
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setCreateDate(new Date(createDate));
+			workflowMetricsSLADefinitionImpl.setCreateDate(
+				new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
 			workflowMetricsSLADefinitionImpl.setModifiedDate(null);
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setModifiedDate(new Date(
-					modifiedDate));
+			workflowMetricsSLADefinitionImpl.setModifiedDate(
+				new Date(modifiedDate));
 		}
 
 		if (name == null) {
@@ -228,8 +237,7 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -313,4 +321,5 @@ public class WorkflowMetricsSLADefinitionCacheModel implements CacheModel<Workfl
 	public String pauseNodeNames;
 	public String startNodeNames;
 	public String stopNodeNames;
+
 }

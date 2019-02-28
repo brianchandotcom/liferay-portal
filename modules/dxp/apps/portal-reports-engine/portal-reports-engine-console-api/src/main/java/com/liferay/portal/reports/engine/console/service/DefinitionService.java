@@ -46,50 +46,62 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=reports", "json.web.service.context.path=Definition"}, service = DefinitionService.class)
+@OSGiBeanProperties(
+	property = {
+		"json.web.service.context.name=reports",
+		"json.web.service.context.path=Definition"
+	},
+	service = DefinitionService.class
+)
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface DefinitionService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DefinitionServiceUtil} to access the definition remote service. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Definition addDefinition(long groupId, Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap, long sourceId,
-		String reportParameters, String fileName, InputStream inputStream,
-		ServiceContext serviceContext) throws PortalException;
+	public Definition addDefinition(
+			long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, long sourceId,
+			String reportParameters, String fileName, InputStream inputStream,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Definition getDefinition(long definitionId)
+	public Definition getDefinition(long definitionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Definition> getDefinitions(
+			long groupId, String definitionName, String description,
+			String sourceId, String reportName, boolean andSearch, int start,
+			int end, OrderByComparator orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Definition> getDefinitions(long groupId, String definitionName,
-		String description, String sourceId, String reportName,
-		boolean andSearch, int start, int end,
-		OrderByComparator orderByComparator) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefinitionsCount(long groupId, String definitionName,
-		String description, String sourceId, String reportName,
-		boolean andSearch);
+	public int getDefinitionsCount(
+		long groupId, String definitionName, String description,
+		String sourceId, String reportName, boolean andSearch);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public Definition updateDefinition(long definitionId,
-		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-		long sourceId, String reportParameters, String fileName,
-		InputStream inputStream, ServiceContext serviceContext)
+	public Definition updateDefinition(
+			long definitionId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, long sourceId,
+			String reportParameters, String fileName, InputStream inputStream,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

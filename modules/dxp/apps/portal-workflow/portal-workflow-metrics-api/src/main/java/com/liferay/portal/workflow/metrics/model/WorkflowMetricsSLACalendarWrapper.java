@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,11 +34,14 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLACalendarWrapper extends BaseModelWrapper<WorkflowMetricsSLACalendar>
+public class WorkflowMetricsSLACalendarWrapper
+	extends BaseModelWrapper<WorkflowMetricsSLACalendar>
 	implements WorkflowMetricsSLACalendar,
-		ModelWrapper<WorkflowMetricsSLACalendar> {
+			   ModelWrapper<WorkflowMetricsSLACalendar> {
+
 	public WorkflowMetricsSLACalendarWrapper(
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
+
 		super(workflowMetricsSLACalendar);
 	}
 
@@ -49,8 +51,8 @@ public class WorkflowMetricsSLACalendarWrapper extends BaseModelWrapper<Workflow
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("workflowMetricsSLACalendarId",
-			getWorkflowMetricsSLACalendarId());
+		attributes.put(
+			"workflowMetricsSLACalendarId", getWorkflowMetricsSLACalendarId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -76,7 +78,7 @@ public class WorkflowMetricsSLACalendarWrapper extends BaseModelWrapper<Workflow
 		}
 
 		Long workflowMetricsSLACalendarId = (Long)attributes.get(
-				"workflowMetricsSLACalendarId");
+			"workflowMetricsSLACalendarId");
 
 		if (workflowMetricsSLACalendarId != null) {
 			setWorkflowMetricsSLACalendarId(workflowMetricsSLACalendarId);
@@ -120,110 +122,110 @@ public class WorkflowMetricsSLACalendarWrapper extends BaseModelWrapper<Workflow
 	}
 
 	/**
-	* Returns the company ID of this workflow metrics sla calendar.
-	*
-	* @return the company ID of this workflow metrics sla calendar
-	*/
+	 * Returns the company ID of this workflow metrics sla calendar.
+	 *
+	 * @return the company ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this workflow metrics sla calendar.
-	*
-	* @return the create date of this workflow metrics sla calendar
-	*/
+	 * Returns the create date of this workflow metrics sla calendar.
+	 *
+	 * @return the create date of this workflow metrics sla calendar
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the group ID of this workflow metrics sla calendar.
-	*
-	* @return the group ID of this workflow metrics sla calendar
-	*/
+	 * Returns the group ID of this workflow metrics sla calendar.
+	 *
+	 * @return the group ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this workflow metrics sla calendar.
-	*
-	* @return the modified date of this workflow metrics sla calendar
-	*/
+	 * Returns the modified date of this workflow metrics sla calendar.
+	 *
+	 * @return the modified date of this workflow metrics sla calendar
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this workflow metrics sla calendar.
-	*
-	* @return the mvcc version of this workflow metrics sla calendar
-	*/
+	 * Returns the mvcc version of this workflow metrics sla calendar.
+	 *
+	 * @return the mvcc version of this workflow metrics sla calendar
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this workflow metrics sla calendar.
-	*
-	* @return the primary key of this workflow metrics sla calendar
-	*/
+	 * Returns the primary key of this workflow metrics sla calendar.
+	 *
+	 * @return the primary key of this workflow metrics sla calendar
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the user ID of this workflow metrics sla calendar.
-	*
-	* @return the user ID of this workflow metrics sla calendar
-	*/
+	 * Returns the user ID of this workflow metrics sla calendar.
+	 *
+	 * @return the user ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this workflow metrics sla calendar.
-	*
-	* @return the user name of this workflow metrics sla calendar
-	*/
+	 * Returns the user name of this workflow metrics sla calendar.
+	 *
+	 * @return the user name of this workflow metrics sla calendar
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this workflow metrics sla calendar.
-	*
-	* @return the user uuid of this workflow metrics sla calendar
-	*/
+	 * Returns the user uuid of this workflow metrics sla calendar.
+	 *
+	 * @return the user uuid of this workflow metrics sla calendar
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this workflow metrics sla calendar.
-	*
-	* @return the uuid of this workflow metrics sla calendar
-	*/
+	 * Returns the uuid of this workflow metrics sla calendar.
+	 *
+	 * @return the uuid of this workflow metrics sla calendar
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	* Returns the workflow metrics sla calendar ID of this workflow metrics sla calendar.
-	*
-	* @return the workflow metrics sla calendar ID of this workflow metrics sla calendar
-	*/
+	 * Returns the workflow metrics sla calendar ID of this workflow metrics sla calendar.
+	 *
+	 * @return the workflow metrics sla calendar ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public long getWorkflowMetricsSLACalendarId() {
 		return model.getWorkflowMetricsSLACalendarId();
@@ -235,113 +237,114 @@ public class WorkflowMetricsSLACalendarWrapper extends BaseModelWrapper<Workflow
 	}
 
 	/**
-	* Sets the company ID of this workflow metrics sla calendar.
-	*
-	* @param companyId the company ID of this workflow metrics sla calendar
-	*/
+	 * Sets the company ID of this workflow metrics sla calendar.
+	 *
+	 * @param companyId the company ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this workflow metrics sla calendar.
-	*
-	* @param createDate the create date of this workflow metrics sla calendar
-	*/
+	 * Sets the create date of this workflow metrics sla calendar.
+	 *
+	 * @param createDate the create date of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the group ID of this workflow metrics sla calendar.
-	*
-	* @param groupId the group ID of this workflow metrics sla calendar
-	*/
+	 * Sets the group ID of this workflow metrics sla calendar.
+	 *
+	 * @param groupId the group ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this workflow metrics sla calendar.
-	*
-	* @param modifiedDate the modified date of this workflow metrics sla calendar
-	*/
+	 * Sets the modified date of this workflow metrics sla calendar.
+	 *
+	 * @param modifiedDate the modified date of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this workflow metrics sla calendar.
-	*
-	* @param mvccVersion the mvcc version of this workflow metrics sla calendar
-	*/
+	 * Sets the mvcc version of this workflow metrics sla calendar.
+	 *
+	 * @param mvccVersion the mvcc version of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this workflow metrics sla calendar.
-	*
-	* @param primaryKey the primary key of this workflow metrics sla calendar
-	*/
+	 * Sets the primary key of this workflow metrics sla calendar.
+	 *
+	 * @param primaryKey the primary key of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the user ID of this workflow metrics sla calendar.
-	*
-	* @param userId the user ID of this workflow metrics sla calendar
-	*/
+	 * Sets the user ID of this workflow metrics sla calendar.
+	 *
+	 * @param userId the user ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this workflow metrics sla calendar.
-	*
-	* @param userName the user name of this workflow metrics sla calendar
-	*/
+	 * Sets the user name of this workflow metrics sla calendar.
+	 *
+	 * @param userName the user name of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this workflow metrics sla calendar.
-	*
-	* @param userUuid the user uuid of this workflow metrics sla calendar
-	*/
+	 * Sets the user uuid of this workflow metrics sla calendar.
+	 *
+	 * @param userUuid the user uuid of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this workflow metrics sla calendar.
-	*
-	* @param uuid the uuid of this workflow metrics sla calendar
-	*/
+	 * Sets the uuid of this workflow metrics sla calendar.
+	 *
+	 * @param uuid the uuid of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
 	}
 
 	/**
-	* Sets the workflow metrics sla calendar ID of this workflow metrics sla calendar.
-	*
-	* @param workflowMetricsSLACalendarId the workflow metrics sla calendar ID of this workflow metrics sla calendar
-	*/
+	 * Sets the workflow metrics sla calendar ID of this workflow metrics sla calendar.
+	 *
+	 * @param workflowMetricsSLACalendarId the workflow metrics sla calendar ID of this workflow metrics sla calendar
+	 */
 	@Override
 	public void setWorkflowMetricsSLACalendarId(
 		long workflowMetricsSLACalendarId) {
+
 		model.setWorkflowMetricsSLACalendarId(workflowMetricsSLACalendarId);
 	}
 
@@ -353,6 +356,9 @@ public class WorkflowMetricsSLACalendarWrapper extends BaseModelWrapper<Workflow
 	@Override
 	protected WorkflowMetricsSLACalendarWrapper wrap(
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar) {
-		return new WorkflowMetricsSLACalendarWrapper(workflowMetricsSLACalendar);
+
+		return new WorkflowMetricsSLACalendarWrapper(
+			workflowMetricsSLACalendar);
 	}
+
 }

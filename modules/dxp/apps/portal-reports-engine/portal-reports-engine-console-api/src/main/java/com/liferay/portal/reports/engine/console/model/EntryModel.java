@@ -35,7 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface EntryModel extends BaseModel<Entry>, GroupedModel, ShardedModel {
+public interface EntryModel
+	extends BaseModel<Entry>, GroupedModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -401,4 +403,5 @@ public interface EntryModel extends BaseModel<Entry>, GroupedModel, ShardedModel
 	 * @param errorMessage the error message of this entry
 	 */
 	public void setErrorMessage(String errorMessage);
+
 }

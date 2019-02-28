@@ -27,32 +27,40 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoProcessLinkModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl")
+@ImplementationClassName(
+	"com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl"
+)
 @ProviderType
-public interface KaleoProcessLink extends KaleoProcessLinkModel, PersistedModel {
+public interface KaleoProcessLink
+	extends KaleoProcessLinkModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoProcessLink, Long> KALEO_PROCESS_LINK_ID_ACCESSOR =
-		new Accessor<KaleoProcessLink, Long>() {
-			@Override
-			public Long get(KaleoProcessLink kaleoProcessLink) {
-				return kaleoProcessLink.getKaleoProcessLinkId();
-			}
+	public static final Accessor<KaleoProcessLink, Long>
+		KALEO_PROCESS_LINK_ID_ACCESSOR =
+			new Accessor<KaleoProcessLink, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(KaleoProcessLink kaleoProcessLink) {
+					return kaleoProcessLink.getKaleoProcessLinkId();
+				}
 
-			@Override
-			public Class<KaleoProcessLink> getTypeClass() {
-				return KaleoProcessLink.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<KaleoProcessLink> getTypeClass() {
+					return KaleoProcessLink.class;
+				}
+
+			};
 
 	public KaleoProcess getKaleoProcess()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

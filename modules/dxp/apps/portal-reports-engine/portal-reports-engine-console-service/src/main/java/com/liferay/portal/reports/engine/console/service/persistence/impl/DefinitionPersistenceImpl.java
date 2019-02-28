@@ -17,7 +17,6 @@ package com.liferay.portal.reports.engine.console.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -68,18 +67,23 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
-	implements DefinitionPersistence {
+public class DefinitionPersistenceImpl
+	extends BasePersistenceImpl<Definition> implements DefinitionPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>DefinitionUtil</code> to access the definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = DefinitionImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		DefinitionImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -129,8 +133,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByUuid(String uuid, int start, int end,
+	public List<Definition> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<Definition> orderByComparator) {
+
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
@@ -149,9 +155,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByUuid(String uuid, int start, int end,
+	public List<Definition> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -159,21 +167,22 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] { uuid };
+			finderArgs = new Object[] {uuid};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<Definition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Definition>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Definition>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
@@ -190,8 +199,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -211,11 +220,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(DefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -235,16 +243,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				}
 
 				if (!pagination) {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -273,9 +281,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByUuid_First(String uuid,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByUuid_First(
+			String uuid, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		Definition definition = fetchByUuid_First(uuid, orderByComparator);
 
 		if (definition != null) {
@@ -302,8 +311,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the first matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByUuid_First(String uuid,
-		OrderByComparator<Definition> orderByComparator) {
+	public Definition fetchByUuid_First(
+		String uuid, OrderByComparator<Definition> orderByComparator) {
+
 		List<Definition> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -322,9 +332,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByUuid_Last(String uuid,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByUuid_Last(
+			String uuid, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		Definition definition = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (definition != null) {
@@ -351,16 +362,17 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByUuid_Last(String uuid,
-		OrderByComparator<Definition> orderByComparator) {
+	public Definition fetchByUuid_Last(
+		String uuid, OrderByComparator<Definition> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Definition> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<Definition> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -379,9 +391,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	 */
 	@Override
-	public Definition[] findByUuid_PrevAndNext(long definitionId, String uuid,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition[] findByUuid_PrevAndNext(
+			long definitionId, String uuid,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		uuid = Objects.toString(uuid, "");
 
 		Definition definition = findByPrimaryKey(definitionId);
@@ -393,13 +407,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			Definition[] array = new DefinitionImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, definition, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, definition, uuid, orderByComparator, true);
 
 			array[1] = definition;
 
-			array[2] = getByUuid_PrevAndNext(session, definition, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, definition, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -411,14 +425,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 	}
 
-	protected Definition getByUuid_PrevAndNext(Session session,
-		Definition definition, String uuid,
+	protected Definition getByUuid_PrevAndNext(
+		Session session, Definition definition, String uuid,
 		OrderByComparator<Definition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -439,7 +454,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -511,8 +527,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					definition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(definition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -534,8 +551,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Definition definition : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (Definition definition :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(definition);
 		}
 	}
@@ -552,7 +570,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 		FinderPath finderPath = _finderPathCountByUuid;
 
-		Object[] finderArgs = new Object[] { uuid };
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -604,8 +622,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "definition.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(definition.uuid IS NULL OR definition.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"definition.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(definition.uuid IS NULL OR definition.uuid = '')";
+
 	private FinderPath _finderPathFetchByUUID_G;
 	private FinderPath _finderPathCountByUUID_G;
 
@@ -620,6 +642,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Definition findByUUID_G(String uuid, long groupId)
 		throws NoSuchDefinitionException {
+
 		Definition definition = fetchByUUID_G(uuid, groupId);
 
 		if (definition == null) {
@@ -666,24 +689,26 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
+	public Definition fetchByUUID_G(
+		String uuid, long groupId, boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(_finderPathFetchByUUID_G,
-					finderArgs, this);
+			result = finderCache.getResult(
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof Definition) {
 			Definition definition = (Definition)result;
 
 			if (!Objects.equals(uuid, definition.getUuid()) ||
-					(groupId != definition.getGroupId())) {
+				(groupId != definition.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -726,8 +751,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				List<Definition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(_finderPathFetchByUUID_G, finderArgs,
-						list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					Definition definition = list.get(0);
@@ -765,6 +790,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Definition removeByUUID_G(String uuid, long groupId)
 		throws NoSuchDefinitionException {
+
 		Definition definition = findByUUID_G(uuid, groupId);
 
 		return remove(definition);
@@ -783,7 +809,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 		FinderPath finderPath = _finderPathCountByUUID_G;
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -839,9 +865,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "definition.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(definition.uuid IS NULL OR definition.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "definition.groupId = ?";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"definition.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(definition.uuid IS NULL OR definition.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"definition.groupId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -855,8 +887,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public List<Definition> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -873,8 +905,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByUuid_C(String uuid, long companyId,
-		int start, int end) {
+	public List<Definition> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -893,9 +926,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<Definition> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<Definition> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<Definition> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -914,9 +950,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<Definition> orderByComparator,
+	public List<Definition> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -924,30 +962,30 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
 		List<Definition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Definition>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Definition>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
 					if (!uuid.equals(definition.getUuid()) ||
-							(companyId != definition.getCompanyId())) {
+						(companyId != definition.getCompanyId())) {
+
 						list = null;
 
 						break;
@@ -960,8 +998,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -983,11 +1021,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(DefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1009,16 +1046,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1048,11 +1085,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
-		Definition definition = fetchByUuid_C_First(uuid, companyId,
-				orderByComparator);
+
+		Definition definition = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
 
 		if (definition != null) {
 			return definition;
@@ -1082,10 +1121,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the first matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByUuid_C_First(String uuid, long companyId,
+	public Definition fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<Definition> orderByComparator) {
-		List<Definition> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<Definition> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1104,11 +1145,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
-		Definition definition = fetchByUuid_C_Last(uuid, companyId,
-				orderByComparator);
+
+		Definition definition = fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
 
 		if (definition != null) {
 			return definition;
@@ -1138,16 +1181,18 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByUuid_C_Last(String uuid, long companyId,
+	public Definition fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<Definition> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Definition> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<Definition> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1167,10 +1212,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	 */
 	@Override
-	public Definition[] findByUuid_C_PrevAndNext(long definitionId,
-		String uuid, long companyId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition[] findByUuid_C_PrevAndNext(
+			long definitionId, String uuid, long companyId,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		uuid = Objects.toString(uuid, "");
 
 		Definition definition = findByPrimaryKey(definitionId);
@@ -1182,13 +1228,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			Definition[] array = new DefinitionImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, definition, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, definition, uuid, companyId, orderByComparator, true);
 
 			array[1] = definition;
 
-			array[2] = getByUuid_C_PrevAndNext(session, definition, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, definition, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1200,14 +1246,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 	}
 
-	protected Definition getByUuid_C_PrevAndNext(Session session,
-		Definition definition, String uuid, long companyId,
+	protected Definition getByUuid_C_PrevAndNext(
+		Session session, Definition definition, String uuid, long companyId,
 		OrderByComparator<Definition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1230,7 +1277,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1304,8 +1352,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					definition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(definition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1328,8 +1377,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Definition definition : findByUuid_C(uuid, companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (Definition definition :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(definition);
 		}
 	}
@@ -1347,7 +1399,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 		FinderPath finderPath = _finderPathCountByUuid_C;
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1403,9 +1455,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "definition.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(definition.uuid IS NULL OR definition.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "definition.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"definition.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(definition.uuid IS NULL OR definition.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"definition.companyId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
@@ -1418,7 +1476,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public List<Definition> findByGroupId(long groupId) {
-		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByGroupId(
+			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1452,8 +1511,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByGroupId(long groupId, int start, int end,
+	public List<Definition> findByGroupId(
+		long groupId, int start, int end,
 		OrderByComparator<Definition> orderByComparator) {
+
 		return findByGroupId(groupId, start, end, orderByComparator, true);
 	}
 
@@ -1472,29 +1533,32 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByGroupId(long groupId, int start, int end,
+	public List<Definition> findByGroupId(
+		long groupId, int start, int end,
 		OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] { groupId };
+			finderArgs = new Object[] {groupId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] { groupId, start, end, orderByComparator };
+			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<Definition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Definition>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Definition>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
@@ -1511,8 +1575,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1523,11 +1587,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(DefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1545,16 +1608,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				qPos.add(groupId);
 
 				if (!pagination) {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1583,10 +1646,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByGroupId_First(long groupId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByGroupId_First(
+			long groupId, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
-		Definition definition = fetchByGroupId_First(groupId, orderByComparator);
+
+		Definition definition = fetchByGroupId_First(
+			groupId, orderByComparator);
 
 		if (definition != null) {
 			return definition;
@@ -1612,8 +1677,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the first matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByGroupId_First(long groupId,
-		OrderByComparator<Definition> orderByComparator) {
+	public Definition fetchByGroupId_First(
+		long groupId, OrderByComparator<Definition> orderByComparator) {
+
 		List<Definition> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1632,9 +1698,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByGroupId_Last(long groupId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByGroupId_Last(
+			long groupId, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		Definition definition = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (definition != null) {
@@ -1661,16 +1728,17 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByGroupId_Last(long groupId,
-		OrderByComparator<Definition> orderByComparator) {
+	public Definition fetchByGroupId_Last(
+		long groupId, OrderByComparator<Definition> orderByComparator) {
+
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Definition> list = findByGroupId(groupId, count - 1, count,
-				orderByComparator);
+		List<Definition> list = findByGroupId(
+			groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1689,9 +1757,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	 */
 	@Override
-	public Definition[] findByGroupId_PrevAndNext(long definitionId,
-		long groupId, OrderByComparator<Definition> orderByComparator)
+	public Definition[] findByGroupId_PrevAndNext(
+			long definitionId, long groupId,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		Definition definition = findByPrimaryKey(definitionId);
 
 		Session session = null;
@@ -1701,13 +1771,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			Definition[] array = new DefinitionImpl[3];
 
-			array[0] = getByGroupId_PrevAndNext(session, definition, groupId,
-					orderByComparator, true);
+			array[0] = getByGroupId_PrevAndNext(
+				session, definition, groupId, orderByComparator, true);
 
 			array[1] = definition;
 
-			array[2] = getByGroupId_PrevAndNext(session, definition, groupId,
-					orderByComparator, false);
+			array[2] = getByGroupId_PrevAndNext(
+				session, definition, groupId, orderByComparator, false);
 
 			return array;
 		}
@@ -1719,14 +1789,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 	}
 
-	protected Definition getByGroupId_PrevAndNext(Session session,
-		Definition definition, long groupId,
+	protected Definition getByGroupId_PrevAndNext(
+		Session session, Definition definition, long groupId,
 		OrderByComparator<Definition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1738,7 +1809,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1808,8 +1880,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					definition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(definition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1832,8 +1905,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public List<Definition> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(groupId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return filterFindByGroupId(
+			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1849,7 +1922,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the range of matching definitions that the user has permission to view
 	 */
 	@Override
-	public List<Definition> filterFindByGroupId(long groupId, int start, int end) {
+	public List<Definition> filterFindByGroupId(
+		long groupId, int start, int end) {
+
 		return filterFindByGroupId(groupId, start, end, null);
 	}
 
@@ -1867,8 +1942,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions that the user has permission to view
 	 */
 	@Override
-	public List<Definition> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator<Definition> orderByComparator) {
+	public List<Definition> filterFindByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<Definition> orderByComparator) {
+
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -1876,8 +1953,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(3 +
-					(orderByComparator.getOrderByFields().length * 2));
+			query = new StringBundler(
+				3 + (orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
 			query = new StringBundler(4);
@@ -1887,23 +1964,25 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			query.append(_FILTER_SQL_SELECT_DEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
 			}
 			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator, true);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
 			}
 		}
 		else {
@@ -1915,9 +1994,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Definition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Definition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -1937,7 +2016,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			qPos.add(groupId);
 
-			return (List<Definition>)QueryUtil.list(q, getDialect(), start, end);
+			return (List<Definition>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -1957,12 +2037,14 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	 */
 	@Override
-	public Definition[] filterFindByGroupId_PrevAndNext(long definitionId,
-		long groupId, OrderByComparator<Definition> orderByComparator)
+	public Definition[] filterFindByGroupId_PrevAndNext(
+			long definitionId, long groupId,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId_PrevAndNext(definitionId, groupId,
-				orderByComparator);
+			return findByGroupId_PrevAndNext(
+				definitionId, groupId, orderByComparator);
 		}
 
 		Definition definition = findByPrimaryKey(definitionId);
@@ -1974,13 +2056,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			Definition[] array = new DefinitionImpl[3];
 
-			array[0] = filterGetByGroupId_PrevAndNext(session, definition,
-					groupId, orderByComparator, true);
+			array[0] = filterGetByGroupId_PrevAndNext(
+				session, definition, groupId, orderByComparator, true);
 
 			array[1] = definition;
 
-			array[2] = filterGetByGroupId_PrevAndNext(session, definition,
-					groupId, orderByComparator, false);
+			array[2] = filterGetByGroupId_PrevAndNext(
+				session, definition, groupId, orderByComparator, false);
 
 			return array;
 		}
@@ -1992,14 +2074,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 	}
 
-	protected Definition filterGetByGroupId_PrevAndNext(Session session,
-		Definition definition, long groupId,
+	protected Definition filterGetByGroupId_PrevAndNext(
+		Session session, Definition definition, long groupId,
 		OrderByComparator<Definition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -2010,17 +2093,20 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			query.append(_FILTER_SQL_SELECT_DEFINITION_WHERE);
 		}
 		else {
-			query.append(_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+			query.append(
+				_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+			query.append(
+				_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2);
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -2028,12 +2114,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByConditionFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByConditionFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
 				}
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -2060,12 +2150,14 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			for (int i = 0; i < orderByFields.length; i++) {
 				if (getDB().isSupportsInlineDistinct()) {
-					query.append(getColumnName(_ORDER_BY_ENTITY_ALIAS,
-							orderByFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
 				}
 				else {
-					query.append(getColumnName(_ORDER_BY_ENTITY_TABLE,
-							orderByFields[i], true));
+					query.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
 				}
 
 				if ((i + 1) < orderByFields.length) {
@@ -2095,9 +2187,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Definition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Definition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -2116,8 +2208,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					definition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(definition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -2139,8 +2232,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (Definition definition : findByGroupId(groupId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (Definition definition :
+				findByGroupId(
+					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(definition);
 		}
 	}
@@ -2155,7 +2250,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	public int countByGroupId(long groupId) {
 		FinderPath finderPath = _finderPathCountByGroupId;
 
-		Object[] finderArgs = new Object[] { groupId };
+		Object[] finderArgs = new Object[] {groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2214,9 +2309,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				Definition.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			query.toString(), Definition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
 
 		Session session = null;
 
@@ -2225,8 +2320,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
+			q.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -2244,7 +2339,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "definition.groupId = ?";
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
+		"definition.groupId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -2257,8 +2354,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public List<Definition> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2274,7 +2371,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByCompanyId(long companyId, int start, int end) {
+	public List<Definition> findByCompanyId(
+		long companyId, int start, int end) {
+
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -2292,8 +2391,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByCompanyId(long companyId, int start, int end,
+	public List<Definition> findByCompanyId(
+		long companyId, int start, int end,
 		OrderByComparator<Definition> orderByComparator) {
+
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
@@ -2312,29 +2413,34 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of matching definitions
 	 */
 	@Override
-	public List<Definition> findByCompanyId(long companyId, int start, int end,
+	public List<Definition> findByCompanyId(
+		long companyId, int start, int end,
 		OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId };
+			finderArgs = new Object[] {companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+			finderArgs = new Object[] {
+				companyId, start, end, orderByComparator
+			};
 		}
 
 		List<Definition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Definition>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Definition>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
@@ -2351,8 +2457,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2363,11 +2469,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(DefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2385,16 +2490,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2423,11 +2528,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByCompanyId_First(long companyId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByCompanyId_First(
+			long companyId, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
-		Definition definition = fetchByCompanyId_First(companyId,
-				orderByComparator);
+
+		Definition definition = fetchByCompanyId_First(
+			companyId, orderByComparator);
 
 		if (definition != null) {
 			return definition;
@@ -2453,10 +2559,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the first matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByCompanyId_First(long companyId,
-		OrderByComparator<Definition> orderByComparator) {
-		List<Definition> list = findByCompanyId(companyId, 0, 1,
-				orderByComparator);
+	public Definition fetchByCompanyId_First(
+		long companyId, OrderByComparator<Definition> orderByComparator) {
+
+		List<Definition> list = findByCompanyId(
+			companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2474,11 +2581,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a matching definition could not be found
 	 */
 	@Override
-	public Definition findByCompanyId_Last(long companyId,
-		OrderByComparator<Definition> orderByComparator)
+	public Definition findByCompanyId_Last(
+			long companyId, OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
-		Definition definition = fetchByCompanyId_Last(companyId,
-				orderByComparator);
+
+		Definition definition = fetchByCompanyId_Last(
+			companyId, orderByComparator);
 
 		if (definition != null) {
 			return definition;
@@ -2504,16 +2612,17 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the last matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchByCompanyId_Last(long companyId,
-		OrderByComparator<Definition> orderByComparator) {
+	public Definition fetchByCompanyId_Last(
+		long companyId, OrderByComparator<Definition> orderByComparator) {
+
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Definition> list = findByCompanyId(companyId, count - 1, count,
-				orderByComparator);
+		List<Definition> list = findByCompanyId(
+			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2532,9 +2641,11 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
 	 */
 	@Override
-	public Definition[] findByCompanyId_PrevAndNext(long definitionId,
-		long companyId, OrderByComparator<Definition> orderByComparator)
+	public Definition[] findByCompanyId_PrevAndNext(
+			long definitionId, long companyId,
+			OrderByComparator<Definition> orderByComparator)
 		throws NoSuchDefinitionException {
+
 		Definition definition = findByPrimaryKey(definitionId);
 
 		Session session = null;
@@ -2544,13 +2655,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 			Definition[] array = new DefinitionImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(session, definition,
-					companyId, orderByComparator, true);
+			array[0] = getByCompanyId_PrevAndNext(
+				session, definition, companyId, orderByComparator, true);
 
 			array[1] = definition;
 
-			array[2] = getByCompanyId_PrevAndNext(session, definition,
-					companyId, orderByComparator, false);
+			array[2] = getByCompanyId_PrevAndNext(
+				session, definition, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -2562,14 +2673,15 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 	}
 
-	protected Definition getByCompanyId_PrevAndNext(Session session,
-		Definition definition, long companyId,
+	protected Definition getByCompanyId_PrevAndNext(
+		Session session, Definition definition, long companyId,
 		OrderByComparator<Definition> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -2581,7 +2693,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -2651,8 +2764,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					definition)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(definition)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -2674,8 +2788,10 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (Definition definition : findByCompanyId(companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (Definition definition :
+				findByCompanyId(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(definition);
 		}
 	}
@@ -2690,7 +2806,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Object[] finderArgs = new Object[] { companyId };
+		Object[] finderArgs = new Object[] {companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2731,7 +2847,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "definition.companyId = ?";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
+		"definition.companyId = ?";
 
 	public DefinitionPersistenceImpl() {
 		setModelClass(Definition.class);
@@ -2748,11 +2865,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public void cacheResult(Definition definition) {
-		entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			DefinitionImpl.class, definition.getPrimaryKey(), definition);
+		entityCache.putResult(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED, DefinitionImpl.class,
+			definition.getPrimaryKey(), definition);
 
-		finderCache.putResult(_finderPathFetchByUUID_G,
-			new Object[] { definition.getUuid(), definition.getGroupId() },
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {definition.getUuid(), definition.getGroupId()},
 			definition);
 
 		definition.resetOriginalValues();
@@ -2767,8 +2886,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	public void cacheResult(List<Definition> definitions) {
 		for (Definition definition : definitions) {
 			if (entityCache.getResult(
-						DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						DefinitionImpl.class, definition.getPrimaryKey()) == null) {
+					DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+					DefinitionImpl.class, definition.getPrimaryKey()) == null) {
+
 				cacheResult(definition);
 			}
 			else {
@@ -2802,8 +2922,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public void clearCache(Definition definition) {
-		entityCache.removeResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			DefinitionImpl.class, definition.getPrimaryKey());
+		entityCache.removeResult(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED, DefinitionImpl.class,
+			definition.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2817,8 +2938,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Definition definition : definitions) {
-			entityCache.removeResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionImpl.class, definition.getPrimaryKey());
+			entityCache.removeResult(
+				DefinitionModelImpl.ENTITY_CACHE_ENABLED, DefinitionImpl.class,
+				definition.getPrimaryKey());
 
 			clearUniqueFindersCache((DefinitionModelImpl)definition, true);
 		}
@@ -2826,34 +2948,36 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 	protected void cacheUniqueFindersCache(
 		DefinitionModelImpl definitionModelImpl) {
-		Object[] args = new Object[] {
-				definitionModelImpl.getUuid(), definitionModelImpl.getGroupId()
-			};
 
-		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1),
-			false);
-		finderCache.putResult(_finderPathFetchByUUID_G, args,
-			definitionModelImpl, false);
+		Object[] args = new Object[] {
+			definitionModelImpl.getUuid(), definitionModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, definitionModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		DefinitionModelImpl definitionModelImpl, boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					definitionModelImpl.getUuid(),
-					definitionModelImpl.getGroupId()
-				};
+				definitionModelImpl.getUuid(), definitionModelImpl.getGroupId()
+			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((definitionModelImpl.getColumnBitmask() &
-				_finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					definitionModelImpl.getOriginalUuid(),
-					definitionModelImpl.getOriginalGroupId()
-				};
+				definitionModelImpl.getOriginalUuid(),
+				definitionModelImpl.getOriginalGroupId()
+			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
@@ -2892,6 +3016,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Definition remove(long definitionId)
 		throws NoSuchDefinitionException {
+
 		return remove((Serializable)definitionId);
 	}
 
@@ -2905,21 +3030,22 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Definition remove(Serializable primaryKey)
 		throws NoSuchDefinitionException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			Definition definition = (Definition)session.get(DefinitionImpl.class,
-					primaryKey);
+			Definition definition = (Definition)session.get(
+				DefinitionImpl.class, primaryKey);
 
 			if (definition == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchDefinitionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchDefinitionException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(definition);
@@ -2943,8 +3069,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			session = openSession();
 
 			if (!session.contains(definition)) {
-				definition = (Definition)session.get(DefinitionImpl.class,
-						definition.getPrimaryKeyObj());
+				definition = (Definition)session.get(
+					DefinitionImpl.class, definition.getPrimaryKeyObj());
 			}
 
 			if (definition != null) {
@@ -2977,15 +3103,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in definition proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom Definition implementation " +
-				definition.getClass());
+					definition.getClass());
 		}
 
-		DefinitionModelImpl definitionModelImpl = (DefinitionModelImpl)definition;
+		DefinitionModelImpl definitionModelImpl =
+			(DefinitionModelImpl)definition;
 
 		if (Validator.isNull(definition.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -2993,7 +3120,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			definition.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -3041,116 +3169,123 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		if (!DefinitionModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { definitionModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {definitionModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
-				args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				definitionModelImpl.getUuid(),
+				definitionModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {definitionModelImpl.getGroupId()};
+
+			finderCache.removeResult(_finderPathCountByGroupId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByGroupId, args);
+
+			args = new Object[] {definitionModelImpl.getCompanyId()};
+
+			finderCache.removeResult(_finderPathCountByCompanyId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByCompanyId, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((definitionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					definitionModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {definitionModelImpl.getUuid()};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((definitionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					definitionModelImpl.getOriginalUuid(),
+					definitionModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					definitionModelImpl.getUuid(),
 					definitionModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-				args);
-
-			args = new Object[] { definitionModelImpl.getGroupId() };
-
-			finderCache.removeResult(_finderPathCountByGroupId, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByGroupId,
-				args);
-
-			args = new Object[] { definitionModelImpl.getCompanyId() };
-
-			finderCache.removeResult(_finderPathCountByCompanyId, args);
-			finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-				args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((definitionModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						definitionModelImpl.getOriginalUuid()
-					};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-
-				args = new Object[] { definitionModelImpl.getUuid() };
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
 			if ((definitionModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByGroupId.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						definitionModelImpl.getOriginalUuid(),
-						definitionModelImpl.getOriginalCompanyId()
-					};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-
-				args = new Object[] {
-						definitionModelImpl.getUuid(),
-						definitionModelImpl.getCompanyId()
-					};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-			}
-
-			if ((definitionModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByGroupId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						definitionModelImpl.getOriginalGroupId()
-					};
+					definitionModelImpl.getOriginalGroupId()
+				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByGroupId,
-					args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByGroupId, args);
 
-				args = new Object[] { definitionModelImpl.getGroupId() };
+				args = new Object[] {definitionModelImpl.getGroupId()};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByGroupId,
-					args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByGroupId, args);
 			}
 
 			if ((definitionModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByCompanyId.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						definitionModelImpl.getOriginalCompanyId()
-					};
+					definitionModelImpl.getOriginalCompanyId()
+				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
 
-				args = new Object[] { definitionModelImpl.getCompanyId() };
+				args = new Object[] {definitionModelImpl.getCompanyId()};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
-				finderCache.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
 			}
 		}
 
-		entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-			DefinitionImpl.class, definition.getPrimaryKey(), definition, false);
+		entityCache.putResult(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED, DefinitionImpl.class,
+			definition.getPrimaryKey(), definition, false);
 
 		clearUniqueFindersCache(definitionModelImpl, false);
 		cacheUniqueFindersCache(definitionModelImpl);
@@ -3170,6 +3305,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Definition findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchDefinitionException {
+
 		Definition definition = fetchByPrimaryKey(primaryKey);
 
 		if (definition == null) {
@@ -3177,8 +3313,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchDefinitionException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchDefinitionException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return definition;
@@ -3194,6 +3330,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@Override
 	public Definition findByPrimaryKey(long definitionId)
 		throws NoSuchDefinitionException {
+
 		return findByPrimaryKey((Serializable)definitionId);
 	}
 
@@ -3247,8 +3384,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of definitions
 	 */
 	@Override
-	public List<Definition> findAll(int start, int end,
-		OrderByComparator<Definition> orderByComparator) {
+	public List<Definition> findAll(
+		int start, int end, OrderByComparator<Definition> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -3266,29 +3404,31 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @return the ordered range of definitions
 	 */
 	@Override
-	public List<Definition> findAll(int start, int end,
-		OrderByComparator<Definition> orderByComparator,
+	public List<Definition> findAll(
+		int start, int end, OrderByComparator<Definition> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Definition> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<Definition>)finderCache.getResult(finderPath,
-					finderArgs, this);
+			list = (List<Definition>)finderCache.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -3296,13 +3436,13 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_DEFINITION);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -3322,16 +3462,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Definition>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<Definition>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3369,8 +3509,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3382,11 +3522,12 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -3427,120 +3568,130 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * Initializes the definition persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-				new String[] {
-					String.class.getName(),
-					
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			DefinitionModelImpl.UUID_COLUMN_BITMASK |
+			DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			DefinitionModelImpl.UUID_COLUMN_BITMASK |
+			DefinitionModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-				new String[] { String.class.getName() },
-				DefinitionModelImpl.UUID_COLUMN_BITMASK |
-				DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			DefinitionModelImpl.UUID_COLUMN_BITMASK |
+			DefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+			DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
-		_finderPathCountByUuid = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-				new String[] { String.class.getName() });
+		_finderPathCountByUuid_C = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
 
-		_finderPathFetchByUUID_G = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-				new String[] { String.class.getName(), Long.class.getName() },
-				DefinitionModelImpl.UUID_COLUMN_BITMASK |
-				DefinitionModelImpl.GROUPID_COLUMN_BITMASK);
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathCountByUUID_G = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-				new String[] { String.class.getName(), Long.class.getName() });
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			new String[] {Long.class.getName()},
+			DefinitionModelImpl.GROUPID_COLUMN_BITMASK |
+			DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-				new String[] {
-					String.class.getName(), Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+		_finderPathCountByGroupId = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()});
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() },
-				DefinitionModelImpl.UUID_COLUMN_BITMASK |
-				DefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-				DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathCountByUuid_C = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() });
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()},
+			DefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+			DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-				new String[] {
-					Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-				new String[] { Long.class.getName() },
-				DefinitionModelImpl.GROUPID_COLUMN_BITMASK |
-				DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-
-		_finderPathCountByGroupId = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-				new String[] { Long.class.getName() });
-
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-				new String[] {
-					Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, DefinitionImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-				new String[] { Long.class.getName() },
-				DefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-				DefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-
-		_finderPathCountByCompanyId = new FinderPath(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByCompanyId = new FinderPath(
+			DefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			DefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -3552,29 +3703,60 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 	@ServiceReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
+
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_DEFINITION = "SELECT definition FROM Definition definition";
-	private static final String _SQL_SELECT_DEFINITION_WHERE = "SELECT definition FROM Definition definition WHERE ";
-	private static final String _SQL_COUNT_DEFINITION = "SELECT COUNT(definition) FROM Definition definition";
-	private static final String _SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(definition) FROM Definition definition WHERE ";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "definition.definitionId";
-	private static final String _FILTER_SQL_SELECT_DEFINITION_WHERE = "SELECT DISTINCT {definition.*} FROM Reports_Definition definition WHERE ";
-	private static final String _FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {Reports_Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Reports_Definition definition WHERE ";
-	private static final String _FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN Reports_Definition ON TEMP_TABLE.definitionId = Reports_Definition.definitionId";
-	private static final String _FILTER_SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Reports_Definition definition WHERE ";
+
+	private static final String _SQL_SELECT_DEFINITION =
+		"SELECT definition FROM Definition definition";
+
+	private static final String _SQL_SELECT_DEFINITION_WHERE =
+		"SELECT definition FROM Definition definition WHERE ";
+
+	private static final String _SQL_COUNT_DEFINITION =
+		"SELECT COUNT(definition) FROM Definition definition";
+
+	private static final String _SQL_COUNT_DEFINITION_WHERE =
+		"SELECT COUNT(definition) FROM Definition definition WHERE ";
+
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"definition.definitionId";
+
+	private static final String _FILTER_SQL_SELECT_DEFINITION_WHERE =
+		"SELECT DISTINCT {definition.*} FROM Reports_Definition definition WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {Reports_Definition.*} FROM (SELECT DISTINCT definition.definitionId FROM Reports_Definition definition WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_DEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN Reports_Definition ON TEMP_TABLE.definitionId = Reports_Definition.definitionId";
+
+	private static final String _FILTER_SQL_COUNT_DEFINITION_WHERE =
+		"SELECT COUNT(DISTINCT definition.definitionId) AS COUNT_VALUE FROM Reports_Definition definition WHERE ";
+
 	private static final String _FILTER_ENTITY_ALIAS = "definition";
+
 	private static final String _FILTER_ENTITY_TABLE = "Reports_Definition";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "definition.";
+
 	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Definition.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Definition exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Definition exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(DefinitionPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No Definition exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No Definition exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefinitionPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

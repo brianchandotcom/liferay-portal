@@ -48,8 +48,10 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl
  * @generated
  */
-public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
+public abstract class DefinitionServiceBaseImpl
+	extends BaseServiceImpl
 	implements DefinitionService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,7 +63,10 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the definition local service
 	 */
-	public com.liferay.portal.reports.engine.console.service.DefinitionLocalService getDefinitionLocalService() {
+	public
+		com.liferay.portal.reports.engine.console.service.DefinitionLocalService
+			getDefinitionLocalService() {
+
 		return definitionLocalService;
 	}
 
@@ -71,7 +76,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param definitionLocalService the definition local service
 	 */
 	public void setDefinitionLocalService(
-		com.liferay.portal.reports.engine.console.service.DefinitionLocalService definitionLocalService) {
+		com.liferay.portal.reports.engine.console.service.DefinitionLocalService
+			definitionLocalService) {
+
 		this.definitionLocalService = definitionLocalService;
 	}
 
@@ -109,6 +116,7 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setDefinitionPersistence(
 		DefinitionPersistence definitionPersistence) {
+
 		this.definitionPersistence = definitionPersistence;
 	}
 
@@ -135,7 +143,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the entry local service
 	 */
-	public com.liferay.portal.reports.engine.console.service.EntryLocalService getEntryLocalService() {
+	public com.liferay.portal.reports.engine.console.service.EntryLocalService
+		getEntryLocalService() {
+
 		return entryLocalService;
 	}
 
@@ -145,7 +155,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param entryLocalService the entry local service
 	 */
 	public void setEntryLocalService(
-		com.liferay.portal.reports.engine.console.service.EntryLocalService entryLocalService) {
+		com.liferay.portal.reports.engine.console.service.EntryLocalService
+			entryLocalService) {
+
 		this.entryLocalService = entryLocalService;
 	}
 
@@ -154,7 +166,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the entry remote service
 	 */
-	public com.liferay.portal.reports.engine.console.service.EntryService getEntryService() {
+	public com.liferay.portal.reports.engine.console.service.EntryService
+		getEntryService() {
+
 		return entryService;
 	}
 
@@ -164,7 +178,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param entryService the entry remote service
 	 */
 	public void setEntryService(
-		com.liferay.portal.reports.engine.console.service.EntryService entryService) {
+		com.liferay.portal.reports.engine.console.service.EntryService
+			entryService) {
+
 		this.entryService = entryService;
 	}
 
@@ -209,7 +225,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the source local service
 	 */
-	public com.liferay.portal.reports.engine.console.service.SourceLocalService getSourceLocalService() {
+	public com.liferay.portal.reports.engine.console.service.SourceLocalService
+		getSourceLocalService() {
+
 		return sourceLocalService;
 	}
 
@@ -219,7 +237,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param sourceLocalService the source local service
 	 */
 	public void setSourceLocalService(
-		com.liferay.portal.reports.engine.console.service.SourceLocalService sourceLocalService) {
+		com.liferay.portal.reports.engine.console.service.SourceLocalService
+			sourceLocalService) {
+
 		this.sourceLocalService = sourceLocalService;
 	}
 
@@ -228,7 +248,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the source remote service
 	 */
-	public com.liferay.portal.reports.engine.console.service.SourceService getSourceService() {
+	public com.liferay.portal.reports.engine.console.service.SourceService
+		getSourceService() {
+
 		return sourceService;
 	}
 
@@ -238,7 +260,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param sourceService the source remote service
 	 */
 	public void setSourceService(
-		com.liferay.portal.reports.engine.console.service.SourceService sourceService) {
+		com.liferay.portal.reports.engine.console.service.SourceService
+			sourceService) {
+
 		this.sourceService = sourceService;
 	}
 
@@ -283,7 +307,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -293,7 +319,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -302,7 +330,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -312,7 +342,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -321,7 +353,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
+	public com.liferay.portal.kernel.service.ClassNameService
+		getClassNameService() {
+
 		return classNameService;
 	}
 
@@ -332,6 +366,7 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
+
 		this.classNameService = classNameService;
 	}
 
@@ -351,6 +386,7 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -359,7 +395,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -369,7 +407,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -378,7 +418,9 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -389,6 +431,7 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -408,6 +451,7 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
+
 		this.userService = userService;
 	}
 
@@ -467,8 +511,8 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -477,44 +521,99 @@ public abstract class DefinitionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.DefinitionLocalService.class)
-	protected com.liferay.portal.reports.engine.console.service.DefinitionLocalService definitionLocalService;
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.DefinitionLocalService.class
+	)
+	protected
+		com.liferay.portal.reports.engine.console.service.DefinitionLocalService
+			definitionLocalService;
+
 	@BeanReference(type = DefinitionService.class)
 	protected DefinitionService definitionService;
+
 	@BeanReference(type = DefinitionPersistence.class)
 	protected DefinitionPersistence definitionPersistence;
+
 	@BeanReference(type = DefinitionFinder.class)
 	protected DefinitionFinder definitionFinder;
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.EntryLocalService.class)
-	protected com.liferay.portal.reports.engine.console.service.EntryLocalService entryLocalService;
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.EntryService.class)
-	protected com.liferay.portal.reports.engine.console.service.EntryService entryService;
+
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.EntryLocalService.class
+	)
+	protected
+		com.liferay.portal.reports.engine.console.service.EntryLocalService
+			entryLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.EntryService.class
+	)
+	protected com.liferay.portal.reports.engine.console.service.EntryService
+		entryService;
+
 	@BeanReference(type = EntryPersistence.class)
 	protected EntryPersistence entryPersistence;
+
 	@BeanReference(type = EntryFinder.class)
 	protected EntryFinder entryFinder;
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.SourceLocalService.class)
-	protected com.liferay.portal.reports.engine.console.service.SourceLocalService sourceLocalService;
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.SourceService.class)
-	protected com.liferay.portal.reports.engine.console.service.SourceService sourceService;
+
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.SourceLocalService.class
+	)
+	protected
+		com.liferay.portal.reports.engine.console.service.SourceLocalService
+			sourceLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.SourceService.class
+	)
+	protected com.liferay.portal.reports.engine.console.service.SourceService
+		sourceService;
+
 	@BeanReference(type = SourcePersistence.class)
 	protected SourcePersistence sourcePersistence;
+
 	@BeanReference(type = SourceFinder.class)
 	protected SourceFinder sourceFinder;
-	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
-	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
+
+	@ServiceReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ClassNameService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameService
+		classNameService;
+
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.UserService.class
+	)
 	protected com.liferay.portal.kernel.service.UserService userService;
+
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
 }

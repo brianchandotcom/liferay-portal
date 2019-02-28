@@ -37,8 +37,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WorkflowMetricsSLAConditionModel extends BaseModel<WorkflowMetricsSLACondition>,
-	GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+public interface WorkflowMetricsSLAConditionModel
+	extends BaseModel<WorkflowMetricsSLACondition>, GroupedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -234,4 +236,5 @@ public interface WorkflowMetricsSLAConditionModel extends BaseModel<WorkflowMetr
 	 */
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId);
+
 }

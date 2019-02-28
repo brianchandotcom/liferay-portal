@@ -34,6 +34,7 @@ import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil;
 @ProviderType
 public abstract class SamlSpAuthRequestBaseImpl
 	extends SamlSpAuthRequestModelImpl implements SamlSpAuthRequest {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SamlSpAuthRequestBaseImpl
 			SamlSpAuthRequestLocalServiceUtil.updateSamlSpAuthRequest(this);
 		}
 	}
+
 }

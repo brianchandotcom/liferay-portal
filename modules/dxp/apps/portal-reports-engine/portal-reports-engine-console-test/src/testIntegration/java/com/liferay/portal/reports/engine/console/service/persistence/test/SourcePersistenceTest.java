@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,15 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,16 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class SourcePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
 				"com.liferay.portal.reports.engine.console.service"));
 
 	@Before
@@ -107,7 +108,8 @@ public class SourcePersistenceTest {
 
 		_persistence.remove(newSource);
 
-		Source existingSource = _persistence.fetchByPrimaryKey(newSource.getPrimaryKey());
+		Source existingSource = _persistence.fetchByPrimaryKey(
+			newSource.getPrimaryKey());
 
 		Assert.assertNull(existingSource);
 	}
@@ -151,35 +153,38 @@ public class SourcePersistenceTest {
 
 		_sources.add(_persistence.update(newSource));
 
-		Source existingSource = _persistence.findByPrimaryKey(newSource.getPrimaryKey());
+		Source existingSource = _persistence.findByPrimaryKey(
+			newSource.getPrimaryKey());
 
 		Assert.assertEquals(existingSource.getUuid(), newSource.getUuid());
-		Assert.assertEquals(existingSource.getSourceId(),
-			newSource.getSourceId());
-		Assert.assertEquals(existingSource.getGroupId(), newSource.getGroupId());
-		Assert.assertEquals(existingSource.getCompanyId(),
-			newSource.getCompanyId());
+		Assert.assertEquals(
+			existingSource.getSourceId(), newSource.getSourceId());
+		Assert.assertEquals(
+			existingSource.getGroupId(), newSource.getGroupId());
+		Assert.assertEquals(
+			existingSource.getCompanyId(), newSource.getCompanyId());
 		Assert.assertEquals(existingSource.getUserId(), newSource.getUserId());
-		Assert.assertEquals(existingSource.getUserName(),
-			newSource.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSource.getCreateDate()),
+		Assert.assertEquals(
+			existingSource.getUserName(), newSource.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSource.getCreateDate()),
 			Time.getShortTimestamp(newSource.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSource.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSource.getModifiedDate()),
 			Time.getShortTimestamp(newSource.getModifiedDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSource.getLastPublishDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSource.getLastPublishDate()),
 			Time.getShortTimestamp(newSource.getLastPublishDate()));
 		Assert.assertEquals(existingSource.getName(), newSource.getName());
-		Assert.assertEquals(existingSource.getDriverClassName(),
+		Assert.assertEquals(
+			existingSource.getDriverClassName(),
 			newSource.getDriverClassName());
-		Assert.assertEquals(existingSource.getDriverUrl(),
-			newSource.getDriverUrl());
-		Assert.assertEquals(existingSource.getDriverUserName(),
-			newSource.getDriverUserName());
-		Assert.assertEquals(existingSource.getDriverPassword(),
-			newSource.getDriverPassword());
+		Assert.assertEquals(
+			existingSource.getDriverUrl(), newSource.getDriverUrl());
+		Assert.assertEquals(
+			existingSource.getDriverUserName(), newSource.getDriverUserName());
+		Assert.assertEquals(
+			existingSource.getDriverPassword(), newSource.getDriverPassword());
 	}
 
 	@Test
@@ -227,7 +232,8 @@ public class SourcePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Source newSource = addSource();
 
-		Source existingSource = _persistence.findByPrimaryKey(newSource.getPrimaryKey());
+		Source existingSource = _persistence.findByPrimaryKey(
+			newSource.getPrimaryKey());
 
 		Assert.assertEquals(existingSource, newSource);
 	}
@@ -241,21 +247,21 @@ public class SourcePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Source> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Reports_Source", "uuid",
-			true, "sourceId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "lastPublishDate", true, "name", true,
+		return OrderByComparatorFactoryUtil.create(
+			"Reports_Source", "uuid", true, "sourceId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "lastPublishDate", true, "name", true,
 			"driverClassName", true, "driverUrl", true, "driverUserName", true,
 			"driverPassword", true);
 	}
@@ -264,7 +270,8 @@ public class SourcePersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Source newSource = addSource();
 
-		Source existingSource = _persistence.fetchByPrimaryKey(newSource.getPrimaryKey());
+		Source existingSource = _persistence.fetchByPrimaryKey(
+			newSource.getPrimaryKey());
 
 		Assert.assertEquals(existingSource, newSource);
 	}
@@ -281,6 +288,7 @@ public class SourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Source newSource1 = addSource();
 		Source newSource2 = addSource();
 
@@ -289,16 +297,20 @@ public class SourcePersistenceTest {
 		primaryKeys.add(newSource1.getPrimaryKey());
 		primaryKeys.add(newSource2.getPrimaryKey());
 
-		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, sources.size());
-		Assert.assertEquals(newSource1, sources.get(newSource1.getPrimaryKey()));
-		Assert.assertEquals(newSource2, sources.get(newSource2.getPrimaryKey()));
+		Assert.assertEquals(
+			newSource1, sources.get(newSource1.getPrimaryKey()));
+		Assert.assertEquals(
+			newSource2, sources.get(newSource2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -308,7 +320,8 @@ public class SourcePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(sources.isEmpty());
 	}
@@ -316,6 +329,7 @@ public class SourcePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Source newSource = addSource();
 
 		long pk = RandomTestUtil.nextLong();
@@ -325,32 +339,33 @@ public class SourcePersistenceTest {
 		primaryKeys.add(newSource.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, sources.size());
 		Assert.assertEquals(newSource, sources.get(newSource.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(sources.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Source newSource = addSource();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSource.getPrimaryKey());
 
-		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Source> sources = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, sources.size());
 		Assert.assertEquals(newSource, sources.get(newSource.getPrimaryKey()));
@@ -360,15 +375,19 @@ public class SourcePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = SourceLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			SourceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Source>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Source>() {
+
 				@Override
 				public void performAction(Source source) {
 					Assert.assertNotNull(source);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -377,15 +396,14 @@ public class SourcePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Source newSource = addSource();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Source.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Source.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("sourceId",
-				newSource.getSourceId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("sourceId", newSource.getSourceId()));
 
 		List<Source> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -398,11 +416,11 @@ public class SourcePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Source.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Source.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("sourceId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("sourceId", RandomTestUtil.nextLong()));
 
 		List<Source> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -410,19 +428,18 @@ public class SourcePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Source newSource = addSource();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Source.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Source.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("sourceId"));
 
 		Object newSourceId = newSource.getSourceId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("sourceId",
-				new Object[] { newSourceId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("sourceId", new Object[] {newSourceId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -435,13 +452,14 @@ public class SourcePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Source.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Source.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("sourceId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("sourceId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"sourceId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -454,14 +472,18 @@ public class SourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		Source existingSource = _persistence.findByPrimaryKey(newSource.getPrimaryKey());
+		Source existingSource = _persistence.findByPrimaryKey(
+			newSource.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingSource.getUuid(),
-				ReflectionTestUtil.invoke(existingSource, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingSource.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingSource,
-				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingSource.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingSource, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingSource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSource, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected Source addSource() throws Exception {
@@ -503,4 +525,5 @@ public class SourcePersistenceTest {
 	private List<Source> _sources = new ArrayList<Source>();
 	private SourcePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

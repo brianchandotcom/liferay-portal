@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<SharepointOAuth2TokenEntry>,
-	Externalizable {
+public class SharepointOAuth2TokenEntryCacheModel
+	implements CacheModel<SharepointOAuth2TokenEntry>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,10 +48,14 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 			return false;
 		}
 
-		SharepointOAuth2TokenEntryCacheModel sharepointOAuth2TokenEntryCacheModel =
-			(SharepointOAuth2TokenEntryCacheModel)obj;
+		SharepointOAuth2TokenEntryCacheModel
+			sharepointOAuth2TokenEntryCacheModel =
+				(SharepointOAuth2TokenEntryCacheModel)obj;
 
-		if (sharepointOAuth2TokenEntryId == sharepointOAuth2TokenEntryCacheModel.sharepointOAuth2TokenEntryId) {
+		if (sharepointOAuth2TokenEntryId ==
+				sharepointOAuth2TokenEntryCacheModel.
+					sharepointOAuth2TokenEntryId) {
+
 			return true;
 		}
 
@@ -91,9 +94,11 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 
 	@Override
 	public SharepointOAuth2TokenEntry toEntityModel() {
-		SharepointOAuth2TokenEntryImpl sharepointOAuth2TokenEntryImpl = new SharepointOAuth2TokenEntryImpl();
+		SharepointOAuth2TokenEntryImpl sharepointOAuth2TokenEntryImpl =
+			new SharepointOAuth2TokenEntryImpl();
 
-		sharepointOAuth2TokenEntryImpl.setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntryId);
+		sharepointOAuth2TokenEntryImpl.setSharepointOAuth2TokenEntryId(
+			sharepointOAuth2TokenEntryId);
 		sharepointOAuth2TokenEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -121,15 +126,16 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 			sharepointOAuth2TokenEntryImpl.setConfigurationPid("");
 		}
 		else {
-			sharepointOAuth2TokenEntryImpl.setConfigurationPid(configurationPid);
+			sharepointOAuth2TokenEntryImpl.setConfigurationPid(
+				configurationPid);
 		}
 
 		if (expirationDate == Long.MIN_VALUE) {
 			sharepointOAuth2TokenEntryImpl.setExpirationDate(null);
 		}
 		else {
-			sharepointOAuth2TokenEntryImpl.setExpirationDate(new Date(
-					expirationDate));
+			sharepointOAuth2TokenEntryImpl.setExpirationDate(
+				new Date(expirationDate));
 		}
 
 		if (refreshToken == null) {
@@ -158,8 +164,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(sharepointOAuth2TokenEntryId);
 
 		objectOutput.writeLong(userId);
@@ -205,4 +210,5 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 	public String configurationPid;
 	public long expirationDate;
 	public String refreshToken;
+
 }

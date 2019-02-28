@@ -19,19 +19,17 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
-import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the saml sp idp connection service. This utility wraps <code>com.liferay.saml.persistence.service.persistence.impl.SamlSpIdpConnectionPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -46,6 +44,7 @@ import java.util.Set;
  */
 @ProviderType
 public class SamlSpIdpConnectionUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +77,7 @@ public class SamlSpIdpConnectionUtil {
 	 */
 	public static Map<Serializable, SamlSpIdpConnection> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -86,6 +86,7 @@ public class SamlSpIdpConnectionUtil {
 	 */
 	public static List<SamlSpIdpConnection> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -94,6 +95,7 @@ public class SamlSpIdpConnectionUtil {
 	 */
 	public static List<SamlSpIdpConnection> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -103,9 +105,9 @@ public class SamlSpIdpConnectionUtil {
 	public static List<SamlSpIdpConnection> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -113,6 +115,7 @@ public class SamlSpIdpConnectionUtil {
 	 */
 	public static SamlSpIdpConnection update(
 		SamlSpIdpConnection samlSpIdpConnection) {
+
 		return getPersistence().update(samlSpIdpConnection);
 	}
 
@@ -120,380 +123,412 @@ public class SamlSpIdpConnectionUtil {
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static SamlSpIdpConnection update(
-		SamlSpIdpConnection samlSpIdpConnection, ServiceContext serviceContext) {
+		SamlSpIdpConnection samlSpIdpConnection,
+		ServiceContext serviceContext) {
+
 		return getPersistence().update(samlSpIdpConnection, serviceContext);
 	}
 
 	/**
-	* Returns all the saml sp idp connections where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching saml sp idp connections
-	*/
+	 * Returns all the saml sp idp connections where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching saml sp idp connections
+	 */
 	public static List<SamlSpIdpConnection> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
 	/**
-	* Returns a range of all the saml sp idp connections where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of saml sp idp connections
-	* @param end the upper bound of the range of saml sp idp connections (not inclusive)
-	* @return the range of matching saml sp idp connections
-	*/
-	public static List<SamlSpIdpConnection> findByCompanyId(long companyId,
-		int start, int end) {
+	 * Returns a range of all the saml sp idp connections where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saml sp idp connections
+	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
+	 * @return the range of matching saml sp idp connections
+	 */
+	public static List<SamlSpIdpConnection> findByCompanyId(
+		long companyId, int start, int end) {
+
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the saml sp idp connections where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of saml sp idp connections
-	* @param end the upper bound of the range of saml sp idp connections (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching saml sp idp connections
-	*/
-	public static List<SamlSpIdpConnection> findByCompanyId(long companyId,
-		int start, int end,
+	 * Returns an ordered range of all the saml sp idp connections where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saml sp idp connections
+	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml sp idp connections
+	 */
+	public static List<SamlSpIdpConnection> findByCompanyId(
+		long companyId, int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the saml sp idp connections where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of saml sp idp connections
-	* @param end the upper bound of the range of saml sp idp connections (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching saml sp idp connections
-	*/
-	public static List<SamlSpIdpConnection> findByCompanyId(long companyId,
-		int start, int end,
+	 * Returns an ordered range of all the saml sp idp connections where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saml sp idp connections
+	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching saml sp idp connections
+	 */
+	public static List<SamlSpIdpConnection> findByCompanyId(
+		long companyId, int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator,
-			retrieveFromCache);
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first saml sp idp connection in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching saml sp idp connection
-	* @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection findByCompanyId_First(long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
+	 * Returns the first saml sp idp connection in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp idp connection
+	 * @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection findByCompanyId_First(
+			long companyId,
+			OrderByComparator<SamlSpIdpConnection> orderByComparator)
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
 
-	/**
-	* Returns the first saml sp idp connection in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection fetchByCompanyId_First(long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching saml sp idp connection
-	* @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection findByCompanyId_Last(long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection fetchByCompanyId_Last(long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the saml sp idp connections before and after the current saml sp idp connection in the ordered set where companyId = &#63;.
-	*
-	* @param samlSpIdpConnectionId the primary key of the current saml sp idp connection
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next saml sp idp connection
-	* @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
-	*/
-	public static SamlSpIdpConnection[] findByCompanyId_PrevAndNext(
-		long samlSpIdpConnectionId, long companyId,
-		OrderByComparator<SamlSpIdpConnection> orderByComparator)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(samlSpIdpConnectionId,
+		return getPersistence().findByCompanyId_First(
 			companyId, orderByComparator);
 	}
 
 	/**
-	* Removes all the saml sp idp connections where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
+	 * Returns the first saml sp idp connection in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection fetchByCompanyId_First(
+		long companyId,
+		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_First(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp idp connection
+	 * @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection findByCompanyId_Last(
+			long companyId,
+			OrderByComparator<SamlSpIdpConnection> orderByComparator)
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
+
+		return getPersistence().findByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last saml sp idp connection in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection fetchByCompanyId_Last(
+		long companyId,
+		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the saml sp idp connections before and after the current saml sp idp connection in the ordered set where companyId = &#63;.
+	 *
+	 * @param samlSpIdpConnectionId the primary key of the current saml sp idp connection
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saml sp idp connection
+	 * @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
+	 */
+	public static SamlSpIdpConnection[] findByCompanyId_PrevAndNext(
+			long samlSpIdpConnectionId, long companyId,
+			OrderByComparator<SamlSpIdpConnection> orderByComparator)
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
+
+		return getPersistence().findByCompanyId_PrevAndNext(
+			samlSpIdpConnectionId, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the saml sp idp connections where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
 	public static void removeByCompanyId(long companyId) {
 		getPersistence().removeByCompanyId(companyId);
 	}
 
 	/**
-	* Returns the number of saml sp idp connections where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching saml sp idp connections
-	*/
+	 * Returns the number of saml sp idp connections where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching saml sp idp connections
+	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**
-	* Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or throws a <code>NoSuchSpIdpConnectionException</code> if it could not be found.
-	*
-	* @param companyId the company ID
-	* @param samlIdpEntityId the saml idp entity ID
-	* @return the matching saml sp idp connection
-	* @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection findByC_SIEI(long companyId,
-		String samlIdpEntityId)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
+	 * Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or throws a <code>NoSuchSpIdpConnectionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @return the matching saml sp idp connection
+	 * @throws NoSuchSpIdpConnectionException if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection findByC_SIEI(
+			long companyId, String samlIdpEntityId)
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
+
 		return getPersistence().findByC_SIEI(companyId, samlIdpEntityId);
 	}
 
 	/**
-	* Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param samlIdpEntityId the saml idp entity ID
-	* @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection fetchByC_SIEI(long companyId,
-		String samlIdpEntityId) {
+	 * Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection fetchByC_SIEI(
+		long companyId, String samlIdpEntityId) {
+
 		return getPersistence().fetchByC_SIEI(companyId, samlIdpEntityId);
 	}
 
 	/**
-	* Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param samlIdpEntityId the saml idp entity ID
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
-	*/
-	public static SamlSpIdpConnection fetchByC_SIEI(long companyId,
-		String samlIdpEntityId, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByC_SIEI(companyId, samlIdpEntityId, retrieveFromCache);
+	 * Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching saml sp idp connection, or <code>null</code> if a matching saml sp idp connection could not be found
+	 */
+	public static SamlSpIdpConnection fetchByC_SIEI(
+		long companyId, String samlIdpEntityId, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByC_SIEI(
+			companyId, samlIdpEntityId, retrieveFromCache);
 	}
 
 	/**
-	* Removes the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param samlIdpEntityId the saml idp entity ID
-	* @return the saml sp idp connection that was removed
-	*/
-	public static SamlSpIdpConnection removeByC_SIEI(long companyId,
-		String samlIdpEntityId)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
+	 * Removes the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @return the saml sp idp connection that was removed
+	 */
+	public static SamlSpIdpConnection removeByC_SIEI(
+			long companyId, String samlIdpEntityId)
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
+
 		return getPersistence().removeByC_SIEI(companyId, samlIdpEntityId);
 	}
 
 	/**
-	* Returns the number of saml sp idp connections where companyId = &#63; and samlIdpEntityId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param samlIdpEntityId the saml idp entity ID
-	* @return the number of matching saml sp idp connections
-	*/
+	 * Returns the number of saml sp idp connections where companyId = &#63; and samlIdpEntityId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @return the number of matching saml sp idp connections
+	 */
 	public static int countByC_SIEI(long companyId, String samlIdpEntityId) {
 		return getPersistence().countByC_SIEI(companyId, samlIdpEntityId);
 	}
 
 	/**
-	* Caches the saml sp idp connection in the entity cache if it is enabled.
-	*
-	* @param samlSpIdpConnection the saml sp idp connection
-	*/
+	 * Caches the saml sp idp connection in the entity cache if it is enabled.
+	 *
+	 * @param samlSpIdpConnection the saml sp idp connection
+	 */
 	public static void cacheResult(SamlSpIdpConnection samlSpIdpConnection) {
 		getPersistence().cacheResult(samlSpIdpConnection);
 	}
 
 	/**
-	* Caches the saml sp idp connections in the entity cache if it is enabled.
-	*
-	* @param samlSpIdpConnections the saml sp idp connections
-	*/
+	 * Caches the saml sp idp connections in the entity cache if it is enabled.
+	 *
+	 * @param samlSpIdpConnections the saml sp idp connections
+	 */
 	public static void cacheResult(
 		List<SamlSpIdpConnection> samlSpIdpConnections) {
+
 		getPersistence().cacheResult(samlSpIdpConnections);
 	}
 
 	/**
-	* Creates a new saml sp idp connection with the primary key. Does not add the saml sp idp connection to the database.
-	*
-	* @param samlSpIdpConnectionId the primary key for the new saml sp idp connection
-	* @return the new saml sp idp connection
-	*/
+	 * Creates a new saml sp idp connection with the primary key. Does not add the saml sp idp connection to the database.
+	 *
+	 * @param samlSpIdpConnectionId the primary key for the new saml sp idp connection
+	 * @return the new saml sp idp connection
+	 */
 	public static SamlSpIdpConnection create(long samlSpIdpConnectionId) {
 		return getPersistence().create(samlSpIdpConnectionId);
 	}
 
 	/**
-	* Removes the saml sp idp connection with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param samlSpIdpConnectionId the primary key of the saml sp idp connection
-	* @return the saml sp idp connection that was removed
-	* @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
-	*/
+	 * Removes the saml sp idp connection with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param samlSpIdpConnectionId the primary key of the saml sp idp connection
+	 * @return the saml sp idp connection that was removed
+	 * @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
+	 */
 	public static SamlSpIdpConnection remove(long samlSpIdpConnectionId)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
+
 		return getPersistence().remove(samlSpIdpConnectionId);
 	}
 
 	public static SamlSpIdpConnection updateImpl(
 		SamlSpIdpConnection samlSpIdpConnection) {
+
 		return getPersistence().updateImpl(samlSpIdpConnection);
 	}
 
 	/**
-	* Returns the saml sp idp connection with the primary key or throws a <code>NoSuchSpIdpConnectionException</code> if it could not be found.
-	*
-	* @param samlSpIdpConnectionId the primary key of the saml sp idp connection
-	* @return the saml sp idp connection
-	* @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
-	*/
+	 * Returns the saml sp idp connection with the primary key or throws a <code>NoSuchSpIdpConnectionException</code> if it could not be found.
+	 *
+	 * @param samlSpIdpConnectionId the primary key of the saml sp idp connection
+	 * @return the saml sp idp connection
+	 * @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
+	 */
 	public static SamlSpIdpConnection findByPrimaryKey(
-		long samlSpIdpConnectionId)
-		throws com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException {
+			long samlSpIdpConnectionId)
+		throws com.liferay.saml.persistence.exception.
+			NoSuchSpIdpConnectionException {
+
 		return getPersistence().findByPrimaryKey(samlSpIdpConnectionId);
 	}
 
 	/**
-	* Returns the saml sp idp connection with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param samlSpIdpConnectionId the primary key of the saml sp idp connection
-	* @return the saml sp idp connection, or <code>null</code> if a saml sp idp connection with the primary key could not be found
-	*/
+	 * Returns the saml sp idp connection with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param samlSpIdpConnectionId the primary key of the saml sp idp connection
+	 * @return the saml sp idp connection, or <code>null</code> if a saml sp idp connection with the primary key could not be found
+	 */
 	public static SamlSpIdpConnection fetchByPrimaryKey(
 		long samlSpIdpConnectionId) {
+
 		return getPersistence().fetchByPrimaryKey(samlSpIdpConnectionId);
 	}
 
 	/**
-	* Returns all the saml sp idp connections.
-	*
-	* @return the saml sp idp connections
-	*/
+	 * Returns all the saml sp idp connections.
+	 *
+	 * @return the saml sp idp connections
+	 */
 	public static List<SamlSpIdpConnection> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the saml sp idp connections.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of saml sp idp connections
-	* @param end the upper bound of the range of saml sp idp connections (not inclusive)
-	* @return the range of saml sp idp connections
-	*/
+	 * Returns a range of all the saml sp idp connections.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of saml sp idp connections
+	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
+	 * @return the range of saml sp idp connections
+	 */
 	public static List<SamlSpIdpConnection> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the saml sp idp connections.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of saml sp idp connections
-	* @param end the upper bound of the range of saml sp idp connections (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of saml sp idp connections
-	*/
-	public static List<SamlSpIdpConnection> findAll(int start, int end,
+	 * Returns an ordered range of all the saml sp idp connections.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of saml sp idp connections
+	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of saml sp idp connections
+	 */
+	public static List<SamlSpIdpConnection> findAll(
+		int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator) {
+
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the saml sp idp connections.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of saml sp idp connections
-	* @param end the upper bound of the range of saml sp idp connections (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of saml sp idp connections
-	*/
-	public static List<SamlSpIdpConnection> findAll(int start, int end,
+	 * Returns an ordered range of all the saml sp idp connections.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpIdpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of saml sp idp connections
+	 * @param end the upper bound of the range of saml sp idp connections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of saml sp idp connections
+	 */
+	public static List<SamlSpIdpConnection> findAll(
+		int start, int end,
 		OrderByComparator<SamlSpIdpConnection> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findAll(start, end, orderByComparator, retrieveFromCache);
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the saml sp idp connections from the database.
-	*/
+	 * Removes all the saml sp idp connections from the database.
+	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of saml sp idp connections.
-	*
-	* @return the number of saml sp idp connections
-	*/
+	 * Returns the number of saml sp idp connections.
+	 *
+	 * @return the number of saml sp idp connections
+	 */
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -502,17 +537,26 @@ public class SamlSpIdpConnectionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SamlSpIdpConnectionPersistence, SamlSpIdpConnectionPersistence> _serviceTracker;
+	private static ServiceTracker
+		<SamlSpIdpConnectionPersistence, SamlSpIdpConnectionPersistence>
+			_serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(SamlSpIdpConnectionPersistence.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			SamlSpIdpConnectionPersistence.class);
 
-		ServiceTracker<SamlSpIdpConnectionPersistence, SamlSpIdpConnectionPersistence> serviceTracker =
-			new ServiceTracker<SamlSpIdpConnectionPersistence, SamlSpIdpConnectionPersistence>(bundle.getBundleContext(),
-				SamlSpIdpConnectionPersistence.class, null);
+		ServiceTracker
+			<SamlSpIdpConnectionPersistence, SamlSpIdpConnectionPersistence>
+				serviceTracker =
+					new ServiceTracker
+						<SamlSpIdpConnectionPersistence,
+						 SamlSpIdpConnectionPersistence>(
+							 bundle.getBundleContext(),
+							 SamlSpIdpConnectionPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
+
 }

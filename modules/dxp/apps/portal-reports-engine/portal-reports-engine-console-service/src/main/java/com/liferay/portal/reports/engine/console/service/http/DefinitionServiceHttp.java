@@ -53,21 +53,25 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
  */
 @ProviderType
 public class DefinitionServiceHttp {
-	public static com.liferay.portal.reports.engine.console.model.Definition addDefinition(
-		HttpPrincipal httpPrincipal, long groupId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
-		String reportParameters, String fileName,
-		java.io.InputStream inputStream,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
-					"addDefinition", _addDefinitionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					nameMap, descriptionMap, sourceId, reportParameters,
-					fileName, inputStream, serviceContext);
+	public static com.liferay.portal.reports.engine.console.model.Definition
+			addDefinition(
+				HttpPrincipal httpPrincipal, long groupId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				long sourceId, String reportParameters, String fileName,
+				java.io.InputStream inputStream,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DefinitionServiceUtil.class, "addDefinition",
+				_addDefinitionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, nameMap, descriptionMap, sourceId,
+				reportParameters, fileName, inputStream, serviceContext);
 
 			Object returnObj = null;
 
@@ -75,14 +79,19 @@ public class DefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -91,15 +100,17 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition deleteDefinition(
-		HttpPrincipal httpPrincipal, long definitionId)
+	public static com.liferay.portal.reports.engine.console.model.Definition
+			deleteDefinition(HttpPrincipal httpPrincipal, long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
-					"deleteDefinition", _deleteDefinitionParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					definitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DefinitionServiceUtil.class, "deleteDefinition",
+				_deleteDefinitionParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, definitionId);
 
 			Object returnObj = null;
 
@@ -107,14 +118,19 @@ public class DefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -123,15 +139,17 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition getDefinition(
-		HttpPrincipal httpPrincipal, long definitionId)
+	public static com.liferay.portal.reports.engine.console.model.Definition
+			getDefinition(HttpPrincipal httpPrincipal, long definitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
-					"getDefinition", _getDefinitionParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					definitionId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DefinitionServiceUtil.class, "getDefinition",
+				_getDefinitionParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, definitionId);
 
 			Object returnObj = null;
 
@@ -139,14 +157,19 @@ public class DefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -155,19 +178,66 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.reports.engine.console.model.Definition> getDefinitions(
+	public static java.util.List
+		<com.liferay.portal.reports.engine.console.model.Definition>
+				getDefinitions(
+					HttpPrincipal httpPrincipal, long groupId,
+					String definitionName, String description, String sourceId,
+					String reportName, boolean andSearch, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DefinitionServiceUtil.class, "getDefinitions",
+				_getDefinitionsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, definitionName, description, sourceId,
+				reportName, andSearch, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.portal.reports.engine.console.model.Definition>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getDefinitionsCount(
 		HttpPrincipal httpPrincipal, long groupId, String definitionName,
 		String description, String sourceId, String reportName,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
-					"getDefinitions", _getDefinitionsParameterTypes3);
+		boolean andSearch) {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					definitionName, description, sourceId, reportName,
-					andSearch, start, end, orderByComparator);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DefinitionServiceUtil.class, "getDefinitionsCount",
+				_getDefinitionsCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, definitionName, description, sourceId,
+				reportName, andSearch);
 
 			Object returnObj = null;
 
@@ -175,39 +245,8 @@ public class DefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.reports.engine.console.model.Definition>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getDefinitionsCount(HttpPrincipal httpPrincipal,
-		long groupId, String definitionName, String description,
-		String sourceId, String reportName, boolean andSearch) {
-		try {
-			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
-					"getDefinitionsCount", _getDefinitionsCountParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					definitionName, description, sourceId, reportName, andSearch);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -219,21 +258,24 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Definition updateDefinition(
-		HttpPrincipal httpPrincipal, long definitionId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		java.util.Map<java.util.Locale, String> descriptionMap, long sourceId,
-		String reportParameters, String fileName,
-		java.io.InputStream inputStream,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.reports.engine.console.model.Definition
+			updateDefinition(
+				HttpPrincipal httpPrincipal, long definitionId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				long sourceId, String reportParameters, String fileName,
+				java.io.InputStream inputStream,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DefinitionServiceUtil.class,
-					"updateDefinition", _updateDefinitionParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					definitionId, nameMap, descriptionMap, sourceId,
-					reportParameters, fileName, inputStream, serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DefinitionServiceUtil.class, "updateDefinition",
+				_updateDefinitionParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, definitionId, nameMap, descriptionMap, sourceId,
+				reportParameters, fileName, inputStream, serviceContext);
 
 			Object returnObj = null;
 
@@ -241,14 +283,19 @@ public class DefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Definition)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Definition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -257,30 +304,35 @@ public class DefinitionServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefinitionServiceHttp.class);
-	private static final Class<?>[] _addDefinitionParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		DefinitionServiceHttp.class);
+
+	private static final Class<?>[] _addDefinitionParameterTypes0 =
+		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, long.class,
 			String.class, String.class, java.io.InputStream.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteDefinitionParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getDefinitionParameterTypes2 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getDefinitionsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deleteDefinitionParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getDefinitionParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getDefinitionsParameterTypes3 =
+		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getDefinitionsCountParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getDefinitionsCountParameterTypes4 =
+		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			boolean.class
 		};
-	private static final Class<?>[] _updateDefinitionParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateDefinitionParameterTypes5 =
+		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, long.class,
 			String.class, String.class, java.io.InputStream.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+
 }

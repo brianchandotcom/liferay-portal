@@ -30,13 +30,17 @@ import java.util.List;
  */
 @ProviderType
 public class WorkflowMetricsSLADefinitionSoap implements Serializable {
+
 	public static WorkflowMetricsSLADefinitionSoap toSoapModel(
 		WorkflowMetricsSLADefinition model) {
-		WorkflowMetricsSLADefinitionSoap soapModel = new WorkflowMetricsSLADefinitionSoap();
+
+		WorkflowMetricsSLADefinitionSoap soapModel =
+			new WorkflowMetricsSLADefinitionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setWorkflowMetricsSLADefinitionId(model.getWorkflowMetricsSLADefinitionId());
+		soapModel.setWorkflowMetricsSLADefinitionId(
+			model.getWorkflowMetricsSLADefinitionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -56,7 +60,9 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 
 	public static WorkflowMetricsSLADefinitionSoap[] toSoapModels(
 		WorkflowMetricsSLADefinition[] models) {
-		WorkflowMetricsSLADefinitionSoap[] soapModels = new WorkflowMetricsSLADefinitionSoap[models.length];
+
+		WorkflowMetricsSLADefinitionSoap[] soapModels =
+			new WorkflowMetricsSLADefinitionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -67,10 +73,12 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 
 	public static WorkflowMetricsSLADefinitionSoap[][] toSoapModels(
 		WorkflowMetricsSLADefinition[][] models) {
+
 		WorkflowMetricsSLADefinitionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new WorkflowMetricsSLADefinitionSoap[models.length][models[0].length];
+			soapModels = new WorkflowMetricsSLADefinitionSoap
+				[models.length][models[0].length];
 		}
 		else {
 			soapModels = new WorkflowMetricsSLADefinitionSoap[0][0];
@@ -85,13 +93,16 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 
 	public static WorkflowMetricsSLADefinitionSoap[] toSoapModels(
 		List<WorkflowMetricsSLADefinition> models) {
-		List<WorkflowMetricsSLADefinitionSoap> soapModels = new ArrayList<WorkflowMetricsSLADefinitionSoap>(models.size());
+
+		List<WorkflowMetricsSLADefinitionSoap> soapModels =
+			new ArrayList<WorkflowMetricsSLADefinitionSoap>(models.size());
 
 		for (WorkflowMetricsSLADefinition model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new WorkflowMetricsSLADefinitionSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new WorkflowMetricsSLADefinitionSoap[soapModels.size()]);
 	}
 
 	public WorkflowMetricsSLADefinitionSoap() {
@@ -127,6 +138,7 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
+
 		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
 	}
 
@@ -250,4 +262,5 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 	private String _pauseNodeNames;
 	private String _startNodeNames;
 	private String _stopNodeNames;
+
 }

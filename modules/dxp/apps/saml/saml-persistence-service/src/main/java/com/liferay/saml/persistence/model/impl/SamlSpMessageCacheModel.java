@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.saml.persistence.model.SamlSpMessage;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SamlSpMessageCacheModel implements CacheModel<SamlSpMessage>,
-	Externalizable {
+public class SamlSpMessageCacheModel
+	implements CacheModel<SamlSpMessage>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,7 +48,8 @@ public class SamlSpMessageCacheModel implements CacheModel<SamlSpMessage>,
 			return false;
 		}
 
-		SamlSpMessageCacheModel samlSpMessageCacheModel = (SamlSpMessageCacheModel)obj;
+		SamlSpMessageCacheModel samlSpMessageCacheModel =
+			(SamlSpMessageCacheModel)obj;
 
 		if (samlSpMessageId == samlSpMessageCacheModel.samlSpMessageId) {
 			return true;
@@ -136,8 +136,7 @@ public class SamlSpMessageCacheModel implements CacheModel<SamlSpMessage>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(samlSpMessageId);
 
 		objectOutput.writeLong(companyId);
@@ -166,4 +165,5 @@ public class SamlSpMessageCacheModel implements CacheModel<SamlSpMessage>,
 	public String samlIdpEntityId;
 	public String samlIdpResponseKey;
 	public long expirationDate;
+
 }

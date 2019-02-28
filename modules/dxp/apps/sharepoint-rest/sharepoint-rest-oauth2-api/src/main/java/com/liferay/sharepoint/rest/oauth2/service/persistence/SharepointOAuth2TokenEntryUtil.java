@@ -19,19 +19,17 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
-import org.osgi.util.tracker.ServiceTracker;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The persistence utility for the sharepoint o auth2 token entry service. This utility wraps <code>com.liferay.sharepoint.rest.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -46,6 +44,7 @@ import java.util.Set;
  */
 @ProviderType
 public class SharepointOAuth2TokenEntryUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +63,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	 */
 	public static void clearCache(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+
 		getPersistence().clearCache(sharepointOAuth2TokenEntry);
 	}
 
@@ -77,8 +77,9 @@ public class SharepointOAuth2TokenEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
 	 */
-	public static Map<Serializable, SharepointOAuth2TokenEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
+	public static Map<Serializable, SharepointOAuth2TokenEntry>
+		fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
+
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -87,6 +88,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	 */
 	public static List<SharepointOAuth2TokenEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -95,6 +97,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	 */
 	public static List<SharepointOAuth2TokenEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -104,9 +107,9 @@ public class SharepointOAuth2TokenEntryUtil {
 	public static List<SharepointOAuth2TokenEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -114,6 +117,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	 */
 	public static SharepointOAuth2TokenEntry update(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+
 		return getPersistence().update(sharepointOAuth2TokenEntry);
 	}
 
@@ -123,220 +127,240 @@ public class SharepointOAuth2TokenEntryUtil {
 	public static SharepointOAuth2TokenEntry update(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry,
 		ServiceContext serviceContext) {
-		return getPersistence()
-				   .update(sharepointOAuth2TokenEntry, serviceContext);
+
+		return getPersistence().update(
+			sharepointOAuth2TokenEntry, serviceContext);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.
-	*
-	* @param userId the user ID
-	* @param configurationPid the configuration pid
-	* @return the matching sharepoint o auth2 token entry
-	* @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
-	*/
-	public static SharepointOAuth2TokenEntry findByU_C(long userId,
-		String configurationPid)
-		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the matching sharepoint o auth2 token entry
+	 * @throws NoSuch2TokenEntryException if a matching sharepoint o auth2 token entry could not be found
+	 */
+	public static SharepointOAuth2TokenEntry findByU_C(
+			long userId, String configurationPid)
+		throws com.liferay.sharepoint.rest.oauth2.exception.
+			NoSuch2TokenEntryException {
+
 		return getPersistence().findByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param userId the user ID
-	* @param configurationPid the configuration pid
-	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	*/
-	public static SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		String configurationPid) {
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
+	 */
+	public static SharepointOAuth2TokenEntry fetchByU_C(
+		long userId, String configurationPid) {
+
 		return getPersistence().fetchByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param userId the user ID
-	* @param configurationPid the configuration pid
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	*/
-	public static SharepointOAuth2TokenEntry fetchByU_C(long userId,
-		String configurationPid, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByU_C(userId, configurationPid, retrieveFromCache);
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
+	 */
+	public static SharepointOAuth2TokenEntry fetchByU_C(
+		long userId, String configurationPid, boolean retrieveFromCache) {
+
+		return getPersistence().fetchByU_C(
+			userId, configurationPid, retrieveFromCache);
 	}
 
 	/**
-	* Removes the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; from the database.
-	*
-	* @param userId the user ID
-	* @param configurationPid the configuration pid
-	* @return the sharepoint o auth2 token entry that was removed
-	*/
-	public static SharepointOAuth2TokenEntry removeByU_C(long userId,
-		String configurationPid)
-		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
+	 * Removes the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the sharepoint o auth2 token entry that was removed
+	 */
+	public static SharepointOAuth2TokenEntry removeByU_C(
+			long userId, String configurationPid)
+		throws com.liferay.sharepoint.rest.oauth2.exception.
+			NoSuch2TokenEntryException {
+
 		return getPersistence().removeByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationPid = &#63;.
-	*
-	* @param userId the user ID
-	* @param configurationPid the configuration pid
-	* @return the number of matching sharepoint o auth2 token entries
-	*/
+	 * Returns the number of sharepoint o auth2 token entries where userId = &#63; and configurationPid = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the number of matching sharepoint o auth2 token entries
+	 */
 	public static int countByU_C(long userId, String configurationPid) {
 		return getPersistence().countByU_C(userId, configurationPid);
 	}
 
 	/**
-	* Caches the sharepoint o auth2 token entry in the entity cache if it is enabled.
-	*
-	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
-	*/
+	 * Caches the sharepoint o auth2 token entry in the entity cache if it is enabled.
+	 *
+	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
+	 */
 	public static void cacheResult(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+
 		getPersistence().cacheResult(sharepointOAuth2TokenEntry);
 	}
 
 	/**
-	* Caches the sharepoint o auth2 token entries in the entity cache if it is enabled.
-	*
-	* @param sharepointOAuth2TokenEntries the sharepoint o auth2 token entries
-	*/
+	 * Caches the sharepoint o auth2 token entries in the entity cache if it is enabled.
+	 *
+	 * @param sharepointOAuth2TokenEntries the sharepoint o auth2 token entries
+	 */
 	public static void cacheResult(
 		List<SharepointOAuth2TokenEntry> sharepointOAuth2TokenEntries) {
+
 		getPersistence().cacheResult(sharepointOAuth2TokenEntries);
 	}
 
 	/**
-	* Creates a new sharepoint o auth2 token entry with the primary key. Does not add the sharepoint o auth2 token entry to the database.
-	*
-	* @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
-	* @return the new sharepoint o auth2 token entry
-	*/
+	 * Creates a new sharepoint o auth2 token entry with the primary key. Does not add the sharepoint o auth2 token entry to the database.
+	 *
+	 * @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
+	 * @return the new sharepoint o auth2 token entry
+	 */
 	public static SharepointOAuth2TokenEntry create(
 		long sharepointOAuth2TokenEntryId) {
+
 		return getPersistence().create(sharepointOAuth2TokenEntryId);
 	}
 
 	/**
-	* Removes the sharepoint o auth2 token entry with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
-	* @return the sharepoint o auth2 token entry that was removed
-	* @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
-	*/
+	 * Removes the sharepoint o auth2 token entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
+	 * @return the sharepoint o auth2 token entry that was removed
+	 * @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
+	 */
 	public static SharepointOAuth2TokenEntry remove(
-		long sharepointOAuth2TokenEntryId)
-		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
+			long sharepointOAuth2TokenEntryId)
+		throws com.liferay.sharepoint.rest.oauth2.exception.
+			NoSuch2TokenEntryException {
+
 		return getPersistence().remove(sharepointOAuth2TokenEntryId);
 	}
 
 	public static SharepointOAuth2TokenEntry updateImpl(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+
 		return getPersistence().updateImpl(sharepointOAuth2TokenEntry);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry with the primary key or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.
-	*
-	* @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
-	* @return the sharepoint o auth2 token entry
-	* @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
-	*/
+	 * Returns the sharepoint o auth2 token entry with the primary key or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.
+	 *
+	 * @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
+	 * @return the sharepoint o auth2 token entry
+	 * @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
+	 */
 	public static SharepointOAuth2TokenEntry findByPrimaryKey(
-		long sharepointOAuth2TokenEntryId)
-		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
+			long sharepointOAuth2TokenEntryId)
+		throws com.liferay.sharepoint.rest.oauth2.exception.
+			NoSuch2TokenEntryException {
+
 		return getPersistence().findByPrimaryKey(sharepointOAuth2TokenEntryId);
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
-	* @return the sharepoint o auth2 token entry, or <code>null</code> if a sharepoint o auth2 token entry with the primary key could not be found
-	*/
+	 * Returns the sharepoint o auth2 token entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param sharepointOAuth2TokenEntryId the primary key of the sharepoint o auth2 token entry
+	 * @return the sharepoint o auth2 token entry, or <code>null</code> if a sharepoint o auth2 token entry with the primary key could not be found
+	 */
 	public static SharepointOAuth2TokenEntry fetchByPrimaryKey(
 		long sharepointOAuth2TokenEntryId) {
+
 		return getPersistence().fetchByPrimaryKey(sharepointOAuth2TokenEntryId);
 	}
 
 	/**
-	* Returns all the sharepoint o auth2 token entries.
-	*
-	* @return the sharepoint o auth2 token entries
-	*/
+	 * Returns all the sharepoint o auth2 token entries.
+	 *
+	 * @return the sharepoint o auth2 token entries
+	 */
 	public static List<SharepointOAuth2TokenEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the sharepoint o auth2 token entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of sharepoint o auth2 token entries
-	* @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	* @return the range of sharepoint o auth2 token entries
-	*/
+	 * Returns a range of all the sharepoint o auth2 token entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @return the range of sharepoint o auth2 token entries
+	 */
 	public static List<SharepointOAuth2TokenEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the sharepoint o auth2 token entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of sharepoint o auth2 token entries
-	* @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of sharepoint o auth2 token entries
-	*/
-	public static List<SharepointOAuth2TokenEntry> findAll(int start, int end,
+	 * Returns an ordered range of all the sharepoint o auth2 token entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of sharepoint o auth2 token entries
+	 */
+	public static List<SharepointOAuth2TokenEntry> findAll(
+		int start, int end,
 		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
+
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the sharepoint o auth2 token entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of sharepoint o auth2 token entries
-	* @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of sharepoint o auth2 token entries
-	*/
-	public static List<SharepointOAuth2TokenEntry> findAll(int start, int end,
+	 * Returns an ordered range of all the sharepoint o auth2 token entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of sharepoint o auth2 token entries
+	 */
+	public static List<SharepointOAuth2TokenEntry> findAll(
+		int start, int end,
 		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findAll(start, end, orderByComparator, retrieveFromCache);
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the sharepoint o auth2 token entries from the database.
-	*/
+	 * Removes all the sharepoint o auth2 token entries from the database.
+	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of sharepoint o auth2 token entries.
-	*
-	* @return the number of sharepoint o auth2 token entries
-	*/
+	 * Returns the number of sharepoint o auth2 token entries.
+	 *
+	 * @return the number of sharepoint o auth2 token entries
+	 */
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
@@ -345,17 +369,26 @@ public class SharepointOAuth2TokenEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence> _serviceTracker;
+	private static ServiceTracker
+		<SharepointOAuth2TokenEntryPersistence,
+		 SharepointOAuth2TokenEntryPersistence> _serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(SharepointOAuth2TokenEntryPersistence.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			SharepointOAuth2TokenEntryPersistence.class);
 
-		ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence> serviceTracker =
-			new ServiceTracker<SharepointOAuth2TokenEntryPersistence, SharepointOAuth2TokenEntryPersistence>(bundle.getBundleContext(),
-				SharepointOAuth2TokenEntryPersistence.class, null);
+		ServiceTracker
+			<SharepointOAuth2TokenEntryPersistence,
+			 SharepointOAuth2TokenEntryPersistence> serviceTracker =
+				new ServiceTracker
+					<SharepointOAuth2TokenEntryPersistence,
+					 SharepointOAuth2TokenEntryPersistence>(
+						 bundle.getBundleContext(),
+						 SharepointOAuth2TokenEntryPersistence.class, null);
 
 		serviceTracker.open();
 
 		_serviceTracker = serviceTracker;
 	}
+
 }

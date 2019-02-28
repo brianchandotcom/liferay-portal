@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.reports.engine.console.model.Source;
 
@@ -37,6 +36,7 @@ import java.util.Date;
  */
 @ProviderType
 public class SourceCacheModel implements CacheModel<Source>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -205,8 +205,7 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -283,4 +282,5 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 	public String driverUrl;
 	public String driverUserName;
 	public String driverPassword;
+
 }

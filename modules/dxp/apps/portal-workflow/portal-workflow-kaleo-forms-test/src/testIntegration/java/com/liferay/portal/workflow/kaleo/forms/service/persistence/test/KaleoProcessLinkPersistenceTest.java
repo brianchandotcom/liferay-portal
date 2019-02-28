@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.forms.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,15 +37,6 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServ
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -57,16 +47,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoProcessLinkPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.forms.service"));
 
 	@Before
@@ -106,7 +107,8 @@ public class KaleoProcessLinkPersistenceTest {
 
 		_persistence.remove(newKaleoProcessLink);
 
-		KaleoProcessLink existingKaleoProcessLink = _persistence.fetchByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
+		KaleoProcessLink existingKaleoProcessLink =
+			_persistence.fetchByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoProcessLink);
 	}
@@ -130,15 +132,20 @@ public class KaleoProcessLinkPersistenceTest {
 
 		_kaleoProcessLinks.add(_persistence.update(newKaleoProcessLink));
 
-		KaleoProcessLink existingKaleoProcessLink = _persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
+		KaleoProcessLink existingKaleoProcessLink =
+			_persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
 
-		Assert.assertEquals(existingKaleoProcessLink.getKaleoProcessLinkId(),
+		Assert.assertEquals(
+			existingKaleoProcessLink.getKaleoProcessLinkId(),
 			newKaleoProcessLink.getKaleoProcessLinkId());
-		Assert.assertEquals(existingKaleoProcessLink.getKaleoProcessId(),
+		Assert.assertEquals(
+			existingKaleoProcessLink.getKaleoProcessId(),
 			newKaleoProcessLink.getKaleoProcessId());
-		Assert.assertEquals(existingKaleoProcessLink.getWorkflowTaskName(),
+		Assert.assertEquals(
+			existingKaleoProcessLink.getWorkflowTaskName(),
 			newKaleoProcessLink.getWorkflowTaskName());
-		Assert.assertEquals(existingKaleoProcessLink.getDDMTemplateId(),
+		Assert.assertEquals(
+			existingKaleoProcessLink.getDDMTemplateId(),
 			newKaleoProcessLink.getDDMTemplateId());
 	}
 
@@ -162,7 +169,8 @@ public class KaleoProcessLinkPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
-		KaleoProcessLink existingKaleoProcessLink = _persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
+		KaleoProcessLink existingKaleoProcessLink =
+			_persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoProcessLink, newKaleoProcessLink);
 	}
@@ -176,21 +184,22 @@ public class KaleoProcessLinkPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<KaleoProcessLink> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoProcessLink",
-			"kaleoProcessLinkId", true, "kaleoProcessId", true,
-			"workflowTaskName", true, "DDMTemplateId", true);
+		return OrderByComparatorFactoryUtil.create(
+			"KaleoProcessLink", "kaleoProcessLinkId", true, "kaleoProcessId",
+			true, "workflowTaskName", true, "DDMTemplateId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
-		KaleoProcessLink existingKaleoProcessLink = _persistence.fetchByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
+		KaleoProcessLink existingKaleoProcessLink =
+			_persistence.fetchByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoProcessLink, newKaleoProcessLink);
 	}
@@ -199,7 +208,8 @@ public class KaleoProcessLinkPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		KaleoProcessLink missingKaleoProcessLink = _persistence.fetchByPrimaryKey(pk);
+		KaleoProcessLink missingKaleoProcessLink =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingKaleoProcessLink);
 	}
@@ -207,6 +217,7 @@ public class KaleoProcessLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		KaleoProcessLink newKaleoProcessLink1 = addKaleoProcessLink();
 		KaleoProcessLink newKaleoProcessLink2 = addKaleoProcessLink();
 
@@ -215,18 +226,22 @@ public class KaleoProcessLinkPersistenceTest {
 		primaryKeys.add(newKaleoProcessLink1.getPrimaryKey());
 		primaryKeys.add(newKaleoProcessLink2.getPrimaryKey());
 
-		Map<Serializable, KaleoProcessLink> kaleoProcessLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcessLink> kaleoProcessLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoProcessLinks.size());
-		Assert.assertEquals(newKaleoProcessLink1,
+		Assert.assertEquals(
+			newKaleoProcessLink1,
 			kaleoProcessLinks.get(newKaleoProcessLink1.getPrimaryKey()));
-		Assert.assertEquals(newKaleoProcessLink2,
+		Assert.assertEquals(
+			newKaleoProcessLink2,
 			kaleoProcessLinks.get(newKaleoProcessLink2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -236,7 +251,8 @@ public class KaleoProcessLinkPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoProcessLink> kaleoProcessLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcessLink> kaleoProcessLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoProcessLinks.isEmpty());
 	}
@@ -244,6 +260,7 @@ public class KaleoProcessLinkPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
 		long pk = RandomTestUtil.nextLong();
@@ -253,36 +270,39 @@ public class KaleoProcessLinkPersistenceTest {
 		primaryKeys.add(newKaleoProcessLink.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoProcessLink> kaleoProcessLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcessLink> kaleoProcessLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoProcessLinks.size());
-		Assert.assertEquals(newKaleoProcessLink,
+		Assert.assertEquals(
+			newKaleoProcessLink,
 			kaleoProcessLinks.get(newKaleoProcessLink.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoProcessLink> kaleoProcessLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcessLink> kaleoProcessLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoProcessLinks.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoProcessLink.getPrimaryKey());
 
-		Map<Serializable, KaleoProcessLink> kaleoProcessLinks = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcessLink> kaleoProcessLinks =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoProcessLinks.size());
-		Assert.assertEquals(newKaleoProcessLink,
+		Assert.assertEquals(
+			newKaleoProcessLink,
 			kaleoProcessLinks.get(newKaleoProcessLink.getPrimaryKey()));
 	}
 
@@ -290,15 +310,19 @@ public class KaleoProcessLinkPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = KaleoProcessLinkLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			KaleoProcessLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoProcessLink>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<KaleoProcessLink>() {
+
 				@Override
 				public void performAction(KaleoProcessLink kaleoProcessLink) {
 					Assert.assertNotNull(kaleoProcessLink);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -307,17 +331,19 @@ public class KaleoProcessLinkPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcessLink.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcessLink.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoProcessLinkId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoProcessLinkId",
 				newKaleoProcessLink.getKaleoProcessLinkId()));
 
-		List<KaleoProcessLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<KaleoProcessLink> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -328,32 +354,35 @@ public class KaleoProcessLinkPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcessLink.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcessLink.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoProcessLinkId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoProcessLinkId", RandomTestUtil.nextLong()));
 
-		List<KaleoProcessLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<KaleoProcessLink> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcessLink.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcessLink.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"kaleoProcessLinkId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("kaleoProcessLinkId"));
 
-		Object newKaleoProcessLinkId = newKaleoProcessLink.getKaleoProcessLinkId();
+		Object newKaleoProcessLinkId =
+			newKaleoProcessLink.getKaleoProcessLinkId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoProcessLinkId",
-				new Object[] { newKaleoProcessLinkId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"kaleoProcessLinkId", new Object[] {newKaleoProcessLinkId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -366,14 +395,16 @@ public class KaleoProcessLinkPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcessLink.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcessLink.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"kaleoProcessLinkId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("kaleoProcessLinkId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoProcessLinkId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"kaleoProcessLinkId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -386,16 +417,20 @@ public class KaleoProcessLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoProcessLink existingKaleoProcessLink = _persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
+		KaleoProcessLink existingKaleoProcessLink =
+			_persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingKaleoProcessLink.getKaleoProcessId()),
-			ReflectionTestUtil.<Long>invoke(existingKaleoProcessLink,
-				"getOriginalKaleoProcessId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
+		Assert.assertEquals(
+			Long.valueOf(existingKaleoProcessLink.getKaleoProcessId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingKaleoProcessLink, "getOriginalKaleoProcessId",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
 				existingKaleoProcessLink.getWorkflowTaskName(),
-				ReflectionTestUtil.invoke(existingKaleoProcessLink,
-					"getOriginalWorkflowTaskName", new Class<?>[0])));
+				ReflectionTestUtil.invoke(
+					existingKaleoProcessLink, "getOriginalWorkflowTaskName",
+					new Class<?>[0])));
 	}
 
 	protected KaleoProcessLink addKaleoProcessLink() throws Exception {
@@ -414,7 +449,9 @@ public class KaleoProcessLinkPersistenceTest {
 		return kaleoProcessLink;
 	}
 
-	private List<KaleoProcessLink> _kaleoProcessLinks = new ArrayList<KaleoProcessLink>();
+	private List<KaleoProcessLink> _kaleoProcessLinks =
+		new ArrayList<KaleoProcessLink>();
 	private KaleoProcessLinkPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

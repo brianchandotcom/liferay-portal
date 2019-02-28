@@ -53,20 +53,24 @@ import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
  */
 @ProviderType
 public class SourceServiceHttp {
-	public static com.liferay.portal.reports.engine.console.model.Source addSource(
-		HttpPrincipal httpPrincipal, long groupId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		String driverClassName, String driverUrl, String driverUserName,
-		String driverPassword,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
-					"addSource", _addSourceParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					nameMap, driverClassName, driverUrl, driverUserName,
-					driverPassword, serviceContext);
+	public static com.liferay.portal.reports.engine.console.model.Source
+			addSource(
+				HttpPrincipal httpPrincipal, long groupId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String driverClassName, String driverUrl, String driverUserName,
+				String driverPassword,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SourceServiceUtil.class, "addSource",
+				_addSourceParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, nameMap, driverClassName, driverUrl,
+				driverUserName, driverPassword, serviceContext);
 
 			Object returnObj = null;
 
@@ -74,14 +78,19 @@ public class SourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -90,14 +99,17 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Source deleteSource(
-		HttpPrincipal httpPrincipal, long sourceId)
+	public static com.liferay.portal.reports.engine.console.model.Source
+			deleteSource(HttpPrincipal httpPrincipal, long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
-					"deleteSource", _deleteSourceParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, sourceId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SourceServiceUtil.class, "deleteSource",
+				_deleteSourceParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, sourceId);
 
 			Object returnObj = null;
 
@@ -105,14 +117,19 @@ public class SourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -121,14 +138,17 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Source getSource(
-		HttpPrincipal httpPrincipal, long sourceId)
+	public static com.liferay.portal.reports.engine.console.model.Source
+			getSource(HttpPrincipal httpPrincipal, long sourceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
-					"getSource", _getSourceParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, sourceId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SourceServiceUtil.class, "getSource",
+				_getSourceParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, sourceId);
 
 			Object returnObj = null;
 
@@ -136,14 +156,19 @@ public class SourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -152,17 +177,62 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.reports.engine.console.model.Source> getSources(
+	public static java.util.List
+		<com.liferay.portal.reports.engine.console.model.Source> getSources(
+				HttpPrincipal httpPrincipal, long groupId, String name,
+				String driverUrl, boolean andSearch, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SourceServiceUtil.class, "getSources",
+				_getSourcesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, name, driverUrl, andSearch, start, end,
+				orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.liferay.portal.reports.engine.console.model.Source>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getSourcesCount(
 		HttpPrincipal httpPrincipal, long groupId, String name,
-		String driverUrl, boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
-					"getSources", _getSourcesParameterTypes3);
+		String driverUrl, boolean andSearch) {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, driverUrl, andSearch, start, end, orderByComparator);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SourceServiceUtil.class, "getSourcesCount",
+				_getSourcesCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, name, driverUrl, andSearch);
 
 			Object returnObj = null;
 
@@ -170,38 +240,8 @@ public class SourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.reports.engine.console.model.Source>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getSourcesCount(HttpPrincipal httpPrincipal,
-		long groupId, String name, String driverUrl, boolean andSearch) {
-		try {
-			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
-					"getSourcesCount", _getSourcesCountParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, driverUrl, andSearch);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -213,20 +253,23 @@ public class SourceServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.Source updateSource(
-		HttpPrincipal httpPrincipal, long sourceId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		String driverClassName, String driverUrl, String driverUserName,
-		String driverPassword,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.reports.engine.console.model.Source
+			updateSource(
+				HttpPrincipal httpPrincipal, long sourceId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String driverClassName, String driverUrl, String driverUserName,
+				String driverPassword,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SourceServiceUtil.class,
-					"updateSource", _updateSourceParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					sourceId, nameMap, driverClassName, driverUrl,
-					driverUserName, driverPassword, serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SourceServiceUtil.class, "updateSource",
+				_updateSourceParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, sourceId, nameMap, driverClassName, driverUrl,
+				driverUserName, driverPassword, serviceContext);
 
 			Object returnObj = null;
 
@@ -234,14 +277,19 @@ public class SourceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.reports.engine.console.model.Source)returnObj;
+			return (com.liferay.portal.reports.engine.console.model.Source)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -251,27 +299,28 @@ public class SourceServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SourceServiceHttp.class);
+
 	private static final Class<?>[] _addSourceParameterTypes0 = new Class[] {
-			long.class, java.util.Map.class, String.class, String.class,
-			String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
+		long.class, java.util.Map.class, String.class, String.class,
+		String.class, String.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
 	private static final Class<?>[] _deleteSourceParameterTypes1 = new Class[] {
-			long.class
-		};
+		long.class
+	};
 	private static final Class<?>[] _getSourceParameterTypes2 = new Class[] {
-			long.class
-		};
+		long.class
+	};
 	private static final Class<?>[] _getSourcesParameterTypes3 = new Class[] {
-			long.class, String.class, String.class, boolean.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getSourcesCountParameterTypes4 = new Class[] {
-			long.class, String.class, String.class, boolean.class
-		};
+		long.class, String.class, String.class, boolean.class, int.class,
+		int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+	};
+	private static final Class<?>[] _getSourcesCountParameterTypes4 =
+		new Class[] {long.class, String.class, String.class, boolean.class};
 	private static final Class<?>[] _updateSourceParameterTypes5 = new Class[] {
-			long.class, java.util.Map.class, String.class, String.class,
-			String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
+		long.class, java.util.Map.class, String.class, String.class,
+		String.class, String.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
+
 }

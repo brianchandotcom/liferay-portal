@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class KaleoProcessLinkWrapper extends BaseModelWrapper<KaleoProcessLink>
+public class KaleoProcessLinkWrapper
+	extends BaseModelWrapper<KaleoProcessLink>
 	implements KaleoProcessLink, ModelWrapper<KaleoProcessLink> {
+
 	public KaleoProcessLinkWrapper(KaleoProcessLink kaleoProcessLink) {
 		super(kaleoProcessLink);
 	}
@@ -78,10 +80,10 @@ public class KaleoProcessLinkWrapper extends BaseModelWrapper<KaleoProcessLink>
 	}
 
 	/**
-	* Returns the ddm template ID of this kaleo process link.
-	*
-	* @return the ddm template ID of this kaleo process link
-	*/
+	 * Returns the ddm template ID of this kaleo process link.
+	 *
+	 * @return the ddm template ID of this kaleo process link
+	 */
 	@Override
 	public long getDDMTemplateId() {
 		return model.getDDMTemplateId();
@@ -90,44 +92,45 @@ public class KaleoProcessLinkWrapper extends BaseModelWrapper<KaleoProcessLink>
 	@Override
 	public KaleoProcess getKaleoProcess()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getKaleoProcess();
 	}
 
 	/**
-	* Returns the kaleo process ID of this kaleo process link.
-	*
-	* @return the kaleo process ID of this kaleo process link
-	*/
+	 * Returns the kaleo process ID of this kaleo process link.
+	 *
+	 * @return the kaleo process ID of this kaleo process link
+	 */
 	@Override
 	public long getKaleoProcessId() {
 		return model.getKaleoProcessId();
 	}
 
 	/**
-	* Returns the kaleo process link ID of this kaleo process link.
-	*
-	* @return the kaleo process link ID of this kaleo process link
-	*/
+	 * Returns the kaleo process link ID of this kaleo process link.
+	 *
+	 * @return the kaleo process link ID of this kaleo process link
+	 */
 	@Override
 	public long getKaleoProcessLinkId() {
 		return model.getKaleoProcessLinkId();
 	}
 
 	/**
-	* Returns the primary key of this kaleo process link.
-	*
-	* @return the primary key of this kaleo process link
-	*/
+	 * Returns the primary key of this kaleo process link.
+	 *
+	 * @return the primary key of this kaleo process link
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the workflow task name of this kaleo process link.
-	*
-	* @return the workflow task name of this kaleo process link
-	*/
+	 * Returns the workflow task name of this kaleo process link.
+	 *
+	 * @return the workflow task name of this kaleo process link
+	 */
 	@Override
 	public String getWorkflowTaskName() {
 		return model.getWorkflowTaskName();
@@ -139,50 +142,50 @@ public class KaleoProcessLinkWrapper extends BaseModelWrapper<KaleoProcessLink>
 	}
 
 	/**
-	* Sets the ddm template ID of this kaleo process link.
-	*
-	* @param DDMTemplateId the ddm template ID of this kaleo process link
-	*/
+	 * Sets the ddm template ID of this kaleo process link.
+	 *
+	 * @param DDMTemplateId the ddm template ID of this kaleo process link
+	 */
 	@Override
 	public void setDDMTemplateId(long DDMTemplateId) {
 		model.setDDMTemplateId(DDMTemplateId);
 	}
 
 	/**
-	* Sets the kaleo process ID of this kaleo process link.
-	*
-	* @param kaleoProcessId the kaleo process ID of this kaleo process link
-	*/
+	 * Sets the kaleo process ID of this kaleo process link.
+	 *
+	 * @param kaleoProcessId the kaleo process ID of this kaleo process link
+	 */
 	@Override
 	public void setKaleoProcessId(long kaleoProcessId) {
 		model.setKaleoProcessId(kaleoProcessId);
 	}
 
 	/**
-	* Sets the kaleo process link ID of this kaleo process link.
-	*
-	* @param kaleoProcessLinkId the kaleo process link ID of this kaleo process link
-	*/
+	 * Sets the kaleo process link ID of this kaleo process link.
+	 *
+	 * @param kaleoProcessLinkId the kaleo process link ID of this kaleo process link
+	 */
 	@Override
 	public void setKaleoProcessLinkId(long kaleoProcessLinkId) {
 		model.setKaleoProcessLinkId(kaleoProcessLinkId);
 	}
 
 	/**
-	* Sets the primary key of this kaleo process link.
-	*
-	* @param primaryKey the primary key of this kaleo process link
-	*/
+	 * Sets the primary key of this kaleo process link.
+	 *
+	 * @param primaryKey the primary key of this kaleo process link
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the workflow task name of this kaleo process link.
-	*
-	* @param workflowTaskName the workflow task name of this kaleo process link
-	*/
+	 * Sets the workflow task name of this kaleo process link.
+	 *
+	 * @param workflowTaskName the workflow task name of this kaleo process link
+	 */
 	@Override
 	public void setWorkflowTaskName(String workflowTaskName) {
 		model.setWorkflowTaskName(workflowTaskName);
@@ -192,4 +195,5 @@ public class KaleoProcessLinkWrapper extends BaseModelWrapper<KaleoProcessLink>
 	protected KaleoProcessLinkWrapper wrap(KaleoProcessLink kaleoProcessLink) {
 		return new KaleoProcessLinkWrapper(kaleoProcessLink);
 	}
+
 }

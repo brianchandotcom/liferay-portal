@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class EntrySoap implements Serializable {
+
 	public static EntrySoap toSoapModel(Entry model) {
 		EntrySoap soapModel = new EntrySoap();
 
@@ -303,4 +304,5 @@ public class EntrySoap implements Serializable {
 	private String _reportParameters;
 	private String _status;
 	private String _errorMessage;
+
 }

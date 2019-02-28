@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,11 +34,14 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<WorkflowMetricsSLADefinition>
+public class WorkflowMetricsSLADefinitionWrapper
+	extends BaseModelWrapper<WorkflowMetricsSLADefinition>
 	implements WorkflowMetricsSLADefinition,
-		ModelWrapper<WorkflowMetricsSLADefinition> {
+			   ModelWrapper<WorkflowMetricsSLADefinition> {
+
 	public WorkflowMetricsSLADefinitionWrapper(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
 		super(workflowMetricsSLADefinition);
 	}
 
@@ -49,7 +51,8 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("workflowMetricsSLADefinitionId",
+		attributes.put(
+			"workflowMetricsSLADefinitionId",
 			getWorkflowMetricsSLADefinitionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -83,7 +86,7 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 		}
 
 		Long workflowMetricsSLADefinitionId = (Long)attributes.get(
-				"workflowMetricsSLADefinitionId");
+			"workflowMetricsSLADefinitionId");
 
 		if (workflowMetricsSLADefinitionId != null) {
 			setWorkflowMetricsSLADefinitionId(workflowMetricsSLADefinitionId);
@@ -169,180 +172,180 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	}
 
 	/**
-	* Returns the company ID of this workflow metrics sla definition.
-	*
-	* @return the company ID of this workflow metrics sla definition
-	*/
+	 * Returns the company ID of this workflow metrics sla definition.
+	 *
+	 * @return the company ID of this workflow metrics sla definition
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this workflow metrics sla definition.
-	*
-	* @return the create date of this workflow metrics sla definition
-	*/
+	 * Returns the create date of this workflow metrics sla definition.
+	 *
+	 * @return the create date of this workflow metrics sla definition
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the description of this workflow metrics sla definition.
-	*
-	* @return the description of this workflow metrics sla definition
-	*/
+	 * Returns the description of this workflow metrics sla definition.
+	 *
+	 * @return the description of this workflow metrics sla definition
+	 */
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	* Returns the duration of this workflow metrics sla definition.
-	*
-	* @return the duration of this workflow metrics sla definition
-	*/
+	 * Returns the duration of this workflow metrics sla definition.
+	 *
+	 * @return the duration of this workflow metrics sla definition
+	 */
 	@Override
 	public long getDuration() {
 		return model.getDuration();
 	}
 
 	/**
-	* Returns the group ID of this workflow metrics sla definition.
-	*
-	* @return the group ID of this workflow metrics sla definition
-	*/
+	 * Returns the group ID of this workflow metrics sla definition.
+	 *
+	 * @return the group ID of this workflow metrics sla definition
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this workflow metrics sla definition.
-	*
-	* @return the modified date of this workflow metrics sla definition
-	*/
+	 * Returns the modified date of this workflow metrics sla definition.
+	 *
+	 * @return the modified date of this workflow metrics sla definition
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this workflow metrics sla definition.
-	*
-	* @return the mvcc version of this workflow metrics sla definition
-	*/
+	 * Returns the mvcc version of this workflow metrics sla definition.
+	 *
+	 * @return the mvcc version of this workflow metrics sla definition
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this workflow metrics sla definition.
-	*
-	* @return the name of this workflow metrics sla definition
-	*/
+	 * Returns the name of this workflow metrics sla definition.
+	 *
+	 * @return the name of this workflow metrics sla definition
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the pause node names of this workflow metrics sla definition.
-	*
-	* @return the pause node names of this workflow metrics sla definition
-	*/
+	 * Returns the pause node names of this workflow metrics sla definition.
+	 *
+	 * @return the pause node names of this workflow metrics sla definition
+	 */
 	@Override
 	public String getPauseNodeNames() {
 		return model.getPauseNodeNames();
 	}
 
 	/**
-	* Returns the primary key of this workflow metrics sla definition.
-	*
-	* @return the primary key of this workflow metrics sla definition
-	*/
+	 * Returns the primary key of this workflow metrics sla definition.
+	 *
+	 * @return the primary key of this workflow metrics sla definition
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the process ID of this workflow metrics sla definition.
-	*
-	* @return the process ID of this workflow metrics sla definition
-	*/
+	 * Returns the process ID of this workflow metrics sla definition.
+	 *
+	 * @return the process ID of this workflow metrics sla definition
+	 */
 	@Override
 	public long getProcessId() {
 		return model.getProcessId();
 	}
 
 	/**
-	* Returns the start node names of this workflow metrics sla definition.
-	*
-	* @return the start node names of this workflow metrics sla definition
-	*/
+	 * Returns the start node names of this workflow metrics sla definition.
+	 *
+	 * @return the start node names of this workflow metrics sla definition
+	 */
 	@Override
 	public String getStartNodeNames() {
 		return model.getStartNodeNames();
 	}
 
 	/**
-	* Returns the stop node names of this workflow metrics sla definition.
-	*
-	* @return the stop node names of this workflow metrics sla definition
-	*/
+	 * Returns the stop node names of this workflow metrics sla definition.
+	 *
+	 * @return the stop node names of this workflow metrics sla definition
+	 */
 	@Override
 	public String getStopNodeNames() {
 		return model.getStopNodeNames();
 	}
 
 	/**
-	* Returns the user ID of this workflow metrics sla definition.
-	*
-	* @return the user ID of this workflow metrics sla definition
-	*/
+	 * Returns the user ID of this workflow metrics sla definition.
+	 *
+	 * @return the user ID of this workflow metrics sla definition
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this workflow metrics sla definition.
-	*
-	* @return the user name of this workflow metrics sla definition
-	*/
+	 * Returns the user name of this workflow metrics sla definition.
+	 *
+	 * @return the user name of this workflow metrics sla definition
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this workflow metrics sla definition.
-	*
-	* @return the user uuid of this workflow metrics sla definition
-	*/
+	 * Returns the user uuid of this workflow metrics sla definition.
+	 *
+	 * @return the user uuid of this workflow metrics sla definition
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this workflow metrics sla definition.
-	*
-	* @return the uuid of this workflow metrics sla definition
-	*/
+	 * Returns the uuid of this workflow metrics sla definition.
+	 *
+	 * @return the uuid of this workflow metrics sla definition
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	* Returns the workflow metrics sla definition ID of this workflow metrics sla definition.
-	*
-	* @return the workflow metrics sla definition ID of this workflow metrics sla definition
-	*/
+	 * Returns the workflow metrics sla definition ID of this workflow metrics sla definition.
+	 *
+	 * @return the workflow metrics sla definition ID of this workflow metrics sla definition
+	 */
 	@Override
 	public long getWorkflowMetricsSLADefinitionId() {
 		return model.getWorkflowMetricsSLADefinitionId();
@@ -354,183 +357,184 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	}
 
 	/**
-	* Sets the company ID of this workflow metrics sla definition.
-	*
-	* @param companyId the company ID of this workflow metrics sla definition
-	*/
+	 * Sets the company ID of this workflow metrics sla definition.
+	 *
+	 * @param companyId the company ID of this workflow metrics sla definition
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this workflow metrics sla definition.
-	*
-	* @param createDate the create date of this workflow metrics sla definition
-	*/
+	 * Sets the create date of this workflow metrics sla definition.
+	 *
+	 * @param createDate the create date of this workflow metrics sla definition
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the description of this workflow metrics sla definition.
-	*
-	* @param description the description of this workflow metrics sla definition
-	*/
+	 * Sets the description of this workflow metrics sla definition.
+	 *
+	 * @param description the description of this workflow metrics sla definition
+	 */
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	* Sets the duration of this workflow metrics sla definition.
-	*
-	* @param duration the duration of this workflow metrics sla definition
-	*/
+	 * Sets the duration of this workflow metrics sla definition.
+	 *
+	 * @param duration the duration of this workflow metrics sla definition
+	 */
 	@Override
 	public void setDuration(long duration) {
 		model.setDuration(duration);
 	}
 
 	/**
-	* Sets the group ID of this workflow metrics sla definition.
-	*
-	* @param groupId the group ID of this workflow metrics sla definition
-	*/
+	 * Sets the group ID of this workflow metrics sla definition.
+	 *
+	 * @param groupId the group ID of this workflow metrics sla definition
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this workflow metrics sla definition.
-	*
-	* @param modifiedDate the modified date of this workflow metrics sla definition
-	*/
+	 * Sets the modified date of this workflow metrics sla definition.
+	 *
+	 * @param modifiedDate the modified date of this workflow metrics sla definition
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this workflow metrics sla definition.
-	*
-	* @param mvccVersion the mvcc version of this workflow metrics sla definition
-	*/
+	 * Sets the mvcc version of this workflow metrics sla definition.
+	 *
+	 * @param mvccVersion the mvcc version of this workflow metrics sla definition
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this workflow metrics sla definition.
-	*
-	* @param name the name of this workflow metrics sla definition
-	*/
+	 * Sets the name of this workflow metrics sla definition.
+	 *
+	 * @param name the name of this workflow metrics sla definition
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the pause node names of this workflow metrics sla definition.
-	*
-	* @param pauseNodeNames the pause node names of this workflow metrics sla definition
-	*/
+	 * Sets the pause node names of this workflow metrics sla definition.
+	 *
+	 * @param pauseNodeNames the pause node names of this workflow metrics sla definition
+	 */
 	@Override
 	public void setPauseNodeNames(String pauseNodeNames) {
 		model.setPauseNodeNames(pauseNodeNames);
 	}
 
 	/**
-	* Sets the primary key of this workflow metrics sla definition.
-	*
-	* @param primaryKey the primary key of this workflow metrics sla definition
-	*/
+	 * Sets the primary key of this workflow metrics sla definition.
+	 *
+	 * @param primaryKey the primary key of this workflow metrics sla definition
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the process ID of this workflow metrics sla definition.
-	*
-	* @param processId the process ID of this workflow metrics sla definition
-	*/
+	 * Sets the process ID of this workflow metrics sla definition.
+	 *
+	 * @param processId the process ID of this workflow metrics sla definition
+	 */
 	@Override
 	public void setProcessId(long processId) {
 		model.setProcessId(processId);
 	}
 
 	/**
-	* Sets the start node names of this workflow metrics sla definition.
-	*
-	* @param startNodeNames the start node names of this workflow metrics sla definition
-	*/
+	 * Sets the start node names of this workflow metrics sla definition.
+	 *
+	 * @param startNodeNames the start node names of this workflow metrics sla definition
+	 */
 	@Override
 	public void setStartNodeNames(String startNodeNames) {
 		model.setStartNodeNames(startNodeNames);
 	}
 
 	/**
-	* Sets the stop node names of this workflow metrics sla definition.
-	*
-	* @param stopNodeNames the stop node names of this workflow metrics sla definition
-	*/
+	 * Sets the stop node names of this workflow metrics sla definition.
+	 *
+	 * @param stopNodeNames the stop node names of this workflow metrics sla definition
+	 */
 	@Override
 	public void setStopNodeNames(String stopNodeNames) {
 		model.setStopNodeNames(stopNodeNames);
 	}
 
 	/**
-	* Sets the user ID of this workflow metrics sla definition.
-	*
-	* @param userId the user ID of this workflow metrics sla definition
-	*/
+	 * Sets the user ID of this workflow metrics sla definition.
+	 *
+	 * @param userId the user ID of this workflow metrics sla definition
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this workflow metrics sla definition.
-	*
-	* @param userName the user name of this workflow metrics sla definition
-	*/
+	 * Sets the user name of this workflow metrics sla definition.
+	 *
+	 * @param userName the user name of this workflow metrics sla definition
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this workflow metrics sla definition.
-	*
-	* @param userUuid the user uuid of this workflow metrics sla definition
-	*/
+	 * Sets the user uuid of this workflow metrics sla definition.
+	 *
+	 * @param userUuid the user uuid of this workflow metrics sla definition
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this workflow metrics sla definition.
-	*
-	* @param uuid the uuid of this workflow metrics sla definition
-	*/
+	 * Sets the uuid of this workflow metrics sla definition.
+	 *
+	 * @param uuid the uuid of this workflow metrics sla definition
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
 	}
 
 	/**
-	* Sets the workflow metrics sla definition ID of this workflow metrics sla definition.
-	*
-	* @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID of this workflow metrics sla definition
-	*/
+	 * Sets the workflow metrics sla definition ID of this workflow metrics sla definition.
+	 *
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID of this workflow metrics sla definition
+	 */
 	@Override
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
+
 		model.setWorkflowMetricsSLADefinitionId(workflowMetricsSLADefinitionId);
 	}
 
@@ -542,6 +546,9 @@ public class WorkflowMetricsSLADefinitionWrapper extends BaseModelWrapper<Workfl
 	@Override
 	protected WorkflowMetricsSLADefinitionWrapper wrap(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
-		return new WorkflowMetricsSLADefinitionWrapper(workflowMetricsSLADefinition);
+
+		return new WorkflowMetricsSLADefinitionWrapper(
+			workflowMetricsSLADefinition);
 	}
+
 }

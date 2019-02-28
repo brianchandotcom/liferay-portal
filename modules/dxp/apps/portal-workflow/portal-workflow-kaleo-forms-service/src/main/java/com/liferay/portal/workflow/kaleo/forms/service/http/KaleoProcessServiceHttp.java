@@ -53,23 +53,28 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
  */
 @ProviderType
 public class KaleoProcessServiceHttp {
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess addKaleoProcess(
-		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		java.util.Map<java.util.Locale, String> descriptionMap,
-		long ddmTemplateId, String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"addKaleoProcess", _addKaleoProcessParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					ddmStructureId, nameMap, descriptionMap, ddmTemplateId,
-					workflowDefinitionName, workflowDefinitionVersion,
-					kaleoTaskFormPairs, serviceContext);
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
+			addKaleoProcess(
+				HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				long ddmTemplateId, String workflowDefinitionName,
+				int workflowDefinitionVersion,
+				com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs
+					kaleoTaskFormPairs,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoProcessServiceUtil.class, "addKaleoProcess",
+				_addKaleoProcessParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, ddmStructureId, nameMap, descriptionMap,
+				ddmTemplateId, workflowDefinitionName,
+				workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
 
 			Object returnObj = null;
 
@@ -77,14 +82,19 @@ public class KaleoProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -93,15 +103,17 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess deleteKaleoProcess(
-		HttpPrincipal httpPrincipal, long kaleoProcessId)
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
+			deleteKaleoProcess(HttpPrincipal httpPrincipal, long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"deleteKaleoProcess", _deleteKaleoProcessParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					kaleoProcessId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoProcessServiceUtil.class, "deleteKaleoProcess",
+				_deleteKaleoProcessParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, kaleoProcessId);
 
 			Object returnObj = null;
 
@@ -109,14 +121,19 @@ public class KaleoProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -125,15 +142,17 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess getKaleoProcess(
-		HttpPrincipal httpPrincipal, long kaleoProcessId)
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
+			getKaleoProcess(HttpPrincipal httpPrincipal, long kaleoProcessId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"getKaleoProcess", _getKaleoProcessParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					kaleoProcessId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoProcessServiceUtil.class, "getKaleoProcess",
+				_getKaleoProcessParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, kaleoProcessId);
 
 			Object returnObj = null;
 
@@ -141,14 +160,19 @@ public class KaleoProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -157,16 +181,20 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
-		HttpPrincipal httpPrincipal, long groupId, String keywords, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		try {
-			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"search", _searchParameterTypes3);
+	public static java.util.List
+		<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess> search(
+			HttpPrincipal httpPrincipal, long groupId, String keywords,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				orderByComparator) {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					keywords, start, end, orderByComparator);
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoProcessServiceUtil.class, "search",
+				_searchParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, keywords, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -174,10 +202,13 @@ public class KaleoProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (java.util.List<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess>)returnObj;
+			return (java.util.List
+				<com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess>)
+					returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -186,14 +217,16 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static int searchCount(HttpPrincipal httpPrincipal, long groupId,
-		String keywords) {
-		try {
-			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"searchCount", _searchCountParameterTypes4);
+	public static int searchCount(
+		HttpPrincipal httpPrincipal, long groupId, String keywords) {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					keywords);
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoProcessServiceUtil.class, "searchCount",
+				_searchCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, keywords);
 
 			Object returnObj = null;
 
@@ -201,7 +234,8 @@ public class KaleoProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -213,24 +247,28 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess updateKaleoProcess(
-		HttpPrincipal httpPrincipal, long kaleoProcessId, long ddmStructureId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		java.util.Map<java.util.Locale, String> descriptionMap,
-		long ddmTemplateId, String workflowDefinitionName,
-		int workflowDefinitionVersion,
-		com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs kaleoTaskFormPairs,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess
+			updateKaleoProcess(
+				HttpPrincipal httpPrincipal, long kaleoProcessId,
+				long ddmStructureId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				long ddmTemplateId, String workflowDefinitionName,
+				int workflowDefinitionVersion,
+				com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs
+					kaleoTaskFormPairs,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(KaleoProcessServiceUtil.class,
-					"updateKaleoProcess", _updateKaleoProcessParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					kaleoProcessId, ddmStructureId, nameMap, descriptionMap,
-					ddmTemplateId, workflowDefinitionName,
-					workflowDefinitionVersion, kaleoTaskFormPairs,
-					serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoProcessServiceUtil.class, "updateKaleoProcess",
+				_updateKaleoProcessParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, kaleoProcessId, ddmStructureId, nameMap,
+				descriptionMap, ddmTemplateId, workflowDefinitionName,
+				workflowDefinitionVersion, kaleoTaskFormPairs, serviceContext);
 
 			Object returnObj = null;
 
@@ -238,14 +276,19 @@ public class KaleoProcessServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)returnObj;
+			return (com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -254,30 +297,35 @@ public class KaleoProcessServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(KaleoProcessServiceHttp.class);
-	private static final Class<?>[] _addKaleoProcessParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		KaleoProcessServiceHttp.class);
+
+	private static final Class<?>[] _addKaleoProcessParameterTypes0 =
+		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, String.class, int.class,
-			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
+			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.
+				class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteKaleoProcessParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getKaleoProcessParameterTypes2 = new Class[] {
-			long.class
-		};
+	private static final Class<?>[] _deleteKaleoProcessParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getKaleoProcessParameterTypes2 =
+		new Class[] {long.class};
 	private static final Class<?>[] _searchParameterTypes3 = new Class[] {
-			long.class, String.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
+		long.class, String.class, int.class, int.class,
+		com.liferay.portal.kernel.util.OrderByComparator.class
+	};
 	private static final Class<?>[] _searchCountParameterTypes4 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[] _updateKaleoProcessParameterTypes5 = new Class[] {
+		long.class, String.class
+	};
+	private static final Class<?>[] _updateKaleoProcessParameterTypes5 =
+		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			long.class, String.class, int.class,
-			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.class,
+			com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs.
+				class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+
 }

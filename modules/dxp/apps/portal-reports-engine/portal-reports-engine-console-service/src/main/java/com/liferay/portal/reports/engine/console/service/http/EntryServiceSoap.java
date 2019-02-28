@@ -63,22 +63,28 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class EntryServiceSoap {
-	public static com.liferay.portal.reports.engine.console.model.EntrySoap addEntry(
-		long groupId, long definitionId, String format,
-		boolean schedulerRequest, java.util.Date startDate,
-		java.util.Date endDate, boolean repeating, String recurrence,
-		String emailNotifications, String emailDelivery, String portletId,
-		String pageURL, String reportName, String reportParameters,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.reports.engine.console.model.Entry returnValue = EntryServiceUtil.addEntry(groupId,
-					definitionId, format, schedulerRequest, startDate, endDate,
-					repeating, recurrence, emailNotifications, emailDelivery,
-					portletId, pageURL, reportName, reportParameters,
-					serviceContext);
 
-			return com.liferay.portal.reports.engine.console.model.EntrySoap.toSoapModel(returnValue);
+	public static com.liferay.portal.reports.engine.console.model.EntrySoap
+			addEntry(
+				long groupId, long definitionId, String format,
+				boolean schedulerRequest, java.util.Date startDate,
+				java.util.Date endDate, boolean repeating, String recurrence,
+				String emailNotifications, String emailDelivery,
+				String portletId, String pageURL, String reportName,
+				String reportParameters,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.reports.engine.console.model.Entry returnValue =
+				EntryServiceUtil.addEntry(
+					groupId, definitionId, format, schedulerRequest, startDate,
+					endDate, repeating, recurrence, emailNotifications,
+					emailDelivery, portletId, pageURL, reportName,
+					reportParameters, serviceContext);
+
+			return com.liferay.portal.reports.engine.console.model.EntrySoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -87,8 +93,10 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static void deleteAttachment(long companyId, long entryId,
-		String fileName) throws RemoteException {
+	public static void deleteAttachment(
+			long companyId, long entryId, String fileName)
+		throws RemoteException {
+
 		try {
 			EntryServiceUtil.deleteAttachment(companyId, entryId, fileName);
 		}
@@ -99,12 +107,16 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.EntrySoap deleteEntry(
-		long entryId) throws RemoteException {
-		try {
-			com.liferay.portal.reports.engine.console.model.Entry returnValue = EntryServiceUtil.deleteEntry(entryId);
+	public static com.liferay.portal.reports.engine.console.model.EntrySoap
+			deleteEntry(long entryId)
+		throws RemoteException {
 
-			return com.liferay.portal.reports.engine.console.model.EntrySoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.reports.engine.console.model.Entry returnValue =
+				EntryServiceUtil.deleteEntry(entryId);
+
+			return com.liferay.portal.reports.engine.console.model.EntrySoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -113,19 +125,24 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.EntrySoap[] getEntries(
-		long groupId, String definitionName, String userName,
-		java.util.Date createDateGT, java.util.Date createDateLT,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.liferay.portal.reports.engine.console.model.EntrySoap[]
+			getEntries(
+				long groupId, String definitionName, String userName,
+				java.util.Date createDateGT, java.util.Date createDateLT,
+				boolean andSearch, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					orderByComparator)
 		throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.reports.engine.console.model.Entry> returnValue =
-				EntryServiceUtil.getEntries(groupId, definitionName, userName,
-					createDateGT, createDateLT, andSearch, start, end,
-					orderByComparator);
 
-			return com.liferay.portal.reports.engine.console.model.EntrySoap.toSoapModels(returnValue);
+		try {
+			java.util.List
+				<com.liferay.portal.reports.engine.console.model.Entry>
+					returnValue = EntryServiceUtil.getEntries(
+						groupId, definitionName, userName, createDateGT,
+						createDateLT, andSearch, start, end, orderByComparator);
+
+			return com.liferay.portal.reports.engine.console.model.EntrySoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -134,14 +151,16 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static int getEntriesCount(long groupId, String definitionName,
-		String userName, java.util.Date createDateGT,
-		java.util.Date createDateLT, boolean andSearch)
+	public static int getEntriesCount(
+			long groupId, String definitionName, String userName,
+			java.util.Date createDateGT, java.util.Date createDateLT,
+			boolean andSearch)
 		throws RemoteException {
+
 		try {
-			int returnValue = EntryServiceUtil.getEntriesCount(groupId,
-					definitionName, userName, createDateGT, createDateLT,
-					andSearch);
+			int returnValue = EntryServiceUtil.getEntriesCount(
+				groupId, definitionName, userName, createDateGT, createDateLT,
+				andSearch);
 
 			return returnValue;
 		}
@@ -152,12 +171,14 @@ public class EntryServiceSoap {
 		}
 	}
 
-	public static void sendEmails(long entryId, String fileName,
-		String[] emailAddresses, boolean notification)
+	public static void sendEmails(
+			long entryId, String fileName, String[] emailAddresses,
+			boolean notification)
 		throws RemoteException {
+
 		try {
-			EntryServiceUtil.sendEmails(entryId, fileName, emailAddresses,
-				notification);
+			EntryServiceUtil.sendEmails(
+				entryId, fileName, emailAddresses, notification);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -178,4 +199,5 @@ public class EntryServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(EntryServiceSoap.class);
+
 }

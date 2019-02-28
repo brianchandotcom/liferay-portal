@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.forms.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,15 +38,6 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceU
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,16 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class KaleoProcessPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
 				"com.liferay.portal.workflow.kaleo.forms.service"));
 
 	@Before
@@ -107,7 +108,8 @@ public class KaleoProcessPersistenceTest {
 
 		_persistence.remove(newKaleoProcess);
 
-		KaleoProcess existingKaleoProcess = _persistence.fetchByPrimaryKey(newKaleoProcess.getPrimaryKey());
+		KaleoProcess existingKaleoProcess = _persistence.fetchByPrimaryKey(
+			newKaleoProcess.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoProcess);
 	}
@@ -141,39 +143,47 @@ public class KaleoProcessPersistenceTest {
 
 		newKaleoProcess.setDDMTemplateId(RandomTestUtil.nextLong());
 
-		newKaleoProcess.setWorkflowDefinitionName(RandomTestUtil.randomString());
+		newKaleoProcess.setWorkflowDefinitionName(
+			RandomTestUtil.randomString());
 
 		newKaleoProcess.setWorkflowDefinitionVersion(RandomTestUtil.nextInt());
 
 		_kaleoProcesses.add(_persistence.update(newKaleoProcess));
 
-		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(newKaleoProcess.getPrimaryKey());
+		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(
+			newKaleoProcess.getPrimaryKey());
 
-		Assert.assertEquals(existingKaleoProcess.getUuid(),
-			newKaleoProcess.getUuid());
-		Assert.assertEquals(existingKaleoProcess.getKaleoProcessId(),
+		Assert.assertEquals(
+			existingKaleoProcess.getUuid(), newKaleoProcess.getUuid());
+		Assert.assertEquals(
+			existingKaleoProcess.getKaleoProcessId(),
 			newKaleoProcess.getKaleoProcessId());
-		Assert.assertEquals(existingKaleoProcess.getGroupId(),
-			newKaleoProcess.getGroupId());
-		Assert.assertEquals(existingKaleoProcess.getCompanyId(),
+		Assert.assertEquals(
+			existingKaleoProcess.getGroupId(), newKaleoProcess.getGroupId());
+		Assert.assertEquals(
+			existingKaleoProcess.getCompanyId(),
 			newKaleoProcess.getCompanyId());
-		Assert.assertEquals(existingKaleoProcess.getUserId(),
-			newKaleoProcess.getUserId());
-		Assert.assertEquals(existingKaleoProcess.getUserName(),
-			newKaleoProcess.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingKaleoProcess.getCreateDate()),
+		Assert.assertEquals(
+			existingKaleoProcess.getUserId(), newKaleoProcess.getUserId());
+		Assert.assertEquals(
+			existingKaleoProcess.getUserName(), newKaleoProcess.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingKaleoProcess.getCreateDate()),
 			Time.getShortTimestamp(newKaleoProcess.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingKaleoProcess.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingKaleoProcess.getModifiedDate()),
 			Time.getShortTimestamp(newKaleoProcess.getModifiedDate()));
-		Assert.assertEquals(existingKaleoProcess.getDDLRecordSetId(),
+		Assert.assertEquals(
+			existingKaleoProcess.getDDLRecordSetId(),
 			newKaleoProcess.getDDLRecordSetId());
-		Assert.assertEquals(existingKaleoProcess.getDDMTemplateId(),
+		Assert.assertEquals(
+			existingKaleoProcess.getDDMTemplateId(),
 			newKaleoProcess.getDDMTemplateId());
-		Assert.assertEquals(existingKaleoProcess.getWorkflowDefinitionName(),
+		Assert.assertEquals(
+			existingKaleoProcess.getWorkflowDefinitionName(),
 			newKaleoProcess.getWorkflowDefinitionName());
-		Assert.assertEquals(existingKaleoProcess.getWorkflowDefinitionVersion(),
+		Assert.assertEquals(
+			existingKaleoProcess.getWorkflowDefinitionVersion(),
 			newKaleoProcess.getWorkflowDefinitionVersion());
 	}
 
@@ -222,7 +232,8 @@ public class KaleoProcessPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoProcess newKaleoProcess = addKaleoProcess();
 
-		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(newKaleoProcess.getPrimaryKey());
+		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(
+			newKaleoProcess.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoProcess, newKaleoProcess);
 	}
@@ -236,30 +247,31 @@ public class KaleoProcessPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<KaleoProcess> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("KaleoProcess", "uuid",
-			true, "kaleoProcessId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "DDLRecordSetId", true, "DDMTemplateId",
-			true, "workflowDefinitionName", true, "workflowDefinitionVersion",
-			true);
+		return OrderByComparatorFactoryUtil.create(
+			"KaleoProcess", "uuid", true, "kaleoProcessId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "DDLRecordSetId", true,
+			"DDMTemplateId", true, "workflowDefinitionName", true,
+			"workflowDefinitionVersion", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		KaleoProcess newKaleoProcess = addKaleoProcess();
 
-		KaleoProcess existingKaleoProcess = _persistence.fetchByPrimaryKey(newKaleoProcess.getPrimaryKey());
+		KaleoProcess existingKaleoProcess = _persistence.fetchByPrimaryKey(
+			newKaleoProcess.getPrimaryKey());
 
 		Assert.assertEquals(existingKaleoProcess, newKaleoProcess);
 	}
@@ -276,6 +288,7 @@ public class KaleoProcessPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		KaleoProcess newKaleoProcess1 = addKaleoProcess();
 		KaleoProcess newKaleoProcess2 = addKaleoProcess();
 
@@ -284,18 +297,22 @@ public class KaleoProcessPersistenceTest {
 		primaryKeys.add(newKaleoProcess1.getPrimaryKey());
 		primaryKeys.add(newKaleoProcess2.getPrimaryKey());
 
-		Map<Serializable, KaleoProcess> kaleoProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcess> kaleoProcesses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, kaleoProcesses.size());
-		Assert.assertEquals(newKaleoProcess1,
+		Assert.assertEquals(
+			newKaleoProcess1,
 			kaleoProcesses.get(newKaleoProcess1.getPrimaryKey()));
-		Assert.assertEquals(newKaleoProcess2,
+		Assert.assertEquals(
+			newKaleoProcess2,
 			kaleoProcesses.get(newKaleoProcess2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -305,7 +322,8 @@ public class KaleoProcessPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, KaleoProcess> kaleoProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcess> kaleoProcesses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoProcesses.isEmpty());
 	}
@@ -313,6 +331,7 @@ public class KaleoProcessPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		KaleoProcess newKaleoProcess = addKaleoProcess();
 
 		long pk = RandomTestUtil.nextLong();
@@ -322,36 +341,39 @@ public class KaleoProcessPersistenceTest {
 		primaryKeys.add(newKaleoProcess.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, KaleoProcess> kaleoProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcess> kaleoProcesses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoProcesses.size());
-		Assert.assertEquals(newKaleoProcess,
+		Assert.assertEquals(
+			newKaleoProcess,
 			kaleoProcesses.get(newKaleoProcess.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, KaleoProcess> kaleoProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcess> kaleoProcesses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(kaleoProcesses.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		KaleoProcess newKaleoProcess = addKaleoProcess();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newKaleoProcess.getPrimaryKey());
 
-		Map<Serializable, KaleoProcess> kaleoProcesses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, KaleoProcess> kaleoProcesses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, kaleoProcesses.size());
-		Assert.assertEquals(newKaleoProcess,
+		Assert.assertEquals(
+			newKaleoProcess,
 			kaleoProcesses.get(newKaleoProcess.getPrimaryKey()));
 	}
 
@@ -359,15 +381,19 @@ public class KaleoProcessPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = KaleoProcessLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			KaleoProcessLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoProcess>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<KaleoProcess>() {
+
 				@Override
 				public void performAction(KaleoProcess kaleoProcess) {
 					Assert.assertNotNull(kaleoProcess);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -376,17 +402,18 @@ public class KaleoProcessPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		KaleoProcess newKaleoProcess = addKaleoProcess();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcess.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcess.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoProcessId",
-				newKaleoProcess.getKaleoProcessId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoProcessId", newKaleoProcess.getKaleoProcessId()));
 
-		List<KaleoProcess> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<KaleoProcess> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -397,32 +424,34 @@ public class KaleoProcessPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcess.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcess.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("kaleoProcessId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoProcessId", RandomTestUtil.nextLong()));
 
-		List<KaleoProcess> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<KaleoProcess> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		KaleoProcess newKaleoProcess = addKaleoProcess();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcess.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcess.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"kaleoProcessId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("kaleoProcessId"));
 
 		Object newKaleoProcessId = newKaleoProcess.getKaleoProcessId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoProcessId",
-				new Object[] { newKaleoProcessId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"kaleoProcessId", new Object[] {newKaleoProcessId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -435,14 +464,15 @@ public class KaleoProcessPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(KaleoProcess.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcess.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"kaleoProcessId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("kaleoProcessId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("kaleoProcessId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"kaleoProcessId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -455,19 +485,24 @@ public class KaleoProcessPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(newKaleoProcess.getPrimaryKey());
+		KaleoProcess existingKaleoProcess = _persistence.findByPrimaryKey(
+			newKaleoProcess.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingKaleoProcess.getUuid(),
-				ReflectionTestUtil.invoke(existingKaleoProcess,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingKaleoProcess.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingKaleoProcess,
-				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingKaleoProcess.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingKaleoProcess, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingKaleoProcess.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingKaleoProcess, "getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(
-				existingKaleoProcess.getDDLRecordSetId()),
-			ReflectionTestUtil.<Long>invoke(existingKaleoProcess,
-				"getOriginalDDLRecordSetId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingKaleoProcess.getDDLRecordSetId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingKaleoProcess, "getOriginalDDLRecordSetId",
+				new Class<?>[0]));
 	}
 
 	protected KaleoProcess addKaleoProcess() throws Exception {
@@ -505,4 +540,5 @@ public class KaleoProcessPersistenceTest {
 	private List<KaleoProcess> _kaleoProcesses = new ArrayList<KaleoProcess>();
 	private KaleoProcessPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

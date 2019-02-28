@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLACondition;
@@ -37,8 +36,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<WorkflowMetricsSLACondition>,
-	Externalizable, MVCCModel {
+public class WorkflowMetricsSLAConditionCacheModel
+	implements CacheModel<WorkflowMetricsSLACondition>, Externalizable,
+			   MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,11 +50,16 @@ public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<Workflo
 			return false;
 		}
 
-		WorkflowMetricsSLAConditionCacheModel workflowMetricsSLAConditionCacheModel =
-			(WorkflowMetricsSLAConditionCacheModel)obj;
+		WorkflowMetricsSLAConditionCacheModel
+			workflowMetricsSLAConditionCacheModel =
+				(WorkflowMetricsSLAConditionCacheModel)obj;
 
-		if ((workflowMetricsSLAConditionId == workflowMetricsSLAConditionCacheModel.workflowMetricsSLAConditionId) &&
-				(mvccVersion == workflowMetricsSLAConditionCacheModel.mvccVersion)) {
+		if ((workflowMetricsSLAConditionId ==
+				workflowMetricsSLAConditionCacheModel.
+					workflowMetricsSLAConditionId) &&
+			(mvccVersion ==
+				workflowMetricsSLAConditionCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -108,7 +114,8 @@ public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<Workflo
 
 	@Override
 	public WorkflowMetricsSLACondition toEntityModel() {
-		WorkflowMetricsSLAConditionImpl workflowMetricsSLAConditionImpl = new WorkflowMetricsSLAConditionImpl();
+		WorkflowMetricsSLAConditionImpl workflowMetricsSLAConditionImpl =
+			new WorkflowMetricsSLAConditionImpl();
 
 		workflowMetricsSLAConditionImpl.setMvccVersion(mvccVersion);
 
@@ -119,7 +126,8 @@ public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<Workflo
 			workflowMetricsSLAConditionImpl.setUuid(uuid);
 		}
 
-		workflowMetricsSLAConditionImpl.setWorkflowMetricsSLAConditionId(workflowMetricsSLAConditionId);
+		workflowMetricsSLAConditionImpl.setWorkflowMetricsSLAConditionId(
+			workflowMetricsSLAConditionId);
 		workflowMetricsSLAConditionImpl.setGroupId(groupId);
 		workflowMetricsSLAConditionImpl.setCompanyId(companyId);
 		workflowMetricsSLAConditionImpl.setUserId(userId);
@@ -142,11 +150,12 @@ public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<Workflo
 			workflowMetricsSLAConditionImpl.setModifiedDate(null);
 		}
 		else {
-			workflowMetricsSLAConditionImpl.setModifiedDate(new Date(
-					modifiedDate));
+			workflowMetricsSLAConditionImpl.setModifiedDate(
+				new Date(modifiedDate));
 		}
 
-		workflowMetricsSLAConditionImpl.setWorkflowMetricsSLADefinitionId(workflowMetricsSLADefinitionId);
+		workflowMetricsSLAConditionImpl.setWorkflowMetricsSLADefinitionId(
+			workflowMetricsSLADefinitionId);
 
 		workflowMetricsSLAConditionImpl.resetOriginalValues();
 
@@ -173,8 +182,7 @@ public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<Workflo
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -215,4 +223,5 @@ public class WorkflowMetricsSLAConditionCacheModel implements CacheModel<Workflo
 	public long createDate;
 	public long modifiedDate;
 	public long workflowMetricsSLADefinitionId;
+
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
  */
 @ProviderType
 public abstract class SourceBaseImpl extends SourceModelImpl implements Source {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class SourceBaseImpl extends SourceModelImpl implements Source {
 			SourceLocalServiceUtil.updateSource(this);
 		}
 	}
+
 }

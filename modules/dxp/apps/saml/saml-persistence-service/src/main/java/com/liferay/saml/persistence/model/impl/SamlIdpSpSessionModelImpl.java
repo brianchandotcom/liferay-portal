@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSpSessionModel;
 
@@ -59,27 +56,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
-	implements SamlIdpSpSessionModel {
+public class SamlIdpSpSessionModelImpl
+	extends BaseModelImpl<SamlIdpSpSession> implements SamlIdpSpSessionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml idp sp session model instance should use the <code>SamlIdpSpSession</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SamlIdpSpSession";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "samlIdpSpSessionId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "samlIdpSsoSessionId", Types.BIGINT },
-			{ "samlSpEntityId", Types.VARCHAR },
-			{ "nameIdFormat", Types.VARCHAR },
-			{ "nameIdValue", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"samlIdpSpSessionId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"samlIdpSsoSessionId", Types.BIGINT},
+		{"samlSpEntityId", Types.VARCHAR}, {"nameIdFormat", Types.VARCHAR},
+		{"nameIdValue", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("samlIdpSpSessionId", Types.BIGINT);
@@ -94,28 +91,49 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 		TABLE_COLUMNS_MAP.put("nameIdValue", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SamlIdpSpSession (samlIdpSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpSsoSessionId LONG,samlSpEntityId VARCHAR(1024) null,nameIdFormat VARCHAR(1024) null,nameIdValue VARCHAR(1024) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SamlIdpSpSession (samlIdpSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpSsoSessionId LONG,samlSpEntityId VARCHAR(1024) null,nameIdFormat VARCHAR(1024) null,nameIdValue VARCHAR(1024) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table SamlIdpSpSession";
-	public static final String ORDER_BY_JPQL = " ORDER BY samlIdpSpSession.samlIdpSpSessionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SamlIdpSpSession.samlIdpSpSessionId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY samlIdpSpSession.samlIdpSpSessionId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SamlIdpSpSession.samlIdpSpSessionId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.saml.persistence.model.SamlIdpSpSession"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.saml.persistence.model.SamlIdpSpSession"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlIdpSpSession"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.saml.persistence.model.SamlIdpSpSession"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.saml.persistence.model.SamlIdpSpSession"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlIdpSpSession"),
+		true);
+
 	public static final long CREATEDATE_COLUMN_BITMASK = 1L;
+
 	public static final long SAMLIDPSSOSESSIONID_COLUMN_BITMASK = 2L;
+
 	public static final long SAMLSPENTITYID_COLUMN_BITMASK = 4L;
+
 	public static final long SAMLIDPSPSESSIONID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.saml.persistence.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.saml.persistence.model.SamlIdpSpSession"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.saml.persistence.service.util.ServiceProps.get(
+			"lock.expiration.time.com.liferay.saml.persistence.model.SamlIdpSpSession"));
 
 	public SamlIdpSpSessionModelImpl() {
 	}
@@ -154,14 +172,18 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SamlIdpSpSession, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SamlIdpSpSession, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SamlIdpSpSession, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlIdpSpSession, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlIdpSpSession, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlIdpSpSession, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SamlIdpSpSession)this));
 		}
 
@@ -173,62 +195,108 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SamlIdpSpSession, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SamlIdpSpSession, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SamlIdpSpSession, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SamlIdpSpSession, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SamlIdpSpSession)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SamlIdpSpSession)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SamlIdpSpSession, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SamlIdpSpSession, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SamlIdpSpSession, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SamlIdpSpSession, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SamlIdpSpSession, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SamlIdpSpSession, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SamlIdpSpSession, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SamlIdpSpSession, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SamlIdpSpSession, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SamlIdpSpSession, Object>>();
-		Map<String, BiConsumer<SamlIdpSpSession, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SamlIdpSpSession, ?>>();
+		Map<String, Function<SamlIdpSpSession, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap<String, Function<SamlIdpSpSession, Object>>();
+		Map<String, BiConsumer<SamlIdpSpSession, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<SamlIdpSpSession, ?>>();
 
-
-		attributeGetterFunctions.put("samlIdpSpSessionId", SamlIdpSpSession::getSamlIdpSpSessionId);
-		attributeSetterBiConsumers.put("samlIdpSpSessionId", (BiConsumer<SamlIdpSpSession, Long>)SamlIdpSpSession::setSamlIdpSpSessionId);
-		attributeGetterFunctions.put("companyId", SamlIdpSpSession::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SamlIdpSpSession, Long>)SamlIdpSpSession::setCompanyId);
+		attributeGetterFunctions.put(
+			"samlIdpSpSessionId", SamlIdpSpSession::getSamlIdpSpSessionId);
+		attributeSetterBiConsumers.put(
+			"samlIdpSpSessionId",
+			(BiConsumer<SamlIdpSpSession, Long>)
+				SamlIdpSpSession::setSamlIdpSpSessionId);
+		attributeGetterFunctions.put(
+			"companyId", SamlIdpSpSession::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SamlIdpSpSession, Long>)SamlIdpSpSession::setCompanyId);
 		attributeGetterFunctions.put("userId", SamlIdpSpSession::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<SamlIdpSpSession, Long>)SamlIdpSpSession::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<SamlIdpSpSession, Long>)SamlIdpSpSession::setUserId);
 		attributeGetterFunctions.put("userName", SamlIdpSpSession::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<SamlIdpSpSession, String>)SamlIdpSpSession::setUserName);
-		attributeGetterFunctions.put("createDate", SamlIdpSpSession::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SamlIdpSpSession, Date>)SamlIdpSpSession::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", SamlIdpSpSession::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SamlIdpSpSession, Date>)SamlIdpSpSession::setModifiedDate);
-		attributeGetterFunctions.put("samlIdpSsoSessionId", SamlIdpSpSession::getSamlIdpSsoSessionId);
-		attributeSetterBiConsumers.put("samlIdpSsoSessionId", (BiConsumer<SamlIdpSpSession, Long>)SamlIdpSpSession::setSamlIdpSsoSessionId);
-		attributeGetterFunctions.put("samlSpEntityId", SamlIdpSpSession::getSamlSpEntityId);
-		attributeSetterBiConsumers.put("samlSpEntityId", (BiConsumer<SamlIdpSpSession, String>)SamlIdpSpSession::setSamlSpEntityId);
-		attributeGetterFunctions.put("nameIdFormat", SamlIdpSpSession::getNameIdFormat);
-		attributeSetterBiConsumers.put("nameIdFormat", (BiConsumer<SamlIdpSpSession, String>)SamlIdpSpSession::setNameIdFormat);
-		attributeGetterFunctions.put("nameIdValue", SamlIdpSpSession::getNameIdValue);
-		attributeSetterBiConsumers.put("nameIdValue", (BiConsumer<SamlIdpSpSession, String>)SamlIdpSpSession::setNameIdValue);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<SamlIdpSpSession, String>)
+				SamlIdpSpSession::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", SamlIdpSpSession::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SamlIdpSpSession, Date>)
+				SamlIdpSpSession::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", SamlIdpSpSession::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<SamlIdpSpSession, Date>)
+				SamlIdpSpSession::setModifiedDate);
+		attributeGetterFunctions.put(
+			"samlIdpSsoSessionId", SamlIdpSpSession::getSamlIdpSsoSessionId);
+		attributeSetterBiConsumers.put(
+			"samlIdpSsoSessionId",
+			(BiConsumer<SamlIdpSpSession, Long>)
+				SamlIdpSpSession::setSamlIdpSsoSessionId);
+		attributeGetterFunctions.put(
+			"samlSpEntityId", SamlIdpSpSession::getSamlSpEntityId);
+		attributeSetterBiConsumers.put(
+			"samlSpEntityId",
+			(BiConsumer<SamlIdpSpSession, String>)
+				SamlIdpSpSession::setSamlSpEntityId);
+		attributeGetterFunctions.put(
+			"nameIdFormat", SamlIdpSpSession::getNameIdFormat);
+		attributeSetterBiConsumers.put(
+			"nameIdFormat",
+			(BiConsumer<SamlIdpSpSession, String>)
+				SamlIdpSpSession::setNameIdFormat);
+		attributeGetterFunctions.put(
+			"nameIdValue", SamlIdpSpSession::getNameIdValue);
+		attributeSetterBiConsumers.put(
+			"nameIdValue",
+			(BiConsumer<SamlIdpSpSession, String>)
+				SamlIdpSpSession::setNameIdValue);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -411,8 +479,8 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SamlIdpSpSession.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SamlIdpSpSession.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -425,8 +493,9 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	@Override
 	public SamlIdpSpSession toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SamlIdpSpSession)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SamlIdpSpSession)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -508,22 +577,26 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	public void resetOriginalValues() {
 		SamlIdpSpSessionModelImpl samlIdpSpSessionModelImpl = this;
 
-		samlIdpSpSessionModelImpl._originalCreateDate = samlIdpSpSessionModelImpl._createDate;
+		samlIdpSpSessionModelImpl._originalCreateDate =
+			samlIdpSpSessionModelImpl._createDate;
 
 		samlIdpSpSessionModelImpl._setModifiedDate = false;
 
-		samlIdpSpSessionModelImpl._originalSamlIdpSsoSessionId = samlIdpSpSessionModelImpl._samlIdpSsoSessionId;
+		samlIdpSpSessionModelImpl._originalSamlIdpSsoSessionId =
+			samlIdpSpSessionModelImpl._samlIdpSsoSessionId;
 
 		samlIdpSpSessionModelImpl._setOriginalSamlIdpSsoSessionId = false;
 
-		samlIdpSpSessionModelImpl._originalSamlSpEntityId = samlIdpSpSessionModelImpl._samlSpEntityId;
+		samlIdpSpSessionModelImpl._originalSamlSpEntityId =
+			samlIdpSpSessionModelImpl._samlSpEntityId;
 
 		samlIdpSpSessionModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<SamlIdpSpSession> toCacheModel() {
-		SamlIdpSpSessionCacheModel samlIdpSpSessionCacheModel = new SamlIdpSpSessionCacheModel();
+		SamlIdpSpSessionCacheModel samlIdpSpSessionCacheModel =
+			new SamlIdpSpSessionCacheModel();
 
 		samlIdpSpSessionCacheModel.samlIdpSpSessionId = getSamlIdpSpSessionId();
 
@@ -557,7 +630,8 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 			samlIdpSpSessionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		samlIdpSpSessionCacheModel.samlIdpSsoSessionId = getSamlIdpSsoSessionId();
+		samlIdpSpSessionCacheModel.samlIdpSsoSessionId =
+			getSamlIdpSsoSessionId();
 
 		samlIdpSpSessionCacheModel.samlSpEntityId = getSamlSpEntityId();
 
@@ -588,17 +662,20 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 
 	@Override
 	public String toString() {
-		Map<String, Function<SamlIdpSpSession, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SamlIdpSpSession, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SamlIdpSpSession, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlIdpSpSession, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlIdpSpSession, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlIdpSpSession, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -617,19 +694,22 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SamlIdpSpSession, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SamlIdpSpSession, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SamlIdpSpSession, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SamlIdpSpSession, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SamlIdpSpSession, Object> attributeGetterFunction = entry.getValue();
+			Function<SamlIdpSpSession, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -643,10 +723,12 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SamlIdpSpSession.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SamlIdpSpSession.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SamlIdpSpSession.class, ModelWrapper.class
-		};
+		SamlIdpSpSession.class, ModelWrapper.class
+	};
+
 	private long _samlIdpSpSessionId;
 	private long _companyId;
 	private long _userId;
@@ -664,4 +746,5 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	private String _nameIdValue;
 	private long _columnBitmask;
 	private SamlIdpSpSession _escapedModel;
+
 }

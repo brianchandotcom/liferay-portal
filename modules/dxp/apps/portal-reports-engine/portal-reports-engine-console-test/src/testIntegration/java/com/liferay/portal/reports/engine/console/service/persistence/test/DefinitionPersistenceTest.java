@@ -15,7 +15,6 @@
 package com.liferay.portal.reports.engine.console.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -39,15 +38,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,16 +48,27 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @generated
  */
 @RunWith(Arquillian.class)
 public class DefinitionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
 				"com.liferay.portal.reports.engine.console.service"));
 
 	@Before
@@ -107,7 +108,8 @@ public class DefinitionPersistenceTest {
 
 		_persistence.remove(newDefinition);
 
-		Definition existingDefinition = _persistence.fetchByPrimaryKey(newDefinition.getPrimaryKey());
+		Definition existingDefinition = _persistence.fetchByPrimaryKey(
+			newDefinition.getPrimaryKey());
 
 		Assert.assertNull(existingDefinition);
 	}
@@ -151,38 +153,42 @@ public class DefinitionPersistenceTest {
 
 		_definitions.add(_persistence.update(newDefinition));
 
-		Definition existingDefinition = _persistence.findByPrimaryKey(newDefinition.getPrimaryKey());
+		Definition existingDefinition = _persistence.findByPrimaryKey(
+			newDefinition.getPrimaryKey());
 
-		Assert.assertEquals(existingDefinition.getUuid(),
-			newDefinition.getUuid());
-		Assert.assertEquals(existingDefinition.getDefinitionId(),
+		Assert.assertEquals(
+			existingDefinition.getUuid(), newDefinition.getUuid());
+		Assert.assertEquals(
+			existingDefinition.getDefinitionId(),
 			newDefinition.getDefinitionId());
-		Assert.assertEquals(existingDefinition.getGroupId(),
-			newDefinition.getGroupId());
-		Assert.assertEquals(existingDefinition.getCompanyId(),
-			newDefinition.getCompanyId());
-		Assert.assertEquals(existingDefinition.getUserId(),
-			newDefinition.getUserId());
-		Assert.assertEquals(existingDefinition.getUserName(),
-			newDefinition.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDefinition.getCreateDate()),
+		Assert.assertEquals(
+			existingDefinition.getGroupId(), newDefinition.getGroupId());
+		Assert.assertEquals(
+			existingDefinition.getCompanyId(), newDefinition.getCompanyId());
+		Assert.assertEquals(
+			existingDefinition.getUserId(), newDefinition.getUserId());
+		Assert.assertEquals(
+			existingDefinition.getUserName(), newDefinition.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDefinition.getCreateDate()),
 			Time.getShortTimestamp(newDefinition.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDefinition.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newDefinition.getModifiedDate()));
-		Assert.assertEquals(existingDefinition.getName(),
-			newDefinition.getName());
-		Assert.assertEquals(existingDefinition.getDescription(),
+		Assert.assertEquals(
+			existingDefinition.getName(), newDefinition.getName());
+		Assert.assertEquals(
+			existingDefinition.getDescription(),
 			newDefinition.getDescription());
-		Assert.assertEquals(existingDefinition.getSourceId(),
-			newDefinition.getSourceId());
-		Assert.assertEquals(existingDefinition.getReportName(),
-			newDefinition.getReportName());
-		Assert.assertEquals(existingDefinition.getReportParameters(),
+		Assert.assertEquals(
+			existingDefinition.getSourceId(), newDefinition.getSourceId());
+		Assert.assertEquals(
+			existingDefinition.getReportName(), newDefinition.getReportName());
+		Assert.assertEquals(
+			existingDefinition.getReportParameters(),
 			newDefinition.getReportParameters());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDefinition.getLastPublishDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDefinition.getLastPublishDate()),
 			Time.getShortTimestamp(newDefinition.getLastPublishDate()));
 	}
 
@@ -231,7 +237,8 @@ public class DefinitionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Definition newDefinition = addDefinition();
 
-		Definition existingDefinition = _persistence.findByPrimaryKey(newDefinition.getPrimaryKey());
+		Definition existingDefinition = _persistence.findByPrimaryKey(
+			newDefinition.getPrimaryKey());
 
 		Assert.assertEquals(existingDefinition, newDefinition);
 	}
@@ -245,29 +252,31 @@ public class DefinitionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Definition> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Reports_Definition",
-			"uuid", true, "definitionId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
-			"sourceId", true, "reportName", true, "lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Reports_Definition", "uuid", true, "definitionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true,
+			"description", true, "sourceId", true, "reportName", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Definition newDefinition = addDefinition();
 
-		Definition existingDefinition = _persistence.fetchByPrimaryKey(newDefinition.getPrimaryKey());
+		Definition existingDefinition = _persistence.fetchByPrimaryKey(
+			newDefinition.getPrimaryKey());
 
 		Assert.assertEquals(existingDefinition, newDefinition);
 	}
@@ -284,6 +293,7 @@ public class DefinitionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Definition newDefinition1 = addDefinition();
 		Definition newDefinition2 = addDefinition();
 
@@ -292,18 +302,20 @@ public class DefinitionPersistenceTest {
 		primaryKeys.add(newDefinition1.getPrimaryKey());
 		primaryKeys.add(newDefinition2.getPrimaryKey());
 
-		Map<Serializable, Definition> definitions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Definition> definitions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, definitions.size());
-		Assert.assertEquals(newDefinition1,
-			definitions.get(newDefinition1.getPrimaryKey()));
-		Assert.assertEquals(newDefinition2,
-			definitions.get(newDefinition2.getPrimaryKey()));
+		Assert.assertEquals(
+			newDefinition1, definitions.get(newDefinition1.getPrimaryKey()));
+		Assert.assertEquals(
+			newDefinition2, definitions.get(newDefinition2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -313,7 +325,8 @@ public class DefinitionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Definition> definitions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Definition> definitions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(definitions.isEmpty());
 	}
@@ -321,6 +334,7 @@ public class DefinitionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Definition newDefinition = addDefinition();
 
 		long pk = RandomTestUtil.nextLong();
@@ -330,52 +344,57 @@ public class DefinitionPersistenceTest {
 		primaryKeys.add(newDefinition.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Definition> definitions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Definition> definitions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, definitions.size());
-		Assert.assertEquals(newDefinition,
-			definitions.get(newDefinition.getPrimaryKey()));
+		Assert.assertEquals(
+			newDefinition, definitions.get(newDefinition.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Definition> definitions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Definition> definitions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(definitions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Definition newDefinition = addDefinition();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDefinition.getPrimaryKey());
 
-		Map<Serializable, Definition> definitions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Definition> definitions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, definitions.size());
-		Assert.assertEquals(newDefinition,
-			definitions.get(newDefinition.getPrimaryKey()));
+		Assert.assertEquals(
+			newDefinition, definitions.get(newDefinition.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = DefinitionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			DefinitionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Definition>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Definition>() {
+
 				@Override
 				public void performAction(Definition definition) {
 					Assert.assertNotNull(definition);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -384,17 +403,18 @@ public class DefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Definition newDefinition = addDefinition();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Definition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Definition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("definitionId",
-				newDefinition.getDefinitionId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"definitionId", newDefinition.getDefinitionId()));
 
-		List<Definition> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Definition> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -405,32 +425,34 @@ public class DefinitionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Definition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Definition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("definitionId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"definitionId", RandomTestUtil.nextLong()));
 
-		List<Definition> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Definition> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Definition newDefinition = addDefinition();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Definition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Definition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"definitionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("definitionId"));
 
 		Object newDefinitionId = newDefinition.getDefinitionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("definitionId",
-				new Object[] { newDefinitionId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"definitionId", new Object[] {newDefinitionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -443,14 +465,15 @@ public class DefinitionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Definition.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Definition.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"definitionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("definitionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("definitionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"definitionId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -463,14 +486,18 @@ public class DefinitionPersistenceTest {
 
 		_persistence.clearCache();
 
-		Definition existingDefinition = _persistence.findByPrimaryKey(newDefinition.getPrimaryKey());
+		Definition existingDefinition = _persistence.findByPrimaryKey(
+			newDefinition.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingDefinition.getUuid(),
-				ReflectionTestUtil.invoke(existingDefinition,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingDefinition.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingDefinition,
-				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingDefinition.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingDefinition, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingDefinition.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDefinition, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected Definition addDefinition() throws Exception {
@@ -512,4 +539,5 @@ public class DefinitionPersistenceTest {
 	private List<Definition> _definitions = new ArrayList<Definition>();
 	private DefinitionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

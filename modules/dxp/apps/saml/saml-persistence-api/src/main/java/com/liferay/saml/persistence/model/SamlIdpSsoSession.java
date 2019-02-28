@@ -27,31 +27,39 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SamlIdpSsoSessionModel
  * @generated
  */
-@ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl")
+@ImplementationClassName(
+	"com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl"
+)
 @ProviderType
-public interface SamlIdpSsoSession extends SamlIdpSsoSessionModel, PersistedModel {
+public interface SamlIdpSsoSession
+	extends SamlIdpSsoSessionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SamlIdpSsoSession, Long> SAML_IDP_SSO_SESSION_ID_ACCESSOR =
-		new Accessor<SamlIdpSsoSession, Long>() {
-			@Override
-			public Long get(SamlIdpSsoSession samlIdpSsoSession) {
-				return samlIdpSsoSession.getSamlIdpSsoSessionId();
-			}
+	public static final Accessor<SamlIdpSsoSession, Long>
+		SAML_IDP_SSO_SESSION_ID_ACCESSOR =
+			new Accessor<SamlIdpSsoSession, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(SamlIdpSsoSession samlIdpSsoSession) {
+					return samlIdpSsoSession.getSamlIdpSsoSessionId();
+				}
 
-			@Override
-			public Class<SamlIdpSsoSession> getTypeClass() {
-				return SamlIdpSsoSession.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<SamlIdpSsoSession> getTypeClass() {
+					return SamlIdpSsoSession.class;
+				}
+
+			};
 
 	public boolean isExpired();
+
 }

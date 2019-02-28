@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnection>,
-	Externalizable {
+public class SamlSpIdpConnectionCacheModel
+	implements CacheModel<SamlSpIdpConnection>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +48,12 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 			return false;
 		}
 
-		SamlSpIdpConnectionCacheModel samlSpIdpConnectionCacheModel = (SamlSpIdpConnectionCacheModel)obj;
+		SamlSpIdpConnectionCacheModel samlSpIdpConnectionCacheModel =
+			(SamlSpIdpConnectionCacheModel)obj;
 
-		if (samlSpIdpConnectionId == samlSpIdpConnectionCacheModel.samlSpIdpConnectionId) {
+		if (samlSpIdpConnectionId ==
+				samlSpIdpConnectionCacheModel.samlSpIdpConnectionId) {
+
 			return true;
 		}
 
@@ -112,7 +114,8 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 
 	@Override
 	public SamlSpIdpConnection toEntityModel() {
-		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl = new SamlSpIdpConnectionImpl();
+		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl =
+			new SamlSpIdpConnectionImpl();
 
 		samlSpIdpConnectionImpl.setSamlSpIdpConnectionId(samlSpIdpConnectionId);
 		samlSpIdpConnectionImpl.setCompanyId(companyId);
@@ -146,7 +149,8 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 			samlSpIdpConnectionImpl.setSamlIdpEntityId(samlIdpEntityId);
 		}
 
-		samlSpIdpConnectionImpl.setAssertionSignatureRequired(assertionSignatureRequired);
+		samlSpIdpConnectionImpl.setAssertionSignatureRequired(
+			assertionSignatureRequired);
 		samlSpIdpConnectionImpl.setClockSkew(clockSkew);
 		samlSpIdpConnectionImpl.setEnabled(enabled);
 		samlSpIdpConnectionImpl.setForceAuthn(forceAuthn);
@@ -170,8 +174,8 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 			samlSpIdpConnectionImpl.setMetadataUpdatedDate(null);
 		}
 		else {
-			samlSpIdpConnectionImpl.setMetadataUpdatedDate(new Date(
-					metadataUpdatedDate));
+			samlSpIdpConnectionImpl.setMetadataUpdatedDate(
+				new Date(metadataUpdatedDate));
 		}
 
 		if (name == null) {
@@ -194,7 +198,8 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 			samlSpIdpConnectionImpl.setUserAttributeMappings("");
 		}
 		else {
-			samlSpIdpConnectionImpl.setUserAttributeMappings(userAttributeMappings);
+			samlSpIdpConnectionImpl.setUserAttributeMappings(
+				userAttributeMappings);
 		}
 
 		samlSpIdpConnectionImpl.resetOriginalValues();
@@ -234,8 +239,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(samlSpIdpConnectionId);
 
 		objectOutput.writeLong(companyId);
@@ -328,4 +332,5 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 	public String nameIdFormat;
 	public boolean signAuthnRequest;
 	public String userAttributeMappings;
+
 }

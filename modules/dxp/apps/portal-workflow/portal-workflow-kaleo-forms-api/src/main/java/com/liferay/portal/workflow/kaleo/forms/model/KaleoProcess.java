@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see KaleoProcessModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl")
+@ImplementationClassName(
+	"com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl"
+)
 @ProviderType
 public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<KaleoProcess, Long> KALEO_PROCESS_ID_ACCESSOR = new Accessor<KaleoProcess, Long>() {
+	public static final Accessor<KaleoProcess, Long> KALEO_PROCESS_ID_ACCESSOR =
+		new Accessor<KaleoProcess, Long>() {
+
 			@Override
 			public Long get(KaleoProcess kaleoProcess) {
 				return kaleoProcess.getKaleoProcessId();
@@ -50,6 +55,7 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 			public Class<KaleoProcess> getTypeClass() {
 				return KaleoProcess.class;
 			}
+
 		};
 
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet()
@@ -73,4 +79,5 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public String getWorkflowDefinition();
+
 }

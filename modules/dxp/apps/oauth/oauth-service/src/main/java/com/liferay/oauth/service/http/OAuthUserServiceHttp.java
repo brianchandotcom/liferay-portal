@@ -17,7 +17,6 @@ package com.liferay.oauth.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.service.OAuthUserServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -54,16 +53,19 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class OAuthUserServiceHttp {
-	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
-		HttpPrincipal httpPrincipal, String consumerKey,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthUserServiceUtil.class,
-					"addOAuthUser", _addOAuthUserParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					consumerKey, serviceContext);
+	public static com.liferay.oauth.model.OAuthUser addOAuthUser(
+			HttpPrincipal httpPrincipal, String consumerKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthUserServiceUtil.class, "addOAuthUser",
+				_addOAuthUserParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, consumerKey, serviceContext);
 
 			Object returnObj = null;
 
@@ -71,11 +73,15 @@ public class OAuthUserServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.oauth.model.OAuthUser)returnObj;
@@ -88,14 +94,16 @@ public class OAuthUserServiceHttp {
 	}
 
 	public static com.liferay.oauth.model.OAuthUser deleteOAuthUser(
-		HttpPrincipal httpPrincipal, long oAuthApplicationId)
+			HttpPrincipal httpPrincipal, long oAuthApplicationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(OAuthUserServiceUtil.class,
-					"deleteOAuthUser", _deleteOAuthUserParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					oAuthApplicationId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				OAuthUserServiceUtil.class, "deleteOAuthUser",
+				_deleteOAuthUserParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, oAuthApplicationId);
 
 			Object returnObj = null;
 
@@ -103,11 +111,15 @@ public class OAuthUserServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.oauth.model.OAuthUser)returnObj;
@@ -120,10 +132,11 @@ public class OAuthUserServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(OAuthUserServiceHttp.class);
+
 	private static final Class<?>[] _addOAuthUserParameterTypes0 = new Class[] {
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteOAuthUserParameterTypes1 = new Class[] {
-			long.class
-		};
+		String.class, com.liferay.portal.kernel.service.ServiceContext.class
+	};
+	private static final Class<?>[] _deleteOAuthUserParameterTypes1 =
+		new Class[] {long.class};
+
 }

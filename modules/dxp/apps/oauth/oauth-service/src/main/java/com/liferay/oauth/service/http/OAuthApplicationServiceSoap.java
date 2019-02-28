@@ -17,7 +17,6 @@ package com.liferay.oauth.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth.service.OAuthApplicationServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -64,17 +63,23 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class OAuthApplicationServiceSoap {
-	public static com.liferay.oauth.model.OAuthApplicationSoap addOAuthApplication(
-		String name, String description, int accessLevel,
-		boolean shareableAccessToken, String callbackURI, String websiteURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+
+	public static com.liferay.oauth.model.OAuthApplicationSoap
+			addOAuthApplication(
+				String name, String description, int accessLevel,
+				boolean shareableAccessToken, String callbackURI,
+				String websiteURL,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
+
 		try {
-			com.liferay.oauth.model.OAuthApplication returnValue = OAuthApplicationServiceUtil.addOAuthApplication(name,
-					description, accessLevel, shareableAccessToken,
+			com.liferay.oauth.model.OAuthApplication returnValue =
+				OAuthApplicationServiceUtil.addOAuthApplication(
+					name, description, accessLevel, shareableAccessToken,
 					callbackURI, websiteURL, serviceContext);
 
-			return com.liferay.oauth.model.OAuthApplicationSoap.toSoapModel(returnValue);
+			return com.liferay.oauth.model.OAuthApplicationSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -85,6 +90,7 @@ public class OAuthApplicationServiceSoap {
 
 	public static void deleteLogo(long oAuthApplicationId)
 		throws RemoteException {
+
 		try {
 			OAuthApplicationServiceUtil.deleteLogo(oAuthApplicationId);
 		}
@@ -95,31 +101,17 @@ public class OAuthApplicationServiceSoap {
 		}
 	}
 
-	public static com.liferay.oauth.model.OAuthApplicationSoap deleteOAuthApplication(
-		long oAuthApplicationId) throws RemoteException {
-		try {
-			com.liferay.oauth.model.OAuthApplication returnValue = OAuthApplicationServiceUtil.deleteOAuthApplication(oAuthApplicationId);
-
-			return com.liferay.oauth.model.OAuthApplicationSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.oauth.model.OAuthApplicationSoap updateOAuthApplication(
-		long oAuthApplicationId, String name, String description,
-		boolean shareableAccessToken, String callbackURI, String websiteURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.oauth.model.OAuthApplicationSoap
+			deleteOAuthApplication(long oAuthApplicationId)
 		throws RemoteException {
-		try {
-			com.liferay.oauth.model.OAuthApplication returnValue = OAuthApplicationServiceUtil.updateOAuthApplication(oAuthApplicationId,
-					name, description, shareableAccessToken, callbackURI,
-					websiteURL, serviceContext);
 
-			return com.liferay.oauth.model.OAuthApplicationSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.oauth.model.OAuthApplication returnValue =
+				OAuthApplicationServiceUtil.deleteOAuthApplication(
+					oAuthApplicationId);
+
+			return com.liferay.oauth.model.OAuthApplicationSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -128,5 +120,31 @@ public class OAuthApplicationServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OAuthApplicationServiceSoap.class);
+	public static com.liferay.oauth.model.OAuthApplicationSoap
+			updateOAuthApplication(
+				long oAuthApplicationId, String name, String description,
+				boolean shareableAccessToken, String callbackURI,
+				String websiteURL,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.oauth.model.OAuthApplication returnValue =
+				OAuthApplicationServiceUtil.updateOAuthApplication(
+					oAuthApplicationId, name, description, shareableAccessToken,
+					callbackURI, websiteURL, serviceContext);
+
+			return com.liferay.oauth.model.OAuthApplicationSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		OAuthApplicationServiceSoap.class);
+
 }

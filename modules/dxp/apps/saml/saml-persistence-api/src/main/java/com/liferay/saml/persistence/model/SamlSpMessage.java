@@ -27,16 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SamlSpMessageModel
  * @generated
  */
-@ImplementationClassName("com.liferay.saml.persistence.model.impl.SamlSpMessageImpl")
+@ImplementationClassName(
+	"com.liferay.saml.persistence.model.impl.SamlSpMessageImpl"
+)
 @ProviderType
 public interface SamlSpMessage extends SamlSpMessageModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpMessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SamlSpMessage, Long> SAML_SP_MESSAGE_ID_ACCESSOR =
-		new Accessor<SamlSpMessage, Long>() {
+	public static final Accessor<SamlSpMessage, Long>
+		SAML_SP_MESSAGE_ID_ACCESSOR = new Accessor<SamlSpMessage, Long>() {
+
 			@Override
 			public Long get(SamlSpMessage samlSpMessage) {
 				return samlSpMessage.getSamlSpMessageId();
@@ -51,7 +55,9 @@ public interface SamlSpMessage extends SamlSpMessageModel, PersistedModel {
 			public Class<SamlSpMessage> getTypeClass() {
 				return SamlSpMessage.class;
 			}
+
 		};
 
 	public boolean isExpired();
+
 }

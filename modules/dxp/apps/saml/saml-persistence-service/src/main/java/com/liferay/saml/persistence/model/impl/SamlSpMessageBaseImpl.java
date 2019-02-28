@@ -32,8 +32,9 @@ import com.liferay.saml.persistence.service.SamlSpMessageLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SamlSpMessageBaseImpl extends SamlSpMessageModelImpl
-	implements SamlSpMessage {
+public abstract class SamlSpMessageBaseImpl
+	extends SamlSpMessageModelImpl implements SamlSpMessage {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SamlSpMessageBaseImpl extends SamlSpMessageModelImpl
 			SamlSpMessageLocalServiceUtil.updateSamlSpMessage(this);
 		}
 	}
+
 }

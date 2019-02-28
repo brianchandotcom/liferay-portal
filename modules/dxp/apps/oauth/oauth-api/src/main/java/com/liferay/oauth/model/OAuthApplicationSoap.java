@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class OAuthApplicationSoap implements Serializable {
+
 	public static OAuthApplicationSoap toSoapModel(OAuthApplication model) {
 		OAuthApplicationSoap soapModel = new OAuthApplicationSoap();
 
@@ -52,8 +53,11 @@ public class OAuthApplicationSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static OAuthApplicationSoap[] toSoapModels(OAuthApplication[] models) {
-		OAuthApplicationSoap[] soapModels = new OAuthApplicationSoap[models.length];
+	public static OAuthApplicationSoap[] toSoapModels(
+		OAuthApplication[] models) {
+
+		OAuthApplicationSoap[] soapModels =
+			new OAuthApplicationSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -64,10 +68,12 @@ public class OAuthApplicationSoap implements Serializable {
 
 	public static OAuthApplicationSoap[][] toSoapModels(
 		OAuthApplication[][] models) {
+
 		OAuthApplicationSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new OAuthApplicationSoap[models.length][models[0].length];
+			soapModels =
+				new OAuthApplicationSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new OAuthApplicationSoap[0][0];
@@ -82,7 +88,9 @@ public class OAuthApplicationSoap implements Serializable {
 
 	public static OAuthApplicationSoap[] toSoapModels(
 		List<OAuthApplication> models) {
-		List<OAuthApplicationSoap> soapModels = new ArrayList<OAuthApplicationSoap>(models.size());
+
+		List<OAuthApplicationSoap> soapModels =
+			new ArrayList<OAuthApplicationSoap>(models.size());
 
 		for (OAuthApplication model : models) {
 			soapModels.add(toSoapModel(model));
@@ -241,4 +249,5 @@ public class OAuthApplicationSoap implements Serializable {
 	private boolean _shareableAccessToken;
 	private String _callbackURI;
 	private String _websiteURL;
+
 }

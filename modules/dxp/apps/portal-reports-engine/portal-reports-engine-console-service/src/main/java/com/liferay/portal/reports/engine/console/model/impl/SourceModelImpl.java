@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,31 +70,28 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class SourceModelImpl extends BaseModelImpl<Source>
-	implements SourceModel {
+public class SourceModelImpl
+	extends BaseModelImpl<Source> implements SourceModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a source model instance should use the <code>Source</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Reports_Source";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
-			{ "sourceId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "lastPublishDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
-			{ "driverClassName", Types.VARCHAR },
-			{ "driverUrl", Types.VARCHAR },
-			{ "driverUserName", Types.VARCHAR },
-			{ "driverPassword", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"uuid_", Types.VARCHAR}, {"sourceId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"lastPublishDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"driverClassName", Types.VARCHAR}, {"driverUrl", Types.VARCHAR},
+		{"driverUserName", Types.VARCHAR}, {"driverPassword", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -116,25 +110,43 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 		TABLE_COLUMNS_MAP.put("driverPassword", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Reports_Source (uuid_ VARCHAR(75) null,sourceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastPublishDate DATE null,name STRING null,driverClassName VARCHAR(75) null,driverUrl STRING null,driverUserName VARCHAR(75) null,driverPassword VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Reports_Source (uuid_ VARCHAR(75) null,sourceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastPublishDate DATE null,name STRING null,driverClassName VARCHAR(75) null,driverUrl STRING null,driverUserName VARCHAR(75) null,driverPassword VARCHAR(75) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Reports_Source";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY source.sourceId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Reports_Source.sourceId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Reports_Source.sourceId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.reports.engine.console.model.Source"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.reports.engine.console.model.Source"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.reports.engine.console.model.Source"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.reports.engine.console.model.Source"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.reports.engine.console.model.Source"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.reports.engine.console.model.Source"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long UUID_COLUMN_BITMASK = 4L;
+
 	public static final long SOURCEID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -188,8 +200,9 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.portal.reports.engine.console.model.Source"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.reports.engine.console.service.util.ServiceProps.get(
+			"lock.expiration.time.com.liferay.portal.reports.engine.console.model.Source"));
 
 	public SourceModelImpl() {
 	}
@@ -228,14 +241,17 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Source, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Source, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Source, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Source, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Source, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Source)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Source)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -246,15 +262,18 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Source, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Source, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Source, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Source, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Source)this, entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Source)this, entry.getValue());
 			}
 		}
 	}
@@ -263,50 +282,78 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Source, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Source, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Source, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Source, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Source, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Source, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Source, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Source, Object>>();
-		Map<String, BiConsumer<Source, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Source, ?>>();
-
+		Map<String, Function<Source, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Source, Object>>();
+		Map<String, BiConsumer<Source, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Source, ?>>();
 
 		attributeGetterFunctions.put("uuid", Source::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<Source, String>)Source::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Source, String>)Source::setUuid);
 		attributeGetterFunctions.put("sourceId", Source::getSourceId);
-		attributeSetterBiConsumers.put("sourceId", (BiConsumer<Source, Long>)Source::setSourceId);
+		attributeSetterBiConsumers.put(
+			"sourceId", (BiConsumer<Source, Long>)Source::setSourceId);
 		attributeGetterFunctions.put("groupId", Source::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<Source, Long>)Source::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<Source, Long>)Source::setGroupId);
 		attributeGetterFunctions.put("companyId", Source::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Source, Long>)Source::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Source, Long>)Source::setCompanyId);
 		attributeGetterFunctions.put("userId", Source::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Source, Long>)Source::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Source, Long>)Source::setUserId);
 		attributeGetterFunctions.put("userName", Source::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Source, String>)Source::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Source, String>)Source::setUserName);
 		attributeGetterFunctions.put("createDate", Source::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Source, Date>)Source::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Source, Date>)Source::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Source::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Source, Date>)Source::setModifiedDate);
-		attributeGetterFunctions.put("lastPublishDate", Source::getLastPublishDate);
-		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Source, Date>)Source::setLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate", (BiConsumer<Source, Date>)Source::setModifiedDate);
+		attributeGetterFunctions.put(
+			"lastPublishDate", Source::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<Source, Date>)Source::setLastPublishDate);
 		attributeGetterFunctions.put("name", Source::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Source, String>)Source::setName);
-		attributeGetterFunctions.put("driverClassName", Source::getDriverClassName);
-		attributeSetterBiConsumers.put("driverClassName", (BiConsumer<Source, String>)Source::setDriverClassName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Source, String>)Source::setName);
+		attributeGetterFunctions.put(
+			"driverClassName", Source::getDriverClassName);
+		attributeSetterBiConsumers.put(
+			"driverClassName",
+			(BiConsumer<Source, String>)Source::setDriverClassName);
 		attributeGetterFunctions.put("driverUrl", Source::getDriverUrl);
-		attributeSetterBiConsumers.put("driverUrl", (BiConsumer<Source, String>)Source::setDriverUrl);
-		attributeGetterFunctions.put("driverUserName", Source::getDriverUserName);
-		attributeSetterBiConsumers.put("driverUserName", (BiConsumer<Source, String>)Source::setDriverUserName);
-		attributeGetterFunctions.put("driverPassword", Source::getDriverPassword);
-		attributeSetterBiConsumers.put("driverPassword", (BiConsumer<Source, String>)Source::setDriverPassword);
+		attributeSetterBiConsumers.put(
+			"driverUrl", (BiConsumer<Source, String>)Source::setDriverUrl);
+		attributeGetterFunctions.put(
+			"driverUserName", Source::getDriverUserName);
+		attributeSetterBiConsumers.put(
+			"driverUserName",
+			(BiConsumer<Source, String>)Source::setDriverUserName);
+		attributeGetterFunctions.put(
+			"driverPassword", Source::getDriverPassword);
+		attributeSetterBiConsumers.put(
+			"driverPassword",
+			(BiConsumer<Source, String>)Source::setDriverPassword);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -506,8 +553,8 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getName(), languageId,
-			useDefault);
+		return LocalizationUtil.getLocalization(
+			getName(), languageId, useDefault);
 	}
 
 	@Override
@@ -544,12 +591,14 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(LocalizationUtil.updateLocalization(getName(), "Name",
-					name, languageId, defaultLanguageId));
+			setName(
+				LocalizationUtil.updateLocalization(
+					getName(), "Name", name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(LocalizationUtil.removeLocalization(getName(), "Name",
-					languageId));
+			setName(
+				LocalizationUtil.removeLocalization(
+					getName(), "Name", languageId));
 		}
 	}
 
@@ -569,7 +618,9 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 			return;
 		}
 
-		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+		setName(
+			LocalizationUtil.updateLocalization(
+				nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -639,8 +690,8 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				Source.class.getName()));
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Source.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -649,8 +700,8 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Source.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Source.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -675,7 +726,8 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 			}
 		}
 
-		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -693,12 +745,15 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(Source.class.getName(),
-				getPrimaryKey(), defaultLocale, availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			Source.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -707,6 +762,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
+
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -724,8 +780,9 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public Source toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Source)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Source)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -926,14 +983,17 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Source, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Source, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Source, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Source, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Source, Object> attributeGetterFunction = entry.getValue();
 
@@ -954,16 +1014,19 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Source, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Source, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Source, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Source, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Source, Object> attributeGetterFunction = entry.getValue();
 
@@ -979,10 +1042,12 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Source.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Source.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Source.class, ModelWrapper.class
-		};
+		Source.class, ModelWrapper.class
+	};
+
 	private String _uuid;
 	private String _originalUuid;
 	private long _sourceId;
@@ -1006,4 +1071,5 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	private String _driverPassword;
 	private long _columnBitmask;
 	private Source _escapedModel;
+
 }

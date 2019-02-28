@@ -30,13 +30,17 @@ import java.util.List;
  */
 @ProviderType
 public class WorkflowMetricsSLACalendarSoap implements Serializable {
+
 	public static WorkflowMetricsSLACalendarSoap toSoapModel(
 		WorkflowMetricsSLACalendar model) {
-		WorkflowMetricsSLACalendarSoap soapModel = new WorkflowMetricsSLACalendarSoap();
+
+		WorkflowMetricsSLACalendarSoap soapModel =
+			new WorkflowMetricsSLACalendarSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setWorkflowMetricsSLACalendarId(model.getWorkflowMetricsSLACalendarId());
+		soapModel.setWorkflowMetricsSLACalendarId(
+			model.getWorkflowMetricsSLACalendarId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -49,7 +53,9 @@ public class WorkflowMetricsSLACalendarSoap implements Serializable {
 
 	public static WorkflowMetricsSLACalendarSoap[] toSoapModels(
 		WorkflowMetricsSLACalendar[] models) {
-		WorkflowMetricsSLACalendarSoap[] soapModels = new WorkflowMetricsSLACalendarSoap[models.length];
+
+		WorkflowMetricsSLACalendarSoap[] soapModels =
+			new WorkflowMetricsSLACalendarSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -60,10 +66,13 @@ public class WorkflowMetricsSLACalendarSoap implements Serializable {
 
 	public static WorkflowMetricsSLACalendarSoap[][] toSoapModels(
 		WorkflowMetricsSLACalendar[][] models) {
+
 		WorkflowMetricsSLACalendarSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new WorkflowMetricsSLACalendarSoap[models.length][models[0].length];
+			soapModels =
+				new WorkflowMetricsSLACalendarSoap
+					[models.length][models[0].length];
 		}
 		else {
 			soapModels = new WorkflowMetricsSLACalendarSoap[0][0];
@@ -78,13 +87,16 @@ public class WorkflowMetricsSLACalendarSoap implements Serializable {
 
 	public static WorkflowMetricsSLACalendarSoap[] toSoapModels(
 		List<WorkflowMetricsSLACalendar> models) {
-		List<WorkflowMetricsSLACalendarSoap> soapModels = new ArrayList<WorkflowMetricsSLACalendarSoap>(models.size());
+
+		List<WorkflowMetricsSLACalendarSoap> soapModels =
+			new ArrayList<WorkflowMetricsSLACalendarSoap>(models.size());
 
 		for (WorkflowMetricsSLACalendar model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new WorkflowMetricsSLACalendarSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new WorkflowMetricsSLACalendarSoap[soapModels.size()]);
 	}
 
 	public WorkflowMetricsSLACalendarSoap() {
@@ -120,6 +132,7 @@ public class WorkflowMetricsSLACalendarSoap implements Serializable {
 
 	public void setWorkflowMetricsSLACalendarId(
 		long workflowMetricsSLACalendarId) {
+
 		_workflowMetricsSLACalendarId = workflowMetricsSLACalendarId;
 	}
 
@@ -180,4 +193,5 @@ public class WorkflowMetricsSLACalendarSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+
 }

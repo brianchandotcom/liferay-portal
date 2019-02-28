@@ -67,21 +67,26 @@ import java.util.Map;
  */
 @ProviderType
 public class SourceServiceSoap {
-	public static com.liferay.portal.reports.engine.console.model.SourceSoap addSource(
-		long groupId, String[] nameMapLanguageIds, String[] nameMapValues,
-		String driverClassName, String driverUrl, String driverUserName,
-		String driverPassword,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap
+			addSource(
+				long groupId, String[] nameMapLanguageIds,
+				String[] nameMapValues, String driverClassName,
+				String driverUrl, String driverUserName, String driverPassword,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
+
 		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-					nameMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
 
-			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.addSource(groupId,
-					nameMap, driverClassName, driverUrl, driverUserName,
-					driverPassword, serviceContext);
+			com.liferay.portal.reports.engine.console.model.Source returnValue =
+				SourceServiceUtil.addSource(
+					groupId, nameMap, driverClassName, driverUrl,
+					driverUserName, driverPassword, serviceContext);
 
-			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -90,45 +95,16 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.SourceSoap deleteSource(
-		long sourceId) throws RemoteException {
-		try {
-			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.deleteSource(sourceId);
-
-			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.reports.engine.console.model.SourceSoap getSource(
-		long sourceId) throws RemoteException {
-		try {
-			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.getSource(sourceId);
-
-			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.reports.engine.console.model.SourceSoap[] getSources(
-		long groupId, String name, String driverUrl, boolean andSearch,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap
+			deleteSource(long sourceId)
 		throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.reports.engine.console.model.Source> returnValue =
-				SourceServiceUtil.getSources(groupId, name, driverUrl,
-					andSearch, start, end, orderByComparator);
 
-			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModels(returnValue);
+		try {
+			com.liferay.portal.reports.engine.console.model.Source returnValue =
+				SourceServiceUtil.deleteSource(sourceId);
+
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -137,11 +113,56 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static int getSourcesCount(long groupId, String name,
-		String driverUrl, boolean andSearch) throws RemoteException {
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap
+			getSource(long sourceId)
+		throws RemoteException {
+
 		try {
-			int returnValue = SourceServiceUtil.getSourcesCount(groupId, name,
-					driverUrl, andSearch);
+			com.liferay.portal.reports.engine.console.model.Source returnValue =
+				SourceServiceUtil.getSource(sourceId);
+
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap[]
+			getSources(
+				long groupId, String name, String driverUrl, boolean andSearch,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.portal.reports.engine.console.model.Source>
+					returnValue = SourceServiceUtil.getSources(
+						groupId, name, driverUrl, andSearch, start, end,
+						orderByComparator);
+
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getSourcesCount(
+			long groupId, String name, String driverUrl, boolean andSearch)
+		throws RemoteException {
+
+		try {
+			int returnValue = SourceServiceUtil.getSourcesCount(
+				groupId, name, driverUrl, andSearch);
 
 			return returnValue;
 		}
@@ -152,21 +173,25 @@ public class SourceServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.reports.engine.console.model.SourceSoap updateSource(
-		long sourceId, String[] nameMapLanguageIds, String[] nameMapValues,
-		String driverClassName, String driverUrl, String driverUserName,
-		String driverPassword,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.reports.engine.console.model.SourceSoap
+			updateSource(
+				long sourceId, String[] nameMapLanguageIds,
+				String[] nameMapValues, String driverClassName,
+				String driverUrl, String driverUserName, String driverPassword,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
+
 		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-					nameMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
 
-			com.liferay.portal.reports.engine.console.model.Source returnValue = SourceServiceUtil.updateSource(sourceId,
-					nameMap, driverClassName, driverUrl, driverUserName,
-					driverPassword, serviceContext);
+			com.liferay.portal.reports.engine.console.model.Source returnValue =
+				SourceServiceUtil.updateSource(
+					sourceId, nameMap, driverClassName, driverUrl,
+					driverUserName, driverPassword, serviceContext);
 
-			return com.liferay.portal.reports.engine.console.model.SourceSoap.toSoapModel(returnValue);
+			return com.liferay.portal.reports.engine.console.model.SourceSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -176,4 +201,5 @@ public class SourceServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SourceServiceSoap.class);
+
 }

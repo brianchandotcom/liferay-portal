@@ -33,7 +33,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SharepointOAuth2TokenEntryModel extends BaseModel<SharepointOAuth2TokenEntry> {
+public interface SharepointOAuth2TokenEntryModel
+	extends BaseModel<SharepointOAuth2TokenEntry> {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -184,4 +186,5 @@ public interface SharepointOAuth2TokenEntryModel extends BaseModel<SharepointOAu
 	 * @param refreshToken the refresh token of this sharepoint o auth2 token entry
 	 */
 	public void setRefreshToken(String refreshToken);
+
 }

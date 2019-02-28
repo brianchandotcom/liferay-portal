@@ -33,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SamlIdpSsoSessionWrapper extends BaseModelWrapper<SamlIdpSsoSession>
+public class SamlIdpSsoSessionWrapper
+	extends BaseModelWrapper<SamlIdpSsoSession>
 	implements SamlIdpSsoSession, ModelWrapper<SamlIdpSsoSession> {
+
 	public SamlIdpSsoSessionWrapper(SamlIdpSsoSession samlIdpSsoSession) {
 		super(samlIdpSsoSession);
 	}
@@ -93,7 +95,7 @@ public class SamlIdpSsoSessionWrapper extends BaseModelWrapper<SamlIdpSsoSession
 		}
 
 		String samlIdpSsoSessionKey = (String)attributes.get(
-				"samlIdpSsoSessionKey");
+			"samlIdpSsoSessionKey");
 
 		if (samlIdpSsoSessionKey != null) {
 			setSamlIdpSsoSessionKey(samlIdpSsoSessionKey);
@@ -101,90 +103,90 @@ public class SamlIdpSsoSessionWrapper extends BaseModelWrapper<SamlIdpSsoSession
 	}
 
 	/**
-	* Returns the company ID of this saml idp sso session.
-	*
-	* @return the company ID of this saml idp sso session
-	*/
+	 * Returns the company ID of this saml idp sso session.
+	 *
+	 * @return the company ID of this saml idp sso session
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this saml idp sso session.
-	*
-	* @return the create date of this saml idp sso session
-	*/
+	 * Returns the create date of this saml idp sso session.
+	 *
+	 * @return the create date of this saml idp sso session
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the modified date of this saml idp sso session.
-	*
-	* @return the modified date of this saml idp sso session
-	*/
+	 * Returns the modified date of this saml idp sso session.
+	 *
+	 * @return the modified date of this saml idp sso session
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the primary key of this saml idp sso session.
-	*
-	* @return the primary key of this saml idp sso session
-	*/
+	 * Returns the primary key of this saml idp sso session.
+	 *
+	 * @return the primary key of this saml idp sso session
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the saml idp sso session ID of this saml idp sso session.
-	*
-	* @return the saml idp sso session ID of this saml idp sso session
-	*/
+	 * Returns the saml idp sso session ID of this saml idp sso session.
+	 *
+	 * @return the saml idp sso session ID of this saml idp sso session
+	 */
 	@Override
 	public long getSamlIdpSsoSessionId() {
 		return model.getSamlIdpSsoSessionId();
 	}
 
 	/**
-	* Returns the saml idp sso session key of this saml idp sso session.
-	*
-	* @return the saml idp sso session key of this saml idp sso session
-	*/
+	 * Returns the saml idp sso session key of this saml idp sso session.
+	 *
+	 * @return the saml idp sso session key of this saml idp sso session
+	 */
 	@Override
 	public String getSamlIdpSsoSessionKey() {
 		return model.getSamlIdpSsoSessionKey();
 	}
 
 	/**
-	* Returns the user ID of this saml idp sso session.
-	*
-	* @return the user ID of this saml idp sso session
-	*/
+	 * Returns the user ID of this saml idp sso session.
+	 *
+	 * @return the user ID of this saml idp sso session
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this saml idp sso session.
-	*
-	* @return the user name of this saml idp sso session
-	*/
+	 * Returns the user name of this saml idp sso session.
+	 *
+	 * @return the user name of this saml idp sso session
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this saml idp sso session.
-	*
-	* @return the user uuid of this saml idp sso session
-	*/
+	 * Returns the user uuid of this saml idp sso session.
+	 *
+	 * @return the user uuid of this saml idp sso session
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -201,97 +203,100 @@ public class SamlIdpSsoSessionWrapper extends BaseModelWrapper<SamlIdpSsoSession
 	}
 
 	/**
-	* Sets the company ID of this saml idp sso session.
-	*
-	* @param companyId the company ID of this saml idp sso session
-	*/
+	 * Sets the company ID of this saml idp sso session.
+	 *
+	 * @param companyId the company ID of this saml idp sso session
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this saml idp sso session.
-	*
-	* @param createDate the create date of this saml idp sso session
-	*/
+	 * Sets the create date of this saml idp sso session.
+	 *
+	 * @param createDate the create date of this saml idp sso session
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the modified date of this saml idp sso session.
-	*
-	* @param modifiedDate the modified date of this saml idp sso session
-	*/
+	 * Sets the modified date of this saml idp sso session.
+	 *
+	 * @param modifiedDate the modified date of this saml idp sso session
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the primary key of this saml idp sso session.
-	*
-	* @param primaryKey the primary key of this saml idp sso session
-	*/
+	 * Sets the primary key of this saml idp sso session.
+	 *
+	 * @param primaryKey the primary key of this saml idp sso session
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the saml idp sso session ID of this saml idp sso session.
-	*
-	* @param samlIdpSsoSessionId the saml idp sso session ID of this saml idp sso session
-	*/
+	 * Sets the saml idp sso session ID of this saml idp sso session.
+	 *
+	 * @param samlIdpSsoSessionId the saml idp sso session ID of this saml idp sso session
+	 */
 	@Override
 	public void setSamlIdpSsoSessionId(long samlIdpSsoSessionId) {
 		model.setSamlIdpSsoSessionId(samlIdpSsoSessionId);
 	}
 
 	/**
-	* Sets the saml idp sso session key of this saml idp sso session.
-	*
-	* @param samlIdpSsoSessionKey the saml idp sso session key of this saml idp sso session
-	*/
+	 * Sets the saml idp sso session key of this saml idp sso session.
+	 *
+	 * @param samlIdpSsoSessionKey the saml idp sso session key of this saml idp sso session
+	 */
 	@Override
 	public void setSamlIdpSsoSessionKey(String samlIdpSsoSessionKey) {
 		model.setSamlIdpSsoSessionKey(samlIdpSsoSessionKey);
 	}
 
 	/**
-	* Sets the user ID of this saml idp sso session.
-	*
-	* @param userId the user ID of this saml idp sso session
-	*/
+	 * Sets the user ID of this saml idp sso session.
+	 *
+	 * @param userId the user ID of this saml idp sso session
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this saml idp sso session.
-	*
-	* @param userName the user name of this saml idp sso session
-	*/
+	 * Sets the user name of this saml idp sso session.
+	 *
+	 * @param userName the user name of this saml idp sso session
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this saml idp sso session.
-	*
-	* @param userUuid the user uuid of this saml idp sso session
-	*/
+	 * Sets the user uuid of this saml idp sso session.
+	 *
+	 * @param userUuid the user uuid of this saml idp sso session
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	protected SamlIdpSsoSessionWrapper wrap(SamlIdpSsoSession samlIdpSsoSession) {
+	protected SamlIdpSsoSessionWrapper wrap(
+		SamlIdpSsoSession samlIdpSsoSession) {
+
 		return new SamlIdpSsoSessionWrapper(samlIdpSsoSession);
 	}
+
 }

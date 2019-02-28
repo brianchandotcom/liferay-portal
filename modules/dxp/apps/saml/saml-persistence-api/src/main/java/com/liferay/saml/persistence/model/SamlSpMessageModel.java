@@ -34,8 +34,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlSpMessageModel extends BaseModel<SamlSpMessage>,
-	ShardedModel {
+public interface SamlSpMessageModel
+	extends BaseModel<SamlSpMessage>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,4 +144,5 @@ public interface SamlSpMessageModel extends BaseModel<SamlSpMessage>,
 	 * @param expirationDate the expiration date of this saml sp message
 	 */
 	public void setExpirationDate(Date expirationDate);
+
 }

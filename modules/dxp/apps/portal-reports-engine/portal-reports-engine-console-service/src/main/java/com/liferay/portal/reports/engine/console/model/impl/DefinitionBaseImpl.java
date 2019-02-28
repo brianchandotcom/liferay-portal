@@ -32,8 +32,9 @@ import com.liferay.portal.reports.engine.console.service.DefinitionLocalServiceU
  * @generated
  */
 @ProviderType
-public abstract class DefinitionBaseImpl extends DefinitionModelImpl
-	implements Definition {
+public abstract class DefinitionBaseImpl
+	extends DefinitionModelImpl implements Definition {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class DefinitionBaseImpl extends DefinitionModelImpl
 			DefinitionLocalServiceUtil.updateDefinition(this);
 		}
 	}
+
 }

@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -76,8 +75,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class DefinitionLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements DefinitionLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements DefinitionLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -121,6 +121,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	@Override
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException {
+
 		return definitionPersistence.remove(definitionId);
 	}
 
@@ -135,6 +136,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	@Override
 	public Definition deleteDefinition(Definition definition)
 		throws PortalException {
+
 		return definitionPersistence.remove(definition);
 	}
 
@@ -142,8 +144,8 @@ public abstract class DefinitionLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(Definition.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			Definition.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -170,10 +172,11 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return definitionPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return definitionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -190,10 +193,12 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return definitionPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return definitionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -215,10 +220,11 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return definitionPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return definitionPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -234,7 +240,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @return the matching definition, or <code>null</code> if a matching definition could not be found
 	 */
 	@Override
-	public Definition fetchDefinitionByUuidAndGroupId(String uuid, long groupId) {
+	public Definition fetchDefinitionByUuidAndGroupId(
+		String uuid, long groupId) {
+
 		return definitionPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -246,14 +254,14 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @throws PortalException if a definition with the primary key could not be found
 	 */
 	@Override
-	public Definition getDefinition(long definitionId)
-		throws PortalException {
+	public Definition getDefinition(long definitionId) throws PortalException {
 		return definitionPersistence.findByPrimaryKey(definitionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(definitionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -265,10 +273,14 @@ public abstract class DefinitionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(definitionLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			definitionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(Definition.class);
 
@@ -280,6 +292,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
+
 		actionableDynamicQuery.setBaseLocalService(definitionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Definition.class);
@@ -290,51 +303,67 @@ public abstract class DefinitionLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(stagedModelType,
-						modelAdditionCount);
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
 
-					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
-							stagedModelType);
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
 
-					manifestSummary.addModelDeletionCount(stagedModelType,
-						modelDeletionCount);
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
 
 					return modelAdditionCount;
 				}
+
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
 				}
+
 			});
 
-		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Definition>() {
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Definition>() {
+
 				@Override
 				public void performAction(Definition definition)
 					throws PortalException {
-					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						definition);
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, definition);
 				}
+
 			});
-		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
 				PortalUtil.getClassNameId(Definition.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -346,12 +375,15 @@ public abstract class DefinitionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return definitionLocalService.deleteDefinition((Definition)persistedModel);
+
+		return definitionLocalService.deleteDefinition(
+			(Definition)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return definitionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -363,8 +395,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @return the matching definitions, or an empty list if no matches were found
 	 */
 	@Override
-	public List<Definition> getDefinitionsByUuidAndCompanyId(String uuid,
-		long companyId) {
+	public List<Definition> getDefinitionsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
 		return definitionPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -379,11 +412,12 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @return the range of matching definitions, or an empty list if no matches were found
 	 */
 	@Override
-	public List<Definition> getDefinitionsByUuidAndCompanyId(String uuid,
-		long companyId, int start, int end,
+	public List<Definition> getDefinitionsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<Definition> orderByComparator) {
-		return definitionPersistence.findByUuid_C(uuid, companyId, start, end,
-			orderByComparator);
+
+		return definitionPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -397,6 +431,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	@Override
 	public Definition getDefinitionByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
+
 		return definitionPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -454,6 +489,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 */
 	public void setDefinitionLocalService(
 		DefinitionLocalService definitionLocalService) {
+
 		this.definitionLocalService = definitionLocalService;
 	}
 
@@ -473,6 +509,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 */
 	public void setDefinitionPersistence(
 		DefinitionPersistence definitionPersistence) {
+
 		this.definitionPersistence = definitionPersistence;
 	}
 
@@ -499,7 +536,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 *
 	 * @return the entry local service
 	 */
-	public com.liferay.portal.reports.engine.console.service.EntryLocalService getEntryLocalService() {
+	public com.liferay.portal.reports.engine.console.service.EntryLocalService
+		getEntryLocalService() {
+
 		return entryLocalService;
 	}
 
@@ -509,7 +548,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @param entryLocalService the entry local service
 	 */
 	public void setEntryLocalService(
-		com.liferay.portal.reports.engine.console.service.EntryLocalService entryLocalService) {
+		com.liferay.portal.reports.engine.console.service.EntryLocalService
+			entryLocalService) {
+
 		this.entryLocalService = entryLocalService;
 	}
 
@@ -554,7 +595,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 *
 	 * @return the source local service
 	 */
-	public com.liferay.portal.reports.engine.console.service.SourceLocalService getSourceLocalService() {
+	public com.liferay.portal.reports.engine.console.service.SourceLocalService
+		getSourceLocalService() {
+
 		return sourceLocalService;
 	}
 
@@ -564,7 +607,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @param sourceLocalService the source local service
 	 */
 	public void setSourceLocalService(
-		com.liferay.portal.reports.engine.console.service.SourceLocalService sourceLocalService) {
+		com.liferay.portal.reports.engine.console.service.SourceLocalService
+			sourceLocalService) {
+
 		this.sourceLocalService = sourceLocalService;
 	}
 
@@ -609,7 +654,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -619,7 +666,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -628,7 +677,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -638,7 +689,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -658,6 +711,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -666,7 +720,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -676,7 +732,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -685,7 +743,9 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -696,6 +756,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -718,7 +779,8 @@ public abstract class DefinitionLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.reports.engine.console.model.Definition",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.reports.engine.console.model.Definition",
 			definitionLocalService);
 	}
 
@@ -759,8 +821,8 @@ public abstract class DefinitionLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -771,34 +833,71 @@ public abstract class DefinitionLocalServiceBaseImpl
 
 	@BeanReference(type = DefinitionLocalService.class)
 	protected DefinitionLocalService definitionLocalService;
+
 	@BeanReference(type = DefinitionPersistence.class)
 	protected DefinitionPersistence definitionPersistence;
+
 	@BeanReference(type = DefinitionFinder.class)
 	protected DefinitionFinder definitionFinder;
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.EntryLocalService.class)
-	protected com.liferay.portal.reports.engine.console.service.EntryLocalService entryLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.EntryLocalService.class
+	)
+	protected
+		com.liferay.portal.reports.engine.console.service.EntryLocalService
+			entryLocalService;
+
 	@BeanReference(type = EntryPersistence.class)
 	protected EntryPersistence entryPersistence;
+
 	@BeanReference(type = EntryFinder.class)
 	protected EntryFinder entryFinder;
-	@BeanReference(type = com.liferay.portal.reports.engine.console.service.SourceLocalService.class)
-	protected com.liferay.portal.reports.engine.console.service.SourceLocalService sourceLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.reports.engine.console.service.SourceLocalService.class
+	)
+	protected
+		com.liferay.portal.reports.engine.console.service.SourceLocalService
+			sourceLocalService;
+
 	@BeanReference(type = SourcePersistence.class)
 	protected SourcePersistence sourcePersistence;
+
 	@BeanReference(type = SourceFinder.class)
 	protected SourceFinder sourceFinder;
-	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+
+	@ServiceReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

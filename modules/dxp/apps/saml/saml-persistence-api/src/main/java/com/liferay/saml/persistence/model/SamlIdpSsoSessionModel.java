@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SamlIdpSsoSessionModel extends AuditedModel,
-	BaseModel<SamlIdpSsoSession>, ShardedModel {
+public interface SamlIdpSsoSessionModel
+	extends AuditedModel, BaseModel<SamlIdpSsoSession>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -182,4 +183,5 @@ public interface SamlIdpSsoSessionModel extends AuditedModel,
 	 * @param samlIdpSsoSessionKey the saml idp sso session key of this saml idp sso session
 	 */
 	public void setSamlIdpSsoSessionKey(String samlIdpSsoSessionKey);
+
 }

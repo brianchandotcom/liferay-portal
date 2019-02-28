@@ -35,6 +35,7 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 public abstract class WorkflowMetricsSLADefinitionBaseImpl
 	extends WorkflowMetricsSLADefinitionModelImpl
 	implements WorkflowMetricsSLADefinition {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,13 @@ public abstract class WorkflowMetricsSLADefinitionBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			WorkflowMetricsSLADefinitionLocalServiceUtil.addWorkflowMetricsSLADefinition(this);
+			WorkflowMetricsSLADefinitionLocalServiceUtil.
+				addWorkflowMetricsSLADefinition(this);
 		}
 		else {
-			WorkflowMetricsSLADefinitionLocalServiceUtil.updateWorkflowMetricsSLADefinition(this);
+			WorkflowMetricsSLADefinitionLocalServiceUtil.
+				updateWorkflowMetricsSLADefinition(this);
 		}
 	}
+
 }

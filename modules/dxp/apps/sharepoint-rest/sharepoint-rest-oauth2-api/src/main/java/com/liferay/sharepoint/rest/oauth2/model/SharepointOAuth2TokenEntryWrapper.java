@@ -33,11 +33,14 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<SharepointOAuth2TokenEntry>
+public class SharepointOAuth2TokenEntryWrapper
+	extends BaseModelWrapper<SharepointOAuth2TokenEntry>
 	implements SharepointOAuth2TokenEntry,
-		ModelWrapper<SharepointOAuth2TokenEntry> {
+			   ModelWrapper<SharepointOAuth2TokenEntry> {
+
 	public SharepointOAuth2TokenEntryWrapper(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+
 		super(sharepointOAuth2TokenEntry);
 	}
 
@@ -45,8 +48,8 @@ public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<Sharepoi
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("sharepointOAuth2TokenEntryId",
-			getSharepointOAuth2TokenEntryId());
+		attributes.put(
+			"sharepointOAuth2TokenEntryId", getSharepointOAuth2TokenEntryId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -61,7 +64,7 @@ public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<Sharepoi
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long sharepointOAuth2TokenEntryId = (Long)attributes.get(
-				"sharepointOAuth2TokenEntryId");
+			"sharepointOAuth2TokenEntryId");
 
 		if (sharepointOAuth2TokenEntryId != null) {
 			setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntryId);
@@ -111,100 +114,100 @@ public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<Sharepoi
 	}
 
 	/**
-	* Returns the access token of this sharepoint o auth2 token entry.
-	*
-	* @return the access token of this sharepoint o auth2 token entry
-	*/
+	 * Returns the access token of this sharepoint o auth2 token entry.
+	 *
+	 * @return the access token of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public String getAccessToken() {
 		return model.getAccessToken();
 	}
 
 	/**
-	* Returns the configuration pid of this sharepoint o auth2 token entry.
-	*
-	* @return the configuration pid of this sharepoint o auth2 token entry
-	*/
+	 * Returns the configuration pid of this sharepoint o auth2 token entry.
+	 *
+	 * @return the configuration pid of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public String getConfigurationPid() {
 		return model.getConfigurationPid();
 	}
 
 	/**
-	* Returns the create date of this sharepoint o auth2 token entry.
-	*
-	* @return the create date of this sharepoint o auth2 token entry
-	*/
+	 * Returns the create date of this sharepoint o auth2 token entry.
+	 *
+	 * @return the create date of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the expiration date of this sharepoint o auth2 token entry.
-	*
-	* @return the expiration date of this sharepoint o auth2 token entry
-	*/
+	 * Returns the expiration date of this sharepoint o auth2 token entry.
+	 *
+	 * @return the expiration date of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public Date getExpirationDate() {
 		return model.getExpirationDate();
 	}
 
 	/**
-	* Returns the primary key of this sharepoint o auth2 token entry.
-	*
-	* @return the primary key of this sharepoint o auth2 token entry
-	*/
+	 * Returns the primary key of this sharepoint o auth2 token entry.
+	 *
+	 * @return the primary key of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the refresh token of this sharepoint o auth2 token entry.
-	*
-	* @return the refresh token of this sharepoint o auth2 token entry
-	*/
+	 * Returns the refresh token of this sharepoint o auth2 token entry.
+	 *
+	 * @return the refresh token of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public String getRefreshToken() {
 		return model.getRefreshToken();
 	}
 
 	/**
-	* Returns the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry.
-	*
-	* @return the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry
-	*/
+	 * Returns the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry.
+	 *
+	 * @return the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public long getSharepointOAuth2TokenEntryId() {
 		return model.getSharepointOAuth2TokenEntryId();
 	}
 
 	/**
-	* Returns the user ID of this sharepoint o auth2 token entry.
-	*
-	* @return the user ID of this sharepoint o auth2 token entry
-	*/
+	 * Returns the user ID of this sharepoint o auth2 token entry.
+	 *
+	 * @return the user ID of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this sharepoint o auth2 token entry.
-	*
-	* @return the user name of this sharepoint o auth2 token entry
-	*/
+	 * Returns the user name of this sharepoint o auth2 token entry.
+	 *
+	 * @return the user name of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this sharepoint o auth2 token entry.
-	*
-	* @return the user uuid of this sharepoint o auth2 token entry
-	*/
+	 * Returns the user uuid of this sharepoint o auth2 token entry.
+	 *
+	 * @return the user uuid of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -216,101 +219,102 @@ public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<Sharepoi
 	}
 
 	/**
-	* Sets the access token of this sharepoint o auth2 token entry.
-	*
-	* @param accessToken the access token of this sharepoint o auth2 token entry
-	*/
+	 * Sets the access token of this sharepoint o auth2 token entry.
+	 *
+	 * @param accessToken the access token of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setAccessToken(String accessToken) {
 		model.setAccessToken(accessToken);
 	}
 
 	/**
-	* Sets the configuration pid of this sharepoint o auth2 token entry.
-	*
-	* @param configurationPid the configuration pid of this sharepoint o auth2 token entry
-	*/
+	 * Sets the configuration pid of this sharepoint o auth2 token entry.
+	 *
+	 * @param configurationPid the configuration pid of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setConfigurationPid(String configurationPid) {
 		model.setConfigurationPid(configurationPid);
 	}
 
 	/**
-	* Sets the create date of this sharepoint o auth2 token entry.
-	*
-	* @param createDate the create date of this sharepoint o auth2 token entry
-	*/
+	 * Sets the create date of this sharepoint o auth2 token entry.
+	 *
+	 * @param createDate the create date of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the expiration date of this sharepoint o auth2 token entry.
-	*
-	* @param expirationDate the expiration date of this sharepoint o auth2 token entry
-	*/
+	 * Sets the expiration date of this sharepoint o auth2 token entry.
+	 *
+	 * @param expirationDate the expiration date of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		model.setExpirationDate(expirationDate);
 	}
 
 	/**
-	* Sets the primary key of this sharepoint o auth2 token entry.
-	*
-	* @param primaryKey the primary key of this sharepoint o auth2 token entry
-	*/
+	 * Sets the primary key of this sharepoint o auth2 token entry.
+	 *
+	 * @param primaryKey the primary key of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the refresh token of this sharepoint o auth2 token entry.
-	*
-	* @param refreshToken the refresh token of this sharepoint o auth2 token entry
-	*/
+	 * Sets the refresh token of this sharepoint o auth2 token entry.
+	 *
+	 * @param refreshToken the refresh token of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setRefreshToken(String refreshToken) {
 		model.setRefreshToken(refreshToken);
 	}
 
 	/**
-	* Sets the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry.
-	*
-	* @param sharepointOAuth2TokenEntryId the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry
-	*/
+	 * Sets the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry.
+	 *
+	 * @param sharepointOAuth2TokenEntryId the sharepoint o auth2 token entry ID of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setSharepointOAuth2TokenEntryId(
 		long sharepointOAuth2TokenEntryId) {
+
 		model.setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntryId);
 	}
 
 	/**
-	* Sets the user ID of this sharepoint o auth2 token entry.
-	*
-	* @param userId the user ID of this sharepoint o auth2 token entry
-	*/
+	 * Sets the user ID of this sharepoint o auth2 token entry.
+	 *
+	 * @param userId the user ID of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this sharepoint o auth2 token entry.
-	*
-	* @param userName the user name of this sharepoint o auth2 token entry
-	*/
+	 * Sets the user name of this sharepoint o auth2 token entry.
+	 *
+	 * @param userName the user name of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this sharepoint o auth2 token entry.
-	*
-	* @param userUuid the user uuid of this sharepoint o auth2 token entry
-	*/
+	 * Sets the user uuid of this sharepoint o auth2 token entry.
+	 *
+	 * @param userUuid the user uuid of this sharepoint o auth2 token entry
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -319,6 +323,9 @@ public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<Sharepoi
 	@Override
 	protected SharepointOAuth2TokenEntryWrapper wrap(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		return new SharepointOAuth2TokenEntryWrapper(sharepointOAuth2TokenEntry);
+
+		return new SharepointOAuth2TokenEntryWrapper(
+			sharepointOAuth2TokenEntry);
 	}
+
 }

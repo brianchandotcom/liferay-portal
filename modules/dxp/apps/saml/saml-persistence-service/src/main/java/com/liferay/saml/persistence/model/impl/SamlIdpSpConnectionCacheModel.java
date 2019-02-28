@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnection>,
-	Externalizable {
+public class SamlIdpSpConnectionCacheModel
+	implements CacheModel<SamlIdpSpConnection>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +48,12 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 			return false;
 		}
 
-		SamlIdpSpConnectionCacheModel samlIdpSpConnectionCacheModel = (SamlIdpSpConnectionCacheModel)obj;
+		SamlIdpSpConnectionCacheModel samlIdpSpConnectionCacheModel =
+			(SamlIdpSpConnectionCacheModel)obj;
 
-		if (samlIdpSpConnectionId == samlIdpSpConnectionCacheModel.samlIdpSpConnectionId) {
+		if (samlIdpSpConnectionId ==
+				samlIdpSpConnectionCacheModel.samlIdpSpConnectionId) {
+
 			return true;
 		}
 
@@ -110,7 +112,8 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 
 	@Override
 	public SamlIdpSpConnection toEntityModel() {
-		SamlIdpSpConnectionImpl samlIdpSpConnectionImpl = new SamlIdpSpConnectionImpl();
+		SamlIdpSpConnectionImpl samlIdpSpConnectionImpl =
+			new SamlIdpSpConnectionImpl();
 
 		samlIdpSpConnectionImpl.setSamlIdpSpConnectionId(samlIdpSpConnectionId);
 		samlIdpSpConnectionImpl.setCompanyId(companyId);
@@ -154,7 +157,8 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		}
 
 		samlIdpSpConnectionImpl.setAttributesEnabled(attributesEnabled);
-		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(attributesNamespaceEnabled);
+		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(
+			attributesNamespaceEnabled);
 		samlIdpSpConnectionImpl.setEnabled(enabled);
 
 		if (metadataUrl == null) {
@@ -175,8 +179,8 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 			samlIdpSpConnectionImpl.setMetadataUpdatedDate(null);
 		}
 		else {
-			samlIdpSpConnectionImpl.setMetadataUpdatedDate(new Date(
-					metadataUpdatedDate));
+			samlIdpSpConnectionImpl.setMetadataUpdatedDate(
+				new Date(metadataUpdatedDate));
 		}
 
 		if (name == null) {
@@ -234,8 +238,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(samlIdpSpConnectionId);
 
 		objectOutput.writeLong(companyId);
@@ -330,4 +333,5 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 	public String name;
 	public String nameIdAttribute;
 	public String nameIdFormat;
+
 }

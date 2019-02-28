@@ -368,11 +368,28 @@ definition {
 		}
 
 		task ("Assert the display page displays correctly along with its tags") {
-			DisplayPagesAdmin.viewPGViaAP(
-				contentList = "Webcontent Title,Webcontent Content,tag1,tag2,tag3",
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title"
+			AssertTextEquals(
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "Webcontent Title",
+				key_assetTitle = "Webcontent Title"
 			);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "Webcontent Content",
+				key_assetTitle = "Webcontent Title"
+			);
+
+			AssetPublisherPortlet.clickViewInContext(
+				assetTitle = "Webcontent Title"
+			);
+
+			for (var content : list "Webcontent Title,Webcontent Content,tag1,tag2,tag3") {
+				AssertVisible(
+					locator1 = "Fragment#EDITABLE_FIELD_CONTENT",
+					key_text = "${content}"
+				);
+			}
 		}
 	}
 }

@@ -65,32 +65,4 @@ definition {
 			card = "${displayPageName}"
 		);
 	}
-
-	macro viewPGViaAP {
-		var key_assetContent = "${webContentContent}";
-		var key_assetTitle = "${webContentTitle}";
-
-		AssertTextEquals(
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${webContentTitle}"
-		);
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "${webContentContent}"
-		);
-
-		AssetPublisherPortlet.clickViewInContext(
-			assetTitle = "${webContentTitle}"
-		);
-
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${webContentTitle}");
-
-		for (var content : list "${contentList}") {
-			AssertElementPresent(
-				locator1 = "Fragment#EDITABLE_FIELD_CONTENT",
-				key_text = "${content}"
-			);
-		}
-	}
 }

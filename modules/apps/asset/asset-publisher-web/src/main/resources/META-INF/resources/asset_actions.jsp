@@ -34,6 +34,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 		markupView="lexicon"
 		message="<%= StringPool.BLANK %>"
 		showWhenSingleIcon="<%= true %>"
+		triggerCssClass="component-action"
 	>
 
 		<%

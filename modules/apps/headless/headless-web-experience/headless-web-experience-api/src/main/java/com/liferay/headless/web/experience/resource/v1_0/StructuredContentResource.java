@@ -37,14 +37,13 @@ public interface StructuredContentResource {
 	public boolean deleteStructuredContent(Long structuredContentId)
 		throws Exception;
 
-	public Page<StructuredContent>
-			getContentSpaceContentStructureStructuredContentsPage(
-				Long contentSpaceId, Long contentStructureId, Filter filter,
-				Pagination pagination, Sort[] sorts)
-		throws Exception;
-
 	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
 			Long contentSpaceId, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public Page<StructuredContent> getContentStructureStructuredContentsPage(
+			Long contentStructureId, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 

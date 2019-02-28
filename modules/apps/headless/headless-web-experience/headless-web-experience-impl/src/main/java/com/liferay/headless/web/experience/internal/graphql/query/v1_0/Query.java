@@ -108,34 +108,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<StructuredContent>
-			getContentSpaceContentStructureStructuredContentsPage(
-				@GraphQLName("content-space-id") Long contentSpaceId,
-				@GraphQLName("content-structure-id") Long contentStructureId,
-				@GraphQLName("filter") Filter filter,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("Sort[]") Sort[] sorts)
-		throws Exception {
-
-		StructuredContentResource structuredContentResource =
-			_createStructuredContentResource();
-
-		structuredContentResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-
-		Page paginationPage =
-			structuredContentResource.
-				getContentSpaceContentStructureStructuredContentsPage(
-					contentSpaceId, contentStructureId, filter,
-					Pagination.of(pageSize, page), sorts);
-
-		return paginationPage.getItems();
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<StructuredContent> getContentSpaceStructuredContentsPage(
 			@GraphQLName("content-space-id") Long contentSpaceId,
 			@GraphQLName("filter") Filter filter,
@@ -171,6 +143,32 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 
 		return contentStructureResource.getContentStructure(contentStructureId);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<StructuredContent>
+			getContentStructureStructuredContentsPage(
+				@GraphQLName("content-structure-id") Long contentStructureId,
+				@GraphQLName("filter") Filter filter,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("Sort[]") Sort[] sorts)
+		throws Exception {
+
+		StructuredContentResource structuredContentResource =
+			_createStructuredContentResource();
+
+		structuredContentResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+
+		Page paginationPage =
+			structuredContentResource.getContentStructureStructuredContentsPage(
+				contentStructureId, filter, Pagination.of(pageSize, page),
+				sorts);
+
+		return paginationPage.getItems();
 	}
 
 	@GraphQLField

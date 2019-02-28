@@ -21,23 +21,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.web.experience.dto.v1_0.Options;
 import com.liferay.headless.web.experience.dto.v1_0.StructuredContent;
+import com.liferay.headless.web.experience.resource.v1_0.StructuredContentResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.net.URL;
+
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -79,14 +92,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testGetContentSpaceContentStructureStructuredContentsPage()
-		throws Exception {
-
+	public void testGetContentSpaceStructuredContentsPage() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGetContentSpaceStructuredContentsPage() throws Exception {
+	public void testGetContentStructureStructuredContentsPage()
+		throws Exception {
+
 		Assert.assertTrue(true);
 	}
 
@@ -198,6 +211,150 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return false;
 	}
 
+	protected Collection<EntityField> getEntityFields() throws Exception {
+		if (!(_structuredContentResource instanceof EntityModelResource)) {
+			throw new UnsupportedOperationException(
+				"Resource is not an instance of EntityModelResource");
+		}
+
+		EntityModelResource entityModelResource =
+			(EntityModelResource)_structuredContentResource;
+
+		EntityModel entityModel = entityModelResource.getEntityModel(null);
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		return entityFieldsMap.values();
+	}
+
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		Collection<EntityField> entityFields = getEntityFields();
+
+		Stream<EntityField> stream = entityFields.stream();
+
+		return stream.filter(
+			entityField -> Objects.equals(entityField.getType(), type)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	protected String getFilterString(
+		EntityField entityField, String operator,
+		StructuredContent structuredContent) {
+
+		StringBundler sb = new StringBundler();
+
+		String entityFieldName = entityField.getName();
+
+		sb.append(entityFieldName);
+
+		sb.append(" ");
+		sb.append(operator);
+		sb.append(" ");
+
+		if (entityFieldName.equals("aggregateRating")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("availableLanguages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("categories")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("categoryIds")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("contentFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("contentSpace")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("contentStructureId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			sb.append(_dateFormat.format(structuredContent.getDateCreated()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			sb.append(_dateFormat.format(structuredContent.getDateModified()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("datePublished")) {
+			sb.append(_dateFormat.format(structuredContent.getDatePublished()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(structuredContent.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("keywords")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("lastReviewed")) {
+			sb.append(_dateFormat.format(structuredContent.getLastReviewed()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("renderedContentsURL")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("title")) {
+			sb.append("'");
+			sb.append(String.valueOf(structuredContent.getTitle()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid entity field " + entityFieldName);
+	}
+
 	protected boolean invokeDeleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
@@ -235,43 +392,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected Page<StructuredContent>
-			invokeGetContentSpaceContentStructureStructuredContentsPage(
-				Long contentSpaceId, Long contentStructureId,
-				String filterString, Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_getContentSpaceContentStructureStructuredContentsLocation(
-				contentSpaceId, contentStructureId, filterString, pagination,
-				sortString));
-
-		return _outputObjectMapper.readValue(
-			HttpUtil.URLtoString(options),
-			new TypeReference<Page<StructuredContent>>() {
-			});
-	}
-
-	protected Http.Response
-			invokeGetContentSpaceContentStructureStructuredContentsPageResponse(
-				Long contentSpaceId, Long contentStructureId,
-				String filterString, Pagination pagination, String sortString)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		options.setLocation(
-			_getContentSpaceContentStructureStructuredContentsLocation(
-				contentSpaceId, contentStructureId, filterString, pagination,
-				sortString));
-
-		HttpUtil.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	protected Page<StructuredContent>
 			invokeGetContentSpaceStructuredContentsPage(
 				Long contentSpaceId, String filterString, Pagination pagination,
 				String sortString)
@@ -299,6 +419,41 @@ public abstract class BaseStructuredContentResourceTestCase {
 		options.setLocation(
 			_getContentSpaceStructuredContentsLocation(
 				contentSpaceId, filterString, pagination, sortString));
+
+		HttpUtil.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	protected Page<StructuredContent>
+			invokeGetContentStructureStructuredContentsPage(
+				Long contentStructureId, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentStructureStructuredContentsLocation(
+				contentStructureId, filterString, pagination, sortString));
+
+		return _outputObjectMapper.readValue(
+			HttpUtil.URLtoString(options),
+			new TypeReference<Page<StructuredContent>>() {
+			});
+	}
+
+	protected Http.Response
+			invokeGetContentStructureStructuredContentsPageResponse(
+				Long contentStructureId, String filterString,
+				Pagination pagination, String sortString)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setLocation(
+			_getContentStructureStructuredContentsLocation(
+				contentStructureId, filterString, pagination, sortString));
 
 		HttpUtil.URLtoString(options);
 
@@ -568,14 +723,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return options;
 	}
 
-	private String _getContentSpaceContentStructureStructuredContentsLocation(
-		Long contentSpaceId, Long contentStructureId, String filterString,
-		Pagination pagination, String sortString) {
+	private String _getContentSpaceStructuredContentsLocation(
+		Long contentSpaceId, String filterString, Pagination pagination,
+		String sortString) {
 
 		String url =
 			_resourceURL +
 				_toPath(
-					"/content-structures/{content-structure-id}/structured-contents",
+					"/content-spaces/{content-space-id}/structured-contents",
 					contentSpaceId);
 
 		url += "?filter=" + URLCodec.encodeURL(filterString);
@@ -586,15 +741,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return url;
 	}
 
-	private String _getContentSpaceStructuredContentsLocation(
-		Long contentSpaceId, String filterString, Pagination pagination,
+	private String _getContentStructureStructuredContentsLocation(
+		Long contentStructureId, String filterString, Pagination pagination,
 		String sortString) {
 
 		String url =
 			_resourceURL +
 				_toPath(
-					"/content-spaces/{content-space-id}/structured-contents",
-					contentSpaceId);
+					"/content-structures/{content-structure-id}/structured-contents",
+					contentStructureId);
 
 		url += "?filter=" + URLCodec.encodeURL(filterString);
 		url += "&page=" + pagination.getPageNumber();
@@ -615,6 +770,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 	};
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
+	private final DateFormat _dateFormat =
+		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	private URL _resourceURL;
+
+	@Inject
+	private StructuredContentResource _structuredContentResource;
 
 }

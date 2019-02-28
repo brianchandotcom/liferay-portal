@@ -118,7 +118,8 @@ public class ExpandoColumnConstants {
 
 	public static final String PROPERTY_DISPLAY_TYPE_RADIO = "radio";
 
-	public static final String PROPERTY_DISPLAY_TYPE_SELECTION_LIST = "selection-list";
+	public static final String PROPERTY_DISPLAY_TYPE_SELECTION_LIST =
+		"selection-list";
 
 	public static final String PROPERTY_DISPLAY_TYPE_TEXT_BOX = "text-box";
 

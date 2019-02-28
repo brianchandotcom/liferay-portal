@@ -10,8 +10,6 @@ definition {
 			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
 			value1 = "Basic Web Content"
 		);
-
-		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
 	}
 
 	macro addArticleCP {
@@ -421,8 +419,6 @@ definition {
 		);
 
 		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
 
 		Panel.expandPanel(panel = "Structure and Template");
 
@@ -864,10 +860,6 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		if (IsElementPresent(locator1 = "IFrame#EDIT_ASSET")) {
-			SelectFrame(locator1 = "IFrame#EDIT_ASSET");
-		}
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECTION",
 			value1 = "${pageName}"
@@ -1275,10 +1267,6 @@ definition {
 		);
 
 		IFrame.selectTopFrame();
-
-		if (IsElementPresent(locator1 = "IFrame#EDIT_ASSET")) {
-			IFrame.selectEditAssetFrame();
-		}
 
 		Panel.expandPanel(panel = "Structure and Template");
 

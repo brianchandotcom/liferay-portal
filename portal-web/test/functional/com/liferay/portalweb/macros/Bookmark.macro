@@ -21,8 +21,6 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
-
 		PortletEntry.inputName(name = "${bookmarkName}");
 
 		Type(locator1 = "TextInput#URL", value1 = "${bookmarkURL}");

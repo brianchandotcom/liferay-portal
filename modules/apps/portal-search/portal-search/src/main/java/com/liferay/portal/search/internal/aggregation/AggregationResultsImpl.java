@@ -40,6 +40,7 @@ import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregationResul
 import com.liferay.portal.search.aggregation.metrics.MaxAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.MinAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.PercentilesAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
@@ -85,6 +86,7 @@ import com.liferay.portal.search.internal.aggregation.metrics.GeoCentroidAggrega
 import com.liferay.portal.search.internal.aggregation.metrics.MaxAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MinAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.PercentileRanksAggregationResultImpl;
+import com.liferay.portal.search.internal.aggregation.metrics.PercentilesAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ScriptedMetricAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.StatsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationResultImpl;
@@ -279,8 +281,8 @@ public class AggregationResultsImpl implements AggregationResults {
 	}
 
 	@Override
-	public PercentilesBucketPipelineAggregationResult percentiles(String name) {
-		return new PercentilesBucketPipelineAggregationResultImpl(name);
+	public PercentilesAggregationResult percentiles(String name) {
+		return new PercentilesAggregationResultImpl(name);
 	}
 
 	@Override

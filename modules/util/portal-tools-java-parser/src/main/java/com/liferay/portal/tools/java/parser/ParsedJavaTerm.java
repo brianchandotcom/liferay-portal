@@ -412,6 +412,15 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	private int _getOpenCurlyBraceFollowingLineAction(String className) {
 		if (className.equals(JavaLambdaExpression.class.getName())) {
+			if (_content.endsWith(") -> {")) {
+				String lastLine = StringUtil.trim(
+					JavaParserUtil.getLastLine(_content));
+
+				if (!lastLine.contains(StringPool.OPEN_PARENTHESIS)) {
+					return DOUBLE_LINE_BREAK_REQUIRED;
+				}
+			}
+
 			return SINGLE_LINE_BREAK_REQUIRED;
 		}
 

@@ -663,14 +663,21 @@ public class JavaParser {
 				parentDetailAST = parentDetailAST.getParent();
 
 				if (parentDetailAST.getType() == TokenTypes.LAMBDA) {
-					String expectedIndent = _getExpectedIndent(
-						parentDetailAST, fileContents);
+					int lambdaLineNumber = parentDetailAST.getLineNo();
+
+					DetailAST firstChildDetailAST =
+						parentDetailAST.getFirstChild();
+
+					if (firstChildDetailAST.getType() == TokenTypes.LPAREN) {
+						lambdaLineNumber = firstChildDetailAST.getLineNo();
+					}
 
 					String actualIndent = StringUtil.removeChar(
-						_getIndent(
-							fileContents.getLine(
-								parentDetailAST.getLineNo() - 1)),
+						_getIndent(fileContents.getLine(lambdaLineNumber - 1)),
 						CharPool.SPACE);
+
+					String expectedIndent = _getExpectedIndent(
+						parentDetailAST, fileContents);
 
 					if (actualIndent.startsWith(expectedIndent)) {
 						indent += StringUtil.replaceFirst(

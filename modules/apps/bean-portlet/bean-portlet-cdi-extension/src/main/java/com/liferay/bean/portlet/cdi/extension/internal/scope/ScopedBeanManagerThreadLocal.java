@@ -72,11 +72,7 @@ public class ScopedBeanManagerThreadLocal {
 
 		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
 
-		boolean empty = scopedBeanManagers.isEmpty();
-
-		if (empty) {
-			scopedBeanManagers.push(supplier.get());
-		}
+		scopedBeanManagers.push(supplier.get());
 
 		try {
 			unsafeRunnable.run();

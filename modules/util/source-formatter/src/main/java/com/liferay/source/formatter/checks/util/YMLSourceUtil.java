@@ -35,24 +35,25 @@ public class YMLSourceUtil {
 		StringBundler sb = new StringBundler();
 
 		for (String line : lines) {
-			if (!line.startsWith(indent) || Validator.isNull(line)) {
+			if (Validator.isNull(line) || !line.startsWith(indent)) {
 				continue;
 			}
 
 			String s = line.substring(indent.length(), indent.length() + 1);
 
-			if (!s.equals(StringPool.SPACE)) {
-				if (sb.length() != 0) {
-					definitions.add(sb.toString());
-					sb.setIndex(0);
-				}
+			if (!s.equals(StringPool.SPACE) && (sb.length() != 0)) {
+				definitions.add(sb.toString());
+
+				sb.setIndex(0);
 			}
 
 			sb.append(line);
 			sb.append("\n");
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		definitions.add(sb.toString());
 

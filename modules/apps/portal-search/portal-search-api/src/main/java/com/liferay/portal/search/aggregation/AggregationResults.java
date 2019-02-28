@@ -39,6 +39,7 @@ import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregationResul
 import com.liferay.portal.search.aggregation.metrics.MaxAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.MinAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.PercentilesAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
@@ -133,7 +134,7 @@ public interface AggregationResults {
 
 	public PercentileRanksAggregationResult percentileRanks(String name);
 
-	public PercentilesBucketPipelineAggregationResult percentiles(String name);
+	public PercentilesAggregationResult percentiles(String name);
 
 	public PercentilesBucketPipelineAggregationResult percentilesBucket(
 		String name);

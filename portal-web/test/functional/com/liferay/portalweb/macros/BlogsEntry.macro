@@ -426,8 +426,6 @@ definition {
 			item = "Move to Recycle Bin"
 		);
 
-		Confirm();
-
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");

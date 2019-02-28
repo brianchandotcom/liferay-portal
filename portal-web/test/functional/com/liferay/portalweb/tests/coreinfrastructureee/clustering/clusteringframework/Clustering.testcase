@@ -28,7 +28,7 @@ definition {
 
 	@priority = "5"
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
-		property test.name.skip.portal.instance = "ClusteringEE#AddAndDeleteBlogEntriesOnSeparateNodes";
+		property test.name.skip.portal.instance = "Clustering#AddAndDeleteBlogEntriesOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -169,7 +169,7 @@ definition {
 
 	@priority = "5"
 	test ShutdownAndStartupNodes {
-		property test.name.skip.portal.instance = "ClusteringEE#ShutdownAndStartupNodes";
+		property test.name.skip.portal.instance = "Clustering#ShutdownAndStartupNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -230,7 +230,7 @@ definition {
 
 	@priority = "4"
 	test ValidateDocumentOnSeparateNodes {
-		property test.name.skip.portal.instance = "ClusteringEE#ValidateDocumentOnSeparateNodes";
+		property test.name.skip.portal.instance = "Clustering#ValidateDocumentOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -288,7 +288,7 @@ definition {
 	@priority = "5"
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true"
-		property test.name.skip.portal.instance = "ClusteringCE#ValidateLiveUsers";
+		property test.name.skip.portal.instance = "Clustering#ValidateLiveUsers";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -381,7 +381,7 @@ definition {
 
 	@priority = "4"
 	test ValidateSchedulerOnSeparateNodes {
-		property test.name.skip.portal.instance = "ClusteringEE#ValidateSchedulerOnSeparateNodes";
+		property test.name.skip.portal.instance = "Clustering#ValidateSchedulerOnSeparateNodes";
 
 		var siteName = TestCase.getSiteName();
 

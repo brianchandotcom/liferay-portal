@@ -49,6 +49,7 @@ public class CumulativeSumPipelineAggregationImpl
 		return _format;
 	}
 
+	@Override
 	public void setFormat(String format) {
 		_format = format;
 	}

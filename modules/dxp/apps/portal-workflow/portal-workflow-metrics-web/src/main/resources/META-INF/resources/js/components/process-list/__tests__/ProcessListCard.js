@@ -97,15 +97,15 @@ test('Should render component with 4 records', () => {
 	expect(tree).toMatchSnapshot();
 });
 
-test('Should change entry', () => {
+test('Should change page size', () => {
 	const data = {items: [], totalCount: 0};
 	const component = shallow(
 		<ProcessListCard client={fetch(data)} companyId={1} />
 	);
 	const instance = component.instance();
 
-	instance.setEntry(20);
-	expect(component.state('selectedEntry')).toBe(20);
+	instance.setPageSize(20);
+	expect(component.state('pageSize')).toBe(20);
 });
 
 test('Should change page', () => {
@@ -115,9 +115,7 @@ test('Should change page', () => {
 	);
 	const instance = component.instance();
 
-	instance
-		.setPage({size: 10, start: 2})
-		.then(() => expect(component.state('start')).toBe(2));
+	instance.setPage(10).then(() => expect(component.state('start')).toBe(2));
 });
 
 test('Should search', () => {
@@ -128,5 +126,5 @@ test('Should search', () => {
 	const instance = component.instance();
 
 	instance.onSearch('test');
-	expect(component.state('total')).toBe(0);
+	expect(component.state('totalCount')).toBe(0);
 });

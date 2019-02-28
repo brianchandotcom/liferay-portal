@@ -3,14 +3,10 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 test('Should render component', () => {
-	const pageClickHandler = () => page => page;
+	const onSelectPage = () => page => page;
 
 	const component = renderer.create(
-		<Pagination
-			entry="1"
-			pageClickHandler={pageClickHandler()}
-			totalCount="10"
-		/>
+		<Pagination onSelectPage={onSelectPage()} pageSize={1} totalCount={10} />
 	);
 
 	const tree = component.toJSON();
@@ -19,14 +15,10 @@ test('Should render component', () => {
 });
 
 test('Should change page', () => {
-	const pageClickHandler = () => page => page;
+	const onSelectPage = () => page => page;
 
 	const component = shallow(
-		<Pagination
-			entry="1"
-			pageClickHandler={pageClickHandler()}
-			totalCount="10"
-		/>
+		<Pagination onSelectPage={onSelectPage()} pageSize={1} totalCount={10} />
 	);
 
 	const instance = component.instance();

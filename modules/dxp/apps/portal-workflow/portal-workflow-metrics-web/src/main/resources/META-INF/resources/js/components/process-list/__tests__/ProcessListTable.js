@@ -10,7 +10,7 @@ test('Should render component', () => {
 		}
 	];
 
-	const component = renderer.create(<ProcessListTable processes={data} />);
+	const component = renderer.create(<ProcessListTable items={data} />);
 
 	const tree = component.toJSON();
 

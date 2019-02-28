@@ -3,7 +3,15 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 test('Should render component as type default', () => {
-	const component = renderer.create(<PageItem page="1" />);
+	const component = renderer.create(<PageItem page={1} />);
+
+	const tree = component.toJSON();
+
+	expect(tree).toMatchSnapshot();
+});
+
+test('Should render component as active', () => {
+	const component = renderer.create(<PageItem active page={1} />);
 
 	const tree = component.toJSON();
 
@@ -11,7 +19,7 @@ test('Should render component as type default', () => {
 });
 
 test('Should render component as type Next', () => {
-	const component = renderer.create(<PageItem page="1" type="next" />);
+	const component = renderer.create(<PageItem page={1} type="next" />);
 
 	const tree = component.toJSON();
 
@@ -19,7 +27,7 @@ test('Should render component as type Next', () => {
 });
 
 test('Should render component as type Previous', () => {
-	const component = renderer.create(<PageItem page="1" type="prev" />);
+	const component = renderer.create(<PageItem page={1} type="prev" />);
 
 	const tree = component.toJSON();
 

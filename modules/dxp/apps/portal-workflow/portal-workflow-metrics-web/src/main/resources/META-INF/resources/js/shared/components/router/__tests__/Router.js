@@ -22,13 +22,14 @@ test('Should test component render', () => {
 	const instance = component.instance();
 
 	instance.componentDidMount();
-	instance.componentWillUnmount();
 
 	const link = shallow(
 		<Link className="test" text="test" to="test" type="button" />
 	);
 
 	link.find('a').simulate('click');
+
+	instance.componentWillUnmount();
 
 	expect(component).toMatchSnapshot();
 });
@@ -55,7 +56,6 @@ test('Should test navigate', () => {
 	const instance = component.instance();
 
 	instance.componentDidMount();
-	instance.componentWillUnmount();
 
 	const link = shallow(
 		<Link
@@ -94,7 +94,6 @@ test('Should test navigate with title', () => {
 	const instance = component.instance();
 
 	instance.componentDidMount();
-	instance.componentWillUnmount();
 
 	const link = shallow(
 		<Link
@@ -133,7 +132,6 @@ test('Should test returning navigate', () => {
 	const instance = component.instance();
 
 	instance.componentDidMount();
-	instance.componentWillUnmount();
 
 	const link = shallow(
 		<Link
@@ -170,7 +168,7 @@ test('Should test returning navigate by click', () => {
 			title: 'test-1'
 		},
 		{
-			component: () => <div>{'test-1'}</div>,
+			component: () => <div>{'test-2'}</div>,
 			path: 'test-2',
 			title: 'test-2'
 		}
@@ -179,7 +177,8 @@ test('Should test returning navigate by click', () => {
 	const instance = component.instance();
 
 	instance.componentDidMount();
-	instance.componentWillUnmount();
+
+	instance.onPageChanged();
 
 	const link = shallow(
 		<Link
@@ -194,11 +193,39 @@ test('Should test returning navigate by click', () => {
 
 	link.find('a').simulate('click');
 
-	const linkReturn = document.body.getElementsByClassName(
-		'metric-control-menu-heading'
-	)[0];
-
-	linkReturn.dispatchEvent(new Event('click'));
-
 	expect(component).toMatchSnapshot();
+});
+
+test('Should test query when clicked', () => {
+	const paths = [
+		{
+			component: () => <div>{'test-1'}</div>,
+			path: 'test-1',
+			title: 'test-1'
+		},
+		{
+			component: () => <div>{'test-1'}</div>,
+			path: 'test-2',
+			title: 'test-2'
+		}
+	];
+	const component = shallow(<Router defautPath="test-1" paths={paths} />);
+	const instance = component.instance();
+
+	instance.componentDidMount();
+
+	const link = shallow(
+		<Link
+			className="test2"
+			query={{title: 'test-2', ztext: 'basic'}}
+			text="test2"
+			title="test-2"
+			to="test-2"
+			type="button"
+		/>
+	);
+
+	link.find('a').simulate('click');
+	instance.onPageChanged();
+	expect(instance.getQuery()).toEqual({});
 });

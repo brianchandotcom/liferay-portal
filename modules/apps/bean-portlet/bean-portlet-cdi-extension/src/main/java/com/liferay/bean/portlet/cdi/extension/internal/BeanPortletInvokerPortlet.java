@@ -214,20 +214,48 @@ public class BeanPortletInvokerPortlet
 				include = methodType.getInclude(method);
 			}
 		}
-		else if ((methodType == MethodType.SERVE_RESOURCE) &&
-				 (method.getParameterCount() == 0)) {
+		else if (methodType == MethodType.SERVE_RESOURCE) {
+			ResourceRequest resourceRequest = (ResourceRequest)args[0];
 
-			String markup = (String)beanMethod.invoke();
+			String resourceID = resourceRequest.getResourceID();
 
-			if (markup != null) {
+			String beanMethodResourceID = beanMethod.getResourceID();
+
+			if (Validator.isNull(beanMethodResourceID) ||
+				beanMethodResourceID.equals(resourceID)) {
+
 				ResourceResponse resourceResponse = (ResourceResponse)args[1];
 
-				PrintWriter writer = resourceResponse.getWriter();
+				String contentType = methodType.getContentType(method);
 
-				writer.write(markup);
+				if (Validator.isNotNull(contentType) &&
+					!Objects.equals(contentType, "*/*")) {
+
+					resourceResponse.setContentType(contentType);
+				}
+
+				String characterEncoding = methodType.getCharacterEncoding(
+					method);
+
+				if (Validator.isNotNull(characterEncoding)) {
+					resourceResponse.setCharacterEncoding(characterEncoding);
+				}
+
+				if (method.getParameterCount() == 0) {
+					String markup = (String)beanMethod.invoke();
+
+					if (Validator.isNotNull(markup)) {
+						PrintWriter writer = resourceResponse.getWriter();
+
+						writer.write(markup);
+					}
+				}
+				else {
+					beanMethod.invoke(args);
+				}
+
+				include = methodType.getInclude(method);
 			}
-
-			include = methodType.getInclude(method);
 		}
 		else {
 			beanMethod.invoke(args);

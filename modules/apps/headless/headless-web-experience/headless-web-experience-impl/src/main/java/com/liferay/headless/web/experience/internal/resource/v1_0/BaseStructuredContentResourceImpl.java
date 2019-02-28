@@ -71,15 +71,13 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@GET
 	@Override
-	@Path("/content-structures/{content-structure-id}/structured-contents")
+	@Path("/content-spaces/{content-space-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<StructuredContent>
-			getContentSpaceContentStructureStructuredContentsPage(
-				@PathParam("content-space-id") Long contentSpaceId,
-				@PathParam("content-structure-id") Long contentStructureId,
-				@Context Filter filter, @Context Pagination pagination,
-				@Context Sort[] sorts)
+	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
+			@PathParam("content-space-id") Long contentSpaceId,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -87,11 +85,11 @@ public abstract class BaseStructuredContentResourceImpl
 
 	@GET
 	@Override
-	@Path("/content-spaces/{content-space-id}/structured-contents")
+	@Path("/content-structures/{content-structure-id}/structured-contents")
 	@Produces("application/json")
 	@RequiresScope("everything.read")
-	public Page<StructuredContent> getContentSpaceStructuredContentsPage(
-			@PathParam("content-space-id") Long contentSpaceId,
+	public Page<StructuredContent> getContentStructureStructuredContentsPage(
+			@PathParam("content-structure-id") Long contentStructureId,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
 		throws Exception {

@@ -18,10 +18,6 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
-import com.liferay.exportimport.changeset.Changeset;
-import com.liferay.exportimport.changeset.ChangesetManager;
-import com.liferay.exportimport.changeset.ChangesetManagerUtil;
-import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -34,7 +30,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -52,7 +47,6 @@ import java.util.function.Consumer;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -237,41 +231,18 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	private Consumer<DropdownItem> _getPublishToLiveEntryActionConsumer() {
-		StagedModelDataHandler<?> stagedModelDataHandler =
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				BlogsEntry.class.getName());
+		PortletURL publishEntryURL = _renderResponse.createActionURL();
 
-		Changeset.RawBuilder rawBuilder = Changeset.createRaw();
+		publishEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/publish_entry");
 
-		Changeset changeset = rawBuilder.addStagedModel(
-			stagedModelDataHandler.fetchStagedModelByUuidAndGroupId(
-				_blogsEntry.getUuid(), _blogsEntry.getGroupId())
-		).build();
-
-		ChangesetManager changesetManager =
-			ChangesetManagerUtil.getChangesetManager();
-
-		changesetManager.addChangeset(changeset);
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_request, ChangesetPortletKeys.CHANGESET,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "exportImportChangeset");
-		portletURL.setParameter(
-			"mvcRenderCommandName", "exportImportChangeset");
-		portletURL.setParameter("cmd", Constants.PUBLISH);
-		portletURL.setParameter(
-			"backURL", PortalUtil.getCurrentCompleteURL(_request));
-		portletURL.setParameter(
-			"groupId", String.valueOf(_blogsEntry.getGroupId()));
-		portletURL.setParameter("changesetUuid", changeset.getUuid());
-		portletURL.setParameter("portletId", BlogsPortletKeys.BLOGS_ADMIN);
+		publishEntryURL.setParameter("backURL", _getRedirectURL());
+		publishEntryURL.setParameter(
+			"entryId", String.valueOf(_blogsEntry.getEntryId()));
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "publishToLive");
-			dropdownItem.putData("permissionsURL", portletURL.toString());
+			dropdownItem.putData("publishEntryURL", publishEntryURL.toString());
 			dropdownItem.setLabel("publish-to-live");
 		};
 	}

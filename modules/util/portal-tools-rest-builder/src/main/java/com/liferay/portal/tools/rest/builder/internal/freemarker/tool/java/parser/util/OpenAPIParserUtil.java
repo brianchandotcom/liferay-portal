@@ -112,6 +112,12 @@ public class OpenAPIParserUtil {
 					javaDataType = javaDataTypeMap.get(
 						StringUtil.upperCaseFirstLetter(itemsType));
 				}
+
+				if ((javaDataType == null) &&
+					Objects.equals(itemsType, "object")) {
+
+					javaDataType = Object.class.getName();
+				}
 			}
 
 			if (items.getReference() != null) {
@@ -132,6 +138,10 @@ public class OpenAPIParserUtil {
 					StringUtil.upperCaseFirstLetter(type));
 			}
 
+			if ((javaDataType == null) && Objects.equals(type, "object")) {
+				javaDataType = Object.class.getName();
+			}
+
 			return javaDataType;
 		}
 
@@ -148,7 +158,7 @@ public class OpenAPIParserUtil {
 		if ((schema.getAnyOfSchemas() != null) ||
 			(schema.getOneOfSchemas() != null)) {
 
-			return "Object";
+			return Object.class.getName();
 		}
 
 		return javaDataTypeMap.get(getComponentType(schema.getReference()));

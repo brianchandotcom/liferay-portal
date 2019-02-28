@@ -453,12 +453,6 @@ paths:
           schema:
             type: integer
         - in: path
-          name: content-space-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: path
           name: content-structure-id
           required: true
           schema:

@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
@@ -35,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
@@ -113,21 +111,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			}
 
 			List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
-				null;
-
-			if (_isOwnerOrAdmin(
-					themeDisplay.getPermissionChecker(), classNameId,
-					classPK)) {
-
-				sharingEntryToUserOVPs = _getSharingEntryUserObjectValuePairs(
-					_sharingEntryLocalService.getSharingEntries(
+				_getSharingEntryUserObjectValuePairs(
+					_sharingEntryService.getSharingEntries(
 						classNameId, classPK));
-			}
-			else {
-				sharingEntryToUserOVPs = _getSharingEntryUserObjectValuePairs(
-					_sharingEntryLocalService.getFromUserSharingEntries(
-						themeDisplay.getUserId(), classNameId, classPK));
-			}
 
 			JSONArray collaboratorsJSONArray =
 				JSONFactoryUtil.createJSONArray();
@@ -281,34 +267,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
 	}
 
-	private boolean _isOwnerOrAdmin(
-		PermissionChecker permissionChecker, long classNameId, long classPK) {
-
-		if (permissionChecker.isOmniadmin() ||
-			permissionChecker.isCompanyAdmin()) {
-
-			return true;
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
-
-		if (assetEntry == null) {
-			return false;
-		}
-
-		if (permissionChecker.isGroupAdmin(assetEntry.getGroupId()) ||
-			permissionChecker.hasOwnerPermission(
-				assetEntry.getCompanyId(), assetEntry.getClassName(),
-				assetEntry.getClassPK(), assetEntry.getUserId(),
-				ActionKeys.VIEW)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -320,6 +278,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private SharingEntryService _sharingEntryService;
 
 	@Reference
 	private SharingUtil _sharingUtil;

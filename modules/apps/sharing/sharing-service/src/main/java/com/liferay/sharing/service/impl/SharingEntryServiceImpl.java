@@ -14,9 +14,13 @@
 
 package com.liferay.sharing.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sharing.model.SharingEntry;
@@ -26,6 +30,7 @@ import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the remote service for adding and updating sharing entries. This
@@ -129,6 +134,28 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 	}
 
+	@Override
+	public List<SharingEntry> getSharingEntries(long classNameId, long classPK)
+		throws PortalException {
+
+		return sharingEntryService.getSharingEntries(
+			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<SharingEntry> getSharingEntries(
+			long classNameId, long classPK, int start, int end)
+		throws PortalException {
+
+		if (_isOwnerOrAdmin(classNameId, classPK)) {
+			return sharingEntryLocalService.getSharingEntries(
+				classNameId, classPK);
+		}
+
+		return sharingEntryLocalService.getFromUserSharingEntries(
+			getUserId(), classNameId, classPK, start, end);
+	}
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *
@@ -165,7 +192,40 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	@ServiceReference(type = AssetEntryLocalService.class)
+	protected AssetEntryLocalService assetEntryLocalService;
+
 	@ServiceReference(type = SharingPermission.class)
 	protected SharingPermission sharingPermission;
+
+	private boolean _isOwnerOrAdmin(long classNameId, long classPK)
+		throws PrincipalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.isOmniadmin() ||
+			permissionChecker.isCompanyAdmin()) {
+
+			return true;
+		}
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return false;
+		}
+
+		if (permissionChecker.isGroupAdmin(assetEntry.getGroupId()) ||
+			permissionChecker.hasOwnerPermission(
+				assetEntry.getCompanyId(), assetEntry.getClassName(),
+				assetEntry.getClassPK(), assetEntry.getUserId(),
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 }

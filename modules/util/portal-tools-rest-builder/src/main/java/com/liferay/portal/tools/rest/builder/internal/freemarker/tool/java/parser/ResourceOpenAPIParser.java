@@ -278,18 +278,6 @@ public class ResourceOpenAPIParser {
 		return javaMethodParameters;
 	}
 
-	private static List<String> _getMediaTypes(Map<String, Content> contents) {
-		if ((contents == null) || contents.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<String> mediaTypes = new ArrayList<>(contents.keySet());
-
-		Collections.sort(mediaTypes);
-
-		return mediaTypes;
-	}
-
 	private static String _getMethodAnnotationConsumes(Operation operation) {
 		RequestBody requestBody = operation.getRequestBody();
 
@@ -299,11 +287,17 @@ public class ResourceOpenAPIParser {
 
 		Map<String, Content> contents = requestBody.getContent();
 
-		List<String> mediaTypes = _getMediaTypes(contents);
+		if ((contents == null) || contents.isEmpty()) {
+			return null;
+		}
+
+		List<String> mediaTypes = new ArrayList<>(contents.keySet());
 
 		if (mediaTypes.isEmpty()) {
 			return null;
 		}
+
+		Collections.sort(mediaTypes);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -332,12 +326,22 @@ public class ResourceOpenAPIParser {
 		List<String> mediaTypes = new ArrayList<>();
 
 		for (Response response : responses.values()) {
-			mediaTypes.addAll(_getMediaTypes(response.getContent()));
+			Map<String, Content> contents = response.getContent();
+
+			if ((contents == null) || contents.isEmpty()) {
+				continue;
+			}
+
+			List<String> curMediaTypes = new ArrayList<>(contents.keySet());
+
+			mediaTypes.addAll(curMediaTypes);
 		}
 
 		if (mediaTypes.isEmpty()) {
 			return null;
 		}
+
+		Collections.sort(mediaTypes);
 
 		StringBuilder sb = new StringBuilder();
 

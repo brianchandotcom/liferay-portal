@@ -35,7 +35,7 @@ public class Page<T> {
 	}
 
 	public static <T> Page<T> of(
-		Collection<T> items, Pagination pagination, int totalCount) {
+		Collection<T> items, Pagination pagination, long totalCount) {
 
 		return new Page<>(items, pagination, totalCount);
 	}
@@ -47,11 +47,11 @@ public class Page<T> {
 	}
 
 	@JsonProperty("pageSize")
-	public int getItemsPerPage() {
+	public long getItemsPerPage() {
 		return _itemsPerPage;
 	}
 
-	public int getLastPageNumber() {
+	public long getLastPageNumber() {
 		if (_totalCount == 0) {
 			return 1;
 		}
@@ -60,11 +60,11 @@ public class Page<T> {
 	}
 
 	@JsonProperty("page")
-	public int getPageNumber() {
+	public long getPageNumber() {
 		return _pageNumber;
 	}
 
-	public int getTotalCount() {
+	public long getTotalCount() {
 		return _totalCount;
 	}
 
@@ -92,7 +92,7 @@ public class Page<T> {
 		_totalCount = _itemsPerPage;
 	}
 
-	private Page(Collection<T> items, Pagination pagination, int totalCount) {
+	private Page(Collection<T> items, Pagination pagination, long totalCount) {
 		_items = items;
 		_itemsPerPage = pagination.getItemsPerPage();
 		_pageNumber = pagination.getPageNumber();
@@ -100,8 +100,8 @@ public class Page<T> {
 	}
 
 	private final Collection<T> _items;
-	private final int _itemsPerPage;
-	private final int _pageNumber;
-	private final int _totalCount;
+	private final long _itemsPerPage;
+	private final long _pageNumber;
+	private final long _totalCount;
 
 }

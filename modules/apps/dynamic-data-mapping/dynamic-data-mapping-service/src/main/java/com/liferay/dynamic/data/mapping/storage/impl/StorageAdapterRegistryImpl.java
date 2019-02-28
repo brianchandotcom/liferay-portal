@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.storage.impl;
 
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
 
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +35,7 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 
 	@Override
 	public StorageAdapter getDefaultStorageAdapter() {
-		return _storageAdaptersMap.get(StorageType.JSON.getValue());
+		return _defaultStorageAdapter;
 	}
 
 	@Override
@@ -63,6 +62,11 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 	public void unsetStorageAdapter(StorageAdapter storageAdapter) {
 		_storageAdaptersMap.remove(storageAdapter);
 	}
+
+	@Reference(
+		target = "(component.name=com.liferay.dynamic.data.mapping.storage.impl.JSONStorageAdapter)"
+	)
+	private StorageAdapter _defaultStorageAdapter;
 
 	private final Map<String, StorageAdapter> _storageAdaptersMap =
 		new ConcurrentHashMap<>();

@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,6 +72,12 @@ public abstract class BaseVocabularyResourceTestCase {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -564,8 +571,8 @@ public abstract class BaseVocabularyResourceTestCase {
 	};
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
-	private final DateFormat _dateFormat =
-		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	private static DateFormat _dateFormat;
+
 	private URL _resourceURL;
 
 	@Inject

@@ -133,7 +133,7 @@ public class ResourceOpenAPIParser {
 			methodAnnotations.add(methodAnnotation);
 		}
 
-		return OpenAPIParserUtil.merge(methodAnnotations, '\n');
+		return StringUtil.merge(methodAnnotations, "\n");
 	}
 
 	public static String getParameters(

@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
@@ -74,7 +75,7 @@ public class GraphQLOpenAPIParser {
 			methodAnnotations.add("@GraphQLField");
 		}
 
-		return OpenAPIParserUtil.merge(methodAnnotations, '\n');
+		return StringUtil.merge(methodAnnotations, "\n");
 	}
 
 	public static String getParameters(

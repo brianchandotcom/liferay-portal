@@ -26,7 +26,6 @@ import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.AbstractMap;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -259,21 +258,6 @@ public class OpenAPIParserUtil {
 		}
 
 		return false;
-	}
-
-	public static String merge(Collection<String> c, Character delimiter) {
-		StringBuilder sb = new StringBuilder();
-
-		for (String s : c) {
-			sb.append(s);
-			sb.append(delimiter);
-		}
-
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
-
-		return sb.toString();
 	}
 
 	private static final Map<Map.Entry<String, String>, String>

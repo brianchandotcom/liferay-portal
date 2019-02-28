@@ -1,47 +1,47 @@
 components:
-  schemas:
-    Folder:
-      description: "https://www.schema.org/Folder"
-      properties:
-        dateCreated:
-          format: date-time
-          type: string
-        dateModified:
-          format: date-time
-          type: string
-        description:
-          type: string
-        documentsRepository:
-          $ref: "#/components/schemas/Folder"
-        id:
-          format: int64
-          type: integer
-        name:
-          type: string
-        self:
-          type: string
-        subFolders:
-          $ref: "#/components/schemas/Folder"
-      type: object
+    schemas:
+        Folder:
+            description: "https://www.schema.org/Folder"
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                documentsRepository:
+                    $ref: "#/components/schemas/Folder"
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                self:
+                    type: string
+                subFolders:
+                    $ref: "#/components/schemas/Folder"
+            type: object
 info:
-  description: ""
-  title: ""
-  version: "1.0.0"
+    description: ""
+    title: ""
+    version: "1.0.0"
 openapi: "3.0.1"
 paths:
-  "/folder/{id}":
-    get:
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            "*/*":
-              schema:
-                $ref: "#/components/schemas/Folder"
-          description: ""
+    "/folder/{id}":
+        get:
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        "*/*":
+                            schema:
+                                $ref: "#/components/schemas/Folder"
+                    description: ""

@@ -532,7 +532,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		AssertLocation(value1 = "http://${portalURL}/web/site-name/page2-name");
+		AssertLocation(value1 = "${portalURL}/web/site-name/page2-name");
 	}
 
 	@priority = "3"

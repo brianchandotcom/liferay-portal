@@ -28,6 +28,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FieldsQueryPara
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.UserContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
@@ -97,6 +98,7 @@ public class VulcanFeature implements Feature {
 			new SortContextProvider(
 				_entityModelResourceRegistry, _language, _portal,
 				_sortParserProvider));
+		featureContext.register(new UserContextProvider(_portal));
 
 		return false;
 	}

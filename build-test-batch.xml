@@ -6218,7 +6218,7 @@ information. Make sure to commit in all build services results.
 					<then>
 						<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
-						<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test"/>
+						<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test" />
 					</then>
 					<else>
 						<antcall inheritAll="false" target="record-test-class-file-names">

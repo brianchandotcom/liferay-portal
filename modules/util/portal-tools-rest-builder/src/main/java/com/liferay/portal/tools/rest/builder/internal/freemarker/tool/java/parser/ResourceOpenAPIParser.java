@@ -509,7 +509,7 @@ public class ResourceOpenAPIParser {
 		Map<String, Response> responses = operation.getResponses();
 
 		if (responses.isEmpty()) {
-			return Boolean.class.getName();
+			return boolean.class.getName();
 		}
 
 		for (Response response : responses.values()) {
@@ -557,7 +557,7 @@ public class ResourceOpenAPIParser {
 			return String.class.getName();
 		}
 
-		return Boolean.class.getName();
+		return boolean.class.getName();
 	}
 
 	private static boolean _isSchemaMethod(

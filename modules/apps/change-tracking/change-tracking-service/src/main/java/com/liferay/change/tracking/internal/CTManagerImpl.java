@@ -80,14 +80,13 @@ public class CTManagerImpl implements CTManager {
 		);
 
 		try {
-			CTEntryAggregate ctEntryctEntryAggregate =
-				TransactionInvokerUtil.invoke(
-					_transactionConfig,
-					() -> _addCTEntryAggregate(
-						userId, activeCTCollectionId, ownerCTEntry,
-						relatedCTEntry, force));
+			CTEntryAggregate ctEntryAggregate = TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> _addCTEntryAggregate(
+					userId, activeCTCollectionId, ownerCTEntry, relatedCTEntry,
+					force));
 
-			return Optional.of(ctEntryctEntryAggregate);
+			return Optional.of(ctEntryAggregate);
 		}
 		catch (Throwable t) {
 			_log.error("Unable to create change tracking entry aggregate", t);

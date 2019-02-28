@@ -179,6 +179,32 @@ AUI.add(
 						}
 					},
 
+					showFolderDialog(itemsSelected) {
+						var instance = this;
+
+						var dialogTitle = Lang.sub(
+							Liferay.Language.get('select-destination-folder-for-x-items'),
+							[itemsSelected]
+						);
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true,
+									width: 680
+								},
+								id: instance.NS + 'selectFolder',
+								title: dialogTitle,
+								uri: instance.get('selectFolderURL')
+							},
+							function(event) {
+								instance._processMoveAction(event.folderid);
+							}
+						);
+					},
+
 					_handleSearchContainerRowToggled: function(event) {
 						var instance = this;
 
@@ -260,27 +286,7 @@ AUI.add(
 							selectedItems = instance._searchContainer.select.getAllSelectedElements().filter(':enabled').size();
 						}
 
-						var dialogTitle = Lang.sub(
-							Liferay.Language.get('select-destination-folder-for-x-items'),
-							[selectedItems]
-						);
-
-						Liferay.Util.selectEntity(
-							{
-								dialog: {
-									constrain: true,
-									destroyOnHide: true,
-									modal: true,
-									width: 680
-								},
-								id: instance.NS + 'selectFolder',
-								title: dialogTitle,
-								uri: instance.get('selectFolderURL')
-							},
-							function(event) {
-								instance._processMoveAction(event.folderid);
-							}
-						);
+						this.showFolderDialog(selectedItems);
 					},
 
 					_openModalTags: function() {

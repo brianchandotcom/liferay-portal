@@ -79,18 +79,22 @@ public class AssetBrowserDisplayContext {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
+			long classNameId = 0L;
+
+			if (assetRendererFactory != null) {
+				classNameId = assetRendererFactory.getClassNameId();
+			}
+
 			int total = AssetEntryLocalServiceUtil.getEntriesCount(
-				_getFilterGroupIds(),
-				new long[] {assetRendererFactory.getClassNameId()},
-				_getKeywords(), _getKeywords(), _getKeywords(), _getKeywords(),
-				_getListable(), false, false);
+				_getFilterGroupIds(), new long[] {classNameId}, _getKeywords(),
+				_getKeywords(), _getKeywords(), _getKeywords(), _getListable(),
+				false, false);
 
 			assetBrowserSearch.setTotal(total);
 
 			List<AssetEntry> assetEntries =
 				AssetEntryLocalServiceUtil.getEntries(
-					_getFilterGroupIds(),
-					new long[] {assetRendererFactory.getClassNameId()},
+					_getFilterGroupIds(), new long[] {classNameId},
 					new long[] {getSubtypeSelectionId()}, _getKeywords(),
 					_getKeywords(), _getKeywords(), _getKeywords(),
 					_getListable(), false, false, assetBrowserSearch.getStart(),
@@ -123,20 +127,24 @@ public class AssetBrowserDisplayContext {
 			sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
 		}
 
+		String className = StringPool.BLANK;
+
+		if (assetRendererFactory != null) {
+			assetRendererFactory.getClassName();
+		}
+
 		int total = (int)AssetEntryLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), assetRendererFactory.getClassName(),
-			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
-			_getStatuses());
+			themeDisplay.getUserId(), className, getSubtypeSelectionId(),
+			_getKeywords(), _isShowNonindexable(), _getStatuses());
 
 		assetBrowserSearch.setTotal(total);
 
 		Hits hits = AssetEntryLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
-			themeDisplay.getUserId(), assetRendererFactory.getClassName(),
-			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
-			_getStatuses(), assetBrowserSearch.getStart(),
-			assetBrowserSearch.getEnd(), sort);
+			themeDisplay.getUserId(), className, getSubtypeSelectionId(),
+			_getKeywords(), _isShowNonindexable(), _getStatuses(),
+			assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), sort);
 
 		List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
 

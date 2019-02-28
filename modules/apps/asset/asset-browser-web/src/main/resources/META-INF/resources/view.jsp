@@ -37,7 +37,7 @@
 			<%
 			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
-			AssetRendererFactory assetRendererFactory = assetBrowserDisplayContext.getAssetRendererFactory();
+			AssetRendererFactory assetRendererFactory = assetRenderer.getAssetRendererFactory();
 
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
@@ -47,6 +47,7 @@
 
 			if (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) {
 				data.put("assetclassname", assetEntry.getClassName());
+				data.put("assetclassnameid", assetEntry.getClassNameId());
 				data.put("assetclasspk", assetEntry.getClassPK());
 				data.put("assettitle", assetRenderer.getTitle(locale));
 				data.put("assettype", assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId()));
@@ -96,6 +97,12 @@
 							</c:choose>
 						</h5>
 
+						<c:if test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
+							<h6 class="text-muted">
+								<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())) %>
+							</h6>
+						</c:if>
+
 						<h6 class="text-default">
 							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 						</h6>
@@ -108,9 +115,19 @@
 					%>
 
 					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
-						/>
+						<c:choose>
+							<c:when test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
+								<clay:vertical-card
+									subtitle="<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())) %>"
+									verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<clay:vertical-card
+									verticalCard="<%= new AssetEntryVerticalCard(assetEntry, renderRequest, assetBrowserDisplayContext) %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
@@ -129,6 +146,14 @@
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
+
+					<c:if test="<%= Validator.isNull(assetBrowserDisplayContext.getTypeSelection()) %>">
+						<liferay-ui:search-container-column-text
+							name="type"
+							truncate="<%= true %>"
+							value="<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId())) %>"
+						/>
+					</c:if>
 
 					<liferay-ui:search-container-column-text
 						name="description"

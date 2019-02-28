@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
@@ -101,14 +100,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			int countSharingEntryToUserIds =
-				_sharingEntryLocalService.getFromUserSharingEntriesCount(
-					themeDisplay.getUserId(), classNameId, classPK);
-
-			if (countSharingEntryToUserIds == 0) {
-				return JSONFactoryUtil.createJSONArray();
-			}
 
 			List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
 				_getSharingEntryUserObjectValuePairs(
@@ -275,9 +266,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private SharingEntryService _sharingEntryService;

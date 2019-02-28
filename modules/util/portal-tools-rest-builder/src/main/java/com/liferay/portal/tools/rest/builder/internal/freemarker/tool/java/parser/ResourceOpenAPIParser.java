@@ -21,7 +21,6 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaM
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.PathUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -383,8 +382,6 @@ public class ResourceOpenAPIParser {
 			String name = parameter.getName();
 
 			urls.add(CamelCaseUtil.toCamelCase(name.replace("-id", ""), true));
-
-			urls.add("");
 		}
 
 		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
@@ -398,15 +395,25 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		String lastSegment = PathUtil.getLastSegment(path, urls.size());
+		String[] pathSegments = path.split("/");
 
 		if (httpMethod.equals("post") &&
-			lastSegment.equals(TextFormatter.formatPlural(schemaName))) {
+			(pathSegments.length > (urls.size() + parameters.size()))) {
 
-			urls.add(schemaName);
+			String pathSegment = pathSegments[urls.size() + parameters.size()];
+
+			String text = CamelCaseUtil.toCamelCase(pathSegment, true);
+
+			if (text.equals(TextFormatter.formatPlural(schemaName))) {
+				urls.add(schemaName);
+			}
 		}
 
-		urls.add(PathUtil.getLastSegment(path, urls.size()));
+		if (pathSegments.length > (urls.size() + parameters.size())) {
+			String pathSegment = pathSegments[urls.size() + parameters.size()];
+
+			urls.add(CamelCaseUtil.toCamelCase(pathSegment, true));
+		}
 
 		if (StringUtil.startsWith(returnType, "Page<")) {
 			urls.add("Page");

@@ -70,7 +70,7 @@ public class ResourceOpenAPIParser {
 				pathItem,
 				operation -> {
 					String returnType = _getReturnType(
-						javaDataTypeMap, openAPIYAML, operation);
+						javaDataTypeMap, operation);
 					List<String> tags = operation.getTags();
 
 					if (!_isSchemaMethod(schemaName, tags, returnType)) {
@@ -163,16 +163,6 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
-	private static JavaMethodParameter _getJavaMethodParameter(
-		Map<String, String> javaDataTypeMap, Parameter parameter) {
-
-		String parameterName = CamelCaseUtil.toCamelCase(parameter.getName());
-		String parameterType = OpenAPIParserUtil.getJavaDataType(
-			javaDataTypeMap, parameter.getSchema());
-
-		return new JavaMethodParameter(parameterName, parameterType);
-	}
-
 	private static List<JavaMethodParameter> _getJavaMethodParameters(
 		Map<String, String> javaDataTypeMap, Operation operation) {
 
@@ -211,7 +201,10 @@ public class ResourceOpenAPIParser {
 			}
 
 			javaMethodParameters.add(
-				_getJavaMethodParameter(javaDataTypeMap, parameter));
+				new JavaMethodParameter(
+					CamelCaseUtil.toCamelCase(parameterName),
+					OpenAPIParserUtil.getJavaDataType(
+						javaDataTypeMap, parameter.getSchema())));
 		}
 
 		if (parameterNames.contains("filter")) {
@@ -499,8 +492,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getReturnType(
-		Map<String, String> javaDataTypeMap, OpenAPIYAML openAPIYAML,
-		Operation operation) {
+		Map<String, String> javaDataTypeMap, Operation operation) {
 
 		Map<String, Response> responses = operation.getResponses();
 
@@ -532,13 +524,16 @@ public class ResourceOpenAPIParser {
 					return "Page<" + s + ">";
 				}
 
-				Schema componentSchema = OpenAPIParserUtil.getComponentSchema(
-					openAPIYAML, schema.getReference());
+				String schemaReference = schema.getReference();
 
-				if (componentSchema != null) {
-					return OpenAPIParserUtil.getComponentType(
-						schema.getReference());
+				if ((schemaReference == null) ||
+					!schemaReference.startsWith("#/components/schemas/")) {
+
+					continue;
 				}
+
+				return javaDataTypeMap.get(
+					OpenAPIParserUtil.getComponentType(schemaReference));
 			}
 		}
 

@@ -20,7 +20,6 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaM
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
-import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
@@ -57,22 +56,6 @@ public class OpenAPIParserUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static Schema getComponentSchema(
-		OpenAPIYAML openAPIYAML, String reference) {
-
-		if ((reference == null) ||
-			!reference.startsWith("#/components/schemas/")) {
-
-			return null;
-		}
-
-		Components components = openAPIYAML.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		return schemas.get(getComponentType(reference));
 	}
 
 	public static String getComponentType(String reference) {

@@ -58,16 +58,6 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
-	public static String getComponentType(String reference) {
-		int index = reference.lastIndexOf('/');
-
-		if (index == -1) {
-			return reference;
-		}
-
-		return reference.substring(index + 1);
-	}
-
 	public static String getHTTPMethod(Operation operation) {
 		Class<? extends Operation> clazz = operation.getClass();
 
@@ -105,7 +95,7 @@ public class OpenAPIParserUtil {
 
 			if (items.getReference() != null) {
 				javaDataType = javaDataTypeMap.get(
-					getComponentType(items.getReference()));
+					getReferenceName(items.getReference()));
 			}
 
 			return javaDataType + "[]";
@@ -133,7 +123,7 @@ public class OpenAPIParserUtil {
 		if (allOfSchemas != null) {
 			for (Schema allOfSchema : allOfSchemas) {
 				if (Validator.isNotNull(allOfSchema.getReference())) {
-					return getComponentType(allOfSchema.getReference());
+					return getReferenceName(allOfSchema.getReference());
 				}
 			}
 		}
@@ -144,7 +134,7 @@ public class OpenAPIParserUtil {
 			return Object.class.getName();
 		}
 
-		return javaDataTypeMap.get(getComponentType(schema.getReference()));
+		return javaDataTypeMap.get(getReferenceName(schema.getReference()));
 	}
 
 	public static Map<String, String> getJavaDataTypeMap(
@@ -205,6 +195,16 @@ public class OpenAPIParserUtil {
 		sb.append(javaMethodParameter.getParameterName());
 
 		return sb.toString();
+	}
+
+	public static String getReferenceName(String reference) {
+		int index = reference.lastIndexOf('/');
+
+		if (index == -1) {
+			return reference;
+		}
+
+		return reference.substring(index + 1);
 	}
 
 	public static Set<String> getSchemaNames(

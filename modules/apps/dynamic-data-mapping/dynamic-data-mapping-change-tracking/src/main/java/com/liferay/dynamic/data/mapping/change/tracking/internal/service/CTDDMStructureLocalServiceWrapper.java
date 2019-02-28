@@ -274,15 +274,15 @@ public class CTDDMStructureLocalServiceWrapper
 		DDMStructureVersion ddmStructureVersion =
 			ddmStructureVersionOptional.get();
 
+		ddmStructure.setStructureId(ddmStructureVersion.getStructureId());
 		ddmStructure.setGroupId(ddmStructureVersion.getGroupId());
 		ddmStructure.setCompanyId(ddmStructureVersion.getCompanyId());
 		ddmStructure.setUserId(ddmStructureVersion.getUserId());
 		ddmStructure.setUserName(ddmStructureVersion.getUserName());
 		ddmStructure.setModifiedDate(ddmStructureVersion.getCreateDate());
-		ddmStructure.setStructureId(ddmStructureVersion.getStructureId());
-		ddmStructure.setVersion(ddmStructureVersion.getVersion());
 		ddmStructure.setParentStructureId(
 			ddmStructureVersion.getParentStructureId());
+		ddmStructure.setVersion(ddmStructureVersion.getVersion());
 		ddmStructure.setName(ddmStructureVersion.getName());
 		ddmStructure.setDescription(ddmStructureVersion.getDescription());
 		ddmStructure.setDefinition(ddmStructureVersion.getDefinition());

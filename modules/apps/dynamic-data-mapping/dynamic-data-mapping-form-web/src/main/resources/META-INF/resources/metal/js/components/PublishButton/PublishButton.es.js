@@ -18,26 +18,26 @@ class PublishButton extends Component {
 		Notifications.closeAlert();
 	}
 
-	publish() {
-		return this._savePublished(true);
+	publish(event) {
+		return this._savePublished(event, true);
 	}
 
-	toggle() {
+	toggle(event) {
 		const {published} = this.props;
 		let promise;
 
 		if (published) {
-			promise = this.unpublish();
+			promise = this.unpublish(event);
 		}
 		else {
-			promise = this.publish();
+			promise = this.publish(event);
 		}
 
 		return promise;
 	}
 
-	unpublish() {
-		return this._savePublished(false);
+	unpublish(event) {
+		return this._savePublished(event, false);
 	}
 
 	render() {
@@ -67,11 +67,11 @@ class PublishButton extends Component {
 		);
 	}
 
-	_handleButtonClicked() {
-		this.toggle();
+	_handleButtonClicked(event) {
+		this.toggle(event);
 	}
 
-	_savePublished(published) {
+	_savePublished(event, published) {
 		const {namespace, submitForm, url} = this.props;
 
 		event.preventDefault();

@@ -882,7 +882,7 @@ AUI.add(
 						);
 					},
 
-					_onPublishButtonClick: function() {
+					_onPublishButtonClick: function(event) {
 						var instance = this;
 
 						event.preventDefault();

@@ -9,7 +9,21 @@ exports[`Should change page 1`] = `
     className="page-link"
     href="#2"
   >
-    3
+    2
+  </a>
+</li>
+`;
+
+exports[`Should render component as active 1`] = `
+<li
+  className="page-item active"
+  onClick={[Function]}
+>
+  <a
+    className="page-link"
+    href="#1"
+  >
+    1
   </a>
 </li>
 `;
@@ -79,7 +93,7 @@ exports[`Should render component as type default 1`] = `
     className="page-link"
     href="#1"
   >
-    11
+    1
   </a>
 </li>
 `;

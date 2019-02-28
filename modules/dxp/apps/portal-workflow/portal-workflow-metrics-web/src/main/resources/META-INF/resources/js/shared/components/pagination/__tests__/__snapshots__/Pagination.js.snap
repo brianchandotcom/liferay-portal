@@ -6,14 +6,8 @@ exports[`Should change page 1`] = `
 >
   <PageItem
     onChangePage={[Function]}
-    page={0}
+    page={1}
     type="prev"
-  />
-  <PageItem
-    active={false}
-    key="process_list_pag_0"
-    onChangePage={[Function]}
-    page={0}
   />
   <PageItem
     active={false}
@@ -70,8 +64,14 @@ exports[`Should change page 1`] = `
     page={9}
   />
   <PageItem
+    active={false}
+    key="process_list_pag_10"
     onChangePage={[Function]}
-    page={9}
+    page={10}
+  />
+  <PageItem
+    onChangePage={[Function]}
+    page={10}
     type="next"
   />
 </ul>
@@ -87,7 +87,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#0"
+      href="#1"
       role="button"
     >
       <svg
@@ -107,12 +107,12 @@ exports[`Should render component 1`] = `
     </a>
   </li>
   <li
-    className="page-item active"
+    className="page-item"
     onClick={[Function]}
   >
     <a
       className="page-link"
-      href="#0"
+      href="#1"
     >
       1
     </a>
@@ -123,7 +123,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#1"
+      href="#2"
     >
       2
     </a>
@@ -134,7 +134,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#2"
+      href="#3"
     >
       3
     </a>
@@ -145,7 +145,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#3"
+      href="#4"
     >
       4
     </a>
@@ -156,7 +156,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#4"
+      href="#5"
     >
       5
     </a>
@@ -167,7 +167,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#5"
+      href="#6"
     >
       6
     </a>
@@ -178,7 +178,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#6"
+      href="#7"
     >
       7
     </a>
@@ -189,7 +189,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#7"
+      href="#8"
     >
       8
     </a>
@@ -200,7 +200,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#8"
+      href="#9"
     >
       9
     </a>
@@ -211,7 +211,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#9"
+      href="#10"
     >
       10
     </a>
@@ -222,7 +222,7 @@ exports[`Should render component 1`] = `
   >
     <a
       className="page-link"
-      href="#9"
+      href="#10"
       role="button"
     >
       <svg

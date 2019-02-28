@@ -11,14 +11,53 @@ exports[`Should render component 1`] = `
       <span
         className="text-truncate-inline"
       >
-        <span />
+        <span
+          title="Process test"
+        >
+          Process test
+        </span>
       </span>
     </div>
   </td>
   <td>
-     items
+    10 items
   </td>
-  <td />
-  <td />
+  <td>
+    5
+  </td>
+  <td>
+    5
+  </td>
+</tr>
+`;
+
+exports[`Should render component with 1 instance count 1`] = `
+<tr>
+  <td
+    className="table-cell-expand"
+  >
+    <div
+      className="table-list-title"
+    >
+      <span
+        className="text-truncate-inline"
+      >
+        <span
+          title="Process test"
+        >
+          Process test
+        </span>
+      </span>
+    </div>
+  </td>
+  <td>
+    1 item
+  </td>
+  <td>
+    5
+  </td>
+  <td>
+    5
+  </td>
 </tr>
 `;

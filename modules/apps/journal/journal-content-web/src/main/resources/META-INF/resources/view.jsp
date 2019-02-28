@@ -150,7 +150,6 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 						<liferay-journal:journal-article-display
 							articleDisplay="<%= articleDisplay %>"
-							wrapperCssClass="d-flex"
 						/>
 
 						<c:if test="<%= articleDisplay.isPaginate() %>">

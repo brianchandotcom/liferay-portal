@@ -17,11 +17,9 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
@@ -37,12 +35,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -158,8 +154,13 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 		serviceContext.setAttribute(
 			"ddmFormValues", _SERIALIZED_DDM_FORM_VALUES);
+
+		DLFileEntryType basicDocumentDLFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
+
 		serviceContext.setAttribute(
-			"fileEntryTypeId", _getMarketingCampaignFileEntryTypeId());
+			"fileEntryTypeId",
+			basicDocumentDLFileEntryType.getFileEntryTypeId());
 
 		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
 			checkedOutFileEntry.getFileEntryId(),
@@ -179,7 +180,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			(DLFileEntry)checkedInFileEntry.getModel();
 
 		Assert.assertEquals(
-			_getMarketingCampaignFileEntryTypeId(),
+			basicDocumentDLFileEntryType.getFileEntryTypeId(),
 			checkedInDLFileEntry.getFileEntryTypeId());
 	}
 
@@ -240,30 +241,6 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		Assert.assertArrayEquals(
 			new String[] {"tag3", "tag4"},
 			lastFileVersionAssetEntry.getTagNames());
-	}
-
-	private long _getMarketingCampaignFileEntryTypeId() throws Exception {
-		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					group.getGroupId()));
-
-		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			String fileEntryTypeKey = dlFileEntryType.getFileEntryTypeKey();
-
-			if (fileEntryTypeKey.equals(
-					DLFileEntryTypeConstants.
-						FILE_ENTRY_TYPE_KEY_MARKETING_BANNER)) {
-
-				return dlFileEntryType.getFileEntryTypeId();
-			}
-		}
-
-		throw new NoSuchFileEntryTypeException(
-			StringBundler.concat(
-				"FileEntryType ",
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER,
-				" not found in group ", group.getGroupId()));
 	}
 
 	private static final String _SERIALIZED_DDM_FORM_VALUES =

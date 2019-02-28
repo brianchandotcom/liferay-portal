@@ -16,8 +16,6 @@ package com.liferay.document.library.internal.instance.lifecycle;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -30,14 +28,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -45,8 +41,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -56,7 +50,6 @@ import java.io.StringReader;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -107,7 +100,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 				"/document-library-structures.xml",
 			serviceContext);
 
-		addDLFileEntryTypes(defaultUserId, group.getGroupId(), serviceContext);
+		_dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
 
 		addDLRawMetadataStructures(
 			defaultUserId, group.getGroupId(), serviceContext);
@@ -118,120 +111,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	protected void activate(Map<String, Object> properties) {
 		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
-	}
-
-	protected void addDLFileEntryType(
-			long userId, long groupId, String languageKey,
-			String dlFileEntryTypeKey, List<String> ddmStructureNames,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		List<Long> ddmStructureIds = new ArrayList<>();
-
-		for (String ddmStructureName : ddmStructureNames) {
-			String ddmStructureKey = ddmStructureName;
-
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
-					groupId, _portal.getClassNameId(DLFileEntryMetadata.class),
-					ddmStructureKey);
-
-			if (ddmStructure == null) {
-				continue;
-			}
-
-			ddmStructureIds.add(ddmStructure.getStructureId());
-		}
-
-		Locale locale = _portal.getSiteDefaultLocale(groupId);
-
-		String definition =
-			_defaultDDMStructureHelper.getDynamicDDMStructureDefinition(
-				getClassLoader(),
-				"com/liferay/document/library/events/dependencies" +
-					"/document-library-structures.xml",
-				languageKey, locale);
-
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				definition);
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
-
-		serviceContext.setAttribute(
-			"ddmForm", _ddmBeanTranslator.translate(ddmForm));
-
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.fetchFileEntryType(
-				groupId, dlFileEntryTypeKey);
-
-		if (dlFileEntryType == null) {
-			Map<Locale, String> localizationMap = new HashMap<>();
-
-			for (Locale curLocale : LanguageUtil.getAvailableLocales(groupId)) {
-				localizationMap.put(
-					curLocale, LanguageUtil.get(curLocale, languageKey));
-			}
-
-			_dlFileEntryTypeLocalService.addFileEntryType(
-				userId, groupId, dlFileEntryTypeKey, localizationMap,
-				localizationMap,
-				ArrayUtil.toArray(
-					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
-				serviceContext);
-		}
-	}
-
-	protected void addDLFileEntryTypes(
-			long userId, long groupId, ServiceContext serviceContext)
-		throws Exception {
-
-		_dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
-
-		List<String> ddmStructureNames = new ArrayList<>();
-
-		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_CONTRACT,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_CONTRACT,
-			ddmStructureNames, serviceContext);
-
-		ddmStructureNames.clear();
-
-		ddmStructureNames.add("Marketing Campaign Theme Metadata");
-
-		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER,
-			ddmStructureNames, serviceContext);
-
-		ddmStructureNames.clear();
-
-		ddmStructureNames.add("Learning Module Metadata");
-
-		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_ONLINE_TRAINING,
-			ddmStructureNames, serviceContext);
-
-		ddmStructureNames.clear();
-
-		ddmStructureNames.add("Meeting Metadata");
-
-		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION,
-			ddmStructureNames, serviceContext);
-
-		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
-			addDLFileEntryType(
-				userId, groupId, DLFileEntryTypeConstants.NAME_IG_IMAGE,
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_IG_IMAGE,
-				ddmStructureNames, serviceContext);
-		}
 	}
 
 	protected void addDLRawMetadataStructures(
@@ -375,11 +254,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		_ddm = ddm;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
-		_ddmBeanTranslator = ddmBeanTranslator;
-	}
-
 	@Reference(
 		target = "(component.name=com.liferay.dynamic.data.mapping.io.internal.DDMFormXSDDeserializer)",
 		unbind = "-"
@@ -427,7 +301,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	}
 
 	private DDM _ddm;
-	private DDMBeanTranslator _ddmBeanTranslator;
 	private DDMFormDeserializer _ddmFormDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

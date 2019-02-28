@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -25,12 +26,14 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
@@ -54,6 +57,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -90,21 +94,15 @@ public class DLFileVersionTest {
 		setUpParentFolder();
 		setUpResourcePermission();
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					_group.getGroupId()));
+		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+			DDMStructureTestUtil.addStructure(
+				_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
-		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			String fileEntryTypeKey = dlFileEntryType.getFileEntryTypeKey();
-
-			if (fileEntryTypeKey.equals(
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_CONTRACT)) {
-
-				_contractDLFileEntryTypeId =
-					dlFileEntryType.getFileEntryTypeId();
-			}
-		}
+		_dlFileEntryType = DLFileEntryTypeServiceUtil.addFileEntryType(
+			_group.getGroupId(), StringUtil.randomString(),
+			StringUtil.randomString(),
+			new long[] {ddmStructure.getStructureId()},
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		ExpandoTable expandoTable =
 			ExpandoTableLocalServiceUtil.addDefaultTable(
@@ -192,7 +190,8 @@ public class DLFileVersionTest {
 	@Test
 	public void testUpdateExpando() throws Exception {
 		updateServiceContext(
-			_UPDATE_VALUE, _contractDLFileEntryTypeId, StringPool.BLANK);
+			_UPDATE_VALUE, _dlFileEntryType.getFileEntryTypeId(),
+			StringPool.BLANK);
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			_fileVersion.getFileEntryId(), _SOURCE_FILE_NAME,
@@ -224,7 +223,8 @@ public class DLFileVersionTest {
 	@Test
 	public void testUpdateMetadata() throws Exception {
 		updateServiceContext(
-			StringPool.BLANK, _contractDLFileEntryTypeId, _UPDATE_VALUE);
+			StringPool.BLANK, _dlFileEntryType.getFileEntryTypeId(),
+			_UPDATE_VALUE);
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			_fileVersion.getFileEntryId(), _SOURCE_FILE_NAME,
@@ -299,7 +299,7 @@ public class DLFileVersionTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		serviceContext.setAttribute(
-			"fileEntryTypeId", _contractDLFileEntryTypeId);
+			"fileEntryTypeId", _dlFileEntryType.getFileEntryTypeId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
 			serviceContext.getExpandoBridgeAttributes();
@@ -310,7 +310,7 @@ public class DLFileVersionTest {
 
 		DLFileEntryType fileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-				_contractDLFileEntryTypeId);
+				_dlFileEntryType.getFileEntryTypeId());
 
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
@@ -446,7 +446,9 @@ public class DLFileVersionTest {
 		}
 	}
 
-	private long _contractDLFileEntryTypeId;
+	@DeleteAfterTestRun
+	private DLFileEntryType _dlFileEntryType;
+
 	private DLFileVersion _fileVersion;
 
 	@DeleteAfterTestRun

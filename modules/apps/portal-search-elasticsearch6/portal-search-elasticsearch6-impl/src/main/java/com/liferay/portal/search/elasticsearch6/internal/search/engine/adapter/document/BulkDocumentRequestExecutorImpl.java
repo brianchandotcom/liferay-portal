@@ -14,7 +14,10 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
@@ -54,6 +57,8 @@ public class BulkDocumentRequestExecutorImpl
 			bulkDocumentRequest);
 
 		BulkResponse bulkResponse = bulkRequestBuilder.get();
+
+		LogUtil.logActionResponse(_log, bulkResponse);
 
 		TimeValue timeValue = bulkResponse.getTook();
 
@@ -150,6 +155,9 @@ public class BulkDocumentRequestExecutorImpl
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BulkDocumentRequestExecutorImpl.class);
 
 	private BulkableDocumentRequestTranslator
 		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,

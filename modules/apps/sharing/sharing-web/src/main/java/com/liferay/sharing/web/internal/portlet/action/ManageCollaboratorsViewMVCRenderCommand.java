@@ -133,7 +133,7 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			}
 			else {
 				sharingEntryToUserOVPs = _getDirectSharingEntries(
-					classNameId, classPK, themeDisplay);
+					themeDisplay.getUserId(), classNameId, classPK);
 			}
 
 			JSONArray collaboratorsJSONArray =
@@ -199,11 +199,11 @@ public class ManageCollaboratorsViewMVCRenderCommand
 	}
 
 	private List<ObjectValuePair<SharingEntry, User>> _getDirectSharingEntries(
-		long classNameId, long classPK, ThemeDisplay themeDisplay) {
+		long userId, long classNameId, long classPK) {
 
 		List<SharingEntry> fromUserSharingEntries =
 			_sharingEntryLocalService.getFromUserSharingEntries(
-				themeDisplay.getUserId(), classNameId, classPK);
+				userId, classNameId, classPK);
 
 		return _getSharingEntryUserObjectValuePairs(fromUserSharingEntries);
 	}

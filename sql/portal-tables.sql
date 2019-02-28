@@ -559,6 +559,8 @@ create table Layout (
 	privateLayout BOOLEAN,
 	layoutId LONG,
 	parentLayoutId LONG,
+	classNameId LONG,
+	classPK LONG,
 	name STRING null,
 	title STRING null,
 	description STRING null,
@@ -577,10 +579,8 @@ create table Layout (
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
-	lastPublishDate DATE null,
-	classNameId LONG,
-	classPK LONG,
-	publishDate DATE null
+	publishDate DATE null,
+	lastPublishDate DATE null
 );
 
 create table LayoutBranch (

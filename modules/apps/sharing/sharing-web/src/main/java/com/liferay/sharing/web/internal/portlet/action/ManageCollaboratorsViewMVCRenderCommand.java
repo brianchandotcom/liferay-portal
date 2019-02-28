@@ -94,15 +94,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
-	private List<ObjectValuePair<SharingEntry, User>> _getAllSharingEntries(
-		long classNameId, long classPK) {
-
-		List<SharingEntry> fromUserSharingEntries =
-			_sharingEntryLocalService.getSharingEntries(classNameId, classPK);
-
-		return _getSharingEntryUserObjectValuePairs(fromUserSharingEntries);
-	}
-
 	private JSONArray _getCollaboratorsJSONArray(RenderRequest renderRequest)
 		throws PortletException {
 
@@ -128,12 +119,14 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					themeDisplay.getPermissionChecker(), classNameId,
 					classPK)) {
 
-				sharingEntryToUserOVPs = _getAllSharingEntries(
-					classNameId, classPK);
+				sharingEntryToUserOVPs = _getSharingEntryUserObjectValuePairs(
+					_sharingEntryLocalService.getSharingEntries(
+						classNameId, classPK));
 			}
 			else {
-				sharingEntryToUserOVPs = _getDirectSharingEntries(
-					themeDisplay.getUserId(), classNameId, classPK);
+				sharingEntryToUserOVPs = _getSharingEntryUserObjectValuePairs(
+					_sharingEntryLocalService.getFromUserSharingEntries(
+						themeDisplay.getUserId(), classNameId, classPK));
 			}
 
 			JSONArray collaboratorsJSONArray =
@@ -196,16 +189,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
-	}
-
-	private List<ObjectValuePair<SharingEntry, User>> _getDirectSharingEntries(
-		long userId, long classNameId, long classPK) {
-
-		List<SharingEntry> fromUserSharingEntries =
-			_sharingEntryLocalService.getFromUserSharingEntries(
-				userId, classNameId, classPK);
-
-		return _getSharingEntryUserObjectValuePairs(fromUserSharingEntries);
 	}
 
 	private String _getManageCollaboratorsActionURL(

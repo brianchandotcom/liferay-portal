@@ -14,21 +14,17 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
-import com.liferay.portal.kernel.search.SearchResultPermissionFilterSearcher;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -40,56 +36,35 @@ import java.util.function.Consumer;
  */
 public class SearchUtil {
 
-	public static Hits getHits(
-			Filter filter, Indexer<?> indexer, Pagination pagination,
+	public static SearchContext createSearchContext(
+			Filter filter, Pagination pagination,
 			Consumer<BooleanQuery> booleanQueryConsumer,
-			Consumer<QueryConfig> queryConfigConsumer,
-			Consumer<SearchContext> searchContextConsumer,
-			SearchResultPermissionFilterFactory
-				searchResultPermissionFilterFactory,
-			Sort[] sorts)
-		throws SearchException {
+			Consumer<QueryConfig> queryConfigConsumer, Sort[] sorts)
+		throws Exception {
+
+		BooleanClause<?> booleanClause = _getBooleanClause(
+			filter, booleanQueryConsumer);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		SearchContext searchContext = _createSearchContext(
-			pagination, permissionChecker, queryConfigConsumer,
-			searchContextConsumer, sorts);
-
-		Query query = _getQuery(
-			filter, indexer, booleanQueryConsumer, searchContext);
-
-		SearchResultPermissionFilter searchResultPermissionFilter =
-			searchResultPermissionFilterFactory.create(
-				new SearchResultPermissionFilterSearcher() {
-
-					public Hits search(SearchContext searchContext)
-						throws SearchException {
-
-						return IndexSearcherHelperUtil.search(
-							searchContext, query);
-					}
-
-				},
-				permissionChecker);
-
-		return searchResultPermissionFilter.search(searchContext);
+		return _createSearchContext(
+			booleanClause, pagination, permissionChecker, queryConfigConsumer,
+			sorts);
 	}
 
 	private static SearchContext _createSearchContext(
-		Pagination pagination, PermissionChecker permissionChecker,
-		Consumer<QueryConfig> queryConfigConsumer,
-		Consumer<SearchContext> searchContextConsumer, Sort[] sorts) {
+		BooleanClause<?> booleanClause, Pagination pagination,
+		PermissionChecker permissionChecker,
+		Consumer<QueryConfig> queryConfigConsumer, Sort[] sorts) {
 
 		SearchContext searchContext = new SearchContext();
 
+		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 		searchContext.setEnd(pagination.getEndPosition());
 		searchContext.setSorts(sorts);
 		searchContext.setStart(pagination.getStartPosition());
 		searchContext.setUserId(permissionChecker.getUserId());
-
-		searchContextConsumer.accept(searchContext);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -101,23 +76,26 @@ public class SearchUtil {
 		return searchContext;
 	}
 
-	private static Query _getQuery(
-			Filter filter, Indexer<?> indexer,
-			Consumer<BooleanQuery> booleanQueryConsumer,
-			SearchContext searchContext)
-		throws SearchException {
+	private static BooleanClause<?> _getBooleanClause(
+			Filter filter, Consumer<BooleanQuery> booleanQueryConsumer)
+		throws Exception {
 
-		BooleanQuery booleanQuery = indexer.getFullQuery(searchContext);
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+		BooleanFilter booleanFilter = new BooleanFilter();
 
 		if (filter != null) {
-			BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
-
 			booleanFilter.add(filter, BooleanClauseOccur.MUST);
 		}
 
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
 		booleanQueryConsumer.accept(booleanQuery);
 
-		return booleanQuery;
+		return BooleanClauseFactoryUtil.create(
+			booleanQuery, BooleanClauseOccur.MUST.getName());
 	}
 
 }

@@ -18,6 +18,21 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	com/liferay/journal/service.xml=../../../modules/apps/journal/journal-service/service.xml,\
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/mobile-device-rules/mobile-device-rules-service/service.xml,\
 	com/liferay/portlet/messageboards/service.xml=../../../modules/apps/message-boards/message-boards-service/service.xml,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/JavaParser.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/CheckstyleException.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/Comment.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/DetailAST.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/FileContents.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/FileText.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/FullIdent.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/TextBlock.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/api/TokenTypes.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/grammars/CommentListener.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/grammars/GeneratedJavaLexer.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/grammars/GeneratedJavaRecognizer.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/grammars/GeneratedJavaTokenTypes.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/utils/CommonUtil.class,\
+	@checkstyle-[0-9]*.jar!/com/puppycrawl/tools/checkstyle/utils/TokenUtil.class,\
 	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
 	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
 	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
@@ -30,6 +45,8 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
 	@com.liferay.petra.reflect-[0-9]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
+	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringBundler.class,\
+	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringBundler$UnsafeStringBuilder.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/XMLUtil.class,\
@@ -144,5 +161,15 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator_IW.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
+	@com.liferay.portal.tools.java.parser-[0-9]*.jar!/com/liferay/portal/tools/java/parser/*.class,\
+	@com.liferay.portal.tools.java.parser-[0-9]*.jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/xml/XMLSafeReader.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/Charsets.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/FileExistsException.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/FileUtils.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/IOUtils.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/filefilter/IOFileFilter.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/output/ByteArrayOutputStream.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/output/NullOutputStream.class,\
+	@commons-io-[0-9]*.jar!/org/apache/commons/io/output/StringBuilderWriter.class,\
 	@xercesImpl-[0-9]*.jar!/org/apache/xerces/xni/XNIException.class

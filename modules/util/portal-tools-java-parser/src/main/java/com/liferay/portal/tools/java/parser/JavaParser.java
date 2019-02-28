@@ -267,6 +267,7 @@ public class JavaParser {
 			fileContents, startLineNumber, endLineNumber);
 
 		if (!actualJavaTermContent.startsWith(expectedJavaTermContent) &&
+			!_isExcludedJavaTerm(parsedJavaTerm) &&
 			(!actualJavaTermContent.contains("\n\n") ||
 			 !Objects.equals(
 				 parsedJavaTerm.getClassName(),
@@ -818,6 +819,30 @@ public class JavaParser {
 		}
 
 		return false;
+	}
+
+	private static boolean _isExcludedJavaTerm(ParsedJavaTerm parsedJavaTerm) {
+		CommonHiddenStreamToken precedingCommentToken =
+			parsedJavaTerm.getPrecedingCommentToken();
+
+		while (true) {
+			if (precedingCommentToken == null) {
+				return false;
+			}
+
+			if (precedingCommentToken.getType() ==
+					TokenTypes.SINGLE_LINE_COMMENT) {
+
+				if (StringUtil.startsWith(
+						StringUtil.trim(precedingCommentToken.getText()),
+						"Skip JavaParser")) {
+
+					return true;
+				}
+			}
+
+			precedingCommentToken = precedingCommentToken.getHiddenBefore();
+		}
 	}
 
 	private static String _parse(File file, String content)

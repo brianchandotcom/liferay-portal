@@ -992,12 +992,21 @@
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
 	</target>
 
-	<target depends="dist-module-artifacts,get-app-change-log" if="app.ticket.list" name="zip-app-sources">
+	<target depends="dist-module-artifacts,get-app-change-log,zip-app-sources-init" if="zip.app.sources" name="zip-app-sources">
 		<zip
 			basedir="${dist.dir}/sources"
 			destfile="${dist.dir}/${app.name}-${app.version}-sources.zip"
 		/>
 
 		<delete dir="${dist.dir}/sources" />
+	</target>
+
+	<target depends="get-app-change-log,init-build-app" name="zip-app-sources-init">
+		<condition property="zip.app.sources">
+			<and>
+				<isset property="app.ticket.list" />
+				<istrue value="${download.app.sources}" />
+			</and>
+		</condition>
 	</target>
 </project>

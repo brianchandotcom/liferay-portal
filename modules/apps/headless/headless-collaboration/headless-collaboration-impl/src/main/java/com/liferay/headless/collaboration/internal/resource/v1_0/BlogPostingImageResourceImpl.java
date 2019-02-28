@@ -104,8 +104,10 @@ public class BlogPostingImageResourceImpl
 			},
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {contentSpaceId});
+			},
 			_searchResultPermissionFilterFactory, sorts);
 
 		List<FileEntry> fileEntries = new ArrayList<>();

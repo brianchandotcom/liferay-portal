@@ -112,6 +112,7 @@ public class BlogPostingResourceImpl
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {contentSpaceId});
 			},
 			_searchResultPermissionFilterFactory, sorts);
 

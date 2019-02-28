@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.beanutils.BeanUtils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -89,20 +90,21 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 	@Test
 	public void testGetContentSpaceBlogPostingsPageWithSortDateTime()
 		throws Exception {
+
 		List<EntityField> stringEntityFields = getEntityFields(
 			EntityField.Type.DATE_TIME);
 
 		BlogPosting randomBlogPosting1 = randomBlogPosting();
+
+		invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting1);
+
 		BlogPosting randomBlogPosting2 = randomBlogPosting();
 
+		invokePostContentSpaceBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting2);
+
 		for (EntityField entityField : stringEntityFields) {
-
-			invokePostContentSpaceBlogPosting(
-				testGroup.getGroupId(), randomBlogPosting1);
-
-			invokePostContentSpaceBlogPosting(
-				testGroup.getGroupId(), randomBlogPosting2);
-
 			Page<BlogPosting> ascPage = invokeGetContentSpaceBlogPostingsPage(
 				testGroup.getGroupId(), null, Pagination.of(2, 1),
 				entityField.getName() + ":asc");
@@ -120,10 +122,11 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 				(List<BlogPosting>)descPage.getItems());
 		}
 	}
-	
+
 	@Test
 	public void testGetContentSpaceBlogPostingsPageWithSortString()
 		throws Exception {
+
 		List<EntityField> stringEntityFields = getEntityFields(
 			EntityField.Type.STRING);
 

@@ -76,7 +76,7 @@ public class DeploymentStatement extends Statement {
 		FrameworkMBean frameworkMBean = JMXProxyUtil.newProxy(
 			_frameworkObjectName, FrameworkMBean.class);
 
-		long bundleId = _installBundle(frameworkMBean, _create());
+		long bundleId = _installBundle(frameworkMBean);
 
 		frameworkMBean.startBundle(bundleId);
 
@@ -247,8 +247,10 @@ public class DeploymentStatement extends Statement {
 		return files;
 	}
 
-	private long _installBundle(FrameworkMBean frameworkMBean, Path path)
+	private long _installBundle(FrameworkMBean frameworkMBean)
 		throws Exception {
+
+		Path path = _create();
 
 		URI uri = path.toUri();
 

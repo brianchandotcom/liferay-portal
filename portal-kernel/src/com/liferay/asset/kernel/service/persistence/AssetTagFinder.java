@@ -22,15 +22,19 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface AssetTagFinder {
+
 	public int countByG_N(long groupId, String name);
 
 	public int countByG_C_N(long groupId, long classNameId, String name);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> findByG_C_N(
 		long groupId, long classNameId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.asset.kernel.model.AssetTag> obc);
 
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> findByG_N_S_E(
-		long groupId, String name, int startPeriod, int endPeriod,
-		int periodLength);
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag>
+		findByG_N_S_E(
+			long groupId, String name, int startPeriod, int endPeriod,
+			int periodLength);
+
 }

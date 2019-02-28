@@ -39,9 +39,12 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface ListTypeService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,15 +60,15 @@ public interface ListTypeService extends BaseService {
 	public List<ListType> getListTypes(String type);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	public void validate(long listTypeId, long classNameId, String type)
 		throws PortalException;
 
-	public void validate(long listTypeId, String type)
-		throws PortalException;
+	public void validate(long listTypeId, String type) throws PortalException;
+
 }

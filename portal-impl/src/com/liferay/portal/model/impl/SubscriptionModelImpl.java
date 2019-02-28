@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -62,28 +60,27 @@ import java.util.function.Function;
  */
 @Deprecated
 @ProviderType
-public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
-	implements SubscriptionModel {
+public class SubscriptionModelImpl
+	extends BaseModelImpl<Subscription> implements SubscriptionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a subscription model instance should use the <code>Subscription</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Subscription";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "subscriptionId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "frequency", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"subscriptionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"frequency", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -99,30 +96,53 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		TABLE_COLUMNS_MAP.put("frequency", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0 not null,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Subscription (mvccVersion LONG default 0 not null,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Subscription";
-	public static final String ORDER_BY_JPQL = " ORDER BY subscription.subscriptionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Subscription.subscriptionId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY subscription.subscriptionId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Subscription.subscriptionId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Subscription"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Subscription"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Subscription"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Subscription"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Subscription"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Subscription"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
+
 	public static final long USERID_COLUMN_BITMASK = 16L;
+
 	public static final long SUBSCRIPTIONID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Subscription"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Subscription"));
 
 	public SubscriptionModelImpl() {
 	}
@@ -161,13 +181,18 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Subscription, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Subscription, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Subscription, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Subscription, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Subscription, Object> attributeGetterFunction = entry.getValue();
+			Function<Subscription, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((Subscription)this));
 		}
 
@@ -179,63 +204,97 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Subscription, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Subscription, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Subscription, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Subscription, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Subscription)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Subscription)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Subscription, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<Subscription, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Subscription, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Subscription, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Subscription, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Subscription, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Subscription, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Subscription, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Subscription, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Subscription, Object>>();
-		Map<String, BiConsumer<Subscription, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Subscription, ?>>();
+		Map<String, Function<Subscription, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Subscription, Object>>();
+		Map<String, BiConsumer<Subscription, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Subscription, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", Subscription::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Subscription, Long>)Subscription::setMvccVersion);
-		attributeGetterFunctions.put("subscriptionId", Subscription::getSubscriptionId);
-		attributeSetterBiConsumers.put("subscriptionId", (BiConsumer<Subscription, Long>)Subscription::setSubscriptionId);
+		attributeGetterFunctions.put(
+			"mvccVersion", Subscription::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<Subscription, Long>)Subscription::setMvccVersion);
+		attributeGetterFunctions.put(
+			"subscriptionId", Subscription::getSubscriptionId);
+		attributeSetterBiConsumers.put(
+			"subscriptionId",
+			(BiConsumer<Subscription, Long>)Subscription::setSubscriptionId);
 		attributeGetterFunctions.put("groupId", Subscription::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<Subscription, Long>)Subscription::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<Subscription, Long>)Subscription::setGroupId);
 		attributeGetterFunctions.put("companyId", Subscription::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Subscription, Long>)Subscription::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<Subscription, Long>)Subscription::setCompanyId);
 		attributeGetterFunctions.put("userId", Subscription::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Subscription, Long>)Subscription::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Subscription, Long>)Subscription::setUserId);
 		attributeGetterFunctions.put("userName", Subscription::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Subscription, String>)Subscription::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<Subscription, String>)Subscription::setUserName);
 		attributeGetterFunctions.put("createDate", Subscription::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Subscription, Date>)Subscription::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Subscription::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Subscription, Date>)Subscription::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", Subscription::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Subscription, Long>)Subscription::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<Subscription, Date>)Subscription::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", Subscription::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Subscription, Date>)Subscription::setModifiedDate);
+		attributeGetterFunctions.put(
+			"classNameId", Subscription::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<Subscription, Long>)Subscription::setClassNameId);
 		attributeGetterFunctions.put("classPK", Subscription::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<Subscription, Long>)Subscription::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<Subscription, Long>)Subscription::setClassPK);
 		attributeGetterFunctions.put("frequency", Subscription::getFrequency);
-		attributeSetterBiConsumers.put("frequency", (BiConsumer<Subscription, String>)Subscription::setFrequency);
+		attributeSetterBiConsumers.put(
+			"frequency",
+			(BiConsumer<Subscription, String>)Subscription::setFrequency);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -466,8 +525,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Subscription.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Subscription.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -480,8 +539,9 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	@Override
 	public Subscription toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Subscription)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Subscription)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -568,7 +628,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionModelImpl._setOriginalGroupId = false;
 
-		subscriptionModelImpl._originalCompanyId = subscriptionModelImpl._companyId;
+		subscriptionModelImpl._originalCompanyId =
+			subscriptionModelImpl._companyId;
 
 		subscriptionModelImpl._setOriginalCompanyId = false;
 
@@ -578,7 +639,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionModelImpl._setModifiedDate = false;
 
-		subscriptionModelImpl._originalClassNameId = subscriptionModelImpl._classNameId;
+		subscriptionModelImpl._originalClassNameId =
+			subscriptionModelImpl._classNameId;
 
 		subscriptionModelImpl._setOriginalClassNameId = false;
 
@@ -591,7 +653,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public CacheModel<Subscription> toCacheModel() {
-		SubscriptionCacheModel subscriptionCacheModel = new SubscriptionCacheModel();
+		SubscriptionCacheModel subscriptionCacheModel =
+			new SubscriptionCacheModel();
 
 		subscriptionCacheModel.mvccVersion = getMvccVersion();
 
@@ -646,16 +709,20 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Subscription, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Subscription, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Subscription, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Subscription, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Subscription, Object> attributeGetterFunction = entry.getValue();
+			Function<Subscription, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -674,18 +741,22 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Subscription, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Subscription, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Subscription, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Subscription, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Subscription, Object> attributeGetterFunction = entry.getValue();
+			Function<Subscription, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -699,10 +770,12 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Subscription.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Subscription.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Subscription.class, ModelWrapper.class
-		};
+		Subscription.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _subscriptionId;
 	private long _groupId;
@@ -727,4 +800,5 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private String _frequency;
 	private long _columnBitmask;
 	private Subscription _escapedModel;
+
 }

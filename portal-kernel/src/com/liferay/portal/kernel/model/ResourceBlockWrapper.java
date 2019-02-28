@@ -33,8 +33,10 @@ import java.util.Map;
  */
 @Deprecated
 @ProviderType
-public class ResourceBlockWrapper extends BaseModelWrapper<ResourceBlock>
+public class ResourceBlockWrapper
+	extends BaseModelWrapper<ResourceBlock>
 	implements ResourceBlock, ModelWrapper<ResourceBlock> {
+
 	public ResourceBlockWrapper(ResourceBlock resourceBlock) {
 		super(resourceBlock);
 	}
@@ -100,80 +102,80 @@ public class ResourceBlockWrapper extends BaseModelWrapper<ResourceBlock>
 	}
 
 	/**
-	* Returns the company ID of this resource block.
-	*
-	* @return the company ID of this resource block
-	*/
+	 * Returns the company ID of this resource block.
+	 *
+	 * @return the company ID of this resource block
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the group ID of this resource block.
-	*
-	* @return the group ID of this resource block
-	*/
+	 * Returns the group ID of this resource block.
+	 *
+	 * @return the group ID of this resource block
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the mvcc version of this resource block.
-	*
-	* @return the mvcc version of this resource block
-	*/
+	 * Returns the mvcc version of this resource block.
+	 *
+	 * @return the mvcc version of this resource block
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this resource block.
-	*
-	* @return the name of this resource block
-	*/
+	 * Returns the name of this resource block.
+	 *
+	 * @return the name of this resource block
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the permissions hash of this resource block.
-	*
-	* @return the permissions hash of this resource block
-	*/
+	 * Returns the permissions hash of this resource block.
+	 *
+	 * @return the permissions hash of this resource block
+	 */
 	@Override
 	public String getPermissionsHash() {
 		return model.getPermissionsHash();
 	}
 
 	/**
-	* Returns the primary key of this resource block.
-	*
-	* @return the primary key of this resource block
-	*/
+	 * Returns the primary key of this resource block.
+	 *
+	 * @return the primary key of this resource block
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the reference count of this resource block.
-	*
-	* @return the reference count of this resource block
-	*/
+	 * Returns the reference count of this resource block.
+	 *
+	 * @return the reference count of this resource block
+	 */
 	@Override
 	public long getReferenceCount() {
 		return model.getReferenceCount();
 	}
 
 	/**
-	* Returns the resource block ID of this resource block.
-	*
-	* @return the resource block ID of this resource block
-	*/
+	 * Returns the resource block ID of this resource block.
+	 *
+	 * @return the resource block ID of this resource block
+	 */
 	@Override
 	public long getResourceBlockId() {
 		return model.getResourceBlockId();
@@ -185,80 +187,80 @@ public class ResourceBlockWrapper extends BaseModelWrapper<ResourceBlock>
 	}
 
 	/**
-	* Sets the company ID of this resource block.
-	*
-	* @param companyId the company ID of this resource block
-	*/
+	 * Sets the company ID of this resource block.
+	 *
+	 * @param companyId the company ID of this resource block
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the group ID of this resource block.
-	*
-	* @param groupId the group ID of this resource block
-	*/
+	 * Sets the group ID of this resource block.
+	 *
+	 * @param groupId the group ID of this resource block
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the mvcc version of this resource block.
-	*
-	* @param mvccVersion the mvcc version of this resource block
-	*/
+	 * Sets the mvcc version of this resource block.
+	 *
+	 * @param mvccVersion the mvcc version of this resource block
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this resource block.
-	*
-	* @param name the name of this resource block
-	*/
+	 * Sets the name of this resource block.
+	 *
+	 * @param name the name of this resource block
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the permissions hash of this resource block.
-	*
-	* @param permissionsHash the permissions hash of this resource block
-	*/
+	 * Sets the permissions hash of this resource block.
+	 *
+	 * @param permissionsHash the permissions hash of this resource block
+	 */
 	@Override
 	public void setPermissionsHash(String permissionsHash) {
 		model.setPermissionsHash(permissionsHash);
 	}
 
 	/**
-	* Sets the primary key of this resource block.
-	*
-	* @param primaryKey the primary key of this resource block
-	*/
+	 * Sets the primary key of this resource block.
+	 *
+	 * @param primaryKey the primary key of this resource block
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the reference count of this resource block.
-	*
-	* @param referenceCount the reference count of this resource block
-	*/
+	 * Sets the reference count of this resource block.
+	 *
+	 * @param referenceCount the reference count of this resource block
+	 */
 	@Override
 	public void setReferenceCount(long referenceCount) {
 		model.setReferenceCount(referenceCount);
 	}
 
 	/**
-	* Sets the resource block ID of this resource block.
-	*
-	* @param resourceBlockId the resource block ID of this resource block
-	*/
+	 * Sets the resource block ID of this resource block.
+	 *
+	 * @param resourceBlockId the resource block ID of this resource block
+	 */
 	@Override
 	public void setResourceBlockId(long resourceBlockId) {
 		model.setResourceBlockId(resourceBlockId);
@@ -268,4 +270,5 @@ public class ResourceBlockWrapper extends BaseModelWrapper<ResourceBlock>
 	protected ResourceBlockWrapper wrap(ResourceBlock resourceBlock) {
 		return new ResourceBlockWrapper(resourceBlock);
 	}
+
 }

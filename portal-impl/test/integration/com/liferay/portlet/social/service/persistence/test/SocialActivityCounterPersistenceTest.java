@@ -30,19 +30,11 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-
 import com.liferay.social.kernel.exception.NoSuchActivityCounterException;
 import com.liferay.social.kernel.model.SocialActivityCounter;
 import com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil;
 import com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence;
 import com.liferay.social.kernel.service.persistence.SocialActivityCounterUtil;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 import java.io.Serializable;
 
@@ -54,14 +46,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class SocialActivityCounterPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -75,7 +76,8 @@ public class SocialActivityCounterPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<SocialActivityCounter> iterator = _socialActivityCounters.iterator();
+		Iterator<SocialActivityCounter> iterator =
+			_socialActivityCounters.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -97,11 +99,14 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
 		_persistence.remove(newSocialActivityCounter);
 
-		SocialActivityCounter existingSocialActivityCounter = _persistence.fetchByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
+		SocialActivityCounter existingSocialActivityCounter =
+			_persistence.fetchByPrimaryKey(
+				newSocialActivityCounter.getPrimaryKey());
 
 		Assert.assertNull(existingSocialActivityCounter);
 	}
@@ -115,7 +120,8 @@ public class SocialActivityCounterPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		SocialActivityCounter newSocialActivityCounter = _persistence.create(pk);
+		SocialActivityCounter newSocialActivityCounter = _persistence.create(
+			pk);
 
 		newSocialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 
@@ -141,36 +147,51 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setActive(RandomTestUtil.randomBoolean());
 
-		_socialActivityCounters.add(_persistence.update(
-				newSocialActivityCounter));
+		_socialActivityCounters.add(
+			_persistence.update(newSocialActivityCounter));
 
-		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
+		SocialActivityCounter existingSocialActivityCounter =
+			_persistence.findByPrimaryKey(
+				newSocialActivityCounter.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityCounter.getActivityCounterId(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getActivityCounterId(),
 			newSocialActivityCounter.getActivityCounterId());
-		Assert.assertEquals(existingSocialActivityCounter.getGroupId(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getGroupId(),
 			newSocialActivityCounter.getGroupId());
-		Assert.assertEquals(existingSocialActivityCounter.getCompanyId(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getCompanyId(),
 			newSocialActivityCounter.getCompanyId());
-		Assert.assertEquals(existingSocialActivityCounter.getClassNameId(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getClassNameId(),
 			newSocialActivityCounter.getClassNameId());
-		Assert.assertEquals(existingSocialActivityCounter.getClassPK(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getClassPK(),
 			newSocialActivityCounter.getClassPK());
-		Assert.assertEquals(existingSocialActivityCounter.getName(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getName(),
 			newSocialActivityCounter.getName());
-		Assert.assertEquals(existingSocialActivityCounter.getOwnerType(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getOwnerType(),
 			newSocialActivityCounter.getOwnerType());
-		Assert.assertEquals(existingSocialActivityCounter.getCurrentValue(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getCurrentValue(),
 			newSocialActivityCounter.getCurrentValue());
-		Assert.assertEquals(existingSocialActivityCounter.getTotalValue(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getTotalValue(),
 			newSocialActivityCounter.getTotalValue());
-		Assert.assertEquals(existingSocialActivityCounter.getGraceValue(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getGraceValue(),
 			newSocialActivityCounter.getGraceValue());
-		Assert.assertEquals(existingSocialActivityCounter.getStartPeriod(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getStartPeriod(),
 			newSocialActivityCounter.getStartPeriod());
-		Assert.assertEquals(existingSocialActivityCounter.getEndPeriod(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.getEndPeriod(),
 			newSocialActivityCounter.getEndPeriod());
-		Assert.assertEquals(existingSocialActivityCounter.isActive(),
+		Assert.assertEquals(
+			existingSocialActivityCounter.isActive(),
 			newSocialActivityCounter.isActive());
 	}
 
@@ -183,26 +204,27 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_C_C_O() throws Exception {
-		_persistence.countByG_C_C_O(RandomTestUtil.nextLong(),
+		_persistence.countByG_C_C_O(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_C_O(0L, 0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_C_C_N_O_S() throws Exception {
-		_persistence.countByG_C_C_N_O_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+		_persistence.countByG_C_C_N_O_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_C_N_O_S(0L, 0L, 0L, "null", 0, 0);
 
@@ -211,9 +233,10 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testCountByG_C_C_N_O_E() throws Exception {
-		_persistence.countByG_C_C_N_O_E(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+		_persistence.countByG_C_C_N_O_E(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_C_N_O_E(0L, 0L, 0L, "null", 0, 0);
 
@@ -222,12 +245,15 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
-		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
+		SocialActivityCounter existingSocialActivityCounter =
+			_persistence.findByPrimaryKey(
+				newSocialActivityCounter.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityCounter,
-			newSocialActivityCounter);
+		Assert.assertEquals(
+			existingSocialActivityCounter, newSocialActivityCounter);
 	}
 
 	@Test(expected = NoSuchActivityCounterException.class)
@@ -239,33 +265,38 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SocialActivityCounter> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SocialActivityCounter",
-			"activityCounterId", true, "groupId", true, "companyId", true,
-			"classNameId", true, "classPK", true, "name", true, "ownerType",
-			true, "currentValue", true, "totalValue", true, "graceValue", true,
-			"startPeriod", true, "endPeriod", true, "active", true);
+		return OrderByComparatorFactoryUtil.create(
+			"SocialActivityCounter", "activityCounterId", true, "groupId", true,
+			"companyId", true, "classNameId", true, "classPK", true, "name",
+			true, "ownerType", true, "currentValue", true, "totalValue", true,
+			"graceValue", true, "startPeriod", true, "endPeriod", true,
+			"active", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
-		SocialActivityCounter existingSocialActivityCounter = _persistence.fetchByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
+		SocialActivityCounter existingSocialActivityCounter =
+			_persistence.fetchByPrimaryKey(
+				newSocialActivityCounter.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityCounter,
-			newSocialActivityCounter);
+		Assert.assertEquals(
+			existingSocialActivityCounter, newSocialActivityCounter);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		SocialActivityCounter missingSocialActivityCounter = _persistence.fetchByPrimaryKey(pk);
+		SocialActivityCounter missingSocialActivityCounter =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingSocialActivityCounter);
 	}
@@ -273,21 +304,27 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		SocialActivityCounter newSocialActivityCounter1 = addSocialActivityCounter();
-		SocialActivityCounter newSocialActivityCounter2 = addSocialActivityCounter();
+
+		SocialActivityCounter newSocialActivityCounter1 =
+			addSocialActivityCounter();
+		SocialActivityCounter newSocialActivityCounter2 =
+			addSocialActivityCounter();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSocialActivityCounter1.getPrimaryKey());
 		primaryKeys.add(newSocialActivityCounter2.getPrimaryKey());
 
-		Map<Serializable, SocialActivityCounter> socialActivityCounters = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivityCounter> socialActivityCounters =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, socialActivityCounters.size());
-		Assert.assertEquals(newSocialActivityCounter1,
+		Assert.assertEquals(
+			newSocialActivityCounter1,
 			socialActivityCounters.get(
 				newSocialActivityCounter1.getPrimaryKey()));
-		Assert.assertEquals(newSocialActivityCounter2,
+		Assert.assertEquals(
+			newSocialActivityCounter2,
 			socialActivityCounters.get(
 				newSocialActivityCounter2.getPrimaryKey()));
 	}
@@ -295,6 +332,7 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -304,7 +342,8 @@ public class SocialActivityCounterPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SocialActivityCounter> socialActivityCounters = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivityCounter> socialActivityCounters =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(socialActivityCounters.isEmpty());
 	}
@@ -312,7 +351,9 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -321,53 +362,65 @@ public class SocialActivityCounterPersistenceTest {
 		primaryKeys.add(newSocialActivityCounter.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SocialActivityCounter> socialActivityCounters = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivityCounter> socialActivityCounters =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, socialActivityCounters.size());
-		Assert.assertEquals(newSocialActivityCounter,
-			socialActivityCounters.get(newSocialActivityCounter.getPrimaryKey()));
+		Assert.assertEquals(
+			newSocialActivityCounter,
+			socialActivityCounters.get(
+				newSocialActivityCounter.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialActivityCounter> socialActivityCounters = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivityCounter> socialActivityCounters =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(socialActivityCounters.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSocialActivityCounter.getPrimaryKey());
 
-		Map<Serializable, SocialActivityCounter> socialActivityCounters = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialActivityCounter> socialActivityCounters =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, socialActivityCounters.size());
-		Assert.assertEquals(newSocialActivityCounter,
-			socialActivityCounters.get(newSocialActivityCounter.getPrimaryKey()));
+		Assert.assertEquals(
+			newSocialActivityCounter,
+			socialActivityCounters.get(
+				newSocialActivityCounter.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = SocialActivityCounterLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			SocialActivityCounterLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialActivityCounter>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<SocialActivityCounter>() {
+
 				@Override
 				public void performAction(
 					SocialActivityCounter socialActivityCounter) {
+
 					Assert.assertNotNull(socialActivityCounter);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -376,54 +429,61 @@ public class SocialActivityCounterPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivityCounter.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityCounterId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"activityCounterId",
 				newSocialActivityCounter.getActivityCounterId()));
 
-		List<SocialActivityCounter> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialActivityCounter> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		SocialActivityCounter existingSocialActivityCounter = result.get(0);
 
-		Assert.assertEquals(existingSocialActivityCounter,
-			newSocialActivityCounter);
+		Assert.assertEquals(
+			existingSocialActivityCounter, newSocialActivityCounter);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivityCounter.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityCounterId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"activityCounterId", RandomTestUtil.nextLong()));
 
-		List<SocialActivityCounter> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialActivityCounter> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivityCounter.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"activityCounterId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("activityCounterId"));
 
-		Object newActivityCounterId = newSocialActivityCounter.getActivityCounterId();
+		Object newActivityCounterId =
+			newSocialActivityCounter.getActivityCounterId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("activityCounterId",
-				new Object[] { newActivityCounterId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"activityCounterId", new Object[] {newActivityCounterId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -436,14 +496,15 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivityCounter.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"activityCounterId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("activityCounterId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("activityCounterId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"activityCounterId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -452,65 +513,83 @@ public class SocialActivityCounterPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
 
 		_persistence.clearCache();
 
-		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
+		SocialActivityCounter existingSocialActivityCounter =
+			_persistence.findByPrimaryKey(
+				newSocialActivityCounter.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingSocialActivityCounter.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialActivityCounter,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingSocialActivityCounter.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialActivityCounter,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingSocialActivityCounter.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingSocialActivityCounter,
-				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
+		Assert.assertEquals(
+			Long.valueOf(existingSocialActivityCounter.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialActivityCounter, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialActivityCounter.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialActivityCounter, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialActivityCounter.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialActivityCounter, "getOriginalClassPK",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
 				existingSocialActivityCounter.getName(),
-				ReflectionTestUtil.invoke(existingSocialActivityCounter,
-					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(Integer.valueOf(
-				existingSocialActivityCounter.getOwnerType()),
-			ReflectionTestUtil.<Integer>invoke(existingSocialActivityCounter,
-				"getOriginalOwnerType", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(
-				existingSocialActivityCounter.getStartPeriod()),
-			ReflectionTestUtil.<Integer>invoke(existingSocialActivityCounter,
-				"getOriginalStartPeriod", new Class<?>[0]));
+				ReflectionTestUtil.invoke(
+					existingSocialActivityCounter, "getOriginalName",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Integer.valueOf(existingSocialActivityCounter.getOwnerType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingSocialActivityCounter, "getOriginalOwnerType",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingSocialActivityCounter.getStartPeriod()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingSocialActivityCounter, "getOriginalStartPeriod",
+				new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(
-				existingSocialActivityCounter.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialActivityCounter,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingSocialActivityCounter.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialActivityCounter,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingSocialActivityCounter.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingSocialActivityCounter,
-				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
+		Assert.assertEquals(
+			Long.valueOf(existingSocialActivityCounter.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialActivityCounter, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialActivityCounter.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialActivityCounter, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialActivityCounter.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialActivityCounter, "getOriginalClassPK",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
 				existingSocialActivityCounter.getName(),
-				ReflectionTestUtil.invoke(existingSocialActivityCounter,
-					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(Integer.valueOf(
-				existingSocialActivityCounter.getOwnerType()),
-			ReflectionTestUtil.<Integer>invoke(existingSocialActivityCounter,
-				"getOriginalOwnerType", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(
-				existingSocialActivityCounter.getEndPeriod()),
-			ReflectionTestUtil.<Integer>invoke(existingSocialActivityCounter,
-				"getOriginalEndPeriod", new Class<?>[0]));
+				ReflectionTestUtil.invoke(
+					existingSocialActivityCounter, "getOriginalName",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Integer.valueOf(existingSocialActivityCounter.getOwnerType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingSocialActivityCounter, "getOriginalOwnerType",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingSocialActivityCounter.getEndPeriod()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingSocialActivityCounter, "getOriginalEndPeriod",
+				new Class<?>[0]));
 	}
 
 	protected SocialActivityCounter addSocialActivityCounter()
 		throws Exception {
+
 		long pk = RandomTestUtil.nextLong();
 
 		SocialActivityCounter socialActivityCounter = _persistence.create(pk);
@@ -544,7 +623,9 @@ public class SocialActivityCounterPersistenceTest {
 		return socialActivityCounter;
 	}
 
-	private List<SocialActivityCounter> _socialActivityCounters = new ArrayList<SocialActivityCounter>();
+	private List<SocialActivityCounter> _socialActivityCounters =
+		new ArrayList<SocialActivityCounter>();
 	private SocialActivityCounterPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

@@ -17,7 +17,6 @@ package com.liferay.announcements.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -38,9 +37,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface AnnouncementsDeliveryService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,20 +50,24 @@ public interface AnnouncementsDeliveryService extends BaseService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public AnnouncementsDelivery updateDelivery(long userId, String type,
-		boolean email, boolean sms) throws PortalException;
+	public AnnouncementsDelivery updateDelivery(
+			long userId, String type, boolean email, boolean sms)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#updateDelivery(long, String, boolean, boolean)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #updateDelivery(long, String, boolean, boolean)}
+	 */
 	@Deprecated
-	public AnnouncementsDelivery updateDelivery(long userId, String type,
-		boolean email, boolean sms, boolean website) throws PortalException;
+	public AnnouncementsDelivery updateDelivery(
+			long userId, String type, boolean email, boolean sms,
+			boolean website)
+		throws PortalException;
+
 }

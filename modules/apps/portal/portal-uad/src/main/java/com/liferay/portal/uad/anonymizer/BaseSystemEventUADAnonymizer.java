@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.uad.constants.PortalUADConstants;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -39,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseSystemEventUADAnonymizer
 	extends DynamicQueryUADAnonymizer<SystemEvent> {
+
 	@Override
-	public void autoAnonymize(SystemEvent systemEvent, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			SystemEvent systemEvent, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (systemEvent.getUserId() == userId) {
 			systemEvent.setUserId(anonymousUser.getUserId());
 			systemEvent.setUserName(anonymousUser.getFullName());
@@ -72,4 +74,5 @@ public abstract class BaseSystemEventUADAnonymizer
 
 	@Reference
 	protected SystemEventLocalService systemEventLocalService;
+
 }

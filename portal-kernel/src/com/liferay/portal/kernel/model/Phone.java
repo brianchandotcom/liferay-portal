@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.PhoneImpl")
 @ProviderType
 public interface Phone extends PhoneModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PhoneImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Phone, Long> PHONE_ID_ACCESSOR = new Accessor<Phone, Long>() {
+	public static final Accessor<Phone, Long> PHONE_ID_ACCESSOR =
+		new Accessor<Phone, Long>() {
+
 			@Override
 			public Long get(Phone phone) {
 				return phone.getPhoneId();
@@ -49,8 +52,10 @@ public interface Phone extends PhoneModel, PersistedModel {
 			public Class<Phone> getTypeClass() {
 				return Phone.class;
 			}
+
 		};
 
 	public ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

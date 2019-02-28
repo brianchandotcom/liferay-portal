@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class AddressPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,8 @@ public class AddressPersistenceTest {
 
 		_persistence.remove(newAddress);
 
-		Address existingAddress = _persistence.fetchByPrimaryKey(newAddress.getPrimaryKey());
+		Address existingAddress = _persistence.fetchByPrimaryKey(
+			newAddress.getPrimaryKey());
 
 		Assert.assertNull(existingAddress);
 	}
@@ -155,43 +158,48 @@ public class AddressPersistenceTest {
 
 		_addresses.add(_persistence.update(newAddress));
 
-		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
+		Address existingAddress = _persistence.findByPrimaryKey(
+			newAddress.getPrimaryKey());
 
-		Assert.assertEquals(existingAddress.getMvccVersion(),
-			newAddress.getMvccVersion());
+		Assert.assertEquals(
+			existingAddress.getMvccVersion(), newAddress.getMvccVersion());
 		Assert.assertEquals(existingAddress.getUuid(), newAddress.getUuid());
-		Assert.assertEquals(existingAddress.getAddressId(),
-			newAddress.getAddressId());
-		Assert.assertEquals(existingAddress.getCompanyId(),
-			newAddress.getCompanyId());
-		Assert.assertEquals(existingAddress.getUserId(), newAddress.getUserId());
-		Assert.assertEquals(existingAddress.getUserName(),
-			newAddress.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingAddress.getCreateDate()),
+		Assert.assertEquals(
+			existingAddress.getAddressId(), newAddress.getAddressId());
+		Assert.assertEquals(
+			existingAddress.getCompanyId(), newAddress.getCompanyId());
+		Assert.assertEquals(
+			existingAddress.getUserId(), newAddress.getUserId());
+		Assert.assertEquals(
+			existingAddress.getUserName(), newAddress.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingAddress.getCreateDate()),
 			Time.getShortTimestamp(newAddress.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingAddress.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingAddress.getModifiedDate()),
 			Time.getShortTimestamp(newAddress.getModifiedDate()));
-		Assert.assertEquals(existingAddress.getClassNameId(),
-			newAddress.getClassNameId());
-		Assert.assertEquals(existingAddress.getClassPK(),
-			newAddress.getClassPK());
-		Assert.assertEquals(existingAddress.getStreet1(),
-			newAddress.getStreet1());
-		Assert.assertEquals(existingAddress.getStreet2(),
-			newAddress.getStreet2());
-		Assert.assertEquals(existingAddress.getStreet3(),
-			newAddress.getStreet3());
+		Assert.assertEquals(
+			existingAddress.getClassNameId(), newAddress.getClassNameId());
+		Assert.assertEquals(
+			existingAddress.getClassPK(), newAddress.getClassPK());
+		Assert.assertEquals(
+			existingAddress.getStreet1(), newAddress.getStreet1());
+		Assert.assertEquals(
+			existingAddress.getStreet2(), newAddress.getStreet2());
+		Assert.assertEquals(
+			existingAddress.getStreet3(), newAddress.getStreet3());
 		Assert.assertEquals(existingAddress.getCity(), newAddress.getCity());
 		Assert.assertEquals(existingAddress.getZip(), newAddress.getZip());
-		Assert.assertEquals(existingAddress.getRegionId(),
-			newAddress.getRegionId());
-		Assert.assertEquals(existingAddress.getCountryId(),
-			newAddress.getCountryId());
-		Assert.assertEquals(existingAddress.getTypeId(), newAddress.getTypeId());
-		Assert.assertEquals(existingAddress.isMailing(), newAddress.isMailing());
-		Assert.assertEquals(existingAddress.isPrimary(), newAddress.isPrimary());
+		Assert.assertEquals(
+			existingAddress.getRegionId(), newAddress.getRegionId());
+		Assert.assertEquals(
+			existingAddress.getCountryId(), newAddress.getCountryId());
+		Assert.assertEquals(
+			existingAddress.getTypeId(), newAddress.getTypeId());
+		Assert.assertEquals(
+			existingAddress.isMailing(), newAddress.isMailing());
+		Assert.assertEquals(
+			existingAddress.isPrimary(), newAddress.isPrimary());
 	}
 
 	@Test
@@ -228,34 +236,35 @@ public class AddressPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C_C() throws Exception {
-		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByC_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByC_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_C_C_M() throws Exception {
-		_persistence.countByC_C_C_M(RandomTestUtil.nextLong(),
+		_persistence.countByC_C_C_M(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_C_C_M(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByC_C_C_P() throws Exception {
-		_persistence.countByC_C_C_P(RandomTestUtil.nextLong(),
+		_persistence.countByC_C_C_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_C_C_P(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
@@ -264,7 +273,8 @@ public class AddressPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Address newAddress = addAddress();
 
-		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
+		Address existingAddress = _persistence.findByPrimaryKey(
+			newAddress.getPrimaryKey());
 
 		Assert.assertEquals(existingAddress, newAddress);
 	}
@@ -278,24 +288,26 @@ public class AddressPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Address> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Address", "mvccVersion",
-			true, "uuid", true, "addressId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "street1", true, "street2",
-			true, "street3", true, "city", true, "zip", true, "regionId", true,
-			"countryId", true, "typeId", true, "mailing", true, "primary", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Address", "mvccVersion", true, "uuid", true, "addressId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"street1", true, "street2", true, "street3", true, "city", true,
+			"zip", true, "regionId", true, "countryId", true, "typeId", true,
+			"mailing", true, "primary", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Address newAddress = addAddress();
 
-		Address existingAddress = _persistence.fetchByPrimaryKey(newAddress.getPrimaryKey());
+		Address existingAddress = _persistence.fetchByPrimaryKey(
+			newAddress.getPrimaryKey());
 
 		Assert.assertEquals(existingAddress, newAddress);
 	}
@@ -312,6 +324,7 @@ public class AddressPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Address newAddress1 = addAddress();
 		Address newAddress2 = addAddress();
 
@@ -320,18 +333,20 @@ public class AddressPersistenceTest {
 		primaryKeys.add(newAddress1.getPrimaryKey());
 		primaryKeys.add(newAddress2.getPrimaryKey());
 
-		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, addresses.size());
-		Assert.assertEquals(newAddress1,
-			addresses.get(newAddress1.getPrimaryKey()));
-		Assert.assertEquals(newAddress2,
-			addresses.get(newAddress2.getPrimaryKey()));
+		Assert.assertEquals(
+			newAddress1, addresses.get(newAddress1.getPrimaryKey()));
+		Assert.assertEquals(
+			newAddress2, addresses.get(newAddress2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -341,7 +356,8 @@ public class AddressPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(addresses.isEmpty());
 	}
@@ -349,6 +365,7 @@ public class AddressPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Address newAddress = addAddress();
 
 		long pk = RandomTestUtil.nextLong();
@@ -358,52 +375,57 @@ public class AddressPersistenceTest {
 		primaryKeys.add(newAddress.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, addresses.size());
-		Assert.assertEquals(newAddress,
-			addresses.get(newAddress.getPrimaryKey()));
+		Assert.assertEquals(
+			newAddress, addresses.get(newAddress.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(addresses.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Address newAddress = addAddress();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newAddress.getPrimaryKey());
 
-		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Address> addresses = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, addresses.size());
-		Assert.assertEquals(newAddress,
-			addresses.get(newAddress.getPrimaryKey()));
+		Assert.assertEquals(
+			newAddress, addresses.get(newAddress.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = AddressLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			AddressLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Address>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Address>() {
+
 				@Override
 				public void performAction(Address address) {
 					Assert.assertNotNull(address);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -412,15 +434,14 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Address newAddress = addAddress();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Address.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("addressId",
-				newAddress.getAddressId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("addressId", newAddress.getAddressId()));
 
 		List<Address> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -433,11 +454,11 @@ public class AddressPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Address.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("addressId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("addressId", RandomTestUtil.nextLong()));
 
 		List<Address> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -445,19 +466,19 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Address newAddress = addAddress();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Address.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("addressId"));
 
 		Object newAddressId = newAddress.getAddressId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("addressId",
-				new Object[] { newAddressId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"addressId", new Object[] {newAddressId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -470,13 +491,14 @@ public class AddressPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Address.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("addressId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("addressId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"addressId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -534,4 +556,5 @@ public class AddressPersistenceTest {
 	private List<Address> _addresses = new ArrayList<Address>();
 	private AddressPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

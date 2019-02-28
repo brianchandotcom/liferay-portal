@@ -19,5 +19,7 @@ package com.liferay.users.admin.uad.constants;
  * @generated
  */
 public class UsersAdminUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_USER_TRACKER = { "userId" };
+
+	public static final String[] USER_ID_FIELD_NAMES_USER_TRACKER = {"userId"};
+
 }

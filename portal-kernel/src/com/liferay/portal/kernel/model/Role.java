@@ -30,12 +30,15 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 @ImplementationClassName("com.liferay.portal.model.impl.RoleImpl")
 @ProviderType
 public interface Role extends RoleModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Role, Long> ROLE_ID_ACCESSOR = new Accessor<Role, Long>() {
+	public static final Accessor<Role, Long> ROLE_ID_ACCESSOR =
+		new Accessor<Role, Long>() {
+
 			@Override
 			public Long get(Role role) {
 				return role.getRoleId();
@@ -50,9 +53,11 @@ public interface Role extends RoleModel, PersistedModel {
 			public Class<Role> getTypeClass() {
 				return Role.class;
 			}
-		};
 
-	public static final Accessor<Role, String> NAME_ACCESSOR = new Accessor<Role, String>() {
+		};
+	public static final Accessor<Role, String> NAME_ACCESSOR =
+		new Accessor<Role, String>() {
+
 			@Override
 			public String get(Role role) {
 				return role.getName();
@@ -67,9 +72,11 @@ public interface Role extends RoleModel, PersistedModel {
 			public Class<Role> getTypeClass() {
 				return Role.class;
 			}
-		};
 
-	public static final Accessor<Role, String> TITLE_ACCESSOR = new Accessor<Role, String>() {
+		};
+	public static final Accessor<Role, String> TITLE_ACCESSOR =
+		new Accessor<Role, String>() {
+
 			@Override
 			public String get(Role role) {
 				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
@@ -84,6 +91,7 @@ public interface Role extends RoleModel, PersistedModel {
 			public Class<Role> getTypeClass() {
 				return Role.class;
 			}
+
 		};
 
 	public String getDescriptiveName()
@@ -94,4 +102,5 @@ public interface Role extends RoleModel, PersistedModel {
 	public boolean isSystem();
 
 	public boolean isTeam();
+
 }

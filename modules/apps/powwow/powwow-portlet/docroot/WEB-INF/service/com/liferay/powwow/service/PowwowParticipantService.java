@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
 import com.liferay.powwow.model.PowwowParticipant;
 
 import java.util.List;
@@ -42,22 +41,26 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface PowwowParticipantService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowParticipantServiceUtil} to access the powwow participant remote service. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowParticipantServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public PowwowParticipant deletePowwowParticipant(
-		PowwowParticipant powwowParticipant) throws PortalException;
+			PowwowParticipant powwowParticipant)
+		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -68,8 +71,10 @@ public interface PowwowParticipantService extends BaseService {
 	public int getPowwowParticipantsCount(long powwowMeetingId)
 		throws PortalException;
 
-	public PowwowParticipant updatePowwowParticipant(long powwowParticipantId,
-		long powwowMeetingId, String name, long participantUserId,
-		String emailAddress, int type, int status, ServiceContext serviceContext)
+	public PowwowParticipant updatePowwowParticipant(
+			long powwowParticipantId, long powwowMeetingId, String name,
+			long participantUserId, String emailAddress, int type, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

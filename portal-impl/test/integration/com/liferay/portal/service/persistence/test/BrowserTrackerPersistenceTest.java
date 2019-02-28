@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class BrowserTrackerPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,8 @@ public class BrowserTrackerPersistenceTest {
 
 		_persistence.remove(newBrowserTracker);
 
-		BrowserTracker existingBrowserTracker = _persistence.fetchByPrimaryKey(newBrowserTracker.getPrimaryKey());
+		BrowserTracker existingBrowserTracker = _persistence.fetchByPrimaryKey(
+			newBrowserTracker.getPrimaryKey());
 
 		Assert.assertNull(existingBrowserTracker);
 	}
@@ -125,17 +128,22 @@ public class BrowserTrackerPersistenceTest {
 
 		_browserTrackers.add(_persistence.update(newBrowserTracker));
 
-		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
+		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(
+			newBrowserTracker.getPrimaryKey());
 
-		Assert.assertEquals(existingBrowserTracker.getMvccVersion(),
+		Assert.assertEquals(
+			existingBrowserTracker.getMvccVersion(),
 			newBrowserTracker.getMvccVersion());
-		Assert.assertEquals(existingBrowserTracker.getBrowserTrackerId(),
+		Assert.assertEquals(
+			existingBrowserTracker.getBrowserTrackerId(),
 			newBrowserTracker.getBrowserTrackerId());
-		Assert.assertEquals(existingBrowserTracker.getCompanyId(),
+		Assert.assertEquals(
+			existingBrowserTracker.getCompanyId(),
 			newBrowserTracker.getCompanyId());
-		Assert.assertEquals(existingBrowserTracker.getUserId(),
-			newBrowserTracker.getUserId());
-		Assert.assertEquals(existingBrowserTracker.getBrowserKey(),
+		Assert.assertEquals(
+			existingBrowserTracker.getUserId(), newBrowserTracker.getUserId());
+		Assert.assertEquals(
+			existingBrowserTracker.getBrowserKey(),
 			newBrowserTracker.getBrowserKey());
 	}
 
@@ -150,7 +158,8 @@ public class BrowserTrackerPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
-		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
+		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(
+			newBrowserTracker.getPrimaryKey());
 
 		Assert.assertEquals(existingBrowserTracker, newBrowserTracker);
 	}
@@ -164,21 +173,22 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<BrowserTracker> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("BrowserTracker",
-			"mvccVersion", true, "browserTrackerId", true, "companyId", true,
-			"userId", true, "browserKey", true);
+		return OrderByComparatorFactoryUtil.create(
+			"BrowserTracker", "mvccVersion", true, "browserTrackerId", true,
+			"companyId", true, "userId", true, "browserKey", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
-		BrowserTracker existingBrowserTracker = _persistence.fetchByPrimaryKey(newBrowserTracker.getPrimaryKey());
+		BrowserTracker existingBrowserTracker = _persistence.fetchByPrimaryKey(
+			newBrowserTracker.getPrimaryKey());
 
 		Assert.assertEquals(existingBrowserTracker, newBrowserTracker);
 	}
@@ -187,7 +197,8 @@ public class BrowserTrackerPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		BrowserTracker missingBrowserTracker = _persistence.fetchByPrimaryKey(pk);
+		BrowserTracker missingBrowserTracker = _persistence.fetchByPrimaryKey(
+			pk);
 
 		Assert.assertNull(missingBrowserTracker);
 	}
@@ -195,6 +206,7 @@ public class BrowserTrackerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		BrowserTracker newBrowserTracker1 = addBrowserTracker();
 		BrowserTracker newBrowserTracker2 = addBrowserTracker();
 
@@ -203,18 +215,22 @@ public class BrowserTrackerPersistenceTest {
 		primaryKeys.add(newBrowserTracker1.getPrimaryKey());
 		primaryKeys.add(newBrowserTracker2.getPrimaryKey());
 
-		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BrowserTracker> browserTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, browserTrackers.size());
-		Assert.assertEquals(newBrowserTracker1,
+		Assert.assertEquals(
+			newBrowserTracker1,
 			browserTrackers.get(newBrowserTracker1.getPrimaryKey()));
-		Assert.assertEquals(newBrowserTracker2,
+		Assert.assertEquals(
+			newBrowserTracker2,
 			browserTrackers.get(newBrowserTracker2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -224,7 +240,8 @@ public class BrowserTrackerPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BrowserTracker> browserTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(browserTrackers.isEmpty());
 	}
@@ -232,6 +249,7 @@ public class BrowserTrackerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
 		long pk = RandomTestUtil.nextLong();
@@ -241,36 +259,39 @@ public class BrowserTrackerPersistenceTest {
 		primaryKeys.add(newBrowserTracker.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BrowserTracker> browserTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, browserTrackers.size());
-		Assert.assertEquals(newBrowserTracker,
+		Assert.assertEquals(
+			newBrowserTracker,
 			browserTrackers.get(newBrowserTracker.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BrowserTracker> browserTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(browserTrackers.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newBrowserTracker.getPrimaryKey());
 
-		Map<Serializable, BrowserTracker> browserTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, BrowserTracker> browserTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, browserTrackers.size());
-		Assert.assertEquals(newBrowserTracker,
+		Assert.assertEquals(
+			newBrowserTracker,
 			browserTrackers.get(newBrowserTracker.getPrimaryKey()));
 	}
 
@@ -278,15 +299,19 @@ public class BrowserTrackerPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = BrowserTrackerLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			BrowserTrackerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BrowserTracker>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<BrowserTracker>() {
+
 				@Override
 				public void performAction(BrowserTracker browserTracker) {
 					Assert.assertNotNull(browserTracker);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -295,17 +320,18 @@ public class BrowserTrackerPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BrowserTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
-				newBrowserTracker.getBrowserTrackerId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"browserTrackerId", newBrowserTracker.getBrowserTrackerId()));
 
-		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BrowserTracker> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -316,32 +342,34 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BrowserTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"browserTrackerId", RandomTestUtil.nextLong()));
 
-		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BrowserTracker> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BrowserTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"browserTrackerId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("browserTrackerId"));
 
 		Object newBrowserTrackerId = newBrowserTracker.getBrowserTrackerId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("browserTrackerId",
-				new Object[] { newBrowserTrackerId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"browserTrackerId", new Object[] {newBrowserTrackerId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -354,14 +382,15 @@ public class BrowserTrackerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BrowserTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"browserTrackerId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("browserTrackerId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("browserTrackerId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"browserTrackerId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -374,11 +403,13 @@ public class BrowserTrackerPersistenceTest {
 
 		_persistence.clearCache();
 
-		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
+		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(
+			newBrowserTracker.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingBrowserTracker.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingBrowserTracker,
-				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingBrowserTracker.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingBrowserTracker, "getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected BrowserTracker addBrowserTracker() throws Exception {
@@ -399,7 +430,9 @@ public class BrowserTrackerPersistenceTest {
 		return browserTracker;
 	}
 
-	private List<BrowserTracker> _browserTrackers = new ArrayList<BrowserTracker>();
+	private List<BrowserTracker> _browserTrackers =
+		new ArrayList<BrowserTracker>();
 	private BrowserTrackerPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

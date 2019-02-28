@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -40,36 +39,42 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface DLFileShortcutService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileShortcutServiceUtil} to access the document library file shortcut remote service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public DLFileShortcut addFileShortcut(long groupId, long repositoryId,
-		long folderId, long toFileEntryId, ServiceContext serviceContext)
+	public DLFileShortcut addFileShortcut(
+			long groupId, long repositoryId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteFileShortcut(long fileShortcutId)
-		throws PortalException;
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public DLFileShortcut updateFileShortcut(long fileShortcutId,
-		long repositoryId, long folderId, long toFileEntryId,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+	public DLFileShortcut updateFileShortcut(
+			long fileShortcutId, long repositoryId, long folderId,
+			long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
+
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException;
+
 }

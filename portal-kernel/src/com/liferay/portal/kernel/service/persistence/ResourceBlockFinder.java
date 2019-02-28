@@ -24,6 +24,9 @@ import aQute.bnd.annotation.ProviderType;
 @Deprecated
 @ProviderType
 public interface ResourceBlockFinder {
-	public com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag findByC_G_N_R(
-		long companyId, long groupId, String name, long[] roleIds);
+
+	public com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag
+		findByC_G_N_R(
+			long companyId, long groupId, String name, long[] roleIds);
+
 }

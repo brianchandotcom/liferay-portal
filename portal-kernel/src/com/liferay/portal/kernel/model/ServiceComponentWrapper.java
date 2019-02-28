@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
+public class ServiceComponentWrapper
+	extends BaseModelWrapper<ServiceComponent>
 	implements ServiceComponent, ModelWrapper<ServiceComponent> {
+
 	public ServiceComponentWrapper(ServiceComponent serviceComponent) {
 		super(serviceComponent);
 	}
@@ -91,40 +93,40 @@ public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
 	}
 
 	/**
-	* Returns the build date of this service component.
-	*
-	* @return the build date of this service component
-	*/
+	 * Returns the build date of this service component.
+	 *
+	 * @return the build date of this service component
+	 */
 	@Override
 	public long getBuildDate() {
 		return model.getBuildDate();
 	}
 
 	/**
-	* Returns the build namespace of this service component.
-	*
-	* @return the build namespace of this service component
-	*/
+	 * Returns the build namespace of this service component.
+	 *
+	 * @return the build namespace of this service component
+	 */
 	@Override
 	public String getBuildNamespace() {
 		return model.getBuildNamespace();
 	}
 
 	/**
-	* Returns the build number of this service component.
-	*
-	* @return the build number of this service component
-	*/
+	 * Returns the build number of this service component.
+	 *
+	 * @return the build number of this service component
+	 */
 	@Override
 	public long getBuildNumber() {
 		return model.getBuildNumber();
 	}
 
 	/**
-	* Returns the data of this service component.
-	*
-	* @return the data of this service component
-	*/
+	 * Returns the data of this service component.
+	 *
+	 * @return the data of this service component
+	 */
 	@Override
 	public String getData() {
 		return model.getData();
@@ -136,20 +138,20 @@ public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
 	}
 
 	/**
-	* Returns the mvcc version of this service component.
-	*
-	* @return the mvcc version of this service component
-	*/
+	 * Returns the mvcc version of this service component.
+	 *
+	 * @return the mvcc version of this service component
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this service component.
-	*
-	* @return the primary key of this service component
-	*/
+	 * Returns the primary key of this service component.
+	 *
+	 * @return the primary key of this service component
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -161,10 +163,10 @@ public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
 	}
 
 	/**
-	* Returns the service component ID of this service component.
-	*
-	* @return the service component ID of this service component
-	*/
+	 * Returns the service component ID of this service component.
+	 *
+	 * @return the service component ID of this service component
+	 */
 	@Override
 	public long getServiceComponentId() {
 		return model.getServiceComponentId();
@@ -181,70 +183,70 @@ public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
 	}
 
 	/**
-	* Sets the build date of this service component.
-	*
-	* @param buildDate the build date of this service component
-	*/
+	 * Sets the build date of this service component.
+	 *
+	 * @param buildDate the build date of this service component
+	 */
 	@Override
 	public void setBuildDate(long buildDate) {
 		model.setBuildDate(buildDate);
 	}
 
 	/**
-	* Sets the build namespace of this service component.
-	*
-	* @param buildNamespace the build namespace of this service component
-	*/
+	 * Sets the build namespace of this service component.
+	 *
+	 * @param buildNamespace the build namespace of this service component
+	 */
 	@Override
 	public void setBuildNamespace(String buildNamespace) {
 		model.setBuildNamespace(buildNamespace);
 	}
 
 	/**
-	* Sets the build number of this service component.
-	*
-	* @param buildNumber the build number of this service component
-	*/
+	 * Sets the build number of this service component.
+	 *
+	 * @param buildNumber the build number of this service component
+	 */
 	@Override
 	public void setBuildNumber(long buildNumber) {
 		model.setBuildNumber(buildNumber);
 	}
 
 	/**
-	* Sets the data of this service component.
-	*
-	* @param data the data of this service component
-	*/
+	 * Sets the data of this service component.
+	 *
+	 * @param data the data of this service component
+	 */
 	@Override
 	public void setData(String data) {
 		model.setData(data);
 	}
 
 	/**
-	* Sets the mvcc version of this service component.
-	*
-	* @param mvccVersion the mvcc version of this service component
-	*/
+	 * Sets the mvcc version of this service component.
+	 *
+	 * @param mvccVersion the mvcc version of this service component
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this service component.
-	*
-	* @param primaryKey the primary key of this service component
-	*/
+	 * Sets the primary key of this service component.
+	 *
+	 * @param primaryKey the primary key of this service component
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the service component ID of this service component.
-	*
-	* @param serviceComponentId the service component ID of this service component
-	*/
+	 * Sets the service component ID of this service component.
+	 *
+	 * @param serviceComponentId the service component ID of this service component
+	 */
 	@Override
 	public void setServiceComponentId(long serviceComponentId) {
 		model.setServiceComponentId(serviceComponentId);
@@ -254,4 +256,5 @@ public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
 	protected ServiceComponentWrapper wrap(ServiceComponent serviceComponent) {
 		return new ServiceComponentWrapper(serviceComponent);
 	}
+
 }

@@ -27,7 +27,9 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class PasswordPolicyFinderBaseImpl extends BasePersistenceImpl<PasswordPolicy> {
+public class PasswordPolicyFinderBaseImpl
+	extends BasePersistenceImpl<PasswordPolicy> {
+
 	public PasswordPolicyFinderBaseImpl() {
 		setModelClass(PasswordPolicy.class);
 	}
@@ -53,10 +55,14 @@ public class PasswordPolicyFinderBaseImpl extends BasePersistenceImpl<PasswordPo
 	 */
 	public void setPasswordPolicyPersistence(
 		PasswordPolicyPersistence passwordPolicyPersistence) {
+
 		this.passwordPolicyPersistence = passwordPolicyPersistence;
 	}
 
 	@BeanReference(type = PasswordPolicyPersistence.class)
 	protected PasswordPolicyPersistence passwordPolicyPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(PasswordPolicyFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PasswordPolicyFinderBaseImpl.class);
+
 }

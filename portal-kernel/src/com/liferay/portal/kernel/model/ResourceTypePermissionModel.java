@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  */
 @Deprecated
 @ProviderType
-public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermission>,
-	MVCCModel, ShardedModel {
+public interface ResourceTypePermissionModel
+	extends BaseModel<ResourceTypePermission>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -156,4 +157,5 @@ public interface ResourceTypePermissionModel extends BaseModel<ResourceTypePermi
 	 * @param actionIds the action IDs of this resource type permission
 	 */
 	public void setActionIds(long actionIds);
+
 }

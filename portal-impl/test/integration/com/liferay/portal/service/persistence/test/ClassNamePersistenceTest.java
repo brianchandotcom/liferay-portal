@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -53,14 +46,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ClassNamePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -100,7 +102,8 @@ public class ClassNamePersistenceTest {
 
 		_persistence.remove(newClassName);
 
-		ClassName existingClassName = _persistence.fetchByPrimaryKey(newClassName.getPrimaryKey());
+		ClassName existingClassName = _persistence.fetchByPrimaryKey(
+			newClassName.getPrimaryKey());
 
 		Assert.assertNull(existingClassName);
 	}
@@ -122,14 +125,15 @@ public class ClassNamePersistenceTest {
 
 		_classNames.add(_persistence.update(newClassName));
 
-		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
+		ClassName existingClassName = _persistence.findByPrimaryKey(
+			newClassName.getPrimaryKey());
 
-		Assert.assertEquals(existingClassName.getMvccVersion(),
-			newClassName.getMvccVersion());
-		Assert.assertEquals(existingClassName.getClassNameId(),
-			newClassName.getClassNameId());
-		Assert.assertEquals(existingClassName.getValue(),
-			newClassName.getValue());
+		Assert.assertEquals(
+			existingClassName.getMvccVersion(), newClassName.getMvccVersion());
+		Assert.assertEquals(
+			existingClassName.getClassNameId(), newClassName.getClassNameId());
+		Assert.assertEquals(
+			existingClassName.getValue(), newClassName.getValue());
 	}
 
 	@Test
@@ -145,7 +149,8 @@ public class ClassNamePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ClassName newClassName = addClassName();
 
-		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
+		ClassName existingClassName = _persistence.findByPrimaryKey(
+			newClassName.getPrimaryKey());
 
 		Assert.assertEquals(existingClassName, newClassName);
 	}
@@ -159,20 +164,22 @@ public class ClassNamePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<ClassName> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ClassName_", "mvccVersion",
-			true, "classNameId", true, "value", true);
+		return OrderByComparatorFactoryUtil.create(
+			"ClassName_", "mvccVersion", true, "classNameId", true, "value",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ClassName newClassName = addClassName();
 
-		ClassName existingClassName = _persistence.fetchByPrimaryKey(newClassName.getPrimaryKey());
+		ClassName existingClassName = _persistence.fetchByPrimaryKey(
+			newClassName.getPrimaryKey());
 
 		Assert.assertEquals(existingClassName, newClassName);
 	}
@@ -189,6 +196,7 @@ public class ClassNamePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		ClassName newClassName1 = addClassName();
 		ClassName newClassName2 = addClassName();
 
@@ -197,18 +205,20 @@ public class ClassNamePersistenceTest {
 		primaryKeys.add(newClassName1.getPrimaryKey());
 		primaryKeys.add(newClassName2.getPrimaryKey());
 
-		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClassName> classNames =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, classNames.size());
-		Assert.assertEquals(newClassName1,
-			classNames.get(newClassName1.getPrimaryKey()));
-		Assert.assertEquals(newClassName2,
-			classNames.get(newClassName2.getPrimaryKey()));
+		Assert.assertEquals(
+			newClassName1, classNames.get(newClassName1.getPrimaryKey()));
+		Assert.assertEquals(
+			newClassName2, classNames.get(newClassName2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -218,7 +228,8 @@ public class ClassNamePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClassName> classNames =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(classNames.isEmpty());
 	}
@@ -226,6 +237,7 @@ public class ClassNamePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		ClassName newClassName = addClassName();
 
 		long pk = RandomTestUtil.nextLong();
@@ -235,52 +247,57 @@ public class ClassNamePersistenceTest {
 		primaryKeys.add(newClassName.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClassName> classNames =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, classNames.size());
-		Assert.assertEquals(newClassName,
-			classNames.get(newClassName.getPrimaryKey()));
+		Assert.assertEquals(
+			newClassName, classNames.get(newClassName.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClassName> classNames =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(classNames.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		ClassName newClassName = addClassName();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newClassName.getPrimaryKey());
 
-		Map<Serializable, ClassName> classNames = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClassName> classNames =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, classNames.size());
-		Assert.assertEquals(newClassName,
-			classNames.get(newClassName.getPrimaryKey()));
+		Assert.assertEquals(
+			newClassName, classNames.get(newClassName.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ClassNameLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ClassNameLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ClassName>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ClassName>() {
+
 				@Override
 				public void performAction(ClassName className) {
 					Assert.assertNotNull(className);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -289,17 +306,18 @@ public class ClassNamePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		ClassName newClassName = addClassName();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClassName.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClassName.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("classNameId",
-				newClassName.getClassNameId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"classNameId", newClassName.getClassNameId()));
 
-		List<ClassName> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ClassName> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -310,31 +328,34 @@ public class ClassNamePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClassName.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClassName.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("classNameId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"classNameId", RandomTestUtil.nextLong()));
 
-		List<ClassName> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ClassName> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		ClassName newClassName = addClassName();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClassName.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClassName.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("classNameId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("classNameId"));
 
 		Object newClassNameId = newClassName.getClassNameId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId",
-				new Object[] { newClassNameId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"classNameId", new Object[] {newClassNameId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -347,13 +368,15 @@ public class ClassNamePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClassName.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClassName.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("classNameId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("classNameId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"classNameId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -366,11 +389,14 @@ public class ClassNamePersistenceTest {
 
 		_persistence.clearCache();
 
-		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
+		ClassName existingClassName = _persistence.findByPrimaryKey(
+			newClassName.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingClassName.getValue(),
-				ReflectionTestUtil.invoke(existingClassName,
-					"getOriginalValue", new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
+				existingClassName.getValue(),
+				ReflectionTestUtil.invoke(
+					existingClassName, "getOriginalValue", new Class<?>[0])));
 	}
 
 	protected ClassName addClassName() throws Exception {
@@ -390,4 +416,5 @@ public class ClassNamePersistenceTest {
 	private List<ClassName> _classNames = new ArrayList<ClassName>();
 	private ClassNamePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

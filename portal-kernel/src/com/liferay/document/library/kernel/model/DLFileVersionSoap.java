@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class DLFileVersionSoap implements Serializable {
+
 	public static DLFileVersionSoap toSoapModel(DLFileVersion model) {
 		DLFileVersionSoap soapModel = new DLFileVersionSoap();
 
@@ -93,7 +94,8 @@ public class DLFileVersionSoap implements Serializable {
 	}
 
 	public static DLFileVersionSoap[] toSoapModels(List<DLFileVersion> models) {
-		List<DLFileVersionSoap> soapModels = new ArrayList<DLFileVersionSoap>(models.size());
+		List<DLFileVersionSoap> soapModels = new ArrayList<DLFileVersionSoap>(
+			models.size());
 
 		for (DLFileVersion model : models) {
 			soapModels.add(toSoapModel(model));
@@ -365,4 +367,5 @@ public class DLFileVersionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class AnnouncementsDeliveryLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,54 +41,63 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the announcements delivery to the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsDelivery the announcements delivery
-	* @return the announcements delivery that was added
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery addAnnouncementsDelivery(
-		com.liferay.announcements.kernel.model.AnnouncementsDelivery announcementsDelivery) {
+	 * Adds the announcements delivery to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param announcementsDelivery the announcements delivery
+	 * @return the announcements delivery that was added
+	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+		addAnnouncementsDelivery(
+			com.liferay.announcements.kernel.model.AnnouncementsDelivery
+				announcementsDelivery) {
+
 		return getService().addAnnouncementsDelivery(announcementsDelivery);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery addUserDelivery(
-		long userId, String type)
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			addUserDelivery(long userId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().addUserDelivery(userId, type);
 	}
 
 	/**
-	* Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
-	*
-	* @param deliveryId the primary key for the new announcements delivery
-	* @return the new announcements delivery
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery createAnnouncementsDelivery(
-		long deliveryId) {
+	 * Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
+	 *
+	 * @param deliveryId the primary key for the new announcements delivery
+	 * @return the new announcements delivery
+	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+		createAnnouncementsDelivery(long deliveryId) {
+
 		return getService().createAnnouncementsDelivery(deliveryId);
 	}
 
 	/**
-	* Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsDelivery the announcements delivery
-	* @return the announcements delivery that was removed
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
-		com.liferay.announcements.kernel.model.AnnouncementsDelivery announcementsDelivery) {
+	 * Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param announcementsDelivery the announcements delivery
+	 * @return the announcements delivery that was removed
+	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+		deleteAnnouncementsDelivery(
+			com.liferay.announcements.kernel.model.AnnouncementsDelivery
+				announcementsDelivery) {
+
 		return getService().deleteAnnouncementsDelivery(announcementsDelivery);
 	}
 
 	/**
-	* Deletes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param deliveryId the primary key of the announcements delivery
-	* @return the announcements delivery that was removed
-	* @throws PortalException if a announcements delivery with the primary key could not be found
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery deleteAnnouncementsDelivery(
-		long deliveryId)
+	 * Deletes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param deliveryId the primary key of the announcements delivery
+	 * @return the announcements delivery that was removed
+	 * @throws PortalException if a announcements delivery with the primary key could not be found
+	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			deleteAnnouncementsDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().deleteAnnouncementsDelivery(deliveryId);
 	}
 
@@ -97,11 +107,13 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 
 	public static void deleteDelivery(
 		com.liferay.announcements.kernel.model.AnnouncementsDelivery delivery) {
+
 		getService().deleteDelivery(delivery);
 	}
 
 	public static void deleteDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteDelivery(deliveryId);
 	}
 
@@ -110,213 +122,247 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			deletePersistedModel(
+				com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
+		dynamicQuery() {
+
 		return getService().dynamicQuery();
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
+
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+
+		return getService().dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
+
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery fetchAnnouncementsDelivery(
-		long deliveryId) {
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+		fetchAnnouncementsDelivery(long deliveryId) {
+
 		return getService().fetchAnnouncementsDelivery(deliveryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
 		return getService().getActionableDynamicQuery();
 	}
 
 	/**
-	* Returns a range of all the announcements deliveries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of announcements deliveries
-	* @param end the upper bound of the range of announcements deliveries (not inclusive)
-	* @return the range of announcements deliveries
-	*/
-	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> getAnnouncementsDeliveries(
-		int start, int end) {
+	 * Returns a range of all the announcements deliveries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of announcements deliveries
+	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
+	 * @return the range of announcements deliveries
+	 */
+	public static java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
+			getAnnouncementsDeliveries(int start, int end) {
+
 		return getService().getAnnouncementsDeliveries(start, end);
 	}
 
 	/**
-	* Returns the number of announcements deliveries.
-	*
-	* @return the number of announcements deliveries
-	*/
+	 * Returns the number of announcements deliveries.
+	 *
+	 * @return the number of announcements deliveries
+	 */
 	public static int getAnnouncementsDeliveriesCount() {
 		return getService().getAnnouncementsDeliveriesCount();
 	}
 
 	/**
-	* Returns the announcements delivery with the primary key.
-	*
-	* @param deliveryId the primary key of the announcements delivery
-	* @return the announcements delivery
-	* @throws PortalException if a announcements delivery with the primary key could not be found
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery getAnnouncementsDelivery(
-		long deliveryId)
+	 * Returns the announcements delivery with the primary key.
+	 *
+	 * @param deliveryId the primary key of the announcements delivery
+	 * @return the announcements delivery
+	 * @throws PortalException if a announcements delivery with the primary key could not be found
+	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			getAnnouncementsDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getAnnouncementsDelivery(deliveryId);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery getDelivery(
-		long deliveryId)
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			getDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getDelivery(deliveryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+	public static
+		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+			getIndexableActionableDynamicQuery() {
+
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static com.liferay.portal.kernel.model.PersistedModel
+			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> getUserDeliveries(
-		long userId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List
+		<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
+				getUserDeliveries(long userId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getUserDeliveries(userId);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery getUserDelivery(
-		long userId, String type)
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			getUserDelivery(long userId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getUserDelivery(userId, type);
 	}
 
 	/**
-	* Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsDelivery the announcements delivery
-	* @return the announcements delivery that was updated
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateAnnouncementsDelivery(
-		com.liferay.announcements.kernel.model.AnnouncementsDelivery announcementsDelivery) {
+	 * Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param announcementsDelivery the announcements delivery
+	 * @return the announcements delivery that was updated
+	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+		updateAnnouncementsDelivery(
+			com.liferay.announcements.kernel.model.AnnouncementsDelivery
+				announcementsDelivery) {
+
 		return getService().updateAnnouncementsDelivery(announcementsDelivery);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
-		long userId, String type, boolean email, boolean sms)
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			updateDelivery(long userId, String type, boolean email, boolean sms)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().updateDelivery(userId, type, email, sms);
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#updateDelivery(long, String, boolean, boolean)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #updateDelivery(long, String, boolean, boolean)}
+	 */
 	@Deprecated
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
-		long userId, String type, boolean email, boolean sms, boolean website)
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery
+			updateDelivery(
+				long userId, String type, boolean email, boolean sms,
+				boolean website)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().updateDelivery(userId, type, email, sms, website);
 	}
 
 	public static AnnouncementsDeliveryLocalService getService() {
 		if (_service == null) {
-			_service = (AnnouncementsDeliveryLocalService)PortalBeanLocatorUtil.locate(AnnouncementsDeliveryLocalService.class.getName());
+			_service =
+				(AnnouncementsDeliveryLocalService)PortalBeanLocatorUtil.locate(
+					AnnouncementsDeliveryLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(AnnouncementsDeliveryLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				AnnouncementsDeliveryLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static AnnouncementsDeliveryLocalService _service;
+
 }

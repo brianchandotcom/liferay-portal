@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface SocialActivityAchievementModel extends BaseModel<SocialActivityAchievement>,
-	ShardedModel {
+public interface SocialActivityAchievementModel
+	extends BaseModel<SocialActivityAchievement>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -175,4 +176,5 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 	 * @param firstInGroup the first in group of this social activity achievement
 	 */
 	public void setFirstInGroup(boolean firstInGroup);
+
 }

@@ -17,11 +17,9 @@ package com.liferay.document.library.uad.anonymizer;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDLFileEntryTypeUADAnonymizer
 	extends DynamicQueryUADAnonymizer<DLFileEntryType> {
+
 	@Override
-	public void autoAnonymize(DLFileEntryType dlFileEntryType, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			DLFileEntryType dlFileEntryType, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (dlFileEntryType.getUserId() == userId) {
 			dlFileEntryType.setUserId(anonymousUser.getUserId());
 			dlFileEntryType.setUserName(anonymousUser.getFullName());
@@ -52,8 +53,7 @@ public abstract class BaseDLFileEntryTypeUADAnonymizer
 	}
 
 	@Override
-	public void delete(DLFileEntryType dlFileEntryType)
-		throws PortalException {
+	public void delete(DLFileEntryType dlFileEntryType) throws PortalException {
 		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 	}
 
@@ -74,4 +74,5 @@ public abstract class BaseDLFileEntryTypeUADAnonymizer
 
 	@Reference
 	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
+
 }

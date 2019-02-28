@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.VirtualHostImpl")
 @ProviderType
 public interface VirtualHost extends VirtualHostModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.VirtualHostImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<VirtualHost, Long> VIRTUAL_HOST_ID_ACCESSOR = new Accessor<VirtualHost, Long>() {
+	public static final Accessor<VirtualHost, Long> VIRTUAL_HOST_ID_ACCESSOR =
+		new Accessor<VirtualHost, Long>() {
+
 			@Override
 			public Long get(VirtualHost virtualHost) {
 				return virtualHost.getVirtualHostId();
@@ -49,5 +52,7 @@ public interface VirtualHost extends VirtualHostModel, PersistedModel {
 			public Class<VirtualHost> getTypeClass() {
 				return VirtualHost.class;
 			}
+
 		};
+
 }

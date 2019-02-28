@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see ExpandoTableModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.expando.model.impl.ExpandoTableImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.expando.model.impl.ExpandoTableImpl"
+)
 @ProviderType
 public interface ExpandoTable extends ExpandoTableModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoTableImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ExpandoTable, Long> TABLE_ID_ACCESSOR = new Accessor<ExpandoTable, Long>() {
+	public static final Accessor<ExpandoTable, Long> TABLE_ID_ACCESSOR =
+		new Accessor<ExpandoTable, Long>() {
+
 			@Override
 			public Long get(ExpandoTable expandoTable) {
 				return expandoTable.getTableId();
@@ -50,7 +55,9 @@ public interface ExpandoTable extends ExpandoTableModel, PersistedModel {
 			public Class<ExpandoTable> getTypeClass() {
 				return ExpandoTable.class;
 			}
+
 		};
 
 	public boolean isDefaultTable();
+
 }

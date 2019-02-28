@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 @ProviderType
 public abstract class UserNotificationEventBaseImpl
 	extends UserNotificationEventModelImpl implements UserNotificationEvent {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,10 +43,13 @@ public abstract class UserNotificationEventBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(this);
+			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+				this);
 		}
 		else {
-			UserNotificationEventLocalServiceUtil.updateUserNotificationEvent(this);
+			UserNotificationEventLocalServiceUtil.updateUserNotificationEvent(
+				this);
 		}
 	}
+
 }

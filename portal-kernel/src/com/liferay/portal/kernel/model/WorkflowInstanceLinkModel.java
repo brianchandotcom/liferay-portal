@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WorkflowInstanceLinkModel extends AttachedModel,
-	BaseModel<WorkflowInstanceLink>, GroupedModel, MVCCModel, ShardedModel {
+public interface WorkflowInstanceLinkModel
+	extends AttachedModel, BaseModel<WorkflowInstanceLink>, GroupedModel,
+			MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -252,4 +254,5 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 	 * @param workflowInstanceId the workflow instance ID of this workflow instance link
 	 */
 	public void setWorkflowInstanceId(long workflowInstanceId);
+
 }

@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionUtil;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -55,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class DLFileVersionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -102,7 +103,8 @@ public class DLFileVersionPersistenceTest {
 
 		_persistence.remove(newDLFileVersion);
 
-		DLFileVersion existingDLFileVersion = _persistence.fetchByPrimaryKey(newDLFileVersion.getPrimaryKey());
+		DLFileVersion existingDLFileVersion = _persistence.fetchByPrimaryKey(
+			newDLFileVersion.getPrimaryKey());
 
 		Assert.assertNull(existingDLFileVersion);
 	}
@@ -174,67 +176,85 @@ public class DLFileVersionPersistenceTest {
 
 		_dlFileVersions.add(_persistence.update(newDLFileVersion));
 
-		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
+		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(
+			newDLFileVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDLFileVersion.getUuid(),
-			newDLFileVersion.getUuid());
-		Assert.assertEquals(existingDLFileVersion.getFileVersionId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getUuid(), newDLFileVersion.getUuid());
+		Assert.assertEquals(
+			existingDLFileVersion.getFileVersionId(),
 			newDLFileVersion.getFileVersionId());
-		Assert.assertEquals(existingDLFileVersion.getGroupId(),
-			newDLFileVersion.getGroupId());
-		Assert.assertEquals(existingDLFileVersion.getCompanyId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getGroupId(), newDLFileVersion.getGroupId());
+		Assert.assertEquals(
+			existingDLFileVersion.getCompanyId(),
 			newDLFileVersion.getCompanyId());
-		Assert.assertEquals(existingDLFileVersion.getUserId(),
-			newDLFileVersion.getUserId());
-		Assert.assertEquals(existingDLFileVersion.getUserName(),
+		Assert.assertEquals(
+			existingDLFileVersion.getUserId(), newDLFileVersion.getUserId());
+		Assert.assertEquals(
+			existingDLFileVersion.getUserName(),
 			newDLFileVersion.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDLFileVersion.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getCreateDate()),
 			Time.getShortTimestamp(newDLFileVersion.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDLFileVersion.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getModifiedDate()),
 			Time.getShortTimestamp(newDLFileVersion.getModifiedDate()));
-		Assert.assertEquals(existingDLFileVersion.getRepositoryId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getRepositoryId(),
 			newDLFileVersion.getRepositoryId());
-		Assert.assertEquals(existingDLFileVersion.getFolderId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getFolderId(),
 			newDLFileVersion.getFolderId());
-		Assert.assertEquals(existingDLFileVersion.getFileEntryId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getFileEntryId(),
 			newDLFileVersion.getFileEntryId());
-		Assert.assertEquals(existingDLFileVersion.getTreePath(),
+		Assert.assertEquals(
+			existingDLFileVersion.getTreePath(),
 			newDLFileVersion.getTreePath());
-		Assert.assertEquals(existingDLFileVersion.getFileName(),
+		Assert.assertEquals(
+			existingDLFileVersion.getFileName(),
 			newDLFileVersion.getFileName());
-		Assert.assertEquals(existingDLFileVersion.getExtension(),
+		Assert.assertEquals(
+			existingDLFileVersion.getExtension(),
 			newDLFileVersion.getExtension());
-		Assert.assertEquals(existingDLFileVersion.getMimeType(),
+		Assert.assertEquals(
+			existingDLFileVersion.getMimeType(),
 			newDLFileVersion.getMimeType());
-		Assert.assertEquals(existingDLFileVersion.getTitle(),
-			newDLFileVersion.getTitle());
-		Assert.assertEquals(existingDLFileVersion.getDescription(),
+		Assert.assertEquals(
+			existingDLFileVersion.getTitle(), newDLFileVersion.getTitle());
+		Assert.assertEquals(
+			existingDLFileVersion.getDescription(),
 			newDLFileVersion.getDescription());
-		Assert.assertEquals(existingDLFileVersion.getChangeLog(),
+		Assert.assertEquals(
+			existingDLFileVersion.getChangeLog(),
 			newDLFileVersion.getChangeLog());
-		Assert.assertEquals(existingDLFileVersion.getExtraSettings(),
+		Assert.assertEquals(
+			existingDLFileVersion.getExtraSettings(),
 			newDLFileVersion.getExtraSettings());
-		Assert.assertEquals(existingDLFileVersion.getFileEntryTypeId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getFileEntryTypeId(),
 			newDLFileVersion.getFileEntryTypeId());
-		Assert.assertEquals(existingDLFileVersion.getVersion(),
-			newDLFileVersion.getVersion());
-		Assert.assertEquals(existingDLFileVersion.getSize(),
-			newDLFileVersion.getSize());
-		Assert.assertEquals(existingDLFileVersion.getChecksum(),
+		Assert.assertEquals(
+			existingDLFileVersion.getVersion(), newDLFileVersion.getVersion());
+		Assert.assertEquals(
+			existingDLFileVersion.getSize(), newDLFileVersion.getSize());
+		Assert.assertEquals(
+			existingDLFileVersion.getChecksum(),
 			newDLFileVersion.getChecksum());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDLFileVersion.getLastPublishDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getLastPublishDate()),
 			Time.getShortTimestamp(newDLFileVersion.getLastPublishDate()));
-		Assert.assertEquals(existingDLFileVersion.getStatus(),
-			newDLFileVersion.getStatus());
-		Assert.assertEquals(existingDLFileVersion.getStatusByUserId(),
+		Assert.assertEquals(
+			existingDLFileVersion.getStatus(), newDLFileVersion.getStatus());
+		Assert.assertEquals(
+			existingDLFileVersion.getStatusByUserId(),
 			newDLFileVersion.getStatusByUserId());
-		Assert.assertEquals(existingDLFileVersion.getStatusByUserName(),
+		Assert.assertEquals(
+			existingDLFileVersion.getStatusByUserName(),
 			newDLFileVersion.getStatusByUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingDLFileVersion.getStatusDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getStatusDate()),
 			Time.getShortTimestamp(newDLFileVersion.getStatusDate()));
 	}
 
@@ -290,8 +310,8 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByC_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotS(0L, 0);
 	}
@@ -307,24 +327,25 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testCountByF_S() throws Exception {
-		_persistence.countByF_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByF_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByF_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_F_S() throws Exception {
-		_persistence.countByG_F_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_F_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_F_S(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByG_F_T_V() throws Exception {
-		_persistence.countByG_F_T_V(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "", "");
+		_persistence.countByG_F_T_V(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "", "");
 
 		_persistence.countByG_F_T_V(0L, 0L, "null", "null");
 
@@ -335,7 +356,8 @@ public class DLFileVersionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
-		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
+		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(
+			newDLFileVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingDLFileVersion, newDLFileVersion);
 	}
@@ -349,28 +371,29 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<DLFileVersion> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileVersion", "uuid",
-			true, "fileVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "repositoryId", true, "folderId", true,
-			"fileEntryId", true, "treePath", true, "fileName", true,
-			"extension", true, "mimeType", true, "title", true, "description",
-			true, "changeLog", true, "fileEntryTypeId", true, "version", true,
-			"size", true, "checksum", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+		return OrderByComparatorFactoryUtil.create(
+			"DLFileVersion", "uuid", true, "fileVersionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "repositoryId", true,
+			"folderId", true, "fileEntryId", true, "treePath", true, "fileName",
+			true, "extension", true, "mimeType", true, "title", true,
+			"description", true, "changeLog", true, "fileEntryTypeId", true,
+			"version", true, "size", true, "checksum", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
-		DLFileVersion existingDLFileVersion = _persistence.fetchByPrimaryKey(newDLFileVersion.getPrimaryKey());
+		DLFileVersion existingDLFileVersion = _persistence.fetchByPrimaryKey(
+			newDLFileVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingDLFileVersion, newDLFileVersion);
 	}
@@ -387,6 +410,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		DLFileVersion newDLFileVersion1 = addDLFileVersion();
 		DLFileVersion newDLFileVersion2 = addDLFileVersion();
 
@@ -395,18 +419,22 @@ public class DLFileVersionPersistenceTest {
 		primaryKeys.add(newDLFileVersion1.getPrimaryKey());
 		primaryKeys.add(newDLFileVersion2.getPrimaryKey());
 
-		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileVersion> dlFileVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, dlFileVersions.size());
-		Assert.assertEquals(newDLFileVersion1,
+		Assert.assertEquals(
+			newDLFileVersion1,
 			dlFileVersions.get(newDLFileVersion1.getPrimaryKey()));
-		Assert.assertEquals(newDLFileVersion2,
+		Assert.assertEquals(
+			newDLFileVersion2,
 			dlFileVersions.get(newDLFileVersion2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -416,7 +444,8 @@ public class DLFileVersionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileVersion> dlFileVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(dlFileVersions.isEmpty());
 	}
@@ -424,6 +453,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
 		long pk = RandomTestUtil.nextLong();
@@ -433,36 +463,39 @@ public class DLFileVersionPersistenceTest {
 		primaryKeys.add(newDLFileVersion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileVersion> dlFileVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, dlFileVersions.size());
-		Assert.assertEquals(newDLFileVersion,
+		Assert.assertEquals(
+			newDLFileVersion,
 			dlFileVersions.get(newDLFileVersion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileVersion> dlFileVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(dlFileVersions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDLFileVersion.getPrimaryKey());
 
-		Map<Serializable, DLFileVersion> dlFileVersions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileVersion> dlFileVersions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, dlFileVersions.size());
-		Assert.assertEquals(newDLFileVersion,
+		Assert.assertEquals(
+			newDLFileVersion,
 			dlFileVersions.get(newDLFileVersion.getPrimaryKey()));
 	}
 
@@ -470,15 +503,19 @@ public class DLFileVersionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = DLFileVersionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			DLFileVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileVersion>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<DLFileVersion>() {
+
 				@Override
 				public void performAction(DLFileVersion dlFileVersion) {
 					Assert.assertNotNull(dlFileVersion);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -487,17 +524,18 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId",
-				newDLFileVersion.getFileVersionId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fileVersionId", newDLFileVersion.getFileVersionId()));
 
-		List<DLFileVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -508,32 +546,34 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fileVersionId", RandomTestUtil.nextLong()));
 
-		List<DLFileVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"fileVersionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("fileVersionId"));
 
 		Object newFileVersionId = newDLFileVersion.getFileVersionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("fileVersionId",
-				new Object[] { newFileVersionId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"fileVersionId", new Object[] {newFileVersionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -546,14 +586,15 @@ public class DLFileVersionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileVersion.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"fileVersionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("fileVersionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("fileVersionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"fileVersionId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -566,21 +607,31 @@ public class DLFileVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
+		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(
+			newDLFileVersion.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingDLFileVersion.getUuid(),
-				ReflectionTestUtil.invoke(existingDLFileVersion,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingDLFileVersion.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingDLFileVersion,
-				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingDLFileVersion.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingDLFileVersion, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingDLFileVersion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDLFileVersion, "getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(existingDLFileVersion.getFileEntryId()),
-			ReflectionTestUtil.<Long>invoke(existingDLFileVersion,
-				"getOriginalFileEntryId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingDLFileVersion.getVersion(),
-				ReflectionTestUtil.invoke(existingDLFileVersion,
-					"getOriginalVersion", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingDLFileVersion.getFileEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDLFileVersion, "getOriginalFileEntryId",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingDLFileVersion.getVersion(),
+				ReflectionTestUtil.invoke(
+					existingDLFileVersion, "getOriginalVersion",
+					new Class<?>[0])));
 	}
 
 	protected DLFileVersion addDLFileVersion() throws Exception {
@@ -647,7 +698,9 @@ public class DLFileVersionPersistenceTest {
 		return dlFileVersion;
 	}
 
-	private List<DLFileVersion> _dlFileVersions = new ArrayList<DLFileVersion>();
+	private List<DLFileVersion> _dlFileVersions =
+		new ArrayList<DLFileVersion>();
 	private DLFileVersionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

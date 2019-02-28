@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class ImageSoap implements Serializable {
+
 	public static ImageSoap toSoapModel(Image model) {
 		ImageSoap soapModel = new ImageSoap();
 
@@ -165,4 +166,5 @@ public class ImageSoap implements Serializable {
 	private int _height;
 	private int _width;
 	private int _size;
+
 }

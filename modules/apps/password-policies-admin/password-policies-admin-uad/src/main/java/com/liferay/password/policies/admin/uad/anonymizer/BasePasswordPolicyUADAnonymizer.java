@@ -15,13 +15,11 @@
 package com.liferay.password.policies.admin.uad.anonymizer;
 
 import com.liferay.password.policies.admin.uad.constants.PasswordPoliciesAdminUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BasePasswordPolicyUADAnonymizer
 	extends DynamicQueryUADAnonymizer<PasswordPolicy> {
+
 	@Override
-	public void autoAnonymize(PasswordPolicy passwordPolicy, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			PasswordPolicy passwordPolicy, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (passwordPolicy.getUserId() == userId) {
 			passwordPolicy.setUserId(anonymousUser.getUserId());
 			passwordPolicy.setUserName(anonymousUser.getFullName());
@@ -68,9 +69,11 @@ public abstract class BasePasswordPolicyUADAnonymizer
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return PasswordPoliciesAdminUADConstants.USER_ID_FIELD_NAMES_PASSWORD_POLICY;
+		return PasswordPoliciesAdminUADConstants.
+			USER_ID_FIELD_NAMES_PASSWORD_POLICY;
 	}
 
 	@Reference
 	protected PasswordPolicyLocalService passwordPolicyLocalService;
+
 }

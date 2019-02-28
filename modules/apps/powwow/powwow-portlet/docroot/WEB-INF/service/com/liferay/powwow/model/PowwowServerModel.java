@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PowwowServerModel extends AuditedModel, BaseModel<PowwowServer>,
-	ShardedModel {
+public interface PowwowServerModel
+	extends AuditedModel, BaseModel<PowwowServer>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -263,4 +264,5 @@ public interface PowwowServerModel extends AuditedModel, BaseModel<PowwowServer>
 	 * @param active the active of this powwow server
 	 */
 	public void setActive(boolean active);
+
 }

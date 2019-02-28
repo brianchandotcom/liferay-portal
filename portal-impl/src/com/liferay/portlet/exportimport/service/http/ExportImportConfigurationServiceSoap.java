@@ -17,7 +17,6 @@ package com.liferay.portlet.exportimport.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -64,10 +63,14 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ExportImportConfigurationServiceSoap {
+
 	public static void deleteExportImportConfiguration(
-		long exportImportConfigurationId) throws RemoteException {
+			long exportImportConfigurationId)
+		throws RemoteException {
+
 		try {
-			ExportImportConfigurationServiceUtil.deleteExportImportConfiguration(exportImportConfigurationId);
+			ExportImportConfigurationServiceUtil.
+				deleteExportImportConfiguration(exportImportConfigurationId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -76,13 +79,21 @@ public class ExportImportConfigurationServiceSoap {
 		}
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap moveExportImportConfigurationToTrash(
-		long exportImportConfigurationId) throws RemoteException {
-		try {
-			com.liferay.exportimport.kernel.model.ExportImportConfiguration returnValue =
-				ExportImportConfigurationServiceUtil.moveExportImportConfigurationToTrash(exportImportConfigurationId);
+	public static
+		com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap
+				moveExportImportConfigurationToTrash(
+					long exportImportConfigurationId)
+			throws RemoteException {
 
-			return com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				returnValue =
+					ExportImportConfigurationServiceUtil.
+						moveExportImportConfigurationToTrash(
+							exportImportConfigurationId);
+
+			return com.liferay.exportimport.kernel.model.
+				ExportImportConfigurationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -91,13 +102,21 @@ public class ExportImportConfigurationServiceSoap {
 		}
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap restoreExportImportConfigurationFromTrash(
-		long exportImportConfigurationId) throws RemoteException {
-		try {
-			com.liferay.exportimport.kernel.model.ExportImportConfiguration returnValue =
-				ExportImportConfigurationServiceUtil.restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
+	public static
+		com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap
+				restoreExportImportConfigurationFromTrash(
+					long exportImportConfigurationId)
+			throws RemoteException {
 
-			return com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				returnValue =
+					ExportImportConfigurationServiceUtil.
+						restoreExportImportConfigurationFromTrash(
+							exportImportConfigurationId);
+
+			return com.liferay.exportimport.kernel.model.
+				ExportImportConfigurationSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -106,5 +125,7 @@ public class ExportImportConfigurationServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExportImportConfigurationServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		ExportImportConfigurationServiceSoap.class);
+
 }

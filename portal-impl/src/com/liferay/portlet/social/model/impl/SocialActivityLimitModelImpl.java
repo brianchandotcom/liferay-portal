@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -33,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
-
 import com.liferay.social.kernel.model.SocialActivityLimit;
 import com.liferay.social.kernel.model.SocialActivityLimitModel;
 
@@ -60,26 +57,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLimit>
+public class SocialActivityLimitModelImpl
+	extends BaseModelImpl<SocialActivityLimit>
 	implements SocialActivityLimitModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social activity limit model instance should use the <code>SocialActivityLimit</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SocialActivityLimit";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "activityLimitId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "activityType", Types.INTEGER },
-			{ "activityCounterName", Types.VARCHAR },
-			{ "value", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"activityLimitId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"activityType", Types.INTEGER}, {"activityCounterName", Types.VARCHAR},
+		{"value", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activityLimitId", Types.BIGINT);
@@ -93,31 +91,56 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
-	public static final String TABLE_SQL_DROP = "drop table SocialActivityLimit";
-	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityLimit.activityLimitId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityLimit.activityLimitId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table SocialActivityLimit";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY socialActivityLimit.activityLimitId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SocialActivityLimit.activityLimitId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityLimit"),
+		true);
+
 	public static final long ACTIVITYCOUNTERNAME_COLUMN_BITMASK = 1L;
+
 	public static final long ACTIVITYTYPE_COLUMN_BITMASK = 2L;
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 4L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 8L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
+
 	public static final long USERID_COLUMN_BITMASK = 32L;
+
 	public static final long ACTIVITYLIMITID_COLUMN_BITMASK = 64L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityLimit"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityLimit"));
 
 	public SocialActivityLimitModelImpl() {
 	}
@@ -156,14 +179,18 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SocialActivityLimit, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityLimit, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SocialActivityLimit, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityLimit, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityLimit, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityLimit, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SocialActivityLimit)this));
 		}
 
@@ -175,61 +202,105 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SocialActivityLimit, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SocialActivityLimit, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SocialActivityLimit, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SocialActivityLimit, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SocialActivityLimit)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SocialActivityLimit)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SocialActivityLimit, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SocialActivityLimit, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SocialActivityLimit, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SocialActivityLimit, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialActivityLimit, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialActivityLimit, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SocialActivityLimit, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialActivityLimit, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SocialActivityLimit, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SocialActivityLimit, Object>>();
-		Map<String, BiConsumer<SocialActivityLimit, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SocialActivityLimit, ?>>();
+		Map<String, Function<SocialActivityLimit, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<SocialActivityLimit, Object>>();
+		Map<String, BiConsumer<SocialActivityLimit, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<SocialActivityLimit, ?>>();
 
-
-		attributeGetterFunctions.put("activityLimitId", SocialActivityLimit::getActivityLimitId);
-		attributeSetterBiConsumers.put("activityLimitId", (BiConsumer<SocialActivityLimit, Long>)SocialActivityLimit::setActivityLimitId);
-		attributeGetterFunctions.put("groupId", SocialActivityLimit::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<SocialActivityLimit, Long>)SocialActivityLimit::setGroupId);
-		attributeGetterFunctions.put("companyId", SocialActivityLimit::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialActivityLimit, Long>)SocialActivityLimit::setCompanyId);
+		attributeGetterFunctions.put(
+			"activityLimitId", SocialActivityLimit::getActivityLimitId);
+		attributeSetterBiConsumers.put(
+			"activityLimitId",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setActivityLimitId);
+		attributeGetterFunctions.put(
+			"groupId", SocialActivityLimit::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", SocialActivityLimit::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setCompanyId);
 		attributeGetterFunctions.put("userId", SocialActivityLimit::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<SocialActivityLimit, Long>)SocialActivityLimit::setUserId);
-		attributeGetterFunctions.put("classNameId", SocialActivityLimit::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SocialActivityLimit, Long>)SocialActivityLimit::setClassNameId);
-		attributeGetterFunctions.put("classPK", SocialActivityLimit::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<SocialActivityLimit, Long>)SocialActivityLimit::setClassPK);
-		attributeGetterFunctions.put("activityType", SocialActivityLimit::getActivityType);
-		attributeSetterBiConsumers.put("activityType", (BiConsumer<SocialActivityLimit, Integer>)SocialActivityLimit::setActivityType);
-		attributeGetterFunctions.put("activityCounterName", SocialActivityLimit::getActivityCounterName);
-		attributeSetterBiConsumers.put("activityCounterName", (BiConsumer<SocialActivityLimit, String>)SocialActivityLimit::setActivityCounterName);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setUserId);
+		attributeGetterFunctions.put(
+			"classNameId", SocialActivityLimit::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setClassNameId);
+		attributeGetterFunctions.put(
+			"classPK", SocialActivityLimit::getClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setClassPK);
+		attributeGetterFunctions.put(
+			"activityType", SocialActivityLimit::getActivityType);
+		attributeSetterBiConsumers.put(
+			"activityType",
+			(BiConsumer<SocialActivityLimit, Integer>)
+				SocialActivityLimit::setActivityType);
+		attributeGetterFunctions.put(
+			"activityCounterName", SocialActivityLimit::getActivityCounterName);
+		attributeSetterBiConsumers.put(
+			"activityCounterName",
+			(BiConsumer<SocialActivityLimit, String>)
+				SocialActivityLimit::setActivityCounterName);
 		attributeGetterFunctions.put("value", SocialActivityLimit::getValue);
-		attributeSetterBiConsumers.put("value", (BiConsumer<SocialActivityLimit, String>)SocialActivityLimit::setValue);
+		attributeSetterBiConsumers.put(
+			"value",
+			(BiConsumer<SocialActivityLimit, String>)
+				SocialActivityLimit::setValue);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -444,8 +515,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SocialActivityLimit.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SocialActivityLimit.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -458,8 +530,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	@Override
 	public SocialActivityLimit toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityLimit)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SocialActivityLimit)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -467,7 +540,8 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public Object clone() {
-		SocialActivityLimitImpl socialActivityLimitImpl = new SocialActivityLimitImpl();
+		SocialActivityLimitImpl socialActivityLimitImpl =
+			new SocialActivityLimitImpl();
 
 		socialActivityLimitImpl.setActivityLimitId(getActivityLimitId());
 		socialActivityLimitImpl.setGroupId(getGroupId());
@@ -476,7 +550,8 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		socialActivityLimitImpl.setClassNameId(getClassNameId());
 		socialActivityLimitImpl.setClassPK(getClassPK());
 		socialActivityLimitImpl.setActivityType(getActivityType());
-		socialActivityLimitImpl.setActivityCounterName(getActivityCounterName());
+		socialActivityLimitImpl.setActivityCounterName(
+			getActivityCounterName());
 		socialActivityLimitImpl.setValue(getValue());
 
 		socialActivityLimitImpl.resetOriginalValues();
@@ -540,34 +615,41 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public void resetOriginalValues() {
 		SocialActivityLimitModelImpl socialActivityLimitModelImpl = this;
 
-		socialActivityLimitModelImpl._originalGroupId = socialActivityLimitModelImpl._groupId;
+		socialActivityLimitModelImpl._originalGroupId =
+			socialActivityLimitModelImpl._groupId;
 
 		socialActivityLimitModelImpl._setOriginalGroupId = false;
 
-		socialActivityLimitModelImpl._originalUserId = socialActivityLimitModelImpl._userId;
+		socialActivityLimitModelImpl._originalUserId =
+			socialActivityLimitModelImpl._userId;
 
 		socialActivityLimitModelImpl._setOriginalUserId = false;
 
-		socialActivityLimitModelImpl._originalClassNameId = socialActivityLimitModelImpl._classNameId;
+		socialActivityLimitModelImpl._originalClassNameId =
+			socialActivityLimitModelImpl._classNameId;
 
 		socialActivityLimitModelImpl._setOriginalClassNameId = false;
 
-		socialActivityLimitModelImpl._originalClassPK = socialActivityLimitModelImpl._classPK;
+		socialActivityLimitModelImpl._originalClassPK =
+			socialActivityLimitModelImpl._classPK;
 
 		socialActivityLimitModelImpl._setOriginalClassPK = false;
 
-		socialActivityLimitModelImpl._originalActivityType = socialActivityLimitModelImpl._activityType;
+		socialActivityLimitModelImpl._originalActivityType =
+			socialActivityLimitModelImpl._activityType;
 
 		socialActivityLimitModelImpl._setOriginalActivityType = false;
 
-		socialActivityLimitModelImpl._originalActivityCounterName = socialActivityLimitModelImpl._activityCounterName;
+		socialActivityLimitModelImpl._originalActivityCounterName =
+			socialActivityLimitModelImpl._activityCounterName;
 
 		socialActivityLimitModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<SocialActivityLimit> toCacheModel() {
-		SocialActivityLimitCacheModel socialActivityLimitCacheModel = new SocialActivityLimitCacheModel();
+		SocialActivityLimitCacheModel socialActivityLimitCacheModel =
+			new SocialActivityLimitCacheModel();
 
 		socialActivityLimitCacheModel.activityLimitId = getActivityLimitId();
 
@@ -583,12 +665,15 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		socialActivityLimitCacheModel.activityType = getActivityType();
 
-		socialActivityLimitCacheModel.activityCounterName = getActivityCounterName();
+		socialActivityLimitCacheModel.activityCounterName =
+			getActivityCounterName();
 
-		String activityCounterName = socialActivityLimitCacheModel.activityCounterName;
+		String activityCounterName =
+			socialActivityLimitCacheModel.activityCounterName;
 
 		if ((activityCounterName != null) &&
-				(activityCounterName.length() == 0)) {
+			(activityCounterName.length() == 0)) {
+
 			socialActivityLimitCacheModel.activityCounterName = null;
 		}
 
@@ -605,17 +690,20 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public String toString() {
-		Map<String, Function<SocialActivityLimit, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityLimit, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SocialActivityLimit, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityLimit, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityLimit, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityLimit, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -634,19 +722,22 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SocialActivityLimit, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityLimit, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SocialActivityLimit, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityLimit, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityLimit, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityLimit, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -660,10 +751,12 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SocialActivityLimit.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SocialActivityLimit.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SocialActivityLimit.class, ModelWrapper.class
-		};
+		SocialActivityLimit.class, ModelWrapper.class
+	};
+
 	private long _activityLimitId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -686,4 +779,5 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	private String _value;
 	private long _columnBitmask;
 	private SocialActivityLimit _escapedModel;
+
 }

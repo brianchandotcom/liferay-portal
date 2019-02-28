@@ -33,8 +33,9 @@ import com.liferay.portal.kernel.model.TypedModel;
  * @generated
  */
 @ProviderType
-public interface ExpandoTableModel extends BaseModel<ExpandoTable>, ShardedModel,
-	TypedModel {
+public interface ExpandoTableModel
+	extends BaseModel<ExpandoTable>, ShardedModel, TypedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -125,4 +126,5 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, ShardedModel
 	 * @param name the name of this expando table
 	 */
 	public void setName(String name);
+
 }

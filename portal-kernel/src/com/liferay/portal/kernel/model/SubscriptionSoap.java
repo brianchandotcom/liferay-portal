@@ -32,6 +32,7 @@ import java.util.List;
 @Deprecated
 @ProviderType
 public class SubscriptionSoap implements Serializable {
+
 	public static SubscriptionSoap toSoapModel(Subscription model) {
 		SubscriptionSoap soapModel = new SubscriptionSoap();
 
@@ -78,7 +79,8 @@ public class SubscriptionSoap implements Serializable {
 	}
 
 	public static SubscriptionSoap[] toSoapModels(List<Subscription> models) {
-		List<SubscriptionSoap> soapModels = new ArrayList<SubscriptionSoap>(models.size());
+		List<SubscriptionSoap> soapModels = new ArrayList<SubscriptionSoap>(
+			models.size());
 
 		for (Subscription model : models) {
 			soapModels.add(toSoapModel(model));
@@ -197,4 +199,5 @@ public class SubscriptionSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _frequency;
+
 }

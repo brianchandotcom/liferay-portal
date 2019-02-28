@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class SocialRequestInterpreterLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,109 +41,121 @@ public class SocialRequestInterpreterLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the social request interpreter to the list of available
-	* interpreters.
-	*
-	* @param requestInterpreter the social request interpreter
-	*/
+	 * Adds the social request interpreter to the list of available
+	 * interpreters.
+	 *
+	 * @param requestInterpreter the social request interpreter
+	 */
 	public static void addRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
+		com.liferay.social.kernel.model.SocialRequestInterpreter
+			requestInterpreter) {
+
 		getService().addRequestInterpreter(requestInterpreter);
 	}
 
 	/**
-	* Removes the social request interpreter from the list of available
-	* interpreters.
-	*
-	* @param requestInterpreter the social request interpreter
-	*/
+	 * Removes the social request interpreter from the list of available
+	 * interpreters.
+	 *
+	 * @param requestInterpreter the social request interpreter
+	 */
 	public static void deleteRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
+		com.liferay.social.kernel.model.SocialRequestInterpreter
+			requestInterpreter) {
+
 		getService().deleteRequestInterpreter(requestInterpreter);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
-	* Creates a human readable request feed entry for the social request using
-	* an available compatible request interpreter.
-	*
-	* <p>
-	* This method finds the appropriate interpreter for the request by going
-	* through the available interpreters to find one that can handle the asset
-	* type of the request.
-	* </p>
-	*
-	* @param request the social request to be translated to human readable
-	form
-	* @param themeDisplay the theme display needed by interpreters to create
-	links and get localized text fragments
-	* @return the social request feed entry
-	*/
-	public static com.liferay.social.kernel.model.SocialRequestFeedEntry interpret(
-		com.liferay.social.kernel.model.SocialRequest request,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+	 * Creates a human readable request feed entry for the social request using
+	 * an available compatible request interpreter.
+	 *
+	 * <p>
+	 * This method finds the appropriate interpreter for the request by going
+	 * through the available interpreters to find one that can handle the asset
+	 * type of the request.
+	 * </p>
+	 *
+	 * @param request the social request to be translated to human readable
+	 form
+	 * @param themeDisplay the theme display needed by interpreters to create
+	 links and get localized text fragments
+	 * @return the social request feed entry
+	 */
+	public static com.liferay.social.kernel.model.SocialRequestFeedEntry
+		interpret(
+			com.liferay.social.kernel.model.SocialRequest request,
+			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+
 		return getService().interpret(request, themeDisplay);
 	}
 
 	/**
-	* Processes the confirmation of the social request.
-	*
-	* <p>
-	* Confirmations are handled by finding the appropriate social request
-	* interpreter and calling its processConfirmation() method. To find the
-	* appropriate interpreter this method goes through the available
-	* interpreters to find one that can handle the asset type of the request.
-	* </p>
-	*
-	* @param request the social request being confirmed
-	* @param themeDisplay the theme display needed by interpreters to create
-	links and get localized text fragments
-	*/
+	 * Processes the confirmation of the social request.
+	 *
+	 * <p>
+	 * Confirmations are handled by finding the appropriate social request
+	 * interpreter and calling its processConfirmation() method. To find the
+	 * appropriate interpreter this method goes through the available
+	 * interpreters to find one that can handle the asset type of the request.
+	 * </p>
+	 *
+	 * @param request the social request being confirmed
+	 * @param themeDisplay the theme display needed by interpreters to create
+	 links and get localized text fragments
+	 */
 	public static void processConfirmation(
 		com.liferay.social.kernel.model.SocialRequest request,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+
 		getService().processConfirmation(request, themeDisplay);
 	}
 
 	/**
-	* Processes the rejection of the social request.
-	*
-	* <p>
-	* Rejections are handled by finding the appropriate social request
-	* interpreters and calling their processRejection() methods. To find the
-	* appropriate interpreters this method goes through the available
-	* interpreters and asks them if they can handle the asset type of the
-	* request.
-	* </p>
-	*
-	* @param request the social request being rejected
-	* @param themeDisplay the theme display needed by interpreters to create
-	links and get localized text fragments
-	*/
+	 * Processes the rejection of the social request.
+	 *
+	 * <p>
+	 * Rejections are handled by finding the appropriate social request
+	 * interpreters and calling their processRejection() methods. To find the
+	 * appropriate interpreters this method goes through the available
+	 * interpreters and asks them if they can handle the asset type of the
+	 * request.
+	 * </p>
+	 *
+	 * @param request the social request being rejected
+	 * @param themeDisplay the theme display needed by interpreters to create
+	 links and get localized text fragments
+	 */
 	public static void processRejection(
 		com.liferay.social.kernel.model.SocialRequest request,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+
 		getService().processRejection(request, themeDisplay);
 	}
 
 	public static SocialRequestInterpreterLocalService getService() {
 		if (_service == null) {
-			_service = (SocialRequestInterpreterLocalService)PortalBeanLocatorUtil.locate(SocialRequestInterpreterLocalService.class.getName());
+			_service =
+				(SocialRequestInterpreterLocalService)
+					PortalBeanLocatorUtil.locate(
+						SocialRequestInterpreterLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(SocialRequestInterpreterLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				SocialRequestInterpreterLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static SocialRequestInterpreterLocalService _service;
+
 }

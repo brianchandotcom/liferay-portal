@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class AnnouncementsEntrySoap implements Serializable {
+
 	public static AnnouncementsEntrySoap toSoapModel(AnnouncementsEntry model) {
 		AnnouncementsEntrySoap soapModel = new AnnouncementsEntrySoap();
 
@@ -56,7 +57,9 @@ public class AnnouncementsEntrySoap implements Serializable {
 
 	public static AnnouncementsEntrySoap[] toSoapModels(
 		AnnouncementsEntry[] models) {
-		AnnouncementsEntrySoap[] soapModels = new AnnouncementsEntrySoap[models.length];
+
+		AnnouncementsEntrySoap[] soapModels =
+			new AnnouncementsEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -67,10 +70,12 @@ public class AnnouncementsEntrySoap implements Serializable {
 
 	public static AnnouncementsEntrySoap[][] toSoapModels(
 		AnnouncementsEntry[][] models) {
+
 		AnnouncementsEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new AnnouncementsEntrySoap[models.length][models[0].length];
+			soapModels =
+				new AnnouncementsEntrySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new AnnouncementsEntrySoap[0][0];
@@ -85,13 +90,16 @@ public class AnnouncementsEntrySoap implements Serializable {
 
 	public static AnnouncementsEntrySoap[] toSoapModels(
 		List<AnnouncementsEntry> models) {
-		List<AnnouncementsEntrySoap> soapModels = new ArrayList<AnnouncementsEntrySoap>(models.size());
+
+		List<AnnouncementsEntrySoap> soapModels =
+			new ArrayList<AnnouncementsEntrySoap>(models.size());
 
 		for (AnnouncementsEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new AnnouncementsEntrySoap[soapModels.size()]);
+		return soapModels.toArray(
+			new AnnouncementsEntrySoap[soapModels.size()]);
 	}
 
 	public AnnouncementsEntrySoap() {
@@ -262,4 +270,5 @@ public class AnnouncementsEntrySoap implements Serializable {
 	private Date _expirationDate;
 	private int _priority;
 	private boolean _alert;
+
 }

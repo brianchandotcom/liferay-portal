@@ -32,11 +32,14 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialActivityAchievement>
+public class SocialActivityAchievementWrapper
+	extends BaseModelWrapper<SocialActivityAchievement>
 	implements SocialActivityAchievement,
-		ModelWrapper<SocialActivityAchievement> {
+			   ModelWrapper<SocialActivityAchievement> {
+
 	public SocialActivityAchievementWrapper(
 		SocialActivityAchievement socialActivityAchievement) {
+
 		super(socialActivityAchievement);
 	}
 
@@ -58,7 +61,7 @@ public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialAct
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 		Long activityAchievementId = (Long)attributes.get(
-				"activityAchievementId");
+			"activityAchievementId");
 
 		if (activityAchievementId != null) {
 			setActivityAchievementId(activityAchievementId);
@@ -102,100 +105,100 @@ public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialAct
 	}
 
 	/**
-	* Returns the activity achievement ID of this social activity achievement.
-	*
-	* @return the activity achievement ID of this social activity achievement
-	*/
+	 * Returns the activity achievement ID of this social activity achievement.
+	 *
+	 * @return the activity achievement ID of this social activity achievement
+	 */
 	@Override
 	public long getActivityAchievementId() {
 		return model.getActivityAchievementId();
 	}
 
 	/**
-	* Returns the company ID of this social activity achievement.
-	*
-	* @return the company ID of this social activity achievement
-	*/
+	 * Returns the company ID of this social activity achievement.
+	 *
+	 * @return the company ID of this social activity achievement
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this social activity achievement.
-	*
-	* @return the create date of this social activity achievement
-	*/
+	 * Returns the create date of this social activity achievement.
+	 *
+	 * @return the create date of this social activity achievement
+	 */
 	@Override
 	public long getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the first in group of this social activity achievement.
-	*
-	* @return the first in group of this social activity achievement
-	*/
+	 * Returns the first in group of this social activity achievement.
+	 *
+	 * @return the first in group of this social activity achievement
+	 */
 	@Override
 	public boolean getFirstInGroup() {
 		return model.getFirstInGroup();
 	}
 
 	/**
-	* Returns the group ID of this social activity achievement.
-	*
-	* @return the group ID of this social activity achievement
-	*/
+	 * Returns the group ID of this social activity achievement.
+	 *
+	 * @return the group ID of this social activity achievement
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the name of this social activity achievement.
-	*
-	* @return the name of this social activity achievement
-	*/
+	 * Returns the name of this social activity achievement.
+	 *
+	 * @return the name of this social activity achievement
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this social activity achievement.
-	*
-	* @return the primary key of this social activity achievement
-	*/
+	 * Returns the primary key of this social activity achievement.
+	 *
+	 * @return the primary key of this social activity achievement
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the user ID of this social activity achievement.
-	*
-	* @return the user ID of this social activity achievement
-	*/
+	 * Returns the user ID of this social activity achievement.
+	 *
+	 * @return the user ID of this social activity achievement
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user uuid of this social activity achievement.
-	*
-	* @return the user uuid of this social activity achievement
-	*/
+	 * Returns the user uuid of this social activity achievement.
+	 *
+	 * @return the user uuid of this social activity achievement
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns <code>true</code> if this social activity achievement is first in group.
-	*
-	* @return <code>true</code> if this social activity achievement is first in group; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this social activity achievement is first in group.
+	 *
+	 * @return <code>true</code> if this social activity achievement is first in group; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isFirstInGroup() {
 		return model.isFirstInGroup();
@@ -207,90 +210,90 @@ public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialAct
 	}
 
 	/**
-	* Sets the activity achievement ID of this social activity achievement.
-	*
-	* @param activityAchievementId the activity achievement ID of this social activity achievement
-	*/
+	 * Sets the activity achievement ID of this social activity achievement.
+	 *
+	 * @param activityAchievementId the activity achievement ID of this social activity achievement
+	 */
 	@Override
 	public void setActivityAchievementId(long activityAchievementId) {
 		model.setActivityAchievementId(activityAchievementId);
 	}
 
 	/**
-	* Sets the company ID of this social activity achievement.
-	*
-	* @param companyId the company ID of this social activity achievement
-	*/
+	 * Sets the company ID of this social activity achievement.
+	 *
+	 * @param companyId the company ID of this social activity achievement
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this social activity achievement.
-	*
-	* @param createDate the create date of this social activity achievement
-	*/
+	 * Sets the create date of this social activity achievement.
+	 *
+	 * @param createDate the create date of this social activity achievement
+	 */
 	@Override
 	public void setCreateDate(long createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets whether this social activity achievement is first in group.
-	*
-	* @param firstInGroup the first in group of this social activity achievement
-	*/
+	 * Sets whether this social activity achievement is first in group.
+	 *
+	 * @param firstInGroup the first in group of this social activity achievement
+	 */
 	@Override
 	public void setFirstInGroup(boolean firstInGroup) {
 		model.setFirstInGroup(firstInGroup);
 	}
 
 	/**
-	* Sets the group ID of this social activity achievement.
-	*
-	* @param groupId the group ID of this social activity achievement
-	*/
+	 * Sets the group ID of this social activity achievement.
+	 *
+	 * @param groupId the group ID of this social activity achievement
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the name of this social activity achievement.
-	*
-	* @param name the name of this social activity achievement
-	*/
+	 * Sets the name of this social activity achievement.
+	 *
+	 * @param name the name of this social activity achievement
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this social activity achievement.
-	*
-	* @param primaryKey the primary key of this social activity achievement
-	*/
+	 * Sets the primary key of this social activity achievement.
+	 *
+	 * @param primaryKey the primary key of this social activity achievement
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the user ID of this social activity achievement.
-	*
-	* @param userId the user ID of this social activity achievement
-	*/
+	 * Sets the user ID of this social activity achievement.
+	 *
+	 * @param userId the user ID of this social activity achievement
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user uuid of this social activity achievement.
-	*
-	* @param userUuid the user uuid of this social activity achievement
-	*/
+	 * Sets the user uuid of this social activity achievement.
+	 *
+	 * @param userUuid the user uuid of this social activity achievement
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -299,6 +302,8 @@ public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialAct
 	@Override
 	protected SocialActivityAchievementWrapper wrap(
 		SocialActivityAchievement socialActivityAchievement) {
+
 		return new SocialActivityAchievementWrapper(socialActivityAchievement);
 	}
+
 }

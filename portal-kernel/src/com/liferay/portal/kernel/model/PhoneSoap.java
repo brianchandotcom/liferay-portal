@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class PhoneSoap implements Serializable {
+
 	public static PhoneSoap toSoapModel(Phone model) {
 		PhoneSoap soapModel = new PhoneSoap();
 
@@ -229,4 +230,5 @@ public class PhoneSoap implements Serializable {
 	private String _extension;
 	private long _typeId;
 	private boolean _primary;
+
 }

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class UserNotificationEventCacheModel implements CacheModel<UserNotificationEvent>,
-	Externalizable, MVCCModel {
+public class UserNotificationEventCacheModel
+	implements CacheModel<UserNotificationEvent>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,10 +47,13 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 			return false;
 		}
 
-		UserNotificationEventCacheModel userNotificationEventCacheModel = (UserNotificationEventCacheModel)obj;
+		UserNotificationEventCacheModel userNotificationEventCacheModel =
+			(UserNotificationEventCacheModel)obj;
 
-		if ((userNotificationEventId == userNotificationEventCacheModel.userNotificationEventId) &&
-				(mvccVersion == userNotificationEventCacheModel.mvccVersion)) {
+		if ((userNotificationEventId ==
+				userNotificationEventCacheModel.userNotificationEventId) &&
+			(mvccVersion == userNotificationEventCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -111,7 +114,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 	@Override
 	public UserNotificationEvent toEntityModel() {
-		UserNotificationEventImpl userNotificationEventImpl = new UserNotificationEventImpl();
+		UserNotificationEventImpl userNotificationEventImpl =
+			new UserNotificationEventImpl();
 
 		userNotificationEventImpl.setMvccVersion(mvccVersion);
 
@@ -122,7 +126,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 			userNotificationEventImpl.setUuid(uuid);
 		}
 
-		userNotificationEventImpl.setUserNotificationEventId(userNotificationEventId);
+		userNotificationEventImpl.setUserNotificationEventId(
+			userNotificationEventId);
 		userNotificationEventImpl.setCompanyId(companyId);
 		userNotificationEventImpl.setUserId(userId);
 
@@ -180,8 +185,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -237,4 +241,5 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public String payload;
 	public boolean actionRequired;
 	public boolean archived;
+
 }

@@ -53,13 +53,16 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class ThemeServiceHttp {
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
-		HttpPrincipal httpPrincipal, long companyId) {
-		try {
-			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class,
-					"getThemes", _getThemesParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
+	public static java.util.List<com.liferay.portal.kernel.model.Theme>
+		getThemes(HttpPrincipal httpPrincipal, long companyId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ThemeServiceUtil.class, "getThemes", _getThemesParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId);
 
 			Object returnObj = null;
 
@@ -67,10 +70,12 @@ public class ThemeServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (java.util.List<com.liferay.portal.kernel.model.Theme>)returnObj;
+			return (java.util.List<com.liferay.portal.kernel.model.Theme>)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -81,9 +86,11 @@ public class ThemeServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONArray getWARThemes(
 		HttpPrincipal httpPrincipal) {
+
 		try {
-			MethodKey methodKey = new MethodKey(ThemeServiceUtil.class,
-					"getWARThemes", _getWARThemesParameterTypes1);
+			MethodKey methodKey = new MethodKey(
+				ThemeServiceUtil.class, "getWARThemes",
+				_getWARThemesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -93,7 +100,8 @@ public class ThemeServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONArray)returnObj;
@@ -106,8 +114,12 @@ public class ThemeServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ThemeServiceHttp.class);
+
 	private static final Class<?>[] _getThemesParameterTypes0 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getWARThemesParameterTypes1 = new Class[] {  };
+		long.class
+	};
+	private static final Class<?>[] _getWARThemesParameterTypes1 = new Class[] {
+		
+	};
+
 }

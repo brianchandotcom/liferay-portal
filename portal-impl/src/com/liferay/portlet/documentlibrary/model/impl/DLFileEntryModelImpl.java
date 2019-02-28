@@ -19,14 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.document.library.kernel.model.DLFileEntrySoap;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,47 +68,37 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
-	implements DLFileEntryModel {
+public class DLFileEntryModelImpl
+	extends BaseModelImpl<DLFileEntry> implements DLFileEntryModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a document library file entry model instance should use the <code>DLFileEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "DLFileEntry";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
-			{ "fileEntryId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "repositoryId", Types.BIGINT },
-			{ "folderId", Types.BIGINT },
-			{ "treePath", Types.VARCHAR },
-			{ "name", Types.VARCHAR },
-			{ "fileName", Types.VARCHAR },
-			{ "extension", Types.VARCHAR },
-			{ "mimeType", Types.VARCHAR },
-			{ "title", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "extraSettings", Types.CLOB },
-			{ "fileEntryTypeId", Types.BIGINT },
-			{ "version", Types.VARCHAR },
-			{ "size_", Types.BIGINT },
-			{ "readCount", Types.INTEGER },
-			{ "smallImageId", Types.BIGINT },
-			{ "largeImageId", Types.BIGINT },
-			{ "custom1ImageId", Types.BIGINT },
-			{ "custom2ImageId", Types.BIGINT },
-			{ "manualCheckInRequired", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"uuid_", Types.VARCHAR}, {"fileEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"repositoryId", Types.BIGINT}, {"folderId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"fileName", Types.VARCHAR}, {"extension", Types.VARCHAR},
+		{"mimeType", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"extraSettings", Types.CLOB},
+		{"fileEntryTypeId", Types.BIGINT}, {"version", Types.VARCHAR},
+		{"size_", Types.BIGINT}, {"readCount", Types.INTEGER},
+		{"smallImageId", Types.BIGINT}, {"largeImageId", Types.BIGINT},
+		{"custom1ImageId", Types.BIGINT}, {"custom2ImageId", Types.BIGINT},
+		{"manualCheckInRequired", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -147,36 +133,66 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
-	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.document.library.kernel.model.DLFileEntry"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long CUSTOM1IMAGEID_COLUMN_BITMASK = 2L;
+
 	public static final long CUSTOM2IMAGEID_COLUMN_BITMASK = 4L;
+
 	public static final long FILEENTRYTYPEID_COLUMN_BITMASK = 8L;
+
 	public static final long FILENAME_COLUMN_BITMASK = 16L;
+
 	public static final long FOLDERID_COLUMN_BITMASK = 32L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 64L;
+
 	public static final long LARGEIMAGEID_COLUMN_BITMASK = 128L;
+
 	public static final long MIMETYPE_COLUMN_BITMASK = 256L;
+
 	public static final long NAME_COLUMN_BITMASK = 512L;
+
 	public static final long REPOSITORYID_COLUMN_BITMASK = 1024L;
+
 	public static final long SMALLIMAGEID_COLUMN_BITMASK = 2048L;
+
 	public static final long TITLE_COLUMN_BITMASK = 4096L;
+
 	public static final long USERID_COLUMN_BITMASK = 8192L;
+
 	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
@@ -237,7 +253,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			return null;
 		}
 
-		List<DLFileEntry> models = new ArrayList<DLFileEntry>(soapModels.length);
+		List<DLFileEntry> models = new ArrayList<DLFileEntry>(
+			soapModels.length);
 
 		for (DLFileEntrySoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -246,8 +263,9 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry"));
 
 	public DLFileEntryModelImpl() {
 	}
@@ -286,13 +304,18 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<DLFileEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<DLFileEntry, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<DLFileEntry, Object> attributeGetterFunction = entry.getValue();
+			Function<DLFileEntry, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((DLFileEntry)this));
 		}
 
@@ -304,100 +327,177 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<DLFileEntry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<DLFileEntry, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<DLFileEntry, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<DLFileEntry, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((DLFileEntry)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(DLFileEntry)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<DLFileEntry, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<DLFileEntry, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<DLFileEntry, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<DLFileEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<DLFileEntry, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<DLFileEntry, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<DLFileEntry, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DLFileEntry, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<DLFileEntry, Object>>();
-		Map<String, BiConsumer<DLFileEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DLFileEntry, ?>>();
-
+		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DLFileEntry, Object>>();
+		Map<String, BiConsumer<DLFileEntry, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DLFileEntry, ?>>();
 
 		attributeGetterFunctions.put("uuid", DLFileEntry::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<DLFileEntry, String>)DLFileEntry::setUuid);
-		attributeGetterFunctions.put("fileEntryId", DLFileEntry::getFileEntryId);
-		attributeSetterBiConsumers.put("fileEntryId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setFileEntryId);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<DLFileEntry, String>)DLFileEntry::setUuid);
+		attributeGetterFunctions.put(
+			"fileEntryId", DLFileEntry::getFileEntryId);
+		attributeSetterBiConsumers.put(
+			"fileEntryId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setFileEntryId);
 		attributeGetterFunctions.put("groupId", DLFileEntry::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setGroupId);
 		attributeGetterFunctions.put("companyId", DLFileEntry::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setCompanyId);
 		attributeGetterFunctions.put("userId", DLFileEntry::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setUserId);
 		attributeGetterFunctions.put("userName", DLFileEntry::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<DLFileEntry, String>)DLFileEntry::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setUserName);
 		attributeGetterFunctions.put("createDate", DLFileEntry::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<DLFileEntry, Date>)DLFileEntry::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", DLFileEntry::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DLFileEntry, Date>)DLFileEntry::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", DLFileEntry::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<DLFileEntry, Date>)DLFileEntry::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", DLFileEntry::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<DLFileEntry, Date>)DLFileEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"classNameId", DLFileEntry::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setClassNameId);
 		attributeGetterFunctions.put("classPK", DLFileEntry::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setClassPK);
-		attributeGetterFunctions.put("repositoryId", DLFileEntry::getRepositoryId);
-		attributeSetterBiConsumers.put("repositoryId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setRepositoryId);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setClassPK);
+		attributeGetterFunctions.put(
+			"repositoryId", DLFileEntry::getRepositoryId);
+		attributeSetterBiConsumers.put(
+			"repositoryId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setRepositoryId);
 		attributeGetterFunctions.put("folderId", DLFileEntry::getFolderId);
-		attributeSetterBiConsumers.put("folderId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setFolderId);
+		attributeSetterBiConsumers.put(
+			"folderId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setFolderId);
 		attributeGetterFunctions.put("treePath", DLFileEntry::getTreePath);
-		attributeSetterBiConsumers.put("treePath", (BiConsumer<DLFileEntry, String>)DLFileEntry::setTreePath);
+		attributeSetterBiConsumers.put(
+			"treePath",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setTreePath);
 		attributeGetterFunctions.put("name", DLFileEntry::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<DLFileEntry, String>)DLFileEntry::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<DLFileEntry, String>)DLFileEntry::setName);
 		attributeGetterFunctions.put("fileName", DLFileEntry::getFileName);
-		attributeSetterBiConsumers.put("fileName", (BiConsumer<DLFileEntry, String>)DLFileEntry::setFileName);
+		attributeSetterBiConsumers.put(
+			"fileName",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setFileName);
 		attributeGetterFunctions.put("extension", DLFileEntry::getExtension);
-		attributeSetterBiConsumers.put("extension", (BiConsumer<DLFileEntry, String>)DLFileEntry::setExtension);
+		attributeSetterBiConsumers.put(
+			"extension",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setExtension);
 		attributeGetterFunctions.put("mimeType", DLFileEntry::getMimeType);
-		attributeSetterBiConsumers.put("mimeType", (BiConsumer<DLFileEntry, String>)DLFileEntry::setMimeType);
+		attributeSetterBiConsumers.put(
+			"mimeType",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setMimeType);
 		attributeGetterFunctions.put("title", DLFileEntry::getTitle);
-		attributeSetterBiConsumers.put("title", (BiConsumer<DLFileEntry, String>)DLFileEntry::setTitle);
-		attributeGetterFunctions.put("description", DLFileEntry::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<DLFileEntry, String>)DLFileEntry::setDescription);
-		attributeGetterFunctions.put("extraSettings", DLFileEntry::getExtraSettings);
-		attributeSetterBiConsumers.put("extraSettings", (BiConsumer<DLFileEntry, String>)DLFileEntry::setExtraSettings);
-		attributeGetterFunctions.put("fileEntryTypeId", DLFileEntry::getFileEntryTypeId);
-		attributeSetterBiConsumers.put("fileEntryTypeId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setFileEntryTypeId);
+		attributeSetterBiConsumers.put(
+			"title", (BiConsumer<DLFileEntry, String>)DLFileEntry::setTitle);
+		attributeGetterFunctions.put(
+			"description", DLFileEntry::getDescription);
+		attributeSetterBiConsumers.put(
+			"description",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setDescription);
+		attributeGetterFunctions.put(
+			"extraSettings", DLFileEntry::getExtraSettings);
+		attributeSetterBiConsumers.put(
+			"extraSettings",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setExtraSettings);
+		attributeGetterFunctions.put(
+			"fileEntryTypeId", DLFileEntry::getFileEntryTypeId);
+		attributeSetterBiConsumers.put(
+			"fileEntryTypeId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setFileEntryTypeId);
 		attributeGetterFunctions.put("version", DLFileEntry::getVersion);
-		attributeSetterBiConsumers.put("version", (BiConsumer<DLFileEntry, String>)DLFileEntry::setVersion);
+		attributeSetterBiConsumers.put(
+			"version",
+			(BiConsumer<DLFileEntry, String>)DLFileEntry::setVersion);
 		attributeGetterFunctions.put("size", DLFileEntry::getSize);
-		attributeSetterBiConsumers.put("size", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setSize);
+		attributeSetterBiConsumers.put(
+			"size", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setSize);
 		attributeGetterFunctions.put("readCount", DLFileEntry::getReadCount);
-		attributeSetterBiConsumers.put("readCount", (BiConsumer<DLFileEntry, Integer>)DLFileEntry::setReadCount);
-		attributeGetterFunctions.put("smallImageId", DLFileEntry::getSmallImageId);
-		attributeSetterBiConsumers.put("smallImageId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setSmallImageId);
-		attributeGetterFunctions.put("largeImageId", DLFileEntry::getLargeImageId);
-		attributeSetterBiConsumers.put("largeImageId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setLargeImageId);
-		attributeGetterFunctions.put("custom1ImageId", DLFileEntry::getCustom1ImageId);
-		attributeSetterBiConsumers.put("custom1ImageId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setCustom1ImageId);
-		attributeGetterFunctions.put("custom2ImageId", DLFileEntry::getCustom2ImageId);
-		attributeSetterBiConsumers.put("custom2ImageId", (BiConsumer<DLFileEntry, Long>)DLFileEntry::setCustom2ImageId);
-		attributeGetterFunctions.put("manualCheckInRequired", DLFileEntry::getManualCheckInRequired);
-		attributeSetterBiConsumers.put("manualCheckInRequired", (BiConsumer<DLFileEntry, Boolean>)DLFileEntry::setManualCheckInRequired);
-		attributeGetterFunctions.put("lastPublishDate", DLFileEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<DLFileEntry, Date>)DLFileEntry::setLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"readCount",
+			(BiConsumer<DLFileEntry, Integer>)DLFileEntry::setReadCount);
+		attributeGetterFunctions.put(
+			"smallImageId", DLFileEntry::getSmallImageId);
+		attributeSetterBiConsumers.put(
+			"smallImageId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setSmallImageId);
+		attributeGetterFunctions.put(
+			"largeImageId", DLFileEntry::getLargeImageId);
+		attributeSetterBiConsumers.put(
+			"largeImageId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setLargeImageId);
+		attributeGetterFunctions.put(
+			"custom1ImageId", DLFileEntry::getCustom1ImageId);
+		attributeSetterBiConsumers.put(
+			"custom1ImageId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setCustom1ImageId);
+		attributeGetterFunctions.put(
+			"custom2ImageId", DLFileEntry::getCustom2ImageId);
+		attributeSetterBiConsumers.put(
+			"custom2ImageId",
+			(BiConsumer<DLFileEntry, Long>)DLFileEntry::setCustom2ImageId);
+		attributeGetterFunctions.put(
+			"manualCheckInRequired", DLFileEntry::getManualCheckInRequired);
+		attributeSetterBiConsumers.put(
+			"manualCheckInRequired",
+			(BiConsumer<DLFileEntry, Boolean>)
+				DLFileEntry::setManualCheckInRequired);
+		attributeGetterFunctions.put(
+			"lastPublishDate", DLFileEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<DLFileEntry, Date>)DLFileEntry::setLastPublishDate);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1005,8 +1105,9 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				DLFileEntry.class.getName()), getClassNameId());
+		return new StagedModelType(
+			PortalUtil.getClassNameId(DLFileEntry.class.getName()),
+			getClassNameId());
 	}
 
 	@Override
@@ -1017,21 +1118,25 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws PortalException {
+
 		if (!isInTrash()) {
 			return null;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry =
+			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
+				fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
 		}
 
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
+			getTrashHandler();
 
-		if (Validator.isNotNull(trashHandler.getContainerModelClassName(
-						getPrimaryKey()))) {
+		if (Validator.isNotNull(
+				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
+
 			ContainerModel containerModel = null;
 
 			try {
@@ -1048,14 +1153,18 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
-							containerModel.getContainerModelId()));
+				trashHandler =
+					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+						getTrashHandler(
+							trashHandler.getContainerModelClassName(
+								containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
 				}
 
-				containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
+				containerModel = trashHandler.getContainerModel(
+					containerModel.getParentContainerModelId());
 			}
 		}
 
@@ -1068,12 +1177,13 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
-	*/
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+			getTrashHandler(getModelClassName());
 	}
 
 	@Override
@@ -1088,16 +1198,19 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
+		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
+			getTrashHandler();
 
 		if ((trashHandler == null) ||
-				Validator.isNull(trashHandler.getContainerModelClassName(
-						getPrimaryKey()))) {
+			Validator.isNull(
+				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
+
 			return false;
 		}
 
 		try {
-			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel =
+				trashHandler.getParentContainerModel(this);
 
 			if (containerModel == null) {
 				return false;
@@ -1119,8 +1232,9 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry =
+			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
+				fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return true;
@@ -1135,8 +1249,9 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			return false;
 		}
 
-		com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getTrashEntryClassPK());
+		com.liferay.trash.kernel.model.TrashEntry trashEntry =
+			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
+				fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return false;
@@ -1151,8 +1266,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			DLFileEntry.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), DLFileEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1165,8 +1280,9 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public DLFileEntry toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (DLFileEntry)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (DLFileEntry)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1286,7 +1402,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalGroupId = false;
 
-		dlFileEntryModelImpl._originalCompanyId = dlFileEntryModelImpl._companyId;
+		dlFileEntryModelImpl._originalCompanyId =
+			dlFileEntryModelImpl._companyId;
 
 		dlFileEntryModelImpl._setOriginalCompanyId = false;
 
@@ -1296,7 +1413,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setModifiedDate = false;
 
-		dlFileEntryModelImpl._originalRepositoryId = dlFileEntryModelImpl._repositoryId;
+		dlFileEntryModelImpl._originalRepositoryId =
+			dlFileEntryModelImpl._repositoryId;
 
 		dlFileEntryModelImpl._setOriginalRepositoryId = false;
 
@@ -1312,23 +1430,28 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._originalTitle = dlFileEntryModelImpl._title;
 
-		dlFileEntryModelImpl._originalFileEntryTypeId = dlFileEntryModelImpl._fileEntryTypeId;
+		dlFileEntryModelImpl._originalFileEntryTypeId =
+			dlFileEntryModelImpl._fileEntryTypeId;
 
 		dlFileEntryModelImpl._setOriginalFileEntryTypeId = false;
 
-		dlFileEntryModelImpl._originalSmallImageId = dlFileEntryModelImpl._smallImageId;
+		dlFileEntryModelImpl._originalSmallImageId =
+			dlFileEntryModelImpl._smallImageId;
 
 		dlFileEntryModelImpl._setOriginalSmallImageId = false;
 
-		dlFileEntryModelImpl._originalLargeImageId = dlFileEntryModelImpl._largeImageId;
+		dlFileEntryModelImpl._originalLargeImageId =
+			dlFileEntryModelImpl._largeImageId;
 
 		dlFileEntryModelImpl._setOriginalLargeImageId = false;
 
-		dlFileEntryModelImpl._originalCustom1ImageId = dlFileEntryModelImpl._custom1ImageId;
+		dlFileEntryModelImpl._originalCustom1ImageId =
+			dlFileEntryModelImpl._custom1ImageId;
 
 		dlFileEntryModelImpl._setOriginalCustom1ImageId = false;
 
-		dlFileEntryModelImpl._originalCustom2ImageId = dlFileEntryModelImpl._custom2ImageId;
+		dlFileEntryModelImpl._originalCustom2ImageId =
+			dlFileEntryModelImpl._custom2ImageId;
 
 		dlFileEntryModelImpl._setOriginalCustom2ImageId = false;
 
@@ -1337,7 +1460,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public CacheModel<DLFileEntry> toCacheModel() {
-		DLFileEntryCacheModel dlFileEntryCacheModel = new DLFileEntryCacheModel();
+		DLFileEntryCacheModel dlFileEntryCacheModel =
+			new DLFileEntryCacheModel();
 
 		dlFileEntryCacheModel.uuid = getUuid();
 
@@ -1491,16 +1615,20 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toString() {
-		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<DLFileEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<DLFileEntry, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<DLFileEntry, Object> attributeGetterFunction = entry.getValue();
+			Function<DLFileEntry, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -1519,18 +1647,22 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<DLFileEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<DLFileEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<DLFileEntry, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<DLFileEntry, Object> attributeGetterFunction = entry.getValue();
+			Function<DLFileEntry, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -1544,10 +1676,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = DLFileEntry.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		DLFileEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			DLFileEntry.class, ModelWrapper.class
-		};
+		DLFileEntry.class, ModelWrapper.class
+	};
+
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileEntryId;
@@ -1606,4 +1740,5 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DLFileEntry _escapedModel;
+
 }

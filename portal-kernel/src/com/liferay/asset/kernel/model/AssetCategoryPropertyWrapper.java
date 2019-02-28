@@ -35,10 +35,13 @@ import java.util.Map;
  */
 @Deprecated
 @ProviderType
-public class AssetCategoryPropertyWrapper extends BaseModelWrapper<AssetCategoryProperty>
+public class AssetCategoryPropertyWrapper
+	extends BaseModelWrapper<AssetCategoryProperty>
 	implements AssetCategoryProperty, ModelWrapper<AssetCategoryProperty> {
+
 	public AssetCategoryPropertyWrapper(
 		AssetCategoryProperty assetCategoryProperty) {
+
 		super(assetCategoryProperty);
 	}
 
@@ -117,110 +120,110 @@ public class AssetCategoryPropertyWrapper extends BaseModelWrapper<AssetCategory
 	}
 
 	/**
-	* Returns the category ID of this asset category property.
-	*
-	* @return the category ID of this asset category property
-	*/
+	 * Returns the category ID of this asset category property.
+	 *
+	 * @return the category ID of this asset category property
+	 */
 	@Override
 	public long getCategoryId() {
 		return model.getCategoryId();
 	}
 
 	/**
-	* Returns the category property ID of this asset category property.
-	*
-	* @return the category property ID of this asset category property
-	*/
+	 * Returns the category property ID of this asset category property.
+	 *
+	 * @return the category property ID of this asset category property
+	 */
 	@Override
 	public long getCategoryPropertyId() {
 		return model.getCategoryPropertyId();
 	}
 
 	/**
-	* Returns the company ID of this asset category property.
-	*
-	* @return the company ID of this asset category property
-	*/
+	 * Returns the company ID of this asset category property.
+	 *
+	 * @return the company ID of this asset category property
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this asset category property.
-	*
-	* @return the create date of this asset category property
-	*/
+	 * Returns the create date of this asset category property.
+	 *
+	 * @return the create date of this asset category property
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the key of this asset category property.
-	*
-	* @return the key of this asset category property
-	*/
+	 * Returns the key of this asset category property.
+	 *
+	 * @return the key of this asset category property
+	 */
 	@Override
 	public String getKey() {
 		return model.getKey();
 	}
 
 	/**
-	* Returns the modified date of this asset category property.
-	*
-	* @return the modified date of this asset category property
-	*/
+	 * Returns the modified date of this asset category property.
+	 *
+	 * @return the modified date of this asset category property
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the primary key of this asset category property.
-	*
-	* @return the primary key of this asset category property
-	*/
+	 * Returns the primary key of this asset category property.
+	 *
+	 * @return the primary key of this asset category property
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the user ID of this asset category property.
-	*
-	* @return the user ID of this asset category property
-	*/
+	 * Returns the user ID of this asset category property.
+	 *
+	 * @return the user ID of this asset category property
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this asset category property.
-	*
-	* @return the user name of this asset category property
-	*/
+	 * Returns the user name of this asset category property.
+	 *
+	 * @return the user name of this asset category property
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this asset category property.
-	*
-	* @return the user uuid of this asset category property
-	*/
+	 * Returns the user uuid of this asset category property.
+	 *
+	 * @return the user uuid of this asset category property
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the value of this asset category property.
-	*
-	* @return the value of this asset category property
-	*/
+	 * Returns the value of this asset category property.
+	 *
+	 * @return the value of this asset category property
+	 */
 	@Override
 	public String getValue() {
 		return model.getValue();
@@ -232,110 +235,110 @@ public class AssetCategoryPropertyWrapper extends BaseModelWrapper<AssetCategory
 	}
 
 	/**
-	* Sets the category ID of this asset category property.
-	*
-	* @param categoryId the category ID of this asset category property
-	*/
+	 * Sets the category ID of this asset category property.
+	 *
+	 * @param categoryId the category ID of this asset category property
+	 */
 	@Override
 	public void setCategoryId(long categoryId) {
 		model.setCategoryId(categoryId);
 	}
 
 	/**
-	* Sets the category property ID of this asset category property.
-	*
-	* @param categoryPropertyId the category property ID of this asset category property
-	*/
+	 * Sets the category property ID of this asset category property.
+	 *
+	 * @param categoryPropertyId the category property ID of this asset category property
+	 */
 	@Override
 	public void setCategoryPropertyId(long categoryPropertyId) {
 		model.setCategoryPropertyId(categoryPropertyId);
 	}
 
 	/**
-	* Sets the company ID of this asset category property.
-	*
-	* @param companyId the company ID of this asset category property
-	*/
+	 * Sets the company ID of this asset category property.
+	 *
+	 * @param companyId the company ID of this asset category property
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this asset category property.
-	*
-	* @param createDate the create date of this asset category property
-	*/
+	 * Sets the create date of this asset category property.
+	 *
+	 * @param createDate the create date of this asset category property
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the key of this asset category property.
-	*
-	* @param key the key of this asset category property
-	*/
+	 * Sets the key of this asset category property.
+	 *
+	 * @param key the key of this asset category property
+	 */
 	@Override
 	public void setKey(String key) {
 		model.setKey(key);
 	}
 
 	/**
-	* Sets the modified date of this asset category property.
-	*
-	* @param modifiedDate the modified date of this asset category property
-	*/
+	 * Sets the modified date of this asset category property.
+	 *
+	 * @param modifiedDate the modified date of this asset category property
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the primary key of this asset category property.
-	*
-	* @param primaryKey the primary key of this asset category property
-	*/
+	 * Sets the primary key of this asset category property.
+	 *
+	 * @param primaryKey the primary key of this asset category property
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the user ID of this asset category property.
-	*
-	* @param userId the user ID of this asset category property
-	*/
+	 * Sets the user ID of this asset category property.
+	 *
+	 * @param userId the user ID of this asset category property
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this asset category property.
-	*
-	* @param userName the user name of this asset category property
-	*/
+	 * Sets the user name of this asset category property.
+	 *
+	 * @param userName the user name of this asset category property
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this asset category property.
-	*
-	* @param userUuid the user uuid of this asset category property
-	*/
+	 * Sets the user uuid of this asset category property.
+	 *
+	 * @param userUuid the user uuid of this asset category property
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the value of this asset category property.
-	*
-	* @param value the value of this asset category property
-	*/
+	 * Sets the value of this asset category property.
+	 *
+	 * @param value the value of this asset category property
+	 */
 	@Override
 	public void setValue(String value) {
 		model.setValue(value);
@@ -344,6 +347,8 @@ public class AssetCategoryPropertyWrapper extends BaseModelWrapper<AssetCategory
 	@Override
 	protected AssetCategoryPropertyWrapper wrap(
 		AssetCategoryProperty assetCategoryProperty) {
+
 		return new AssetCategoryPropertyWrapper(assetCategoryProperty);
 	}
+
 }

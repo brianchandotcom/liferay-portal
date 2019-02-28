@@ -36,9 +36,12 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface CounterLocalService extends BaseLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,27 +51,40 @@ public interface CounterLocalService extends BaseLocalService {
 	public List<String> getNames();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(
+		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
+	)
 	public long increment();
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(
+		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
+	)
 	public long increment(String name);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(
+		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
+	)
 	public long increment(String name, int size);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(
+		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
+	)
 	public void rename(String oldName, String newName);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(
+		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
+	)
 	public void reset(String name);
 
-	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
+	@Transactional(
+		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW
+	)
 	public void reset(String name, long size);
+
 }

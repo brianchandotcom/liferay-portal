@@ -27,30 +27,37 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SocialActivitySettingModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.social.model.impl.SocialActivitySettingImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.social.model.impl.SocialActivitySettingImpl"
+)
 @ProviderType
-public interface SocialActivitySetting extends SocialActivitySettingModel,
-	PersistedModel {
+public interface SocialActivitySetting
+	extends SocialActivitySettingModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivitySettingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SocialActivitySetting, Long> ACTIVITY_SETTING_ID_ACCESSOR =
-		new Accessor<SocialActivitySetting, Long>() {
-			@Override
-			public Long get(SocialActivitySetting socialActivitySetting) {
-				return socialActivitySetting.getActivitySettingId();
-			}
+	public static final Accessor<SocialActivitySetting, Long>
+		ACTIVITY_SETTING_ID_ACCESSOR =
+			new Accessor<SocialActivitySetting, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(SocialActivitySetting socialActivitySetting) {
+					return socialActivitySetting.getActivitySettingId();
+				}
 
-			@Override
-			public Class<SocialActivitySetting> getTypeClass() {
-				return SocialActivitySetting.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<SocialActivitySetting> getTypeClass() {
+					return SocialActivitySetting.class;
+				}
+
+			};
+
 }

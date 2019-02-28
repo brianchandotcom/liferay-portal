@@ -53,11 +53,14 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class PortletServiceHttp {
+
 	public static com.liferay.portal.kernel.json.JSONArray getWARPortlets(
 		HttpPrincipal httpPrincipal) {
+
 		try {
-			MethodKey methodKey = new MethodKey(PortletServiceUtil.class,
-					"getWARPortlets", _getWARPortletsParameterTypes0);
+			MethodKey methodKey = new MethodKey(
+				PortletServiceUtil.class, "getWARPortlets",
+				_getWARPortletsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -67,7 +70,8 @@ public class PortletServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONArray)returnObj;
@@ -80,15 +84,17 @@ public class PortletServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
-		HttpPrincipal httpPrincipal, long companyId, String portletId,
-		String roles, boolean active)
+			HttpPrincipal httpPrincipal, long companyId, String portletId,
+			String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(PortletServiceUtil.class,
-					"updatePortlet", _updatePortletParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, portletId, roles, active);
+		try {
+			MethodKey methodKey = new MethodKey(
+				PortletServiceUtil.class, "updatePortlet",
+				_updatePortletParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, portletId, roles, active);
 
 			Object returnObj = null;
 
@@ -96,11 +102,15 @@ public class PortletServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.model.Portlet)returnObj;
@@ -113,10 +123,10 @@ public class PortletServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletServiceHttp.class);
-	private static final Class<?>[] _getWARPortletsParameterTypes0 = new Class[] {
-			
-		};
-	private static final Class<?>[] _updatePortletParameterTypes1 = new Class[] {
-			long.class, String.class, String.class, boolean.class
-		};
+
+	private static final Class<?>[] _getWARPortletsParameterTypes0 =
+		new Class[] {};
+	private static final Class<?>[] _updatePortletParameterTypes1 =
+		new Class[] {long.class, String.class, String.class, boolean.class};
+
 }

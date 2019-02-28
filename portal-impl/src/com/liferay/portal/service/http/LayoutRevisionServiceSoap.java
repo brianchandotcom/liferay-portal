@@ -63,24 +63,30 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class LayoutRevisionServiceSoap {
-	public static com.liferay.portal.kernel.model.LayoutRevisionSoap addLayoutRevision(
-		long userId, long layoutSetBranchId, long layoutBranchId,
-		long parentLayoutRevisionId, boolean head, long plid,
-		long portletPreferencesPlid, boolean privateLayout, String name,
-		String title, String description, String keywords, String robots,
-		String typeSettings, boolean iconImage, long iconImageId,
-		String themeId, String colorSchemeId, String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.LayoutRevision returnValue = LayoutRevisionServiceUtil.addLayoutRevision(userId,
-					layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
-					head, plid, portletPreferencesPlid, privateLayout, name,
-					title, description, keywords, robots, typeSettings,
-					iconImage, iconImageId, themeId, colorSchemeId, css,
-					serviceContext);
 
-			return com.liferay.portal.kernel.model.LayoutRevisionSoap.toSoapModel(returnValue);
+	public static com.liferay.portal.kernel.model.LayoutRevisionSoap
+			addLayoutRevision(
+				long userId, long layoutSetBranchId, long layoutBranchId,
+				long parentLayoutRevisionId, boolean head, long plid,
+				long portletPreferencesPlid, boolean privateLayout, String name,
+				String title, String description, String keywords,
+				String robots, String typeSettings, boolean iconImage,
+				long iconImageId, String themeId, String colorSchemeId,
+				String css,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.LayoutRevision returnValue =
+				LayoutRevisionServiceUtil.addLayoutRevision(
+					userId, layoutSetBranchId, layoutBranchId,
+					parentLayoutRevisionId, head, plid, portletPreferencesPlid,
+					privateLayout, name, title, description, keywords, robots,
+					typeSettings, iconImage, iconImageId, themeId,
+					colorSchemeId, css, serviceContext);
+
+			return com.liferay.portal.kernel.model.LayoutRevisionSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -89,5 +95,7 @@ public class LayoutRevisionServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		LayoutRevisionServiceSoap.class);
+
 }

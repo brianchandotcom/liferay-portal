@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -53,14 +46,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class UserIdMapperPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -100,7 +102,8 @@ public class UserIdMapperPersistenceTest {
 
 		_persistence.remove(newUserIdMapper);
 
-		UserIdMapper existingUserIdMapper = _persistence.fetchByPrimaryKey(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper = _persistence.fetchByPrimaryKey(
+			newUserIdMapper.getPrimaryKey());
 
 		Assert.assertNull(existingUserIdMapper);
 	}
@@ -130,21 +133,27 @@ public class UserIdMapperPersistenceTest {
 
 		_userIdMappers.add(_persistence.update(newUserIdMapper));
 
-		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(
+			newUserIdMapper.getPrimaryKey());
 
-		Assert.assertEquals(existingUserIdMapper.getMvccVersion(),
+		Assert.assertEquals(
+			existingUserIdMapper.getMvccVersion(),
 			newUserIdMapper.getMvccVersion());
-		Assert.assertEquals(existingUserIdMapper.getUserIdMapperId(),
+		Assert.assertEquals(
+			existingUserIdMapper.getUserIdMapperId(),
 			newUserIdMapper.getUserIdMapperId());
-		Assert.assertEquals(existingUserIdMapper.getCompanyId(),
+		Assert.assertEquals(
+			existingUserIdMapper.getCompanyId(),
 			newUserIdMapper.getCompanyId());
-		Assert.assertEquals(existingUserIdMapper.getUserId(),
-			newUserIdMapper.getUserId());
-		Assert.assertEquals(existingUserIdMapper.getType(),
-			newUserIdMapper.getType());
-		Assert.assertEquals(existingUserIdMapper.getDescription(),
+		Assert.assertEquals(
+			existingUserIdMapper.getUserId(), newUserIdMapper.getUserId());
+		Assert.assertEquals(
+			existingUserIdMapper.getType(), newUserIdMapper.getType());
+		Assert.assertEquals(
+			existingUserIdMapper.getDescription(),
 			newUserIdMapper.getDescription());
-		Assert.assertEquals(existingUserIdMapper.getExternalUserId(),
+		Assert.assertEquals(
+			existingUserIdMapper.getExternalUserId(),
 			newUserIdMapper.getExternalUserId());
 	}
 
@@ -177,7 +186,8 @@ public class UserIdMapperPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
-		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(
+			newUserIdMapper.getPrimaryKey());
 
 		Assert.assertEquals(existingUserIdMapper, newUserIdMapper);
 	}
@@ -191,22 +201,23 @@ public class UserIdMapperPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<UserIdMapper> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("UserIdMapper",
-			"mvccVersion", true, "userIdMapperId", true, "companyId", true,
-			"userId", true, "type", true, "description", true,
-			"externalUserId", true);
+		return OrderByComparatorFactoryUtil.create(
+			"UserIdMapper", "mvccVersion", true, "userIdMapperId", true,
+			"companyId", true, "userId", true, "type", true, "description",
+			true, "externalUserId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
-		UserIdMapper existingUserIdMapper = _persistence.fetchByPrimaryKey(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper = _persistence.fetchByPrimaryKey(
+			newUserIdMapper.getPrimaryKey());
 
 		Assert.assertEquals(existingUserIdMapper, newUserIdMapper);
 	}
@@ -223,6 +234,7 @@ public class UserIdMapperPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		UserIdMapper newUserIdMapper1 = addUserIdMapper();
 		UserIdMapper newUserIdMapper2 = addUserIdMapper();
 
@@ -231,18 +243,22 @@ public class UserIdMapperPersistenceTest {
 		primaryKeys.add(newUserIdMapper1.getPrimaryKey());
 		primaryKeys.add(newUserIdMapper2.getPrimaryKey());
 
-		Map<Serializable, UserIdMapper> userIdMappers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserIdMapper> userIdMappers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, userIdMappers.size());
-		Assert.assertEquals(newUserIdMapper1,
+		Assert.assertEquals(
+			newUserIdMapper1,
 			userIdMappers.get(newUserIdMapper1.getPrimaryKey()));
-		Assert.assertEquals(newUserIdMapper2,
+		Assert.assertEquals(
+			newUserIdMapper2,
 			userIdMappers.get(newUserIdMapper2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -252,7 +268,8 @@ public class UserIdMapperPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, UserIdMapper> userIdMappers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserIdMapper> userIdMappers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userIdMappers.isEmpty());
 	}
@@ -260,6 +277,7 @@ public class UserIdMapperPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
 		long pk = RandomTestUtil.nextLong();
@@ -269,36 +287,39 @@ public class UserIdMapperPersistenceTest {
 		primaryKeys.add(newUserIdMapper.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, UserIdMapper> userIdMappers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserIdMapper> userIdMappers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userIdMappers.size());
-		Assert.assertEquals(newUserIdMapper,
+		Assert.assertEquals(
+			newUserIdMapper,
 			userIdMappers.get(newUserIdMapper.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserIdMapper> userIdMappers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserIdMapper> userIdMappers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userIdMappers.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUserIdMapper.getPrimaryKey());
 
-		Map<Serializable, UserIdMapper> userIdMappers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserIdMapper> userIdMappers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userIdMappers.size());
-		Assert.assertEquals(newUserIdMapper,
+		Assert.assertEquals(
+			newUserIdMapper,
 			userIdMappers.get(newUserIdMapper.getPrimaryKey()));
 	}
 
@@ -306,15 +327,19 @@ public class UserIdMapperPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = UserIdMapperLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			UserIdMapperLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserIdMapper>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<UserIdMapper>() {
+
 				@Override
 				public void performAction(UserIdMapper userIdMapper) {
 					Assert.assertNotNull(userIdMapper);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -323,17 +348,18 @@ public class UserIdMapperPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserIdMapper.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("userIdMapperId",
-				newUserIdMapper.getUserIdMapperId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userIdMapperId", newUserIdMapper.getUserIdMapperId()));
 
-		List<UserIdMapper> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserIdMapper> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -344,32 +370,34 @@ public class UserIdMapperPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserIdMapper.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("userIdMapperId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userIdMapperId", RandomTestUtil.nextLong()));
 
-		List<UserIdMapper> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserIdMapper> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserIdMapper.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"userIdMapperId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("userIdMapperId"));
 
 		Object newUserIdMapperId = newUserIdMapper.getUserIdMapperId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("userIdMapperId",
-				new Object[] { newUserIdMapperId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"userIdMapperId", new Object[] {newUserIdMapperId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -382,14 +410,15 @@ public class UserIdMapperPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserIdMapper.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"userIdMapperId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("userIdMapperId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("userIdMapperId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"userIdMapperId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -402,22 +431,30 @@ public class UserIdMapperPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(
+			newUserIdMapper.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingUserIdMapper.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingUserIdMapper,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingUserIdMapper.getType(),
-				ReflectionTestUtil.invoke(existingUserIdMapper,
-					"getOriginalType", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingUserIdMapper.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingUserIdMapper, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingUserIdMapper.getType(),
+				ReflectionTestUtil.invoke(
+					existingUserIdMapper, "getOriginalType", new Class<?>[0])));
 
-		Assert.assertTrue(Objects.equals(existingUserIdMapper.getType(),
-				ReflectionTestUtil.invoke(existingUserIdMapper,
-					"getOriginalType", new Class<?>[0])));
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
+				existingUserIdMapper.getType(),
+				ReflectionTestUtil.invoke(
+					existingUserIdMapper, "getOriginalType", new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
 				existingUserIdMapper.getExternalUserId(),
-				ReflectionTestUtil.invoke(existingUserIdMapper,
-					"getOriginalExternalUserId", new Class<?>[0])));
+				ReflectionTestUtil.invoke(
+					existingUserIdMapper, "getOriginalExternalUserId",
+					new Class<?>[0])));
 	}
 
 	protected UserIdMapper addUserIdMapper() throws Exception {
@@ -445,4 +482,5 @@ public class UserIdMapperPersistenceTest {
 	private List<UserIdMapper> _userIdMappers = new ArrayList<UserIdMapper>();
 	private UserIdMapperPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

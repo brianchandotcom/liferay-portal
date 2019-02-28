@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.ContactImpl")
 @ProviderType
 public interface Contact extends ContactModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ContactImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Contact, Long> CONTACT_ID_ACCESSOR = new Accessor<Contact, Long>() {
+	public static final Accessor<Contact, Long> CONTACT_ID_ACCESSOR =
+		new Accessor<Contact, Long>() {
+
 			@Override
 			public Long get(Contact contact) {
 				return contact.getContactId();
@@ -49,9 +52,11 @@ public interface Contact extends ContactModel, PersistedModel {
 			public Class<Contact> getTypeClass() {
 				return Contact.class;
 			}
+
 		};
 
 	public String getFullName();
 
 	public boolean isUser();
+
 }

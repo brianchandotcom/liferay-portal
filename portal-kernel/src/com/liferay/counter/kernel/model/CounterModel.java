@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.BaseModel;
  */
 @ProviderType
 public interface CounterModel extends BaseModel<Counter> {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -80,4 +81,5 @@ public interface CounterModel extends BaseModel<Counter> {
 	 * @param currentId the current ID of this counter
 	 */
 	public void setCurrentId(long currentId);
+
 }

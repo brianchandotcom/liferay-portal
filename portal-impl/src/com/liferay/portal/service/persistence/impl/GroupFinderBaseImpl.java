@@ -28,6 +28,7 @@ import java.util.Set;
  * @generated
  */
 public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
+
 	public GroupFinderBaseImpl() {
 		setModelClass(Group.class);
 	}
@@ -57,5 +58,8 @@ public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
 
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(GroupFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupFinderBaseImpl.class);
+
 }

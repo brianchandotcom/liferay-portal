@@ -33,50 +33,62 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ExportImportConfigurationServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void deleteExportImportConfiguration(
-		long exportImportConfigurationId)
+			long exportImportConfigurationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteExportImportConfiguration(exportImportConfigurationId);
+
+		getService().deleteExportImportConfiguration(
+			exportImportConfigurationId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveExportImportConfigurationToTrash(exportImportConfigurationId);
+	public static
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				moveExportImportConfigurationToTrash(
+					long exportImportConfigurationId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().moveExportImportConfigurationToTrash(
+			exportImportConfigurationId);
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
+	public static
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				restoreExportImportConfigurationFromTrash(
+					long exportImportConfigurationId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().restoreExportImportConfigurationFromTrash(
+			exportImportConfigurationId);
 	}
 
 	public static ExportImportConfigurationService getService() {
 		if (_service == null) {
-			_service = (ExportImportConfigurationService)PortalBeanLocatorUtil.locate(ExportImportConfigurationService.class.getName());
+			_service =
+				(ExportImportConfigurationService)PortalBeanLocatorUtil.locate(
+					ExportImportConfigurationService.class.getName());
 
-			ReferenceRegistry.registerReference(ExportImportConfigurationServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ExportImportConfigurationServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ExportImportConfigurationService _service;
+
 }

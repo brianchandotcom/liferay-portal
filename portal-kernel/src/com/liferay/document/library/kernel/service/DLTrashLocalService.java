@@ -35,9 +35,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface DLTrashLocalService extends BaseLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -45,19 +48,23 @@ public interface DLTrashLocalService extends BaseLocalService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public FileEntry moveFileEntryFromTrash(long userId, long repositoryId,
-		long fileEntryId, long newFolderId, ServiceContext serviceContext)
+	public FileEntry moveFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
-	public FileEntry moveFileEntryToTrash(long userId, long repositoryId,
-		long fileEntryId) throws PortalException;
+	public FileEntry moveFileEntryToTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException;
 
-	public void restoreFileEntryFromTrash(long userId, long repositoryId,
-		long fileEntryId) throws PortalException;
+	public void restoreFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException;
+
 }

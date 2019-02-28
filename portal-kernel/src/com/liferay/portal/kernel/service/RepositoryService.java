@@ -38,17 +38,22 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface RepositoryService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryServiceUtil} to access the repository remote service. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Repository addRepository(long groupId, long classNameId,
-		long parentFolderId, String name, String description, String portletId,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+	public Repository addRepository(
+			long groupId, long classNameId, long parentFolderId, String name,
+			String description, String portletId,
+			UnicodeProperties typeSettingsProperties,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkRepository(long repositoryId) throws PortalException;
@@ -56,43 +61,44 @@ public interface RepositoryService extends BaseService {
 	public void deleteRepository(long repositoryId) throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository getRepository(long repositoryId)
-		throws PortalException;
+	public Repository getRepository(long repositoryId) throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getSupportedConfigurations(long classNameId);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getSupportedParameters(long classNameId,
-		String configuration);
+	public String[] getSupportedParameters(
+		long classNameId, String configuration);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getSupportedParameters(String className,
-		String configuration);
+	public String[] getSupportedParameters(
+		String className, String configuration);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException;
 
-	public void updateRepository(long repositoryId, String name,
-		String description) throws PortalException;
+	public void updateRepository(
+			long repositoryId, String name, String description)
+		throws PortalException;
+
 }

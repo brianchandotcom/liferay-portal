@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -51,9 +50,12 @@ import java.util.Map;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface LayoutService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,464 +63,494 @@ public interface LayoutService extends BaseService {
 	 */
 
 	/**
-	* Adds a layout with additional parameters.
-	*
-	* <p>
-	* This method handles the creation of the layout including its resources,
-	* metadata, and internal data structures. It is not necessary to make
-	* subsequent calls to any methods to setup default groups, resources, ...
-	* etc.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parentLayoutId the layout ID of the parent layout (optionally
-	{@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	* @param localeNamesMap the layout's locales and localized names
-	* @param localeTitlesMap the layout's locales and localized titles
-	* @param descriptionMap the layout's locales and localized descriptions
-	* @param keywordsMap the layout's locales and localized keywords
-	* @param robotsMap the layout's locales and localized robots
-	* @param type the layout's type (optionally {@link
-	LayoutConstants#TYPE_PORTLET}). The possible types can be found
-	in {@link LayoutConstants}.
-	* @param typeSettings the settings to load the unicode properties object.
-	See {@link com.liferay.portal.kernel.util.UnicodeProperties
-	#fastLoad(String)}.
-	* @param hidden whether the layout is hidden
-	* @param friendlyURLMap the layout's locales and localized friendly URLs.
-	To see how the URL is normalized when accessed, see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param serviceContext the service context to be applied. Must set the
-	UUID for the layout. Can set the creation date, modification
-	date, and expando bridge attributes for the layout. For layouts
-	that belong to a layout set prototype, an attribute named
-	<code>layoutUpdateable</code> can be used to specify whether site
-	administrators can modify this page within their site.
-	* @return the layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout addLayout(long groupId, boolean privateLayout,
-		long parentLayoutId, Map<Locale, String> localeNamesMap,
-		Map<Locale, String> localeTitlesMap,
-		Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
-		Map<Locale, String> robotsMap, String type, String typeSettings,
-		boolean hidden, Map<Locale, String> friendlyURLMap,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Adds a layout with single entry maps for name, title, and description to
-	* the default locale.
-	*
-	* <p>
-	* This method handles the creation of the layout including its resources,
-	* metadata, and internal data structures. It is not necessary to make
-	* subsequent calls to any methods to setup default groups, resources, ...
-	* etc.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parentLayoutId the layout ID of the parent layout (optionally
-	{@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	* @param name the layout's locales and localized names
-	* @param title the layout's locales and localized titles
-	* @param description the layout's locales and localized descriptions
-	* @param type the layout's type (optionally {@link
-	LayoutConstants#TYPE_PORTLET}). The possible types can be found
-	in {@link LayoutConstants}.
-	* @param hidden whether the layout is hidden
-	* @param friendlyURL the layout's locales and localized friendly URLs. To
-	see how the URL is normalized when accessed, see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param serviceContext the service context to be applied. Must set the
-	UUID for the layout. Can specify the creation date, modification
-	date, and expando bridge attributes for the layout. For layouts
-	that belong to a layout set prototype, an attribute named
-	<code>layoutUpdateable</code> can be used to specify whether site
-	administrators can modify this page within their site.
-	* @return the layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout addLayout(long groupId, boolean privateLayout,
-		long parentLayoutId, String name, String title, String description,
-		String type, boolean hidden, String friendlyURL,
-		ServiceContext serviceContext) throws PortalException;
-
-	public FileEntry addTempFileEntry(long groupId, String folderName,
-		String fileName, InputStream inputStream, String mimeType)
+	 * Adds a layout with additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation of the layout including its resources,
+	 * metadata, and internal data structures. It is not necessary to make
+	 * subsequent calls to any methods to setup default groups, resources, ...
+	 * etc.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parentLayoutId the layout ID of the parent layout (optionally
+	 {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param localeNamesMap the layout's locales and localized names
+	 * @param localeTitlesMap the layout's locales and localized titles
+	 * @param descriptionMap the layout's locales and localized descriptions
+	 * @param keywordsMap the layout's locales and localized keywords
+	 * @param robotsMap the layout's locales and localized robots
+	 * @param type the layout's type (optionally {@link
+	 LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 in {@link LayoutConstants}.
+	 * @param typeSettings the settings to load the unicode properties object.
+	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
+	 #fastLoad(String)}.
+	 * @param hidden whether the layout is hidden
+	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
+	 To see how the URL is normalized when accessed, see {@link
+	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 String)}.
+	 * @param serviceContext the service context to be applied. Must set the
+	 UUID for the layout. Can set the creation date, modification
+	 date, and expando bridge attributes for the layout. For layouts
+	 that belong to a layout set prototype, an attribute named
+	 <code>layoutUpdateable</code> can be used to specify whether site
+	 administrators can modify this page within their site.
+	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout addLayout(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			Map<Locale, String> localeNamesMap,
+			Map<Locale, String> localeTitlesMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, String type, String typeSettings,
+			boolean hidden, Map<Locale, String> friendlyURLMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Deletes the layout with the primary key, also deleting the layout's child
-	* layouts, and associated resources.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId, ServiceContext serviceContext) throws PortalException;
+	 * Adds a layout with single entry maps for name, title, and description to
+	 * the default locale.
+	 *
+	 * <p>
+	 * This method handles the creation of the layout including its resources,
+	 * metadata, and internal data structures. It is not necessary to make
+	 * subsequent calls to any methods to setup default groups, resources, ...
+	 * etc.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parentLayoutId the layout ID of the parent layout (optionally
+	 {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param name the layout's locales and localized names
+	 * @param title the layout's locales and localized titles
+	 * @param description the layout's locales and localized descriptions
+	 * @param type the layout's type (optionally {@link
+	 LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 in {@link LayoutConstants}.
+	 * @param hidden whether the layout is hidden
+	 * @param friendlyURL the layout's locales and localized friendly URLs. To
+	 see how the URL is normalized when accessed, see {@link
+	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 String)}.
+	 * @param serviceContext the service context to be applied. Must set the
+	 UUID for the layout. Can specify the creation date, modification
+	 date, and expando bridge attributes for the layout. For layouts
+	 that belong to a layout set prototype, an attribute named
+	 <code>layoutUpdateable</code> can be used to specify whether site
+	 administrators can modify this page within their site.
+	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout addLayout(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			String name, String title, String description, String type,
+			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileEntry addTempFileEntry(
+			long groupId, String folderName, String fileName,
+			InputStream inputStream, String mimeType)
+		throws PortalException;
 
 	/**
-	* Deletes the layout with the plid, also deleting the layout's child
-	* layouts, and associated resources.
-	*
-	* @param plid the primary key of the layout
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Deletes the layout with the primary key, also deleting the layout's child
+	 * layouts, and associated resources.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public void deleteLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * Deletes the layout with the plid, also deleting the layout's child
+	 * layouts, and associated resources.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteTempFileEntry(long groupId, String folderName,
-		String fileName) throws PortalException;
-
-	/**
-	* Exports the layouts that match the primary keys and the criteria as a
-	* byte array.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIds the primary keys of the layouts to be exported
-	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in
-	the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param startDate the export's start date
-	* @param endDate the export's end date
-	* @return the layouts as a byte array
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public byte[] exportLayouts(long groupId, boolean privateLayout,
-		long[] layoutIds, Map<String, String[]> parameterMap, Date startDate,
-		Date endDate) throws PortalException;
-
-	/**
-	* Exports all layouts that match the criteria as a byte array.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in
-	the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param startDate the export's start date
-	* @param endDate the export's end date
-	* @return the layout as a byte array
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public byte[] exportLayouts(long groupId, boolean privateLayout,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate)
+	public void deleteTempFileEntry(
+			long groupId, String folderName, String fileName)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFile(
-	ExportImportConfiguration)}
-	*/
+	 * Exports the layouts that match the primary keys and the criteria as a
+	 * byte array.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutIds the primary keys of the layouts to be exported
+	 * @param parameterMap the mapping of parameters indicating which
+	 information to export. For information on the keys used in
+	 the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param startDate the export's start date
+	 * @param endDate the export's end date
+	 * @return the layouts as a byte array
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public byte[] exportLayouts(
+			long groupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
+
+	/**
+	 * Exports all layouts that match the criteria as a byte array.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parameterMap the mapping of parameters indicating which
+	 information to export. For information on the keys used in
+	 the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param startDate the export's start date
+	 * @param endDate the export's end date
+	 * @return the layout as a byte array
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public byte[] exportLayouts(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFile(
+	 ExportImportConfiguration)}
+	 */
 	@Deprecated
 	public File exportLayoutsAsFile(
-		ExportImportConfiguration exportImportConfiguration)
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
-	* Exports all layouts that match the primary keys and criteria as a file.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIds the primary keys of the layouts to be exported
-	(optionally <code>null</code>)
-	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in
-	the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param startDate the export's start date
-	* @param endDate the export's end date
-	* @return the layouts as a File
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Exports all layouts that match the primary keys and criteria as a file.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutIds the primary keys of the layouts to be exported
+	 (optionally <code>null</code>)
+	 * @param parameterMap the mapping of parameters indicating which
+	 information to export. For information on the keys used in
+	 the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param startDate the export's start date
+	 * @param endDate the export's end date
+	 * @return the layouts as a File
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public File exportLayoutsAsFile(long groupId, boolean privateLayout,
-		long[] layoutIds, Map<String, String[]> parameterMap, Date startDate,
-		Date endDate) throws PortalException;
+	public File exportLayoutsAsFile(
+			long groupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
-	ExportImportConfiguration)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
+	 ExportImportConfiguration)}
+	 */
 	@Deprecated
 	public long exportLayoutsAsFileInBackground(
-		ExportImportConfiguration exportImportConfiguration)
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
-	long)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
+	 long)}
+	 */
 	@Deprecated
 	public long exportLayoutsAsFileInBackground(
-		long exportImportConfigurationId) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public long exportLayoutsAsFileInBackground(String taskName, long groupId,
-		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			long exportImportConfigurationId)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long exportLayoutsAsFileInBackground(String taskName, long groupId,
-		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		String fileName) throws PortalException;
-
-	/**
-	* Exports the portlet information (categories, permissions, ... etc.) as a
-	* byte array.
-	*
-	* @param plid the primary key of the layout
-	* @param groupId the primary key of the group
-	* @param portletId the primary key of the portlet
-	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in
-	the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param startDate the export's start date
-	* @param endDate the export's end date
-	* @return the portlet information as a byte array
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public byte[] exportPortletInfo(long plid, long groupId, String portletId,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate)
+	public long exportLayoutsAsFileInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public byte[] exportPortletInfo(long companyId, String portletId,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate)
+	public long exportLayoutsAsFileInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate, String fileName)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#exportPortletInfoAsFile(
-	ExportImportConfiguration)}
-	*/
+	 * Exports the portlet information (categories, permissions, ... etc.) as a
+	 * byte array.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param groupId the primary key of the group
+	 * @param portletId the primary key of the portlet
+	 * @param parameterMap the mapping of parameters indicating which
+	 information to export. For information on the keys used in
+	 the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param startDate the export's start date
+	 * @param endDate the export's end date
+	 * @return the portlet information as a byte array
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public byte[] exportPortletInfo(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public byte[] exportPortletInfo(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#exportPortletInfoAsFile(
+	 ExportImportConfiguration)}
+	 */
 	@Deprecated
 	public File exportPortletInfoAsFile(
-		ExportImportConfiguration exportImportConfiguration)
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
-	* Exports the portlet information (categories, permissions, ... etc.) as a
-	* file.
-	*
-	* @param plid the primary key of the layout
-	* @param groupId the primary key of the group
-	* @param portletId the primary key of the portlet
-	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in
-	the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param startDate the export's start date
-	* @param endDate the export's end date
-	* @return the portlet information as a file
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Exports the portlet information (categories, permissions, ... etc.) as a
+	 * file.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param groupId the primary key of the group
+	 * @param portletId the primary key of the portlet
+	 * @param parameterMap the mapping of parameters indicating which
+	 information to export. For information on the keys used in
+	 the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param startDate the export's start date
+	 * @param endDate the export's end date
+	 * @return the portlet information as a file
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public File exportPortletInfoAsFile(long plid, long groupId,
-		String portletId, Map<String, String[]> parameterMap, Date startDate,
-		Date endDate) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public File exportPortletInfoAsFile(String portletId,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate)
+	public File exportPortletInfoAsFile(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long exportPortletInfoAsFileInBackground(String taskName, long plid,
-		long groupId, String portletId, Map<String, String[]> parameterMap,
-		Date startDate, Date endDate, String fileName)
+	public File exportPortletInfoAsFile(
+			String portletId, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long exportPortletInfoAsFileInBackground(String taskName,
-		String portletId, Map<String, String[]> parameterMap, Date startDate,
-		Date endDate, String fileName) throws PortalException;
+	public long exportPortletInfoAsFileInBackground(
+			String taskName, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate,
+			String fileName)
+		throws PortalException;
 
 	/**
-	* Returns all the ancestor layouts of the layout.
-	*
-	* @param plid the primary key of the layout
-	* @return the ancestor layouts of the layout
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public long exportPortletInfoAsFileInBackground(
+			String taskName, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate,
+			String fileName)
+		throws PortalException;
+
+	/**
+	 * Returns all the ancestor layouts of the layout.
+	 *
+	 * @param plid the primary key of the layout
+	 * @return the ancestor layouts of the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getAncestorLayouts(long plid) throws PortalException;
 
 	/**
-	* Returns the control panel layout's plid.
-	*
-	* @return the control panel layout's plid
-	* @throws PortalException if a portal exception is occured
-	*/
+	 * Returns the control panel layout's plid.
+	 *
+	 * @return the control panel layout's plid
+	 * @throws PortalException if a portal exception is occured
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getControlPanelLayoutPlid() throws PortalException;
 
 	/**
-	* Returns primary key of the matching default layout for the group.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @return the primary key of the default layout for the group; {@link
-	LayoutConstants#DEFAULT_PLID}) otherwise
-	*/
+	 * Returns primary key of the matching default layout for the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @return the primary key of the default layout for the group; {@link
+	 LayoutConstants#DEFAULT_PLID}) otherwise
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultPlid(long groupId, boolean privateLayout);
 
 	/**
-	* Returns the primary key of the default layout for the group.
-	*
-	* @param groupId the primary key of the group
-	* @param scopeGroupId the primary key of the scope group. See {@link
-	ServiceContext#getScopeGroupId()}.
-	* @param privateLayout whether the layout is private to the group
-	* @param portletId the primary key of the portlet
-	* @return Returns the primary key of the default layout group; {@link
-	LayoutConstants#DEFAULT_PLID} otherwise
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Returns the primary key of the default layout for the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param scopeGroupId the primary key of the scope group. See {@link
+	 ServiceContext#getScopeGroupId()}.
+	 * @param privateLayout whether the layout is private to the group
+	 * @param portletId the primary key of the portlet
+	 * @return Returns the primary key of the default layout group; {@link
+	 LayoutConstants#DEFAULT_PLID} otherwise
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultPlid(long groupId, long scopeGroupId,
-		boolean privateLayout, String portletId) throws PortalException;
+	public long getDefaultPlid(
+			long groupId, long scopeGroupId, boolean privateLayout,
+			String portletId)
+		throws PortalException;
 
 	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultPlid(long groupId, long scopeGroupId, String portletId)
+	public long getDefaultPlid(
+			long groupId, long scopeGroupId, String portletId)
 		throws PortalException;
 
 	/**
-	* Returns the layout matching the UUID, group, and privacy.
-	*
-	* @param uuid the layout's UUID
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @return the matching layout
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Returns the layout matching the UUID, group, and privacy.
+	 *
+	 * @param uuid the layout's UUID
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @return the matching layout
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId,
-		boolean privateLayout) throws PortalException;
+	public Layout getLayoutByUuidAndGroupId(
+			String uuid, long groupId, boolean privateLayout)
+		throws PortalException;
 
 	/**
-	* Returns the name of the layout.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param languageId the primary key of the language. For more information
-	See {@link Locale}.
-	* @return the layout's name
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Returns the name of the layout.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param languageId the primary key of the language. For more information
+	 See {@link Locale}.
+	 * @return the layout's name
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getLayoutName(long groupId, boolean privateLayout,
-		long layoutId, String languageId) throws PortalException;
+	public String getLayoutName(
+			long groupId, boolean privateLayout, long layoutId,
+			String languageId)
+		throws PortalException;
 
 	/**
-	* Returns the layout's plid that matches the parameters.
-	*
-	* @param uuid the layout's UUID
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @return the matching layout's plid
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Returns the layout's plid that matches the parameters.
+	 *
+	 * @param uuid the layout's UUID
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @return the matching layout's plid
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getLayoutPlid(String uuid, long groupId, boolean privateLayout)
 		throws PortalException;
 
 	/**
-	* Returns the layout references for all the layouts that belong to the
-	* company and belong to the portlet that matches the preferences.
-	*
-	* @param companyId the primary key of the company
-	* @param portletId the primary key of the portlet
-	* @param preferencesKey the portlet's preference key
-	* @param preferencesValue the portlet's preference value
-	* @return the layout references of the matching layouts
-	*/
+	 * Returns the layout references for all the layouts that belong to the
+	 * company and belong to the portlet that matches the preferences.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param portletId the primary key of the portlet
+	 * @param preferencesKey the portlet's preference key
+	 * @param preferencesValue the portlet's preference value
+	 * @return the layout references of the matching layouts
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutReference[] getLayoutReferences(long companyId,
-		String portletId, String preferencesKey, String preferencesValue);
+	public LayoutReference[] getLayoutReferences(
+		long companyId, String portletId, String preferencesKey,
+		String preferencesValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId) throws PortalException;
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, long parentLayoutId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, boolean incomplete, int start, int end)
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			boolean incomplete, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getLayouts(long groupId, String type, int start, int end);
+	public List<Layout> getLayouts(
+		long groupId, String type, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutsCount(long groupId, boolean privateLayout,
-		long parentLayoutId);
+	public int getLayoutsCount(
+		long groupId, boolean privateLayout, long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutsCount(long groupId, boolean privateLayout,
-		long parentLayoutId, int priority);
+	public int getLayoutsCount(
+		long groupId, boolean privateLayout, long parentLayoutId, int priority);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, String type);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -526,16 +558,16 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns <code>true</code> if there is a matching layout with the UUID,
-	* group, and privacy.
-	*
-	* @param uuid the layout's UUID
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @return <code>true</code> if the layout is found; <code>false</code>
-	otherwise
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Returns <code>true</code> if there is a matching layout with the UUID,
+	 * group, and privacy.
+	 *
+	 * @param uuid the layout's UUID
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @return <code>true</code> if the layout is found; <code>false</code>
+	 otherwise
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
 		throws PortalException;
@@ -545,639 +577,674 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
-	ExportImportConfiguration, File)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
+	 ExportImportConfiguration, File)}
+	 */
 	@Deprecated
 	public void importLayouts(
-		ExportImportConfiguration exportImportConfiguration, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
-	ExportImportConfiguration, InputStream)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
+	 ExportImportConfiguration, InputStream)}
+	 */
 	@Deprecated
 	public void importLayouts(
-		ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
 		throws PortalException;
 
 	/**
-	* Imports the layouts from the byte array.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys
-	used in the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param bytes the byte array with the data
-	* @throws PortalException if a portal exception occurred
-	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Imports the layouts from the byte array.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be imported. For information on the keys
+	 used in the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param bytes the byte array with the data
+	 * @throws PortalException if a portal exception occurred
+	 * @see com.liferay.exportimport.kernel.lar.LayoutImporter
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importLayouts(long groupId, boolean privateLayout,
-		Map<String, String[]> parameterMap, byte[] bytes)
+	public void importLayouts(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, byte[] bytes)
 		throws PortalException;
 
 	/**
-	* Imports the layouts from the file.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys
-	used in the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param file the LAR file with the data
-	* @throws PortalException if a portal exception occurred
-	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Imports the layouts from the file.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be imported. For information on the keys
+	 used in the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param file the LAR file with the data
+	 * @throws PortalException if a portal exception occurred
+	 * @see com.liferay.exportimport.kernel.lar.LayoutImporter
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importLayouts(long groupId, boolean privateLayout,
-		Map<String, String[]> parameterMap, File file)
+	public void importLayouts(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
 		throws PortalException;
 
 	/**
-	* Imports the layouts from the input stream.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys
-	used in the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param is the input stream
-	* @throws PortalException if a portal exception occurred
-	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Imports the layouts from the input stream.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be imported. For information on the keys
+	 used in the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param is the input stream
+	 * @throws PortalException if a portal exception occurred
+	 * @see com.liferay.exportimport.kernel.lar.LayoutImporter
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importLayouts(long groupId, boolean privateLayout,
-		Map<String, String[]> parameterMap, InputStream is)
+	public void importLayouts(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, InputStream is)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long importLayoutsInBackground(String taskName, long groupId,
-		boolean privateLayout, Map<String, String[]> parameterMap, File file)
+	public long importLayoutsInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long importLayoutsInBackground(String taskName, long groupId,
-		boolean privateLayout, Map<String, String[]> parameterMap,
-		InputStream inputStream) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
-	ExportImportConfiguration, File)} (
-	*/
-	@Deprecated
-	public void importPortletInfo(
-		ExportImportConfiguration exportImportConfiguration, File file)
+	public long importLayoutsInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, InputStream inputStream)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
-	ExportImportConfiguration, InputStream)} (
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
+	 ExportImportConfiguration, File)} (
+	 */
 	@Deprecated
 	public void importPortletInfo(
-		ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
 	/**
-	* Imports the portlet information (categories, permissions, ... etc.) from
-	* the file.
-	*
-	* @param plid the primary key of the layout
-	* @param groupId the primary key of the group
-	* @param portletId the primary key of the portlet
-	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys
-	used in the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param file the LAR file with the data
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
+	 ExportImportConfiguration, InputStream)} (
+	 */
 	@Deprecated
-	public void importPortletInfo(long plid, long groupId, String portletId,
-		Map<String, String[]> parameterMap, File file)
+	public void importPortletInfo(
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
 		throws PortalException;
 
 	/**
-	* Imports the portlet information (categories, permissions, ... etc.) from
-	* the input stream.
-	*
-	* @param plid the primary key of the layout
-	* @param groupId the primary key of the group
-	* @param portletId the primary key of the portlet
-	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys
-	used in the map see {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param is the input stream
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Imports the portlet information (categories, permissions, ... etc.) from
+	 * the file.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param groupId the primary key of the group
+	 * @param portletId the primary key of the portlet
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be imported. For information on the keys
+	 used in the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param file the LAR file with the data
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importPortletInfo(long plid, long groupId, String portletId,
-		Map<String, String[]> parameterMap, InputStream is)
+	public void importPortletInfo(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * Imports the portlet information (categories, permissions, ... etc.) from
+	 * the input stream.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param groupId the primary key of the group
+	 * @param portletId the primary key of the portlet
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be imported. For information on the keys
+	 used in the map see {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param is the input stream
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importPortletInfo(String portletId,
-		Map<String, String[]> parameterMap, File file)
+	public void importPortletInfo(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, InputStream is)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importPortletInfo(String portletId,
-		Map<String, String[]> parameterMap, InputStream is)
+	public void importPortletInfo(
+			String portletId, Map<String, String[]> parameterMap, File file)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long importPortletInfoInBackground(String taskName, long plid,
-		long groupId, String portletId, Map<String, String[]> parameterMap,
-		File file) throws PortalException;
+	public void importPortletInfo(
+			String portletId, Map<String, String[]> parameterMap,
+			InputStream is)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public long importPortletInfoInBackground(String taskName, long plid,
-		long groupId, String portletId, Map<String, String[]> parameterMap,
-		InputStream is) throws PortalException;
+	public long importPortletInfoInBackground(
+			String taskName, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importPortletInfoInBackground(String taskName,
-		String portletId, Map<String, String[]> parameterMap, File file)
+	public long importPortletInfoInBackground(
+			String taskName, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, InputStream is)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void importPortletInfoInBackground(String taskName,
-		String portletId, Map<String, String[]> parameterMap, InputStream is)
+	public void importPortletInfoInBackground(
+			String taskName, String portletId,
+			Map<String, String[]> parameterMap, File file)
 		throws PortalException;
 
 	/**
-	* Schedules a range of layouts to be published.
-	*
-	* @param sourceGroupId the primary key of the source group
-	* @param targetGroupId the primary key of the target group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIds the layouts considered for publishing, specified by
-	the layout IDs
-	* @param parameterMap the mapping of parameters indicating which
-	information will be used. See {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param scope the scope of the pages. It can be
-	<code>all-pages</code> or <code>selected-pages</code>.
-	* @param startDate the start date
-	* @param endDate the end date
-	* @param groupName the group name (optionally {@link
-	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	DestinationNames}.
-	* @param cronText the cron text. See {@link
-	com.liferay.portal.kernel.cal.RecurrenceSerializer
-	#toCronText}
-	* @param schedulerStartDate the scheduler start date
-	* @param schedulerEndDate the scheduler end date
-	* @param description the scheduler description
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#schedulePublishToLive(long, long, boolean, long[], Map,
-	String, String, Date, Date, String)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
-		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, String scope, Date startDate,
-		Date endDate, String groupName, String cronText,
-		Date schedulerStartDate, Date schedulerEndDate, String description)
+	public void importPortletInfoInBackground(
+			String taskName, String portletId,
+			Map<String, String[]> parameterMap, InputStream is)
 		throws PortalException;
 
 	/**
-	* Schedules a range of layouts to be published.
-	*
-	* @param sourceGroupId the primary key of the source group
-	* @param targetGroupId the primary key of the target group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIds the layouts considered for publishing, specified by the
-	layout IDs
-	* @param parameterMap the mapping of parameters indicating which
-	information will be used. See {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param groupName the group name (optionally {@link
-	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	DestinationNames}.
-	* @param cronText the cron text. See {@link
-	com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
-	* @param schedulerStartDate the scheduler start date
-	* @param schedulerEndDate the scheduler end date
-	* @param description the scheduler description
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
-		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, String groupName, String cronText,
-		Date schedulerStartDate, Date schedulerEndDate, String description)
-		throws PortalException;
-
-	/**
-	* Schedules a range of layouts to be published.
-	*
-	* @param sourceGroupId the primary key of the source group
-	* @param targetGroupId the primary key of the target group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIdMap the layouts considered for publishing, specified
-	by the layout IDs and booleans indicating whether they have
-	children
-	* @param parameterMap the mapping of parameters indicating which
-	information will be used. See {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param scope the scope of the pages
-	* @param startDate the start date
-	* @param endDate the end date
-	* @param groupName the group name (optionally {@link
-	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	DestinationNames}.
-	* @param cronText the cron text. See {@link
-	com.liferay.portal.kernel.cal.RecurrenceSerializer
-	#toCronText}
-	* @param schedulerStartDate the scheduler start date
-	* @param schedulerEndDate the scheduler end date
-	* @param description the scheduler description
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#schedulePublishToLive(long, long, boolean, long[], Map,
-	String, Date, Date, String, String, Date, Date, String)}
-	*/
+	 * Schedules a range of layouts to be published.
+	 *
+	 * @param sourceGroupId the primary key of the source group
+	 * @param targetGroupId the primary key of the target group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutIds the layouts considered for publishing, specified by
+	 the layout IDs
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be used. See {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param scope the scope of the pages. It can be
+	 <code>all-pages</code> or <code>selected-pages</code>.
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @param groupName the group name (optionally {@link
+	 DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 DestinationNames}.
+	 * @param cronText the cron text. See {@link
+	 com.liferay.portal.kernel.cal.RecurrenceSerializer
+	 #toCronText}
+	 * @param schedulerStartDate the scheduler start date
+	 * @param schedulerEndDate the scheduler end date
+	 * @param description the scheduler description
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #schedulePublishToLive(long, long, boolean, long[], Map,
+	 String, String, Date, Date, String)}
+	 */
 	@Deprecated
-	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
-		boolean privateLayout, Map<Long, Boolean> layoutIdMap,
-		Map<String, String[]> parameterMap, String scope, Date startDate,
-		Date endDate, String groupName, String cronText,
-		Date schedulerStartDate, Date schedulerEndDate, String description)
+	public void schedulePublishToLive(
+			long sourceGroupId, long targetGroupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap, String scope,
+			Date startDate, Date endDate, String groupName, String cronText,
+			Date schedulerStartDate, Date schedulerEndDate, String description)
 		throws PortalException;
 
 	/**
-	* Schedules a range of layouts to be stored.
-	*
-	* @param sourceGroupId the primary key of the source group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIdMap the layouts considered for publishing, specified by
-	the layout IDs and booleans indicating whether they have children
-	* @param parameterMap the mapping of parameters indicating which
-	information will be used. See {@link
-	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	* @param remoteAddress the remote address
-	* @param remotePort the remote port
-	* @param remotePathContext the remote path context
-	* @param secureConnection whether the connection is secure
-	* @param remoteGroupId the primary key of the remote group
-	* @param remotePrivateLayout whether remote group's layout is private
-	* @param startDate the start date
-	* @param endDate the end date
-	* @param groupName the group name. Optionally {@link
-	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	DestinationNames}.
-	* @param cronText the cron text. See {@link
-	com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
-	* @param schedulerStartDate the scheduler start date
-	* @param schedulerEndDate the scheduler end date
-	* @param description the scheduler description
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void schedulePublishToRemote(long sourceGroupId,
-		boolean privateLayout, Map<Long, Boolean> layoutIdMap,
-		Map<String, String[]> parameterMap, String remoteAddress,
-		int remotePort, String remotePathContext, boolean secureConnection,
-		long remoteGroupId, boolean remotePrivateLayout, Date startDate,
-		Date endDate, String groupName, String cronText,
-		Date schedulerStartDate, Date schedulerEndDate, String description)
+	 * Schedules a range of layouts to be published.
+	 *
+	 * @param sourceGroupId the primary key of the source group
+	 * @param targetGroupId the primary key of the target group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutIds the layouts considered for publishing, specified by the
+	 layout IDs
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be used. See {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param groupName the group name (optionally {@link
+	 DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 DestinationNames}.
+	 * @param cronText the cron text. See {@link
+	 com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
+	 * @param schedulerStartDate the scheduler start date
+	 * @param schedulerEndDate the scheduler end date
+	 * @param description the scheduler description
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public void schedulePublishToLive(
+			long sourceGroupId, long targetGroupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
+			String groupName, String cronText, Date schedulerStartDate,
+			Date schedulerEndDate, String description)
 		throws PortalException;
 
 	/**
-	* Sets the layouts for the group, replacing and prioritizing all layouts of
-	* the parent layout.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parentLayoutId the layout ID of the parent layout
-	* @param layoutIds the primary keys of the layouts
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds, ServiceContext serviceContext)
+	 * Schedules a range of layouts to be published.
+	 *
+	 * @param sourceGroupId the primary key of the source group
+	 * @param targetGroupId the primary key of the target group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutIdMap the layouts considered for publishing, specified
+	 by the layout IDs and booleans indicating whether they have
+	 children
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be used. See {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param scope the scope of the pages
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @param groupName the group name (optionally {@link
+	 DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 DestinationNames}.
+	 * @param cronText the cron text. See {@link
+	 com.liferay.portal.kernel.cal.RecurrenceSerializer
+	 #toCronText}
+	 * @param schedulerStartDate the scheduler start date
+	 * @param schedulerEndDate the scheduler end date
+	 * @param description the scheduler description
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #schedulePublishToLive(long, long, boolean, long[], Map,
+	 String, Date, Date, String, String, Date, Date, String)}
+	 */
+	@Deprecated
+	public void schedulePublishToLive(
+			long sourceGroupId, long targetGroupId, boolean privateLayout,
+			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
+			String scope, Date startDate, Date endDate, String groupName,
+			String cronText, Date schedulerStartDate, Date schedulerEndDate,
+			String description)
 		throws PortalException;
 
 	/**
-	* Deletes the job from the scheduler's queue.
-	*
-	* @param groupId the primary key of the group
-	* @param jobName the job name
-	* @param groupName the group name (optionally {@link
-	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	DestinationNames}.
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void unschedulePublishToLive(long groupId, String jobName,
-		String groupName) throws PortalException;
+	 * Schedules a range of layouts to be stored.
+	 *
+	 * @param sourceGroupId the primary key of the source group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutIdMap the layouts considered for publishing, specified by
+	 the layout IDs and booleans indicating whether they have children
+	 * @param parameterMap the mapping of parameters indicating which
+	 information will be used. See {@link
+	 com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param remoteAddress the remote address
+	 * @param remotePort the remote port
+	 * @param remotePathContext the remote path context
+	 * @param secureConnection whether the connection is secure
+	 * @param remoteGroupId the primary key of the remote group
+	 * @param remotePrivateLayout whether remote group's layout is private
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @param groupName the group name. Optionally {@link
+	 DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 DestinationNames}.
+	 * @param cronText the cron text. See {@link
+	 com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
+	 * @param schedulerStartDate the scheduler start date
+	 * @param schedulerEndDate the scheduler end date
+	 * @param description the scheduler description
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public void schedulePublishToRemote(
+			long sourceGroupId, boolean privateLayout,
+			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			boolean remotePrivateLayout, Date startDate, Date endDate,
+			String groupName, String cronText, Date schedulerStartDate,
+			Date schedulerEndDate, String description)
+		throws PortalException;
 
 	/**
-	* Deletes the job from the scheduler's persistent queue.
-	*
-	* @param groupId the primary key of the group
-	* @param jobName the job name
-	* @param groupName the group name (optionally {@link
-	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	DestinationNames}.
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void unschedulePublishToRemote(long groupId, String jobName,
-		String groupName) throws PortalException;
+	 * Sets the layouts for the group, replacing and prioritizing all layouts of
+	 * the parent layout.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parentLayoutId the layout ID of the parent layout
+	 * @param layoutIds the primary keys of the layouts
+	 * @param serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public void setLayouts(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			long[] layoutIds, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * Deletes the job from the scheduler's queue.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param jobName the job name
+	 * @param groupName the group name (optionally {@link
+	 DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 DestinationNames}.
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public void unschedulePublishToLive(
+			long groupId, String jobName, String groupName)
+		throws PortalException;
+
+	/**
+	 * Deletes the job from the scheduler's persistent queue.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param jobName the job name
+	 * @param groupName the group name (optionally {@link
+	 DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 DestinationNames}.
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public void unschedulePublishToRemote(
+			long groupId, String jobName, String groupName)
+		throws PortalException;
 
 	public Layout updateIconImage(long plid, byte[] bytes)
 		throws PortalException;
 
 	/**
-	* Updates the layout with additional parameters.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param parentLayoutId the layout ID of the layout's new parent layout
-	* @param localeNamesMap the layout's locales and localized names
-	* @param localeTitlesMap the layout's locales and localized titles
-	* @param descriptionMap the locales and localized descriptions to merge
-	(optionally <code>null</code>)
-	* @param keywordsMap the locales and localized keywords to merge
-	(optionally <code>null</code>)
-	* @param robotsMap the locales and localized robots to merge (optionally
-	<code>null</code>)
-	* @param type the layout's new type (optionally {@link
-	LayoutConstants#TYPE_PORTLET})
-	* @param hidden whether the layout is hidden
-	* @param friendlyURLMap the layout's locales and localized friendly URLs.
-	To see how the URL is normalized when accessed see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param iconImage whether the icon image will be updated
-	* @param iconBytes the byte array of the layout's new icon image
-	* @param serviceContext the service context to be applied. Can set the
-	modification date and expando bridge attributes for the layout.
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updateLayout(long groupId, boolean privateLayout,
-		long layoutId, long parentLayoutId, Map<Locale, String> localeNamesMap,
-		Map<Locale, String> localeTitlesMap,
-		Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
-		Map<Locale, String> robotsMap, String type, boolean hidden,
-		Map<Locale, String> friendlyURLMap, boolean iconImage,
-		byte[] iconBytes, ServiceContext serviceContext)
+	 * Updates the layout with additional parameters.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param parentLayoutId the layout ID of the layout's new parent layout
+	 * @param localeNamesMap the layout's locales and localized names
+	 * @param localeTitlesMap the layout's locales and localized titles
+	 * @param descriptionMap the locales and localized descriptions to merge
+	 (optionally <code>null</code>)
+	 * @param keywordsMap the locales and localized keywords to merge
+	 (optionally <code>null</code>)
+	 * @param robotsMap the locales and localized robots to merge (optionally
+	 <code>null</code>)
+	 * @param type the layout's new type (optionally {@link
+	 LayoutConstants#TYPE_PORTLET})
+	 * @param hidden whether the layout is hidden
+	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
+	 To see how the URL is normalized when accessed see {@link
+	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 String)}.
+	 * @param iconImage whether the icon image will be updated
+	 * @param iconBytes the byte array of the layout's new icon image
+	 * @param serviceContext the service context to be applied. Can set the
+	 modification date and expando bridge attributes for the layout.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			long parentLayoutId, Map<Locale, String> localeNamesMap,
+			Map<Locale, String> localeTitlesMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, String type, boolean hidden,
+			Map<Locale, String> friendlyURLMap, boolean iconImage,
+			byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Updates the layout replacing its type settings.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param typeSettings the settings to load the unicode properties object.
-	See {@link com.liferay.portal.kernel.util.UnicodeProperties
-	#fastLoad(String)}.
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updateLayout(long groupId, boolean privateLayout,
-		long layoutId, String typeSettings) throws PortalException;
-
-	/**
-	* Updates the look and feel of the layout.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param themeId the primary key of the layout's new theme
-	* @param colorSchemeId the primary key of the layout's new color scheme
-	* @param css the layout's new CSS
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updateLookAndFeel(long groupId, boolean privateLayout,
-		long layoutId, String themeId, String colorSchemeId, String css)
+	 * Updates the layout replacing its type settings.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param typeSettings the settings to load the unicode properties object.
+	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
+	 #fastLoad(String)}.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings)
 		throws PortalException;
 
 	/**
-	* Updates the name of the layout matching the group, layout ID, and
-	* privacy.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param name the layout's new name
-	* @param languageId the primary key of the language. For more information
-	see {@link Locale}.
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updateName(long groupId, boolean privateLayout,
-		long layoutId, String name, String languageId)
+	 * Updates the look and feel of the layout.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param themeId the primary key of the layout's new theme
+	 * @param colorSchemeId the primary key of the layout's new color scheme
+	 * @param css the layout's new CSS
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateLookAndFeel(
+			long groupId, boolean privateLayout, long layoutId, String themeId,
+			String colorSchemeId, String css)
 		throws PortalException;
 
 	/**
-	* Updates the name of the layout matching the primary key.
-	*
-	* @param plid the primary key of the layout
-	* @param name the name to be assigned
-	* @param languageId the primary key of the language. For more information
-	see {@link Locale}.
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Updates the name of the layout matching the group, layout ID, and
+	 * privacy.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param name the layout's new name
+	 * @param languageId the primary key of the language. For more information
+	 see {@link Locale}.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateName(
+			long groupId, boolean privateLayout, long layoutId, String name,
+			String languageId)
+		throws PortalException;
+
+	/**
+	 * Updates the name of the layout matching the primary key.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param name the name to be assigned
+	 * @param languageId the primary key of the language. For more information
+	 see {@link Locale}.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public Layout updateName(long plid, String name, String languageId)
 		throws PortalException;
 
 	/**
-	* Updates the parent layout ID of the layout matching the group, layout ID,
-	* and privacy.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param parentLayoutId the layout ID to be assigned to the parent
-	layout
-	* @return the matching layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updateParentLayoutId(long groupId, boolean privateLayout,
-		long layoutId, long parentLayoutId) throws PortalException;
+	 * Updates the parent layout ID of the layout matching the group, layout ID,
+	 * and privacy.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param parentLayoutId the layout ID to be assigned to the parent
+	 layout
+	 * @return the matching layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateParentLayoutId(
+			long groupId, boolean privateLayout, long layoutId,
+			long parentLayoutId)
+		throws PortalException;
 
 	/**
-	* Updates the parent layout ID of the layout matching the primary key. If a
-	* layout matching the parent primary key is found, the layout ID of that
-	* layout is assigned, otherwise {@link
-	* LayoutConstants#DEFAULT_PARENT_LAYOUT_ID} is assigned.
-	*
-	* @param plid the primary key of the layout
-	* @param parentPlid the primary key of the parent layout
-	* @return the layout matching the primary key
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Updates the parent layout ID of the layout matching the primary key. If a
+	 * layout matching the parent primary key is found, the layout ID of that
+	 * layout is assigned, otherwise {@link
+	 * LayoutConstants#DEFAULT_PARENT_LAYOUT_ID} is assigned.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param parentPlid the primary key of the parent layout
+	 * @return the layout matching the primary key
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public Layout updateParentLayoutId(long plid, long parentPlid)
 		throws PortalException;
 
 	/**
-	* Updates the parent layout ID and priority of the layout.
-	*
-	* @param plid the primary key of the layout
-	* @param parentPlid the primary key of the parent layout
-	* @param priority the layout's new priority
-	* @return the layout matching the primary key
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updateParentLayoutIdAndPriority(long plid, long parentPlid,
-		int priority) throws PortalException;
-
-	/**
-	* Updates the priority of the layout matching the group, layout ID, and
-	* privacy.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param priority the layout's new priority
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updatePriority(long groupId, boolean privateLayout,
-		long layoutId, int priority) throws PortalException;
-
-	/**
-	* Updates the priority of the layout matching the group, layout ID, and
-	* privacy, setting the layout's priority based on the priorities of the
-	* next and previous layouts.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the layout ID of the layout
-	* @param nextLayoutId the layout ID of the next layout
-	* @param previousLayoutId the layout ID of the previous layout
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
-	public Layout updatePriority(long groupId, boolean privateLayout,
-		long layoutId, long nextLayoutId, long previousLayoutId)
+	 * Updates the parent layout ID and priority of the layout.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param parentPlid the primary key of the parent layout
+	 * @param priority the layout's new priority
+	 * @return the layout matching the primary key
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateParentLayoutIdAndPriority(
+			long plid, long parentPlid, int priority)
 		throws PortalException;
 
 	/**
-	* Updates the priority of the layout matching the primary key.
-	*
-	* @param plid the primary key of the layout
-	* @param priority the layout's new priority
-	* @return the updated layout
-	* @throws PortalException if a portal exception occurred
-	*/
+	 * Updates the priority of the layout matching the group, layout ID, and
+	 * privacy.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param priority the layout's new priority
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updatePriority(
+			long groupId, boolean privateLayout, long layoutId, int priority)
+		throws PortalException;
+
+	/**
+	 * Updates the priority of the layout matching the group, layout ID, and
+	 * privacy, setting the layout's priority based on the priorities of the
+	 * next and previous layouts.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param nextLayoutId the layout ID of the next layout
+	 * @param previousLayoutId the layout ID of the previous layout
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updatePriority(
+			long groupId, boolean privateLayout, long layoutId,
+			long nextLayoutId, long previousLayoutId)
+		throws PortalException;
+
+	/**
+	 * Updates the priority of the layout matching the primary key.
+	 *
+	 * @param plid the primary key of the layout
+	 * @param priority the layout's new priority
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public Layout updatePriority(long plid, int priority)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
-	ExportImportConfiguration, File)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
+	 ExportImportConfiguration, File)}
+	 */
 	@Deprecated
 	public MissingReferences validateImportLayoutsFile(
-		ExportImportConfiguration exportImportConfiguration, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
-	ExportImportConfiguration, InputStream)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
+	 ExportImportConfiguration, InputStream)}
+	 */
 	@Deprecated
 	public MissingReferences validateImportLayoutsFile(
-		ExportImportConfiguration exportImportConfiguration,
-		InputStream inputStream) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public MissingReferences validateImportLayoutsFile(long groupId,
-		boolean privateLayout, Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public MissingReferences validateImportLayoutsFile(long groupId,
-		boolean privateLayout, Map<String, String[]> parameterMap,
-		InputStream inputStream) throws PortalException;
+	public MissingReferences validateImportLayoutsFile(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
-	ExportImportConfiguration, File)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public MissingReferences validateImportLayoutsFile(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
+	 ExportImportConfiguration, File)}
+	 */
 	@Deprecated
 	public MissingReferences validateImportPortletInfo(
-		ExportImportConfiguration exportImportConfiguration, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
-	ExportImportConfiguration, InputStream)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
+	 ExportImportConfiguration, InputStream)}
+	 */
 	@Deprecated
 	public MissingReferences validateImportPortletInfo(
-		ExportImportConfiguration exportImportConfiguration,
-		InputStream inputStream) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated
-	public MissingReferences validateImportPortletInfo(long plid, long groupId,
-		String portletId, Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public MissingReferences validateImportPortletInfo(long plid, long groupId,
-		String portletId, Map<String, String[]> parameterMap,
-		InputStream inputStream) throws PortalException;
+	public MissingReferences validateImportPortletInfo(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public MissingReferences validateImportPortletInfo(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException;
+
 }

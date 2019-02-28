@@ -30,13 +30,15 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see AssetTagStats
  * @deprecated As of Judson (7.1.x), replaced by {@link
-com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
+ com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */
 @Deprecated
 @ProviderType
-public class AssetTagStatsWrapper extends BaseModelWrapper<AssetTagStats>
+public class AssetTagStatsWrapper
+	extends BaseModelWrapper<AssetTagStats>
 	implements AssetTagStats, ModelWrapper<AssetTagStats> {
+
 	public AssetTagStatsWrapper(AssetTagStats assetTagStats) {
 		super(assetTagStats);
 	}
@@ -88,70 +90,70 @@ public class AssetTagStatsWrapper extends BaseModelWrapper<AssetTagStats>
 	}
 
 	/**
-	* Returns the asset count of this asset tag stats.
-	*
-	* @return the asset count of this asset tag stats
-	*/
+	 * Returns the asset count of this asset tag stats.
+	 *
+	 * @return the asset count of this asset tag stats
+	 */
 	@Override
 	public int getAssetCount() {
 		return model.getAssetCount();
 	}
 
 	/**
-	* Returns the fully qualified class name of this asset tag stats.
-	*
-	* @return the fully qualified class name of this asset tag stats
-	*/
+	 * Returns the fully qualified class name of this asset tag stats.
+	 *
+	 * @return the fully qualified class name of this asset tag stats
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this asset tag stats.
-	*
-	* @return the class name ID of this asset tag stats
-	*/
+	 * Returns the class name ID of this asset tag stats.
+	 *
+	 * @return the class name ID of this asset tag stats
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the company ID of this asset tag stats.
-	*
-	* @return the company ID of this asset tag stats
-	*/
+	 * Returns the company ID of this asset tag stats.
+	 *
+	 * @return the company ID of this asset tag stats
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the primary key of this asset tag stats.
-	*
-	* @return the primary key of this asset tag stats
-	*/
+	 * Returns the primary key of this asset tag stats.
+	 *
+	 * @return the primary key of this asset tag stats
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the tag ID of this asset tag stats.
-	*
-	* @return the tag ID of this asset tag stats
-	*/
+	 * Returns the tag ID of this asset tag stats.
+	 *
+	 * @return the tag ID of this asset tag stats
+	 */
 	@Override
 	public long getTagId() {
 		return model.getTagId();
 	}
 
 	/**
-	* Returns the tag stats ID of this asset tag stats.
-	*
-	* @return the tag stats ID of this asset tag stats
-	*/
+	 * Returns the tag stats ID of this asset tag stats.
+	 *
+	 * @return the tag stats ID of this asset tag stats
+	 */
 	@Override
 	public long getTagStatsId() {
 		return model.getTagStatsId();
@@ -163,10 +165,10 @@ public class AssetTagStatsWrapper extends BaseModelWrapper<AssetTagStats>
 	}
 
 	/**
-	* Sets the asset count of this asset tag stats.
-	*
-	* @param assetCount the asset count of this asset tag stats
-	*/
+	 * Sets the asset count of this asset tag stats.
+	 *
+	 * @param assetCount the asset count of this asset tag stats
+	 */
 	@Override
 	public void setAssetCount(int assetCount) {
 		model.setAssetCount(assetCount);
@@ -178,50 +180,50 @@ public class AssetTagStatsWrapper extends BaseModelWrapper<AssetTagStats>
 	}
 
 	/**
-	* Sets the class name ID of this asset tag stats.
-	*
-	* @param classNameId the class name ID of this asset tag stats
-	*/
+	 * Sets the class name ID of this asset tag stats.
+	 *
+	 * @param classNameId the class name ID of this asset tag stats
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the company ID of this asset tag stats.
-	*
-	* @param companyId the company ID of this asset tag stats
-	*/
+	 * Sets the company ID of this asset tag stats.
+	 *
+	 * @param companyId the company ID of this asset tag stats
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the primary key of this asset tag stats.
-	*
-	* @param primaryKey the primary key of this asset tag stats
-	*/
+	 * Sets the primary key of this asset tag stats.
+	 *
+	 * @param primaryKey the primary key of this asset tag stats
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the tag ID of this asset tag stats.
-	*
-	* @param tagId the tag ID of this asset tag stats
-	*/
+	 * Sets the tag ID of this asset tag stats.
+	 *
+	 * @param tagId the tag ID of this asset tag stats
+	 */
 	@Override
 	public void setTagId(long tagId) {
 		model.setTagId(tagId);
 	}
 
 	/**
-	* Sets the tag stats ID of this asset tag stats.
-	*
-	* @param tagStatsId the tag stats ID of this asset tag stats
-	*/
+	 * Sets the tag stats ID of this asset tag stats.
+	 *
+	 * @param tagStatsId the tag stats ID of this asset tag stats
+	 */
 	@Override
 	public void setTagStatsId(long tagStatsId) {
 		model.setTagStatsId(tagStatsId);
@@ -231,4 +233,5 @@ public class AssetTagStatsWrapper extends BaseModelWrapper<AssetTagStats>
 	protected AssetTagStatsWrapper wrap(AssetTagStats assetTagStats) {
 		return new AssetTagStatsWrapper(assetTagStats);
 	}
+
 }

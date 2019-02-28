@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.uad.constants.PortalUADConstants;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -39,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BasePortletItemUADAnonymizer
 	extends DynamicQueryUADAnonymizer<PortletItem> {
+
 	@Override
-	public void autoAnonymize(PortletItem portletItem, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			PortletItem portletItem, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (portletItem.getUserId() == userId) {
 			portletItem.setUserId(anonymousUser.getUserId());
 			portletItem.setUserName(anonymousUser.getFullName());
@@ -72,4 +74,5 @@ public abstract class BasePortletItemUADAnonymizer
 
 	@Reference
 	protected PortletItemLocalService portletItemLocalService;
+
 }

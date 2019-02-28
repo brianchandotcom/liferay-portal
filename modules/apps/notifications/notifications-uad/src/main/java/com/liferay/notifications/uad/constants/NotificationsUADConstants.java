@@ -19,10 +19,12 @@ package com.liferay.notifications.uad.constants;
  * @generated
  */
 public class NotificationsUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_USER_NOTIFICATION_DELIVERY = {
-			"userId"
-		};
+
+	public static final String[]
+		USER_ID_FIELD_NAMES_USER_NOTIFICATION_DELIVERY = {"userId"};
+
 	public static final String[] USER_ID_FIELD_NAMES_USER_NOTIFICATION_EVENT = {
-			"userId"
-		};
+		"userId"
+	};
+
 }

@@ -32,8 +32,9 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ExpandoColumnBaseImpl extends ExpandoColumnModelImpl
-	implements ExpandoColumn {
+public abstract class ExpandoColumnBaseImpl
+	extends ExpandoColumnModelImpl implements ExpandoColumn {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ExpandoColumnBaseImpl extends ExpandoColumnModelImpl
 			ExpandoColumnLocalServiceUtil.updateExpandoColumn(this);
 		}
 	}
+
 }

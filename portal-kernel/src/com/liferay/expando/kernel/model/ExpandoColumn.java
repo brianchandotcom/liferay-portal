@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see ExpandoColumnModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.expando.model.impl.ExpandoColumnImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.expando.model.impl.ExpandoColumnImpl"
+)
 @ProviderType
 public interface ExpandoColumn extends ExpandoColumnModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoColumnImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ExpandoColumn, Long> COLUMN_ID_ACCESSOR = new Accessor<ExpandoColumn, Long>() {
+	public static final Accessor<ExpandoColumn, Long> COLUMN_ID_ACCESSOR =
+		new Accessor<ExpandoColumn, Long>() {
+
 			@Override
 			public Long get(ExpandoColumn expandoColumn) {
 				return expandoColumn.getColumnId();
@@ -50,14 +55,18 @@ public interface ExpandoColumn extends ExpandoColumnModel, PersistedModel {
 			public Class<ExpandoColumn> getTypeClass() {
 				return ExpandoColumn.class;
 			}
+
 		};
 
 	public java.io.Serializable getDefaultValue();
 
 	public String getDisplayName(java.util.Locale locale);
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties();
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties);
+
 }

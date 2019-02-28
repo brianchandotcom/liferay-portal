@@ -30,12 +30,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portlet.asset.model.impl.AssetTagImpl")
 @ProviderType
 public interface AssetTag extends AssetTagModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.asset.model.impl.AssetTagImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetTag, Long> TAG_ID_ACCESSOR = new Accessor<AssetTag, Long>() {
+	public static final Accessor<AssetTag, Long> TAG_ID_ACCESSOR =
+		new Accessor<AssetTag, Long>() {
+
 			@Override
 			public Long get(AssetTag assetTag) {
 				return assetTag.getTagId();
@@ -50,9 +53,11 @@ public interface AssetTag extends AssetTagModel, PersistedModel {
 			public Class<AssetTag> getTypeClass() {
 				return AssetTag.class;
 			}
-		};
 
-	public static final Accessor<AssetTag, String> NAME_ACCESSOR = new Accessor<AssetTag, String>() {
+		};
+	public static final Accessor<AssetTag, String> NAME_ACCESSOR =
+		new Accessor<AssetTag, String>() {
+
 			@Override
 			public String get(AssetTag assetTag) {
 				return assetTag.getName();
@@ -67,5 +72,7 @@ public interface AssetTag extends AssetTagModel, PersistedModel {
 			public Class<AssetTag> getTypeClass() {
 				return AssetTag.class;
 			}
+
 		};
+
 }

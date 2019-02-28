@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ExpandoTableWrapper extends BaseModelWrapper<ExpandoTable>
+public class ExpandoTableWrapper
+	extends BaseModelWrapper<ExpandoTable>
 	implements ExpandoTable, ModelWrapper<ExpandoTable> {
+
 	public ExpandoTableWrapper(ExpandoTable expandoTable) {
 		super(expandoTable);
 	}
@@ -78,60 +80,60 @@ public class ExpandoTableWrapper extends BaseModelWrapper<ExpandoTable>
 	}
 
 	/**
-	* Returns the fully qualified class name of this expando table.
-	*
-	* @return the fully qualified class name of this expando table
-	*/
+	 * Returns the fully qualified class name of this expando table.
+	 *
+	 * @return the fully qualified class name of this expando table
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this expando table.
-	*
-	* @return the class name ID of this expando table
-	*/
+	 * Returns the class name ID of this expando table.
+	 *
+	 * @return the class name ID of this expando table
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the company ID of this expando table.
-	*
-	* @return the company ID of this expando table
-	*/
+	 * Returns the company ID of this expando table.
+	 *
+	 * @return the company ID of this expando table
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the name of this expando table.
-	*
-	* @return the name of this expando table
-	*/
+	 * Returns the name of this expando table.
+	 *
+	 * @return the name of this expando table
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this expando table.
-	*
-	* @return the primary key of this expando table
-	*/
+	 * Returns the primary key of this expando table.
+	 *
+	 * @return the primary key of this expando table
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the table ID of this expando table.
-	*
-	* @return the table ID of this expando table
-	*/
+	 * Returns the table ID of this expando table.
+	 *
+	 * @return the table ID of this expando table
+	 */
 	@Override
 	public long getTableId() {
 		return model.getTableId();
@@ -153,50 +155,50 @@ public class ExpandoTableWrapper extends BaseModelWrapper<ExpandoTable>
 	}
 
 	/**
-	* Sets the class name ID of this expando table.
-	*
-	* @param classNameId the class name ID of this expando table
-	*/
+	 * Sets the class name ID of this expando table.
+	 *
+	 * @param classNameId the class name ID of this expando table
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the company ID of this expando table.
-	*
-	* @param companyId the company ID of this expando table
-	*/
+	 * Sets the company ID of this expando table.
+	 *
+	 * @param companyId the company ID of this expando table
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the name of this expando table.
-	*
-	* @param name the name of this expando table
-	*/
+	 * Sets the name of this expando table.
+	 *
+	 * @param name the name of this expando table
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this expando table.
-	*
-	* @param primaryKey the primary key of this expando table
-	*/
+	 * Sets the primary key of this expando table.
+	 *
+	 * @param primaryKey the primary key of this expando table
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the table ID of this expando table.
-	*
-	* @param tableId the table ID of this expando table
-	*/
+	 * Sets the table ID of this expando table.
+	 *
+	 * @param tableId the table ID of this expando table
+	 */
 	@Override
 	public void setTableId(long tableId) {
 		model.setTableId(tableId);
@@ -206,4 +208,5 @@ public class ExpandoTableWrapper extends BaseModelWrapper<ExpandoTable>
 	protected ExpandoTableWrapper wrap(ExpandoTable expandoTable) {
 		return new ExpandoTableWrapper(expandoTable);
 	}
+
 }

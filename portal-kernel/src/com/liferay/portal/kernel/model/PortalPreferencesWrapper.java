@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class PortalPreferencesWrapper extends BaseModelWrapper<PortalPreferences>
+public class PortalPreferencesWrapper
+	extends BaseModelWrapper<PortalPreferences>
 	implements PortalPreferences, ModelWrapper<PortalPreferences> {
+
 	public PortalPreferencesWrapper(PortalPreferences portalPreferences) {
 		super(portalPreferences);
 	}
@@ -84,60 +86,60 @@ public class PortalPreferencesWrapper extends BaseModelWrapper<PortalPreferences
 	}
 
 	/**
-	* Returns the mvcc version of this portal preferences.
-	*
-	* @return the mvcc version of this portal preferences
-	*/
+	 * Returns the mvcc version of this portal preferences.
+	 *
+	 * @return the mvcc version of this portal preferences
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the owner ID of this portal preferences.
-	*
-	* @return the owner ID of this portal preferences
-	*/
+	 * Returns the owner ID of this portal preferences.
+	 *
+	 * @return the owner ID of this portal preferences
+	 */
 	@Override
 	public long getOwnerId() {
 		return model.getOwnerId();
 	}
 
 	/**
-	* Returns the owner type of this portal preferences.
-	*
-	* @return the owner type of this portal preferences
-	*/
+	 * Returns the owner type of this portal preferences.
+	 *
+	 * @return the owner type of this portal preferences
+	 */
 	@Override
 	public int getOwnerType() {
 		return model.getOwnerType();
 	}
 
 	/**
-	* Returns the portal preferences ID of this portal preferences.
-	*
-	* @return the portal preferences ID of this portal preferences
-	*/
+	 * Returns the portal preferences ID of this portal preferences.
+	 *
+	 * @return the portal preferences ID of this portal preferences
+	 */
 	@Override
 	public long getPortalPreferencesId() {
 		return model.getPortalPreferencesId();
 	}
 
 	/**
-	* Returns the preferences of this portal preferences.
-	*
-	* @return the preferences of this portal preferences
-	*/
+	 * Returns the preferences of this portal preferences.
+	 *
+	 * @return the preferences of this portal preferences
+	 */
 	@Override
 	public String getPreferences() {
 		return model.getPreferences();
 	}
 
 	/**
-	* Returns the primary key of this portal preferences.
-	*
-	* @return the primary key of this portal preferences
-	*/
+	 * Returns the primary key of this portal preferences.
+	 *
+	 * @return the primary key of this portal preferences
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -149,67 +151,70 @@ public class PortalPreferencesWrapper extends BaseModelWrapper<PortalPreferences
 	}
 
 	/**
-	* Sets the mvcc version of this portal preferences.
-	*
-	* @param mvccVersion the mvcc version of this portal preferences
-	*/
+	 * Sets the mvcc version of this portal preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this portal preferences
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the owner ID of this portal preferences.
-	*
-	* @param ownerId the owner ID of this portal preferences
-	*/
+	 * Sets the owner ID of this portal preferences.
+	 *
+	 * @param ownerId the owner ID of this portal preferences
+	 */
 	@Override
 	public void setOwnerId(long ownerId) {
 		model.setOwnerId(ownerId);
 	}
 
 	/**
-	* Sets the owner type of this portal preferences.
-	*
-	* @param ownerType the owner type of this portal preferences
-	*/
+	 * Sets the owner type of this portal preferences.
+	 *
+	 * @param ownerType the owner type of this portal preferences
+	 */
 	@Override
 	public void setOwnerType(int ownerType) {
 		model.setOwnerType(ownerType);
 	}
 
 	/**
-	* Sets the portal preferences ID of this portal preferences.
-	*
-	* @param portalPreferencesId the portal preferences ID of this portal preferences
-	*/
+	 * Sets the portal preferences ID of this portal preferences.
+	 *
+	 * @param portalPreferencesId the portal preferences ID of this portal preferences
+	 */
 	@Override
 	public void setPortalPreferencesId(long portalPreferencesId) {
 		model.setPortalPreferencesId(portalPreferencesId);
 	}
 
 	/**
-	* Sets the preferences of this portal preferences.
-	*
-	* @param preferences the preferences of this portal preferences
-	*/
+	 * Sets the preferences of this portal preferences.
+	 *
+	 * @param preferences the preferences of this portal preferences
+	 */
 	@Override
 	public void setPreferences(String preferences) {
 		model.setPreferences(preferences);
 	}
 
 	/**
-	* Sets the primary key of this portal preferences.
-	*
-	* @param primaryKey the primary key of this portal preferences
-	*/
+	 * Sets the primary key of this portal preferences.
+	 *
+	 * @param primaryKey the primary key of this portal preferences
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	protected PortalPreferencesWrapper wrap(PortalPreferences portalPreferences) {
+	protected PortalPreferencesWrapper wrap(
+		PortalPreferences portalPreferences) {
+
 		return new PortalPreferencesWrapper(portalPreferences);
 	}
+
 }

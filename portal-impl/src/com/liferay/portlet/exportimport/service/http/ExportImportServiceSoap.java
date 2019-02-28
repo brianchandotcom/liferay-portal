@@ -17,7 +17,6 @@ package com.liferay.portlet.exportimport.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -53,12 +52,18 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ExportImportServiceSoap {
+
 	public static long exportLayoutsAsFileInBackground(
-		com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap exportImportConfiguration)
+			com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap
+				exportImportConfiguration)
 		throws RemoteException {
+
 		try {
-			long returnValue = ExportImportServiceUtil.exportLayoutsAsFileInBackground(com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl.toModel(
-						exportImportConfiguration));
+			long returnValue =
+				ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+					com.liferay.portlet.exportimport.model.impl.
+						ExportImportConfigurationModelImpl.toModel(
+							exportImportConfiguration));
 
 			return returnValue;
 		}
@@ -70,9 +75,13 @@ public class ExportImportServiceSoap {
 	}
 
 	public static long exportLayoutsAsFileInBackground(
-		long exportImportConfigurationId) throws RemoteException {
+			long exportImportConfigurationId)
+		throws RemoteException {
+
 		try {
-			long returnValue = ExportImportServiceUtil.exportLayoutsAsFileInBackground(exportImportConfigurationId);
+			long returnValue =
+				ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+					exportImportConfigurationId);
 
 			return returnValue;
 		}
@@ -84,11 +93,16 @@ public class ExportImportServiceSoap {
 	}
 
 	public static long exportPortletInfoAsFileInBackground(
-		com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap exportImportConfiguration)
+			com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap
+				exportImportConfiguration)
 		throws RemoteException {
+
 		try {
-			long returnValue = ExportImportServiceUtil.exportPortletInfoAsFileInBackground(com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl.toModel(
-						exportImportConfiguration));
+			long returnValue =
+				ExportImportServiceUtil.exportPortletInfoAsFileInBackground(
+					com.liferay.portlet.exportimport.model.impl.
+						ExportImportConfigurationModelImpl.toModel(
+							exportImportConfiguration));
 
 			return returnValue;
 		}
@@ -99,5 +113,7 @@ public class ExportImportServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExportImportServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		ExportImportServiceSoap.class);
+
 }

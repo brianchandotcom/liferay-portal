@@ -30,72 +30,85 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  * @see AssetCategoryPropertyService
  * @deprecated As of Judson (7.1.x), replaced by {@link
-com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
+ com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
  * @generated
  */
 @Deprecated
 @ProviderType
 public class AssetCategoryPropertyServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.asset.kernel.model.AssetCategoryProperty addCategoryProperty(
-		long entryId, String key, String value)
+	public static com.liferay.asset.kernel.model.AssetCategoryProperty
+			addCategoryProperty(long entryId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().addCategoryProperty(entryId, key, value);
 	}
 
 	public static void deleteCategoryProperty(long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteCategoryProperty(categoryPropertyId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategoryProperty> getCategoryProperties(
-		long entryId) {
+	public static java.util.List
+		<com.liferay.asset.kernel.model.AssetCategoryProperty>
+			getCategoryProperties(long entryId) {
+
 		return getService().getCategoryProperties(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategoryProperty> getCategoryPropertyValues(
-		long companyId, String key) {
+	public static java.util.List
+		<com.liferay.asset.kernel.model.AssetCategoryProperty>
+			getCategoryPropertyValues(long companyId, String key) {
+
 		return getService().getCategoryPropertyValues(companyId, key);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
-		long userId, long categoryPropertyId, String key, String value)
+	public static com.liferay.asset.kernel.model.AssetCategoryProperty
+			updateCategoryProperty(
+				long userId, long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCategoryProperty(userId, categoryPropertyId, key,
-			value);
+
+		return getService().updateCategoryProperty(
+			userId, categoryPropertyId, key, value);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, String key, String value)
+	public static com.liferay.asset.kernel.model.AssetCategoryProperty
+			updateCategoryProperty(
+				long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCategoryProperty(categoryPropertyId, key, value);
+
+		return getService().updateCategoryProperty(
+			categoryPropertyId, key, value);
 	}
 
 	public static AssetCategoryPropertyService getService() {
 		if (_service == null) {
-			_service = (AssetCategoryPropertyService)PortalBeanLocatorUtil.locate(AssetCategoryPropertyService.class.getName());
+			_service =
+				(AssetCategoryPropertyService)PortalBeanLocatorUtil.locate(
+					AssetCategoryPropertyService.class.getName());
 
-			ReferenceRegistry.registerReference(AssetCategoryPropertyServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				AssetCategoryPropertyServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static AssetCategoryPropertyService _service;
+
 }

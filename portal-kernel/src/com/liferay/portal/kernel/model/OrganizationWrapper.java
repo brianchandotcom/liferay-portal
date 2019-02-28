@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
@@ -34,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class OrganizationWrapper extends BaseModelWrapper<Organization>
+public class OrganizationWrapper
+	extends BaseModelWrapper<Organization>
 	implements Organization, ModelWrapper<Organization> {
+
 	public OrganizationWrapper(Organization organization) {
 		super(organization);
 	}
@@ -82,7 +83,7 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 		}
 
 		String externalReferenceCode = (String)attributes.get(
-				"externalReferenceCode");
+			"externalReferenceCode");
 
 		if (externalReferenceCode != null) {
 			setExternalReferenceCode(externalReferenceCode);
@@ -124,7 +125,8 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 			setModifiedDate(modifiedDate);
 		}
 
-		Long parentOrganizationId = (Long)attributes.get("parentOrganizationId");
+		Long parentOrganizationId = (Long)attributes.get(
+			"parentOrganizationId");
 
 		if (parentOrganizationId != null) {
 			setParentOrganizationId(parentOrganizationId);
@@ -188,6 +190,7 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.buildTreePath();
 	}
 
@@ -204,12 +207,14 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	@Override
 	public long[] getAncestorOrganizationIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getAncestorOrganizationIds();
 	}
 
 	@Override
 	public java.util.List<Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getAncestors();
 	}
 
@@ -219,40 +224,40 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the comments of this organization.
-	*
-	* @return the comments of this organization
-	*/
+	 * Returns the comments of this organization.
+	 *
+	 * @return the comments of this organization
+	 */
 	@Override
 	public String getComments() {
 		return model.getComments();
 	}
 
 	/**
-	* Returns the company ID of this organization.
-	*
-	* @return the company ID of this organization
-	*/
+	 * Returns the company ID of this organization.
+	 *
+	 * @return the company ID of this organization
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the country ID of this organization.
-	*
-	* @return the country ID of this organization
-	*/
+	 * Returns the country ID of this organization.
+	 *
+	 * @return the country ID of this organization
+	 */
 	@Override
 	public long getCountryId() {
 		return model.getCountryId();
 	}
 
 	/**
-	* Returns the create date of this organization.
-	*
-	* @return the create date of this organization
-	*/
+	 * Returns the create date of this organization.
+	 *
+	 * @return the create date of this organization
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
@@ -264,10 +269,10 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the external reference code of this organization.
-	*
-	* @return the external reference code of this organization
-	*/
+	 * Returns the external reference code of this organization.
+	 *
+	 * @return the external reference code of this organization
+	 */
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
@@ -284,50 +289,50 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the logo ID of this organization.
-	*
-	* @return the logo ID of this organization
-	*/
+	 * Returns the logo ID of this organization.
+	 *
+	 * @return the logo ID of this organization
+	 */
 	@Override
 	public long getLogoId() {
 		return model.getLogoId();
 	}
 
 	/**
-	* Returns the modified date of this organization.
-	*
-	* @return the modified date of this organization
-	*/
+	 * Returns the modified date of this organization.
+	 *
+	 * @return the modified date of this organization
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this organization.
-	*
-	* @return the mvcc version of this organization
-	*/
+	 * Returns the mvcc version of this organization.
+	 *
+	 * @return the mvcc version of this organization
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this organization.
-	*
-	* @return the name of this organization
-	*/
+	 * Returns the name of this organization.
+	 *
+	 * @return the name of this organization
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the organization ID of this organization.
-	*
-	* @return the organization ID of this organization
-	*/
+	 * Returns the organization ID of this organization.
+	 *
+	 * @return the organization ID of this organization
+	 */
 	@Override
 	public long getOrganizationId() {
 		return model.getOrganizationId();
@@ -336,14 +341,15 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	@Override
 	public Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getParentOrganization();
 	}
 
 	/**
-	* Returns the parent organization ID of this organization.
-	*
-	* @return the parent organization ID of this organization
-	*/
+	 * Returns the parent organization ID of this organization.
+	 *
+	 * @return the parent organization ID of this organization
+	 */
 	@Override
 	public long getParentOrganizationId() {
 		return model.getParentOrganizationId();
@@ -360,10 +366,10 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the primary key of this organization.
-	*
-	* @return the primary key of this organization
-	*/
+	 * Returns the primary key of this organization.
+	 *
+	 * @return the primary key of this organization
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -380,20 +386,20 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the recursable of this organization.
-	*
-	* @return the recursable of this organization
-	*/
+	 * Returns the recursable of this organization.
+	 *
+	 * @return the recursable of this organization
+	 */
 	@Override
 	public boolean getRecursable() {
 		return model.getRecursable();
 	}
 
 	/**
-	* Returns the region ID of this organization.
-	*
-	* @return the region ID of this organization
-	*/
+	 * Returns the region ID of this organization.
+	 *
+	 * @return the region ID of this organization
+	 */
 	@Override
 	public long getRegionId() {
 		return model.getRegionId();
@@ -402,6 +408,7 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	@Override
 	public java.util.Set<String> getReminderQueryQuestions(
 		java.util.Locale locale) {
+
 		return model.getReminderQueryQuestions(locale);
 	}
 
@@ -411,10 +418,10 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the status ID of this organization.
-	*
-	* @return the status ID of this organization
-	*/
+	 * Returns the status ID of this organization.
+	 *
+	 * @return the status ID of this organization
+	 */
 	@Override
 	public long getStatusId() {
 		return model.getStatusId();
@@ -431,20 +438,20 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the tree path of this organization.
-	*
-	* @return the tree path of this organization
-	*/
+	 * Returns the tree path of this organization.
+	 *
+	 * @return the tree path of this organization
+	 */
 	@Override
 	public String getTreePath() {
 		return model.getTreePath();
 	}
 
 	/**
-	* Returns the type of this organization.
-	*
-	* @return the type of this organization
-	*/
+	 * Returns the type of this organization.
+	 *
+	 * @return the type of this organization
+	 */
 	@Override
 	public String getType() {
 		return model.getType();
@@ -456,40 +463,40 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns the user ID of this organization.
-	*
-	* @return the user ID of this organization
-	*/
+	 * Returns the user ID of this organization.
+	 *
+	 * @return the user ID of this organization
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this organization.
-	*
-	* @return the user name of this organization
-	*/
+	 * Returns the user name of this organization.
+	 *
+	 * @return the user name of this organization
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this organization.
-	*
-	* @return the user uuid of this organization
-	*/
+	 * Returns the user uuid of this organization.
+	 *
+	 * @return the user uuid of this organization
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this organization.
-	*
-	* @return the uuid of this organization
-	*/
+	 * Returns the uuid of this organization.
+	 *
+	 * @return the uuid of this organization
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -516,10 +523,10 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Returns <code>true</code> if this organization is recursable.
-	*
-	* @return <code>true</code> if this organization is recursable; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this organization is recursable.
+	 *
+	 * @return <code>true</code> if this organization is recursable; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isRecursable() {
 		return model.isRecursable();
@@ -536,210 +543,210 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	}
 
 	/**
-	* Sets the comments of this organization.
-	*
-	* @param comments the comments of this organization
-	*/
+	 * Sets the comments of this organization.
+	 *
+	 * @param comments the comments of this organization
+	 */
 	@Override
 	public void setComments(String comments) {
 		model.setComments(comments);
 	}
 
 	/**
-	* Sets the company ID of this organization.
-	*
-	* @param companyId the company ID of this organization
-	*/
+	 * Sets the company ID of this organization.
+	 *
+	 * @param companyId the company ID of this organization
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the country ID of this organization.
-	*
-	* @param countryId the country ID of this organization
-	*/
+	 * Sets the country ID of this organization.
+	 *
+	 * @param countryId the country ID of this organization
+	 */
 	@Override
 	public void setCountryId(long countryId) {
 		model.setCountryId(countryId);
 	}
 
 	/**
-	* Sets the create date of this organization.
-	*
-	* @param createDate the create date of this organization
-	*/
+	 * Sets the create date of this organization.
+	 *
+	 * @param createDate the create date of this organization
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the external reference code of this organization.
-	*
-	* @param externalReferenceCode the external reference code of this organization
-	*/
+	 * Sets the external reference code of this organization.
+	 *
+	 * @param externalReferenceCode the external reference code of this organization
+	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
-	* Sets the logo ID of this organization.
-	*
-	* @param logoId the logo ID of this organization
-	*/
+	 * Sets the logo ID of this organization.
+	 *
+	 * @param logoId the logo ID of this organization
+	 */
 	@Override
 	public void setLogoId(long logoId) {
 		model.setLogoId(logoId);
 	}
 
 	/**
-	* Sets the modified date of this organization.
-	*
-	* @param modifiedDate the modified date of this organization
-	*/
+	 * Sets the modified date of this organization.
+	 *
+	 * @param modifiedDate the modified date of this organization
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this organization.
-	*
-	* @param mvccVersion the mvcc version of this organization
-	*/
+	 * Sets the mvcc version of this organization.
+	 *
+	 * @param mvccVersion the mvcc version of this organization
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this organization.
-	*
-	* @param name the name of this organization
-	*/
+	 * Sets the name of this organization.
+	 *
+	 * @param name the name of this organization
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the organization ID of this organization.
-	*
-	* @param organizationId the organization ID of this organization
-	*/
+	 * Sets the organization ID of this organization.
+	 *
+	 * @param organizationId the organization ID of this organization
+	 */
 	@Override
 	public void setOrganizationId(long organizationId) {
 		model.setOrganizationId(organizationId);
 	}
 
 	/**
-	* Sets the parent organization ID of this organization.
-	*
-	* @param parentOrganizationId the parent organization ID of this organization
-	*/
+	 * Sets the parent organization ID of this organization.
+	 *
+	 * @param parentOrganizationId the parent organization ID of this organization
+	 */
 	@Override
 	public void setParentOrganizationId(long parentOrganizationId) {
 		model.setParentOrganizationId(parentOrganizationId);
 	}
 
 	/**
-	* Sets the primary key of this organization.
-	*
-	* @param primaryKey the primary key of this organization
-	*/
+	 * Sets the primary key of this organization.
+	 *
+	 * @param primaryKey the primary key of this organization
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets whether this organization is recursable.
-	*
-	* @param recursable the recursable of this organization
-	*/
+	 * Sets whether this organization is recursable.
+	 *
+	 * @param recursable the recursable of this organization
+	 */
 	@Override
 	public void setRecursable(boolean recursable) {
 		model.setRecursable(recursable);
 	}
 
 	/**
-	* Sets the region ID of this organization.
-	*
-	* @param regionId the region ID of this organization
-	*/
+	 * Sets the region ID of this organization.
+	 *
+	 * @param regionId the region ID of this organization
+	 */
 	@Override
 	public void setRegionId(long regionId) {
 		model.setRegionId(regionId);
 	}
 
 	/**
-	* Sets the status ID of this organization.
-	*
-	* @param statusId the status ID of this organization
-	*/
+	 * Sets the status ID of this organization.
+	 *
+	 * @param statusId the status ID of this organization
+	 */
 	@Override
 	public void setStatusId(long statusId) {
 		model.setStatusId(statusId);
 	}
 
 	/**
-	* Sets the tree path of this organization.
-	*
-	* @param treePath the tree path of this organization
-	*/
+	 * Sets the tree path of this organization.
+	 *
+	 * @param treePath the tree path of this organization
+	 */
 	@Override
 	public void setTreePath(String treePath) {
 		model.setTreePath(treePath);
 	}
 
 	/**
-	* Sets the type of this organization.
-	*
-	* @param type the type of this organization
-	*/
+	 * Sets the type of this organization.
+	 *
+	 * @param type the type of this organization
+	 */
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	* Sets the user ID of this organization.
-	*
-	* @param userId the user ID of this organization
-	*/
+	 * Sets the user ID of this organization.
+	 *
+	 * @param userId the user ID of this organization
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this organization.
-	*
-	* @param userName the user name of this organization
-	*/
+	 * Sets the user name of this organization.
+	 *
+	 * @param userName the user name of this organization
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this organization.
-	*
-	* @param userUuid the user uuid of this organization
-	*/
+	 * Sets the user uuid of this organization.
+	 *
+	 * @param userUuid the user uuid of this organization
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this organization.
-	*
-	* @param uuid the uuid of this organization
-	*/
+	 * Sets the uuid of this organization.
+	 *
+	 * @param uuid the uuid of this organization
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -759,4 +766,5 @@ public class OrganizationWrapper extends BaseModelWrapper<Organization>
 	protected OrganizationWrapper wrap(Organization organization) {
 		return new OrganizationWrapper(organization);
 	}
+
 }

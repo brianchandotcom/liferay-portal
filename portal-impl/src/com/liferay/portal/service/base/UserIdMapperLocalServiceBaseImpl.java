@@ -61,8 +61,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class UserIdMapperLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements UserIdMapperLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements UserIdMapperLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -106,6 +107,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	@Override
 	public UserIdMapper deleteUserIdMapper(long userIdMapperId)
 		throws PortalException {
+
 		return userIdMapperPersistence.remove(userIdMapperId);
 	}
 
@@ -125,8 +127,8 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			UserIdMapper.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -153,10 +155,11 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return userIdMapperPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return userIdMapperPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -173,10 +176,12 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return userIdMapperPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return userIdMapperPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -198,10 +203,11 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return userIdMapperPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return userIdMapperPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -219,12 +225,14 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	@Override
 	public UserIdMapper getUserIdMapper(long userIdMapperId)
 		throws PortalException {
+
 		return userIdMapperPersistence.findByPrimaryKey(userIdMapperId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(userIdMapperLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -236,10 +244,14 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(userIdMapperLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			userIdMapperLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(UserIdMapper.class);
 
@@ -251,6 +263,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
+
 		actionableDynamicQuery.setBaseLocalService(userIdMapperLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserIdMapper.class);
@@ -264,12 +277,15 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return userIdMapperLocalService.deleteUserIdMapper((UserIdMapper)persistedModel);
+
+		return userIdMapperLocalService.deleteUserIdMapper(
+			(UserIdMapper)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return userIdMapperPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -327,6 +343,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 */
 	public void setUserIdMapperLocalService(
 		UserIdMapperLocalService userIdMapperLocalService) {
+
 		this.userIdMapperLocalService = userIdMapperLocalService;
 	}
 
@@ -346,6 +363,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 */
 	public void setUserIdMapperPersistence(
 		UserIdMapperPersistence userIdMapperPersistence) {
+
 		this.userIdMapperPersistence = userIdMapperPersistence;
 	}
 
@@ -354,7 +372,9 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -364,12 +384,15 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.UserIdMapper",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.UserIdMapper",
 			userIdMapperLocalService);
 	}
 
@@ -410,8 +433,8 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -422,10 +445,18 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 
 	@BeanReference(type = UserIdMapperLocalService.class)
 	protected UserIdMapperLocalService userIdMapperLocalService;
+
 	@BeanReference(type = UserIdMapperPersistence.class)
 	protected UserIdMapperPersistence userIdMapperPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

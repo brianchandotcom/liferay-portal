@@ -30,19 +30,11 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-
 import com.liferay.social.kernel.exception.NoSuchRequestException;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
 import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
 import com.liferay.social.kernel.service.persistence.SocialRequestUtil;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 import java.io.Serializable;
 
@@ -54,14 +46,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class SocialRequestPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +102,8 @@ public class SocialRequestPersistenceTest {
 
 		_persistence.remove(newSocialRequest);
 
-		SocialRequest existingSocialRequest = _persistence.fetchByPrimaryKey(newSocialRequest.getPrimaryKey());
+		SocialRequest existingSocialRequest = _persistence.fetchByPrimaryKey(
+			newSocialRequest.getPrimaryKey());
 
 		Assert.assertNull(existingSocialRequest);
 	}
@@ -143,34 +145,42 @@ public class SocialRequestPersistenceTest {
 
 		_socialRequests.add(_persistence.update(newSocialRequest));
 
-		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
+		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(
+			newSocialRequest.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialRequest.getUuid(),
-			newSocialRequest.getUuid());
-		Assert.assertEquals(existingSocialRequest.getRequestId(),
+		Assert.assertEquals(
+			existingSocialRequest.getUuid(), newSocialRequest.getUuid());
+		Assert.assertEquals(
+			existingSocialRequest.getRequestId(),
 			newSocialRequest.getRequestId());
-		Assert.assertEquals(existingSocialRequest.getGroupId(),
-			newSocialRequest.getGroupId());
-		Assert.assertEquals(existingSocialRequest.getCompanyId(),
+		Assert.assertEquals(
+			existingSocialRequest.getGroupId(), newSocialRequest.getGroupId());
+		Assert.assertEquals(
+			existingSocialRequest.getCompanyId(),
 			newSocialRequest.getCompanyId());
-		Assert.assertEquals(existingSocialRequest.getUserId(),
-			newSocialRequest.getUserId());
-		Assert.assertEquals(existingSocialRequest.getCreateDate(),
+		Assert.assertEquals(
+			existingSocialRequest.getUserId(), newSocialRequest.getUserId());
+		Assert.assertEquals(
+			existingSocialRequest.getCreateDate(),
 			newSocialRequest.getCreateDate());
-		Assert.assertEquals(existingSocialRequest.getModifiedDate(),
+		Assert.assertEquals(
+			existingSocialRequest.getModifiedDate(),
 			newSocialRequest.getModifiedDate());
-		Assert.assertEquals(existingSocialRequest.getClassNameId(),
+		Assert.assertEquals(
+			existingSocialRequest.getClassNameId(),
 			newSocialRequest.getClassNameId());
-		Assert.assertEquals(existingSocialRequest.getClassPK(),
-			newSocialRequest.getClassPK());
-		Assert.assertEquals(existingSocialRequest.getType(),
-			newSocialRequest.getType());
-		Assert.assertEquals(existingSocialRequest.getExtraData(),
+		Assert.assertEquals(
+			existingSocialRequest.getClassPK(), newSocialRequest.getClassPK());
+		Assert.assertEquals(
+			existingSocialRequest.getType(), newSocialRequest.getType());
+		Assert.assertEquals(
+			existingSocialRequest.getExtraData(),
 			newSocialRequest.getExtraData());
-		Assert.assertEquals(existingSocialRequest.getReceiverUserId(),
+		Assert.assertEquals(
+			existingSocialRequest.getReceiverUserId(),
 			newSocialRequest.getReceiverUserId());
-		Assert.assertEquals(existingSocialRequest.getStatus(),
-			newSocialRequest.getStatus());
+		Assert.assertEquals(
+			existingSocialRequest.getStatus(), newSocialRequest.getStatus());
 	}
 
 	@Test
@@ -223,51 +233,54 @@ public class SocialRequestPersistenceTest {
 
 	@Test
 	public void testCountByU_S() throws Exception {
-		_persistence.countByU_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByU_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByU_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByR_S() throws Exception {
-		_persistence.countByR_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByR_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByR_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByU_C_C_T_R() throws Exception {
-		_persistence.countByU_C_C_T_R(RandomTestUtil.nextLong(),
+		_persistence.countByU_C_C_T_R(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByU_C_C_T_R(0L, 0L, 0L, 0, 0L);
 	}
 
 	@Test
 	public void testCountByU_C_C_T_S() throws Exception {
-		_persistence.countByU_C_C_T_S(RandomTestUtil.nextLong(),
+		_persistence.countByU_C_C_T_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByU_C_C_T_S(0L, 0L, 0L, 0, 0);
 	}
 
 	@Test
 	public void testCountByC_C_T_R_S() throws Exception {
-		_persistence.countByC_C_T_R_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_C_T_R_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_C_T_R_S(0L, 0L, 0, 0L, 0);
 	}
@@ -276,7 +289,8 @@ public class SocialRequestPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
-		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
+		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(
+			newSocialRequest.getPrimaryKey());
 
 		Assert.assertEquals(existingSocialRequest, newSocialRequest);
 	}
@@ -290,23 +304,24 @@ public class SocialRequestPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SocialRequest> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SocialRequest", "uuid",
-			true, "requestId", true, "groupId", true, "companyId", true,
-			"userId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "type", true, "extraData",
-			true, "receiverUserId", true, "status", true);
+		return OrderByComparatorFactoryUtil.create(
+			"SocialRequest", "uuid", true, "requestId", true, "groupId", true,
+			"companyId", true, "userId", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true, "type",
+			true, "extraData", true, "receiverUserId", true, "status", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
-		SocialRequest existingSocialRequest = _persistence.fetchByPrimaryKey(newSocialRequest.getPrimaryKey());
+		SocialRequest existingSocialRequest = _persistence.fetchByPrimaryKey(
+			newSocialRequest.getPrimaryKey());
 
 		Assert.assertEquals(existingSocialRequest, newSocialRequest);
 	}
@@ -323,6 +338,7 @@ public class SocialRequestPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		SocialRequest newSocialRequest1 = addSocialRequest();
 		SocialRequest newSocialRequest2 = addSocialRequest();
 
@@ -331,18 +347,22 @@ public class SocialRequestPersistenceTest {
 		primaryKeys.add(newSocialRequest1.getPrimaryKey());
 		primaryKeys.add(newSocialRequest2.getPrimaryKey());
 
-		Map<Serializable, SocialRequest> socialRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialRequest> socialRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, socialRequests.size());
-		Assert.assertEquals(newSocialRequest1,
+		Assert.assertEquals(
+			newSocialRequest1,
 			socialRequests.get(newSocialRequest1.getPrimaryKey()));
-		Assert.assertEquals(newSocialRequest2,
+		Assert.assertEquals(
+			newSocialRequest2,
 			socialRequests.get(newSocialRequest2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -352,7 +372,8 @@ public class SocialRequestPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SocialRequest> socialRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialRequest> socialRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(socialRequests.isEmpty());
 	}
@@ -360,6 +381,7 @@ public class SocialRequestPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		SocialRequest newSocialRequest = addSocialRequest();
 
 		long pk = RandomTestUtil.nextLong();
@@ -369,36 +391,39 @@ public class SocialRequestPersistenceTest {
 		primaryKeys.add(newSocialRequest.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SocialRequest> socialRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialRequest> socialRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, socialRequests.size());
-		Assert.assertEquals(newSocialRequest,
+		Assert.assertEquals(
+			newSocialRequest,
 			socialRequests.get(newSocialRequest.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SocialRequest> socialRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialRequest> socialRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(socialRequests.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSocialRequest.getPrimaryKey());
 
-		Map<Serializable, SocialRequest> socialRequests = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SocialRequest> socialRequests =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, socialRequests.size());
-		Assert.assertEquals(newSocialRequest,
+		Assert.assertEquals(
+			newSocialRequest,
 			socialRequests.get(newSocialRequest.getPrimaryKey()));
 	}
 
@@ -406,15 +431,19 @@ public class SocialRequestPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = SocialRequestLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			SocialRequestLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SocialRequest>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<SocialRequest>() {
+
 				@Override
 				public void performAction(SocialRequest socialRequest) {
 					Assert.assertNotNull(socialRequest);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -423,17 +452,18 @@ public class SocialRequestPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialRequest.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("requestId",
-				newSocialRequest.getRequestId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"requestId", newSocialRequest.getRequestId()));
 
-		List<SocialRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialRequest> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -444,31 +474,32 @@ public class SocialRequestPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialRequest.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("requestId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("requestId", RandomTestUtil.nextLong()));
 
-		List<SocialRequest> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialRequest> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		SocialRequest newSocialRequest = addSocialRequest();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialRequest.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("requestId"));
 
 		Object newRequestId = newSocialRequest.getRequestId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("requestId",
-				new Object[] { newRequestId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"requestId", new Object[] {newRequestId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -481,13 +512,14 @@ public class SocialRequestPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialRequest.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("requestId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("requestId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"requestId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -500,31 +532,42 @@ public class SocialRequestPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
+		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(
+			newSocialRequest.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingSocialRequest.getUuid(),
-				ReflectionTestUtil.invoke(existingSocialRequest,
-					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingSocialRequest.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
-				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingSocialRequest.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingSocialRequest, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialRequest.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialRequest, "getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(existingSocialRequest.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingSocialRequest.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingSocialRequest.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
-				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(existingSocialRequest.getType()),
-			ReflectionTestUtil.<Integer>invoke(existingSocialRequest,
-				"getOriginalType", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingSocialRequest.getReceiverUserId()),
-			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
-				"getOriginalReceiverUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialRequest.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialRequest, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialRequest.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialRequest, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialRequest.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialRequest, "getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingSocialRequest.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingSocialRequest, "getOriginalType", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingSocialRequest.getReceiverUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingSocialRequest, "getOriginalReceiverUserId",
+				new Class<?>[0]));
 	}
 
 	protected SocialRequest addSocialRequest() throws Exception {
@@ -561,7 +604,9 @@ public class SocialRequestPersistenceTest {
 		return socialRequest;
 	}
 
-	private List<SocialRequest> _socialRequests = new ArrayList<SocialRequest>();
+	private List<SocialRequest> _socialRequests =
+		new ArrayList<SocialRequest>();
 	private SocialRequestPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

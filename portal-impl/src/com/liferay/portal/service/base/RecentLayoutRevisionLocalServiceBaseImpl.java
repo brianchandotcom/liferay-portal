@@ -62,8 +62,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class RecentLayoutRevisionLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements RecentLayoutRevisionLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements RecentLayoutRevisionLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -80,6 +81,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	@Override
 	public RecentLayoutRevision addRecentLayoutRevision(
 		RecentLayoutRevision recentLayoutRevision) {
+
 		recentLayoutRevision.setNew(true);
 
 		return recentLayoutRevisionPersistence.update(recentLayoutRevision);
@@ -95,6 +97,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public RecentLayoutRevision createRecentLayoutRevision(
 		long recentLayoutRevisionId) {
+
 		return recentLayoutRevisionPersistence.create(recentLayoutRevisionId);
 	}
 
@@ -108,7 +111,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RecentLayoutRevision deleteRecentLayoutRevision(
-		long recentLayoutRevisionId) throws PortalException {
+			long recentLayoutRevisionId)
+		throws PortalException {
+
 		return recentLayoutRevisionPersistence.remove(recentLayoutRevisionId);
 	}
 
@@ -122,6 +127,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	@Override
 	public RecentLayoutRevision deleteRecentLayoutRevision(
 		RecentLayoutRevision recentLayoutRevision) {
+
 		return recentLayoutRevisionPersistence.remove(recentLayoutRevision);
 	}
 
@@ -129,8 +135,8 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(RecentLayoutRevision.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			RecentLayoutRevision.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -141,7 +147,8 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return recentLayoutRevisionPersistence.findWithDynamicQuery(dynamicQuery);
+		return recentLayoutRevisionPersistence.findWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -157,10 +164,11 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return recentLayoutRevisionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return recentLayoutRevisionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -177,10 +185,12 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return recentLayoutRevisionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return recentLayoutRevisionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -191,7 +201,8 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return recentLayoutRevisionPersistence.countWithDynamicQuery(dynamicQuery);
+		return recentLayoutRevisionPersistence.countWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -202,16 +213,19 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return recentLayoutRevisionPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return recentLayoutRevisionPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public RecentLayoutRevision fetchRecentLayoutRevision(
 		long recentLayoutRevisionId) {
-		return recentLayoutRevisionPersistence.fetchByPrimaryKey(recentLayoutRevisionId);
+
+		return recentLayoutRevisionPersistence.fetchByPrimaryKey(
+			recentLayoutRevisionId);
 	}
 
 	/**
@@ -223,15 +237,20 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	@Override
 	public RecentLayoutRevision getRecentLayoutRevision(
-		long recentLayoutRevisionId) throws PortalException {
-		return recentLayoutRevisionPersistence.findByPrimaryKey(recentLayoutRevisionId);
+			long recentLayoutRevisionId)
+		throws PortalException {
+
+		return recentLayoutRevisionPersistence.findByPrimaryKey(
+			recentLayoutRevisionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(recentLayoutRevisionLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			recentLayoutRevisionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RecentLayoutRevision.class);
 
@@ -242,12 +261,17 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(recentLayoutRevisionLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			recentLayoutRevisionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(RecentLayoutRevision.class);
+		indexableActionableDynamicQuery.setModelClass(
+			RecentLayoutRevision.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"recentLayoutRevisionId");
@@ -257,7 +281,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(recentLayoutRevisionLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			recentLayoutRevisionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RecentLayoutRevision.class);
 
@@ -271,12 +297,15 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return recentLayoutRevisionLocalService.deleteRecentLayoutRevision((RecentLayoutRevision)persistedModel);
+
+		return recentLayoutRevisionLocalService.deleteRecentLayoutRevision(
+			(RecentLayoutRevision)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return recentLayoutRevisionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -292,8 +321,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @return the range of recent layout revisions
 	 */
 	@Override
-	public List<RecentLayoutRevision> getRecentLayoutRevisions(int start,
-		int end) {
+	public List<RecentLayoutRevision> getRecentLayoutRevisions(
+		int start, int end) {
+
 		return recentLayoutRevisionPersistence.findAll(start, end);
 	}
 
@@ -317,6 +347,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	@Override
 	public RecentLayoutRevision updateRecentLayoutRevision(
 		RecentLayoutRevision recentLayoutRevision) {
+
 		return recentLayoutRevisionPersistence.update(recentLayoutRevision);
 	}
 
@@ -325,7 +356,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 *
 	 * @return the recent layout revision local service
 	 */
-	public RecentLayoutRevisionLocalService getRecentLayoutRevisionLocalService() {
+	public RecentLayoutRevisionLocalService
+		getRecentLayoutRevisionLocalService() {
+
 		return recentLayoutRevisionLocalService;
 	}
 
@@ -336,7 +369,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	public void setRecentLayoutRevisionLocalService(
 		RecentLayoutRevisionLocalService recentLayoutRevisionLocalService) {
-		this.recentLayoutRevisionLocalService = recentLayoutRevisionLocalService;
+
+		this.recentLayoutRevisionLocalService =
+			recentLayoutRevisionLocalService;
 	}
 
 	/**
@@ -344,7 +379,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 *
 	 * @return the recent layout revision persistence
 	 */
-	public RecentLayoutRevisionPersistence getRecentLayoutRevisionPersistence() {
+	public RecentLayoutRevisionPersistence
+		getRecentLayoutRevisionPersistence() {
+
 		return recentLayoutRevisionPersistence;
 	}
 
@@ -355,6 +392,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	public void setRecentLayoutRevisionPersistence(
 		RecentLayoutRevisionPersistence recentLayoutRevisionPersistence) {
+
 		this.recentLayoutRevisionPersistence = recentLayoutRevisionPersistence;
 	}
 
@@ -363,7 +401,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -373,7 +413,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -382,7 +424,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 *
 	 * @return the layout revision local service
 	 */
-	public com.liferay.portal.kernel.service.LayoutRevisionLocalService getLayoutRevisionLocalService() {
+	public com.liferay.portal.kernel.service.LayoutRevisionLocalService
+		getLayoutRevisionLocalService() {
+
 		return layoutRevisionLocalService;
 	}
 
@@ -392,7 +436,9 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 * @param layoutRevisionLocalService the layout revision local service
 	 */
 	public void setLayoutRevisionLocalService(
-		com.liferay.portal.kernel.service.LayoutRevisionLocalService layoutRevisionLocalService) {
+		com.liferay.portal.kernel.service.LayoutRevisionLocalService
+			layoutRevisionLocalService) {
+
 		this.layoutRevisionLocalService = layoutRevisionLocalService;
 	}
 
@@ -412,11 +458,13 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	public void setLayoutRevisionPersistence(
 		LayoutRevisionPersistence layoutRevisionPersistence) {
+
 		this.layoutRevisionPersistence = layoutRevisionPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.RecentLayoutRevision",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.RecentLayoutRevision",
 			recentLayoutRevisionLocalService);
 	}
 
@@ -450,15 +498,16 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = recentLayoutRevisionPersistence.getDataSource();
+			DataSource dataSource =
+				recentLayoutRevisionPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -469,14 +518,27 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 
 	@BeanReference(type = RecentLayoutRevisionLocalService.class)
 	protected RecentLayoutRevisionLocalService recentLayoutRevisionLocalService;
+
 	@BeanReference(type = RecentLayoutRevisionPersistence.class)
 	protected RecentLayoutRevisionPersistence recentLayoutRevisionPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.LayoutRevisionLocalService.class)
-	protected com.liferay.portal.kernel.service.LayoutRevisionLocalService layoutRevisionLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.LayoutRevisionLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.LayoutRevisionLocalService
+		layoutRevisionLocalService;
+
 	@BeanReference(type = LayoutRevisionPersistence.class)
 	protected LayoutRevisionPersistence layoutRevisionPersistence;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

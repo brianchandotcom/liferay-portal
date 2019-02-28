@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationUtil;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -53,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ExportImportConfigurationPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -74,7 +75,8 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<ExportImportConfiguration> iterator = _exportImportConfigurations.iterator();
+		Iterator<ExportImportConfiguration> iterator =
+			_exportImportConfigurations.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -87,7 +89,8 @@ public class ExportImportConfigurationPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ExportImportConfiguration exportImportConfiguration = _persistence.create(pk);
+		ExportImportConfiguration exportImportConfiguration =
+			_persistence.create(pk);
 
 		Assert.assertNotNull(exportImportConfiguration);
 
@@ -96,11 +99,14 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
 		_persistence.remove(newExportImportConfiguration);
 
-		ExportImportConfiguration existingExportImportConfiguration = _persistence.fetchByPrimaryKey(newExportImportConfiguration.getPrimaryKey());
+		ExportImportConfiguration existingExportImportConfiguration =
+			_persistence.fetchByPrimaryKey(
+				newExportImportConfiguration.getPrimaryKey());
 
 		Assert.assertNull(existingExportImportConfiguration);
 	}
@@ -114,7 +120,8 @@ public class ExportImportConfigurationPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ExportImportConfiguration newExportImportConfiguration = _persistence.create(pk);
+		ExportImportConfiguration newExportImportConfiguration =
+			_persistence.create(pk);
 
 		newExportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -132,7 +139,8 @@ public class ExportImportConfigurationPersistenceTest {
 
 		newExportImportConfiguration.setName(RandomTestUtil.randomString());
 
-		newExportImportConfiguration.setDescription(RandomTestUtil.randomString());
+		newExportImportConfiguration.setDescription(
+			RandomTestUtil.randomString());
 
 		newExportImportConfiguration.setType(RandomTestUtil.nextInt());
 
@@ -140,53 +148,75 @@ public class ExportImportConfigurationPersistenceTest {
 
 		newExportImportConfiguration.setStatus(RandomTestUtil.nextInt());
 
-		newExportImportConfiguration.setStatusByUserId(RandomTestUtil.nextLong());
+		newExportImportConfiguration.setStatusByUserId(
+			RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setStatusByUserName(RandomTestUtil.randomString());
+		newExportImportConfiguration.setStatusByUserName(
+			RandomTestUtil.randomString());
 
 		newExportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
 
-		_exportImportConfigurations.add(_persistence.update(
-				newExportImportConfiguration));
+		_exportImportConfigurations.add(
+			_persistence.update(newExportImportConfiguration));
 
-		ExportImportConfiguration existingExportImportConfiguration = _persistence.findByPrimaryKey(newExportImportConfiguration.getPrimaryKey());
+		ExportImportConfiguration existingExportImportConfiguration =
+			_persistence.findByPrimaryKey(
+				newExportImportConfiguration.getPrimaryKey());
 
-		Assert.assertEquals(existingExportImportConfiguration.getMvccVersion(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getMvccVersion(),
 			newExportImportConfiguration.getMvccVersion());
-		Assert.assertEquals(existingExportImportConfiguration.getExportImportConfigurationId(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getExportImportConfigurationId(),
 			newExportImportConfiguration.getExportImportConfigurationId());
-		Assert.assertEquals(existingExportImportConfiguration.getGroupId(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getGroupId(),
 			newExportImportConfiguration.getGroupId());
-		Assert.assertEquals(existingExportImportConfiguration.getCompanyId(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getCompanyId(),
 			newExportImportConfiguration.getCompanyId());
-		Assert.assertEquals(existingExportImportConfiguration.getUserId(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getUserId(),
 			newExportImportConfiguration.getUserId());
-		Assert.assertEquals(existingExportImportConfiguration.getUserName(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getUserName(),
 			newExportImportConfiguration.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingExportImportConfiguration.getCreateDate()),
-			Time.getShortTimestamp(newExportImportConfiguration.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
+			Time.getShortTimestamp(
+				newExportImportConfiguration.getCreateDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingExportImportConfiguration.getModifiedDate()),
 			Time.getShortTimestamp(
 				newExportImportConfiguration.getModifiedDate()));
-		Assert.assertEquals(existingExportImportConfiguration.getName(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getName(),
 			newExportImportConfiguration.getName());
-		Assert.assertEquals(existingExportImportConfiguration.getDescription(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getDescription(),
 			newExportImportConfiguration.getDescription());
-		Assert.assertEquals(existingExportImportConfiguration.getType(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getType(),
 			newExportImportConfiguration.getType());
-		Assert.assertEquals(existingExportImportConfiguration.getSettings(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getSettings(),
 			newExportImportConfiguration.getSettings());
-		Assert.assertEquals(existingExportImportConfiguration.getStatus(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getStatus(),
 			newExportImportConfiguration.getStatus());
-		Assert.assertEquals(existingExportImportConfiguration.getStatusByUserId(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getStatusByUserId(),
 			newExportImportConfiguration.getStatusByUserId());
-		Assert.assertEquals(existingExportImportConfiguration.getStatusByUserName(),
+		Assert.assertEquals(
+			existingExportImportConfiguration.getStatusByUserName(),
 			newExportImportConfiguration.getStatusByUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
+		Assert.assertEquals(
+			Time.getShortTimestamp(
 				existingExportImportConfiguration.getStatusDate()),
-			Time.getShortTimestamp(newExportImportConfiguration.getStatusDate()));
+			Time.getShortTimestamp(
+				newExportImportConfiguration.getStatusDate()));
 	}
 
 	@Test
@@ -205,36 +235,40 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_T(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByG_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
 	public void testCountByG_T_S() throws Exception {
-		_persistence.countByG_T_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+		_persistence.countByG_T_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByG_T_S(0L, 0, 0);
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
-		ExportImportConfiguration existingExportImportConfiguration = _persistence.findByPrimaryKey(newExportImportConfiguration.getPrimaryKey());
+		ExportImportConfiguration existingExportImportConfiguration =
+			_persistence.findByPrimaryKey(
+				newExportImportConfiguration.getPrimaryKey());
 
-		Assert.assertEquals(existingExportImportConfiguration,
-			newExportImportConfiguration);
+		Assert.assertEquals(
+			existingExportImportConfiguration, newExportImportConfiguration);
 	}
 
 	@Test(expected = NoSuchConfigurationException.class)
@@ -246,34 +280,41 @@ public class ExportImportConfigurationPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
-	protected OrderByComparator<ExportImportConfiguration> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ExportImportConfiguration",
-			"mvccVersion", true, "exportImportConfigurationId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"description", true, "type", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+	protected OrderByComparator<ExportImportConfiguration>
+		getOrderByComparator() {
+
+		return OrderByComparatorFactoryUtil.create(
+			"ExportImportConfiguration", "mvccVersion", true,
+			"exportImportConfigurationId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true, "type",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
-		ExportImportConfiguration existingExportImportConfiguration = _persistence.fetchByPrimaryKey(newExportImportConfiguration.getPrimaryKey());
+		ExportImportConfiguration existingExportImportConfiguration =
+			_persistence.fetchByPrimaryKey(
+				newExportImportConfiguration.getPrimaryKey());
 
-		Assert.assertEquals(existingExportImportConfiguration,
-			newExportImportConfiguration);
+		Assert.assertEquals(
+			existingExportImportConfiguration, newExportImportConfiguration);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ExportImportConfiguration missingExportImportConfiguration = _persistence.fetchByPrimaryKey(pk);
+		ExportImportConfiguration missingExportImportConfiguration =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingExportImportConfiguration);
 	}
@@ -281,21 +322,28 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		ExportImportConfiguration newExportImportConfiguration1 = addExportImportConfiguration();
-		ExportImportConfiguration newExportImportConfiguration2 = addExportImportConfiguration();
+
+		ExportImportConfiguration newExportImportConfiguration1 =
+			addExportImportConfiguration();
+		ExportImportConfiguration newExportImportConfiguration2 =
+			addExportImportConfiguration();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newExportImportConfiguration1.getPrimaryKey());
 		primaryKeys.add(newExportImportConfiguration2.getPrimaryKey());
 
-		Map<Serializable, ExportImportConfiguration> exportImportConfigurations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ExportImportConfiguration>
+			exportImportConfigurations = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(2, exportImportConfigurations.size());
-		Assert.assertEquals(newExportImportConfiguration1,
+		Assert.assertEquals(
+			newExportImportConfiguration1,
 			exportImportConfigurations.get(
 				newExportImportConfiguration1.getPrimaryKey()));
-		Assert.assertEquals(newExportImportConfiguration2,
+		Assert.assertEquals(
+			newExportImportConfiguration2,
 			exportImportConfigurations.get(
 				newExportImportConfiguration2.getPrimaryKey()));
 	}
@@ -303,6 +351,7 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -312,7 +361,9 @@ public class ExportImportConfigurationPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, ExportImportConfiguration> exportImportConfigurations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ExportImportConfiguration>
+			exportImportConfigurations = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertTrue(exportImportConfigurations.isEmpty());
 	}
@@ -320,7 +371,9 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -329,37 +382,44 @@ public class ExportImportConfigurationPersistenceTest {
 		primaryKeys.add(newExportImportConfiguration.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, ExportImportConfiguration> exportImportConfigurations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ExportImportConfiguration>
+			exportImportConfigurations = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(1, exportImportConfigurations.size());
-		Assert.assertEquals(newExportImportConfiguration,
+		Assert.assertEquals(
+			newExportImportConfiguration,
 			exportImportConfigurations.get(
 				newExportImportConfiguration.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ExportImportConfiguration> exportImportConfigurations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ExportImportConfiguration>
+			exportImportConfigurations = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertTrue(exportImportConfigurations.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newExportImportConfiguration.getPrimaryKey());
 
-		Map<Serializable, ExportImportConfiguration> exportImportConfigurations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ExportImportConfiguration>
+			exportImportConfigurations = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
 
 		Assert.assertEquals(1, exportImportConfigurations.size());
-		Assert.assertEquals(newExportImportConfiguration,
+		Assert.assertEquals(
+			newExportImportConfiguration,
 			exportImportConfigurations.get(
 				newExportImportConfiguration.getPrimaryKey()));
 	}
@@ -368,16 +428,23 @@ public class ExportImportConfigurationPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ExportImportConfigurationLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ExportImportConfigurationLocalServiceUtil.
+				getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ExportImportConfiguration>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<ExportImportConfiguration>() {
+
 				@Override
 				public void performAction(
 					ExportImportConfiguration exportImportConfiguration) {
+
 					Assert.assertNotNull(exportImportConfiguration);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -386,56 +453,63 @@ public class ExportImportConfigurationPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ExportImportConfiguration.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
 				"exportImportConfigurationId",
 				newExportImportConfiguration.getExportImportConfigurationId()));
 
-		List<ExportImportConfiguration> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ExportImportConfiguration> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		ExportImportConfiguration existingExportImportConfiguration = result.get(0);
+		ExportImportConfiguration existingExportImportConfiguration =
+			result.get(0);
 
-		Assert.assertEquals(existingExportImportConfiguration,
-			newExportImportConfiguration);
+		Assert.assertEquals(
+			existingExportImportConfiguration, newExportImportConfiguration);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ExportImportConfiguration.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
 				"exportImportConfigurationId", RandomTestUtil.nextLong()));
 
-		List<ExportImportConfiguration> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ExportImportConfiguration> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		ExportImportConfiguration newExportImportConfiguration =
+			addExportImportConfiguration();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ExportImportConfiguration.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"exportImportConfigurationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("exportImportConfigurationId"));
 
-		Object newExportImportConfigurationId = newExportImportConfiguration.getExportImportConfigurationId();
+		Object newExportImportConfigurationId =
+			newExportImportConfiguration.getExportImportConfigurationId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
 				"exportImportConfigurationId",
-				new Object[] { newExportImportConfigurationId }));
+				new Object[] {newExportImportConfigurationId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -443,21 +517,23 @@ public class ExportImportConfigurationPersistenceTest {
 
 		Object existingExportImportConfigurationId = result.get(0);
 
-		Assert.assertEquals(existingExportImportConfigurationId,
+		Assert.assertEquals(
+			existingExportImportConfigurationId,
 			newExportImportConfigurationId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ExportImportConfiguration.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"exportImportConfigurationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("exportImportConfigurationId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in(
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
 				"exportImportConfigurationId",
-				new Object[] { RandomTestUtil.nextLong() }));
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -466,9 +542,11 @@ public class ExportImportConfigurationPersistenceTest {
 
 	protected ExportImportConfiguration addExportImportConfiguration()
 		throws Exception {
+
 		long pk = RandomTestUtil.nextLong();
 
-		ExportImportConfiguration exportImportConfiguration = _persistence.create(pk);
+		ExportImportConfiguration exportImportConfiguration =
+			_persistence.create(pk);
 
 		exportImportConfiguration.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -496,17 +574,20 @@ public class ExportImportConfigurationPersistenceTest {
 
 		exportImportConfiguration.setStatusByUserId(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setStatusByUserName(RandomTestUtil.randomString());
+		exportImportConfiguration.setStatusByUserName(
+			RandomTestUtil.randomString());
 
 		exportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
 
-		_exportImportConfigurations.add(_persistence.update(
-				exportImportConfiguration));
+		_exportImportConfigurations.add(
+			_persistence.update(exportImportConfiguration));
 
 		return exportImportConfiguration;
 	}
 
-	private List<ExportImportConfiguration> _exportImportConfigurations = new ArrayList<ExportImportConfiguration>();
+	private List<ExportImportConfiguration> _exportImportConfigurations =
+		new ArrayList<ExportImportConfiguration>();
 	private ExportImportConfigurationPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

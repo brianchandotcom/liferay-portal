@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.RegionImpl")
 @ProviderType
 public interface Region extends RegionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RegionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Region, Long> REGION_ID_ACCESSOR = new Accessor<Region, Long>() {
+	public static final Accessor<Region, Long> REGION_ID_ACCESSOR =
+		new Accessor<Region, Long>() {
+
 			@Override
 			public Long get(Region region) {
 				return region.getRegionId();
@@ -49,5 +52,7 @@ public interface Region extends RegionModel {
 			public Class<Region> getTypeClass() {
 				return Region.class;
 			}
+
 		};
+
 }

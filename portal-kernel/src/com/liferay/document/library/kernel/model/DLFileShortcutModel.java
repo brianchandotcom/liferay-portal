@@ -38,8 +38,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
-	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+public interface DLFileShortcutModel
+	extends BaseModel<DLFileShortcut>, ShardedModel, StagedGroupedModel,
+			TrashedModel, WorkflowedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -491,4 +493,5 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 */
 	@Override
 	public boolean isScheduled();
+
 }

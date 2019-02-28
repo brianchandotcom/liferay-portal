@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.RepositoryImpl")
 @ProviderType
 public interface Repository extends RepositoryModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RepositoryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Repository, Long> REPOSITORY_ID_ACCESSOR = new Accessor<Repository, Long>() {
+	public static final Accessor<Repository, Long> REPOSITORY_ID_ACCESSOR =
+		new Accessor<Repository, Long>() {
+
 			@Override
 			public Long get(Repository repository) {
 				return repository.getRepositoryId();
@@ -49,10 +52,14 @@ public interface Repository extends RepositoryModel, PersistedModel {
 			public Class<Repository> getTypeClass() {
 				return Repository.class;
 			}
+
 		};
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties();
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties);
+
 }

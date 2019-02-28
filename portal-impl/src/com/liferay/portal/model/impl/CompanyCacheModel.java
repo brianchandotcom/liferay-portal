@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
-	MVCCModel {
+public class CompanyCacheModel
+	implements CacheModel<Company>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,7 +50,8 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 		CompanyCacheModel companyCacheModel = (CompanyCacheModel)obj;
 
 		if ((companyId == companyCacheModel.companyId) &&
-				(mvccVersion == companyCacheModel.mvccVersion)) {
+			(mvccVersion == companyCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -160,6 +161,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -178,14 +180,14 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 
 		active = objectInput.readBoolean();
 
-		_companySecurityBag = (CompanyImpl.CompanySecurityBag)objectInput.readObject();
+		_companySecurityBag =
+			(CompanyImpl.CompanySecurityBag)objectInput.readObject();
 		_keyObj = (java.security.Key)objectInput.readObject();
 		_virtualHostname = (String)objectInput.readObject();
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(companyId);
@@ -247,4 +249,5 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 	public CompanyImpl.CompanySecurityBag _companySecurityBag;
 	public java.security.Key _keyObj;
 	public String _virtualHostname;
+
 }

@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AssetVocabularyModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.asset.model.impl.AssetVocabularyImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.asset.model.impl.AssetVocabularyImpl"
+)
 @ProviderType
 public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.asset.model.impl.AssetVocabularyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetVocabulary, Long> VOCABULARY_ID_ACCESSOR = new Accessor<AssetVocabulary, Long>() {
+	public static final Accessor<AssetVocabulary, Long> VOCABULARY_ID_ACCESSOR =
+		new Accessor<AssetVocabulary, Long>() {
+
 			@Override
 			public Long get(AssetVocabulary assetVocabulary) {
 				return assetVocabulary.getVocabularyId();
@@ -50,6 +55,7 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 			public Class<AssetVocabulary> getTypeClass() {
 				return AssetVocabulary.class;
 			}
+
 		};
 
 	public java.util.List<AssetCategory> getCategories();
@@ -63,41 +69,43 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public long[] getSelectedClassTypePKs();
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated()
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getSettingsProperties();
 
 	public String getUnambiguousTitle(
-		java.util.List<AssetVocabulary> vocabularies, long groupId,
-		java.util.Locale locale)
+			java.util.List<AssetVocabulary> vocabularies, long groupId,
+			java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds);
 
 	public boolean isAssociatedToClassNameId(long classNameId);
 
-	public boolean isAssociatedToClassNameIdAndClassTypePK(long classNameId,
-		long classTypePK);
+	public boolean isAssociatedToClassNameIdAndClassTypePK(
+		long classNameId, long classTypePK);
 
-	public boolean isMissingRequiredCategory(long classNameId,
-		long classTypePK, long[] categoryIds);
+	public boolean isMissingRequiredCategory(
+		long classNameId, long classTypePK, long[] categoryIds);
 
 	public boolean isMultiValued();
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#isRequired(long, long)}
-	*/
-	@Deprecated()
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #isRequired(long, long)}
+	 */
+	@Deprecated
 	public boolean isRequired(long classNameId);
 
 	public boolean isRequired(long classNameId, long classTypePK);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
-	@Deprecated()
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
+
 }

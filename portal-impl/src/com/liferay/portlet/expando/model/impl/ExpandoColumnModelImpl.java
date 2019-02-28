@@ -19,9 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnModel;
 import com.liferay.expando.kernel.model.ExpandoColumnSoap;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,24 +54,25 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
-	implements ExpandoColumnModel {
+public class ExpandoColumnModelImpl
+	extends BaseModelImpl<ExpandoColumn> implements ExpandoColumnModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a expando column model instance should use the <code>ExpandoColumn</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ExpandoColumn";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "columnId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "tableId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "type_", Types.INTEGER },
-			{ "defaultData", Types.CLOB },
-			{ "typeSettings", Types.CLOB }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"columnId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"tableId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"defaultData", Types.CLOB},
+		{"typeSettings", Types.CLOB}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("columnId", Types.BIGINT);
@@ -85,23 +84,40 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoColumn (columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table ExpandoColumn (columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
+
 	public static final String TABLE_SQL_DROP = "drop table ExpandoColumn";
-	public static final String ORDER_BY_JPQL = " ORDER BY expandoColumn.name ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY ExpandoColumn.name ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY expandoColumn.name ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY ExpandoColumn.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.expando.kernel.model.ExpandoColumn"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.expando.kernel.model.ExpandoColumn"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.expando.kernel.model.ExpandoColumn"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.expando.kernel.model.ExpandoColumn"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.expando.kernel.model.ExpandoColumn"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.expando.kernel.model.ExpandoColumn"),
+		true);
+
 	public static final long NAME_COLUMN_BITMASK = 1L;
+
 	public static final long TABLEID_COLUMN_BITMASK = 2L;
 
 	/**
@@ -139,7 +155,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 			return null;
 		}
 
-		List<ExpandoColumn> models = new ArrayList<ExpandoColumn>(soapModels.length);
+		List<ExpandoColumn> models = new ArrayList<ExpandoColumn>(
+			soapModels.length);
 
 		for (ExpandoColumnSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -148,8 +165,9 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.expando.kernel.model.ExpandoColumn"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.expando.kernel.model.ExpandoColumn"));
 
 	public ExpandoColumnModelImpl() {
 	}
@@ -188,13 +206,18 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<ExpandoColumn, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ExpandoColumn, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ExpandoColumn, Object> attributeGetterFunction = entry.getValue();
+			Function<ExpandoColumn, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((ExpandoColumn)this));
 		}
 
@@ -206,55 +229,78 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<ExpandoColumn, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<ExpandoColumn, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<ExpandoColumn, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<ExpandoColumn, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((ExpandoColumn)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(ExpandoColumn)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<ExpandoColumn, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<ExpandoColumn, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<ExpandoColumn, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<ExpandoColumn, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ExpandoColumn, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ExpandoColumn, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<ExpandoColumn, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ExpandoColumn, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ExpandoColumn, Object>>();
-		Map<String, BiConsumer<ExpandoColumn, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ExpandoColumn, ?>>();
-
+		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ExpandoColumn, Object>>();
+		Map<String, BiConsumer<ExpandoColumn, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ExpandoColumn, ?>>();
 
 		attributeGetterFunctions.put("columnId", ExpandoColumn::getColumnId);
-		attributeSetterBiConsumers.put("columnId", (BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setColumnId);
+		attributeSetterBiConsumers.put(
+			"columnId",
+			(BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setColumnId);
 		attributeGetterFunctions.put("companyId", ExpandoColumn::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setCompanyId);
 		attributeGetterFunctions.put("tableId", ExpandoColumn::getTableId);
-		attributeSetterBiConsumers.put("tableId", (BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setTableId);
+		attributeSetterBiConsumers.put(
+			"tableId",
+			(BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setTableId);
 		attributeGetterFunctions.put("name", ExpandoColumn::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<ExpandoColumn, String>)ExpandoColumn::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<ExpandoColumn, String>)ExpandoColumn::setName);
 		attributeGetterFunctions.put("type", ExpandoColumn::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<ExpandoColumn, Integer>)ExpandoColumn::setType);
-		attributeGetterFunctions.put("defaultData", ExpandoColumn::getDefaultData);
-		attributeSetterBiConsumers.put("defaultData", (BiConsumer<ExpandoColumn, String>)ExpandoColumn::setDefaultData);
-		attributeGetterFunctions.put("typeSettings", ExpandoColumn::getTypeSettings);
-		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<ExpandoColumn, String>)ExpandoColumn::setTypeSettings);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<ExpandoColumn, Integer>)ExpandoColumn::setType);
+		attributeGetterFunctions.put(
+			"defaultData", ExpandoColumn::getDefaultData);
+		attributeSetterBiConsumers.put(
+			"defaultData",
+			(BiConsumer<ExpandoColumn, String>)ExpandoColumn::setDefaultData);
+		attributeGetterFunctions.put(
+			"typeSettings", ExpandoColumn::getTypeSettings);
+		attributeSetterBiConsumers.put(
+			"typeSettings",
+			(BiConsumer<ExpandoColumn, String>)ExpandoColumn::setTypeSettings);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -378,8 +424,9 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	@Override
 	public ExpandoColumn toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ExpandoColumn)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (ExpandoColumn)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -456,7 +503,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	public void resetOriginalValues() {
 		ExpandoColumnModelImpl expandoColumnModelImpl = this;
 
-		expandoColumnModelImpl._originalTableId = expandoColumnModelImpl._tableId;
+		expandoColumnModelImpl._originalTableId =
+			expandoColumnModelImpl._tableId;
 
 		expandoColumnModelImpl._setOriginalTableId = false;
 
@@ -467,7 +515,8 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	@Override
 	public CacheModel<ExpandoColumn> toCacheModel() {
-		ExpandoColumnCacheModel expandoColumnCacheModel = new ExpandoColumnCacheModel();
+		ExpandoColumnCacheModel expandoColumnCacheModel =
+			new ExpandoColumnCacheModel();
 
 		expandoColumnCacheModel.columnId = getColumnId();
 
@@ -506,16 +555,20 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	@Override
 	public String toString() {
-		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<ExpandoColumn, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ExpandoColumn, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ExpandoColumn, Object> attributeGetterFunction = entry.getValue();
+			Function<ExpandoColumn, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -534,18 +587,22 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ExpandoColumn, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<ExpandoColumn, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ExpandoColumn, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ExpandoColumn, Object> attributeGetterFunction = entry.getValue();
+			Function<ExpandoColumn, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -559,10 +616,12 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = ExpandoColumn.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		ExpandoColumn.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ExpandoColumn.class, ModelWrapper.class
-		};
+		ExpandoColumn.class, ModelWrapper.class
+	};
+
 	private long _columnId;
 	private long _companyId;
 	private long _tableId;
@@ -575,4 +634,5 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	private String _typeSettings;
 	private long _columnBitmask;
 	private ExpandoColumn _escapedModel;
+
 }

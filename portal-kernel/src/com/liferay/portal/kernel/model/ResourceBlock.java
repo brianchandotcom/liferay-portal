@@ -31,13 +31,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.ResourceBlockImpl")
 @ProviderType
 public interface ResourceBlock extends ResourceBlockModel, PermissionedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ResourceBlockImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ResourceBlock, Long> RESOURCE_BLOCK_ID_ACCESSOR =
-		new Accessor<ResourceBlock, Long>() {
+	public static final Accessor<ResourceBlock, Long>
+		RESOURCE_BLOCK_ID_ACCESSOR = new Accessor<ResourceBlock, Long>() {
+
 			@Override
 			public Long get(ResourceBlock resourceBlock) {
 				return resourceBlock.getResourceBlockId();
@@ -52,5 +54,7 @@ public interface ResourceBlock extends ResourceBlockModel, PermissionedModel {
 			public Class<ResourceBlock> getTypeClass() {
 				return ResourceBlock.class;
 			}
+
 		};
+
 }

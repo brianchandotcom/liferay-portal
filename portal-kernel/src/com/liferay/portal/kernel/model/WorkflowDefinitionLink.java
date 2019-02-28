@@ -26,30 +26,37 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see WorkflowDefinitionLinkModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl")
+@ImplementationClassName(
+	"com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl"
+)
 @ProviderType
-public interface WorkflowDefinitionLink extends WorkflowDefinitionLinkModel,
-	PersistedModel {
+public interface WorkflowDefinitionLink
+	extends WorkflowDefinitionLinkModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WorkflowDefinitionLink, Long> WORKFLOW_DEFINITION_LINK_ID_ACCESSOR =
-		new Accessor<WorkflowDefinitionLink, Long>() {
-			@Override
-			public Long get(WorkflowDefinitionLink workflowDefinitionLink) {
-				return workflowDefinitionLink.getWorkflowDefinitionLinkId();
-			}
+	public static final Accessor<WorkflowDefinitionLink, Long>
+		WORKFLOW_DEFINITION_LINK_ID_ACCESSOR =
+			new Accessor<WorkflowDefinitionLink, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(WorkflowDefinitionLink workflowDefinitionLink) {
+					return workflowDefinitionLink.getWorkflowDefinitionLinkId();
+				}
 
-			@Override
-			public Class<WorkflowDefinitionLink> getTypeClass() {
-				return WorkflowDefinitionLink.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<WorkflowDefinitionLink> getTypeClass() {
+					return WorkflowDefinitionLink.class;
+				}
+
+			};
+
 }

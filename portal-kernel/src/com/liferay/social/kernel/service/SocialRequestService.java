@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
 import com.liferay.social.kernel.model.SocialRequest;
 
 /**
@@ -39,9 +38,12 @@ import com.liferay.social.kernel.model.SocialRequest;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface SocialRequestService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,12 +51,14 @@ public interface SocialRequestService extends BaseService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public SocialRequest updateRequest(long requestId, int status,
-		ThemeDisplay themeDisplay) throws PortalException;
+	public SocialRequest updateRequest(
+			long requestId, int status, ThemeDisplay themeDisplay)
+		throws PortalException;
+
 }

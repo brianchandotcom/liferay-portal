@@ -18,12 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkModel;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,26 +56,26 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
-	implements AssetLinkModel {
+public class AssetLinkModelImpl
+	extends BaseModelImpl<AssetLink> implements AssetLinkModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset link model instance should use the <code>AssetLink</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "AssetLink";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "linkId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "entryId1", Types.BIGINT },
-			{ "entryId2", Types.BIGINT },
-			{ "type_", Types.INTEGER },
-			{ "weight", Types.INTEGER }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"linkId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"entryId1", Types.BIGINT},
+		{"entryId2", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"weight", Types.INTEGER}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
@@ -92,28 +89,47 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		TABLE_COLUMNS_MAP.put("weight", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetLink (linkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
+	public static final String TABLE_SQL_CREATE =
+		"create table AssetLink (linkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
+
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY assetLink.weight ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY AssetLink.weight ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.asset.kernel.model.AssetLink"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.asset.kernel.model.AssetLink"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetLink"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.asset.kernel.model.AssetLink"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.asset.kernel.model.AssetLink"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetLink"),
+		true);
+
 	public static final long ENTRYID1_COLUMN_BITMASK = 1L;
+
 	public static final long ENTRYID2_COLUMN_BITMASK = 2L;
+
 	public static final long TYPE_COLUMN_BITMASK = 4L;
+
 	public static final long WEIGHT_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.asset.kernel.model.AssetLink"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.asset.kernel.model.AssetLink"));
 
 	public AssetLinkModelImpl() {
 	}
@@ -152,14 +168,18 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<AssetLink, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<AssetLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AssetLink, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AssetLink, Object> attributeGetterFunction = entry.getValue();
+			Function<AssetLink, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((AssetLink)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((AssetLink)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -170,58 +190,78 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<AssetLink, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<AssetLink, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<AssetLink, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<AssetLink, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((AssetLink)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(AssetLink)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<AssetLink, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<AssetLink, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<AssetLink, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<AssetLink, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AssetLink, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AssetLink, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<AssetLink, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetLink, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<AssetLink, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<AssetLink, Object>>();
-		Map<String, BiConsumer<AssetLink, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<AssetLink, ?>>();
-
+		Map<String, Function<AssetLink, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetLink, Object>>();
+		Map<String, BiConsumer<AssetLink, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetLink, ?>>();
 
 		attributeGetterFunctions.put("linkId", AssetLink::getLinkId);
-		attributeSetterBiConsumers.put("linkId", (BiConsumer<AssetLink, Long>)AssetLink::setLinkId);
+		attributeSetterBiConsumers.put(
+			"linkId", (BiConsumer<AssetLink, Long>)AssetLink::setLinkId);
 		attributeGetterFunctions.put("companyId", AssetLink::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetLink, Long>)AssetLink::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<AssetLink, Long>)AssetLink::setCompanyId);
 		attributeGetterFunctions.put("userId", AssetLink::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetLink, Long>)AssetLink::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<AssetLink, Long>)AssetLink::setUserId);
 		attributeGetterFunctions.put("userName", AssetLink::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetLink, String>)AssetLink::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<AssetLink, String>)AssetLink::setUserName);
 		attributeGetterFunctions.put("createDate", AssetLink::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetLink, Date>)AssetLink::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<AssetLink, Date>)AssetLink::setCreateDate);
 		attributeGetterFunctions.put("entryId1", AssetLink::getEntryId1);
-		attributeSetterBiConsumers.put("entryId1", (BiConsumer<AssetLink, Long>)AssetLink::setEntryId1);
+		attributeSetterBiConsumers.put(
+			"entryId1", (BiConsumer<AssetLink, Long>)AssetLink::setEntryId1);
 		attributeGetterFunctions.put("entryId2", AssetLink::getEntryId2);
-		attributeSetterBiConsumers.put("entryId2", (BiConsumer<AssetLink, Long>)AssetLink::setEntryId2);
+		attributeSetterBiConsumers.put(
+			"entryId2", (BiConsumer<AssetLink, Long>)AssetLink::setEntryId2);
 		attributeGetterFunctions.put("type", AssetLink::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<AssetLink, Integer>)AssetLink::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<AssetLink, Integer>)AssetLink::setType);
 		attributeGetterFunctions.put("weight", AssetLink::getWeight);
-		attributeSetterBiConsumers.put("weight", (BiConsumer<AssetLink, Integer>)AssetLink::setWeight);
+		attributeSetterBiConsumers.put(
+			"weight", (BiConsumer<AssetLink, Integer>)AssetLink::setWeight);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -379,8 +419,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			AssetLink.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AssetLink.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -393,8 +433,9 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	@Override
 	public AssetLink toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetLink)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (AssetLink)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -536,16 +577,20 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	@Override
 	public String toString() {
-		Map<String, Function<AssetLink, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<AssetLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AssetLink, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AssetLink, Object> attributeGetterFunction = entry.getValue();
+			Function<AssetLink, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -564,18 +609,22 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<AssetLink, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetLink, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<AssetLink, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AssetLink, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AssetLink, Object> attributeGetterFunction = entry.getValue();
+			Function<AssetLink, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -589,10 +638,12 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = AssetLink.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		AssetLink.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			AssetLink.class, ModelWrapper.class
-		};
+		AssetLink.class, ModelWrapper.class
+	};
+
 	private long _linkId;
 	private long _companyId;
 	private long _userId;
@@ -610,4 +661,5 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	private int _weight;
 	private long _columnBitmask;
 	private AssetLink _escapedModel;
+
 }

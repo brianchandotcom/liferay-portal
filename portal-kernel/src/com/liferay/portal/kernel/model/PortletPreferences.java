@@ -28,28 +28,33 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.PortletPreferencesImpl")
 @ProviderType
-public interface PortletPreferences extends PortletPreferencesModel,
-	PersistedModel {
+public interface PortletPreferences
+	extends PortletPreferencesModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PortletPreferencesImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PortletPreferences, Long> PORTLET_PREFERENCES_ID_ACCESSOR =
-		new Accessor<PortletPreferences, Long>() {
-			@Override
-			public Long get(PortletPreferences portletPreferences) {
-				return portletPreferences.getPortletPreferencesId();
-			}
+	public static final Accessor<PortletPreferences, Long>
+		PORTLET_PREFERENCES_ID_ACCESSOR =
+			new Accessor<PortletPreferences, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(PortletPreferences portletPreferences) {
+					return portletPreferences.getPortletPreferencesId();
+				}
 
-			@Override
-			public Class<PortletPreferences> getTypeClass() {
-				return PortletPreferences.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<PortletPreferences> getTypeClass() {
+					return PortletPreferences.class;
+				}
+
+			};
+
 }

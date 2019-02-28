@@ -17,7 +17,6 @@ package com.liferay.portal.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -39,6 +38,7 @@ import java.util.List;
  */
 @ProviderType
 public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,7 +67,7 @@ public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
 			group = GroupLocalServiceUtil.fetchGroup(group.getParentGroupId());
 		}
 
-		StringBundler sb = new StringBundler((groups.size() * 2) + 1);
+		StringBundler sb = new StringBundler(groups.size() * 2 + 1);
 
 		sb.append("/");
 
@@ -89,4 +89,5 @@ public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
 
 		GroupLocalServiceUtil.updateGroup(group);
 	}
+
 }

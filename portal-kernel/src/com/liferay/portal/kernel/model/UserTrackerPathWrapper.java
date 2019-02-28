@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class UserTrackerPathWrapper extends BaseModelWrapper<UserTrackerPath>
+public class UserTrackerPathWrapper
+	extends BaseModelWrapper<UserTrackerPath>
 	implements UserTrackerPath, ModelWrapper<UserTrackerPath> {
+
 	public UserTrackerPathWrapper(UserTrackerPath userTrackerPath) {
 		super(userTrackerPath);
 	}
@@ -92,70 +94,70 @@ public class UserTrackerPathWrapper extends BaseModelWrapper<UserTrackerPath>
 	}
 
 	/**
-	* Returns the company ID of this user tracker path.
-	*
-	* @return the company ID of this user tracker path
-	*/
+	 * Returns the company ID of this user tracker path.
+	 *
+	 * @return the company ID of this user tracker path
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the mvcc version of this user tracker path.
-	*
-	* @return the mvcc version of this user tracker path
-	*/
+	 * Returns the mvcc version of this user tracker path.
+	 *
+	 * @return the mvcc version of this user tracker path
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the path of this user tracker path.
-	*
-	* @return the path of this user tracker path
-	*/
+	 * Returns the path of this user tracker path.
+	 *
+	 * @return the path of this user tracker path
+	 */
 	@Override
 	public String getPath() {
 		return model.getPath();
 	}
 
 	/**
-	* Returns the path date of this user tracker path.
-	*
-	* @return the path date of this user tracker path
-	*/
+	 * Returns the path date of this user tracker path.
+	 *
+	 * @return the path date of this user tracker path
+	 */
 	@Override
 	public Date getPathDate() {
 		return model.getPathDate();
 	}
 
 	/**
-	* Returns the primary key of this user tracker path.
-	*
-	* @return the primary key of this user tracker path
-	*/
+	 * Returns the primary key of this user tracker path.
+	 *
+	 * @return the primary key of this user tracker path
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the user tracker ID of this user tracker path.
-	*
-	* @return the user tracker ID of this user tracker path
-	*/
+	 * Returns the user tracker ID of this user tracker path.
+	 *
+	 * @return the user tracker ID of this user tracker path
+	 */
 	@Override
 	public long getUserTrackerId() {
 		return model.getUserTrackerId();
 	}
 
 	/**
-	* Returns the user tracker path ID of this user tracker path.
-	*
-	* @return the user tracker path ID of this user tracker path
-	*/
+	 * Returns the user tracker path ID of this user tracker path.
+	 *
+	 * @return the user tracker path ID of this user tracker path
+	 */
 	@Override
 	public long getUserTrackerPathId() {
 		return model.getUserTrackerPathId();
@@ -167,70 +169,70 @@ public class UserTrackerPathWrapper extends BaseModelWrapper<UserTrackerPath>
 	}
 
 	/**
-	* Sets the company ID of this user tracker path.
-	*
-	* @param companyId the company ID of this user tracker path
-	*/
+	 * Sets the company ID of this user tracker path.
+	 *
+	 * @param companyId the company ID of this user tracker path
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the mvcc version of this user tracker path.
-	*
-	* @param mvccVersion the mvcc version of this user tracker path
-	*/
+	 * Sets the mvcc version of this user tracker path.
+	 *
+	 * @param mvccVersion the mvcc version of this user tracker path
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the path of this user tracker path.
-	*
-	* @param path the path of this user tracker path
-	*/
+	 * Sets the path of this user tracker path.
+	 *
+	 * @param path the path of this user tracker path
+	 */
 	@Override
 	public void setPath(String path) {
 		model.setPath(path);
 	}
 
 	/**
-	* Sets the path date of this user tracker path.
-	*
-	* @param pathDate the path date of this user tracker path
-	*/
+	 * Sets the path date of this user tracker path.
+	 *
+	 * @param pathDate the path date of this user tracker path
+	 */
 	@Override
 	public void setPathDate(Date pathDate) {
 		model.setPathDate(pathDate);
 	}
 
 	/**
-	* Sets the primary key of this user tracker path.
-	*
-	* @param primaryKey the primary key of this user tracker path
-	*/
+	 * Sets the primary key of this user tracker path.
+	 *
+	 * @param primaryKey the primary key of this user tracker path
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the user tracker ID of this user tracker path.
-	*
-	* @param userTrackerId the user tracker ID of this user tracker path
-	*/
+	 * Sets the user tracker ID of this user tracker path.
+	 *
+	 * @param userTrackerId the user tracker ID of this user tracker path
+	 */
 	@Override
 	public void setUserTrackerId(long userTrackerId) {
 		model.setUserTrackerId(userTrackerId);
 	}
 
 	/**
-	* Sets the user tracker path ID of this user tracker path.
-	*
-	* @param userTrackerPathId the user tracker path ID of this user tracker path
-	*/
+	 * Sets the user tracker path ID of this user tracker path.
+	 *
+	 * @param userTrackerPathId the user tracker path ID of this user tracker path
+	 */
 	@Override
 	public void setUserTrackerPathId(long userTrackerPathId) {
 		model.setUserTrackerPathId(userTrackerPathId);
@@ -240,4 +242,5 @@ public class UserTrackerPathWrapper extends BaseModelWrapper<UserTrackerPath>
 	protected UserTrackerPathWrapper wrap(UserTrackerPath userTrackerPath) {
 		return new UserTrackerPathWrapper(userTrackerPath);
 	}
+
 }

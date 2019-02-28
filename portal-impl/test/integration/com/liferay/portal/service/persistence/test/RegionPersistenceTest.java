@@ -33,13 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -50,14 +43,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class RegionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -97,7 +99,8 @@ public class RegionPersistenceTest {
 
 		_persistence.remove(newRegion);
 
-		Region existingRegion = _persistence.fetchByPrimaryKey(newRegion.getPrimaryKey());
+		Region existingRegion = _persistence.fetchByPrimaryKey(
+			newRegion.getPrimaryKey());
 
 		Assert.assertNull(existingRegion);
 	}
@@ -125,16 +128,17 @@ public class RegionPersistenceTest {
 
 		_regions.add(_persistence.update(newRegion));
 
-		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
+		Region existingRegion = _persistence.findByPrimaryKey(
+			newRegion.getPrimaryKey());
 
-		Assert.assertEquals(existingRegion.getMvccVersion(),
-			newRegion.getMvccVersion());
-		Assert.assertEquals(existingRegion.getRegionId(),
-			newRegion.getRegionId());
-		Assert.assertEquals(existingRegion.getCountryId(),
-			newRegion.getCountryId());
-		Assert.assertEquals(existingRegion.getRegionCode(),
-			newRegion.getRegionCode());
+		Assert.assertEquals(
+			existingRegion.getMvccVersion(), newRegion.getMvccVersion());
+		Assert.assertEquals(
+			existingRegion.getRegionId(), newRegion.getRegionId());
+		Assert.assertEquals(
+			existingRegion.getCountryId(), newRegion.getCountryId());
+		Assert.assertEquals(
+			existingRegion.getRegionCode(), newRegion.getRegionCode());
 		Assert.assertEquals(existingRegion.getName(), newRegion.getName());
 		Assert.assertEquals(existingRegion.isActive(), newRegion.isActive());
 	}
@@ -164,8 +168,8 @@ public class RegionPersistenceTest {
 
 	@Test
 	public void testCountByC_A() throws Exception {
-		_persistence.countByC_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByC_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
 	}
@@ -174,7 +178,8 @@ public class RegionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Region newRegion = addRegion();
 
-		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
+		Region existingRegion = _persistence.findByPrimaryKey(
+			newRegion.getPrimaryKey());
 
 		Assert.assertEquals(existingRegion, newRegion);
 	}
@@ -188,21 +193,22 @@ public class RegionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Region> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Region", "mvccVersion",
-			true, "regionId", true, "countryId", true, "regionCode", true,
-			"name", true, "active", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Region", "mvccVersion", true, "regionId", true, "countryId", true,
+			"regionCode", true, "name", true, "active", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Region newRegion = addRegion();
 
-		Region existingRegion = _persistence.fetchByPrimaryKey(newRegion.getPrimaryKey());
+		Region existingRegion = _persistence.fetchByPrimaryKey(
+			newRegion.getPrimaryKey());
 
 		Assert.assertEquals(existingRegion, newRegion);
 	}
@@ -219,6 +225,7 @@ public class RegionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Region newRegion1 = addRegion();
 		Region newRegion2 = addRegion();
 
@@ -227,16 +234,20 @@ public class RegionPersistenceTest {
 		primaryKeys.add(newRegion1.getPrimaryKey());
 		primaryKeys.add(newRegion2.getPrimaryKey());
 
-		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, regions.size());
-		Assert.assertEquals(newRegion1, regions.get(newRegion1.getPrimaryKey()));
-		Assert.assertEquals(newRegion2, regions.get(newRegion2.getPrimaryKey()));
+		Assert.assertEquals(
+			newRegion1, regions.get(newRegion1.getPrimaryKey()));
+		Assert.assertEquals(
+			newRegion2, regions.get(newRegion2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -246,7 +257,8 @@ public class RegionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(regions.isEmpty());
 	}
@@ -254,6 +266,7 @@ public class RegionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Region newRegion = addRegion();
 
 		long pk = RandomTestUtil.nextLong();
@@ -263,47 +276,47 @@ public class RegionPersistenceTest {
 		primaryKeys.add(newRegion.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, regions.size());
 		Assert.assertEquals(newRegion, regions.get(newRegion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(regions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Region newRegion = addRegion();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRegion.getPrimaryKey());
 
-		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Region> regions = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, regions.size());
 		Assert.assertEquals(newRegion, regions.get(newRegion.getPrimaryKey()));
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Region newRegion = addRegion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Region.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
-				newRegion.getRegionId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("regionId", newRegion.getRegionId()));
 
 		List<Region> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -316,11 +329,11 @@ public class RegionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Region.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("regionId", RandomTestUtil.nextLong()));
 
 		List<Region> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -328,19 +341,18 @@ public class RegionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Region newRegion = addRegion();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Region.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("regionId"));
 
 		Object newRegionId = newRegion.getRegionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("regionId",
-				new Object[] { newRegionId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("regionId", new Object[] {newRegionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -353,13 +365,14 @@ public class RegionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Region.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("regionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("regionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"regionId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -372,14 +385,18 @@ public class RegionPersistenceTest {
 
 		_persistence.clearCache();
 
-		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
+		Region existingRegion = _persistence.findByPrimaryKey(
+			newRegion.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingRegion.getCountryId()),
-			ReflectionTestUtil.<Long>invoke(existingRegion,
-				"getOriginalCountryId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingRegion.getRegionCode(),
-				ReflectionTestUtil.invoke(existingRegion,
-					"getOriginalRegionCode", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingRegion.getCountryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRegion, "getOriginalCountryId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingRegion.getRegionCode(),
+				ReflectionTestUtil.invoke(
+					existingRegion, "getOriginalRegionCode", new Class<?>[0])));
 	}
 
 	protected Region addRegion() throws Exception {
@@ -405,4 +422,5 @@ public class RegionPersistenceTest {
 	private List<Region> _regions = new ArrayList<Region>();
 	private RegionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

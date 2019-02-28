@@ -19,5 +19,7 @@ package com.liferay.user.groups.admin.uad.constants;
  * @generated
  */
 public class UserGroupsAdminUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_USER_GROUP = { "userId" };
+
+	public static final String[] USER_ID_FIELD_NAMES_USER_GROUP = {"userId"};
+
 }

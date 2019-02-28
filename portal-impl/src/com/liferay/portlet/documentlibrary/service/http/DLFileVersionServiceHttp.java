@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLFileVersionServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -54,15 +53,18 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class DLFileVersionServiceHttp {
-	public static com.liferay.document.library.kernel.model.DLFileVersion getFileVersion(
-		HttpPrincipal httpPrincipal, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
-					"getFileVersion", _getFileVersionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileVersionId);
+	public static com.liferay.document.library.kernel.model.DLFileVersion
+			getFileVersion(HttpPrincipal httpPrincipal, long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileVersionServiceUtil.class, "getFileVersion",
+				_getFileVersionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileVersionId);
 
 			Object returnObj = null;
 
@@ -70,14 +72,19 @@ public class DLFileVersionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.document.library.kernel.model.DLFileVersion)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -86,15 +93,19 @@ public class DLFileVersionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getFileVersions(
-		HttpPrincipal httpPrincipal, long fileEntryId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
-					"getFileVersions", _getFileVersionsParameterTypes1);
+	public static java.util.List
+		<com.liferay.document.library.kernel.model.DLFileVersion>
+				getFileVersions(
+					HttpPrincipal httpPrincipal, long fileEntryId, int status)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, status);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileVersionServiceUtil.class, "getFileVersions",
+				_getFileVersionsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileEntryId, status);
 
 			Object returnObj = null;
 
@@ -102,14 +113,20 @@ public class DLFileVersionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (java.util.List<com.liferay.document.library.kernel.model.DLFileVersion>)returnObj;
+			return (java.util.List
+				<com.liferay.document.library.kernel.model.DLFileVersion>)
+					returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -118,15 +135,17 @@ public class DLFileVersionServiceHttp {
 		}
 	}
 
-	public static int getFileVersionsCount(HttpPrincipal httpPrincipal,
-		long fileEntryId, int status)
+	public static int getFileVersionsCount(
+			HttpPrincipal httpPrincipal, long fileEntryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
-					"getFileVersionsCount", _getFileVersionsCountParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, status);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileVersionServiceUtil.class, "getFileVersionsCount",
+				_getFileVersionsCountParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileEntryId, status);
 
 			Object returnObj = null;
 
@@ -134,11 +153,15 @@ public class DLFileVersionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return ((Integer)returnObj).intValue();
@@ -150,15 +173,17 @@ public class DLFileVersionServiceHttp {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileVersion getLatestFileVersion(
-		HttpPrincipal httpPrincipal, long fileEntryId)
+	public static com.liferay.document.library.kernel.model.DLFileVersion
+			getLatestFileVersion(HttpPrincipal httpPrincipal, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
-					"getLatestFileVersion", _getLatestFileVersionParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileVersionServiceUtil.class, "getLatestFileVersion",
+				_getLatestFileVersionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileEntryId);
 
 			Object returnObj = null;
 
@@ -166,14 +191,19 @@ public class DLFileVersionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.document.library.kernel.model.DLFileVersion)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -182,16 +212,19 @@ public class DLFileVersionServiceHttp {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileVersion getLatestFileVersion(
-		HttpPrincipal httpPrincipal, long fileEntryId,
-		boolean excludeWorkingCopy)
+	public static com.liferay.document.library.kernel.model.DLFileVersion
+			getLatestFileVersion(
+				HttpPrincipal httpPrincipal, long fileEntryId,
+				boolean excludeWorkingCopy)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(DLFileVersionServiceUtil.class,
-					"getLatestFileVersion", _getLatestFileVersionParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileEntryId, excludeWorkingCopy);
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileVersionServiceUtil.class, "getLatestFileVersion",
+				_getLatestFileVersionParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileEntryId, excludeWorkingCopy);
 
 			Object returnObj = null;
 
@@ -199,14 +232,19 @@ public class DLFileVersionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.document.library.kernel.model.DLFileVersion)returnObj;
+			return (com.liferay.document.library.kernel.model.DLFileVersion)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -215,20 +253,18 @@ public class DLFileVersionServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLFileVersionServiceHttp.class);
-	private static final Class<?>[] _getFileVersionParameterTypes0 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getFileVersionsParameterTypes1 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[] _getFileVersionsCountParameterTypes2 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[] _getLatestFileVersionParameterTypes3 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getLatestFileVersionParameterTypes4 = new Class[] {
-			long.class, boolean.class
-		};
+	private static Log _log = LogFactoryUtil.getLog(
+		DLFileVersionServiceHttp.class);
+
+	private static final Class<?>[] _getFileVersionParameterTypes0 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getFileVersionsParameterTypes1 =
+		new Class[] {long.class, int.class};
+	private static final Class<?>[] _getFileVersionsCountParameterTypes2 =
+		new Class[] {long.class, int.class};
+	private static final Class<?>[] _getLatestFileVersionParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getLatestFileVersionParameterTypes4 =
+		new Class[] {long.class, boolean.class};
+
 }

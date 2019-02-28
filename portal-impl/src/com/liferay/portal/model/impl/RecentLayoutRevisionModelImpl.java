@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -57,25 +55,26 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRevision>
+public class RecentLayoutRevisionModelImpl
+	extends BaseModelImpl<RecentLayoutRevision>
 	implements RecentLayoutRevisionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a recent layout revision model instance should use the <code>RecentLayoutRevision</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "RecentLayoutRevision";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "recentLayoutRevisionId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "layoutRevisionId", Types.BIGINT },
-			{ "layoutSetBranchId", Types.BIGINT },
-			{ "plid", Types.BIGINT }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"recentLayoutRevisionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"layoutRevisionId", Types.BIGINT},
+		{"layoutSetBranchId", Types.BIGINT}, {"plid", Types.BIGINT}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -88,30 +87,54 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RecentLayoutRevision (mvccVersion LONG default 0 not null,recentLayoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutRevisionId LONG,layoutSetBranchId LONG,plid LONG)";
-	public static final String TABLE_SQL_DROP = "drop table RecentLayoutRevision";
-	public static final String ORDER_BY_JPQL = " ORDER BY recentLayoutRevision.recentLayoutRevisionId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY RecentLayoutRevision.recentLayoutRevisionId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table RecentLayoutRevision (mvccVersion LONG default 0 not null,recentLayoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutRevisionId LONG,layoutSetBranchId LONG,plid LONG)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table RecentLayoutRevision";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY recentLayoutRevision.recentLayoutRevisionId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY RecentLayoutRevision.recentLayoutRevisionId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.RecentLayoutRevision"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.RecentLayoutRevision"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.RecentLayoutRevision"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.RecentLayoutRevision"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.RecentLayoutRevision"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.RecentLayoutRevision"),
+		true);
+
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
+
 	public static final long LAYOUTREVISIONID_COLUMN_BITMASK = 2L;
+
 	public static final long LAYOUTSETBRANCHID_COLUMN_BITMASK = 4L;
+
 	public static final long PLID_COLUMN_BITMASK = 8L;
+
 	public static final long USERID_COLUMN_BITMASK = 16L;
+
 	public static final long RECENTLAYOUTREVISIONID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.RecentLayoutRevision"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.RecentLayoutRevision"));
 
 	public RecentLayoutRevisionModelImpl() {
 	}
@@ -150,14 +173,18 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<RecentLayoutRevision, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<RecentLayoutRevision, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<RecentLayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<RecentLayoutRevision, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<RecentLayoutRevision, Object> attributeGetterFunction = entry.getValue();
+			Function<RecentLayoutRevision, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((RecentLayoutRevision)this));
 		}
 
@@ -169,59 +196,101 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<RecentLayoutRevision, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<RecentLayoutRevision, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<RecentLayoutRevision, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<RecentLayoutRevision, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((RecentLayoutRevision)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(RecentLayoutRevision)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<RecentLayoutRevision, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<RecentLayoutRevision, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<RecentLayoutRevision, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<RecentLayoutRevision, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<RecentLayoutRevision, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<RecentLayoutRevision, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<RecentLayoutRevision, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<RecentLayoutRevision, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<RecentLayoutRevision, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<RecentLayoutRevision, Object>>();
-		Map<String, BiConsumer<RecentLayoutRevision, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<RecentLayoutRevision, ?>>();
+		Map<String, Function<RecentLayoutRevision, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<RecentLayoutRevision, Object>>();
+		Map<String, BiConsumer<RecentLayoutRevision, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap
+					<String, BiConsumer<RecentLayoutRevision, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", RecentLayoutRevision::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setMvccVersion);
-		attributeGetterFunctions.put("recentLayoutRevisionId", RecentLayoutRevision::getRecentLayoutRevisionId);
-		attributeSetterBiConsumers.put("recentLayoutRevisionId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setRecentLayoutRevisionId);
-		attributeGetterFunctions.put("groupId", RecentLayoutRevision::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setGroupId);
-		attributeGetterFunctions.put("companyId", RecentLayoutRevision::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setCompanyId);
+		attributeGetterFunctions.put(
+			"mvccVersion", RecentLayoutRevision::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setMvccVersion);
+		attributeGetterFunctions.put(
+			"recentLayoutRevisionId",
+			RecentLayoutRevision::getRecentLayoutRevisionId);
+		attributeSetterBiConsumers.put(
+			"recentLayoutRevisionId",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setRecentLayoutRevisionId);
+		attributeGetterFunctions.put(
+			"groupId", RecentLayoutRevision::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", RecentLayoutRevision::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setCompanyId);
 		attributeGetterFunctions.put("userId", RecentLayoutRevision::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setUserId);
-		attributeGetterFunctions.put("layoutRevisionId", RecentLayoutRevision::getLayoutRevisionId);
-		attributeSetterBiConsumers.put("layoutRevisionId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setLayoutRevisionId);
-		attributeGetterFunctions.put("layoutSetBranchId", RecentLayoutRevision::getLayoutSetBranchId);
-		attributeSetterBiConsumers.put("layoutSetBranchId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setLayoutSetBranchId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setUserId);
+		attributeGetterFunctions.put(
+			"layoutRevisionId", RecentLayoutRevision::getLayoutRevisionId);
+		attributeSetterBiConsumers.put(
+			"layoutRevisionId",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setLayoutRevisionId);
+		attributeGetterFunctions.put(
+			"layoutSetBranchId", RecentLayoutRevision::getLayoutSetBranchId);
+		attributeSetterBiConsumers.put(
+			"layoutSetBranchId",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setLayoutSetBranchId);
 		attributeGetterFunctions.put("plid", RecentLayoutRevision::getPlid);
-		attributeSetterBiConsumers.put("plid", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setPlid);
+		attributeSetterBiConsumers.put(
+			"plid",
+			(BiConsumer<RecentLayoutRevision, Long>)
+				RecentLayoutRevision::setPlid);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -386,8 +455,9 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			RecentLayoutRevision.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), RecentLayoutRevision.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -400,8 +470,9 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 	@Override
 	public RecentLayoutRevision toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (RecentLayoutRevision)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (RecentLayoutRevision)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -409,10 +480,12 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 	@Override
 	public Object clone() {
-		RecentLayoutRevisionImpl recentLayoutRevisionImpl = new RecentLayoutRevisionImpl();
+		RecentLayoutRevisionImpl recentLayoutRevisionImpl =
+			new RecentLayoutRevisionImpl();
 
 		recentLayoutRevisionImpl.setMvccVersion(getMvccVersion());
-		recentLayoutRevisionImpl.setRecentLayoutRevisionId(getRecentLayoutRevisionId());
+		recentLayoutRevisionImpl.setRecentLayoutRevisionId(
+			getRecentLayoutRevisionId());
 		recentLayoutRevisionImpl.setGroupId(getGroupId());
 		recentLayoutRevisionImpl.setCompanyId(getCompanyId());
 		recentLayoutRevisionImpl.setUserId(getUserId());
@@ -481,23 +554,28 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 	public void resetOriginalValues() {
 		RecentLayoutRevisionModelImpl recentLayoutRevisionModelImpl = this;
 
-		recentLayoutRevisionModelImpl._originalGroupId = recentLayoutRevisionModelImpl._groupId;
+		recentLayoutRevisionModelImpl._originalGroupId =
+			recentLayoutRevisionModelImpl._groupId;
 
 		recentLayoutRevisionModelImpl._setOriginalGroupId = false;
 
-		recentLayoutRevisionModelImpl._originalUserId = recentLayoutRevisionModelImpl._userId;
+		recentLayoutRevisionModelImpl._originalUserId =
+			recentLayoutRevisionModelImpl._userId;
 
 		recentLayoutRevisionModelImpl._setOriginalUserId = false;
 
-		recentLayoutRevisionModelImpl._originalLayoutRevisionId = recentLayoutRevisionModelImpl._layoutRevisionId;
+		recentLayoutRevisionModelImpl._originalLayoutRevisionId =
+			recentLayoutRevisionModelImpl._layoutRevisionId;
 
 		recentLayoutRevisionModelImpl._setOriginalLayoutRevisionId = false;
 
-		recentLayoutRevisionModelImpl._originalLayoutSetBranchId = recentLayoutRevisionModelImpl._layoutSetBranchId;
+		recentLayoutRevisionModelImpl._originalLayoutSetBranchId =
+			recentLayoutRevisionModelImpl._layoutSetBranchId;
 
 		recentLayoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
 
-		recentLayoutRevisionModelImpl._originalPlid = recentLayoutRevisionModelImpl._plid;
+		recentLayoutRevisionModelImpl._originalPlid =
+			recentLayoutRevisionModelImpl._plid;
 
 		recentLayoutRevisionModelImpl._setOriginalPlid = false;
 
@@ -506,11 +584,13 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 	@Override
 	public CacheModel<RecentLayoutRevision> toCacheModel() {
-		RecentLayoutRevisionCacheModel recentLayoutRevisionCacheModel = new RecentLayoutRevisionCacheModel();
+		RecentLayoutRevisionCacheModel recentLayoutRevisionCacheModel =
+			new RecentLayoutRevisionCacheModel();
 
 		recentLayoutRevisionCacheModel.mvccVersion = getMvccVersion();
 
-		recentLayoutRevisionCacheModel.recentLayoutRevisionId = getRecentLayoutRevisionId();
+		recentLayoutRevisionCacheModel.recentLayoutRevisionId =
+			getRecentLayoutRevisionId();
 
 		recentLayoutRevisionCacheModel.groupId = getGroupId();
 
@@ -520,7 +600,8 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 		recentLayoutRevisionCacheModel.layoutRevisionId = getLayoutRevisionId();
 
-		recentLayoutRevisionCacheModel.layoutSetBranchId = getLayoutSetBranchId();
+		recentLayoutRevisionCacheModel.layoutSetBranchId =
+			getLayoutSetBranchId();
 
 		recentLayoutRevisionCacheModel.plid = getPlid();
 
@@ -529,21 +610,25 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 	@Override
 	public String toString() {
-		Map<String, Function<RecentLayoutRevision, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<RecentLayoutRevision, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<RecentLayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<RecentLayoutRevision, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<RecentLayoutRevision, Object> attributeGetterFunction = entry.getValue();
+			Function<RecentLayoutRevision, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeGetterFunction.apply((RecentLayoutRevision)this));
+			sb.append(
+				attributeGetterFunction.apply((RecentLayoutRevision)this));
 			sb.append(", ");
 		}
 
@@ -558,24 +643,28 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<RecentLayoutRevision, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<RecentLayoutRevision, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<RecentLayoutRevision, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<RecentLayoutRevision, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<RecentLayoutRevision, Object> attributeGetterFunction = entry.getValue();
+			Function<RecentLayoutRevision, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((RecentLayoutRevision)this));
+			sb.append(
+				attributeGetterFunction.apply((RecentLayoutRevision)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -584,10 +673,12 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = RecentLayoutRevision.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		RecentLayoutRevision.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			RecentLayoutRevision.class, ModelWrapper.class
-		};
+		RecentLayoutRevision.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _recentLayoutRevisionId;
 	private long _groupId;
@@ -608,4 +699,5 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 	private boolean _setOriginalPlid;
 	private long _columnBitmask;
 	private RecentLayoutRevision _escapedModel;
+
 }

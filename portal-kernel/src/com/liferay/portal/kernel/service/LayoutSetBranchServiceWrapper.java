@@ -24,42 +24,47 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
-	ServiceWrapper<LayoutSetBranchService> {
+public class LayoutSetBranchServiceWrapper
+	implements LayoutSetBranchService, ServiceWrapper<LayoutSetBranchService> {
+
 	public LayoutSetBranchServiceWrapper(
 		LayoutSetBranchService layoutSetBranchService) {
+
 		_layoutSetBranchService = layoutSetBranchService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSetBranch addLayoutSetBranch(
-		long groupId, boolean privateLayout, String name, String description,
-		boolean master, long copyLayoutSetBranchId,
-		ServiceContext serviceContext)
+			long groupId, boolean privateLayout, String name,
+			String description, boolean master, long copyLayoutSetBranchId,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetBranchService.addLayoutSetBranch(groupId,
-			privateLayout, name, description, master, copyLayoutSetBranchId,
-			serviceContext);
+
+		return _layoutSetBranchService.addLayoutSetBranch(
+			groupId, privateLayout, name, description, master,
+			copyLayoutSetBranchId, serviceContext);
 	}
 
 	@Override
 	public void deleteLayoutSetBranch(long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout) {
-		return _layoutSetBranchService.getLayoutSetBranches(groupId,
-			privateLayout);
+	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch>
+		getLayoutSetBranches(long groupId, boolean privateLayout) {
+
+		return _layoutSetBranchService.getLayoutSetBranches(
+			groupId, privateLayout);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _layoutSetBranchService.getOSGiServiceIdentifier();
@@ -67,20 +72,23 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSetBranch mergeLayoutSetBranch(
-		long layoutSetBranchId, long mergeLayoutSetBranchId,
-		ServiceContext serviceContext)
+			long layoutSetBranchId, long mergeLayoutSetBranchId,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetBranchService.mergeLayoutSetBranch(layoutSetBranchId,
-			mergeLayoutSetBranchId, serviceContext);
+
+		return _layoutSetBranchService.mergeLayoutSetBranch(
+			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutSetBranch updateLayoutSetBranch(
-		long groupId, long layoutSetBranchId, String name, String description,
-		ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.LayoutSetBranch
+			updateLayoutSetBranch(
+				long groupId, long layoutSetBranchId, String name,
+				String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetBranchService.updateLayoutSetBranch(groupId,
-			layoutSetBranchId, name, description, serviceContext);
+
+		return _layoutSetBranchService.updateLayoutSetBranch(
+			groupId, layoutSetBranchId, name, description, serviceContext);
 	}
 
 	@Override
@@ -89,9 +97,12 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 	}
 
 	@Override
-	public void setWrappedService(LayoutSetBranchService layoutSetBranchService) {
+	public void setWrappedService(
+		LayoutSetBranchService layoutSetBranchService) {
+
 		_layoutSetBranchService = layoutSetBranchService;
 	}
 
 	private LayoutSetBranchService _layoutSetBranchService;
+
 }

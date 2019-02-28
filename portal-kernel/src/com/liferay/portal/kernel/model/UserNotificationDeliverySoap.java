@@ -29,12 +29,16 @@ import java.util.List;
  */
 @ProviderType
 public class UserNotificationDeliverySoap implements Serializable {
+
 	public static UserNotificationDeliverySoap toSoapModel(
 		UserNotificationDelivery model) {
-		UserNotificationDeliverySoap soapModel = new UserNotificationDeliverySoap();
+
+		UserNotificationDeliverySoap soapModel =
+			new UserNotificationDeliverySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setUserNotificationDeliveryId(model.getUserNotificationDeliveryId());
+		soapModel.setUserNotificationDeliveryId(
+			model.getUserNotificationDeliveryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setPortletId(model.getPortletId());
@@ -48,7 +52,9 @@ public class UserNotificationDeliverySoap implements Serializable {
 
 	public static UserNotificationDeliverySoap[] toSoapModels(
 		UserNotificationDelivery[] models) {
-		UserNotificationDeliverySoap[] soapModels = new UserNotificationDeliverySoap[models.length];
+
+		UserNotificationDeliverySoap[] soapModels =
+			new UserNotificationDeliverySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,10 +65,13 @@ public class UserNotificationDeliverySoap implements Serializable {
 
 	public static UserNotificationDeliverySoap[][] toSoapModels(
 		UserNotificationDelivery[][] models) {
+
 		UserNotificationDeliverySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new UserNotificationDeliverySoap[models.length][models[0].length];
+			soapModels =
+				new UserNotificationDeliverySoap
+					[models.length][models[0].length];
 		}
 		else {
 			soapModels = new UserNotificationDeliverySoap[0][0];
@@ -77,13 +86,16 @@ public class UserNotificationDeliverySoap implements Serializable {
 
 	public static UserNotificationDeliverySoap[] toSoapModels(
 		List<UserNotificationDelivery> models) {
-		List<UserNotificationDeliverySoap> soapModels = new ArrayList<UserNotificationDeliverySoap>(models.size());
+
+		List<UserNotificationDeliverySoap> soapModels =
+			new ArrayList<UserNotificationDeliverySoap>(models.size());
 
 		for (UserNotificationDelivery model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new UserNotificationDeliverySoap[soapModels.size()]);
+		return soapModels.toArray(
+			new UserNotificationDeliverySoap[soapModels.size()]);
 	}
 
 	public UserNotificationDeliverySoap() {
@@ -182,4 +194,5 @@ public class UserNotificationDeliverySoap implements Serializable {
 	private int _notificationType;
 	private int _deliveryType;
 	private boolean _deliver;
+
 }

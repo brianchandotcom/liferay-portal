@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface UserNotificationEventModel extends BaseModel<UserNotificationEvent>,
-	MVCCModel, ShardedModel {
+public interface UserNotificationEventModel
+	extends BaseModel<UserNotificationEvent>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -275,4 +276,5 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	 * @param archived the archived of this user notification event
 	 */
 	public void setArchived(boolean archived);
+
 }

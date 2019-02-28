@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class AccountServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,24 +41,26 @@ public class AccountServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static AccountService getService() {
 		if (_service == null) {
-			_service = (AccountService)PortalBeanLocatorUtil.locate(AccountService.class.getName());
+			_service = (AccountService)PortalBeanLocatorUtil.locate(
+				AccountService.class.getName());
 
-			ReferenceRegistry.registerReference(AccountServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				AccountServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static AccountService _service;
+
 }

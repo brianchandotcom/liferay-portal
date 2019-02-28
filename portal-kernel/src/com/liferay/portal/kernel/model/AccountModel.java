@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCModel,
-	ShardedModel {
+public interface AccountModel
+	extends AuditedModel, BaseModel<Account>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -329,4 +330,5 @@ public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCMode
 	 * @param size the size of this account
 	 */
 	public void setSize(String size);
+
 }

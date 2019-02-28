@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
 import com.liferay.social.kernel.model.SocialActivityCounterDefinition;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 import com.liferay.social.kernel.model.SocialActivitySetting;
@@ -44,21 +43,26 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface SocialActivitySettingService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivitySettingServiceUtil} to access the social activity setting remote service. Add custom service methods to <code>com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialActivityDefinition getActivityDefinition(long groupId,
-		String className, int activityType) throws PortalException;
+	public SocialActivityDefinition getActivityDefinition(
+			long groupId, String className, int activityType)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SocialActivityDefinition> getActivityDefinitions(long groupId,
-		String className) throws PortalException;
+	public List<SocialActivityDefinition> getActivityDefinitions(
+			long groupId, String className)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivitySetting> getActivitySettings(long groupId)
@@ -69,22 +73,24 @@ public interface SocialActivitySettingService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public void updateActivitySetting(long groupId, String className,
-		boolean enabled) throws PortalException;
-
-	public void updateActivitySetting(long groupId, String className,
-		int activityType,
-		SocialActivityCounterDefinition activityCounterDefinition)
+	public void updateActivitySetting(
+			long groupId, String className, boolean enabled)
 		throws PortalException;
 
-	public void updateActivitySettings(long groupId, String className,
-		int activityType,
-		List<SocialActivityCounterDefinition> activityCounterDefinitions)
+	public void updateActivitySetting(
+			long groupId, String className, int activityType,
+			SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException;
+
+	public void updateActivitySettings(
+			long groupId, String className, int activityType,
+			List<SocialActivityCounterDefinition> activityCounterDefinitions)
+		throws PortalException;
+
 }

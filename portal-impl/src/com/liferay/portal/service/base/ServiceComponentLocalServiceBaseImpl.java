@@ -63,8 +63,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class ServiceComponentLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements ServiceComponentLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements ServiceComponentLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -81,6 +82,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public ServiceComponent addServiceComponent(
 		ServiceComponent serviceComponent) {
+
 		serviceComponent.setNew(true);
 
 		return serviceComponentPersistence.update(serviceComponent);
@@ -109,6 +111,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public ServiceComponent deleteServiceComponent(long serviceComponentId)
 		throws PortalException {
+
 		return serviceComponentPersistence.remove(serviceComponentId);
 	}
 
@@ -122,6 +125,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public ServiceComponent deleteServiceComponent(
 		ServiceComponent serviceComponent) {
+
 		return serviceComponentPersistence.remove(serviceComponent);
 	}
 
@@ -129,8 +133,8 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			ServiceComponent.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -157,10 +161,11 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return serviceComponentPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return serviceComponentPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -177,10 +182,12 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return serviceComponentPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return serviceComponentPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -202,15 +209,17 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return serviceComponentPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return serviceComponentPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public ServiceComponent fetchServiceComponent(long serviceComponentId) {
-		return serviceComponentPersistence.fetchByPrimaryKey(serviceComponentId);
+		return serviceComponentPersistence.fetchByPrimaryKey(
+			serviceComponentId);
 	}
 
 	/**
@@ -223,14 +232,17 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public ServiceComponent getServiceComponent(long serviceComponentId)
 		throws PortalException {
+
 		return serviceComponentPersistence.findByPrimaryKey(serviceComponentId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(serviceComponentLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			serviceComponentLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -240,10 +252,14 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(serviceComponentLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			serviceComponentLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -255,7 +271,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(serviceComponentLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			serviceComponentLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -268,12 +286,15 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return serviceComponentLocalService.deleteServiceComponent((ServiceComponent)persistedModel);
+
+		return serviceComponentLocalService.deleteServiceComponent(
+			(ServiceComponent)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return serviceComponentPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -313,6 +334,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	@Override
 	public ServiceComponent updateServiceComponent(
 		ServiceComponent serviceComponent) {
+
 		return serviceComponentPersistence.update(serviceComponent);
 	}
 
@@ -332,6 +354,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 */
 	public void setServiceComponentLocalService(
 		ServiceComponentLocalService serviceComponentLocalService) {
+
 		this.serviceComponentLocalService = serviceComponentLocalService;
 	}
 
@@ -351,6 +374,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 */
 	public void setServiceComponentPersistence(
 		ServiceComponentPersistence serviceComponentPersistence) {
+
 		this.serviceComponentPersistence = serviceComponentPersistence;
 	}
 
@@ -370,6 +394,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 */
 	public void setServiceComponentFinder(
 		ServiceComponentFinder serviceComponentFinder) {
+
 		this.serviceComponentFinder = serviceComponentFinder;
 	}
 
@@ -378,7 +403,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -388,7 +415,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -397,7 +426,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @return the release local service
 	 */
-	public com.liferay.portal.kernel.service.ReleaseLocalService getReleaseLocalService() {
+	public com.liferay.portal.kernel.service.ReleaseLocalService
+		getReleaseLocalService() {
+
 		return releaseLocalService;
 	}
 
@@ -407,7 +438,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param releaseLocalService the release local service
 	 */
 	public void setReleaseLocalService(
-		com.liferay.portal.kernel.service.ReleaseLocalService releaseLocalService) {
+		com.liferay.portal.kernel.service.ReleaseLocalService
+			releaseLocalService) {
+
 		this.releaseLocalService = releaseLocalService;
 	}
 
@@ -430,7 +463,8 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.ServiceComponent",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.ServiceComponent",
 			serviceComponentLocalService);
 	}
 
@@ -471,8 +505,8 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -483,16 +517,30 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 
 	@BeanReference(type = ServiceComponentLocalService.class)
 	protected ServiceComponentLocalService serviceComponentLocalService;
+
 	@BeanReference(type = ServiceComponentPersistence.class)
 	protected ServiceComponentPersistence serviceComponentPersistence;
+
 	@BeanReference(type = ServiceComponentFinder.class)
 	protected ServiceComponentFinder serviceComponentFinder;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ReleaseLocalService.class)
-	protected com.liferay.portal.kernel.service.ReleaseLocalService releaseLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ReleaseLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ReleaseLocalService
+		releaseLocalService;
+
 	@BeanReference(type = ReleasePersistence.class)
 	protected ReleasePersistence releasePersistence;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

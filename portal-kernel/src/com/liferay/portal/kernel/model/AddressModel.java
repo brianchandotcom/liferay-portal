@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AddressModel extends AttachedModel, BaseModel<Address>,
-	MVCCModel, ShardedModel, StagedAuditedModel {
+public interface AddressModel
+	extends AttachedModel, BaseModel<Address>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -398,4 +400,5 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 * @param primary the primary of this address
 	 */
 	public void setPrimary(boolean primary);
+
 }

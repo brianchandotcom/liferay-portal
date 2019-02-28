@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.base;
 
 import com.liferay.document.library.kernel.service.DLTrashService;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -40,8 +39,9 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl
  * @generated
  */
-public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
-	implements DLTrashService, IdentifiableOSGiService {
+public abstract class DLTrashServiceBaseImpl
+	extends BaseServiceImpl implements DLTrashService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -53,7 +53,9 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the dl trash local service
 	 */
-	public com.liferay.document.library.kernel.service.DLTrashLocalService getDLTrashLocalService() {
+	public com.liferay.document.library.kernel.service.DLTrashLocalService
+		getDLTrashLocalService() {
+
 		return dlTrashLocalService;
 	}
 
@@ -63,7 +65,9 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 	 * @param dlTrashLocalService the dl trash local service
 	 */
 	public void setDLTrashLocalService(
-		com.liferay.document.library.kernel.service.DLTrashLocalService dlTrashLocalService) {
+		com.liferay.document.library.kernel.service.DLTrashLocalService
+			dlTrashLocalService) {
+
 		this.dlTrashLocalService = dlTrashLocalService;
 	}
 
@@ -90,7 +94,9 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -100,7 +106,9 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -134,8 +142,8 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -144,10 +152,19 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLTrashLocalService.class)
-	protected com.liferay.document.library.kernel.service.DLTrashLocalService dlTrashLocalService;
+	@BeanReference(
+		type = com.liferay.document.library.kernel.service.DLTrashLocalService.class
+	)
+	protected com.liferay.document.library.kernel.service.DLTrashLocalService
+		dlTrashLocalService;
+
 	@BeanReference(type = DLTrashService.class)
 	protected DLTrashService dlTrashService;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
 }

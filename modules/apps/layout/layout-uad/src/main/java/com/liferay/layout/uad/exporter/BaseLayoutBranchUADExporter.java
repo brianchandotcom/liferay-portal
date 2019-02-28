@@ -15,13 +15,10 @@
 package com.liferay.layout.uad.exporter;
 
 import com.liferay.layout.uad.constants.LayoutUADConstants;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
-
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLayoutBranchUADExporter
 	extends DynamicQueryUADExporter<LayoutBranch> {
+
 	@Override
 	public Class<LayoutBranch> getTypeClass() {
 		return LayoutBranch.class;
@@ -83,4 +81,5 @@ public abstract class BaseLayoutBranchUADExporter
 
 	@Reference
 	protected LayoutBranchLocalService layoutBranchLocalService;
+
 }

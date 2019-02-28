@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -61,32 +59,30 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
-	implements SystemEventModel {
+public class SystemEventModelImpl
+	extends BaseModelImpl<SystemEvent> implements SystemEventModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a system event model instance should use the <code>SystemEvent</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SystemEvent";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "systemEventId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "classUuid", Types.VARCHAR },
-			{ "referrerClassNameId", Types.BIGINT },
-			{ "parentSystemEventId", Types.BIGINT },
-			{ "systemEventSetKey", Types.BIGINT },
-			{ "type_", Types.INTEGER },
-			{ "extraData", Types.CLOB }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"systemEventId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"classUuid", Types.VARCHAR},
+		{"referrerClassNameId", Types.BIGINT},
+		{"parentSystemEventId", Types.BIGINT},
+		{"systemEventSetKey", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"extraData", Types.CLOB}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -106,30 +102,53 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		TABLE_COLUMNS_MAP.put("extraData", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SystemEvent (mvccVersion LONG default 0 not null,systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SystemEvent (mvccVersion LONG default 0 not null,systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null)";
+
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
-	public static final String ORDER_BY_JPQL = " ORDER BY systemEvent.createDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY SystemEvent.createDate DESC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY systemEvent.createDate DESC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SystemEvent.createDate DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.SystemEvent"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.SystemEvent"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.SystemEvent"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.SystemEvent"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.SystemEvent"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.SystemEvent"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
+
 	public static final long SYSTEMEVENTSETKEY_COLUMN_BITMASK = 8L;
+
 	public static final long TYPE_COLUMN_BITMASK = 16L;
+
 	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.SystemEvent"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.SystemEvent"));
 
 	public SystemEventModelImpl() {
 	}
@@ -168,13 +187,18 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SystemEvent, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SystemEvent, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SystemEvent, Object> attributeGetterFunction = entry.getValue();
+			Function<SystemEvent, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SystemEvent)this));
 		}
 
@@ -186,70 +210,112 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SystemEvent, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SystemEvent, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SystemEvent, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SystemEvent, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SystemEvent)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SystemEvent)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SystemEvent, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SystemEvent, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SystemEvent, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SystemEvent, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SystemEvent, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SystemEvent, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SystemEvent, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SystemEvent, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SystemEvent, Object>>();
-		Map<String, BiConsumer<SystemEvent, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SystemEvent, ?>>();
+		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SystemEvent, Object>>();
+		Map<String, BiConsumer<SystemEvent, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SystemEvent, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", SystemEvent::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<SystemEvent, Long>)SystemEvent::setMvccVersion);
-		attributeGetterFunctions.put("systemEventId", SystemEvent::getSystemEventId);
-		attributeSetterBiConsumers.put("systemEventId", (BiConsumer<SystemEvent, Long>)SystemEvent::setSystemEventId);
+		attributeGetterFunctions.put(
+			"mvccVersion", SystemEvent::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setMvccVersion);
+		attributeGetterFunctions.put(
+			"systemEventId", SystemEvent::getSystemEventId);
+		attributeSetterBiConsumers.put(
+			"systemEventId",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setSystemEventId);
 		attributeGetterFunctions.put("groupId", SystemEvent::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<SystemEvent, Long>)SystemEvent::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<SystemEvent, Long>)SystemEvent::setGroupId);
 		attributeGetterFunctions.put("companyId", SystemEvent::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SystemEvent, Long>)SystemEvent::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setCompanyId);
 		attributeGetterFunctions.put("userId", SystemEvent::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<SystemEvent, Long>)SystemEvent::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<SystemEvent, Long>)SystemEvent::setUserId);
 		attributeGetterFunctions.put("userName", SystemEvent::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<SystemEvent, String>)SystemEvent::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<SystemEvent, String>)SystemEvent::setUserName);
 		attributeGetterFunctions.put("createDate", SystemEvent::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SystemEvent, Date>)SystemEvent::setCreateDate);
-		attributeGetterFunctions.put("classNameId", SystemEvent::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SystemEvent, Long>)SystemEvent::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SystemEvent, Date>)SystemEvent::setCreateDate);
+		attributeGetterFunctions.put(
+			"classNameId", SystemEvent::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setClassNameId);
 		attributeGetterFunctions.put("classPK", SystemEvent::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<SystemEvent, Long>)SystemEvent::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<SystemEvent, Long>)SystemEvent::setClassPK);
 		attributeGetterFunctions.put("classUuid", SystemEvent::getClassUuid);
-		attributeSetterBiConsumers.put("classUuid", (BiConsumer<SystemEvent, String>)SystemEvent::setClassUuid);
-		attributeGetterFunctions.put("referrerClassNameId", SystemEvent::getReferrerClassNameId);
-		attributeSetterBiConsumers.put("referrerClassNameId", (BiConsumer<SystemEvent, Long>)SystemEvent::setReferrerClassNameId);
-		attributeGetterFunctions.put("parentSystemEventId", SystemEvent::getParentSystemEventId);
-		attributeSetterBiConsumers.put("parentSystemEventId", (BiConsumer<SystemEvent, Long>)SystemEvent::setParentSystemEventId);
-		attributeGetterFunctions.put("systemEventSetKey", SystemEvent::getSystemEventSetKey);
-		attributeSetterBiConsumers.put("systemEventSetKey", (BiConsumer<SystemEvent, Long>)SystemEvent::setSystemEventSetKey);
+		attributeSetterBiConsumers.put(
+			"classUuid",
+			(BiConsumer<SystemEvent, String>)SystemEvent::setClassUuid);
+		attributeGetterFunctions.put(
+			"referrerClassNameId", SystemEvent::getReferrerClassNameId);
+		attributeSetterBiConsumers.put(
+			"referrerClassNameId",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setReferrerClassNameId);
+		attributeGetterFunctions.put(
+			"parentSystemEventId", SystemEvent::getParentSystemEventId);
+		attributeSetterBiConsumers.put(
+			"parentSystemEventId",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setParentSystemEventId);
+		attributeGetterFunctions.put(
+			"systemEventSetKey", SystemEvent::getSystemEventSetKey);
+		attributeSetterBiConsumers.put(
+			"systemEventSetKey",
+			(BiConsumer<SystemEvent, Long>)SystemEvent::setSystemEventSetKey);
 		attributeGetterFunctions.put("type", SystemEvent::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<SystemEvent, Integer>)SystemEvent::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<SystemEvent, Integer>)SystemEvent::setType);
 		attributeGetterFunctions.put("extraData", SystemEvent::getExtraData);
-		attributeSetterBiConsumers.put("extraData", (BiConsumer<SystemEvent, String>)SystemEvent::setExtraData);
+		attributeSetterBiConsumers.put(
+			"extraData",
+			(BiConsumer<SystemEvent, String>)SystemEvent::setExtraData);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -521,8 +587,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SystemEvent.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SystemEvent.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -535,8 +601,9 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	@Override
 	public SystemEvent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SystemEvent)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SystemEvent)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -571,7 +638,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public int compareTo(SystemEvent systemEvent) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(), systemEvent.getCreateDate());
+		value = DateUtil.compareTo(
+			getCreateDate(), systemEvent.getCreateDate());
 
 		value = value * -1;
 
@@ -627,7 +695,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 		systemEventModelImpl._setOriginalGroupId = false;
 
-		systemEventModelImpl._originalClassNameId = systemEventModelImpl._classNameId;
+		systemEventModelImpl._originalClassNameId =
+			systemEventModelImpl._classNameId;
 
 		systemEventModelImpl._setOriginalClassNameId = false;
 
@@ -635,7 +704,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 		systemEventModelImpl._setOriginalClassPK = false;
 
-		systemEventModelImpl._originalSystemEventSetKey = systemEventModelImpl._systemEventSetKey;
+		systemEventModelImpl._originalSystemEventSetKey =
+			systemEventModelImpl._systemEventSetKey;
 
 		systemEventModelImpl._setOriginalSystemEventSetKey = false;
 
@@ -648,7 +718,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public CacheModel<SystemEvent> toCacheModel() {
-		SystemEventCacheModel systemEventCacheModel = new SystemEventCacheModel();
+		SystemEventCacheModel systemEventCacheModel =
+			new SystemEventCacheModel();
 
 		systemEventCacheModel.mvccVersion = getMvccVersion();
 
@@ -710,16 +781,20 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public String toString() {
-		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SystemEvent, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SystemEvent, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SystemEvent, Object> attributeGetterFunction = entry.getValue();
+			Function<SystemEvent, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -738,18 +813,22 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SystemEvent, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SystemEvent, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SystemEvent, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SystemEvent, Object> attributeGetterFunction = entry.getValue();
+			Function<SystemEvent, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -763,10 +842,12 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SystemEvent.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SystemEvent.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SystemEvent.class, ModelWrapper.class
-		};
+		SystemEvent.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _systemEventId;
 	private long _groupId;
@@ -794,4 +875,5 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	private String _extraData;
 	private long _columnBitmask;
 	private SystemEvent _escapedModel;
+
 }

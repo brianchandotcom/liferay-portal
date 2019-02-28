@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -67,27 +64,25 @@ import java.util.function.Function;
 @JSON(strict = true)
 @ProviderType
 public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a team model instance should use the <code>Team</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Team";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "teamId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "groupId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "lastPublishDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"teamId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"groupId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -104,25 +99,42 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Team (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Team (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Team";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY team.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY Team.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Team"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Team"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Team"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Team"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Team"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Team"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -175,25 +187,41 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public static final String MAPPING_TABLE_USERS_TEAMS_NAME = "Users_Teams";
+
 	public static final Object[][] MAPPING_TABLE_USERS_TEAMS_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "teamId", Types.BIGINT },
-			{ "userId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE = "create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
-	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Users_Teams"), true);
-	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = "UserGroups_Teams";
+		{"companyId", Types.BIGINT}, {"teamId", Types.BIGINT},
+		{"userId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE =
+		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_Teams"),
+			true);
+
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME =
+		"UserGroups_Teams";
+
 	public static final Object[][] MAPPING_TABLE_USERGROUPS_TEAMS_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "teamId", Types.BIGINT },
-			{ "userGroupId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
-	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.UserGroups_Teams"), true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Team"));
+		{"companyId", Types.BIGINT}, {"teamId", Types.BIGINT},
+		{"userGroupId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE =
+		"create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.UserGroups_Teams"),
+			true);
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Team"));
 
 	public TeamModelImpl() {
 	}
@@ -232,14 +260,17 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Team, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Team, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Team, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Team, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Team, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Team)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Team)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -250,12 +281,14 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Team, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Team, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Team, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Team, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((Team)this, entry.getValue());
@@ -267,46 +300,66 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Team, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Team, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Team, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Team, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Team, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Team, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Team, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Team, Object>>();
-		Map<String, BiConsumer<Team, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Team, ?>>();
-
+		Map<String, Function<Team, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Team, Object>>();
+		Map<String, BiConsumer<Team, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Team, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Team::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Team, Long>)Team::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Team, Long>)Team::setMvccVersion);
 		attributeGetterFunctions.put("uuid", Team::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<Team, String>)Team::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Team, String>)Team::setUuid);
 		attributeGetterFunctions.put("teamId", Team::getTeamId);
-		attributeSetterBiConsumers.put("teamId", (BiConsumer<Team, Long>)Team::setTeamId);
+		attributeSetterBiConsumers.put(
+			"teamId", (BiConsumer<Team, Long>)Team::setTeamId);
 		attributeGetterFunctions.put("companyId", Team::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Team, Long>)Team::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Team, Long>)Team::setCompanyId);
 		attributeGetterFunctions.put("userId", Team::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Team, Long>)Team::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Team, Long>)Team::setUserId);
 		attributeGetterFunctions.put("userName", Team::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Team, String>)Team::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Team, String>)Team::setUserName);
 		attributeGetterFunctions.put("createDate", Team::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Team, Date>)Team::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Team, Date>)Team::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Team::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Team, Date>)Team::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate", (BiConsumer<Team, Date>)Team::setModifiedDate);
 		attributeGetterFunctions.put("groupId", Team::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<Team, Long>)Team::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<Team, Long>)Team::setGroupId);
 		attributeGetterFunctions.put("name", Team::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Team, String>)Team::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Team, String>)Team::setName);
 		attributeGetterFunctions.put("description", Team::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<Team, String>)Team::setDescription);
-		attributeGetterFunctions.put("lastPublishDate", Team::getLastPublishDate);
-		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Team, Date>)Team::setLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"description", (BiConsumer<Team, String>)Team::setDescription);
+		attributeGetterFunctions.put(
+			"lastPublishDate", Team::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<Team, Date>)Team::setLastPublishDate);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -529,8 +582,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				Team.class.getName()));
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Team.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -539,8 +592,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Team.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Team.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -553,8 +606,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	@Override
 	public Team toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Team)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Team)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -731,14 +785,17 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public String toString() {
-		Map<String, Function<Team, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Team, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Team, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Team, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Team, Object> attributeGetterFunction = entry.getValue();
 
@@ -759,16 +816,19 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Team, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Team, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Team, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Team, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Team, Object> attributeGetterFunction = entry.getValue();
 
@@ -786,8 +846,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	private static final ClassLoader _classLoader = Team.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Team.class, ModelWrapper.class
-		};
+		Team.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -809,4 +870,5 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private Team _escapedModel;
+
 }

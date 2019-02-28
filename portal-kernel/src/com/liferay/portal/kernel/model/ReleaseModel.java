@@ -33,6 +33,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -218,4 +219,5 @@ public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
 	 * @param testString the test string of this release
 	 */
 	public void setTestString(String testString);
+
 }

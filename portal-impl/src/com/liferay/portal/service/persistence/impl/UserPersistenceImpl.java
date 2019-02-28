@@ -17,7 +17,6 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -80,18 +79,23 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class UserPersistenceImpl extends BasePersistenceImpl<User>
-	implements UserPersistence {
+public class UserPersistenceImpl
+	extends BasePersistenceImpl<User> implements UserPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>UserUtil</code> to access the user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = UserImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		UserImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -141,8 +145,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByUuid(String uuid, int start, int end,
+	public List<User> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<User> orderByComparator) {
+
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
@@ -161,8 +167,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByUuid(String uuid, int start, int end,
+	public List<User> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -170,21 +178,22 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] { uuid };
+			finderArgs = new Object[] {uuid};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -201,8 +210,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -222,11 +231,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -246,16 +254,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -284,8 +292,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByUuid_First(String uuid,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByUuid_First(
+			String uuid, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByUuid_First(uuid, orderByComparator);
 
 		if (user != null) {
@@ -312,8 +322,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByUuid_First(String uuid,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByUuid_First(
+		String uuid, OrderByComparator<User> orderByComparator) {
+
 		List<User> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -332,8 +343,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByUuid_Last(String uuid,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByUuid_Last(
+			String uuid, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (user != null) {
@@ -360,8 +373,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByUuid_Last(String uuid,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByUuid_Last(
+		String uuid, OrderByComparator<User> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -387,8 +401,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByUuid_PrevAndNext(long userId, String uuid,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User[] findByUuid_PrevAndNext(
+			long userId, String uuid, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		uuid = Objects.toString(uuid, "");
 
 		User user = findByPrimaryKey(userId);
@@ -400,13 +416,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, user, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, user, uuid, orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByUuid_PrevAndNext(session, user, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, user, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -418,13 +434,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByUuid_PrevAndNext(Session session, User user,
-		String uuid, OrderByComparator<User> orderByComparator, boolean previous) {
+	protected User getByUuid_PrevAndNext(
+		Session session, User user, String uuid,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -445,7 +463,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -517,8 +536,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -540,8 +560,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (User user : findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null)) {
+		for (User user :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(user);
 		}
 	}
@@ -558,10 +579,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByUuid;
 
-		Object[] finderArgs = new Object[] { uuid };
+		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -612,7 +633,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "user.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(user.uuid IS NULL OR user.uuid = '')";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(user.uuid IS NULL OR user.uuid = '')";
+
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -626,8 +650,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -644,8 +668,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByUuid_C(String uuid, long companyId, int start,
-		int end) {
+	public List<User> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -664,9 +689,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<User> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<User> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -685,9 +713,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<User> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<User> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -695,30 +724,30 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if (!uuid.equals(user.getUuid()) ||
-							(companyId != user.getCompanyId())) {
+						(companyId != user.getCompanyId())) {
+
 						list = null;
 
 						break;
@@ -731,8 +760,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -754,11 +783,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -780,16 +808,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -819,8 +847,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (user != null) {
@@ -851,9 +882,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByUuid_C_First(String uuid, long companyId,
+	public User fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<User> orderByComparator) {
-		List<User> list = findByUuid_C(uuid, companyId, 0, 1, orderByComparator);
+
+		List<User> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -872,8 +906,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (user != null) {
@@ -904,16 +941,18 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByUuid_C_Last(String uuid, long companyId,
+	public User fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<User> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<User> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -933,9 +972,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByUuid_C_PrevAndNext(long userId, String uuid,
-		long companyId, OrderByComparator<User> orderByComparator)
+	public User[] findByUuid_C_PrevAndNext(
+			long userId, String uuid, long companyId,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
+
 		uuid = Objects.toString(uuid, "");
 
 		User user = findByPrimaryKey(userId);
@@ -947,13 +988,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, user, uuid, companyId,
-					orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, user, uuid, companyId, orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByUuid_C_PrevAndNext(session, user, uuid, companyId,
-					orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, user, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -965,14 +1006,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByUuid_C_PrevAndNext(Session session, User user,
-		String uuid, long companyId, OrderByComparator<User> orderByComparator,
-		boolean previous) {
+	protected User getByUuid_C_PrevAndNext(
+		Session session, User user, String uuid, long companyId,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -995,7 +1037,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1069,8 +1112,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1093,8 +1137,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (User user : findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(user);
 		}
 	}
@@ -1112,10 +1159,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByUuid_C;
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1169,9 +1216,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "user.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(user.uuid IS NULL OR user.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "user.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"user.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(user.uuid IS NULL OR user.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"user.companyId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -1184,8 +1237,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1219,8 +1272,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByCompanyId(long companyId, int start, int end,
+	public List<User> findByCompanyId(
+		long companyId, int start, int end,
 		OrderByComparator<User> orderByComparator) {
+
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
@@ -1239,28 +1294,33 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByCompanyId(long companyId, int start, int end,
+	public List<User> findByCompanyId(
+		long companyId, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId };
+			finderArgs = new Object[] {companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+			finderArgs = new Object[] {
+				companyId, start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -1277,8 +1337,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1289,11 +1349,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1311,16 +1370,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1349,8 +1408,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByCompanyId_First(long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByCompanyId_First(
+			long companyId, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (user != null) {
@@ -1377,8 +1438,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByCompanyId_First(long companyId,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByCompanyId_First(
+		long companyId, OrderByComparator<User> orderByComparator) {
+
 		List<User> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1397,8 +1459,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByCompanyId_Last(long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByCompanyId_Last(
+			long companyId, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (user != null) {
@@ -1425,16 +1489,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByCompanyId_Last(long companyId,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByCompanyId_Last(
+		long companyId, OrderByComparator<User> orderByComparator) {
+
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByCompanyId(companyId, count - 1, count,
-				orderByComparator);
+		List<User> list = findByCompanyId(
+			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1453,8 +1518,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByCompanyId_PrevAndNext(long userId, long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User[] findByCompanyId_PrevAndNext(
+			long userId, long companyId,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -1464,13 +1532,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(session, user, companyId,
-					orderByComparator, true);
+			array[0] = getByCompanyId_PrevAndNext(
+				session, user, companyId, orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByCompanyId_PrevAndNext(session, user, companyId,
-					orderByComparator, false);
+			array[2] = getByCompanyId_PrevAndNext(
+				session, user, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1482,14 +1550,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByCompanyId_PrevAndNext(Session session, User user,
-		long companyId, OrderByComparator<User> orderByComparator,
-		boolean previous) {
+	protected User getByCompanyId_PrevAndNext(
+		Session session, User user, long companyId,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1501,7 +1570,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1571,8 +1641,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1594,8 +1665,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (User user : findByCompanyId(companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByCompanyId(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(user);
 		}
 	}
@@ -1610,10 +1683,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Object[] finderArgs = new Object[] { companyId };
+		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1652,7 +1725,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "user.companyId = ? AND user.defaultUser = [$FALSE$]";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
+		"user.companyId = ? AND user.defaultUser = [$FALSE$]";
+
 	private FinderPath _finderPathFetchByContactId;
 	private FinderPath _finderPathCountByContactId;
 
@@ -1707,13 +1782,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByContactId(long contactId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { contactId };
+		Object[] finderArgs = new Object[] {contactId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByContactId,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByContactId, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -1747,8 +1822,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByContactId,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByContactId, finderArgs, list);
 				}
 				else {
 					User user = list.get(0);
@@ -1759,8 +1834,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByContactId,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByContactId, finderArgs);
 
 				throw processException(e);
 			}
@@ -1800,10 +1875,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByContactId(long contactId) {
 		FinderPath finderPath = _finderPathCountByContactId;
 
-		Object[] finderArgs = new Object[] { contactId };
+		Object[] finderArgs = new Object[] {contactId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1842,7 +1917,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CONTACTID_CONTACTID_2 = "user.contactId = ?";
+	private static final String _FINDER_COLUMN_CONTACTID_CONTACTID_2 =
+		"user.contactId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByEmailAddress;
 	private FinderPath _finderPathWithoutPaginationFindByEmailAddress;
 	private FinderPath _finderPathCountByEmailAddress;
@@ -1855,8 +1932,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByEmailAddress(String emailAddress) {
-		return findByEmailAddress(emailAddress, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByEmailAddress(
+			emailAddress, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1872,7 +1949,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByEmailAddress(String emailAddress, int start, int end) {
+	public List<User> findByEmailAddress(
+		String emailAddress, int start, int end) {
+
 		return findByEmailAddress(emailAddress, start, end, null);
 	}
 
@@ -1890,10 +1969,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByEmailAddress(String emailAddress, int start,
-		int end, OrderByComparator<User> orderByComparator) {
-		return findByEmailAddress(emailAddress, start, end, orderByComparator,
-			true);
+	public List<User> findByEmailAddress(
+		String emailAddress, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByEmailAddress(
+			emailAddress, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1911,9 +1992,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByEmailAddress(String emailAddress, int start,
-		int end, OrderByComparator<User> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<User> findByEmailAddress(
+		String emailAddress, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		emailAddress = Objects.toString(emailAddress, "");
 
 		boolean pagination = true;
@@ -1921,25 +2003,24 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByEmailAddress;
-			finderArgs = new Object[] { emailAddress };
+			finderArgs = new Object[] {emailAddress};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByEmailAddress;
 			finderArgs = new Object[] {
-					emailAddress,
-					
-					start, end, orderByComparator
-				};
+				emailAddress, start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
@@ -1956,8 +2037,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1977,11 +2058,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2001,16 +2081,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2039,8 +2119,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByEmailAddress_First(String emailAddress,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByEmailAddress_First(
+			String emailAddress, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByEmailAddress_First(emailAddress, orderByComparator);
 
 		if (user != null) {
@@ -2067,10 +2149,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByEmailAddress_First(String emailAddress,
-		OrderByComparator<User> orderByComparator) {
-		List<User> list = findByEmailAddress(emailAddress, 0, 1,
-				orderByComparator);
+	public User fetchByEmailAddress_First(
+		String emailAddress, OrderByComparator<User> orderByComparator) {
+
+		List<User> list = findByEmailAddress(
+			emailAddress, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2088,8 +2171,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByEmailAddress_Last(String emailAddress,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByEmailAddress_Last(
+			String emailAddress, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByEmailAddress_Last(emailAddress, orderByComparator);
 
 		if (user != null) {
@@ -2116,16 +2201,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByEmailAddress_Last(String emailAddress,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByEmailAddress_Last(
+		String emailAddress, OrderByComparator<User> orderByComparator) {
+
 		int count = countByEmailAddress(emailAddress);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByEmailAddress(emailAddress, count - 1, count,
-				orderByComparator);
+		List<User> list = findByEmailAddress(
+			emailAddress, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2144,9 +2230,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByEmailAddress_PrevAndNext(long userId,
-		String emailAddress, OrderByComparator<User> orderByComparator)
+	public User[] findByEmailAddress_PrevAndNext(
+			long userId, String emailAddress,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
+
 		emailAddress = Objects.toString(emailAddress, "");
 
 		User user = findByPrimaryKey(userId);
@@ -2158,13 +2246,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByEmailAddress_PrevAndNext(session, user,
-					emailAddress, orderByComparator, true);
+			array[0] = getByEmailAddress_PrevAndNext(
+				session, user, emailAddress, orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByEmailAddress_PrevAndNext(session, user,
-					emailAddress, orderByComparator, false);
+			array[2] = getByEmailAddress_PrevAndNext(
+				session, user, emailAddress, orderByComparator, false);
 
 			return array;
 		}
@@ -2176,14 +2264,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByEmailAddress_PrevAndNext(Session session, User user,
-		String emailAddress, OrderByComparator<User> orderByComparator,
-		boolean previous) {
+	protected User getByEmailAddress_PrevAndNext(
+		Session session, User user, String emailAddress,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -2204,7 +2293,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -2276,8 +2366,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -2299,8 +2390,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByEmailAddress(String emailAddress) {
-		for (User user : findByEmailAddress(emailAddress, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByEmailAddress(
+					emailAddress, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(user);
 		}
 	}
@@ -2317,10 +2410,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByEmailAddress;
 
-		Object[] finderArgs = new Object[] { emailAddress };
+		Object[] finderArgs = new Object[] {emailAddress};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2370,8 +2463,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_2 = "user.emailAddress = ?";
-	private static final String _FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3 = "(user.emailAddress IS NULL OR user.emailAddress = '')";
+	private static final String _FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_2 =
+		"user.emailAddress = ?";
+
+	private static final String _FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3 =
+		"(user.emailAddress IS NULL OR user.emailAddress = '')";
+
 	private FinderPath _finderPathFetchByPortraitId;
 	private FinderPath _finderPathCountByPortraitId;
 
@@ -2426,13 +2523,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByPortraitId(long portraitId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { portraitId };
+		Object[] finderArgs = new Object[] {portraitId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByPortraitId,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByPortraitId, finderArgs, this);
 		}
 
 		if (result instanceof User) {
@@ -2466,8 +2563,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByPortraitId,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByPortraitId, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -2476,8 +2573,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"UserPersistenceImpl.fetchByPortraitId(long, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -2489,8 +2586,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByPortraitId,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByPortraitId, finderArgs);
 
 				throw processException(e);
 			}
@@ -2530,10 +2627,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByPortraitId(long portraitId) {
 		FinderPath finderPath = _finderPathCountByPortraitId;
 
-		Object[] finderArgs = new Object[] { portraitId };
+		Object[] finderArgs = new Object[] {portraitId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2572,7 +2669,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_PORTRAITID_PORTRAITID_2 = "user.portraitId = ?";
+	private static final String _FINDER_COLUMN_PORTRAITID_PORTRAITID_2 =
+		"user.portraitId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByU_C;
 	private FinderPath _finderPathWithPaginationCountByU_C;
 
@@ -2585,8 +2684,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByU_C(long userId, long companyId) {
-		return findByU_C(userId, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByU_C(
+			userId, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2603,7 +2702,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByU_C(long userId, long companyId, int start, int end) {
+	public List<User> findByU_C(
+		long userId, long companyId, int start, int end) {
+
 		return findByU_C(userId, companyId, start, end, null);
 	}
 
@@ -2622,9 +2723,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByU_C(long userId, long companyId, int start,
-		int end, OrderByComparator<User> orderByComparator) {
-		return findByU_C(userId, companyId, start, end, orderByComparator, true);
+	public List<User> findByU_C(
+		long userId, long companyId, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByU_C(
+			userId, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2643,30 +2747,30 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByU_C(long userId, long companyId, int start,
-		int end, OrderByComparator<User> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<User> findByU_C(
+		long userId, long companyId, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		finderPath = _finderPathWithPaginationFindByU_C;
 		finderArgs = new Object[] {
-				userId, companyId,
-				
-				start, end, orderByComparator
-			};
+			userId, companyId, start, end, orderByComparator
+		};
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((userId >= user.getUserId()) ||
-							(companyId != user.getCompanyId())) {
+						(companyId != user.getCompanyId())) {
+
 						list = null;
 
 						break;
@@ -2679,8 +2783,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -2693,11 +2797,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			query.append(_FINDER_COLUMN_U_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2717,16 +2820,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2756,8 +2859,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByU_C_First(long userId, long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByU_C_First(
+			long userId, long companyId,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByU_C_First(userId, companyId, orderByComparator);
 
 		if (user != null) {
@@ -2788,8 +2894,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByU_C_First(long userId, long companyId,
+	public User fetchByU_C_First(
+		long userId, long companyId,
 		OrderByComparator<User> orderByComparator) {
+
 		List<User> list = findByU_C(userId, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2809,8 +2917,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByU_C_Last(long userId, long companyId,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByU_C_Last(
+			long userId, long companyId,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByU_C_Last(userId, companyId, orderByComparator);
 
 		if (user != null) {
@@ -2841,16 +2952,18 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByU_C_Last(long userId, long companyId,
+	public User fetchByU_C_Last(
+		long userId, long companyId,
 		OrderByComparator<User> orderByComparator) {
+
 		int count = countByU_C(userId, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByU_C(userId, companyId, count - 1, count,
-				orderByComparator);
+		List<User> list = findByU_C(
+			userId, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2867,8 +2980,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByU_C(long userId, long companyId) {
-		for (User user : findByU_C(userId, companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByU_C(
+					userId, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(user);
 		}
 	}
@@ -2884,10 +3000,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByU_C(long userId, long companyId) {
 		FinderPath finderPath = _finderPathWithPaginationCountByU_C;
 
-		Object[] finderArgs = new Object[] { userId, companyId };
+		Object[] finderArgs = new Object[] {userId, companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2930,8 +3046,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_C_USERID_2 = "user.userId > ? AND ";
-	private static final String _FINDER_COLUMN_U_C_COMPANYID_2 = "user.companyId = ? AND user.defaultUser = [$FALSE$]";
+	private static final String _FINDER_COLUMN_U_C_USERID_2 =
+		"user.userId > ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_COMPANYID_2 =
+		"user.companyId = ? AND user.defaultUser = [$FALSE$]";
+
 	private FinderPath _finderPathFetchByC_U;
 	private FinderPath _finderPathCountByC_U;
 
@@ -2946,6 +3066,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_U(long companyId, long userId)
 		throws NoSuchUserException {
+
 		User user = fetchByC_U(companyId, userId);
 
 		if (user == null) {
@@ -2992,22 +3113,24 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_U(long companyId, long userId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { companyId, userId };
+	public User fetchByC_U(
+		long companyId, long userId, boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {companyId, userId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_U,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_U, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					(userId != user.getUserId())) {
+				(userId != user.getUserId())) {
+
 				result = null;
 			}
 		}
@@ -3039,8 +3162,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_U,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_U, finderArgs, list);
 				}
 				else {
 					User user = list.get(0);
@@ -3078,6 +3201,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_U(long companyId, long userId)
 		throws NoSuchUserException {
+
 		User user = findByC_U(companyId, userId);
 
 		return remove(user);
@@ -3094,10 +3218,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_U(long companyId, long userId) {
 		FinderPath finderPath = _finderPathCountByC_U;
 
-		Object[] finderArgs = new Object[] { companyId, userId };
+		Object[] finderArgs = new Object[] {companyId, userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3140,8 +3264,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 = "user.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
 	private static final String _FINDER_COLUMN_C_U_USERID_2 = "user.userId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_CD;
 	private FinderPath _finderPathWithoutPaginationFindByC_CD;
 	private FinderPath _finderPathCountByC_CD;
@@ -3155,8 +3282,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_CD(long companyId, Date createDate) {
-		return findByC_CD(companyId, createDate, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_CD(
+			companyId, createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -3173,8 +3300,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByC_CD(long companyId, Date createDate, int start,
-		int end) {
+	public List<User> findByC_CD(
+		long companyId, Date createDate, int start, int end) {
+
 		return findByC_CD(companyId, createDate, start, end, null);
 	}
 
@@ -3193,10 +3321,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_CD(long companyId, Date createDate, int start,
-		int end, OrderByComparator<User> orderByComparator) {
-		return findByC_CD(companyId, createDate, start, end, orderByComparator,
-			true);
+	public List<User> findByC_CD(
+		long companyId, Date createDate, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByC_CD(
+			companyId, createDate, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3215,38 +3345,39 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_CD(long companyId, Date createDate, int start,
-		int end, OrderByComparator<User> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<User> findByC_CD(
+		long companyId, Date createDate, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_CD;
-			finderArgs = new Object[] { companyId, _getTime(createDate) };
+			finderArgs = new Object[] {companyId, _getTime(createDate)};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_CD;
 			finderArgs = new Object[] {
-					companyId, _getTime(createDate),
-					
-					start, end, orderByComparator
-				};
+				companyId, _getTime(createDate), start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							!Objects.equals(createDate, user.getCreateDate())) {
+						!Objects.equals(createDate, user.getCreateDate())) {
+
 						list = null;
 
 						break;
@@ -3259,8 +3390,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -3282,11 +3413,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3308,16 +3438,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3347,8 +3477,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_CD_First(long companyId, Date createDate,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByC_CD_First(
+			long companyId, Date createDate,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByC_CD_First(companyId, createDate, orderByComparator);
 
 		if (user != null) {
@@ -3379,10 +3512,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_CD_First(long companyId, Date createDate,
+	public User fetchByC_CD_First(
+		long companyId, Date createDate,
 		OrderByComparator<User> orderByComparator) {
-		List<User> list = findByC_CD(companyId, createDate, 0, 1,
-				orderByComparator);
+
+		List<User> list = findByC_CD(
+			companyId, createDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3401,8 +3536,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_CD_Last(long companyId, Date createDate,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByC_CD_Last(
+			long companyId, Date createDate,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByC_CD_Last(companyId, createDate, orderByComparator);
 
 		if (user != null) {
@@ -3433,16 +3571,18 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_CD_Last(long companyId, Date createDate,
+	public User fetchByC_CD_Last(
+		long companyId, Date createDate,
 		OrderByComparator<User> orderByComparator) {
+
 		int count = countByC_CD(companyId, createDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByC_CD(companyId, createDate, count - 1, count,
-				orderByComparator);
+		List<User> list = findByC_CD(
+			companyId, createDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3462,9 +3602,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByC_CD_PrevAndNext(long userId, long companyId,
-		Date createDate, OrderByComparator<User> orderByComparator)
+	public User[] findByC_CD_PrevAndNext(
+			long userId, long companyId, Date createDate,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
+
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -3474,13 +3616,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByC_CD_PrevAndNext(session, user, companyId,
-					createDate, orderByComparator, true);
+			array[0] = getByC_CD_PrevAndNext(
+				session, user, companyId, createDate, orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByC_CD_PrevAndNext(session, user, companyId,
-					createDate, orderByComparator, false);
+			array[2] = getByC_CD_PrevAndNext(
+				session, user, companyId, createDate, orderByComparator, false);
 
 			return array;
 		}
@@ -3492,14 +3634,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByC_CD_PrevAndNext(Session session, User user,
-		long companyId, Date createDate,
+	protected User getByC_CD_PrevAndNext(
+		Session session, User user, long companyId, Date createDate,
 		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -3522,7 +3665,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -3596,8 +3740,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -3620,8 +3765,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByC_CD(long companyId, Date createDate) {
-		for (User user : findByC_CD(companyId, createDate, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByC_CD(
+					companyId, createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(user);
 		}
 	}
@@ -3637,10 +3785,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_CD(long companyId, Date createDate) {
 		FinderPath finderPath = _finderPathCountByC_CD;
 
-		Object[] finderArgs = new Object[] { companyId, _getTime(createDate) };
+		Object[] finderArgs = new Object[] {companyId, _getTime(createDate)};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3694,9 +3842,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_CD_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_1 = "user.createDate IS NULL AND user.defaultUser = [$FALSE$]";
-	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_2 = "user.createDate = ? AND user.defaultUser = [$FALSE$]";
+	private static final String _FINDER_COLUMN_C_CD_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_1 =
+		"user.createDate IS NULL AND user.defaultUser = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_2 =
+		"user.createDate = ? AND user.defaultUser = [$FALSE$]";
+
 	private FinderPath _finderPathWithPaginationFindByC_MD;
 	private FinderPath _finderPathWithoutPaginationFindByC_MD;
 	private FinderPath _finderPathCountByC_MD;
@@ -3710,8 +3864,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_MD(long companyId, Date modifiedDate) {
-		return findByC_MD(companyId, modifiedDate, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_MD(
+			companyId, modifiedDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
@@ -3728,8 +3883,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByC_MD(long companyId, Date modifiedDate, int start,
-		int end) {
+	public List<User> findByC_MD(
+		long companyId, Date modifiedDate, int start, int end) {
+
 		return findByC_MD(companyId, modifiedDate, start, end, null);
 	}
 
@@ -3748,10 +3904,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_MD(long companyId, Date modifiedDate, int start,
-		int end, OrderByComparator<User> orderByComparator) {
-		return findByC_MD(companyId, modifiedDate, start, end,
-			orderByComparator, true);
+	public List<User> findByC_MD(
+		long companyId, Date modifiedDate, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByC_MD(
+			companyId, modifiedDate, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3770,38 +3928,39 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_MD(long companyId, Date modifiedDate, int start,
-		int end, OrderByComparator<User> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<User> findByC_MD(
+		long companyId, Date modifiedDate, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_MD;
-			finderArgs = new Object[] { companyId, _getTime(modifiedDate) };
+			finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_MD;
 			finderArgs = new Object[] {
-					companyId, _getTime(modifiedDate),
-					
-					start, end, orderByComparator
-				};
+				companyId, _getTime(modifiedDate), start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							!Objects.equals(modifiedDate, user.getModifiedDate())) {
+						!Objects.equals(modifiedDate, user.getModifiedDate())) {
+
 						list = null;
 
 						break;
@@ -3814,8 +3973,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -3837,11 +3996,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3863,16 +4021,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3902,9 +4060,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_MD_First(long companyId, Date modifiedDate,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
-		User user = fetchByC_MD_First(companyId, modifiedDate, orderByComparator);
+	public User findByC_MD_First(
+			long companyId, Date modifiedDate,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = fetchByC_MD_First(
+			companyId, modifiedDate, orderByComparator);
 
 		if (user != null) {
 			return user;
@@ -3934,10 +4096,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_MD_First(long companyId, Date modifiedDate,
+	public User fetchByC_MD_First(
+		long companyId, Date modifiedDate,
 		OrderByComparator<User> orderByComparator) {
-		List<User> list = findByC_MD(companyId, modifiedDate, 0, 1,
-				orderByComparator);
+
+		List<User> list = findByC_MD(
+			companyId, modifiedDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3956,9 +4120,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_MD_Last(long companyId, Date modifiedDate,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
-		User user = fetchByC_MD_Last(companyId, modifiedDate, orderByComparator);
+	public User findByC_MD_Last(
+			long companyId, Date modifiedDate,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = fetchByC_MD_Last(
+			companyId, modifiedDate, orderByComparator);
 
 		if (user != null) {
 			return user;
@@ -3988,16 +4156,18 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_MD_Last(long companyId, Date modifiedDate,
+	public User fetchByC_MD_Last(
+		long companyId, Date modifiedDate,
 		OrderByComparator<User> orderByComparator) {
+
 		int count = countByC_MD(companyId, modifiedDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByC_MD(companyId, modifiedDate, count - 1, count,
-				orderByComparator);
+		List<User> list = findByC_MD(
+			companyId, modifiedDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4017,9 +4187,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByC_MD_PrevAndNext(long userId, long companyId,
-		Date modifiedDate, OrderByComparator<User> orderByComparator)
+	public User[] findByC_MD_PrevAndNext(
+			long userId, long companyId, Date modifiedDate,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
+
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -4029,13 +4201,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByC_MD_PrevAndNext(session, user, companyId,
-					modifiedDate, orderByComparator, true);
+			array[0] = getByC_MD_PrevAndNext(
+				session, user, companyId, modifiedDate, orderByComparator,
+				true);
 
 			array[1] = user;
 
-			array[2] = getByC_MD_PrevAndNext(session, user, companyId,
-					modifiedDate, orderByComparator, false);
+			array[2] = getByC_MD_PrevAndNext(
+				session, user, companyId, modifiedDate, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -4047,14 +4221,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByC_MD_PrevAndNext(Session session, User user,
-		long companyId, Date modifiedDate,
+	protected User getByC_MD_PrevAndNext(
+		Session session, User user, long companyId, Date modifiedDate,
 		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -4077,7 +4252,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -4151,8 +4327,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -4175,8 +4352,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByC_MD(long companyId, Date modifiedDate) {
-		for (User user : findByC_MD(companyId, modifiedDate, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByC_MD(
+					companyId, modifiedDate, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
 			remove(user);
 		}
 	}
@@ -4192,10 +4372,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_MD(long companyId, Date modifiedDate) {
 		FinderPath finderPath = _finderPathCountByC_MD;
 
-		Object[] finderArgs = new Object[] { companyId, _getTime(modifiedDate) };
+		Object[] finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4249,9 +4429,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_MD_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_1 = "user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$]";
-	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_2 = "user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
+	private static final String _FINDER_COLUMN_C_MD_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_1 =
+		"user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_2 =
+		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
+
 	private FinderPath _finderPathFetchByC_DU;
 	private FinderPath _finderPathCountByC_DU;
 
@@ -4266,6 +4452,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_DU(long companyId, boolean defaultUser)
 		throws NoSuchUserException {
+
 		User user = fetchByC_DU(companyId, defaultUser);
 
 		if (user == null) {
@@ -4312,22 +4499,24 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_DU(long companyId, boolean defaultUser,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { companyId, defaultUser };
+	public User fetchByC_DU(
+		long companyId, boolean defaultUser, boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {companyId, defaultUser};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_DU,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_DU, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					(defaultUser != user.isDefaultUser())) {
+				(defaultUser != user.isDefaultUser())) {
+
 				result = null;
 			}
 		}
@@ -4359,8 +4548,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_DU,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_DU, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -4369,8 +4558,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"UserPersistenceImpl.fetchByC_DU(long, boolean, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -4382,7 +4571,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_DU, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_DU, finderArgs);
 
 				throw processException(e);
 			}
@@ -4409,6 +4599,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_DU(long companyId, boolean defaultUser)
 		throws NoSuchUserException {
+
 		User user = findByC_DU(companyId, defaultUser);
 
 		return remove(user);
@@ -4425,10 +4616,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_DU(long companyId, boolean defaultUser) {
 		FinderPath finderPath = _finderPathCountByC_DU;
 
-		Object[] finderArgs = new Object[] { companyId, defaultUser };
+		Object[] finderArgs = new Object[] {companyId, defaultUser};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4471,8 +4662,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_DU_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_DU_DEFAULTUSER_2 = "user.defaultUser = ?";
+	private static final String _FINDER_COLUMN_C_DU_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_DU_DEFAULTUSER_2 =
+		"user.defaultUser = ?";
+
 	private FinderPath _finderPathFetchByC_SN;
 	private FinderPath _finderPathCountByC_SN;
 
@@ -4487,6 +4682,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_SN(long companyId, String screenName)
 		throws NoSuchUserException {
+
 		User user = fetchByC_SN(companyId, screenName);
 
 		if (user == null) {
@@ -4533,24 +4729,26 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_SN(long companyId, String screenName,
-		boolean retrieveFromCache) {
+	public User fetchByC_SN(
+		long companyId, String screenName, boolean retrieveFromCache) {
+
 		screenName = Objects.toString(screenName, "");
 
-		Object[] finderArgs = new Object[] { companyId, screenName };
+		Object[] finderArgs = new Object[] {companyId, screenName};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_SN,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_SN, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Objects.equals(screenName, user.getScreenName())) {
+				!Objects.equals(screenName, user.getScreenName())) {
+
 				result = null;
 			}
 		}
@@ -4593,8 +4791,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_SN,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_SN, finderArgs, list);
 				}
 				else {
 					User user = list.get(0);
@@ -4605,7 +4803,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_SN, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_SN, finderArgs);
 
 				throw processException(e);
 			}
@@ -4632,6 +4831,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_SN(long companyId, String screenName)
 		throws NoSuchUserException {
+
 		User user = findByC_SN(companyId, screenName);
 
 		return remove(user);
@@ -4650,10 +4850,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByC_SN;
 
-		Object[] finderArgs = new Object[] { companyId, screenName };
+		Object[] finderArgs = new Object[] {companyId, screenName};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4707,9 +4907,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_SN_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_SN_SCREENNAME_2 = "user.screenName = ?";
-	private static final String _FINDER_COLUMN_C_SN_SCREENNAME_3 = "(user.screenName IS NULL OR user.screenName = '')";
+	private static final String _FINDER_COLUMN_C_SN_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_SN_SCREENNAME_2 =
+		"user.screenName = ?";
+
+	private static final String _FINDER_COLUMN_C_SN_SCREENNAME_3 =
+		"(user.screenName IS NULL OR user.screenName = '')";
+
 	private FinderPath _finderPathFetchByC_EA;
 	private FinderPath _finderPathCountByC_EA;
 
@@ -4724,6 +4930,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_EA(long companyId, String emailAddress)
 		throws NoSuchUserException {
+
 		User user = fetchByC_EA(companyId, emailAddress);
 
 		if (user == null) {
@@ -4770,24 +4977,26 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_EA(long companyId, String emailAddress,
-		boolean retrieveFromCache) {
+	public User fetchByC_EA(
+		long companyId, String emailAddress, boolean retrieveFromCache) {
+
 		emailAddress = Objects.toString(emailAddress, "");
 
-		Object[] finderArgs = new Object[] { companyId, emailAddress };
+		Object[] finderArgs = new Object[] {companyId, emailAddress};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_EA,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_EA, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Objects.equals(emailAddress, user.getEmailAddress())) {
+				!Objects.equals(emailAddress, user.getEmailAddress())) {
+
 				result = null;
 			}
 		}
@@ -4830,8 +5039,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_EA,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_EA, finderArgs, list);
 				}
 				else {
 					User user = list.get(0);
@@ -4842,7 +5051,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_EA, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_EA, finderArgs);
 
 				throw processException(e);
 			}
@@ -4869,6 +5079,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_EA(long companyId, String emailAddress)
 		throws NoSuchUserException {
+
 		User user = findByC_EA(companyId, emailAddress);
 
 		return remove(user);
@@ -4887,10 +5098,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByC_EA;
 
-		Object[] finderArgs = new Object[] { companyId, emailAddress };
+		Object[] finderArgs = new Object[] {companyId, emailAddress};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4944,9 +5155,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_EA_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_EA_EMAILADDRESS_2 = "user.emailAddress = ?";
-	private static final String _FINDER_COLUMN_C_EA_EMAILADDRESS_3 = "(user.emailAddress IS NULL OR user.emailAddress = '')";
+	private static final String _FINDER_COLUMN_C_EA_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_EA_EMAILADDRESS_2 =
+		"user.emailAddress = ?";
+
+	private static final String _FINDER_COLUMN_C_EA_EMAILADDRESS_3 =
+		"(user.emailAddress IS NULL OR user.emailAddress = '')";
+
 	private FinderPath _finderPathFetchByC_FID;
 	private FinderPath _finderPathCountByC_FID;
 
@@ -4961,6 +5178,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_FID(long companyId, long facebookId)
 		throws NoSuchUserException {
+
 		User user = fetchByC_FID(companyId, facebookId);
 
 		if (user == null) {
@@ -5007,22 +5225,24 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_FID(long companyId, long facebookId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { companyId, facebookId };
+	public User fetchByC_FID(
+		long companyId, long facebookId, boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {companyId, facebookId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_FID,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_FID, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					(facebookId != user.getFacebookId())) {
+				(facebookId != user.getFacebookId())) {
+
 				result = null;
 			}
 		}
@@ -5054,8 +5274,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_FID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_FID, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -5064,8 +5284,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"UserPersistenceImpl.fetchByC_FID(long, long, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -5077,7 +5297,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_FID, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_FID, finderArgs);
 
 				throw processException(e);
 			}
@@ -5104,6 +5325,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_FID(long companyId, long facebookId)
 		throws NoSuchUserException {
+
 		User user = findByC_FID(companyId, facebookId);
 
 		return remove(user);
@@ -5120,10 +5342,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_FID(long companyId, long facebookId) {
 		FinderPath finderPath = _finderPathCountByC_FID;
 
-		Object[] finderArgs = new Object[] { companyId, facebookId };
+		Object[] finderArgs = new Object[] {companyId, facebookId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5166,8 +5388,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_FID_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_FID_FACEBOOKID_2 = "user.facebookId = ?";
+	private static final String _FINDER_COLUMN_C_FID_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_FID_FACEBOOKID_2 =
+		"user.facebookId = ?";
+
 	private FinderPath _finderPathFetchByC_GUID;
 	private FinderPath _finderPathCountByC_GUID;
 
@@ -5182,6 +5408,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_GUID(long companyId, String googleUserId)
 		throws NoSuchUserException {
+
 		User user = fetchByC_GUID(companyId, googleUserId);
 
 		if (user == null) {
@@ -5228,24 +5455,26 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_GUID(long companyId, String googleUserId,
-		boolean retrieveFromCache) {
+	public User fetchByC_GUID(
+		long companyId, String googleUserId, boolean retrieveFromCache) {
+
 		googleUserId = Objects.toString(googleUserId, "");
 
-		Object[] finderArgs = new Object[] { companyId, googleUserId };
+		Object[] finderArgs = new Object[] {companyId, googleUserId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_GUID,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_GUID, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Objects.equals(googleUserId, user.getGoogleUserId())) {
+				!Objects.equals(googleUserId, user.getGoogleUserId())) {
+
 				result = null;
 			}
 		}
@@ -5288,8 +5517,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_GUID,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_GUID, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -5298,8 +5527,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"UserPersistenceImpl.fetchByC_GUID(long, String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -5311,8 +5540,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_GUID,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_GUID, finderArgs);
 
 				throw processException(e);
 			}
@@ -5339,6 +5568,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_GUID(long companyId, String googleUserId)
 		throws NoSuchUserException {
+
 		User user = findByC_GUID(companyId, googleUserId);
 
 		return remove(user);
@@ -5357,10 +5587,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByC_GUID;
 
-		Object[] finderArgs = new Object[] { companyId, googleUserId };
+		Object[] finderArgs = new Object[] {companyId, googleUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5414,9 +5644,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_GUID_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_2 = "user.googleUserId = ?";
-	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_3 = "(user.googleUserId IS NULL OR user.googleUserId = '')";
+	private static final String _FINDER_COLUMN_C_GUID_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_2 =
+		"user.googleUserId = ?";
+
+	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_3 =
+		"(user.googleUserId IS NULL OR user.googleUserId = '')";
+
 	private FinderPath _finderPathFetchByC_O;
 	private FinderPath _finderPathCountByC_O;
 
@@ -5431,6 +5667,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_O(long companyId, String openId)
 		throws NoSuchUserException {
+
 		User user = fetchByC_O(companyId, openId);
 
 		if (user == null) {
@@ -5477,24 +5714,26 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_O(long companyId, String openId,
-		boolean retrieveFromCache) {
+	public User fetchByC_O(
+		long companyId, String openId, boolean retrieveFromCache) {
+
 		openId = Objects.toString(openId, "");
 
-		Object[] finderArgs = new Object[] { companyId, openId };
+		Object[] finderArgs = new Object[] {companyId, openId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_O,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_O, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Objects.equals(openId, user.getOpenId())) {
+				!Objects.equals(openId, user.getOpenId())) {
+
 				result = null;
 			}
 		}
@@ -5537,8 +5776,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_O,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_O, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -5547,8 +5786,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"UserPersistenceImpl.fetchByC_O(long, String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -5587,6 +5826,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_O(long companyId, String openId)
 		throws NoSuchUserException {
+
 		User user = findByC_O(companyId, openId);
 
 		return remove(user);
@@ -5605,10 +5845,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByC_O;
 
-		Object[] finderArgs = new Object[] { companyId, openId };
+		Object[] finderArgs = new Object[] {companyId, openId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5662,9 +5902,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_O_COMPANYID_2 = "user.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_O_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
 	private static final String _FINDER_COLUMN_C_O_OPENID_2 = "user.openId = ?";
-	private static final String _FINDER_COLUMN_C_O_OPENID_3 = "(user.openId IS NULL OR user.openId = '')";
+
+	private static final String _FINDER_COLUMN_C_O_OPENID_3 =
+		"(user.openId IS NULL OR user.openId = '')";
+
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
 	private FinderPath _finderPathCountByC_S;
@@ -5678,8 +5923,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public List<User> findByC_S(long companyId, int status) {
-		return findByC_S(companyId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_S(
+			companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -5696,7 +5941,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByC_S(long companyId, int status, int start, int end) {
+	public List<User> findByC_S(
+		long companyId, int status, int start, int end) {
+
 		return findByC_S(companyId, status, start, end, null);
 	}
 
@@ -5715,9 +5962,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_S(long companyId, int status, int start, int end,
+	public List<User> findByC_S(
+		long companyId, int status, int start, int end,
 		OrderByComparator<User> orderByComparator) {
-		return findByC_S(companyId, status, start, end, orderByComparator, true);
+
+		return findByC_S(
+			companyId, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -5736,37 +5986,39 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_S(long companyId, int status, int start, int end,
+	public List<User> findByC_S(
+		long companyId, int status, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_S;
-			finderArgs = new Object[] { companyId, status };
+			finderArgs = new Object[] {companyId, status};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
-					companyId, status,
-					
-					start, end, orderByComparator
-				};
+				companyId, status, start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							(status != user.getStatus())) {
+						(status != user.getStatus())) {
+
 						list = null;
 
 						break;
@@ -5779,8 +6031,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -5793,11 +6045,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5817,16 +6068,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -5856,8 +6107,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_S_First(long companyId, int status,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByC_S_First(
+			long companyId, int status,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByC_S_First(companyId, status, orderByComparator);
 
 		if (user != null) {
@@ -5888,8 +6142,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_S_First(long companyId, int status,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByC_S_First(
+		long companyId, int status, OrderByComparator<User> orderByComparator) {
+
 		List<User> list = findByC_S(companyId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5909,8 +6164,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_S_Last(long companyId, int status,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User findByC_S_Last(
+			long companyId, int status,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = fetchByC_S_Last(companyId, status, orderByComparator);
 
 		if (user != null) {
@@ -5941,16 +6199,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_S_Last(long companyId, int status,
-		OrderByComparator<User> orderByComparator) {
+	public User fetchByC_S_Last(
+		long companyId, int status, OrderByComparator<User> orderByComparator) {
+
 		int count = countByC_S(companyId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByC_S(companyId, status, count - 1, count,
-				orderByComparator);
+		List<User> list = findByC_S(
+			companyId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5970,9 +6229,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByC_S_PrevAndNext(long userId, long companyId,
-		int status, OrderByComparator<User> orderByComparator)
+	public User[] findByC_S_PrevAndNext(
+			long userId, long companyId, int status,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
+
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -5982,13 +6243,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByC_S_PrevAndNext(session, user, companyId, status,
-					orderByComparator, true);
+			array[0] = getByC_S_PrevAndNext(
+				session, user, companyId, status, orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByC_S_PrevAndNext(session, user, companyId, status,
-					orderByComparator, false);
+			array[2] = getByC_S_PrevAndNext(
+				session, user, companyId, status, orderByComparator, false);
 
 			return array;
 		}
@@ -6000,14 +6261,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByC_S_PrevAndNext(Session session, User user,
-		long companyId, int status, OrderByComparator<User> orderByComparator,
-		boolean previous) {
+	protected User getByC_S_PrevAndNext(
+		Session session, User user, long companyId, int status,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -6021,7 +6283,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		query.append(_FINDER_COLUMN_C_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -6093,8 +6356,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -6117,8 +6381,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeByC_S(long companyId, int status) {
-		for (User user : findByC_S(companyId, status, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (User user :
+				findByC_S(
+					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(user);
 		}
 	}
@@ -6134,10 +6401,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_S(long companyId, int status) {
 		FinderPath finderPath = _finderPathCountByC_S;
 
-		Object[] finderArgs = new Object[] { companyId, status };
+		Object[] finderArgs = new Object[] {companyId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6180,8 +6447,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "user.status = ? AND user.defaultUser = [$FALSE$]";
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
+		"user.status = ? AND user.defaultUser = [$FALSE$]";
+
 	private FinderPath _finderPathWithPaginationFindByC_CD_MD;
 	private FinderPath _finderPathWithoutPaginationFindByC_CD_MD;
 	private FinderPath _finderPathCountByC_CD_MD;
@@ -6195,10 +6466,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching users
 	 */
 	@Override
-	public List<User> findByC_CD_MD(long companyId, Date createDate,
-		Date modifiedDate) {
-		return findByC_CD_MD(companyId, createDate, modifiedDate,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<User> findByC_CD_MD(
+		long companyId, Date createDate, Date modifiedDate) {
+
+		return findByC_CD_MD(
+			companyId, createDate, modifiedDate, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -6216,10 +6489,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByC_CD_MD(long companyId, Date createDate,
-		Date modifiedDate, int start, int end) {
-		return findByC_CD_MD(companyId, createDate, modifiedDate, start, end,
-			null);
+	public List<User> findByC_CD_MD(
+		long companyId, Date createDate, Date modifiedDate, int start,
+		int end) {
+
+		return findByC_CD_MD(
+			companyId, createDate, modifiedDate, start, end, null);
 	}
 
 	/**
@@ -6238,11 +6513,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_CD_MD(long companyId, Date createDate,
-		Date modifiedDate, int start, int end,
+	public List<User> findByC_CD_MD(
+		long companyId, Date createDate, Date modifiedDate, int start, int end,
 		OrderByComparator<User> orderByComparator) {
-		return findByC_CD_MD(companyId, createDate, modifiedDate, start, end,
-			orderByComparator, true);
+
+		return findByC_CD_MD(
+			companyId, createDate, modifiedDate, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -6262,41 +6539,43 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_CD_MD(long companyId, Date createDate,
-		Date modifiedDate, int start, int end,
+	public List<User> findByC_CD_MD(
+		long companyId, Date createDate, Date modifiedDate, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_CD_MD;
 			finderArgs = new Object[] {
-					companyId, _getTime(createDate), _getTime(modifiedDate)
-				};
+				companyId, _getTime(createDate), _getTime(modifiedDate)
+			};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_CD_MD;
 			finderArgs = new Object[] {
-					companyId, _getTime(createDate), _getTime(modifiedDate),
-					
-					start, end, orderByComparator
-				};
+				companyId, _getTime(createDate), _getTime(modifiedDate), start,
+				end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							!Objects.equals(createDate, user.getCreateDate()) ||
-							!Objects.equals(modifiedDate, user.getModifiedDate())) {
+						!Objects.equals(createDate, user.getCreateDate()) ||
+						!Objects.equals(modifiedDate, user.getModifiedDate())) {
+
 						list = null;
 
 						break;
@@ -6309,8 +6588,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -6343,11 +6622,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6373,16 +6651,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -6413,11 +6691,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_CD_MD_First(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator<User> orderByComparator)
+	public User findByC_CD_MD_First(
+			long companyId, Date createDate, Date modifiedDate,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
-		User user = fetchByC_CD_MD_First(companyId, createDate, modifiedDate,
-				orderByComparator);
+
+		User user = fetchByC_CD_MD_First(
+			companyId, createDate, modifiedDate, orderByComparator);
 
 		if (user != null) {
 			return user;
@@ -6451,10 +6731,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_CD_MD_First(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator<User> orderByComparator) {
-		List<User> list = findByC_CD_MD(companyId, createDate, modifiedDate, 0,
-				1, orderByComparator);
+	public User fetchByC_CD_MD_First(
+		long companyId, Date createDate, Date modifiedDate,
+		OrderByComparator<User> orderByComparator) {
+
+		List<User> list = findByC_CD_MD(
+			companyId, createDate, modifiedDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6474,11 +6756,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_CD_MD_Last(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator<User> orderByComparator)
+	public User findByC_CD_MD_Last(
+			long companyId, Date createDate, Date modifiedDate,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
-		User user = fetchByC_CD_MD_Last(companyId, createDate, modifiedDate,
-				orderByComparator);
+
+		User user = fetchByC_CD_MD_Last(
+			companyId, createDate, modifiedDate, orderByComparator);
 
 		if (user != null) {
 			return user;
@@ -6512,16 +6796,19 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_CD_MD_Last(long companyId, Date createDate,
-		Date modifiedDate, OrderByComparator<User> orderByComparator) {
+	public User fetchByC_CD_MD_Last(
+		long companyId, Date createDate, Date modifiedDate,
+		OrderByComparator<User> orderByComparator) {
+
 		int count = countByC_CD_MD(companyId, createDate, modifiedDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByC_CD_MD(companyId, createDate, modifiedDate,
-				count - 1, count, orderByComparator);
+		List<User> list = findByC_CD_MD(
+			companyId, createDate, modifiedDate, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -6542,9 +6829,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByC_CD_MD_PrevAndNext(long userId, long companyId,
-		Date createDate, Date modifiedDate,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User[] findByC_CD_MD_PrevAndNext(
+			long userId, long companyId, Date createDate, Date modifiedDate,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -6554,13 +6843,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByC_CD_MD_PrevAndNext(session, user, companyId,
-					createDate, modifiedDate, orderByComparator, true);
+			array[0] = getByC_CD_MD_PrevAndNext(
+				session, user, companyId, createDate, modifiedDate,
+				orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByC_CD_MD_PrevAndNext(session, user, companyId,
-					createDate, modifiedDate, orderByComparator, false);
+			array[2] = getByC_CD_MD_PrevAndNext(
+				session, user, companyId, createDate, modifiedDate,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -6572,14 +6863,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByC_CD_MD_PrevAndNext(Session session, User user,
-		long companyId, Date createDate, Date modifiedDate,
-		OrderByComparator<User> orderByComparator, boolean previous) {
+	protected User getByC_CD_MD_PrevAndNext(
+		Session session, User user, long companyId, Date createDate,
+		Date modifiedDate, OrderByComparator<User> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -6613,7 +6906,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -6691,8 +6985,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -6715,10 +7010,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param modifiedDate the modified date
 	 */
 	@Override
-	public void removeByC_CD_MD(long companyId, Date createDate,
-		Date modifiedDate) {
-		for (User user : findByC_CD_MD(companyId, createDate, modifiedDate,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByC_CD_MD(
+		long companyId, Date createDate, Date modifiedDate) {
+
+		for (User user :
+				findByC_CD_MD(
+					companyId, createDate, modifiedDate, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
 			remove(user);
 		}
 	}
@@ -6732,15 +7031,17 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the number of matching users
 	 */
 	@Override
-	public int countByC_CD_MD(long companyId, Date createDate, Date modifiedDate) {
+	public int countByC_CD_MD(
+		long companyId, Date createDate, Date modifiedDate) {
+
 		FinderPath finderPath = _finderPathCountByC_CD_MD;
 
 		Object[] finderArgs = new Object[] {
-				companyId, _getTime(createDate), _getTime(modifiedDate)
-			};
+			companyId, _getTime(createDate), _getTime(modifiedDate)
+		};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -6809,11 +7110,21 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_CD_MD_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_CD_MD_CREATEDATE_1 = "user.createDate IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_CD_MD_CREATEDATE_2 = "user.createDate = ? AND ";
-	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_1 = "user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$]";
-	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_2 = "user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
+	private static final String _FINDER_COLUMN_C_CD_MD_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_CD_MD_CREATEDATE_1 =
+		"user.createDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_C_CD_MD_CREATEDATE_2 =
+		"user.createDate = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_1 =
+		"user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_2 =
+		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
+
 	private FinderPath _finderPathWithPaginationFindByC_DU_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_DU_S;
 	private FinderPath _finderPathCountByC_DU_S;
@@ -6827,9 +7138,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching users
 	 */
 	@Override
-	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
-		int status) {
-		return findByC_DU_S(companyId, defaultUser, status, QueryUtil.ALL_POS,
+	public List<User> findByC_DU_S(
+		long companyId, boolean defaultUser, int status) {
+
+		return findByC_DU_S(
+			companyId, defaultUser, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -6848,8 +7161,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of matching users
 	 */
 	@Override
-	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
-		int status, int start, int end) {
+	public List<User> findByC_DU_S(
+		long companyId, boolean defaultUser, int status, int start, int end) {
+
 		return findByC_DU_S(companyId, defaultUser, status, start, end, null);
 	}
 
@@ -6869,11 +7183,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
-		int status, int start, int end,
+	public List<User> findByC_DU_S(
+		long companyId, boolean defaultUser, int status, int start, int end,
 		OrderByComparator<User> orderByComparator) {
-		return findByC_DU_S(companyId, defaultUser, status, start, end,
-			orderByComparator, true);
+
+		return findByC_DU_S(
+			companyId, defaultUser, status, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -6893,39 +7209,40 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of matching users
 	 */
 	@Override
-	public List<User> findByC_DU_S(long companyId, boolean defaultUser,
-		int status, int start, int end,
+	public List<User> findByC_DU_S(
+		long companyId, boolean defaultUser, int status, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_DU_S;
-			finderArgs = new Object[] { companyId, defaultUser, status };
+			finderArgs = new Object[] {companyId, defaultUser, status};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_DU_S;
 			finderArgs = new Object[] {
-					companyId, defaultUser, status,
-					
-					start, end, orderByComparator
-				};
+				companyId, defaultUser, status, start, end, orderByComparator
+			};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							(defaultUser != user.isDefaultUser()) ||
-							(status != user.getStatus())) {
+						(defaultUser != user.isDefaultUser()) ||
+						(status != user.getStatus())) {
+
 						list = null;
 
 						break;
@@ -6938,8 +7255,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -6954,11 +7271,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			query.append(_FINDER_COLUMN_C_DU_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(UserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6980,16 +7296,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -7020,11 +7336,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_DU_S_First(long companyId, boolean defaultUser,
-		int status, OrderByComparator<User> orderByComparator)
+	public User findByC_DU_S_First(
+			long companyId, boolean defaultUser, int status,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
-		User user = fetchByC_DU_S_First(companyId, defaultUser, status,
-				orderByComparator);
+
+		User user = fetchByC_DU_S_First(
+			companyId, defaultUser, status, orderByComparator);
 
 		if (user != null) {
 			return user;
@@ -7058,10 +7376,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_DU_S_First(long companyId, boolean defaultUser,
-		int status, OrderByComparator<User> orderByComparator) {
-		List<User> list = findByC_DU_S(companyId, defaultUser, status, 0, 1,
-				orderByComparator);
+	public User fetchByC_DU_S_First(
+		long companyId, boolean defaultUser, int status,
+		OrderByComparator<User> orderByComparator) {
+
+		List<User> list = findByC_DU_S(
+			companyId, defaultUser, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7081,11 +7401,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
 	@Override
-	public User findByC_DU_S_Last(long companyId, boolean defaultUser,
-		int status, OrderByComparator<User> orderByComparator)
+	public User findByC_DU_S_Last(
+			long companyId, boolean defaultUser, int status,
+			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
-		User user = fetchByC_DU_S_Last(companyId, defaultUser, status,
-				orderByComparator);
+
+		User user = fetchByC_DU_S_Last(
+			companyId, defaultUser, status, orderByComparator);
 
 		if (user != null) {
 			return user;
@@ -7119,16 +7441,19 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_DU_S_Last(long companyId, boolean defaultUser,
-		int status, OrderByComparator<User> orderByComparator) {
+	public User fetchByC_DU_S_Last(
+		long companyId, boolean defaultUser, int status,
+		OrderByComparator<User> orderByComparator) {
+
 		int count = countByC_DU_S(companyId, defaultUser, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<User> list = findByC_DU_S(companyId, defaultUser, status,
-				count - 1, count, orderByComparator);
+		List<User> list = findByC_DU_S(
+			companyId, defaultUser, status, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7149,9 +7474,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @throws NoSuchUserException if a user with the primary key could not be found
 	 */
 	@Override
-	public User[] findByC_DU_S_PrevAndNext(long userId, long companyId,
-		boolean defaultUser, int status,
-		OrderByComparator<User> orderByComparator) throws NoSuchUserException {
+	public User[] findByC_DU_S_PrevAndNext(
+			long userId, long companyId, boolean defaultUser, int status,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
 		User user = findByPrimaryKey(userId);
 
 		Session session = null;
@@ -7161,13 +7488,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			User[] array = new UserImpl[3];
 
-			array[0] = getByC_DU_S_PrevAndNext(session, user, companyId,
-					defaultUser, status, orderByComparator, true);
+			array[0] = getByC_DU_S_PrevAndNext(
+				session, user, companyId, defaultUser, status,
+				orderByComparator, true);
 
 			array[1] = user;
 
-			array[2] = getByC_DU_S_PrevAndNext(session, user, companyId,
-					defaultUser, status, orderByComparator, false);
+			array[2] = getByC_DU_S_PrevAndNext(
+				session, user, companyId, defaultUser, status,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -7179,14 +7508,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
-	protected User getByC_DU_S_PrevAndNext(Session session, User user,
-		long companyId, boolean defaultUser, int status,
-		OrderByComparator<User> orderByComparator, boolean previous) {
+	protected User getByC_DU_S_PrevAndNext(
+		Session session, User user, long companyId, boolean defaultUser,
+		int status, OrderByComparator<User> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -7202,7 +7533,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		query.append(_FINDER_COLUMN_C_DU_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -7276,8 +7608,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					user)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -7300,9 +7633,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param status the status
 	 */
 	@Override
-	public void removeByC_DU_S(long companyId, boolean defaultUser, int status) {
-		for (User user : findByC_DU_S(companyId, defaultUser, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByC_DU_S(
+		long companyId, boolean defaultUser, int status) {
+
+		for (User user :
+				findByC_DU_S(
+					companyId, defaultUser, status, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
 			remove(user);
 		}
 	}
@@ -7319,10 +7657,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_DU_S(long companyId, boolean defaultUser, int status) {
 		FinderPath finderPath = _finderPathCountByC_DU_S;
 
-		Object[] finderArgs = new Object[] { companyId, defaultUser, status };
+		Object[] finderArgs = new Object[] {companyId, defaultUser, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -7369,9 +7707,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_DU_S_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_DU_S_DEFAULTUSER_2 = "user.defaultUser = ? AND ";
-	private static final String _FINDER_COLUMN_C_DU_S_STATUS_2 = "user.status = ?";
+	private static final String _FINDER_COLUMN_C_DU_S_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_DU_S_DEFAULTUSER_2 =
+		"user.defaultUser = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_DU_S_STATUS_2 =
+		"user.status = ?";
+
 	private FinderPath _finderPathFetchByC_ERC;
 	private FinderPath _finderPathCountByC_ERC;
 
@@ -7386,6 +7730,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByC_ERC(long companyId, String externalReferenceCode)
 		throws NoSuchUserException {
+
 		User user = fetchByC_ERC(companyId, externalReferenceCode);
 
 		if (user == null) {
@@ -7432,25 +7777,28 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchByC_ERC(long companyId, String externalReferenceCode,
+	public User fetchByC_ERC(
+		long companyId, String externalReferenceCode,
 		boolean retrieveFromCache) {
+
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		Object[] finderArgs = new Object[] { companyId, externalReferenceCode };
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_ERC,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_ERC, finderArgs, this);
 		}
 
 		if (result instanceof User) {
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Objects.equals(externalReferenceCode,
-						user.getExternalReferenceCode())) {
+				!Objects.equals(
+					externalReferenceCode, user.getExternalReferenceCode())) {
+
 				result = null;
 			}
 		}
@@ -7493,8 +7841,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				List<User> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_ERC,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_ERC, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -7503,8 +7851,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"UserPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
@@ -7516,7 +7864,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_ERC, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_ERC, finderArgs);
 
 				throw processException(e);
 			}
@@ -7543,6 +7892,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User removeByC_ERC(long companyId, String externalReferenceCode)
 		throws NoSuchUserException {
+
 		User user = findByC_ERC(companyId, externalReferenceCode);
 
 		return remove(user);
@@ -7561,10 +7911,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		FinderPath finderPath = _finderPathCountByC_ERC;
 
-		Object[] finderArgs = new Object[] { companyId, externalReferenceCode };
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -7618,9 +7968,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 = "user.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 = "user.externalReferenceCode = ?";
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 = "(user.externalReferenceCode IS NULL OR user.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
+		"user.externalReferenceCode = ?";
+
+	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
+		"(user.externalReferenceCode IS NULL OR user.externalReferenceCode = '')";
 
 	public UserPersistenceImpl() {
 		setModelClass(User.class);
@@ -7637,38 +7992,49 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void cacheResult(User user) {
-		EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserImpl.class, user.getPrimaryKey(), user);
+		EntityCacheUtil.putResult(
+			UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
+			user.getPrimaryKey(), user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByContactId,
-			new Object[] { user.getContactId() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByContactId, new Object[] {user.getContactId()},
+			user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByPortraitId,
-			new Object[] { user.getPortraitId() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByPortraitId, new Object[] {user.getPortraitId()},
+			user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_U,
-			new Object[] { user.getCompanyId(), user.getUserId() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_U,
+			new Object[] {user.getCompanyId(), user.getUserId()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_DU,
-			new Object[] { user.getCompanyId(), user.isDefaultUser() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_DU,
+			new Object[] {user.getCompanyId(), user.isDefaultUser()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_SN,
-			new Object[] { user.getCompanyId(), user.getScreenName() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_SN,
+			new Object[] {user.getCompanyId(), user.getScreenName()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_EA,
-			new Object[] { user.getCompanyId(), user.getEmailAddress() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_EA,
+			new Object[] {user.getCompanyId(), user.getEmailAddress()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_FID,
-			new Object[] { user.getCompanyId(), user.getFacebookId() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_FID,
+			new Object[] {user.getCompanyId(), user.getFacebookId()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_GUID,
-			new Object[] { user.getCompanyId(), user.getGoogleUserId() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_GUID,
+			new Object[] {user.getCompanyId(), user.getGoogleUserId()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_O,
-			new Object[] { user.getCompanyId(), user.getOpenId() }, user);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_O,
+			new Object[] {user.getCompanyId(), user.getOpenId()}, user);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_ERC,
-			new Object[] { user.getCompanyId(), user.getExternalReferenceCode() },
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_ERC,
+			new Object[] {user.getCompanyId(), user.getExternalReferenceCode()},
 			user);
 
 		user.resetOriginalValues();
@@ -7682,8 +8048,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void cacheResult(List<User> users) {
 		for (User user : users) {
-			if (EntityCacheUtil.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-						UserImpl.class, user.getPrimaryKey()) == null) {
+			if (EntityCacheUtil.getResult(
+					UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
+					user.getPrimaryKey()) == null) {
+
 				cacheResult(user);
 			}
 			else {
@@ -7717,8 +8085,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void clearCache(User user) {
-		EntityCacheUtil.removeResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserImpl.class, user.getPrimaryKey());
+		EntityCacheUtil.removeResult(
+			UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
+			user.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -7732,292 +8101,304 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (User user : users) {
-			EntityCacheUtil.removeResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserImpl.class, user.getPrimaryKey());
+			EntityCacheUtil.removeResult(
+				UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
+				user.getPrimaryKey());
 
 			clearUniqueFindersCache((UserModelImpl)user, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(UserModelImpl userModelImpl) {
-		Object[] args = new Object[] { userModelImpl.getContactId() };
+		Object[] args = new Object[] {userModelImpl.getContactId()};
 
-		FinderCacheUtil.putResult(_finderPathCountByContactId, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByContactId, args,
-			userModelImpl, false);
+		FinderCacheUtil.putResult(
+			_finderPathCountByContactId, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByContactId, args, userModelImpl, false);
 
-		args = new Object[] { userModelImpl.getPortraitId() };
+		args = new Object[] {userModelImpl.getPortraitId()};
 
-		FinderCacheUtil.putResult(_finderPathCountByPortraitId, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByPortraitId, args,
-			userModelImpl, false);
+		FinderCacheUtil.putResult(
+			_finderPathCountByPortraitId, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByPortraitId, args, userModelImpl, false);
 
 		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.getUserId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_U, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_U, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.isDefaultUser()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_DU, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_DU, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.getScreenName()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_SN, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_SN, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.getEmailAddress()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_EA, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_EA, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.getFacebookId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_FID, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_FID, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.getGoogleUserId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_GUID, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_GUID, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.getOpenId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_O, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_O, args, userModelImpl, false);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(),
+			userModelImpl.getExternalReferenceCode()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_ERC, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_ERC, args, userModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		UserModelImpl userModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {userModelImpl.getContactId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByContactId, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByContactId, args);
+		}
+
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByContactId.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {userModelImpl.getOriginalContactId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByContactId, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByContactId, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {userModelImpl.getPortraitId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByPortraitId, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByPortraitId, args);
+		}
+
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByPortraitId.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalPortraitId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByPortraitId, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByPortraitId, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getUserId()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_U, args, Long.valueOf(1),
-			false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_U, args, userModelImpl,
-			false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_U, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_U, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_U.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalUserId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_U, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_U, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.isDefaultUser()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_DU, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_DU, args, userModelImpl,
-			false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_DU, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_DU, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_DU.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalDefaultUser()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_DU, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_DU, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getScreenName()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_SN, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_SN, args, userModelImpl,
-			false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_SN, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_SN, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_SN.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalScreenName()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_SN, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_SN, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getEmailAddress()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_EA, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_EA, args, userModelImpl,
-			false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_EA, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_EA, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_EA.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalEmailAddress()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_EA, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_EA, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getFacebookId()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_FID, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_FID, args, userModelImpl,
-			false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_FID, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_FID, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_FID.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalFacebookId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_FID, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_FID, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getGoogleUserId()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_GUID, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_GUID, args,
-			userModelImpl, false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_GUID, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_GUID, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_GUID.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalGoogleUserId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_GUID, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_GUID, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getOpenId()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_O, args, Long.valueOf(1),
-			false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_O, args, userModelImpl,
-			false);
+			FinderCacheUtil.removeResult(_finderPathCountByC_O, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_O, args);
+		}
 
-		args = new Object[] {
+		if ((userModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_O.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalOpenId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_O, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_O, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				userModelImpl.getCompanyId(),
 				userModelImpl.getExternalReferenceCode()
 			};
-
-		FinderCacheUtil.putResult(_finderPathCountByC_ERC, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_ERC, args, userModelImpl,
-			false);
-	}
-
-	protected void clearUniqueFindersCache(UserModelImpl userModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] { userModelImpl.getContactId() };
-
-			FinderCacheUtil.removeResult(_finderPathCountByContactId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByContactId, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByContactId.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] { userModelImpl.getOriginalContactId() };
-
-			FinderCacheUtil.removeResult(_finderPathCountByContactId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByContactId, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] { userModelImpl.getPortraitId() };
-
-			FinderCacheUtil.removeResult(_finderPathCountByPortraitId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByPortraitId, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByPortraitId.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] { userModelImpl.getOriginalPortraitId() };
-
-			FinderCacheUtil.removeResult(_finderPathCountByPortraitId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByPortraitId, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.getUserId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_U, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_U, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_U.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalUserId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_U, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_U, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.isDefaultUser()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_DU, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_DU, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_DU.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalDefaultUser()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_DU, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_DU, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.getScreenName()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_SN, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_SN, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_SN.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalScreenName()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_SN, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_SN, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(),
-					userModelImpl.getEmailAddress()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_EA, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_EA, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_EA.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalEmailAddress()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_EA, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_EA, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.getFacebookId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_FID, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_FID, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_FID.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalFacebookId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_FID, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_FID, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(),
-					userModelImpl.getGoogleUserId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_GUID, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_GUID, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_GUID.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalGoogleUserId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_GUID, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_GUID, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(), userModelImpl.getOpenId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_O, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_O, args);
-		}
-
-		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_O.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalOpenId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_O, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_O, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					userModelImpl.getCompanyId(),
-					userModelImpl.getExternalReferenceCode()
-				};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_ERC, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_ERC, args);
 		}
 
 		if ((userModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
+			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					userModelImpl.getOriginalCompanyId(),
-					userModelImpl.getOriginalExternalReferenceCode()
-				};
+				userModelImpl.getOriginalCompanyId(),
+				userModelImpl.getOriginalExternalReferenceCode()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_ERC, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_ERC, args);
@@ -8079,8 +8460,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchUserException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(user);
@@ -8098,15 +8479,20 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	@Override
 	protected User removeImpl(User user) {
-		userToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
+		userToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(
+			user.getPrimaryKey());
 
-		userToOrganizationTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
+		userToOrganizationTableMapper.deleteLeftPrimaryKeyTableMappings(
+			user.getPrimaryKey());
 
-		userToRoleTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
+		userToRoleTableMapper.deleteLeftPrimaryKeyTableMappings(
+			user.getPrimaryKey());
 
-		userToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
+		userToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(
+			user.getPrimaryKey());
 
-		userToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
+		userToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(
+			user.getPrimaryKey());
 
 		Session session = null;
 
@@ -8114,7 +8500,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			session = openSession();
 
 			if (!session.contains(user)) {
-				user = (User)session.get(UserImpl.class, user.getPrimaryKeyObj());
+				user = (User)session.get(
+					UserImpl.class, user.getPrimaryKeyObj());
 			}
 
 			if (user != null) {
@@ -8147,12 +8534,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in user proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom User implementation " +
-				user.getClass());
+					user.getClass());
 		}
 
 		UserModelImpl userModelImpl = (UserModelImpl)user;
@@ -8163,7 +8550,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			user.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -8209,266 +8597,282 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!UserModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { userModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {userModelImpl.getUuid()};
 
 			FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid,
-				args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				userModelImpl.getUuid(), userModelImpl.getCompanyId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {userModelImpl.getCompanyId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByCompanyId, args);
+
+			args = new Object[] {userModelImpl.getEmailAddress()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByEmailAddress, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByEmailAddress, args);
+
+			args = new Object[] {
+				userModelImpl.getCompanyId(), userModelImpl.getCreateDate()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_CD, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_CD, args);
+
+			args = new Object[] {
+				userModelImpl.getCompanyId(), userModelImpl.getModifiedDate()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_MD, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_MD, args);
+
+			args = new Object[] {
+				userModelImpl.getCompanyId(), userModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_S, args);
+
+			args = new Object[] {
+				userModelImpl.getCompanyId(), userModelImpl.getCreateDate(),
+				userModelImpl.getModifiedDate()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_CD_MD, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_CD_MD, args);
+
+			args = new Object[] {
+				userModelImpl.getCompanyId(), userModelImpl.isDefaultUser(),
+				userModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_DU_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_DU_S, args);
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {userModelImpl.getOriginalUuid()};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {userModelImpl.getUuid()};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalUuid(),
+					userModelImpl.getOriginalCompanyId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					userModelImpl.getUuid(), userModelImpl.getCompanyId()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+			}
 
-			args = new Object[] { userModelImpl.getCompanyId() };
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCompanyId.
+					 getColumnBitmask()) != 0) {
 
-			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-				args);
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalCompanyId()
+				};
 
-			args = new Object[] { userModelImpl.getEmailAddress() };
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
 
-			FinderCacheUtil.removeResult(_finderPathCountByEmailAddress, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByEmailAddress,
-				args);
+				args = new Object[] {userModelImpl.getCompanyId()};
 
-			args = new Object[] {
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByEmailAddress.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalEmailAddress()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByEmailAddress, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByEmailAddress, args);
+
+				args = new Object[] {userModelImpl.getEmailAddress()};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByEmailAddress, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByEmailAddress, args);
+			}
+
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_CD.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalCompanyId(),
+					userModelImpl.getOriginalCreateDate()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_CD, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_CD, args);
+
+				args = new Object[] {
 					userModelImpl.getCompanyId(), userModelImpl.getCreateDate()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_CD, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_CD,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByC_CD, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_CD, args);
+			}
 
-			args = new Object[] {
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_MD.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalCompanyId(),
+					userModelImpl.getOriginalModifiedDate()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_MD, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_MD, args);
+
+				args = new Object[] {
 					userModelImpl.getCompanyId(),
 					userModelImpl.getModifiedDate()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_MD, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_MD,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByC_MD, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_MD, args);
+			}
 
-			args = new Object[] {
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_S.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalCompanyId(),
+					userModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_S, args);
+
+				args = new Object[] {
 					userModelImpl.getCompanyId(), userModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_S,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_S, args);
+			}
 
-			args = new Object[] {
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_CD_MD.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalCompanyId(),
+					userModelImpl.getOriginalCreateDate(),
+					userModelImpl.getOriginalModifiedDate()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_CD_MD, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_CD_MD, args);
+
+				args = new Object[] {
 					userModelImpl.getCompanyId(), userModelImpl.getCreateDate(),
 					userModelImpl.getModifiedDate()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_CD_MD, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_CD_MD,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByC_CD_MD, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_CD_MD, args);
+			}
 
-			args = new Object[] {
+			if ((userModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_DU_S.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					userModelImpl.getOriginalCompanyId(),
+					userModelImpl.getOriginalDefaultUser(),
+					userModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_DU_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_DU_S, args);
+
+				args = new Object[] {
 					userModelImpl.getCompanyId(), userModelImpl.isDefaultUser(),
 					userModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_DU_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_DU_S,
-				args);
-
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { userModelImpl.getOriginalUuid() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-
-				args = new Object[] { userModelImpl.getUuid() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalUuid(),
-						userModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-
-				args = new Object[] {
-						userModelImpl.getUuid(), userModelImpl.getCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
-
-				args = new Object[] { userModelImpl.getCompanyId() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByEmailAddress.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalEmailAddress()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByEmailAddress,
-					args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByEmailAddress,
-					args);
-
-				args = new Object[] { userModelImpl.getEmailAddress() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByEmailAddress,
-					args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByEmailAddress,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_CD.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalCompanyId(),
-						userModelImpl.getOriginalCreateDate()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_CD, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_CD,
-					args);
-
-				args = new Object[] {
-						userModelImpl.getCompanyId(),
-						userModelImpl.getCreateDate()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_CD, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_CD,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_MD.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalCompanyId(),
-						userModelImpl.getOriginalModifiedDate()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_MD, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_MD,
-					args);
-
-				args = new Object[] {
-						userModelImpl.getCompanyId(),
-						userModelImpl.getModifiedDate()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_MD, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_MD,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalCompanyId(),
-						userModelImpl.getOriginalStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_S,
-					args);
-
-				args = new Object[] {
-						userModelImpl.getCompanyId(), userModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_S,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_CD_MD.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalCompanyId(),
-						userModelImpl.getOriginalCreateDate(),
-						userModelImpl.getOriginalModifiedDate()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_CD_MD, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_CD_MD,
-					args);
-
-				args = new Object[] {
-						userModelImpl.getCompanyId(),
-						userModelImpl.getCreateDate(),
-						userModelImpl.getModifiedDate()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_CD_MD, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_CD_MD,
-					args);
-			}
-
-			if ((userModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_DU_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userModelImpl.getOriginalCompanyId(),
-						userModelImpl.getOriginalDefaultUser(),
-						userModelImpl.getOriginalStatus()
-					};
-
 				FinderCacheUtil.removeResult(_finderPathCountByC_DU_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_DU_S,
-					args);
-
-				args = new Object[] {
-						userModelImpl.getCompanyId(),
-						userModelImpl.isDefaultUser(), userModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_DU_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_DU_S,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_DU_S, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-			UserImpl.class, user.getPrimaryKey(), user, false);
+		EntityCacheUtil.putResult(
+			UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
+			user.getPrimaryKey(), user, false);
 
 		clearUniqueFindersCache(userModelImpl, false);
 		cacheUniqueFindersCache(userModelImpl);
@@ -8488,6 +8892,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public User findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchUserException {
+
 		User user = fetchByPrimaryKey(primaryKey);
 
 		if (user == null) {
@@ -8495,8 +8900,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchUserException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchUserException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return user;
@@ -8564,8 +8969,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of users
 	 */
 	@Override
-	public List<User> findAll(int start, int end,
-		OrderByComparator<User> orderByComparator) {
+	public List<User> findAll(
+		int start, int end, OrderByComparator<User> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -8583,28 +8989,31 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of users
 	 */
 	@Override
-	public List<User> findAll(int start, int end,
-		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+	public List<User> findAll(
+		int start, int end, OrderByComparator<User> orderByComparator,
+		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<User> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<User>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -8612,13 +9021,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_USER);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -8638,16 +9047,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<User>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<User>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -8685,8 +9094,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -8698,12 +9107,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -8752,8 +9161,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of groups associated with the user
 	 */
 	@Override
-	public List<com.liferay.portal.kernel.model.Group> getGroups(long pk,
-		int start, int end) {
+	public List<com.liferay.portal.kernel.model.Group> getGroups(
+		long pk, int start, int end) {
+
 		return getGroups(pk, start, end, null);
 	}
 
@@ -8771,11 +9181,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of groups associated with the user
 	 */
 	@Override
-	public List<com.liferay.portal.kernel.model.Group> getGroups(long pk,
-		int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.Group> orderByComparator) {
-		return userToGroupTableMapper.getRightBaseModels(pk, start, end,
-			orderByComparator);
+	public List<com.liferay.portal.kernel.model.Group> getGroups(
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portal.kernel.model.Group>
+			orderByComparator) {
+
+		return userToGroupTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -8830,12 +9242,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToGroupTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, groupPK);
+			userToGroupTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, groupPK);
 		}
 		else {
-			userToGroupTableMapper.addTableMapping(user.getCompanyId(), pk,
-				groupPK);
+			userToGroupTableMapper.addTableMapping(
+				user.getCompanyId(), pk, groupPK);
 		}
 	}
 
@@ -8850,12 +9262,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToGroupTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, group.getPrimaryKey());
+			userToGroupTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, group.getPrimaryKey());
 		}
 		else {
-			userToGroupTableMapper.addTableMapping(user.getCompanyId(), pk,
-				group.getPrimaryKey());
+			userToGroupTableMapper.addTableMapping(
+				user.getCompanyId(), pk, group.getPrimaryKey());
 		}
 	}
 
@@ -8888,10 +9300,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param groups the groups
 	 */
 	@Override
-	public void addGroups(long pk,
-		List<com.liferay.portal.kernel.model.Group> groups) {
-		addGroups(pk,
-			ListUtil.toLongArray(groups,
+	public void addGroups(
+		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
+
+		addGroups(
+			pk,
+			ListUtil.toLongArray(
+				groups,
 				com.liferay.portal.kernel.model.Group.GROUP_ID_ACCESSOR));
 	}
 
@@ -8923,7 +9338,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param group the group
 	 */
 	@Override
-	public void removeGroup(long pk, com.liferay.portal.kernel.model.Group group) {
+	public void removeGroup(
+		long pk, com.liferay.portal.kernel.model.Group group) {
+
 		userToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
 	}
 
@@ -8945,10 +9362,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param groups the groups
 	 */
 	@Override
-	public void removeGroups(long pk,
-		List<com.liferay.portal.kernel.model.Group> groups) {
-		removeGroups(pk,
-			ListUtil.toLongArray(groups,
+	public void removeGroups(
+		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
+
+		removeGroups(
+			pk,
+			ListUtil.toLongArray(
+				groups,
 				com.liferay.portal.kernel.model.Group.GROUP_ID_ACCESSOR));
 	}
 
@@ -8961,15 +9381,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setGroups(long pk, long[] groupPKs) {
 		Set<Long> newGroupPKsSet = SetUtil.fromArray(groupPKs);
-		Set<Long> oldGroupPKsSet = SetUtil.fromArray(userToGroupTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldGroupPKsSet = SetUtil.fromArray(
+			userToGroupTableMapper.getRightPrimaryKeys(pk));
 
 		Set<Long> removeGroupPKsSet = new HashSet<Long>(oldGroupPKsSet);
 
 		removeGroupPKsSet.removeAll(newGroupPKsSet);
 
-		userToGroupTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeGroupPKsSet));
+		userToGroupTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeGroupPKsSet));
 
 		newGroupPKsSet.removeAll(oldGroupPKsSet);
 
@@ -8984,8 +9404,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToGroupTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newGroupPKsSet));
+		userToGroupTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newGroupPKsSet));
 	}
 
 	/**
@@ -8995,8 +9415,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param groups the groups to be associated with the user
 	 */
 	@Override
-	public void setGroups(long pk,
-		List<com.liferay.portal.kernel.model.Group> groups) {
+	public void setGroups(
+		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
+
 		try {
 			long[] groupPKs = new long[groups.size()];
 
@@ -9035,6 +9456,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long pk) {
+
 		return getOrganizations(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -9053,6 +9475,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long pk, int start, int end) {
+
 		return getOrganizations(pk, start, end, null);
 	}
 
@@ -9072,9 +9495,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.Organization> orderByComparator) {
-		return userToOrganizationTableMapper.getRightBaseModels(pk, start, end,
-			orderByComparator);
+		OrderByComparator<com.liferay.portal.kernel.model.Organization>
+			orderByComparator) {
+
+		return userToOrganizationTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -9099,8 +9524,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public boolean containsOrganization(long pk, long organizationPK) {
-		return userToOrganizationTableMapper.containsTableMapping(pk,
-			organizationPK);
+		return userToOrganizationTableMapper.containsTableMapping(
+			pk, organizationPK);
 	}
 
 	/**
@@ -9130,12 +9555,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToOrganizationTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, organizationPK);
+			userToOrganizationTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, organizationPK);
 		}
 		else {
-			userToOrganizationTableMapper.addTableMapping(user.getCompanyId(),
-				pk, organizationPK);
+			userToOrganizationTableMapper.addTableMapping(
+				user.getCompanyId(), pk, organizationPK);
 		}
 	}
 
@@ -9146,17 +9571,19 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param organization the organization
 	 */
 	@Override
-	public void addOrganization(long pk,
-		com.liferay.portal.kernel.model.Organization organization) {
+	public void addOrganization(
+		long pk, com.liferay.portal.kernel.model.Organization organization) {
+
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToOrganizationTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, organization.getPrimaryKey());
+			userToOrganizationTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk,
+				organization.getPrimaryKey());
 		}
 		else {
-			userToOrganizationTableMapper.addTableMapping(user.getCompanyId(),
-				pk, organization.getPrimaryKey());
+			userToOrganizationTableMapper.addTableMapping(
+				user.getCompanyId(), pk, organization.getPrimaryKey());
 		}
 	}
 
@@ -9179,8 +9606,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToOrganizationTableMapper.addTableMappings(companyId, pk,
-			organizationPKs);
+		userToOrganizationTableMapper.addTableMappings(
+			companyId, pk, organizationPKs);
 	}
 
 	/**
@@ -9190,11 +9617,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param organizations the organizations
 	 */
 	@Override
-	public void addOrganizations(long pk,
+	public void addOrganizations(
+		long pk,
 		List<com.liferay.portal.kernel.model.Organization> organizations) {
-		addOrganizations(pk,
-			ListUtil.toLongArray(organizations,
-				com.liferay.portal.kernel.model.Organization.ORGANIZATION_ID_ACCESSOR));
+
+		addOrganizations(
+			pk,
+			ListUtil.toLongArray(
+				organizations,
+				com.liferay.portal.kernel.model.Organization.
+					ORGANIZATION_ID_ACCESSOR));
 	}
 
 	/**
@@ -9225,10 +9657,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param organization the organization
 	 */
 	@Override
-	public void removeOrganization(long pk,
-		com.liferay.portal.kernel.model.Organization organization) {
-		userToOrganizationTableMapper.deleteTableMapping(pk,
-			organization.getPrimaryKey());
+	public void removeOrganization(
+		long pk, com.liferay.portal.kernel.model.Organization organization) {
+
+		userToOrganizationTableMapper.deleteTableMapping(
+			pk, organization.getPrimaryKey());
 	}
 
 	/**
@@ -9249,11 +9682,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param organizations the organizations
 	 */
 	@Override
-	public void removeOrganizations(long pk,
+	public void removeOrganizations(
+		long pk,
 		List<com.liferay.portal.kernel.model.Organization> organizations) {
-		removeOrganizations(pk,
-			ListUtil.toLongArray(organizations,
-				com.liferay.portal.kernel.model.Organization.ORGANIZATION_ID_ACCESSOR));
+
+		removeOrganizations(
+			pk,
+			ListUtil.toLongArray(
+				organizations,
+				com.liferay.portal.kernel.model.Organization.
+					ORGANIZATION_ID_ACCESSOR));
 	}
 
 	/**
@@ -9265,15 +9703,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setOrganizations(long pk, long[] organizationPKs) {
 		Set<Long> newOrganizationPKsSet = SetUtil.fromArray(organizationPKs);
-		Set<Long> oldOrganizationPKsSet = SetUtil.fromArray(userToOrganizationTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldOrganizationPKsSet = SetUtil.fromArray(
+			userToOrganizationTableMapper.getRightPrimaryKeys(pk));
 
-		Set<Long> removeOrganizationPKsSet = new HashSet<Long>(oldOrganizationPKsSet);
+		Set<Long> removeOrganizationPKsSet = new HashSet<Long>(
+			oldOrganizationPKsSet);
 
 		removeOrganizationPKsSet.removeAll(newOrganizationPKsSet);
 
-		userToOrganizationTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeOrganizationPKsSet));
+		userToOrganizationTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeOrganizationPKsSet));
 
 		newOrganizationPKsSet.removeAll(oldOrganizationPKsSet);
 
@@ -9288,8 +9727,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToOrganizationTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newOrganizationPKsSet));
+		userToOrganizationTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newOrganizationPKsSet));
 	}
 
 	/**
@@ -9299,13 +9738,16 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param organizations the organizations to be associated with the user
 	 */
 	@Override
-	public void setOrganizations(long pk,
+	public void setOrganizations(
+		long pk,
 		List<com.liferay.portal.kernel.model.Organization> organizations) {
+
 		try {
 			long[] organizationPKs = new long[organizations.size()];
 
 			for (int i = 0; i < organizations.size(); i++) {
-				com.liferay.portal.kernel.model.Organization organization = organizations.get(i);
+				com.liferay.portal.kernel.model.Organization organization =
+					organizations.get(i);
 
 				organizationPKs[i] = organization.getPrimaryKey();
 			}
@@ -9354,8 +9796,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of roles associated with the user
 	 */
 	@Override
-	public List<com.liferay.portal.kernel.model.Role> getRoles(long pk,
-		int start, int end) {
+	public List<com.liferay.portal.kernel.model.Role> getRoles(
+		long pk, int start, int end) {
+
 		return getRoles(pk, start, end, null);
 	}
 
@@ -9373,11 +9816,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of roles associated with the user
 	 */
 	@Override
-	public List<com.liferay.portal.kernel.model.Role> getRoles(long pk,
-		int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.Role> orderByComparator) {
-		return userToRoleTableMapper.getRightBaseModels(pk, start, end,
-			orderByComparator);
+	public List<com.liferay.portal.kernel.model.Role> getRoles(
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portal.kernel.model.Role>
+			orderByComparator) {
+
+		return userToRoleTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -9432,12 +9877,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToRoleTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, rolePK);
+			userToRoleTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, rolePK);
 		}
 		else {
-			userToRoleTableMapper.addTableMapping(user.getCompanyId(), pk,
-				rolePK);
+			userToRoleTableMapper.addTableMapping(
+				user.getCompanyId(), pk, rolePK);
 		}
 	}
 
@@ -9452,12 +9897,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToRoleTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, role.getPrimaryKey());
+			userToRoleTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, role.getPrimaryKey());
 		}
 		else {
-			userToRoleTableMapper.addTableMapping(user.getCompanyId(), pk,
-				role.getPrimaryKey());
+			userToRoleTableMapper.addTableMapping(
+				user.getCompanyId(), pk, role.getPrimaryKey());
 		}
 	}
 
@@ -9490,11 +9935,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param roles the roles
 	 */
 	@Override
-	public void addRoles(long pk,
-		List<com.liferay.portal.kernel.model.Role> roles) {
-		addRoles(pk,
-			ListUtil.toLongArray(roles,
-				com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR));
+	public void addRoles(
+		long pk, List<com.liferay.portal.kernel.model.Role> roles) {
+
+		addRoles(
+			pk,
+			ListUtil.toLongArray(
+				roles, com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR));
 	}
 
 	/**
@@ -9547,11 +9994,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param roles the roles
 	 */
 	@Override
-	public void removeRoles(long pk,
-		List<com.liferay.portal.kernel.model.Role> roles) {
-		removeRoles(pk,
-			ListUtil.toLongArray(roles,
-				com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR));
+	public void removeRoles(
+		long pk, List<com.liferay.portal.kernel.model.Role> roles) {
+
+		removeRoles(
+			pk,
+			ListUtil.toLongArray(
+				roles, com.liferay.portal.kernel.model.Role.ROLE_ID_ACCESSOR));
 	}
 
 	/**
@@ -9563,15 +10012,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setRoles(long pk, long[] rolePKs) {
 		Set<Long> newRolePKsSet = SetUtil.fromArray(rolePKs);
-		Set<Long> oldRolePKsSet = SetUtil.fromArray(userToRoleTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldRolePKsSet = SetUtil.fromArray(
+			userToRoleTableMapper.getRightPrimaryKeys(pk));
 
 		Set<Long> removeRolePKsSet = new HashSet<Long>(oldRolePKsSet);
 
 		removeRolePKsSet.removeAll(newRolePKsSet);
 
-		userToRoleTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeRolePKsSet));
+		userToRoleTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeRolePKsSet));
 
 		newRolePKsSet.removeAll(oldRolePKsSet);
 
@@ -9586,8 +10035,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToRoleTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newRolePKsSet));
+		userToRoleTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newRolePKsSet));
 	}
 
 	/**
@@ -9597,8 +10046,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param roles the roles to be associated with the user
 	 */
 	@Override
-	public void setRoles(long pk,
-		List<com.liferay.portal.kernel.model.Role> roles) {
+	public void setRoles(
+		long pk, List<com.liferay.portal.kernel.model.Role> roles) {
+
 		try {
 			long[] rolePKs = new long[roles.size()];
 
@@ -9652,8 +10102,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the range of teams associated with the user
 	 */
 	@Override
-	public List<com.liferay.portal.kernel.model.Team> getTeams(long pk,
-		int start, int end) {
+	public List<com.liferay.portal.kernel.model.Team> getTeams(
+		long pk, int start, int end) {
+
 		return getTeams(pk, start, end, null);
 	}
 
@@ -9671,11 +10122,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @return the ordered range of teams associated with the user
 	 */
 	@Override
-	public List<com.liferay.portal.kernel.model.Team> getTeams(long pk,
-		int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.Team> orderByComparator) {
-		return userToTeamTableMapper.getRightBaseModels(pk, start, end,
-			orderByComparator);
+	public List<com.liferay.portal.kernel.model.Team> getTeams(
+		long pk, int start, int end,
+		OrderByComparator<com.liferay.portal.kernel.model.Team>
+			orderByComparator) {
+
+		return userToTeamTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -9730,12 +10183,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToTeamTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, teamPK);
+			userToTeamTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, teamPK);
 		}
 		else {
-			userToTeamTableMapper.addTableMapping(user.getCompanyId(), pk,
-				teamPK);
+			userToTeamTableMapper.addTableMapping(
+				user.getCompanyId(), pk, teamPK);
 		}
 	}
 
@@ -9750,12 +10203,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToTeamTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, team.getPrimaryKey());
+			userToTeamTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, team.getPrimaryKey());
 		}
 		else {
-			userToTeamTableMapper.addTableMapping(user.getCompanyId(), pk,
-				team.getPrimaryKey());
+			userToTeamTableMapper.addTableMapping(
+				user.getCompanyId(), pk, team.getPrimaryKey());
 		}
 	}
 
@@ -9788,11 +10241,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param teams the teams
 	 */
 	@Override
-	public void addTeams(long pk,
-		List<com.liferay.portal.kernel.model.Team> teams) {
-		addTeams(pk,
-			ListUtil.toLongArray(teams,
-				com.liferay.portal.kernel.model.Team.TEAM_ID_ACCESSOR));
+	public void addTeams(
+		long pk, List<com.liferay.portal.kernel.model.Team> teams) {
+
+		addTeams(
+			pk,
+			ListUtil.toLongArray(
+				teams, com.liferay.portal.kernel.model.Team.TEAM_ID_ACCESSOR));
 	}
 
 	/**
@@ -9845,11 +10300,13 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param teams the teams
 	 */
 	@Override
-	public void removeTeams(long pk,
-		List<com.liferay.portal.kernel.model.Team> teams) {
-		removeTeams(pk,
-			ListUtil.toLongArray(teams,
-				com.liferay.portal.kernel.model.Team.TEAM_ID_ACCESSOR));
+	public void removeTeams(
+		long pk, List<com.liferay.portal.kernel.model.Team> teams) {
+
+		removeTeams(
+			pk,
+			ListUtil.toLongArray(
+				teams, com.liferay.portal.kernel.model.Team.TEAM_ID_ACCESSOR));
 	}
 
 	/**
@@ -9861,15 +10318,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setTeams(long pk, long[] teamPKs) {
 		Set<Long> newTeamPKsSet = SetUtil.fromArray(teamPKs);
-		Set<Long> oldTeamPKsSet = SetUtil.fromArray(userToTeamTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldTeamPKsSet = SetUtil.fromArray(
+			userToTeamTableMapper.getRightPrimaryKeys(pk));
 
 		Set<Long> removeTeamPKsSet = new HashSet<Long>(oldTeamPKsSet);
 
 		removeTeamPKsSet.removeAll(newTeamPKsSet);
 
-		userToTeamTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeTeamPKsSet));
+		userToTeamTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeTeamPKsSet));
 
 		newTeamPKsSet.removeAll(oldTeamPKsSet);
 
@@ -9884,8 +10341,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToTeamTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newTeamPKsSet));
+		userToTeamTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newTeamPKsSet));
 	}
 
 	/**
@@ -9895,8 +10352,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param teams the teams to be associated with the user
 	 */
 	@Override
-	public void setTeams(long pk,
-		List<com.liferay.portal.kernel.model.Team> teams) {
+	public void setTeams(
+		long pk, List<com.liferay.portal.kernel.model.Team> teams) {
+
 		try {
 			long[] teamPKs = new long[teams.size()];
 
@@ -9935,6 +10393,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
 		long pk) {
+
 		return getUserGroups(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -9953,6 +10412,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
 		long pk, int start, int end) {
+
 		return getUserGroups(pk, start, end, null);
 	}
 
@@ -9972,9 +10432,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.kernel.model.UserGroup> getUserGroups(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.UserGroup> orderByComparator) {
-		return userToUserGroupTableMapper.getRightBaseModels(pk, start, end,
-			orderByComparator);
+		OrderByComparator<com.liferay.portal.kernel.model.UserGroup>
+			orderByComparator) {
+
+		return userToUserGroupTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -10029,12 +10491,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToUserGroupTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, userGroupPK);
+			userToUserGroupTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, userGroupPK);
 		}
 		else {
-			userToUserGroupTableMapper.addTableMapping(user.getCompanyId(), pk,
-				userGroupPK);
+			userToUserGroupTableMapper.addTableMapping(
+				user.getCompanyId(), pk, userGroupPK);
 		}
 	}
 
@@ -10045,17 +10507,18 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param userGroup the user group
 	 */
 	@Override
-	public void addUserGroup(long pk,
-		com.liferay.portal.kernel.model.UserGroup userGroup) {
+	public void addUserGroup(
+		long pk, com.liferay.portal.kernel.model.UserGroup userGroup) {
+
 		User user = fetchByPrimaryKey(pk);
 
 		if (user == null) {
-			userToUserGroupTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, userGroup.getPrimaryKey());
+			userToUserGroupTableMapper.addTableMapping(
+				companyProvider.getCompanyId(), pk, userGroup.getPrimaryKey());
 		}
 		else {
-			userToUserGroupTableMapper.addTableMapping(user.getCompanyId(), pk,
-				userGroup.getPrimaryKey());
+			userToUserGroupTableMapper.addTableMapping(
+				user.getCompanyId(), pk, userGroup.getPrimaryKey());
 		}
 	}
 
@@ -10078,7 +10541,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToUserGroupTableMapper.addTableMappings(companyId, pk, userGroupPKs);
+		userToUserGroupTableMapper.addTableMappings(
+			companyId, pk, userGroupPKs);
 	}
 
 	/**
@@ -10088,11 +10552,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param userGroups the user groups
 	 */
 	@Override
-	public void addUserGroups(long pk,
-		List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
-		addUserGroups(pk,
-			ListUtil.toLongArray(userGroups,
-				com.liferay.portal.kernel.model.UserGroup.USER_GROUP_ID_ACCESSOR));
+	public void addUserGroups(
+		long pk, List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+
+		addUserGroups(
+			pk,
+			ListUtil.toLongArray(
+				userGroups,
+				com.liferay.portal.kernel.model.UserGroup.
+					USER_GROUP_ID_ACCESSOR));
 	}
 
 	/**
@@ -10123,10 +10591,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param userGroup the user group
 	 */
 	@Override
-	public void removeUserGroup(long pk,
-		com.liferay.portal.kernel.model.UserGroup userGroup) {
-		userToUserGroupTableMapper.deleteTableMapping(pk,
-			userGroup.getPrimaryKey());
+	public void removeUserGroup(
+		long pk, com.liferay.portal.kernel.model.UserGroup userGroup) {
+
+		userToUserGroupTableMapper.deleteTableMapping(
+			pk, userGroup.getPrimaryKey());
 	}
 
 	/**
@@ -10147,11 +10616,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param userGroups the user groups
 	 */
 	@Override
-	public void removeUserGroups(long pk,
-		List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
-		removeUserGroups(pk,
-			ListUtil.toLongArray(userGroups,
-				com.liferay.portal.kernel.model.UserGroup.USER_GROUP_ID_ACCESSOR));
+	public void removeUserGroups(
+		long pk, List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+
+		removeUserGroups(
+			pk,
+			ListUtil.toLongArray(
+				userGroups,
+				com.liferay.portal.kernel.model.UserGroup.
+					USER_GROUP_ID_ACCESSOR));
 	}
 
 	/**
@@ -10163,15 +10636,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setUserGroups(long pk, long[] userGroupPKs) {
 		Set<Long> newUserGroupPKsSet = SetUtil.fromArray(userGroupPKs);
-		Set<Long> oldUserGroupPKsSet = SetUtil.fromArray(userToUserGroupTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldUserGroupPKsSet = SetUtil.fromArray(
+			userToUserGroupTableMapper.getRightPrimaryKeys(pk));
 
 		Set<Long> removeUserGroupPKsSet = new HashSet<Long>(oldUserGroupPKsSet);
 
 		removeUserGroupPKsSet.removeAll(newUserGroupPKsSet);
 
-		userToUserGroupTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeUserGroupPKsSet));
+		userToUserGroupTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeUserGroupPKsSet));
 
 		newUserGroupPKsSet.removeAll(oldUserGroupPKsSet);
 
@@ -10186,8 +10659,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			companyId = user.getCompanyId();
 		}
 
-		userToUserGroupTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newUserGroupPKsSet));
+		userToUserGroupTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newUserGroupPKsSet));
 	}
 
 	/**
@@ -10197,13 +10670,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * @param userGroups the user groups to be associated with the user
 	 */
 	@Override
-	public void setUserGroups(long pk,
-		List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+	public void setUserGroups(
+		long pk, List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+
 		try {
 			long[] userGroupPKs = new long[userGroups.size()];
 
 			for (int i = 0; i < userGroups.size(); i++) {
-				com.liferay.portal.kernel.model.UserGroup userGroup = userGroups.get(i);
+				com.liferay.portal.kernel.model.UserGroup userGroup =
+					userGroups.get(i);
 
 				userGroupPKs[i] = userGroup.getPrimaryKey();
 			}
@@ -10244,379 +10719,418 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 * Initializes the user persistence.
 	 */
 	public void afterPropertiesSet() {
-		userToGroupTableMapper = TableMapperFactory.getTableMapper("Users_Groups",
-				"companyId", "userId", "groupId", this, groupPersistence);
+		userToGroupTableMapper = TableMapperFactory.getTableMapper(
+			"Users_Groups", "companyId", "userId", "groupId", this,
+			groupPersistence);
 
-		userToOrganizationTableMapper = TableMapperFactory.getTableMapper("Users_Orgs",
-				"companyId", "userId", "organizationId", this,
-				organizationPersistence);
+		userToOrganizationTableMapper = TableMapperFactory.getTableMapper(
+			"Users_Orgs", "companyId", "userId", "organizationId", this,
+			organizationPersistence);
 
-		userToRoleTableMapper = TableMapperFactory.getTableMapper("Users_Roles",
-				"companyId", "userId", "roleId", this, rolePersistence);
+		userToRoleTableMapper = TableMapperFactory.getTableMapper(
+			"Users_Roles", "companyId", "userId", "roleId", this,
+			rolePersistence);
 
-		userToTeamTableMapper = TableMapperFactory.getTableMapper("Users_Teams",
-				"companyId", "userId", "teamId", this, teamPersistence);
+		userToTeamTableMapper = TableMapperFactory.getTableMapper(
+			"Users_Teams", "companyId", "userId", "teamId", this,
+			teamPersistence);
 
-		userToUserGroupTableMapper = TableMapperFactory.getTableMapper("Users_UserGroups",
-				"companyId", "userId", "userGroupId", this, userGroupPersistence);
+		userToUserGroupTableMapper = TableMapperFactory.getTableMapper(
+			"Users_UserGroups", "companyId", "userId", "userGroupId", this,
+			userGroupPersistence);
 
-		_finderPathWithPaginationFindAll = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-				new String[] {
-					String.class.getName(),
-					
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			UserModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-				new String[] { String.class.getName() },
-				UserModelImpl.UUID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			UserModelImpl.UUID_COLUMN_BITMASK |
+			UserModelImpl.COMPANYID_COLUMN_BITMASK);
 
-		_finderPathCountByUuid = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-				new String[] { String.class.getName() });
+		_finderPathCountByUuid_C = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-				new String[] {
-					String.class.getName(), Long.class.getName(),
-					
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByCompanyId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()});
+
+		_finderPathFetchByContactId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByContactId",
+			new String[] {Long.class.getName()},
+			UserModelImpl.CONTACTID_COLUMN_BITMASK);
+
+		_finderPathCountByContactId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByEmailAddress = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEmailAddress",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByEmailAddress = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEmailAddress",
+			new String[] {String.class.getName()},
+			UserModelImpl.EMAILADDRESS_COLUMN_BITMASK);
+
+		_finderPathCountByEmailAddress = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEmailAddress",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByPortraitId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByPortraitId",
+			new String[] {Long.class.getName()},
+			UserModelImpl.PORTRAITID_COLUMN_BITMASK);
+
+		_finderPathCountByPortraitId = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortraitId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByU_C = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() },
-				UserModelImpl.UUID_COLUMN_BITMASK |
-				UserModelImpl.COMPANYID_COLUMN_BITMASK);
+		_finderPathWithPaginationCountByU_C = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
-		_finderPathCountByUuid_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() });
+		_finderPathFetchByC_U = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.USERID_COLUMN_BITMASK);
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-				new String[] {
-					Long.class.getName(),
-					
+		_finderPathCountByC_U = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByC_CD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-				new String[] { Long.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_CD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CD",
+			new String[] {Long.class.getName(), Date.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.CREATEDATE_COLUMN_BITMASK);
 
-		_finderPathCountByCompanyId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByC_CD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CD",
+			new String[] {Long.class.getName(), Date.class.getName()});
 
-		_finderPathFetchByContactId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByContactId",
-				new String[] { Long.class.getName() },
-				UserModelImpl.CONTACTID_COLUMN_BITMASK);
-
-		_finderPathCountByContactId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactId",
-				new String[] { Long.class.getName() });
-
-		_finderPathWithPaginationFindByEmailAddress = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEmailAddress",
-				new String[] {
-					String.class.getName(),
-					
+		_finderPathWithPaginationFindByC_MD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByEmailAddress = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByEmailAddress", new String[] { String.class.getName() },
-				UserModelImpl.EMAILADDRESS_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_MD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_MD",
+			new String[] {Long.class.getName(), Date.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 
-		_finderPathCountByEmailAddress = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByEmailAddress", new String[] { String.class.getName() });
+		_finderPathCountByC_MD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MD",
+			new String[] {Long.class.getName(), Date.class.getName()});
 
-		_finderPathFetchByPortraitId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByPortraitId",
-				new String[] { Long.class.getName() },
-				UserModelImpl.PORTRAITID_COLUMN_BITMASK);
+		_finderPathFetchByC_DU = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_DU",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.DEFAULTUSER_COLUMN_BITMASK);
 
-		_finderPathCountByPortraitId = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortraitId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByC_DU = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DU",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
 
-		_finderPathWithPaginationFindByU_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					
+		_finderPathFetchByC_SN = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_SN",
+			new String[] {Long.class.getName(), String.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.SCREENNAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_SN = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SN",
+			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathFetchByC_EA = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_EA",
+			new String[] {Long.class.getName(), String.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.EMAILADDRESS_COLUMN_BITMASK);
+
+		_finderPathCountByC_EA = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_EA",
+			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathFetchByC_FID = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_FID",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.FACEBOOKID_COLUMN_BITMASK);
+
+		_finderPathCountByC_FID = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_FID",
+			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathFetchByC_GUID = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_GUID",
+			new String[] {Long.class.getName(), String.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.GOOGLEUSERID_COLUMN_BITMASK);
+
+		_finderPathCountByC_GUID = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_GUID",
+			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathFetchByC_O = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
+			new String[] {Long.class.getName(), String.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.OPENID_COLUMN_BITMASK);
+
+		_finderPathCountByC_O = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O",
+			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathWithPaginationFindByC_S = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithPaginationCountByU_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_C",
-				new String[] { Long.class.getName(), Long.class.getName() });
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathFetchByC_U = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
-				new String[] { Long.class.getName(), Long.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.USERID_COLUMN_BITMASK);
+		_finderPathCountByC_S = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
-		_finderPathCountByC_U = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-				new String[] { Long.class.getName(), Long.class.getName() });
+		_finderPathWithPaginationFindByC_CD_MD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CD_MD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				Date.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithPaginationFindByC_CD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CD",
-				new String[] {
-					Long.class.getName(), Date.class.getName(),
-					
+		_finderPathWithoutPaginationFindByC_CD_MD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CD_MD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(), Date.class.getName()
+			},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.CREATEDATE_COLUMN_BITMASK |
+			UserModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByC_CD_MD = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CD_MD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(), Date.class.getName()
+			});
+
+		_finderPathWithPaginationFindByC_DU_S = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DU_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByC_CD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CD",
-				new String[] { Long.class.getName(), Date.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.CREATEDATE_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_DU_S = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DU_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.DEFAULTUSER_COLUMN_BITMASK |
+			UserModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathCountByC_CD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CD",
-				new String[] { Long.class.getName(), Date.class.getName() });
+		_finderPathCountByC_DU_S = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DU_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			});
 
-		_finderPathWithPaginationFindByC_MD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MD",
-				new String[] {
-					Long.class.getName(), Date.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+		_finderPathFetchByC_ERC = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			UserModelImpl.COMPANYID_COLUMN_BITMASK |
+			UserModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
-		_finderPathWithoutPaginationFindByC_MD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_MD",
-				new String[] { Long.class.getName(), Date.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-
-		_finderPathCountByC_MD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MD",
-				new String[] { Long.class.getName(), Date.class.getName() });
-
-		_finderPathFetchByC_DU = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_DU",
-				new String[] { Long.class.getName(), Boolean.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.DEFAULTUSER_COLUMN_BITMASK);
-
-		_finderPathCountByC_DU = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DU",
-				new String[] { Long.class.getName(), Boolean.class.getName() });
-
-		_finderPathFetchByC_SN = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_SN",
-				new String[] { Long.class.getName(), String.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.SCREENNAME_COLUMN_BITMASK);
-
-		_finderPathCountByC_SN = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SN",
-				new String[] { Long.class.getName(), String.class.getName() });
-
-		_finderPathFetchByC_EA = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_EA",
-				new String[] { Long.class.getName(), String.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.EMAILADDRESS_COLUMN_BITMASK);
-
-		_finderPathCountByC_EA = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_EA",
-				new String[] { Long.class.getName(), String.class.getName() });
-
-		_finderPathFetchByC_FID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_FID",
-				new String[] { Long.class.getName(), Long.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.FACEBOOKID_COLUMN_BITMASK);
-
-		_finderPathCountByC_FID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_FID",
-				new String[] { Long.class.getName(), Long.class.getName() });
-
-		_finderPathFetchByC_GUID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_GUID",
-				new String[] { Long.class.getName(), String.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.GOOGLEUSERID_COLUMN_BITMASK);
-
-		_finderPathCountByC_GUID = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_GUID",
-				new String[] { Long.class.getName(), String.class.getName() });
-
-		_finderPathFetchByC_O = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
-				new String[] { Long.class.getName(), String.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.OPENID_COLUMN_BITMASK);
-
-		_finderPathCountByC_O = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O",
-				new String[] { Long.class.getName(), String.class.getName() });
-
-		_finderPathWithPaginationFindByC_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-				new String[] { Long.class.getName(), Integer.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByC_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-				new String[] { Long.class.getName(), Integer.class.getName() });
-
-		_finderPathWithPaginationFindByC_CD_MD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CD_MD",
-				new String[] {
-					Long.class.getName(), Date.class.getName(),
-					Date.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByC_CD_MD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CD_MD",
-				new String[] {
-					Long.class.getName(), Date.class.getName(),
-					Date.class.getName()
-				},
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.CREATEDATE_COLUMN_BITMASK |
-				UserModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-
-		_finderPathCountByC_CD_MD = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CD_MD",
-				new String[] {
-					Long.class.getName(), Date.class.getName(),
-					Date.class.getName()
-				});
-
-		_finderPathWithPaginationFindByC_DU_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DU_S",
-				new String[] {
-					Long.class.getName(), Boolean.class.getName(),
-					Integer.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByC_DU_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DU_S",
-				new String[] {
-					Long.class.getName(), Boolean.class.getName(),
-					Integer.class.getName()
-				},
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.DEFAULTUSER_COLUMN_BITMASK |
-				UserModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByC_DU_S = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DU_S",
-				new String[] {
-					Long.class.getName(), Boolean.class.getName(),
-					Integer.class.getName()
-				});
-
-		_finderPathFetchByC_ERC = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-				new String[] { Long.class.getName(), String.class.getName() },
-				UserModelImpl.COMPANYID_COLUMN_BITMASK |
-				UserModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
-
-		_finderPathCountByC_ERC = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
-				UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-				new String[] { Long.class.getName(), String.class.getName() });
+		_finderPathCountByC_ERC = new FinderPath(
+			UserModelImpl.ENTITY_CACHE_ENABLED,
+			UserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
 	public void destroy() {
@@ -10634,21 +11148,36 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
+
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	protected TableMapper<User, com.liferay.portal.kernel.model.Group> userToGroupTableMapper;
+
+	protected TableMapper<User, com.liferay.portal.kernel.model.Group>
+		userToGroupTableMapper;
+
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	protected TableMapper<User, com.liferay.portal.kernel.model.Organization> userToOrganizationTableMapper;
+
+	protected TableMapper<User, com.liferay.portal.kernel.model.Organization>
+		userToOrganizationTableMapper;
+
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
-	protected TableMapper<User, com.liferay.portal.kernel.model.Role> userToRoleTableMapper;
+
+	protected TableMapper<User, com.liferay.portal.kernel.model.Role>
+		userToRoleTableMapper;
+
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;
-	protected TableMapper<User, com.liferay.portal.kernel.model.Team> userToTeamTableMapper;
+
+	protected TableMapper<User, com.liferay.portal.kernel.model.Team>
+		userToTeamTableMapper;
+
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
-	protected TableMapper<User, com.liferay.portal.kernel.model.UserGroup> userToUserGroupTableMapper;
+
+	protected TableMapper<User, com.liferay.portal.kernel.model.UserGroup>
+		userToUserGroupTableMapper;
 
 	private Long _getTime(Date date) {
 		if (date == null) {
@@ -10659,14 +11188,28 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
-	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";
-	private static final String _SQL_COUNT_USER = "SELECT COUNT(user) FROM User user";
-	private static final String _SQL_COUNT_USER_WHERE = "SELECT COUNT(user) FROM User user WHERE ";
+
+	private static final String _SQL_SELECT_USER_WHERE =
+		"SELECT user FROM User user WHERE ";
+
+	private static final String _SQL_COUNT_USER =
+		"SELECT COUNT(user) FROM User user";
+
+	private static final String _SQL_COUNT_USER_WHERE =
+		"SELECT COUNT(user) FROM User user WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "user.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No User exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "password", "groups"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No User exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No User exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid", "password", "groups"});
+
 }

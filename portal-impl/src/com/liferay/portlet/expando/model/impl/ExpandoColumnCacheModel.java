@@ -17,10 +17,8 @@ package com.liferay.portlet.expando.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -35,8 +33,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
-	Externalizable {
+public class ExpandoColumnCacheModel
+	implements CacheModel<ExpandoColumn>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,7 +46,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 			return false;
 		}
 
-		ExpandoColumnCacheModel expandoColumnCacheModel = (ExpandoColumnCacheModel)obj;
+		ExpandoColumnCacheModel expandoColumnCacheModel =
+			(ExpandoColumnCacheModel)obj;
 
 		if (columnId == expandoColumnCacheModel.columnId) {
 			return true;
@@ -135,8 +135,7 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(columnId);
 
 		objectOutput.writeLong(companyId);
@@ -174,4 +173,5 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 	public int type;
 	public String defaultData;
 	public String typeSettings;
+
 }

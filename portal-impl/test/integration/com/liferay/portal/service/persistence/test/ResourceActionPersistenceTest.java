@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -53,14 +46,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ResourceActionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -100,7 +102,8 @@ public class ResourceActionPersistenceTest {
 
 		_persistence.remove(newResourceAction);
 
-		ResourceAction existingResourceAction = _persistence.fetchByPrimaryKey(newResourceAction.getPrimaryKey());
+		ResourceAction existingResourceAction = _persistence.fetchByPrimaryKey(
+			newResourceAction.getPrimaryKey());
 
 		Assert.assertNull(existingResourceAction);
 	}
@@ -126,17 +129,22 @@ public class ResourceActionPersistenceTest {
 
 		_resourceActions.add(_persistence.update(newResourceAction));
 
-		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
+		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(
+			newResourceAction.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceAction.getMvccVersion(),
+		Assert.assertEquals(
+			existingResourceAction.getMvccVersion(),
 			newResourceAction.getMvccVersion());
-		Assert.assertEquals(existingResourceAction.getResourceActionId(),
+		Assert.assertEquals(
+			existingResourceAction.getResourceActionId(),
 			newResourceAction.getResourceActionId());
-		Assert.assertEquals(existingResourceAction.getName(),
-			newResourceAction.getName());
-		Assert.assertEquals(existingResourceAction.getActionId(),
+		Assert.assertEquals(
+			existingResourceAction.getName(), newResourceAction.getName());
+		Assert.assertEquals(
+			existingResourceAction.getActionId(),
 			newResourceAction.getActionId());
-		Assert.assertEquals(existingResourceAction.getBitwiseValue(),
+		Assert.assertEquals(
+			existingResourceAction.getBitwiseValue(),
 			newResourceAction.getBitwiseValue());
 	}
 
@@ -162,7 +170,8 @@ public class ResourceActionPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 
-		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
+		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(
+			newResourceAction.getPrimaryKey());
 
 		Assert.assertEquals(existingResourceAction, newResourceAction);
 	}
@@ -176,21 +185,22 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<ResourceAction> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ResourceAction",
-			"mvccVersion", true, "resourceActionId", true, "name", true,
-			"actionId", true, "bitwiseValue", true);
+		return OrderByComparatorFactoryUtil.create(
+			"ResourceAction", "mvccVersion", true, "resourceActionId", true,
+			"name", true, "actionId", true, "bitwiseValue", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 
-		ResourceAction existingResourceAction = _persistence.fetchByPrimaryKey(newResourceAction.getPrimaryKey());
+		ResourceAction existingResourceAction = _persistence.fetchByPrimaryKey(
+			newResourceAction.getPrimaryKey());
 
 		Assert.assertEquals(existingResourceAction, newResourceAction);
 	}
@@ -199,7 +209,8 @@ public class ResourceActionPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ResourceAction missingResourceAction = _persistence.fetchByPrimaryKey(pk);
+		ResourceAction missingResourceAction = _persistence.fetchByPrimaryKey(
+			pk);
 
 		Assert.assertNull(missingResourceAction);
 	}
@@ -207,6 +218,7 @@ public class ResourceActionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		ResourceAction newResourceAction1 = addResourceAction();
 		ResourceAction newResourceAction2 = addResourceAction();
 
@@ -215,18 +227,22 @@ public class ResourceActionPersistenceTest {
 		primaryKeys.add(newResourceAction1.getPrimaryKey());
 		primaryKeys.add(newResourceAction2.getPrimaryKey());
 
-		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ResourceAction> resourceActions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, resourceActions.size());
-		Assert.assertEquals(newResourceAction1,
+		Assert.assertEquals(
+			newResourceAction1,
 			resourceActions.get(newResourceAction1.getPrimaryKey()));
-		Assert.assertEquals(newResourceAction2,
+		Assert.assertEquals(
+			newResourceAction2,
 			resourceActions.get(newResourceAction2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -236,7 +252,8 @@ public class ResourceActionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ResourceAction> resourceActions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(resourceActions.isEmpty());
 	}
@@ -244,6 +261,7 @@ public class ResourceActionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		ResourceAction newResourceAction = addResourceAction();
 
 		long pk = RandomTestUtil.nextLong();
@@ -253,36 +271,39 @@ public class ResourceActionPersistenceTest {
 		primaryKeys.add(newResourceAction.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ResourceAction> resourceActions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, resourceActions.size());
-		Assert.assertEquals(newResourceAction,
+		Assert.assertEquals(
+			newResourceAction,
 			resourceActions.get(newResourceAction.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ResourceAction> resourceActions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(resourceActions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newResourceAction.getPrimaryKey());
 
-		Map<Serializable, ResourceAction> resourceActions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ResourceAction> resourceActions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, resourceActions.size());
-		Assert.assertEquals(newResourceAction,
+		Assert.assertEquals(
+			newResourceAction,
 			resourceActions.get(newResourceAction.getPrimaryKey()));
 	}
 
@@ -290,15 +311,19 @@ public class ResourceActionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ResourceActionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ResourceActionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ResourceAction>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ResourceAction>() {
+
 				@Override
 				public void performAction(ResourceAction resourceAction) {
 					Assert.assertNotNull(resourceAction);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -307,17 +332,18 @@ public class ResourceActionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceAction.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ResourceAction.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceActionId",
-				newResourceAction.getResourceActionId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"resourceActionId", newResourceAction.getResourceActionId()));
 
-		List<ResourceAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceAction> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -328,32 +354,34 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceAction.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ResourceAction.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceActionId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"resourceActionId", RandomTestUtil.nextLong()));
 
-		List<ResourceAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceAction> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		ResourceAction newResourceAction = addResourceAction();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceAction.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ResourceAction.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"resourceActionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("resourceActionId"));
 
 		Object newResourceActionId = newResourceAction.getResourceActionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceActionId",
-				new Object[] { newResourceActionId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"resourceActionId", new Object[] {newResourceActionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -366,14 +394,15 @@ public class ResourceActionPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceAction.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ResourceAction.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"resourceActionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("resourceActionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceActionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"resourceActionId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -386,14 +415,21 @@ public class ResourceActionPersistenceTest {
 
 		_persistence.clearCache();
 
-		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
+		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(
+			newResourceAction.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingResourceAction.getName(),
-				ReflectionTestUtil.invoke(existingResourceAction,
-					"getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(Objects.equals(existingResourceAction.getActionId(),
-				ReflectionTestUtil.invoke(existingResourceAction,
-					"getOriginalActionId", new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
+				existingResourceAction.getName(),
+				ReflectionTestUtil.invoke(
+					existingResourceAction, "getOriginalName",
+					new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
+				existingResourceAction.getActionId(),
+				ReflectionTestUtil.invoke(
+					existingResourceAction, "getOriginalActionId",
+					new Class<?>[0])));
 	}
 
 	protected ResourceAction addResourceAction() throws Exception {
@@ -414,7 +450,9 @@ public class ResourceActionPersistenceTest {
 		return resourceAction;
 	}
 
-	private List<ResourceAction> _resourceActions = new ArrayList<ResourceAction>();
+	private List<ResourceAction> _resourceActions =
+		new ArrayList<ResourceAction>();
 	private ResourceActionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

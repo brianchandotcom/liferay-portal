@@ -32,19 +32,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-
 import com.liferay.ratings.kernel.exception.NoSuchEntryException;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
 import com.liferay.ratings.kernel.service.persistence.RatingsEntryUtil;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
 
 import java.io.Serializable;
 
@@ -55,14 +47,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class RatingsEntryPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -102,7 +103,8 @@ public class RatingsEntryPersistenceTest {
 
 		_persistence.remove(newRatingsEntry);
 
-		RatingsEntry existingRatingsEntry = _persistence.fetchByPrimaryKey(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry = _persistence.fetchByPrimaryKey(
+			newRatingsEntry.getPrimaryKey());
 
 		Assert.assertNull(existingRatingsEntry);
 	}
@@ -138,30 +140,33 @@ public class RatingsEntryPersistenceTest {
 
 		_ratingsEntries.add(_persistence.update(newRatingsEntry));
 
-		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(
+			newRatingsEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingRatingsEntry.getUuid(),
-			newRatingsEntry.getUuid());
-		Assert.assertEquals(existingRatingsEntry.getEntryId(),
-			newRatingsEntry.getEntryId());
-		Assert.assertEquals(existingRatingsEntry.getCompanyId(),
+		Assert.assertEquals(
+			existingRatingsEntry.getUuid(), newRatingsEntry.getUuid());
+		Assert.assertEquals(
+			existingRatingsEntry.getEntryId(), newRatingsEntry.getEntryId());
+		Assert.assertEquals(
+			existingRatingsEntry.getCompanyId(),
 			newRatingsEntry.getCompanyId());
-		Assert.assertEquals(existingRatingsEntry.getUserId(),
-			newRatingsEntry.getUserId());
-		Assert.assertEquals(existingRatingsEntry.getUserName(),
-			newRatingsEntry.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingRatingsEntry.getCreateDate()),
+		Assert.assertEquals(
+			existingRatingsEntry.getUserId(), newRatingsEntry.getUserId());
+		Assert.assertEquals(
+			existingRatingsEntry.getUserName(), newRatingsEntry.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRatingsEntry.getCreateDate()),
 			Time.getShortTimestamp(newRatingsEntry.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingRatingsEntry.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRatingsEntry.getModifiedDate()),
 			Time.getShortTimestamp(newRatingsEntry.getModifiedDate()));
-		Assert.assertEquals(existingRatingsEntry.getClassNameId(),
+		Assert.assertEquals(
+			existingRatingsEntry.getClassNameId(),
 			newRatingsEntry.getClassNameId());
-		Assert.assertEquals(existingRatingsEntry.getClassPK(),
-			newRatingsEntry.getClassPK());
-		AssertUtils.assertEquals(existingRatingsEntry.getScore(),
-			newRatingsEntry.getScore());
+		Assert.assertEquals(
+			existingRatingsEntry.getClassPK(), newRatingsEntry.getClassPK());
+		AssertUtils.assertEquals(
+			existingRatingsEntry.getScore(), newRatingsEntry.getScore());
 	}
 
 	@Test
@@ -184,31 +189,33 @@ public class RatingsEntryPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByU_C_C() throws Exception {
-		_persistence.countByU_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByU_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByU_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByU_C_CArrayable() throws Exception {
-		_persistence.countByU_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L });
+		_persistence.countByU_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
 	}
 
 	@Test
 	public void testCountByC_C_S() throws Exception {
-		_persistence.countByC_C_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextDouble());
+		_persistence.countByC_C_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDouble());
 
 		_persistence.countByC_C_S(0L, 0L, 0D);
 	}
@@ -217,7 +224,8 @@ public class RatingsEntryPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		RatingsEntry newRatingsEntry = addRatingsEntry();
 
-		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(
+			newRatingsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingRatingsEntry, newRatingsEntry);
 	}
@@ -231,22 +239,24 @@ public class RatingsEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<RatingsEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("RatingsEntry", "uuid",
-			true, "entryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "score", true);
+		return OrderByComparatorFactoryUtil.create(
+			"RatingsEntry", "uuid", true, "entryId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true, "score",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		RatingsEntry newRatingsEntry = addRatingsEntry();
 
-		RatingsEntry existingRatingsEntry = _persistence.fetchByPrimaryKey(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry = _persistence.fetchByPrimaryKey(
+			newRatingsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingRatingsEntry, newRatingsEntry);
 	}
@@ -263,6 +273,7 @@ public class RatingsEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		RatingsEntry newRatingsEntry1 = addRatingsEntry();
 		RatingsEntry newRatingsEntry2 = addRatingsEntry();
 
@@ -271,18 +282,22 @@ public class RatingsEntryPersistenceTest {
 		primaryKeys.add(newRatingsEntry1.getPrimaryKey());
 		primaryKeys.add(newRatingsEntry2.getPrimaryKey());
 
-		Map<Serializable, RatingsEntry> ratingsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RatingsEntry> ratingsEntries =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, ratingsEntries.size());
-		Assert.assertEquals(newRatingsEntry1,
+		Assert.assertEquals(
+			newRatingsEntry1,
 			ratingsEntries.get(newRatingsEntry1.getPrimaryKey()));
-		Assert.assertEquals(newRatingsEntry2,
+		Assert.assertEquals(
+			newRatingsEntry2,
 			ratingsEntries.get(newRatingsEntry2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -292,7 +307,8 @@ public class RatingsEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, RatingsEntry> ratingsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RatingsEntry> ratingsEntries =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ratingsEntries.isEmpty());
 	}
@@ -300,6 +316,7 @@ public class RatingsEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		RatingsEntry newRatingsEntry = addRatingsEntry();
 
 		long pk = RandomTestUtil.nextLong();
@@ -309,36 +326,39 @@ public class RatingsEntryPersistenceTest {
 		primaryKeys.add(newRatingsEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, RatingsEntry> ratingsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RatingsEntry> ratingsEntries =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ratingsEntries.size());
-		Assert.assertEquals(newRatingsEntry,
+		Assert.assertEquals(
+			newRatingsEntry,
 			ratingsEntries.get(newRatingsEntry.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, RatingsEntry> ratingsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RatingsEntry> ratingsEntries =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(ratingsEntries.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		RatingsEntry newRatingsEntry = addRatingsEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRatingsEntry.getPrimaryKey());
 
-		Map<Serializable, RatingsEntry> ratingsEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RatingsEntry> ratingsEntries =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, ratingsEntries.size());
-		Assert.assertEquals(newRatingsEntry,
+		Assert.assertEquals(
+			newRatingsEntry,
 			ratingsEntries.get(newRatingsEntry.getPrimaryKey()));
 	}
 
@@ -346,15 +366,19 @@ public class RatingsEntryPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = RatingsEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			RatingsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
+
 				@Override
 				public void performAction(RatingsEntry ratingsEntry) {
 					Assert.assertNotNull(ratingsEntry);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -363,17 +387,18 @@ public class RatingsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		RatingsEntry newRatingsEntry = addRatingsEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RatingsEntry.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RatingsEntry.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
-				newRatingsEntry.getEntryId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"entryId", newRatingsEntry.getEntryId()));
 
-		List<RatingsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<RatingsEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -384,31 +409,31 @@ public class RatingsEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RatingsEntry.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RatingsEntry.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("entryId", RandomTestUtil.nextLong()));
 
-		List<RatingsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<RatingsEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		RatingsEntry newRatingsEntry = addRatingsEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RatingsEntry.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RatingsEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
 		Object newEntryId = newRatingsEntry.getEntryId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { newEntryId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("entryId", new Object[] {newEntryId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -421,13 +446,14 @@ public class RatingsEntryPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RatingsEntry.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RatingsEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"entryId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -440,17 +466,22 @@ public class RatingsEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(
+			newRatingsEntry.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingRatingsEntry.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingRatingsEntry,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingRatingsEntry.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingRatingsEntry,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingRatingsEntry.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingRatingsEntry,
-				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRatingsEntry.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRatingsEntry, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRatingsEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRatingsEntry, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRatingsEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRatingsEntry, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected RatingsEntry addRatingsEntry() throws Exception {
@@ -484,4 +515,5 @@ public class RatingsEntryPersistenceTest {
 	private List<RatingsEntry> _ratingsEntries = new ArrayList<RatingsEntry>();
 	private RatingsEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

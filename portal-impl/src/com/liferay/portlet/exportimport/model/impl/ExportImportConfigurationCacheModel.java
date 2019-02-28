@@ -17,10 +17,8 @@ package com.liferay.portlet.exportimport.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 
@@ -38,8 +36,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class ExportImportConfigurationCacheModel implements CacheModel<ExportImportConfiguration>,
-	Externalizable, MVCCModel {
+public class ExportImportConfigurationCacheModel
+	implements CacheModel<ExportImportConfiguration>, Externalizable,
+			   MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,10 +50,15 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 			return false;
 		}
 
-		ExportImportConfigurationCacheModel exportImportConfigurationCacheModel = (ExportImportConfigurationCacheModel)obj;
+		ExportImportConfigurationCacheModel
+			exportImportConfigurationCacheModel =
+				(ExportImportConfigurationCacheModel)obj;
 
-		if ((exportImportConfigurationId == exportImportConfigurationCacheModel.exportImportConfigurationId) &&
-				(mvccVersion == exportImportConfigurationCacheModel.mvccVersion)) {
+		if ((exportImportConfigurationId ==
+				exportImportConfigurationCacheModel.
+					exportImportConfigurationId) &&
+			(mvccVersion == exportImportConfigurationCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -120,10 +125,12 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 
 	@Override
 	public ExportImportConfiguration toEntityModel() {
-		ExportImportConfigurationImpl exportImportConfigurationImpl = new ExportImportConfigurationImpl();
+		ExportImportConfigurationImpl exportImportConfigurationImpl =
+			new ExportImportConfigurationImpl();
 
 		exportImportConfigurationImpl.setMvccVersion(mvccVersion);
-		exportImportConfigurationImpl.setExportImportConfigurationId(exportImportConfigurationId);
+		exportImportConfigurationImpl.setExportImportConfigurationId(
+			exportImportConfigurationId);
 		exportImportConfigurationImpl.setGroupId(groupId);
 		exportImportConfigurationImpl.setCompanyId(companyId);
 		exportImportConfigurationImpl.setUserId(userId);
@@ -146,7 +153,8 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 			exportImportConfigurationImpl.setModifiedDate(null);
 		}
 		else {
-			exportImportConfigurationImpl.setModifiedDate(new Date(modifiedDate));
+			exportImportConfigurationImpl.setModifiedDate(
+				new Date(modifiedDate));
 		}
 
 		if (name == null) {
@@ -222,8 +230,7 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(exportImportConfigurationId);
@@ -297,4 +304,5 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+
 }

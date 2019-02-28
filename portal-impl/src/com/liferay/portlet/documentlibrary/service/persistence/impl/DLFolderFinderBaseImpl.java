@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +28,7 @@ import java.util.Set;
  * @generated
  */
 public class DLFolderFinderBaseImpl extends BasePersistenceImpl<DLFolder> {
+
 	public DLFolderFinderBaseImpl() {
 		setModelClass(DLFolder.class);
 	}
@@ -52,11 +52,16 @@ public class DLFolderFinderBaseImpl extends BasePersistenceImpl<DLFolder> {
 	 *
 	 * @param dlFolderPersistence the document library folder persistence
 	 */
-	public void setDLFolderPersistence(DLFolderPersistence dlFolderPersistence) {
+	public void setDLFolderPersistence(
+		DLFolderPersistence dlFolderPersistence) {
+
 		this.dlFolderPersistence = dlFolderPersistence;
 	}
 
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(DLFolderFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderFinderBaseImpl.class);
+
 }

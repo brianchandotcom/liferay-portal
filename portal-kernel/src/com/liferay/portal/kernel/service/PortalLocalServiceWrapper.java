@@ -24,17 +24,18 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class PortalLocalServiceWrapper implements PortalLocalService,
-	ServiceWrapper<PortalLocalService> {
+public class PortalLocalServiceWrapper
+	implements PortalLocalService, ServiceWrapper<PortalLocalService> {
+
 	public PortalLocalServiceWrapper(PortalLocalService portalLocalService) {
 		_portalLocalService = portalLocalService;
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _portalLocalService.getOSGiServiceIdentifier();
@@ -51,4 +52,5 @@ public class PortalLocalServiceWrapper implements PortalLocalService,
 	}
 
 	private PortalLocalService _portalLocalService;
+
 }

@@ -22,7 +22,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface DLFileEntryMetadataFinder {
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> findByMismatchedCompanyId();
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> findByNoStructures();
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
+			findByMismatchedCompanyId();
+
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
+			findByNoStructures();
+
 }

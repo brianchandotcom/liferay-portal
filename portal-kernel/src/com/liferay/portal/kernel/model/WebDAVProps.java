@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.WebDAVPropsImpl")
 @ProviderType
 public interface WebDAVProps extends WebDAVPropsModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WebDAVPropsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WebDAVProps, Long> WEB_DAV_PROPS_ID_ACCESSOR = new Accessor<WebDAVProps, Long>() {
+	public static final Accessor<WebDAVProps, Long> WEB_DAV_PROPS_ID_ACCESSOR =
+		new Accessor<WebDAVProps, Long>() {
+
 			@Override
 			public Long get(WebDAVProps webDAVProps) {
 				return webDAVProps.getWebDavPropsId();
@@ -49,6 +52,7 @@ public interface WebDAVProps extends WebDAVPropsModel, PersistedModel {
 			public Class<WebDAVProps> getTypeClass() {
 				return WebDAVProps.class;
 			}
+
 		};
 
 	public void addProp(String name, String prefix, String uri)
@@ -67,4 +71,5 @@ public interface WebDAVProps extends WebDAVPropsModel, PersistedModel {
 		throws Exception;
 
 	public void store() throws Exception;
+
 }

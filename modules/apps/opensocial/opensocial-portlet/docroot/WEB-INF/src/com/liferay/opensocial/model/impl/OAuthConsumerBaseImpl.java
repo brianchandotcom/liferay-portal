@@ -32,8 +32,9 @@ import com.liferay.opensocial.service.OAuthConsumerLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class OAuthConsumerBaseImpl extends OAuthConsumerModelImpl
-	implements OAuthConsumer {
+public abstract class OAuthConsumerBaseImpl
+	extends OAuthConsumerModelImpl implements OAuthConsumer {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class OAuthConsumerBaseImpl extends OAuthConsumerModelImpl
 			OAuthConsumerLocalServiceUtil.updateOAuthConsumer(this);
 		}
 	}
+
 }

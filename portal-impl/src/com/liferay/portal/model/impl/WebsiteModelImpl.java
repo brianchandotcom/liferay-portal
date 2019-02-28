@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -68,31 +65,28 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class WebsiteModelImpl extends BaseModelImpl<Website>
-	implements WebsiteModel {
+public class WebsiteModelImpl
+	extends BaseModelImpl<Website> implements WebsiteModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a website model instance should use the <code>Website</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Website";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "websiteId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "url", Types.VARCHAR },
-			{ "typeId", Types.BIGINT },
-			{ "primary_", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"websiteId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"url", Types.VARCHAR}, {"typeId", Types.BIGINT},
+		{"primary_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -111,28 +105,50 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Website (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Website (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Website";
-	public static final String ORDER_BY_JPQL = " ORDER BY website.createDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Website.createDate ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY website.createDate ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Website.createDate ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Website"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Website"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Website"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Website"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Website"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Website"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
 	public static final long PRIMARY_COLUMN_BITMASK = 8L;
+
 	public static final long USERID_COLUMN_BITMASK = 16L;
+
 	public static final long UUID_COLUMN_BITMASK = 32L;
+
 	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
@@ -186,8 +202,9 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Website"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Website"));
 
 	public WebsiteModelImpl() {
 	}
@@ -226,14 +243,18 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Website, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Website, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Website, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Website, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Website, Object> attributeGetterFunction = entry.getValue();
+			Function<Website, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Website)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Website)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -244,67 +265,95 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Website, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Website, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Website, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Website, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Website)this, entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Website)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Website, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<Website, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Website, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Website, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Website, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Website, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Website, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Website, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Website, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Website, Object>>();
-		Map<String, BiConsumer<Website, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Website, ?>>();
-
+		Map<String, Function<Website, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Website, Object>>();
+		Map<String, BiConsumer<Website, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Website, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Website::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Website, Long>)Website::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Website, Long>)Website::setMvccVersion);
 		attributeGetterFunctions.put("uuid", Website::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<Website, String>)Website::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Website, String>)Website::setUuid);
 		attributeGetterFunctions.put("websiteId", Website::getWebsiteId);
-		attributeSetterBiConsumers.put("websiteId", (BiConsumer<Website, Long>)Website::setWebsiteId);
+		attributeSetterBiConsumers.put(
+			"websiteId", (BiConsumer<Website, Long>)Website::setWebsiteId);
 		attributeGetterFunctions.put("companyId", Website::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Website, Long>)Website::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Website, Long>)Website::setCompanyId);
 		attributeGetterFunctions.put("userId", Website::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Website, Long>)Website::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Website, Long>)Website::setUserId);
 		attributeGetterFunctions.put("userName", Website::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Website, String>)Website::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Website, String>)Website::setUserName);
 		attributeGetterFunctions.put("createDate", Website::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Website, Date>)Website::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Website, Date>)Website::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Website::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Website, Date>)Website::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Website, Date>)Website::setModifiedDate);
 		attributeGetterFunctions.put("classNameId", Website::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Website, Long>)Website::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId", (BiConsumer<Website, Long>)Website::setClassNameId);
 		attributeGetterFunctions.put("classPK", Website::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<Website, Long>)Website::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<Website, Long>)Website::setClassPK);
 		attributeGetterFunctions.put("url", Website::getUrl);
-		attributeSetterBiConsumers.put("url", (BiConsumer<Website, String>)Website::setUrl);
+		attributeSetterBiConsumers.put(
+			"url", (BiConsumer<Website, String>)Website::setUrl);
 		attributeGetterFunctions.put("typeId", Website::getTypeId);
-		attributeSetterBiConsumers.put("typeId", (BiConsumer<Website, Long>)Website::setTypeId);
+		attributeSetterBiConsumers.put(
+			"typeId", (BiConsumer<Website, Long>)Website::setTypeId);
 		attributeGetterFunctions.put("primary", Website::getPrimary);
-		attributeSetterBiConsumers.put("primary", (BiConsumer<Website, Boolean>)Website::setPrimary);
-		attributeGetterFunctions.put("lastPublishDate", Website::getLastPublishDate);
-		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Website, Date>)Website::setLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"primary", (BiConsumer<Website, Boolean>)Website::setPrimary);
+		attributeGetterFunctions.put(
+			"lastPublishDate", Website::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<Website, Date>)Website::setLastPublishDate);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -598,8 +647,9 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				Website.class.getName()), getClassNameId());
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Website.class.getName()),
+			getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -608,8 +658,8 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Website.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Website.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -622,8 +672,9 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	@Override
 	public Website toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Website)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Website)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -810,16 +861,20 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Website, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Website, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Website, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Website, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Website, Object> attributeGetterFunction = entry.getValue();
+			Function<Website, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -838,18 +893,22 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Website, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Website, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Website, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Website, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Website, Object> attributeGetterFunction = entry.getValue();
+			Function<Website, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -863,10 +922,12 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Website.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Website.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Website.class, ModelWrapper.class
-		};
+		Website.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -895,4 +956,5 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private Website _escapedModel;
+
 }

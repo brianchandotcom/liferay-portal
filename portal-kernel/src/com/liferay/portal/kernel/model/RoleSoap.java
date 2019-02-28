@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class RoleSoap implements Serializable {
+
 	public static RoleSoap toSoapModel(Role model) {
 		RoleSoap soapModel = new RoleSoap();
 
@@ -235,4 +236,5 @@ public class RoleSoap implements Serializable {
 	private String _description;
 	private int _type;
 	private String _subtype;
+
 }

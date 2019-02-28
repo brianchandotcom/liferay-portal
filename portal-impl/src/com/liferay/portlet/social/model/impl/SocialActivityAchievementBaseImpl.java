@@ -35,6 +35,7 @@ import com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUt
 public abstract class SocialActivityAchievementBaseImpl
 	extends SocialActivityAchievementModelImpl
 	implements SocialActivityAchievement {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,13 @@ public abstract class SocialActivityAchievementBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			SocialActivityAchievementLocalServiceUtil.addSocialActivityAchievement(this);
+			SocialActivityAchievementLocalServiceUtil.
+				addSocialActivityAchievement(this);
 		}
 		else {
-			SocialActivityAchievementLocalServiceUtil.updateSocialActivityAchievement(this);
+			SocialActivityAchievementLocalServiceUtil.
+				updateSocialActivityAchievement(this);
 		}
 	}
+
 }

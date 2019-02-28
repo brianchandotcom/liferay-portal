@@ -30,8 +30,9 @@ import aQute.bnd.annotation.ProviderType;
  */
 @Deprecated
 @ProviderType
-public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPermission>,
-	MVCCModel, ShardedModel {
+public interface ResourceBlockPermissionModel
+	extends BaseModel<ResourceBlockPermission>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -139,4 +140,5 @@ public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPer
 	 * @param actionIds the action IDs of this resource block permission
 	 */
 	public void setActionIds(long actionIds);
+
 }

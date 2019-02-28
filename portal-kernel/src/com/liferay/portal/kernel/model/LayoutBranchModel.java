@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel,
-	ShardedModel {
+public interface LayoutBranchModel
+	extends BaseModel<LayoutBranch>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -233,4 +234,5 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel,
 	 * @param master the master of this layout branch
 	 */
 	public void setMaster(boolean master);
+
 }

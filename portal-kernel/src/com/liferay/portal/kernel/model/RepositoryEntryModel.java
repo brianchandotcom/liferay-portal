@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
-	MVCCModel, ShardedModel, StagedGroupedModel {
+public interface RepositoryEntryModel
+	extends BaseModel<RepositoryEntry>, MVCCModel, ShardedModel,
+			StagedGroupedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -279,4 +281,5 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
 }

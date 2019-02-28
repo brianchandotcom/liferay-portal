@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class PortalPreferencesPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,9 @@ public class PortalPreferencesPersistenceTest {
 
 		_persistence.remove(newPortalPreferences);
 
-		PortalPreferences existingPortalPreferences = _persistence.fetchByPrimaryKey(newPortalPreferences.getPrimaryKey());
+		PortalPreferences existingPortalPreferences =
+			_persistence.fetchByPrimaryKey(
+				newPortalPreferences.getPrimaryKey());
 
 		Assert.assertNull(existingPortalPreferences);
 	}
@@ -125,24 +129,30 @@ public class PortalPreferencesPersistenceTest {
 
 		_portalPreferenceses.add(_persistence.update(newPortalPreferences));
 
-		PortalPreferences existingPortalPreferences = _persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
+		PortalPreferences existingPortalPreferences =
+			_persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
 
-		Assert.assertEquals(existingPortalPreferences.getMvccVersion(),
+		Assert.assertEquals(
+			existingPortalPreferences.getMvccVersion(),
 			newPortalPreferences.getMvccVersion());
-		Assert.assertEquals(existingPortalPreferences.getPortalPreferencesId(),
+		Assert.assertEquals(
+			existingPortalPreferences.getPortalPreferencesId(),
 			newPortalPreferences.getPortalPreferencesId());
-		Assert.assertEquals(existingPortalPreferences.getOwnerId(),
+		Assert.assertEquals(
+			existingPortalPreferences.getOwnerId(),
 			newPortalPreferences.getOwnerId());
-		Assert.assertEquals(existingPortalPreferences.getOwnerType(),
+		Assert.assertEquals(
+			existingPortalPreferences.getOwnerType(),
 			newPortalPreferences.getOwnerType());
-		Assert.assertEquals(existingPortalPreferences.getPreferences(),
+		Assert.assertEquals(
+			existingPortalPreferences.getPreferences(),
 			newPortalPreferences.getPreferences());
 	}
 
 	@Test
 	public void testCountByO_O() throws Exception {
-		_persistence.countByO_O(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByO_O(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByO_O(0L, 0);
 	}
@@ -151,7 +161,8 @@ public class PortalPreferencesPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
-		PortalPreferences existingPortalPreferences = _persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
+		PortalPreferences existingPortalPreferences =
+			_persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
 
 		Assert.assertEquals(existingPortalPreferences, newPortalPreferences);
 	}
@@ -165,21 +176,23 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<PortalPreferences> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("PortalPreferences",
-			"mvccVersion", true, "portalPreferencesId", true, "ownerId", true,
-			"ownerType", true);
+		return OrderByComparatorFactoryUtil.create(
+			"PortalPreferences", "mvccVersion", true, "portalPreferencesId",
+			true, "ownerId", true, "ownerType", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
-		PortalPreferences existingPortalPreferences = _persistence.fetchByPrimaryKey(newPortalPreferences.getPrimaryKey());
+		PortalPreferences existingPortalPreferences =
+			_persistence.fetchByPrimaryKey(
+				newPortalPreferences.getPrimaryKey());
 
 		Assert.assertEquals(existingPortalPreferences, newPortalPreferences);
 	}
@@ -188,7 +201,8 @@ public class PortalPreferencesPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		PortalPreferences missingPortalPreferences = _persistence.fetchByPrimaryKey(pk);
+		PortalPreferences missingPortalPreferences =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingPortalPreferences);
 	}
@@ -196,6 +210,7 @@ public class PortalPreferencesPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		PortalPreferences newPortalPreferences1 = addPortalPreferences();
 		PortalPreferences newPortalPreferences2 = addPortalPreferences();
 
@@ -204,18 +219,22 @@ public class PortalPreferencesPersistenceTest {
 		primaryKeys.add(newPortalPreferences1.getPrimaryKey());
 		primaryKeys.add(newPortalPreferences2.getPrimaryKey());
 
-		Map<Serializable, PortalPreferences> portalPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortalPreferences> portalPreferenceses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, portalPreferenceses.size());
-		Assert.assertEquals(newPortalPreferences1,
+		Assert.assertEquals(
+			newPortalPreferences1,
 			portalPreferenceses.get(newPortalPreferences1.getPrimaryKey()));
-		Assert.assertEquals(newPortalPreferences2,
+		Assert.assertEquals(
+			newPortalPreferences2,
 			portalPreferenceses.get(newPortalPreferences2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -225,7 +244,8 @@ public class PortalPreferencesPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, PortalPreferences> portalPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortalPreferences> portalPreferenceses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(portalPreferenceses.isEmpty());
 	}
@@ -233,6 +253,7 @@ public class PortalPreferencesPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
 		long pk = RandomTestUtil.nextLong();
@@ -242,36 +263,39 @@ public class PortalPreferencesPersistenceTest {
 		primaryKeys.add(newPortalPreferences.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, PortalPreferences> portalPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortalPreferences> portalPreferenceses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, portalPreferenceses.size());
-		Assert.assertEquals(newPortalPreferences,
+		Assert.assertEquals(
+			newPortalPreferences,
 			portalPreferenceses.get(newPortalPreferences.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PortalPreferences> portalPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortalPreferences> portalPreferenceses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(portalPreferenceses.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newPortalPreferences.getPrimaryKey());
 
-		Map<Serializable, PortalPreferences> portalPreferenceses = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortalPreferences> portalPreferenceses =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, portalPreferenceses.size());
-		Assert.assertEquals(newPortalPreferences,
+		Assert.assertEquals(
+			newPortalPreferences,
 			portalPreferenceses.get(newPortalPreferences.getPrimaryKey()));
 	}
 
@@ -279,15 +303,20 @@ public class PortalPreferencesPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = PortalPreferencesLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			PortalPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortalPreferences>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<PortalPreferences>() {
+
 				@Override
 				public void performAction(PortalPreferences portalPreferences) {
 					Assert.assertNotNull(portalPreferences);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -296,17 +325,19 @@ public class PortalPreferencesPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortalPreferences.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"portalPreferencesId",
 				newPortalPreferences.getPortalPreferencesId()));
 
-		List<PortalPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortalPreferences> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -317,32 +348,35 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortalPreferences.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"portalPreferencesId", RandomTestUtil.nextLong()));
 
-		List<PortalPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortalPreferences> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortalPreferences.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"portalPreferencesId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("portalPreferencesId"));
 
-		Object newPortalPreferencesId = newPortalPreferences.getPortalPreferencesId();
+		Object newPortalPreferencesId =
+			newPortalPreferences.getPortalPreferencesId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("portalPreferencesId",
-				new Object[] { newPortalPreferencesId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"portalPreferencesId", new Object[] {newPortalPreferencesId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -350,19 +384,22 @@ public class PortalPreferencesPersistenceTest {
 
 		Object existingPortalPreferencesId = result.get(0);
 
-		Assert.assertEquals(existingPortalPreferencesId, newPortalPreferencesId);
+		Assert.assertEquals(
+			existingPortalPreferencesId, newPortalPreferencesId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortalPreferences.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"portalPreferencesId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("portalPreferencesId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("portalPreferencesId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"portalPreferencesId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -375,19 +412,22 @@ public class PortalPreferencesPersistenceTest {
 
 		_persistence.clearCache();
 
-		PortalPreferences existingPortalPreferences = _persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
+		PortalPreferences existingPortalPreferences =
+			_persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingPortalPreferences.getOwnerId()),
-			ReflectionTestUtil.<Long>invoke(existingPortalPreferences,
-				"getOriginalOwnerId", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(
-				existingPortalPreferences.getOwnerType()),
-			ReflectionTestUtil.<Integer>invoke(existingPortalPreferences,
-				"getOriginalOwnerType", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingPortalPreferences.getOwnerId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingPortalPreferences, "getOriginalOwnerId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(existingPortalPreferences.getOwnerType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingPortalPreferences, "getOriginalOwnerType",
+				new Class<?>[0]));
 	}
 
-	protected PortalPreferences addPortalPreferences()
-		throws Exception {
+	protected PortalPreferences addPortalPreferences() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		PortalPreferences portalPreferences = _persistence.create(pk);
@@ -405,7 +445,9 @@ public class PortalPreferencesPersistenceTest {
 		return portalPreferences;
 	}
 
-	private List<PortalPreferences> _portalPreferenceses = new ArrayList<PortalPreferences>();
+	private List<PortalPreferences> _portalPreferenceses =
+		new ArrayList<PortalPreferences>();
 	private PortalPreferencesPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.WebsiteImpl")
 @ProviderType
 public interface Website extends WebsiteModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WebsiteImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Website, Long> WEBSITE_ID_ACCESSOR = new Accessor<Website, Long>() {
+	public static final Accessor<Website, Long> WEBSITE_ID_ACCESSOR =
+		new Accessor<Website, Long>() {
+
 			@Override
 			public Long get(Website website) {
 				return website.getWebsiteId();
@@ -49,8 +52,10 @@ public interface Website extends WebsiteModel, PersistedModel {
 			public Class<Website> getTypeClass() {
 				return Website.class;
 			}
+
 		};
 
 	public ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

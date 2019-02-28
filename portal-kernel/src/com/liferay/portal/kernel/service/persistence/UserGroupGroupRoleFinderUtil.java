@@ -25,27 +25,35 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class UserGroupGroupRoleFinderUtil {
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroupGroupRole> findByGroupRoleType(
-		long groupId, int roleType) {
+
+	public static java.util.List
+		<com.liferay.portal.kernel.model.UserGroupGroupRole>
+			findByGroupRoleType(long groupId, int roleType) {
+
 		return getFinder().findByGroupRoleType(groupId, roleType);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroupGroupRole> findByUserGroupsUsers(
-		long userId) {
+	public static java.util.List
+		<com.liferay.portal.kernel.model.UserGroupGroupRole>
+			findByUserGroupsUsers(long userId) {
+
 		return getFinder().findByUserGroupsUsers(userId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroupGroupRole> findByUserGroupsUsers(
-		long userId, long groupId) {
+	public static java.util.List
+		<com.liferay.portal.kernel.model.UserGroupGroupRole>
+			findByUserGroupsUsers(long userId, long groupId) {
+
 		return getFinder().findByUserGroupsUsers(userId, groupId);
 	}
 
 	public static UserGroupGroupRoleFinder getFinder() {
 		if (_finder == null) {
-			_finder = (UserGroupGroupRoleFinder)PortalBeanLocatorUtil.locate(UserGroupGroupRoleFinder.class.getName());
+			_finder = (UserGroupGroupRoleFinder)PortalBeanLocatorUtil.locate(
+				UserGroupGroupRoleFinder.class.getName());
 
-			ReferenceRegistry.registerReference(UserGroupGroupRoleFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(
+				UserGroupGroupRoleFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -54,9 +62,10 @@ public class UserGroupGroupRoleFinderUtil {
 	public void setFinder(UserGroupGroupRoleFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(UserGroupGroupRoleFinderUtil.class,
-			"_finder");
+		ReferenceRegistry.registerReference(
+			UserGroupGroupRoleFinderUtil.class, "_finder");
 	}
 
 	private static UserGroupGroupRoleFinder _finder;
+
 }

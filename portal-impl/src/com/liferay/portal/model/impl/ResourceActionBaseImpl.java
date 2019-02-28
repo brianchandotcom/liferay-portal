@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ResourceActionBaseImpl extends ResourceActionModelImpl
-	implements ResourceAction {
+public abstract class ResourceActionBaseImpl
+	extends ResourceActionModelImpl implements ResourceAction {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ResourceActionBaseImpl extends ResourceActionModelImpl
 			ResourceActionLocalServiceUtil.updateResourceAction(this);
 		}
 	}
+
 }

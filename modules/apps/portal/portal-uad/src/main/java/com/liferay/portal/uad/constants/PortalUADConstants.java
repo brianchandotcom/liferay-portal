@@ -19,10 +19,15 @@ package com.liferay.portal.uad.constants;
  * @generated
  */
 public class PortalUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_PORTLET_ITEM = { "userId" };
-	public static final String[] USER_ID_FIELD_NAMES_REPOSITORY = { "userId" };
+
+	public static final String[] USER_ID_FIELD_NAMES_PORTLET_ITEM = {"userId"};
+
+	public static final String[] USER_ID_FIELD_NAMES_REPOSITORY = {"userId"};
+
 	public static final String[] USER_ID_FIELD_NAMES_REPOSITORY_ENTRY = {
-			"userId"
-		};
-	public static final String[] USER_ID_FIELD_NAMES_SYSTEM_EVENT = { "userId" };
+		"userId"
+	};
+
+	public static final String[] USER_ID_FIELD_NAMES_SYSTEM_EVENT = {"userId"};
+
 }

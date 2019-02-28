@@ -28,69 +28,78 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class ExpandoColumnLocalServiceWrapper
 	implements ExpandoColumnLocalService,
-		ServiceWrapper<ExpandoColumnLocalService> {
+			   ServiceWrapper<ExpandoColumnLocalService> {
+
 	public ExpandoColumnLocalServiceWrapper(
 		ExpandoColumnLocalService expandoColumnLocalService) {
+
 		_expandoColumnLocalService = expandoColumnLocalService;
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-		long tableId, String name, int type)
+			long tableId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.addColumn(tableId, name, type);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-		long tableId, String name, int type, Object defaultData)
+			long tableId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoColumnLocalService.addColumn(tableId, name, type,
-			defaultData);
+
+		return _expandoColumnLocalService.addColumn(
+			tableId, name, type, defaultData);
 	}
 
 	/**
-	* Adds the expando column to the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was added
-	*/
+	 * Adds the expando column to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoColumn the expando column
+	 * @return the expando column that was added
+	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn addExpandoColumn(
 		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
+
 		return _expandoColumnLocalService.addExpandoColumn(expandoColumn);
 	}
 
 	/**
-	* Creates a new expando column with the primary key. Does not add the expando column to the database.
-	*
-	* @param columnId the primary key for the new expando column
-	* @return the new expando column
-	*/
+	 * Creates a new expando column with the primary key. Does not add the expando column to the database.
+	 *
+	 * @param columnId the primary key for the new expando column
+	 * @return the new expando column
+	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn createExpandoColumn(
 		long columnId) {
+
 		return _expandoColumnLocalService.createExpandoColumn(columnId);
 	}
 
 	@Override
 	public void deleteColumn(
 		com.liferay.expando.kernel.model.ExpandoColumn column) {
+
 		_expandoColumnLocalService.deleteColumn(column);
 	}
 
 	@Override
 	public void deleteColumn(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_expandoColumnLocalService.deleteColumn(columnId);
 	}
 
 	@Override
-	public void deleteColumn(long companyId, long classNameId,
-		String tableName, String name)
+	public void deleteColumn(
+			long companyId, long classNameId, String tableName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoColumnLocalService.deleteColumn(companyId, classNameId,
-			tableName, name);
+
+		_expandoColumnLocalService.deleteColumn(
+			companyId, classNameId, tableName, name);
 	}
 
 	@Override
@@ -99,11 +108,12 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteColumn(long companyId, String className,
-		String tableName, String name)
+	public void deleteColumn(
+			long companyId, String className, String tableName, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoColumnLocalService.deleteColumn(companyId, className,
-			tableName, name);
+
+		_expandoColumnLocalService.deleteColumn(
+			companyId, className, tableName, name);
 	}
 
 	@Override
@@ -112,51 +122,59 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteColumns(long companyId, long classNameId, String tableName)
+	public void deleteColumns(
+			long companyId, long classNameId, String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoColumnLocalService.deleteColumns(companyId, classNameId,
-			tableName);
+
+		_expandoColumnLocalService.deleteColumns(
+			companyId, classNameId, tableName);
 	}
 
 	@Override
-	public void deleteColumns(long companyId, String className, String tableName)
+	public void deleteColumns(
+			long companyId, String className, String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoColumnLocalService.deleteColumns(companyId, className, tableName);
+
+		_expandoColumnLocalService.deleteColumns(
+			companyId, className, tableName);
 	}
 
 	/**
-	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was removed
-	*/
+	 * Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoColumn the expando column
+	 * @return the expando column that was removed
+	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn deleteExpandoColumn(
 		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
+
 		return _expandoColumnLocalService.deleteExpandoColumn(expandoColumn);
 	}
 
 	/**
-	* Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param columnId the primary key of the expando column
-	* @return the expando column that was removed
-	* @throws PortalException if a expando column with the primary key could not be found
-	*/
+	 * Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param columnId the primary key of the expando column
+	 * @return the expando column that was removed
+	 * @throws PortalException if a expando column with the primary key could not be found
+	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn deleteExpandoColumn(
-		long columnId)
+			long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.deleteExpandoColumn(columnId);
 	}
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+			com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.deletePersistedModel(persistedModel);
 	}
 
@@ -166,163 +184,184 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return _expandoColumnLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-		return _expandoColumnLocalService.dynamicQuery(dynamicQuery, start, end);
+
+		return _expandoColumnLocalService.dynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _expandoColumnLocalService.dynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+
+		return _expandoColumnLocalService.dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return _expandoColumnLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _expandoColumnLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+
+		return _expandoColumnLocalService.dynamicQueryCount(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn fetchExpandoColumn(
 		long columnId) {
+
 		return _expandoColumnLocalService.fetchExpandoColumn(columnId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
 		return _expandoColumnLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long columnId)
+			long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.getColumn(columnId);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getColumn(
 		long companyId, long classNameId, String tableName, String name) {
-		return _expandoColumnLocalService.getColumn(companyId, classNameId,
-			tableName, name);
+
+		return _expandoColumnLocalService.getColumn(
+			companyId, classNameId, tableName, name);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getColumn(
 		long tableId, String name) {
+
 		return _expandoColumnLocalService.getColumn(tableId, name);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getColumn(
 		long companyId, String className, String tableName, String name) {
-		return _expandoColumnLocalService.getColumn(companyId, className,
-			tableName, name);
+
+		return _expandoColumnLocalService.getColumn(
+			companyId, className, tableName, name);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long tableId) {
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getColumns(long tableId) {
+
 		return _expandoColumnLocalService.getColumns(tableId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long tableId, java.util.Collection<String> names) {
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getColumns(long tableId, java.util.Collection<String> names) {
+
 		return _expandoColumnLocalService.getColumns(tableId, names);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, long classNameId, String tableName) {
-		return _expandoColumnLocalService.getColumns(companyId, classNameId,
-			tableName);
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getColumns(long companyId, long classNameId, String tableName) {
+
+		return _expandoColumnLocalService.getColumns(
+			companyId, classNameId, tableName);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, long classNameId, String tableName,
-		java.util.Collection<String> names) {
-		return _expandoColumnLocalService.getColumns(companyId, classNameId,
-			tableName, names);
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getColumns(
+			long companyId, long classNameId, String tableName,
+			java.util.Collection<String> names) {
+
+		return _expandoColumnLocalService.getColumns(
+			companyId, classNameId, tableName, names);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, String className, String tableName) {
-		return _expandoColumnLocalService.getColumns(companyId, className,
-			tableName);
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getColumns(long companyId, String className, String tableName) {
+
+		return _expandoColumnLocalService.getColumns(
+			companyId, className, tableName);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
-		long companyId, String className, String tableName,
-		java.util.Collection<String> columnNames) {
-		return _expandoColumnLocalService.getColumns(companyId, className,
-			tableName, columnNames);
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getColumns(
+			long companyId, String className, String tableName,
+			java.util.Collection<String> columnNames) {
+
+		return _expandoColumnLocalService.getColumns(
+			companyId, className, tableName, columnNames);
 	}
 
 	@Override
@@ -331,110 +370,120 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	@Override
-	public int getColumnsCount(long companyId, long classNameId,
-		String tableName) {
-		return _expandoColumnLocalService.getColumnsCount(companyId,
-			classNameId, tableName);
+	public int getColumnsCount(
+		long companyId, long classNameId, String tableName) {
+
+		return _expandoColumnLocalService.getColumnsCount(
+			companyId, classNameId, tableName);
 	}
 
 	@Override
-	public int getColumnsCount(long companyId, String className,
-		String tableName) {
-		return _expandoColumnLocalService.getColumnsCount(companyId, className,
-			tableName);
+	public int getColumnsCount(
+		long companyId, String className, String tableName) {
+
+		return _expandoColumnLocalService.getColumnsCount(
+			companyId, className, tableName);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
 		long companyId, long classNameId, String name) {
-		return _expandoColumnLocalService.getDefaultTableColumn(companyId,
-			classNameId, name);
+
+		return _expandoColumnLocalService.getDefaultTableColumn(
+			companyId, classNameId, name);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
 		long companyId, String className, String name) {
-		return _expandoColumnLocalService.getDefaultTableColumn(companyId,
-			className, name);
+
+		return _expandoColumnLocalService.getDefaultTableColumn(
+			companyId, className, name);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
-		long companyId, long classNameId) {
-		return _expandoColumnLocalService.getDefaultTableColumns(companyId,
-			classNameId);
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getDefaultTableColumns(long companyId, long classNameId) {
+
+		return _expandoColumnLocalService.getDefaultTableColumns(
+			companyId, classNameId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
-		long companyId, String className) {
-		return _expandoColumnLocalService.getDefaultTableColumns(companyId,
-			className);
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getDefaultTableColumns(long companyId, String className) {
+
+		return _expandoColumnLocalService.getDefaultTableColumns(
+			companyId, className);
 	}
 
 	@Override
 	public int getDefaultTableColumnsCount(long companyId, long classNameId) {
-		return _expandoColumnLocalService.getDefaultTableColumnsCount(companyId,
-			classNameId);
+		return _expandoColumnLocalService.getDefaultTableColumnsCount(
+			companyId, classNameId);
 	}
 
 	@Override
 	public int getDefaultTableColumnsCount(long companyId, String className) {
-		return _expandoColumnLocalService.getDefaultTableColumnsCount(companyId,
-			className);
+		return _expandoColumnLocalService.getDefaultTableColumnsCount(
+			companyId, className);
 	}
 
 	/**
-	* Returns the expando column with the primary key.
-	*
-	* @param columnId the primary key of the expando column
-	* @return the expando column
-	* @throws PortalException if a expando column with the primary key could not be found
-	*/
+	 * Returns the expando column with the primary key.
+	 *
+	 * @param columnId the primary key of the expando column
+	 * @return the expando column
+	 * @throws PortalException if a expando column with the primary key could not be found
+	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn getExpandoColumn(
-		long columnId)
+			long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.getExpandoColumn(columnId);
 	}
 
 	/**
-	* Returns a range of all the expando columns.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of expando columns
-	* @param end the upper bound of the range of expando columns (not inclusive)
-	* @return the range of expando columns
-	*/
+	 * Returns a range of all the expando columns.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @return the range of expando columns
+	 */
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getExpandoColumns(
-		int start, int end) {
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoColumn>
+		getExpandoColumns(int start, int end) {
+
 		return _expandoColumnLocalService.getExpandoColumns(start, end);
 	}
 
 	/**
-	* Returns the number of expando columns.
-	*
-	* @return the number of expando columns
-	*/
+	 * Returns the number of expando columns.
+	 *
+	 * @return the number of expando columns
+	 */
 	@Override
 	public int getExpandoColumnsCount() {
 		return _expandoColumnLocalService.getExpandoColumnsCount();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
 		return _expandoColumnLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _expandoColumnLocalService.getOSGiServiceIdentifier();
@@ -442,44 +491,49 @@ public class ExpandoColumnLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+			java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, String name, int type)
+			long columnId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _expandoColumnLocalService.updateColumn(columnId, name, type);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, String name, int type, Object defaultData)
+			long columnId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoColumnLocalService.updateColumn(columnId, name, type,
-			defaultData);
+
+		return _expandoColumnLocalService.updateColumn(
+			columnId, name, type, defaultData);
 	}
 
 	/**
-	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was updated
-	*/
+	 * Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoColumn the expando column
+	 * @return the expando column that was updated
+	 */
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn updateExpandoColumn(
 		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
+
 		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
-		long columnId, String typeSettings)
+			long columnId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoColumnLocalService.updateTypeSettings(columnId,
-			typeSettings);
+
+		return _expandoColumnLocalService.updateTypeSettings(
+			columnId, typeSettings);
 	}
 
 	@Override
@@ -490,8 +544,10 @@ public class ExpandoColumnLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		ExpandoColumnLocalService expandoColumnLocalService) {
+
 		_expandoColumnLocalService = expandoColumnLocalService;
 	}
 
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
 }

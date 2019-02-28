@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class StagingServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,90 +41,100 @@ public class StagingServiceUtil {
 	 */
 	public static void cleanUpStagingRequest(long stagingRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().cleanUpStagingRequest(stagingRequestId);
 	}
 
 	public static long createStagingRequest(long groupId, String checksum)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().createStagingRequest(groupId, checksum);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static boolean hasRemoteLayout(String uuid, long groupId,
-		boolean privateLayout)
+	public static boolean hasRemoteLayout(
+			String uuid, long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().hasRemoteLayout(uuid, groupId, privateLayout);
 	}
 
-	public static void propagateExportImportLifecycleEvent(int code,
-		int processFlag, String processId,
-		java.util.List<java.io.Serializable> arguments)
+	public static void propagateExportImportLifecycleEvent(
+			int code, int processFlag, String processId,
+			java.util.List<java.io.Serializable> arguments)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.propagateExportImportLifecycleEvent(code, processFlag, processId,
-			arguments);
+
+		getService().propagateExportImportLifecycleEvent(
+			code, processFlag, processId, arguments);
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
-	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long stagingRequestId, boolean privateLayout,
-		java.util.Map<String, String[]> parameterMap)
+	public static com.liferay.exportimport.kernel.lar.MissingReferences
+			publishStagingRequest(
+				long stagingRequestId, boolean privateLayout,
+				java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .publishStagingRequest(stagingRequestId, privateLayout,
-			parameterMap);
+
+		return getService().publishStagingRequest(
+			stagingRequestId, privateLayout, parameterMap);
 	}
 
-	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long stagingRequestId,
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
+	public static com.liferay.exportimport.kernel.lar.MissingReferences
+			publishStagingRequest(
+				long stagingRequestId,
+				com.liferay.exportimport.kernel.model.ExportImportConfiguration
+					exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .publishStagingRequest(stagingRequestId,
-			exportImportConfiguration);
+
+		return getService().publishStagingRequest(
+			stagingRequestId, exportImportConfiguration);
 	}
 
-	public static void updateStagingRequest(long stagingRequestId,
-		String fileName, byte[] bytes)
+	public static void updateStagingRequest(
+			long stagingRequestId, String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().updateStagingRequest(stagingRequestId, fileName, bytes);
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#publishStagingRequest(long, boolean, Map)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #publishStagingRequest(long, boolean, Map)}
+	 */
 	@Deprecated
-	public static com.liferay.exportimport.kernel.lar.MissingReferences validateStagingRequest(
-		long stagingRequestId, boolean privateLayout,
-		java.util.Map<String, String[]> parameterMap)
+	public static com.liferay.exportimport.kernel.lar.MissingReferences
+			validateStagingRequest(
+				long stagingRequestId, boolean privateLayout,
+				java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .validateStagingRequest(stagingRequestId, privateLayout,
-			parameterMap);
+
+		return getService().validateStagingRequest(
+			stagingRequestId, privateLayout, parameterMap);
 	}
 
 	public static StagingService getService() {
 		if (_service == null) {
-			_service = (StagingService)PortalBeanLocatorUtil.locate(StagingService.class.getName());
+			_service = (StagingService)PortalBeanLocatorUtil.locate(
+				StagingService.class.getName());
 
-			ReferenceRegistry.registerReference(StagingServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				StagingServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static StagingService _service;
+
 }

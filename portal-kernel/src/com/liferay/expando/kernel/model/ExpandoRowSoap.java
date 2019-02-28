@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class ExpandoRowSoap implements Serializable {
+
 	public static ExpandoRowSoap toSoapModel(ExpandoRow model) {
 		ExpandoRowSoap soapModel = new ExpandoRowSoap();
 
@@ -70,7 +71,8 @@ public class ExpandoRowSoap implements Serializable {
 	}
 
 	public static ExpandoRowSoap[] toSoapModels(List<ExpandoRow> models) {
-		List<ExpandoRowSoap> soapModels = new ArrayList<ExpandoRowSoap>(models.size());
+		List<ExpandoRowSoap> soapModels = new ArrayList<ExpandoRowSoap>(
+			models.size());
 
 		for (ExpandoRow model : models) {
 			soapModels.add(toSoapModel(model));
@@ -135,4 +137,5 @@ public class ExpandoRowSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _tableId;
 	private long _classPK;
+
 }

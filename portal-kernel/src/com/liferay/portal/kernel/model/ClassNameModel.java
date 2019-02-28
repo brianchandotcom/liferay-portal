@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface ClassNameModel extends BaseModel<ClassName>, MVCCModel,
-	TypedModel {
+public interface ClassNameModel
+	extends BaseModel<ClassName>, MVCCModel, TypedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -108,4 +109,5 @@ public interface ClassNameModel extends BaseModel<ClassName>, MVCCModel,
 	 * @param value the value of this class name
 	 */
 	public void setValue(String value);
+
 }

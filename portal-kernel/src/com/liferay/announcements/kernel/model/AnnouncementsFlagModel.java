@@ -33,8 +33,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag>,
-	ShardedModel {
+public interface AnnouncementsFlagModel
+	extends BaseModel<AnnouncementsFlag>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -154,4 +155,5 @@ public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag>,
 	 * @param value the value of this announcements flag
 	 */
 	public void setValue(int value);
+
 }

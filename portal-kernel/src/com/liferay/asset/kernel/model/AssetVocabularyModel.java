@@ -39,8 +39,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
-	LocalizedModel, ShardedModel, StagedGroupedModel {
+public interface AssetVocabularyModel
+	extends BaseModel<AssetVocabulary>, LocalizedModel, ShardedModel,
+			StagedGroupedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -414,8 +416,8 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(String description, Locale locale,
-		Locale defaultLocale);
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -432,8 +434,8 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	 * @param descriptionMap the locales and localized descriptions of this asset vocabulary
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(Map<Locale, String> descriptionMap,
-		Locale defaultLocale);
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
 	 * Returns the settings of this asset vocabulary.
@@ -478,4 +480,5 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
+
 }

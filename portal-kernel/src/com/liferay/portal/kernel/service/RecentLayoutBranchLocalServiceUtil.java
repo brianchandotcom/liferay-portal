@@ -33,71 +33,84 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class RecentLayoutBranchLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RecentLayoutBranchLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch addRecentLayoutBranch(
-		long userId, long layoutBranchId, long layoutSetBranchId, long plid)
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+			addRecentLayoutBranch(
+				long userId, long layoutBranchId, long layoutSetBranchId,
+				long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRecentLayoutBranch(userId, layoutBranchId,
-			layoutSetBranchId, plid);
+
+		return getService().addRecentLayoutBranch(
+			userId, layoutBranchId, layoutSetBranchId, plid);
 	}
 
 	/**
-	* Adds the recent layout branch to the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutBranch the recent layout branch
-	* @return the recent layout branch that was added
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch addRecentLayoutBranch(
-		com.liferay.portal.kernel.model.RecentLayoutBranch recentLayoutBranch) {
+	 * Adds the recent layout branch to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param recentLayoutBranch the recent layout branch
+	 * @return the recent layout branch that was added
+	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+		addRecentLayoutBranch(
+			com.liferay.portal.kernel.model.RecentLayoutBranch
+				recentLayoutBranch) {
+
 		return getService().addRecentLayoutBranch(recentLayoutBranch);
 	}
 
 	/**
-	* Creates a new recent layout branch with the primary key. Does not add the recent layout branch to the database.
-	*
-	* @param recentLayoutBranchId the primary key for the new recent layout branch
-	* @return the new recent layout branch
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch createRecentLayoutBranch(
-		long recentLayoutBranchId) {
+	 * Creates a new recent layout branch with the primary key. Does not add the recent layout branch to the database.
+	 *
+	 * @param recentLayoutBranchId the primary key for the new recent layout branch
+	 * @return the new recent layout branch
+	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+		createRecentLayoutBranch(long recentLayoutBranchId) {
+
 		return getService().createRecentLayoutBranch(recentLayoutBranchId);
 	}
 
 	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			deletePersistedModel(
+				com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
-	* Deletes the recent layout branch with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutBranchId the primary key of the recent layout branch
-	* @return the recent layout branch that was removed
-	* @throws PortalException if a recent layout branch with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch deleteRecentLayoutBranch(
-		long recentLayoutBranchId)
+	 * Deletes the recent layout branch with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param recentLayoutBranchId the primary key of the recent layout branch
+	 * @return the recent layout branch that was removed
+	 * @throws PortalException if a recent layout branch with the primary key could not be found
+	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+			deleteRecentLayoutBranch(long recentLayoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().deleteRecentLayoutBranch(recentLayoutBranchId);
 	}
 
 	/**
-	* Deletes the recent layout branch from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutBranch the recent layout branch
-	* @return the recent layout branch that was removed
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch deleteRecentLayoutBranch(
-		com.liferay.portal.kernel.model.RecentLayoutBranch recentLayoutBranch) {
+	 * Deletes the recent layout branch from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param recentLayoutBranch the recent layout branch
+	 * @return the recent layout branch that was removed
+	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+		deleteRecentLayoutBranch(
+			com.liferay.portal.kernel.model.RecentLayoutBranch
+				recentLayoutBranch) {
+
 		return getService().deleteRecentLayoutBranch(recentLayoutBranch);
 	}
 
@@ -109,177 +122,202 @@ public class RecentLayoutBranchLocalServiceUtil {
 		getService().deleteUserRecentLayoutBranches(userId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
+		dynamicQuery() {
+
 		return getService().dynamicQuery();
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
+
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+
+		return getService().dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
+
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch fetchRecentLayoutBranch(
-		long recentLayoutBranchId) {
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+		fetchRecentLayoutBranch(long recentLayoutBranchId) {
+
 		return getService().fetchRecentLayoutBranch(recentLayoutBranchId);
 	}
 
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch fetchRecentLayoutBranch(
-		long userId, long layoutSetBranchId, long plid) {
-		return getService()
-				   .fetchRecentLayoutBranch(userId, layoutSetBranchId, plid);
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+		fetchRecentLayoutBranch(
+			long userId, long layoutSetBranchId, long plid) {
+
+		return getService().fetchRecentLayoutBranch(
+			userId, layoutSetBranchId, plid);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+	public static
+		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+			getIndexableActionableDynamicQuery() {
+
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static com.liferay.portal.kernel.model.PersistedModel
+			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	* Returns the recent layout branch with the primary key.
-	*
-	* @param recentLayoutBranchId the primary key of the recent layout branch
-	* @return the recent layout branch
-	* @throws PortalException if a recent layout branch with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch getRecentLayoutBranch(
-		long recentLayoutBranchId)
+	 * Returns the recent layout branch with the primary key.
+	 *
+	 * @param recentLayoutBranchId the primary key of the recent layout branch
+	 * @return the recent layout branch
+	 * @throws PortalException if a recent layout branch with the primary key could not be found
+	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+			getRecentLayoutBranch(long recentLayoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getRecentLayoutBranch(recentLayoutBranchId);
 	}
 
 	/**
-	* Returns a range of all the recent layout branchs.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of recent layout branchs
-	* @param end the upper bound of the range of recent layout branchs (not inclusive)
-	* @return the range of recent layout branchs
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.RecentLayoutBranch> getRecentLayoutBranchs(
-		int start, int end) {
+	 * Returns a range of all the recent layout branchs.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RecentLayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of recent layout branchs
+	 * @param end the upper bound of the range of recent layout branchs (not inclusive)
+	 * @return the range of recent layout branchs
+	 */
+	public static java.util.List
+		<com.liferay.portal.kernel.model.RecentLayoutBranch>
+			getRecentLayoutBranchs(int start, int end) {
+
 		return getService().getRecentLayoutBranchs(start, end);
 	}
 
 	/**
-	* Returns the number of recent layout branchs.
-	*
-	* @return the number of recent layout branchs
-	*/
+	 * Returns the number of recent layout branchs.
+	 *
+	 * @return the number of recent layout branchs
+	 */
 	public static int getRecentLayoutBranchsCount() {
 		return getService().getRecentLayoutBranchsCount();
 	}
 
 	/**
-	* Updates the recent layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutBranch the recent layout branch
-	* @return the recent layout branch that was updated
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutBranch updateRecentLayoutBranch(
-		com.liferay.portal.kernel.model.RecentLayoutBranch recentLayoutBranch) {
+	 * Updates the recent layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param recentLayoutBranch the recent layout branch
+	 * @return the recent layout branch that was updated
+	 */
+	public static com.liferay.portal.kernel.model.RecentLayoutBranch
+		updateRecentLayoutBranch(
+			com.liferay.portal.kernel.model.RecentLayoutBranch
+				recentLayoutBranch) {
+
 		return getService().updateRecentLayoutBranch(recentLayoutBranch);
 	}
 
 	public static RecentLayoutBranchLocalService getService() {
 		if (_service == null) {
-			_service = (RecentLayoutBranchLocalService)PortalBeanLocatorUtil.locate(RecentLayoutBranchLocalService.class.getName());
+			_service =
+				(RecentLayoutBranchLocalService)PortalBeanLocatorUtil.locate(
+					RecentLayoutBranchLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(RecentLayoutBranchLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				RecentLayoutBranchLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static RecentLayoutBranchLocalService _service;
+
 }

@@ -33,10 +33,13 @@ import java.util.Map;
  */
 @Deprecated
 @ProviderType
-public class ResourceTypePermissionWrapper extends BaseModelWrapper<ResourceTypePermission>
+public class ResourceTypePermissionWrapper
+	extends BaseModelWrapper<ResourceTypePermission>
 	implements ResourceTypePermission, ModelWrapper<ResourceTypePermission> {
+
 	public ResourceTypePermissionWrapper(
 		ResourceTypePermission resourceTypePermission) {
+
 		super(resourceTypePermission);
 	}
 
@@ -45,7 +48,8 @@ public class ResourceTypePermissionWrapper extends BaseModelWrapper<ResourceType
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("resourceTypePermissionId", getResourceTypePermissionId());
+		attributes.put(
+			"resourceTypePermissionId", getResourceTypePermissionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
@@ -64,7 +68,7 @@ public class ResourceTypePermissionWrapper extends BaseModelWrapper<ResourceType
 		}
 
 		Long resourceTypePermissionId = (Long)attributes.get(
-				"resourceTypePermissionId");
+			"resourceTypePermissionId");
 
 		if (resourceTypePermissionId != null) {
 			setResourceTypePermissionId(resourceTypePermissionId);
@@ -102,80 +106,80 @@ public class ResourceTypePermissionWrapper extends BaseModelWrapper<ResourceType
 	}
 
 	/**
-	* Returns the action IDs of this resource type permission.
-	*
-	* @return the action IDs of this resource type permission
-	*/
+	 * Returns the action IDs of this resource type permission.
+	 *
+	 * @return the action IDs of this resource type permission
+	 */
 	@Override
 	public long getActionIds() {
 		return model.getActionIds();
 	}
 
 	/**
-	* Returns the company ID of this resource type permission.
-	*
-	* @return the company ID of this resource type permission
-	*/
+	 * Returns the company ID of this resource type permission.
+	 *
+	 * @return the company ID of this resource type permission
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the group ID of this resource type permission.
-	*
-	* @return the group ID of this resource type permission
-	*/
+	 * Returns the group ID of this resource type permission.
+	 *
+	 * @return the group ID of this resource type permission
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the mvcc version of this resource type permission.
-	*
-	* @return the mvcc version of this resource type permission
-	*/
+	 * Returns the mvcc version of this resource type permission.
+	 *
+	 * @return the mvcc version of this resource type permission
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this resource type permission.
-	*
-	* @return the name of this resource type permission
-	*/
+	 * Returns the name of this resource type permission.
+	 *
+	 * @return the name of this resource type permission
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this resource type permission.
-	*
-	* @return the primary key of this resource type permission
-	*/
+	 * Returns the primary key of this resource type permission.
+	 *
+	 * @return the primary key of this resource type permission
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the resource type permission ID of this resource type permission.
-	*
-	* @return the resource type permission ID of this resource type permission
-	*/
+	 * Returns the resource type permission ID of this resource type permission.
+	 *
+	 * @return the resource type permission ID of this resource type permission
+	 */
 	@Override
 	public long getResourceTypePermissionId() {
 		return model.getResourceTypePermissionId();
 	}
 
 	/**
-	* Returns the role ID of this resource type permission.
-	*
-	* @return the role ID of this resource type permission
-	*/
+	 * Returns the role ID of this resource type permission.
+	 *
+	 * @return the role ID of this resource type permission
+	 */
 	@Override
 	public long getRoleId() {
 		return model.getRoleId();
@@ -202,80 +206,80 @@ public class ResourceTypePermissionWrapper extends BaseModelWrapper<ResourceType
 	}
 
 	/**
-	* Sets the action IDs of this resource type permission.
-	*
-	* @param actionIds the action IDs of this resource type permission
-	*/
+	 * Sets the action IDs of this resource type permission.
+	 *
+	 * @param actionIds the action IDs of this resource type permission
+	 */
 	@Override
 	public void setActionIds(long actionIds) {
 		model.setActionIds(actionIds);
 	}
 
 	/**
-	* Sets the company ID of this resource type permission.
-	*
-	* @param companyId the company ID of this resource type permission
-	*/
+	 * Sets the company ID of this resource type permission.
+	 *
+	 * @param companyId the company ID of this resource type permission
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the group ID of this resource type permission.
-	*
-	* @param groupId the group ID of this resource type permission
-	*/
+	 * Sets the group ID of this resource type permission.
+	 *
+	 * @param groupId the group ID of this resource type permission
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the mvcc version of this resource type permission.
-	*
-	* @param mvccVersion the mvcc version of this resource type permission
-	*/
+	 * Sets the mvcc version of this resource type permission.
+	 *
+	 * @param mvccVersion the mvcc version of this resource type permission
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this resource type permission.
-	*
-	* @param name the name of this resource type permission
-	*/
+	 * Sets the name of this resource type permission.
+	 *
+	 * @param name the name of this resource type permission
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this resource type permission.
-	*
-	* @param primaryKey the primary key of this resource type permission
-	*/
+	 * Sets the primary key of this resource type permission.
+	 *
+	 * @param primaryKey the primary key of this resource type permission
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the resource type permission ID of this resource type permission.
-	*
-	* @param resourceTypePermissionId the resource type permission ID of this resource type permission
-	*/
+	 * Sets the resource type permission ID of this resource type permission.
+	 *
+	 * @param resourceTypePermissionId the resource type permission ID of this resource type permission
+	 */
 	@Override
 	public void setResourceTypePermissionId(long resourceTypePermissionId) {
 		model.setResourceTypePermissionId(resourceTypePermissionId);
 	}
 
 	/**
-	* Sets the role ID of this resource type permission.
-	*
-	* @param roleId the role ID of this resource type permission
-	*/
+	 * Sets the role ID of this resource type permission.
+	 *
+	 * @param roleId the role ID of this resource type permission
+	 */
 	@Override
 	public void setRoleId(long roleId) {
 		model.setRoleId(roleId);
@@ -284,6 +288,8 @@ public class ResourceTypePermissionWrapper extends BaseModelWrapper<ResourceType
 	@Override
 	protected ResourceTypePermissionWrapper wrap(
 		ResourceTypePermission resourceTypePermission) {
+
 		return new ResourceTypePermissionWrapper(resourceTypePermission);
 	}
+
 }

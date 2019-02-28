@@ -33,62 +33,69 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class WebsiteServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.Website addWebsite(
-		String className, long classPK, String url, long typeId,
-		boolean primary, ServiceContext serviceContext)
+			String className, long classPK, String url, long typeId,
+			boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addWebsite(className, classPK, url, typeId, primary,
-			serviceContext);
+
+		return getService().addWebsite(
+			className, classPK, url, typeId, primary, serviceContext);
 	}
 
 	public static void deleteWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteWebsite(websiteId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.model.Website getWebsite(
-		long websiteId)
+			long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getWebsite(websiteId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
-		String className, long classPK)
+	public static java.util.List<com.liferay.portal.kernel.model.Website>
+			getWebsites(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getWebsites(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.model.Website updateWebsite(
-		long websiteId, String url, long typeId, boolean primary)
+			long websiteId, String url, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().updateWebsite(websiteId, url, typeId, primary);
 	}
 
 	public static WebsiteService getService() {
 		if (_service == null) {
-			_service = (WebsiteService)PortalBeanLocatorUtil.locate(WebsiteService.class.getName());
+			_service = (WebsiteService)PortalBeanLocatorUtil.locate(
+				WebsiteService.class.getName());
 
-			ReferenceRegistry.registerReference(WebsiteServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				WebsiteServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static WebsiteService _service;
+
 }

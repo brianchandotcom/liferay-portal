@@ -33,66 +33,76 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class DLFileShortcutServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.document.library.kernel.model.DLFileShortcut addFileShortcut(
-		long groupId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.document.library.kernel.model.DLFileShortcut
+			addFileShortcut(
+				long groupId, long repositoryId, long folderId,
+				long toFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addFileShortcut(groupId, repositoryId, folderId,
-			toFileEntryId, serviceContext);
+
+		return getService().addFileShortcut(
+			groupId, repositoryId, folderId, toFileEntryId, serviceContext);
 	}
 
 	public static void deleteFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteFileShortcut(fileShortcutId);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileShortcut getFileShortcut(
-		long fileShortcutId)
+	public static com.liferay.document.library.kernel.model.DLFileShortcut
+			getFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getFileShortcut(fileShortcutId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
-		long fileShortcutId, long repositoryId, long folderId,
-		long toFileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.document.library.kernel.model.DLFileShortcut
+			updateFileShortcut(
+				long fileShortcutId, long repositoryId, long folderId,
+				long toFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFileShortcut(fileShortcutId, repositoryId, folderId,
-			toFileEntryId, serviceContext);
+
+		return getService().updateFileShortcut(
+			fileShortcutId, repositoryId, folderId, toFileEntryId,
+			serviceContext);
 	}
 
-	public static void updateFileShortcuts(long oldToFileEntryId,
-		long newToFileEntryId)
+	public static void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
 	public static DLFileShortcutService getService() {
 		if (_service == null) {
-			_service = (DLFileShortcutService)PortalBeanLocatorUtil.locate(DLFileShortcutService.class.getName());
+			_service = (DLFileShortcutService)PortalBeanLocatorUtil.locate(
+				DLFileShortcutService.class.getName());
 
-			ReferenceRegistry.registerReference(DLFileShortcutServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				DLFileShortcutServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static DLFileShortcutService _service;
+
 }

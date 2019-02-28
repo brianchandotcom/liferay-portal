@@ -29,27 +29,33 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.powwow.model.impl.PowwowParticipantImpl")
 @ProviderType
-public interface PowwowParticipant extends PowwowParticipantModel, PersistedModel {
+public interface PowwowParticipant
+	extends PowwowParticipantModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.powwow.model.impl.PowwowParticipantImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PowwowParticipant, Long> POWWOW_PARTICIPANT_ID_ACCESSOR =
-		new Accessor<PowwowParticipant, Long>() {
-			@Override
-			public Long get(PowwowParticipant powwowParticipant) {
-				return powwowParticipant.getPowwowParticipantId();
-			}
+	public static final Accessor<PowwowParticipant, Long>
+		POWWOW_PARTICIPANT_ID_ACCESSOR =
+			new Accessor<PowwowParticipant, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(PowwowParticipant powwowParticipant) {
+					return powwowParticipant.getPowwowParticipantId();
+				}
 
-			@Override
-			public Class<PowwowParticipant> getTypeClass() {
-				return PowwowParticipant.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<PowwowParticipant> getTypeClass() {
+					return PowwowParticipant.class;
+				}
+
+			};
+
 }

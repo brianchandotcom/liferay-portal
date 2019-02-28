@@ -37,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class TicketPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +103,8 @@ public class TicketPersistenceTest {
 
 		_persistence.remove(newTicket);
 
-		Ticket existingTicket = _persistence.fetchByPrimaryKey(newTicket.getPrimaryKey());
+		Ticket existingTicket = _persistence.fetchByPrimaryKey(
+			newTicket.getPrimaryKey());
 
 		Assert.assertNull(existingTicket);
 	}
@@ -137,26 +140,28 @@ public class TicketPersistenceTest {
 
 		_tickets.add(_persistence.update(newTicket));
 
-		Ticket existingTicket = _persistence.findByPrimaryKey(newTicket.getPrimaryKey());
+		Ticket existingTicket = _persistence.findByPrimaryKey(
+			newTicket.getPrimaryKey());
 
-		Assert.assertEquals(existingTicket.getMvccVersion(),
-			newTicket.getMvccVersion());
-		Assert.assertEquals(existingTicket.getTicketId(),
-			newTicket.getTicketId());
-		Assert.assertEquals(existingTicket.getCompanyId(),
-			newTicket.getCompanyId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingTicket.getCreateDate()),
+		Assert.assertEquals(
+			existingTicket.getMvccVersion(), newTicket.getMvccVersion());
+		Assert.assertEquals(
+			existingTicket.getTicketId(), newTicket.getTicketId());
+		Assert.assertEquals(
+			existingTicket.getCompanyId(), newTicket.getCompanyId());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTicket.getCreateDate()),
 			Time.getShortTimestamp(newTicket.getCreateDate()));
-		Assert.assertEquals(existingTicket.getClassNameId(),
-			newTicket.getClassNameId());
-		Assert.assertEquals(existingTicket.getClassPK(), newTicket.getClassPK());
+		Assert.assertEquals(
+			existingTicket.getClassNameId(), newTicket.getClassNameId());
+		Assert.assertEquals(
+			existingTicket.getClassPK(), newTicket.getClassPK());
 		Assert.assertEquals(existingTicket.getKey(), newTicket.getKey());
 		Assert.assertEquals(existingTicket.getType(), newTicket.getType());
-		Assert.assertEquals(existingTicket.getExtraInfo(),
-			newTicket.getExtraInfo());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingTicket.getExpirationDate()),
+		Assert.assertEquals(
+			existingTicket.getExtraInfo(), newTicket.getExtraInfo());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTicket.getExpirationDate()),
 			Time.getShortTimestamp(newTicket.getExpirationDate()));
 	}
 
@@ -171,17 +176,18 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testCountByC_C_T() throws Exception {
-		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
 		_persistence.countByC_C_T(0L, 0L, 0);
 	}
 
 	@Test
 	public void testCountByC_C_C_T() throws Exception {
-		_persistence.countByC_C_C_T(RandomTestUtil.nextLong(),
+		_persistence.countByC_C_C_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByC_C_C_T(0L, 0L, 0L, 0);
 	}
@@ -190,7 +196,8 @@ public class TicketPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Ticket newTicket = addTicket();
 
-		Ticket existingTicket = _persistence.findByPrimaryKey(newTicket.getPrimaryKey());
+		Ticket existingTicket = _persistence.findByPrimaryKey(
+			newTicket.getPrimaryKey());
 
 		Assert.assertEquals(existingTicket, newTicket);
 	}
@@ -204,22 +211,23 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Ticket> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Ticket", "mvccVersion",
-			true, "ticketId", true, "companyId", true, "createDate", true,
-			"classNameId", true, "classPK", true, "key", true, "type", true,
-			"expirationDate", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Ticket", "mvccVersion", true, "ticketId", true, "companyId", true,
+			"createDate", true, "classNameId", true, "classPK", true, "key",
+			true, "type", true, "expirationDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Ticket newTicket = addTicket();
 
-		Ticket existingTicket = _persistence.fetchByPrimaryKey(newTicket.getPrimaryKey());
+		Ticket existingTicket = _persistence.fetchByPrimaryKey(
+			newTicket.getPrimaryKey());
 
 		Assert.assertEquals(existingTicket, newTicket);
 	}
@@ -236,6 +244,7 @@ public class TicketPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Ticket newTicket1 = addTicket();
 		Ticket newTicket2 = addTicket();
 
@@ -244,16 +253,20 @@ public class TicketPersistenceTest {
 		primaryKeys.add(newTicket1.getPrimaryKey());
 		primaryKeys.add(newTicket2.getPrimaryKey());
 
-		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, tickets.size());
-		Assert.assertEquals(newTicket1, tickets.get(newTicket1.getPrimaryKey()));
-		Assert.assertEquals(newTicket2, tickets.get(newTicket2.getPrimaryKey()));
+		Assert.assertEquals(
+			newTicket1, tickets.get(newTicket1.getPrimaryKey()));
+		Assert.assertEquals(
+			newTicket2, tickets.get(newTicket2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -263,7 +276,8 @@ public class TicketPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(tickets.isEmpty());
 	}
@@ -271,6 +285,7 @@ public class TicketPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Ticket newTicket = addTicket();
 
 		long pk = RandomTestUtil.nextLong();
@@ -280,32 +295,33 @@ public class TicketPersistenceTest {
 		primaryKeys.add(newTicket.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, tickets.size());
 		Assert.assertEquals(newTicket, tickets.get(newTicket.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(tickets.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Ticket newTicket = addTicket();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newTicket.getPrimaryKey());
 
-		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Ticket> tickets = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, tickets.size());
 		Assert.assertEquals(newTicket, tickets.get(newTicket.getPrimaryKey()));
@@ -315,15 +331,19 @@ public class TicketPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = TicketLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			TicketLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Ticket>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Ticket>() {
+
 				@Override
 				public void performAction(Ticket ticket) {
 					Assert.assertNotNull(ticket);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -332,15 +352,14 @@ public class TicketPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Ticket newTicket = addTicket();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Ticket.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("ticketId",
-				newTicket.getTicketId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("ticketId", newTicket.getTicketId()));
 
 		List<Ticket> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -353,11 +372,11 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Ticket.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("ticketId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("ticketId", RandomTestUtil.nextLong()));
 
 		List<Ticket> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -365,19 +384,18 @@ public class TicketPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Ticket newTicket = addTicket();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Ticket.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ticketId"));
 
 		Object newTicketId = newTicket.getTicketId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("ticketId",
-				new Object[] { newTicketId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("ticketId", new Object[] {newTicketId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -390,13 +408,14 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Ticket.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ticketId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("ticketId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"ticketId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -409,11 +428,14 @@ public class TicketPersistenceTest {
 
 		_persistence.clearCache();
 
-		Ticket existingTicket = _persistence.findByPrimaryKey(newTicket.getPrimaryKey());
+		Ticket existingTicket = _persistence.findByPrimaryKey(
+			newTicket.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingTicket.getKey(),
-				ReflectionTestUtil.invoke(existingTicket, "getOriginalKey",
-					new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
+				existingTicket.getKey(),
+				ReflectionTestUtil.invoke(
+					existingTicket, "getOriginalKey", new Class<?>[0])));
 	}
 
 	protected Ticket addTicket() throws Exception {
@@ -447,4 +469,5 @@ public class TicketPersistenceTest {
 	private List<Ticket> _tickets = new ArrayList<Ticket>();
 	private TicketPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

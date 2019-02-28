@@ -26,30 +26,37 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see WorkflowInstanceLinkModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.model.impl.WorkflowInstanceLinkImpl")
+@ImplementationClassName(
+	"com.liferay.portal.model.impl.WorkflowInstanceLinkImpl"
+)
 @ProviderType
-public interface WorkflowInstanceLink extends WorkflowInstanceLinkModel,
-	PersistedModel {
+public interface WorkflowInstanceLink
+	extends WorkflowInstanceLinkModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WorkflowInstanceLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<WorkflowInstanceLink, Long> WORKFLOW_INSTANCE_LINK_ID_ACCESSOR =
-		new Accessor<WorkflowInstanceLink, Long>() {
-			@Override
-			public Long get(WorkflowInstanceLink workflowInstanceLink) {
-				return workflowInstanceLink.getWorkflowInstanceLinkId();
-			}
+	public static final Accessor<WorkflowInstanceLink, Long>
+		WORKFLOW_INSTANCE_LINK_ID_ACCESSOR =
+			new Accessor<WorkflowInstanceLink, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(WorkflowInstanceLink workflowInstanceLink) {
+					return workflowInstanceLink.getWorkflowInstanceLinkId();
+				}
 
-			@Override
-			public Class<WorkflowInstanceLink> getTypeClass() {
-				return WorkflowInstanceLink.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<WorkflowInstanceLink> getTypeClass() {
+					return WorkflowInstanceLink.class;
+				}
+
+			};
+
 }

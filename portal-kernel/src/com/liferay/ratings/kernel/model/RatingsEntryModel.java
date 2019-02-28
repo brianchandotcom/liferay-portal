@@ -36,8 +36,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry>,
-	ShardedModel, StagedAuditedModel {
+public interface RatingsEntryModel
+	extends AttachedModel, BaseModel<RatingsEntry>, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -241,4 +243,5 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	 * @param score the score of this ratings entry
 	 */
 	public void setScore(double score);
+
 }

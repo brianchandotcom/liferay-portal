@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class AssetTagSoap implements Serializable {
+
 	public static AssetTagSoap toSoapModel(AssetTag model) {
 		AssetTagSoap soapModel = new AssetTagSoap();
 
@@ -76,7 +77,8 @@ public class AssetTagSoap implements Serializable {
 	}
 
 	public static AssetTagSoap[] toSoapModels(List<AssetTag> models) {
-		List<AssetTagSoap> soapModels = new ArrayList<AssetTagSoap>(models.size());
+		List<AssetTagSoap> soapModels = new ArrayList<AssetTagSoap>(
+			models.size());
 
 		for (AssetTag model : models) {
 			soapModels.add(toSoapModel(model));
@@ -195,4 +197,5 @@ public class AssetTagSoap implements Serializable {
 	private String _name;
 	private int _assetCount;
 	private Date _lastPublishDate;
+
 }

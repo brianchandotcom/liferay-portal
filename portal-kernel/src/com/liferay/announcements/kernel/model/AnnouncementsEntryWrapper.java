@@ -17,7 +17,6 @@ package com.liferay.announcements.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,8 +34,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEntry>
+public class AnnouncementsEntryWrapper
+	extends BaseModelWrapper<AnnouncementsEntry>
 	implements AnnouncementsEntry, ModelWrapper<AnnouncementsEntry> {
+
 	public AnnouncementsEntryWrapper(AnnouncementsEntry announcementsEntry) {
 		super(announcementsEntry);
 	}
@@ -172,100 +173,100 @@ public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEnt
 	}
 
 	/**
-	* Returns the alert of this announcements entry.
-	*
-	* @return the alert of this announcements entry
-	*/
+	 * Returns the alert of this announcements entry.
+	 *
+	 * @return the alert of this announcements entry
+	 */
 	@Override
 	public boolean getAlert() {
 		return model.getAlert();
 	}
 
 	/**
-	* Returns the fully qualified class name of this announcements entry.
-	*
-	* @return the fully qualified class name of this announcements entry
-	*/
+	 * Returns the fully qualified class name of this announcements entry.
+	 *
+	 * @return the fully qualified class name of this announcements entry
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this announcements entry.
-	*
-	* @return the class name ID of this announcements entry
-	*/
+	 * Returns the class name ID of this announcements entry.
+	 *
+	 * @return the class name ID of this announcements entry
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the class pk of this announcements entry.
-	*
-	* @return the class pk of this announcements entry
-	*/
+	 * Returns the class pk of this announcements entry.
+	 *
+	 * @return the class pk of this announcements entry
+	 */
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	* Returns the company ID of this announcements entry.
-	*
-	* @return the company ID of this announcements entry
-	*/
+	 * Returns the company ID of this announcements entry.
+	 *
+	 * @return the company ID of this announcements entry
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the content of this announcements entry.
-	*
-	* @return the content of this announcements entry
-	*/
+	 * Returns the content of this announcements entry.
+	 *
+	 * @return the content of this announcements entry
+	 */
 	@Override
 	public String getContent() {
 		return model.getContent();
 	}
 
 	/**
-	* Returns the create date of this announcements entry.
-	*
-	* @return the create date of this announcements entry
-	*/
+	 * Returns the create date of this announcements entry.
+	 *
+	 * @return the create date of this announcements entry
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the display date of this announcements entry.
-	*
-	* @return the display date of this announcements entry
-	*/
+	 * Returns the display date of this announcements entry.
+	 *
+	 * @return the display date of this announcements entry
+	 */
 	@Override
 	public Date getDisplayDate() {
 		return model.getDisplayDate();
 	}
 
 	/**
-	* Returns the entry ID of this announcements entry.
-	*
-	* @return the entry ID of this announcements entry
-	*/
+	 * Returns the entry ID of this announcements entry.
+	 *
+	 * @return the entry ID of this announcements entry
+	 */
 	@Override
 	public long getEntryId() {
 		return model.getEntryId();
 	}
 
 	/**
-	* Returns the expiration date of this announcements entry.
-	*
-	* @return the expiration date of this announcements entry
-	*/
+	 * Returns the expiration date of this announcements entry.
+	 *
+	 * @return the expiration date of this announcements entry
+	 */
 	@Override
 	public Date getExpirationDate() {
 		return model.getExpirationDate();
@@ -274,114 +275,115 @@ public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEnt
 	@Override
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this announcements entry.
-	*
-	* @return the modified date of this announcements entry
-	*/
+	 * Returns the modified date of this announcements entry.
+	 *
+	 * @return the modified date of this announcements entry
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the primary key of this announcements entry.
-	*
-	* @return the primary key of this announcements entry
-	*/
+	 * Returns the primary key of this announcements entry.
+	 *
+	 * @return the primary key of this announcements entry
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the priority of this announcements entry.
-	*
-	* @return the priority of this announcements entry
-	*/
+	 * Returns the priority of this announcements entry.
+	 *
+	 * @return the priority of this announcements entry
+	 */
 	@Override
 	public int getPriority() {
 		return model.getPriority();
 	}
 
 	/**
-	* Returns the title of this announcements entry.
-	*
-	* @return the title of this announcements entry
-	*/
+	 * Returns the title of this announcements entry.
+	 *
+	 * @return the title of this announcements entry
+	 */
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	* Returns the type of this announcements entry.
-	*
-	* @return the type of this announcements entry
-	*/
+	 * Returns the type of this announcements entry.
+	 *
+	 * @return the type of this announcements entry
+	 */
 	@Override
 	public String getType() {
 		return model.getType();
 	}
 
 	/**
-	* Returns the url of this announcements entry.
-	*
-	* @return the url of this announcements entry
-	*/
+	 * Returns the url of this announcements entry.
+	 *
+	 * @return the url of this announcements entry
+	 */
 	@Override
 	public String getUrl() {
 		return model.getUrl();
 	}
 
 	/**
-	* Returns the user ID of this announcements entry.
-	*
-	* @return the user ID of this announcements entry
-	*/
+	 * Returns the user ID of this announcements entry.
+	 *
+	 * @return the user ID of this announcements entry
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this announcements entry.
-	*
-	* @return the user name of this announcements entry
-	*/
+	 * Returns the user name of this announcements entry.
+	 *
+	 * @return the user name of this announcements entry
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this announcements entry.
-	*
-	* @return the user uuid of this announcements entry
-	*/
+	 * Returns the user uuid of this announcements entry.
+	 *
+	 * @return the user uuid of this announcements entry
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this announcements entry.
-	*
-	* @return the uuid of this announcements entry
-	*/
+	 * Returns the uuid of this announcements entry.
+	 *
+	 * @return the uuid of this announcements entry
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	* Returns <code>true</code> if this announcements entry is alert.
-	*
-	* @return <code>true</code> if this announcements entry is alert; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this announcements entry is alert.
+	 *
+	 * @return <code>true</code> if this announcements entry is alert; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isAlert() {
 		return model.isAlert();
@@ -393,10 +395,10 @@ public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEnt
 	}
 
 	/**
-	* Sets whether this announcements entry is alert.
-	*
-	* @param alert the alert of this announcements entry
-	*/
+	 * Sets whether this announcements entry is alert.
+	 *
+	 * @param alert the alert of this announcements entry
+	 */
 	@Override
 	public void setAlert(boolean alert) {
 		model.setAlert(alert);
@@ -408,180 +410,180 @@ public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEnt
 	}
 
 	/**
-	* Sets the class name ID of this announcements entry.
-	*
-	* @param classNameId the class name ID of this announcements entry
-	*/
+	 * Sets the class name ID of this announcements entry.
+	 *
+	 * @param classNameId the class name ID of this announcements entry
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the class pk of this announcements entry.
-	*
-	* @param classPK the class pk of this announcements entry
-	*/
+	 * Sets the class pk of this announcements entry.
+	 *
+	 * @param classPK the class pk of this announcements entry
+	 */
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	* Sets the company ID of this announcements entry.
-	*
-	* @param companyId the company ID of this announcements entry
-	*/
+	 * Sets the company ID of this announcements entry.
+	 *
+	 * @param companyId the company ID of this announcements entry
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the content of this announcements entry.
-	*
-	* @param content the content of this announcements entry
-	*/
+	 * Sets the content of this announcements entry.
+	 *
+	 * @param content the content of this announcements entry
+	 */
 	@Override
 	public void setContent(String content) {
 		model.setContent(content);
 	}
 
 	/**
-	* Sets the create date of this announcements entry.
-	*
-	* @param createDate the create date of this announcements entry
-	*/
+	 * Sets the create date of this announcements entry.
+	 *
+	 * @param createDate the create date of this announcements entry
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the display date of this announcements entry.
-	*
-	* @param displayDate the display date of this announcements entry
-	*/
+	 * Sets the display date of this announcements entry.
+	 *
+	 * @param displayDate the display date of this announcements entry
+	 */
 	@Override
 	public void setDisplayDate(Date displayDate) {
 		model.setDisplayDate(displayDate);
 	}
 
 	/**
-	* Sets the entry ID of this announcements entry.
-	*
-	* @param entryId the entry ID of this announcements entry
-	*/
+	 * Sets the entry ID of this announcements entry.
+	 *
+	 * @param entryId the entry ID of this announcements entry
+	 */
 	@Override
 	public void setEntryId(long entryId) {
 		model.setEntryId(entryId);
 	}
 
 	/**
-	* Sets the expiration date of this announcements entry.
-	*
-	* @param expirationDate the expiration date of this announcements entry
-	*/
+	 * Sets the expiration date of this announcements entry.
+	 *
+	 * @param expirationDate the expiration date of this announcements entry
+	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		model.setExpirationDate(expirationDate);
 	}
 
 	/**
-	* Sets the modified date of this announcements entry.
-	*
-	* @param modifiedDate the modified date of this announcements entry
-	*/
+	 * Sets the modified date of this announcements entry.
+	 *
+	 * @param modifiedDate the modified date of this announcements entry
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the primary key of this announcements entry.
-	*
-	* @param primaryKey the primary key of this announcements entry
-	*/
+	 * Sets the primary key of this announcements entry.
+	 *
+	 * @param primaryKey the primary key of this announcements entry
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the priority of this announcements entry.
-	*
-	* @param priority the priority of this announcements entry
-	*/
+	 * Sets the priority of this announcements entry.
+	 *
+	 * @param priority the priority of this announcements entry
+	 */
 	@Override
 	public void setPriority(int priority) {
 		model.setPriority(priority);
 	}
 
 	/**
-	* Sets the title of this announcements entry.
-	*
-	* @param title the title of this announcements entry
-	*/
+	 * Sets the title of this announcements entry.
+	 *
+	 * @param title the title of this announcements entry
+	 */
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
 	}
 
 	/**
-	* Sets the type of this announcements entry.
-	*
-	* @param type the type of this announcements entry
-	*/
+	 * Sets the type of this announcements entry.
+	 *
+	 * @param type the type of this announcements entry
+	 */
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	* Sets the url of this announcements entry.
-	*
-	* @param url the url of this announcements entry
-	*/
+	 * Sets the url of this announcements entry.
+	 *
+	 * @param url the url of this announcements entry
+	 */
 	@Override
 	public void setUrl(String url) {
 		model.setUrl(url);
 	}
 
 	/**
-	* Sets the user ID of this announcements entry.
-	*
-	* @param userId the user ID of this announcements entry
-	*/
+	 * Sets the user ID of this announcements entry.
+	 *
+	 * @param userId the user ID of this announcements entry
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this announcements entry.
-	*
-	* @param userName the user name of this announcements entry
-	*/
+	 * Sets the user name of this announcements entry.
+	 *
+	 * @param userName the user name of this announcements entry
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this announcements entry.
-	*
-	* @param userUuid the user uuid of this announcements entry
-	*/
+	 * Sets the user uuid of this announcements entry.
+	 *
+	 * @param userUuid the user uuid of this announcements entry
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this announcements entry.
-	*
-	* @param uuid the uuid of this announcements entry
-	*/
+	 * Sets the uuid of this announcements entry.
+	 *
+	 * @param uuid the uuid of this announcements entry
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -595,6 +597,8 @@ public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEnt
 	@Override
 	protected AnnouncementsEntryWrapper wrap(
 		AnnouncementsEntry announcementsEntry) {
+
 		return new AnnouncementsEntryWrapper(announcementsEntry);
 	}
+
 }

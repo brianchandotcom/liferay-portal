@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ContactPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,8 @@ public class ContactPersistenceTest {
 
 		_persistence.remove(newContact);
 
-		Contact existingContact = _persistence.fetchByPrimaryKey(newContact.getPrimaryKey());
+		Contact existingContact = _persistence.fetchByPrimaryKey(
+			newContact.getPrimaryKey());
 
 		Assert.assertNull(existingContact);
 	}
@@ -173,65 +176,71 @@ public class ContactPersistenceTest {
 
 		_contacts.add(_persistence.update(newContact));
 
-		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
+		Contact existingContact = _persistence.findByPrimaryKey(
+			newContact.getPrimaryKey());
 
-		Assert.assertEquals(existingContact.getMvccVersion(),
-			newContact.getMvccVersion());
-		Assert.assertEquals(existingContact.getContactId(),
-			newContact.getContactId());
-		Assert.assertEquals(existingContact.getCompanyId(),
-			newContact.getCompanyId());
-		Assert.assertEquals(existingContact.getUserId(), newContact.getUserId());
-		Assert.assertEquals(existingContact.getUserName(),
-			newContact.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingContact.getCreateDate()),
+		Assert.assertEquals(
+			existingContact.getMvccVersion(), newContact.getMvccVersion());
+		Assert.assertEquals(
+			existingContact.getContactId(), newContact.getContactId());
+		Assert.assertEquals(
+			existingContact.getCompanyId(), newContact.getCompanyId());
+		Assert.assertEquals(
+			existingContact.getUserId(), newContact.getUserId());
+		Assert.assertEquals(
+			existingContact.getUserName(), newContact.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingContact.getCreateDate()),
 			Time.getShortTimestamp(newContact.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingContact.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingContact.getModifiedDate()),
 			Time.getShortTimestamp(newContact.getModifiedDate()));
-		Assert.assertEquals(existingContact.getClassNameId(),
-			newContact.getClassNameId());
-		Assert.assertEquals(existingContact.getClassPK(),
-			newContact.getClassPK());
-		Assert.assertEquals(existingContact.getAccountId(),
-			newContact.getAccountId());
-		Assert.assertEquals(existingContact.getParentContactId(),
+		Assert.assertEquals(
+			existingContact.getClassNameId(), newContact.getClassNameId());
+		Assert.assertEquals(
+			existingContact.getClassPK(), newContact.getClassPK());
+		Assert.assertEquals(
+			existingContact.getAccountId(), newContact.getAccountId());
+		Assert.assertEquals(
+			existingContact.getParentContactId(),
 			newContact.getParentContactId());
-		Assert.assertEquals(existingContact.getEmailAddress(),
-			newContact.getEmailAddress());
-		Assert.assertEquals(existingContact.getFirstName(),
-			newContact.getFirstName());
-		Assert.assertEquals(existingContact.getMiddleName(),
-			newContact.getMiddleName());
-		Assert.assertEquals(existingContact.getLastName(),
-			newContact.getLastName());
-		Assert.assertEquals(existingContact.getPrefixId(),
-			newContact.getPrefixId());
-		Assert.assertEquals(existingContact.getSuffixId(),
-			newContact.getSuffixId());
+		Assert.assertEquals(
+			existingContact.getEmailAddress(), newContact.getEmailAddress());
+		Assert.assertEquals(
+			existingContact.getFirstName(), newContact.getFirstName());
+		Assert.assertEquals(
+			existingContact.getMiddleName(), newContact.getMiddleName());
+		Assert.assertEquals(
+			existingContact.getLastName(), newContact.getLastName());
+		Assert.assertEquals(
+			existingContact.getPrefixId(), newContact.getPrefixId());
+		Assert.assertEquals(
+			existingContact.getSuffixId(), newContact.getSuffixId());
 		Assert.assertEquals(existingContact.isMale(), newContact.isMale());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingContact.getBirthday()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingContact.getBirthday()),
 			Time.getShortTimestamp(newContact.getBirthday()));
 		Assert.assertEquals(existingContact.getSmsSn(), newContact.getSmsSn());
-		Assert.assertEquals(existingContact.getFacebookSn(),
-			newContact.getFacebookSn());
-		Assert.assertEquals(existingContact.getJabberSn(),
-			newContact.getJabberSn());
-		Assert.assertEquals(existingContact.getSkypeSn(),
-			newContact.getSkypeSn());
-		Assert.assertEquals(existingContact.getTwitterSn(),
-			newContact.getTwitterSn());
-		Assert.assertEquals(existingContact.getEmployeeStatusId(),
+		Assert.assertEquals(
+			existingContact.getFacebookSn(), newContact.getFacebookSn());
+		Assert.assertEquals(
+			existingContact.getJabberSn(), newContact.getJabberSn());
+		Assert.assertEquals(
+			existingContact.getSkypeSn(), newContact.getSkypeSn());
+		Assert.assertEquals(
+			existingContact.getTwitterSn(), newContact.getTwitterSn());
+		Assert.assertEquals(
+			existingContact.getEmployeeStatusId(),
 			newContact.getEmployeeStatusId());
-		Assert.assertEquals(existingContact.getEmployeeNumber(),
+		Assert.assertEquals(
+			existingContact.getEmployeeNumber(),
 			newContact.getEmployeeNumber());
-		Assert.assertEquals(existingContact.getJobTitle(),
-			newContact.getJobTitle());
-		Assert.assertEquals(existingContact.getJobClass(),
-			newContact.getJobClass());
-		Assert.assertEquals(existingContact.getHoursOfOperation(),
+		Assert.assertEquals(
+			existingContact.getJobTitle(), newContact.getJobTitle());
+		Assert.assertEquals(
+			existingContact.getJobClass(), newContact.getJobClass());
+		Assert.assertEquals(
+			existingContact.getHoursOfOperation(),
 			newContact.getHoursOfOperation());
 	}
 
@@ -251,8 +260,8 @@ public class ContactPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
@@ -261,7 +270,8 @@ public class ContactPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Contact newContact = addContact();
 
-		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
+		Contact existingContact = _persistence.findByPrimaryKey(
+			newContact.getPrimaryKey());
 
 		Assert.assertEquals(existingContact, newContact);
 	}
@@ -275,28 +285,29 @@ public class ContactPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Contact> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Contact_", "mvccVersion",
-			true, "contactId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "accountId", true,
-			"parentContactId", true, "emailAddress", true, "firstName", true,
-			"middleName", true, "lastName", true, "prefixId", true, "suffixId",
-			true, "male", true, "birthday", true, "smsSn", true, "facebookSn",
-			true, "jabberSn", true, "skypeSn", true, "twitterSn", true,
-			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
-			"jobClass", true, "hoursOfOperation", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Contact_", "mvccVersion", true, "contactId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"accountId", true, "parentContactId", true, "emailAddress", true,
+			"firstName", true, "middleName", true, "lastName", true, "prefixId",
+			true, "suffixId", true, "male", true, "birthday", true, "smsSn",
+			true, "facebookSn", true, "jabberSn", true, "skypeSn", true,
+			"twitterSn", true, "employeeStatusId", true, "employeeNumber", true,
+			"jobTitle", true, "jobClass", true, "hoursOfOperation", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Contact newContact = addContact();
 
-		Contact existingContact = _persistence.fetchByPrimaryKey(newContact.getPrimaryKey());
+		Contact existingContact = _persistence.fetchByPrimaryKey(
+			newContact.getPrimaryKey());
 
 		Assert.assertEquals(existingContact, newContact);
 	}
@@ -313,6 +324,7 @@ public class ContactPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Contact newContact1 = addContact();
 		Contact newContact2 = addContact();
 
@@ -321,18 +333,20 @@ public class ContactPersistenceTest {
 		primaryKeys.add(newContact1.getPrimaryKey());
 		primaryKeys.add(newContact2.getPrimaryKey());
 
-		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, contacts.size());
-		Assert.assertEquals(newContact1,
-			contacts.get(newContact1.getPrimaryKey()));
-		Assert.assertEquals(newContact2,
-			contacts.get(newContact2.getPrimaryKey()));
+		Assert.assertEquals(
+			newContact1, contacts.get(newContact1.getPrimaryKey()));
+		Assert.assertEquals(
+			newContact2, contacts.get(newContact2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -342,7 +356,8 @@ public class ContactPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(contacts.isEmpty());
 	}
@@ -350,6 +365,7 @@ public class ContactPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Contact newContact = addContact();
 
 		long pk = RandomTestUtil.nextLong();
@@ -359,50 +375,57 @@ public class ContactPersistenceTest {
 		primaryKeys.add(newContact.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, contacts.size());
-		Assert.assertEquals(newContact, contacts.get(newContact.getPrimaryKey()));
+		Assert.assertEquals(
+			newContact, contacts.get(newContact.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(contacts.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Contact newContact = addContact();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newContact.getPrimaryKey());
 
-		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Contact> contacts = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, contacts.size());
-		Assert.assertEquals(newContact, contacts.get(newContact.getPrimaryKey()));
+		Assert.assertEquals(
+			newContact, contacts.get(newContact.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ContactLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ContactLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Contact>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Contact>() {
+
 				@Override
 				public void performAction(Contact contact) {
 					Assert.assertNotNull(contact);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -411,15 +434,14 @@ public class ContactPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Contact newContact = addContact();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Contact.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Contact.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("contactId",
-				newContact.getContactId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("contactId", newContact.getContactId()));
 
 		List<Contact> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -432,11 +454,11 @@ public class ContactPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Contact.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Contact.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("contactId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("contactId", RandomTestUtil.nextLong()));
 
 		List<Contact> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -444,19 +466,19 @@ public class ContactPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Contact newContact = addContact();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Contact.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Contact.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contactId"));
 
 		Object newContactId = newContact.getContactId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("contactId",
-				new Object[] { newContactId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"contactId", new Object[] {newContactId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -469,13 +491,14 @@ public class ContactPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Contact.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Contact.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contactId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("contactId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"contactId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -551,4 +574,5 @@ public class ContactPersistenceTest {
 	private List<Contact> _contacts = new ArrayList<Contact>();
 	private ContactPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

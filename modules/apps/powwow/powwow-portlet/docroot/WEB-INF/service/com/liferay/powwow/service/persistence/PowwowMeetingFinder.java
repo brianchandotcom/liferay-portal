@@ -22,9 +22,11 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface PowwowMeetingFinder {
+
 	public int countByU_S(long userId, int[] statuses);
 
 	public java.util.List<com.liferay.powwow.model.PowwowMeeting> findByU_S(
 		long userId, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
 }

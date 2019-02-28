@@ -39,38 +39,45 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface LayoutSetBranchService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetBranchServiceUtil} to access the layout set branch remote service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutSetBranchServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutSetBranch addLayoutSetBranch(long groupId,
-		boolean privateLayout, String name, String description, boolean master,
-		long copyLayoutSetBranchId, ServiceContext serviceContext)
+	public LayoutSetBranch addLayoutSetBranch(
+			long groupId, boolean privateLayout, String name,
+			String description, boolean master, long copyLayoutSetBranchId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
-		boolean privateLayout);
+	public List<LayoutSetBranch> getLayoutSetBranches(
+		long groupId, boolean privateLayout);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public LayoutSetBranch mergeLayoutSetBranch(long layoutSetBranchId,
-		long mergeLayoutSetBranchId, ServiceContext serviceContext)
+	public LayoutSetBranch mergeLayoutSetBranch(
+			long layoutSetBranchId, long mergeLayoutSetBranchId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
-	public LayoutSetBranch updateLayoutSetBranch(long groupId,
-		long layoutSetBranchId, String name, String description,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutSetBranch updateLayoutSetBranch(
+			long groupId, long layoutSetBranchId, String name,
+			String description, ServiceContext serviceContext)
+		throws PortalException;
+
 }

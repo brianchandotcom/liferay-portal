@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ServiceComponentBaseImpl extends ServiceComponentModelImpl
-	implements ServiceComponent {
+public abstract class ServiceComponentBaseImpl
+	extends ServiceComponentModelImpl implements ServiceComponent {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ServiceComponentBaseImpl extends ServiceComponentModelImpl
 			ServiceComponentLocalServiceUtil.updateServiceComponent(this);
 		}
 	}
+
 }

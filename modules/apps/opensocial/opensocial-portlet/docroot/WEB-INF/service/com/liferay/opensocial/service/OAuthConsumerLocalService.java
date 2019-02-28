@@ -17,7 +17,6 @@ package com.liferay.opensocial.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.opensocial.model.OAuthConsumer;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -49,62 +48,65 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface OAuthConsumerLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface OAuthConsumerLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthConsumerLocalServiceUtil} to access the o auth consumer local service. Add custom service methods to <code>com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public OAuthConsumer addOAuthConsumer(long companyId, String gadgetKey,
-		String serviceName, String consumerKey, String consumerSecret,
-		String keyType);
+	public OAuthConsumer addOAuthConsumer(
+		long companyId, String gadgetKey, String serviceName,
+		String consumerKey, String consumerSecret, String keyType);
 
 	/**
-	* Adds the o auth consumer to the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was added
-	*/
+	 * Adds the o auth consumer to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param oAuthConsumer the o auth consumer
+	 * @return the o auth consumer that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthConsumer addOAuthConsumer(OAuthConsumer oAuthConsumer);
 
 	/**
-	* Creates a new o auth consumer with the primary key. Does not add the o auth consumer to the database.
-	*
-	* @param oAuthConsumerId the primary key for the new o auth consumer
-	* @return the new o auth consumer
-	*/
+	 * Creates a new o auth consumer with the primary key. Does not add the o auth consumer to the database.
+	 *
+	 * @param oAuthConsumerId the primary key for the new o auth consumer
+	 * @return the new o auth consumer
+	 */
 	@Transactional(enabled = false)
 	public OAuthConsumer createOAuthConsumer(long oAuthConsumerId);
 
 	/**
-	* Deletes the o auth consumer with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumerId the primary key of the o auth consumer
-	* @return the o auth consumer that was removed
-	* @throws PortalException if a o auth consumer with the primary key could not be found
-	*/
+	 * Deletes the o auth consumer with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param oAuthConsumerId the primary key of the o auth consumer
+	 * @return the o auth consumer that was removed
+	 * @throws PortalException if a o auth consumer with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthConsumer deleteOAuthConsumer(long oAuthConsumerId)
 		throws PortalException;
 
 	/**
-	* Deletes the o auth consumer from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was removed
-	*/
+	 * Deletes the o auth consumer from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param oAuthConsumer the o auth consumer
+	 * @return the o auth consumer that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthConsumer deleteOAuthConsumer(OAuthConsumer oAuthConsumer);
 
 	public void deleteOAuthConsumers(String gadgetKey);
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -113,72 +115,74 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.opensocial.model.impl.OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.opensocial.model.impl.OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.opensocial.model.impl.OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.opensocial.model.impl.OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthConsumer fetchOAuthConsumer(long oAuthConsumerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuthConsumer fetchOAuthConsumer(String gadgetKey, String serviceName);
+	public OAuthConsumer fetchOAuthConsumer(
+		String gadgetKey, String serviceName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -187,12 +191,12 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the o auth consumer with the primary key.
-	*
-	* @param oAuthConsumerId the primary key of the o auth consumer
-	* @return the o auth consumer
-	* @throws PortalException if a o auth consumer with the primary key could not be found
-	*/
+	 * Returns the o auth consumer with the primary key.
+	 *
+	 * @param oAuthConsumerId the primary key of the o auth consumer
+	 * @return the o auth consumer
+	 * @throws PortalException if a o auth consumer with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthConsumer getOAuthConsumer(long oAuthConsumerId)
 		throws PortalException;
@@ -202,16 +206,16 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns a range of all the o auth consumers.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.opensocial.model.impl.OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of o auth consumers
-	* @param end the upper bound of the range of o auth consumers (not inclusive)
-	* @return the range of o auth consumers
-	*/
+	 * Returns a range of all the o auth consumers.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.opensocial.model.impl.OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of o auth consumers
+	 * @param end the upper bound of the range of o auth consumers (not inclusive)
+	 * @return the range of o auth consumers
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OAuthConsumer> getOAuthConsumers(int start, int end);
 
@@ -219,14 +223,14 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public List<OAuthConsumer> getOAuthConsumers(String gadgetKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<OAuthConsumer> getOAuthConsumers(String gadgetKey, int start,
-		int end);
+	public List<OAuthConsumer> getOAuthConsumers(
+		String gadgetKey, int start, int end);
 
 	/**
-	* Returns the number of o auth consumers.
-	*
-	* @return the number of o auth consumers
-	*/
+	 * Returns the number of o auth consumers.
+	 *
+	 * @return the number of o auth consumers
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOAuthConsumersCount();
 
@@ -234,10 +238,10 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public int getOAuthConsumersCount(String gadgetKey);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -245,16 +249,18 @@ public interface OAuthConsumerLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public OAuthConsumer updateOAuthConsumer(long oAuthConsumerId,
-		String consumerKey, String consumerSecret, String keyType,
-		String keyName, String callbackURL) throws PortalException;
+	public OAuthConsumer updateOAuthConsumer(
+			long oAuthConsumerId, String consumerKey, String consumerSecret,
+			String keyType, String keyName, String callbackURL)
+		throws PortalException;
 
 	/**
-	* Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthConsumer the o auth consumer
-	* @return the o auth consumer that was updated
-	*/
+	 * Updates the o auth consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param oAuthConsumer the o auth consumer
+	 * @return the o auth consumer that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public OAuthConsumer updateOAuthConsumer(OAuthConsumer oAuthConsumer);
+
 }

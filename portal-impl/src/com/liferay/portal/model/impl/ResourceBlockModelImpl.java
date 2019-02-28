@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -61,24 +59,25 @@ import java.util.function.Function;
 @Deprecated
 @JSON(strict = true)
 @ProviderType
-public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
-	implements ResourceBlockModel {
+public class ResourceBlockModelImpl
+	extends BaseModelImpl<ResourceBlock> implements ResourceBlockModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a resource block model instance should use the <code>ResourceBlock</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ResourceBlock";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "resourceBlockId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "permissionsHash", Types.VARCHAR },
-			{ "referenceCount", Types.BIGINT }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"resourceBlockId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"permissionsHash", Types.VARCHAR},
+		{"referenceCount", Types.BIGINT}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -90,26 +89,46 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		TABLE_COLUMNS_MAP.put("referenceCount", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (mvccVersion LONG default 0 not null,resourceBlockId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
+	public static final String TABLE_SQL_CREATE =
+		"create table ResourceBlock (mvccVersion LONG default 0 not null,resourceBlockId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
+
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlock";
-	public static final String ORDER_BY_JPQL = " ORDER BY resourceBlock.resourceBlockId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY ResourceBlock.resourceBlockId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY resourceBlock.resourceBlockId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY ResourceBlock.resourceBlockId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ResourceBlock"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ResourceBlock"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ResourceBlock"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ResourceBlock"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ResourceBlock"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ResourceBlock"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long PERMISSIONSHASH_COLUMN_BITMASK = 8L;
+
 	public static final long RESOURCEBLOCKID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -147,7 +166,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 			return null;
 		}
 
-		List<ResourceBlock> models = new ArrayList<ResourceBlock>(soapModels.length);
+		List<ResourceBlock> models = new ArrayList<ResourceBlock>(
+			soapModels.length);
 
 		for (ResourceBlockSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -156,8 +176,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.ResourceBlock"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.ResourceBlock"));
 
 	public ResourceBlockModelImpl() {
 	}
@@ -196,13 +217,18 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<ResourceBlock, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ResourceBlock, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ResourceBlock, Object> attributeGetterFunction = entry.getValue();
+			Function<ResourceBlock, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((ResourceBlock)this));
 		}
 
@@ -214,55 +240,82 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<ResourceBlock, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<ResourceBlock, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<ResourceBlock, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<ResourceBlock, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((ResourceBlock)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(ResourceBlock)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<ResourceBlock, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<ResourceBlock, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<ResourceBlock, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<ResourceBlock, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ResourceBlock, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ResourceBlock, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<ResourceBlock, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ResourceBlock, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ResourceBlock, Object>>();
-		Map<String, BiConsumer<ResourceBlock, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ResourceBlock, ?>>();
+		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ResourceBlock, Object>>();
+		Map<String, BiConsumer<ResourceBlock, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ResourceBlock, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", ResourceBlock::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ResourceBlock, Long>)ResourceBlock::setMvccVersion);
-		attributeGetterFunctions.put("resourceBlockId", ResourceBlock::getResourceBlockId);
-		attributeSetterBiConsumers.put("resourceBlockId", (BiConsumer<ResourceBlock, Long>)ResourceBlock::setResourceBlockId);
+		attributeGetterFunctions.put(
+			"mvccVersion", ResourceBlock::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ResourceBlock, Long>)ResourceBlock::setMvccVersion);
+		attributeGetterFunctions.put(
+			"resourceBlockId", ResourceBlock::getResourceBlockId);
+		attributeSetterBiConsumers.put(
+			"resourceBlockId",
+			(BiConsumer<ResourceBlock, Long>)ResourceBlock::setResourceBlockId);
 		attributeGetterFunctions.put("companyId", ResourceBlock::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<ResourceBlock, Long>)ResourceBlock::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<ResourceBlock, Long>)ResourceBlock::setCompanyId);
 		attributeGetterFunctions.put("groupId", ResourceBlock::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<ResourceBlock, Long>)ResourceBlock::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<ResourceBlock, Long>)ResourceBlock::setGroupId);
 		attributeGetterFunctions.put("name", ResourceBlock::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<ResourceBlock, String>)ResourceBlock::setName);
-		attributeGetterFunctions.put("permissionsHash", ResourceBlock::getPermissionsHash);
-		attributeSetterBiConsumers.put("permissionsHash", (BiConsumer<ResourceBlock, String>)ResourceBlock::setPermissionsHash);
-		attributeGetterFunctions.put("referenceCount", ResourceBlock::getReferenceCount);
-		attributeSetterBiConsumers.put("referenceCount", (BiConsumer<ResourceBlock, Long>)ResourceBlock::setReferenceCount);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<ResourceBlock, String>)ResourceBlock::setName);
+		attributeGetterFunctions.put(
+			"permissionsHash", ResourceBlock::getPermissionsHash);
+		attributeSetterBiConsumers.put(
+			"permissionsHash",
+			(BiConsumer<ResourceBlock, String>)
+				ResourceBlock::setPermissionsHash);
+		attributeGetterFunctions.put(
+			"referenceCount", ResourceBlock::getReferenceCount);
+		attributeSetterBiConsumers.put(
+			"referenceCount",
+			(BiConsumer<ResourceBlock, Long>)ResourceBlock::setReferenceCount);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -402,8 +455,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			ResourceBlock.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), ResourceBlock.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -416,8 +469,9 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	@Override
 	public ResourceBlock toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ResourceBlock)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (ResourceBlock)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -496,24 +550,28 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	public void resetOriginalValues() {
 		ResourceBlockModelImpl resourceBlockModelImpl = this;
 
-		resourceBlockModelImpl._originalCompanyId = resourceBlockModelImpl._companyId;
+		resourceBlockModelImpl._originalCompanyId =
+			resourceBlockModelImpl._companyId;
 
 		resourceBlockModelImpl._setOriginalCompanyId = false;
 
-		resourceBlockModelImpl._originalGroupId = resourceBlockModelImpl._groupId;
+		resourceBlockModelImpl._originalGroupId =
+			resourceBlockModelImpl._groupId;
 
 		resourceBlockModelImpl._setOriginalGroupId = false;
 
 		resourceBlockModelImpl._originalName = resourceBlockModelImpl._name;
 
-		resourceBlockModelImpl._originalPermissionsHash = resourceBlockModelImpl._permissionsHash;
+		resourceBlockModelImpl._originalPermissionsHash =
+			resourceBlockModelImpl._permissionsHash;
 
 		resourceBlockModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<ResourceBlock> toCacheModel() {
-		ResourceBlockCacheModel resourceBlockCacheModel = new ResourceBlockCacheModel();
+		ResourceBlockCacheModel resourceBlockCacheModel =
+			new ResourceBlockCacheModel();
 
 		resourceBlockCacheModel.mvccVersion = getMvccVersion();
 
@@ -546,16 +604,20 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public String toString() {
-		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<ResourceBlock, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ResourceBlock, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ResourceBlock, Object> attributeGetterFunction = entry.getValue();
+			Function<ResourceBlock, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -574,18 +636,22 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ResourceBlock, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<ResourceBlock, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ResourceBlock, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ResourceBlock, Object> attributeGetterFunction = entry.getValue();
+			Function<ResourceBlock, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -599,10 +665,12 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = ResourceBlock.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		ResourceBlock.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ResourceBlock.class, ModelWrapper.class
-		};
+		ResourceBlock.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _resourceBlockId;
 	private long _companyId;
@@ -618,4 +686,5 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	private long _referenceCount;
 	private long _columnBitmask;
 	private ResourceBlock _escapedModel;
+
 }

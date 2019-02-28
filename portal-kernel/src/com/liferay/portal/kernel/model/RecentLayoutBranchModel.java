@@ -28,8 +28,9 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface RecentLayoutBranchModel extends BaseModel<RecentLayoutBranch>,
-	MVCCModel, ShardedModel {
+public interface RecentLayoutBranchModel
+	extends BaseModel<RecentLayoutBranch>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -179,4 +180,5 @@ public interface RecentLayoutBranchModel extends BaseModel<RecentLayoutBranch>,
 	 * @param plid the plid of this recent layout branch
 	 */
 	public void setPlid(long plid);
+
 }

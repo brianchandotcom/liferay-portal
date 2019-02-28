@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.groups.admin.uad.constants.UserGroupsAdminUADConstants;
 
@@ -39,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUserGroupUADAnonymizer
 	extends DynamicQueryUADAnonymizer<UserGroup> {
+
 	@Override
-	public void autoAnonymize(UserGroup userGroup, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			UserGroup userGroup, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (userGroup.getUserId() == userId) {
 			userGroup.setUserId(anonymousUser.getUserId());
 			userGroup.setUserName(anonymousUser.getFullName());
@@ -72,4 +74,5 @@ public abstract class BaseUserGroupUADAnonymizer
 
 	@Reference
 	protected UserGroupLocalService userGroupLocalService;
+
 }

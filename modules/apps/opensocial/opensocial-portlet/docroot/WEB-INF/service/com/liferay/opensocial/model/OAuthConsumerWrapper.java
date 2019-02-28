@@ -33,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class OAuthConsumerWrapper extends BaseModelWrapper<OAuthConsumer>
+public class OAuthConsumerWrapper
+	extends BaseModelWrapper<OAuthConsumer>
 	implements OAuthConsumer, ModelWrapper<OAuthConsumer> {
+
 	public OAuthConsumerWrapper(OAuthConsumer oAuthConsumer) {
 		super(oAuthConsumer);
 	}
@@ -114,50 +116,50 @@ public class OAuthConsumerWrapper extends BaseModelWrapper<OAuthConsumer>
 	}
 
 	/**
-	* Returns the company ID of this o auth consumer.
-	*
-	* @return the company ID of this o auth consumer
-	*/
+	 * Returns the company ID of this o auth consumer.
+	 *
+	 * @return the company ID of this o auth consumer
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the consumer key of this o auth consumer.
-	*
-	* @return the consumer key of this o auth consumer
-	*/
+	 * Returns the consumer key of this o auth consumer.
+	 *
+	 * @return the consumer key of this o auth consumer
+	 */
 	@Override
 	public String getConsumerKey() {
 		return model.getConsumerKey();
 	}
 
 	/**
-	* Returns the consumer secret of this o auth consumer.
-	*
-	* @return the consumer secret of this o auth consumer
-	*/
+	 * Returns the consumer secret of this o auth consumer.
+	 *
+	 * @return the consumer secret of this o auth consumer
+	 */
 	@Override
 	public String getConsumerSecret() {
 		return model.getConsumerSecret();
 	}
 
 	/**
-	* Returns the create date of this o auth consumer.
-	*
-	* @return the create date of this o auth consumer
-	*/
+	 * Returns the create date of this o auth consumer.
+	 *
+	 * @return the create date of this o auth consumer
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the gadget key of this o auth consumer.
-	*
-	* @return the gadget key of this o auth consumer
-	*/
+	 * Returns the gadget key of this o auth consumer.
+	 *
+	 * @return the gadget key of this o auth consumer
+	 */
 	@Override
 	public String getGadgetKey() {
 		return model.getGadgetKey();
@@ -169,50 +171,50 @@ public class OAuthConsumerWrapper extends BaseModelWrapper<OAuthConsumer>
 	}
 
 	/**
-	* Returns the key type of this o auth consumer.
-	*
-	* @return the key type of this o auth consumer
-	*/
+	 * Returns the key type of this o auth consumer.
+	 *
+	 * @return the key type of this o auth consumer
+	 */
 	@Override
 	public String getKeyType() {
 		return model.getKeyType();
 	}
 
 	/**
-	* Returns the modified date of this o auth consumer.
-	*
-	* @return the modified date of this o auth consumer
-	*/
+	 * Returns the modified date of this o auth consumer.
+	 *
+	 * @return the modified date of this o auth consumer
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the o auth consumer ID of this o auth consumer.
-	*
-	* @return the o auth consumer ID of this o auth consumer
-	*/
+	 * Returns the o auth consumer ID of this o auth consumer.
+	 *
+	 * @return the o auth consumer ID of this o auth consumer
+	 */
 	@Override
 	public long getOAuthConsumerId() {
 		return model.getOAuthConsumerId();
 	}
 
 	/**
-	* Returns the primary key of this o auth consumer.
-	*
-	* @return the primary key of this o auth consumer
-	*/
+	 * Returns the primary key of this o auth consumer.
+	 *
+	 * @return the primary key of this o auth consumer
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the service name of this o auth consumer.
-	*
-	* @return the service name of this o auth consumer
-	*/
+	 * Returns the service name of this o auth consumer.
+	 *
+	 * @return the service name of this o auth consumer
+	 */
 	@Override
 	public String getServiceName() {
 		return model.getServiceName();
@@ -224,50 +226,50 @@ public class OAuthConsumerWrapper extends BaseModelWrapper<OAuthConsumer>
 	}
 
 	/**
-	* Sets the company ID of this o auth consumer.
-	*
-	* @param companyId the company ID of this o auth consumer
-	*/
+	 * Sets the company ID of this o auth consumer.
+	 *
+	 * @param companyId the company ID of this o auth consumer
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the consumer key of this o auth consumer.
-	*
-	* @param consumerKey the consumer key of this o auth consumer
-	*/
+	 * Sets the consumer key of this o auth consumer.
+	 *
+	 * @param consumerKey the consumer key of this o auth consumer
+	 */
 	@Override
 	public void setConsumerKey(String consumerKey) {
 		model.setConsumerKey(consumerKey);
 	}
 
 	/**
-	* Sets the consumer secret of this o auth consumer.
-	*
-	* @param consumerSecret the consumer secret of this o auth consumer
-	*/
+	 * Sets the consumer secret of this o auth consumer.
+	 *
+	 * @param consumerSecret the consumer secret of this o auth consumer
+	 */
 	@Override
 	public void setConsumerSecret(String consumerSecret) {
 		model.setConsumerSecret(consumerSecret);
 	}
 
 	/**
-	* Sets the create date of this o auth consumer.
-	*
-	* @param createDate the create date of this o auth consumer
-	*/
+	 * Sets the create date of this o auth consumer.
+	 *
+	 * @param createDate the create date of this o auth consumer
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the gadget key of this o auth consumer.
-	*
-	* @param gadgetKey the gadget key of this o auth consumer
-	*/
+	 * Sets the gadget key of this o auth consumer.
+	 *
+	 * @param gadgetKey the gadget key of this o auth consumer
+	 */
 	@Override
 	public void setGadgetKey(String gadgetKey) {
 		model.setGadgetKey(gadgetKey);
@@ -279,50 +281,50 @@ public class OAuthConsumerWrapper extends BaseModelWrapper<OAuthConsumer>
 	}
 
 	/**
-	* Sets the key type of this o auth consumer.
-	*
-	* @param keyType the key type of this o auth consumer
-	*/
+	 * Sets the key type of this o auth consumer.
+	 *
+	 * @param keyType the key type of this o auth consumer
+	 */
 	@Override
 	public void setKeyType(String keyType) {
 		model.setKeyType(keyType);
 	}
 
 	/**
-	* Sets the modified date of this o auth consumer.
-	*
-	* @param modifiedDate the modified date of this o auth consumer
-	*/
+	 * Sets the modified date of this o auth consumer.
+	 *
+	 * @param modifiedDate the modified date of this o auth consumer
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the o auth consumer ID of this o auth consumer.
-	*
-	* @param oAuthConsumerId the o auth consumer ID of this o auth consumer
-	*/
+	 * Sets the o auth consumer ID of this o auth consumer.
+	 *
+	 * @param oAuthConsumerId the o auth consumer ID of this o auth consumer
+	 */
 	@Override
 	public void setOAuthConsumerId(long oAuthConsumerId) {
 		model.setOAuthConsumerId(oAuthConsumerId);
 	}
 
 	/**
-	* Sets the primary key of this o auth consumer.
-	*
-	* @param primaryKey the primary key of this o auth consumer
-	*/
+	 * Sets the primary key of this o auth consumer.
+	 *
+	 * @param primaryKey the primary key of this o auth consumer
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the service name of this o auth consumer.
-	*
-	* @param serviceName the service name of this o auth consumer
-	*/
+	 * Sets the service name of this o auth consumer.
+	 *
+	 * @param serviceName the service name of this o auth consumer
+	 */
 	@Override
 	public void setServiceName(String serviceName) {
 		model.setServiceName(serviceName);
@@ -332,4 +334,5 @@ public class OAuthConsumerWrapper extends BaseModelWrapper<OAuthConsumer>
 	protected OAuthConsumerWrapper wrap(OAuthConsumer oAuthConsumer) {
 		return new OAuthConsumerWrapper(oAuthConsumer);
 	}
+
 }

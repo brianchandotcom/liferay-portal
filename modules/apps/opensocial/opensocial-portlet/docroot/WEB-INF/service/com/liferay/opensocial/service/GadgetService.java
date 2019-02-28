@@ -17,7 +17,6 @@ package com.liferay.opensocial.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.opensocial.model.Gadget;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -39,28 +38,35 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface GadgetService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link GadgetServiceUtil} to access the gadget remote service. Add custom service methods to <code>com.liferay.opensocial.service.impl.GadgetServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Gadget addGadget(long companyId, String url,
-		String portletCategoryNames, ServiceContext serviceContext)
+	public Gadget addGadget(
+			long companyId, String url, String portletCategoryNames,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteGadget(long gadgetId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public void updateGadget(long gadgetId, String portletCategoryNames,
-		ServiceContext serviceContext) throws PortalException;
+	public void updateGadget(
+			long gadgetId, String portletCategoryNames,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class PortalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,10 +48,10 @@ public class PortalServiceUtil {
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -67,22 +68,29 @@ public class PortalServiceUtil {
 		getService().testAddClassName_Success(classNameValue);
 	}
 
-	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		String transactionPortletBarText) {
-		getService()
-			.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
+	public static void
+		testAddClassNameAndTestTransactionPortletBar_PortalRollback(
+			String transactionPortletBarText) {
+
+		getService().
+			testAddClassNameAndTestTransactionPortletBar_PortalRollback(
+				transactionPortletBarText);
 	}
 
-	public static void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		String transactionPortletBarText) {
-		getService()
-			.testAddClassNameAndTestTransactionPortletBar_PortletRollback(transactionPortletBarText);
+	public static void
+		testAddClassNameAndTestTransactionPortletBar_PortletRollback(
+			String transactionPortletBarText) {
+
+		getService().
+			testAddClassNameAndTestTransactionPortletBar_PortletRollback(
+				transactionPortletBarText);
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_Success(
 		String transactionPortletBarText) {
-		getService()
-			.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
+
+		getService().testAddClassNameAndTestTransactionPortletBar_Success(
+			transactionPortletBarText);
 	}
 
 	public static void testAutoSyncHibernateSessionStateOnTxCreation() {
@@ -91,6 +99,7 @@ public class PortalServiceUtil {
 
 	public static void testDeleteClassName()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().testDeleteClassName();
 	}
 
@@ -108,14 +117,16 @@ public class PortalServiceUtil {
 
 	public static PortalService getService() {
 		if (_service == null) {
-			_service = (PortalService)PortalBeanLocatorUtil.locate(PortalService.class.getName());
+			_service = (PortalService)PortalBeanLocatorUtil.locate(
+				PortalService.class.getName());
 
-			ReferenceRegistry.registerReference(PortalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				PortalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static PortalService _service;
+
 }

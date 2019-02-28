@@ -36,27 +36,32 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface LayoutRevisionService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutRevisionServiceUtil} to access the layout revision remote service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutRevisionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutRevision addLayoutRevision(long userId,
-		long layoutSetBranchId, long layoutBranchId,
-		long parentLayoutRevisionId, boolean head, long plid,
-		long portletPreferencesPlid, boolean privateLayout, String name,
-		String title, String description, String keywords, String robots,
-		String typeSettings, boolean iconImage, long iconImageId,
-		String themeId, String colorSchemeId, String css,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutRevision addLayoutRevision(
+			long userId, long layoutSetBranchId, long layoutBranchId,
+			long parentLayoutRevisionId, boolean head, long plid,
+			long portletPreferencesPlid, boolean privateLayout, String name,
+			String title, String description, String keywords, String robots,
+			String typeSettings, boolean iconImage, long iconImageId,
+			String themeId, String colorSchemeId, String css,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
+
 }

@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WorkflowDefinitionLinkModel extends AttachedModel,
-	BaseModel<WorkflowDefinitionLink>, GroupedModel, MVCCModel, ShardedModel {
+public interface WorkflowDefinitionLinkModel
+	extends AttachedModel, BaseModel<WorkflowDefinitionLink>, GroupedModel,
+			MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -281,4 +283,5 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 	 * @param workflowDefinitionVersion the workflow definition version of this workflow definition link
 	 */
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion);
+
 }

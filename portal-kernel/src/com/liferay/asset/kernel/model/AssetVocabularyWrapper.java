@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,8 +34,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
+public class AssetVocabularyWrapper
+	extends BaseModelWrapper<AssetVocabulary>
 	implements AssetVocabulary, ModelWrapper<AssetVocabulary> {
+
 	public AssetVocabularyWrapper(AssetVocabulary assetVocabulary) {
 		super(assetVocabulary);
 	}
@@ -72,7 +73,7 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 		}
 
 		String externalReferenceCode = (String)attributes.get(
-				"externalReferenceCode");
+			"externalReferenceCode");
 
 		if (externalReferenceCode != null) {
 			setExternalReferenceCode(externalReferenceCode);
@@ -167,20 +168,20 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Returns the company ID of this asset vocabulary.
-	*
-	* @return the company ID of this asset vocabulary
-	*/
+	 * Returns the company ID of this asset vocabulary.
+	 *
+	 * @return the company ID of this asset vocabulary
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this asset vocabulary.
-	*
-	* @return the create date of this asset vocabulary
-	*/
+	 * Returns the create date of this asset vocabulary.
+	 *
+	 * @return the create date of this asset vocabulary
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
@@ -192,56 +193,56 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Returns the description of this asset vocabulary.
-	*
-	* @return the description of this asset vocabulary
-	*/
+	 * Returns the description of this asset vocabulary.
+	 *
+	 * @return the description of this asset vocabulary
+	 */
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	* Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this asset vocabulary
-	*/
+	 * Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized description of this asset vocabulary
+	 */
 	@Override
 	public String getDescription(java.util.Locale locale) {
 		return model.getDescription(locale);
 	}
 
 	/**
-	* Returns the localized description of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this asset vocabulary. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
+	 * Returns the localized description of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this asset vocabulary. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
 		return model.getDescription(locale, useDefault);
 	}
 
 	/**
-	* Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this asset vocabulary
-	*/
+	 * Returns the localized description of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized description of this asset vocabulary
+	 */
 	@Override
 	public String getDescription(String languageId) {
 		return model.getDescription(languageId);
 	}
 
 	/**
-	* Returns the localized description of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this asset vocabulary
-	*/
+	 * Returns the localized description of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this asset vocabulary
+	 */
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
 		return model.getDescription(languageId, useDefault);
@@ -258,70 +259,70 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this asset vocabulary.
-	*
-	* @return the locales and localized descriptions of this asset vocabulary
-	*/
+	 * Returns a map of the locales and localized descriptions of this asset vocabulary.
+	 *
+	 * @return the locales and localized descriptions of this asset vocabulary
+	 */
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
 		return model.getDescriptionMap();
 	}
 
 	/**
-	* Returns the external reference code of this asset vocabulary.
-	*
-	* @return the external reference code of this asset vocabulary
-	*/
+	 * Returns the external reference code of this asset vocabulary.
+	 *
+	 * @return the external reference code of this asset vocabulary
+	 */
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
 	}
 
 	/**
-	* Returns the group ID of this asset vocabulary.
-	*
-	* @return the group ID of this asset vocabulary
-	*/
+	 * Returns the group ID of this asset vocabulary.
+	 *
+	 * @return the group ID of this asset vocabulary
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the last publish date of this asset vocabulary.
-	*
-	* @return the last publish date of this asset vocabulary
-	*/
+	 * Returns the last publish date of this asset vocabulary.
+	 *
+	 * @return the last publish date of this asset vocabulary
+	 */
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	* Returns the modified date of this asset vocabulary.
-	*
-	* @return the modified date of this asset vocabulary
-	*/
+	 * Returns the modified date of this asset vocabulary.
+	 *
+	 * @return the modified date of this asset vocabulary
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this asset vocabulary.
-	*
-	* @return the name of this asset vocabulary
-	*/
+	 * Returns the name of this asset vocabulary.
+	 *
+	 * @return the name of this asset vocabulary
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this asset vocabulary.
-	*
-	* @return the primary key of this asset vocabulary
-	*/
+	 * Returns the primary key of this asset vocabulary.
+	 *
+	 * @return the primary key of this asset vocabulary
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -343,75 +344,77 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Returns the settings of this asset vocabulary.
-	*
-	* @return the settings of this asset vocabulary
-	*/
+	 * Returns the settings of this asset vocabulary.
+	 *
+	 * @return the settings of this asset vocabulary
+	 */
 	@Override
 	public String getSettings() {
 		return model.getSettings();
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getSettingsProperties() {
+
 		return model.getSettingsProperties();
 	}
 
 	/**
-	* Returns the title of this asset vocabulary.
-	*
-	* @return the title of this asset vocabulary
-	*/
+	 * Returns the title of this asset vocabulary.
+	 *
+	 * @return the title of this asset vocabulary
+	 */
 	@Override
 	public String getTitle() {
 		return model.getTitle();
 	}
 
 	/**
-	* Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this asset vocabulary
-	*/
+	 * Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this asset vocabulary
+	 */
 	@Override
 	public String getTitle(java.util.Locale locale) {
 		return model.getTitle(locale);
 	}
 
 	/**
-	* Returns the localized title of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this asset vocabulary. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
+	 * Returns the localized title of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this asset vocabulary. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
 		return model.getTitle(locale, useDefault);
 	}
 
 	/**
-	* Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this asset vocabulary
-	*/
+	 * Returns the localized title of this asset vocabulary in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this asset vocabulary
+	 */
 	@Override
 	public String getTitle(String languageId) {
 		return model.getTitle(languageId);
 	}
 
 	/**
-	* Returns the localized title of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this asset vocabulary
-	*/
+	 * Returns the localized title of this asset vocabulary in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this asset vocabulary
+	 */
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
 		return model.getTitle(languageId, useDefault);
@@ -428,10 +431,10 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Returns a map of the locales and localized titles of this asset vocabulary.
-	*
-	* @return the locales and localized titles of this asset vocabulary
-	*/
+	 * Returns a map of the locales and localized titles of this asset vocabulary.
+	 *
+	 * @return the locales and localized titles of this asset vocabulary
+	 */
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
 		return model.getTitleMap();
@@ -439,57 +442,58 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 
 	@Override
 	public String getUnambiguousTitle(
-		java.util.List<AssetVocabulary> vocabularies, long groupId,
-		java.util.Locale locale)
+			java.util.List<AssetVocabulary> vocabularies, long groupId,
+			java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getUnambiguousTitle(vocabularies, groupId, locale);
 	}
 
 	/**
-	* Returns the user ID of this asset vocabulary.
-	*
-	* @return the user ID of this asset vocabulary
-	*/
+	 * Returns the user ID of this asset vocabulary.
+	 *
+	 * @return the user ID of this asset vocabulary
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this asset vocabulary.
-	*
-	* @return the user name of this asset vocabulary
-	*/
+	 * Returns the user name of this asset vocabulary.
+	 *
+	 * @return the user name of this asset vocabulary
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this asset vocabulary.
-	*
-	* @return the user uuid of this asset vocabulary
-	*/
+	 * Returns the user uuid of this asset vocabulary.
+	 *
+	 * @return the user uuid of this asset vocabulary
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this asset vocabulary.
-	*
-	* @return the uuid of this asset vocabulary
-	*/
+	 * Returns the uuid of this asset vocabulary.
+	 *
+	 * @return the uuid of this asset vocabulary
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
 	}
 
 	/**
-	* Returns the vocabulary ID of this asset vocabulary.
-	*
-	* @return the vocabulary ID of this asset vocabulary
-	*/
+	 * Returns the vocabulary ID of this asset vocabulary.
+	 *
+	 * @return the vocabulary ID of this asset vocabulary
+	 */
 	@Override
 	public long getVocabularyId() {
 		return model.getVocabularyId();
@@ -506,17 +510,19 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	@Override
-	public boolean isAssociatedToClassNameIdAndClassTypePK(long classNameId,
-		long classTypePK) {
-		return model.isAssociatedToClassNameIdAndClassTypePK(classNameId,
-			classTypePK);
+	public boolean isAssociatedToClassNameIdAndClassTypePK(
+		long classNameId, long classTypePK) {
+
+		return model.isAssociatedToClassNameIdAndClassTypePK(
+			classNameId, classTypePK);
 	}
 
 	@Override
-	public boolean isMissingRequiredCategory(long classNameId,
-		long classTypePK, long[] categoryIds) {
-		return model.isMissingRequiredCategory(classNameId, classTypePK,
-			categoryIds);
+	public boolean isMissingRequiredCategory(
+		long classNameId, long classTypePK, long[] categoryIds) {
+
+		return model.isMissingRequiredCategory(
+			classNameId, classTypePK, categoryIds);
 	}
 
 	@Override
@@ -525,9 +531,9 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#isRequired(long, long)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #isRequired(long, long)}
+	 */
 	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId) {
@@ -547,67 +553,71 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
+
 		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
-		java.util.Locale defaultImportLocale)
+			java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
+
 		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
-	* Sets the company ID of this asset vocabulary.
-	*
-	* @param companyId the company ID of this asset vocabulary
-	*/
+	 * Sets the company ID of this asset vocabulary.
+	 *
+	 * @param companyId the company ID of this asset vocabulary
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this asset vocabulary.
-	*
-	* @param createDate the create date of this asset vocabulary
-	*/
+	 * Sets the create date of this asset vocabulary.
+	 *
+	 * @param createDate the create date of this asset vocabulary
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the description of this asset vocabulary.
-	*
-	* @param description the description of this asset vocabulary
-	*/
+	 * Sets the description of this asset vocabulary.
+	 *
+	 * @param description the description of this asset vocabulary
+	 */
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	* Sets the localized description of this asset vocabulary in the language.
-	*
-	* @param description the localized description of this asset vocabulary
-	* @param locale the locale of the language
-	*/
+	 * Sets the localized description of this asset vocabulary in the language.
+	 *
+	 * @param description the localized description of this asset vocabulary
+	 * @param locale the locale of the language
+	 */
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
 		model.setDescription(description, locale);
 	}
 
 	/**
-	* Sets the localized description of this asset vocabulary in the language, and sets the default locale.
-	*
-	* @param description the localized description of this asset vocabulary
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
+	 * Sets the localized description of this asset vocabulary in the language, and sets the default locale.
+	 *
+	 * @param description the localized description of this asset vocabulary
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
 	@Override
-	public void setDescription(String description, java.util.Locale locale,
+	public void setDescription(
+		String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
+
 		model.setDescription(description, locale, defaultLocale);
 	}
 
@@ -617,139 +627,144 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Sets the localized descriptions of this asset vocabulary from the map of locales and localized descriptions.
-	*
-	* @param descriptionMap the locales and localized descriptions of this asset vocabulary
-	*/
+	 * Sets the localized descriptions of this asset vocabulary from the map of locales and localized descriptions.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this asset vocabulary
+	 */
 	@Override
-	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
+	public void setDescriptionMap(
+		Map<java.util.Locale, String> descriptionMap) {
+
 		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
-	* Sets the localized descriptions of this asset vocabulary from the map of locales and localized descriptions, and sets the default locale.
-	*
-	* @param descriptionMap the locales and localized descriptions of this asset vocabulary
-	* @param defaultLocale the default locale
-	*/
+	 * Sets the localized descriptions of this asset vocabulary from the map of locales and localized descriptions, and sets the default locale.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this asset vocabulary
+	 * @param defaultLocale the default locale
+	 */
 	@Override
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
+
 		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
-	* Sets the external reference code of this asset vocabulary.
-	*
-	* @param externalReferenceCode the external reference code of this asset vocabulary
-	*/
+	 * Sets the external reference code of this asset vocabulary.
+	 *
+	 * @param externalReferenceCode the external reference code of this asset vocabulary
+	 */
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
-	* Sets the group ID of this asset vocabulary.
-	*
-	* @param groupId the group ID of this asset vocabulary
-	*/
+	 * Sets the group ID of this asset vocabulary.
+	 *
+	 * @param groupId the group ID of this asset vocabulary
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the last publish date of this asset vocabulary.
-	*
-	* @param lastPublishDate the last publish date of this asset vocabulary
-	*/
+	 * Sets the last publish date of this asset vocabulary.
+	 *
+	 * @param lastPublishDate the last publish date of this asset vocabulary
+	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	* Sets the modified date of this asset vocabulary.
-	*
-	* @param modifiedDate the modified date of this asset vocabulary
-	*/
+	 * Sets the modified date of this asset vocabulary.
+	 *
+	 * @param modifiedDate the modified date of this asset vocabulary
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this asset vocabulary.
-	*
-	* @param name the name of this asset vocabulary
-	*/
+	 * Sets the name of this asset vocabulary.
+	 *
+	 * @param name the name of this asset vocabulary
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this asset vocabulary.
-	*
-	* @param primaryKey the primary key of this asset vocabulary
-	*/
+	 * Sets the primary key of this asset vocabulary.
+	 *
+	 * @param primaryKey the primary key of this asset vocabulary
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the settings of this asset vocabulary.
-	*
-	* @param settings the settings of this asset vocabulary
-	*/
+	 * Sets the settings of this asset vocabulary.
+	 *
+	 * @param settings the settings of this asset vocabulary
+	 */
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
 	@Override
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
+
 		model.setSettingsProperties(settingsProperties);
 	}
 
 	/**
-	* Sets the title of this asset vocabulary.
-	*
-	* @param title the title of this asset vocabulary
-	*/
+	 * Sets the title of this asset vocabulary.
+	 *
+	 * @param title the title of this asset vocabulary
+	 */
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
 	}
 
 	/**
-	* Sets the localized title of this asset vocabulary in the language.
-	*
-	* @param title the localized title of this asset vocabulary
-	* @param locale the locale of the language
-	*/
+	 * Sets the localized title of this asset vocabulary in the language.
+	 *
+	 * @param title the localized title of this asset vocabulary
+	 * @param locale the locale of the language
+	 */
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
 		model.setTitle(title, locale);
 	}
 
 	/**
-	* Sets the localized title of this asset vocabulary in the language, and sets the default locale.
-	*
-	* @param title the localized title of this asset vocabulary
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
+	 * Sets the localized title of this asset vocabulary in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this asset vocabulary
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
 	@Override
-	public void setTitle(String title, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
+	public void setTitle(
+		String title, java.util.Locale locale, java.util.Locale defaultLocale) {
+
 		model.setTitle(title, locale, defaultLocale);
 	}
 
@@ -759,72 +774,74 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	}
 
 	/**
-	* Sets the localized titles of this asset vocabulary from the map of locales and localized titles.
-	*
-	* @param titleMap the locales and localized titles of this asset vocabulary
-	*/
+	 * Sets the localized titles of this asset vocabulary from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this asset vocabulary
+	 */
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
 		model.setTitleMap(titleMap);
 	}
 
 	/**
-	* Sets the localized titles of this asset vocabulary from the map of locales and localized titles, and sets the default locale.
-	*
-	* @param titleMap the locales and localized titles of this asset vocabulary
-	* @param defaultLocale the default locale
-	*/
+	 * Sets the localized titles of this asset vocabulary from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this asset vocabulary
+	 * @param defaultLocale the default locale
+	 */
 	@Override
-	public void setTitleMap(Map<java.util.Locale, String> titleMap,
+	public void setTitleMap(
+		Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
+
 		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
-	* Sets the user ID of this asset vocabulary.
-	*
-	* @param userId the user ID of this asset vocabulary
-	*/
+	 * Sets the user ID of this asset vocabulary.
+	 *
+	 * @param userId the user ID of this asset vocabulary
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this asset vocabulary.
-	*
-	* @param userName the user name of this asset vocabulary
-	*/
+	 * Sets the user name of this asset vocabulary.
+	 *
+	 * @param userName the user name of this asset vocabulary
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this asset vocabulary.
-	*
-	* @param userUuid the user uuid of this asset vocabulary
-	*/
+	 * Sets the user uuid of this asset vocabulary.
+	 *
+	 * @param userUuid the user uuid of this asset vocabulary
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this asset vocabulary.
-	*
-	* @param uuid the uuid of this asset vocabulary
-	*/
+	 * Sets the uuid of this asset vocabulary.
+	 *
+	 * @param uuid the uuid of this asset vocabulary
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
 	}
 
 	/**
-	* Sets the vocabulary ID of this asset vocabulary.
-	*
-	* @param vocabularyId the vocabulary ID of this asset vocabulary
-	*/
+	 * Sets the vocabulary ID of this asset vocabulary.
+	 *
+	 * @param vocabularyId the vocabulary ID of this asset vocabulary
+	 */
 	@Override
 	public void setVocabularyId(long vocabularyId) {
 		model.setVocabularyId(vocabularyId);
@@ -839,4 +856,5 @@ public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
 	protected AssetVocabularyWrapper wrap(AssetVocabulary assetVocabulary) {
 		return new AssetVocabularyWrapper(assetVocabulary);
 	}
+
 }

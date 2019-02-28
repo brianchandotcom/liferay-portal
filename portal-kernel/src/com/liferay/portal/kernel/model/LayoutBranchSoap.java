@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class LayoutBranchSoap implements Serializable {
+
 	public static LayoutBranchSoap toSoapModel(LayoutBranch model) {
 		LayoutBranchSoap soapModel = new LayoutBranchSoap();
 
@@ -75,7 +76,8 @@ public class LayoutBranchSoap implements Serializable {
 	}
 
 	public static LayoutBranchSoap[] toSoapModels(List<LayoutBranch> models) {
-		List<LayoutBranchSoap> soapModels = new ArrayList<LayoutBranchSoap>(models.size());
+		List<LayoutBranchSoap> soapModels = new ArrayList<LayoutBranchSoap>(
+			models.size());
 
 		for (LayoutBranch model : models) {
 			soapModels.add(toSoapModel(model));
@@ -198,4 +200,5 @@ public class LayoutBranchSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _master;
+
 }

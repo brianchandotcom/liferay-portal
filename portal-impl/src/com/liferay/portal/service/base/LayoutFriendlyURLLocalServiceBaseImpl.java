@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -70,8 +69,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class LayoutFriendlyURLLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements LayoutFriendlyURLLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements LayoutFriendlyURLLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +88,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public LayoutFriendlyURL addLayoutFriendlyURL(
 		LayoutFriendlyURL layoutFriendlyURL) {
+
 		layoutFriendlyURL.setNew(true);
 
 		return layoutFriendlyURLPersistence.update(layoutFriendlyURL);
@@ -116,6 +117,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public LayoutFriendlyURL deleteLayoutFriendlyURL(long layoutFriendlyURLId)
 		throws PortalException {
+
 		return layoutFriendlyURLPersistence.remove(layoutFriendlyURLId);
 	}
 
@@ -129,6 +131,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public LayoutFriendlyURL deleteLayoutFriendlyURL(
 		LayoutFriendlyURL layoutFriendlyURL) {
+
 		return layoutFriendlyURLPersistence.remove(layoutFriendlyURL);
 	}
 
@@ -136,8 +139,8 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(LayoutFriendlyURL.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			LayoutFriendlyURL.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -164,10 +167,11 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return layoutFriendlyURLPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -184,10 +188,12 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return layoutFriendlyURLPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -209,15 +215,17 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return layoutFriendlyURLPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return layoutFriendlyURLPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public LayoutFriendlyURL fetchLayoutFriendlyURL(long layoutFriendlyURLId) {
-		return layoutFriendlyURLPersistence.fetchByPrimaryKey(layoutFriendlyURLId);
+		return layoutFriendlyURLPersistence.fetchByPrimaryKey(
+			layoutFriendlyURLId);
 	}
 
 	/**
@@ -230,6 +238,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
 		String uuid, long groupId) {
+
 		return layoutFriendlyURLPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -243,14 +252,18 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURL(long layoutFriendlyURLId)
 		throws PortalException {
-		return layoutFriendlyURLPersistence.findByPrimaryKey(layoutFriendlyURLId);
+
+		return layoutFriendlyURLPersistence.findByPrimaryKey(
+			layoutFriendlyURLId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(layoutFriendlyURLLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			layoutFriendlyURLLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutFriendlyURL.class);
 
@@ -260,10 +273,14 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(layoutFriendlyURLLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			layoutFriendlyURLLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(LayoutFriendlyURL.class);
 
@@ -275,7 +292,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(layoutFriendlyURLLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			layoutFriendlyURLLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutFriendlyURL.class);
 
@@ -285,51 +304,68 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(stagedModelType,
-						modelAdditionCount);
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
 
-					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
-							stagedModelType);
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
 
-					manifestSummary.addModelDeletionCount(stagedModelType,
-						modelDeletionCount);
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
 
 					return modelAdditionCount;
 				}
+
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
 				}
+
 			});
 
-		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+		exportActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutFriendlyURL>() {
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<LayoutFriendlyURL>() {
+
 				@Override
 				public void performAction(LayoutFriendlyURL layoutFriendlyURL)
 					throws PortalException {
-					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						layoutFriendlyURL);
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, layoutFriendlyURL);
 				}
+
 			});
-		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
 				PortalUtil.getClassNameId(LayoutFriendlyURL.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -341,12 +377,15 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return layoutFriendlyURLLocalService.deleteLayoutFriendlyURL((LayoutFriendlyURL)persistedModel);
+
+		return layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+			(LayoutFriendlyURL)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return layoutFriendlyURLPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -360,6 +399,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public List<LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
 		String uuid, long companyId) {
+
 		return layoutFriendlyURLPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -377,8 +417,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	public List<LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-		return layoutFriendlyURLPersistence.findByUuid_C(uuid, companyId,
-			start, end, orderByComparator);
+
+		return layoutFriendlyURLPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -390,8 +431,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @throws PortalException if a matching layout friendly url could not be found
 	 */
 	@Override
-	public LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException {
+	public LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
 		return layoutFriendlyURLPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -431,6 +474,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public LayoutFriendlyURL updateLayoutFriendlyURL(
 		LayoutFriendlyURL layoutFriendlyURL) {
+
 		return layoutFriendlyURLPersistence.update(layoutFriendlyURL);
 	}
 
@@ -450,6 +494,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 */
 	public void setLayoutFriendlyURLLocalService(
 		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+
 		this.layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
 	}
 
@@ -469,6 +514,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 */
 	public void setLayoutFriendlyURLPersistence(
 		LayoutFriendlyURLPersistence layoutFriendlyURLPersistence) {
+
 		this.layoutFriendlyURLPersistence = layoutFriendlyURLPersistence;
 	}
 
@@ -477,7 +523,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -487,7 +535,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -496,7 +546,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -507,6 +559,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -547,7 +600,8 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.LayoutFriendlyURL",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.LayoutFriendlyURL",
 			layoutFriendlyURLLocalService);
 	}
 
@@ -581,15 +635,16 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = layoutFriendlyURLPersistence.getDataSource();
+			DataSource dataSource =
+				layoutFriendlyURLPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -600,16 +655,30 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 
 	@BeanReference(type = LayoutFriendlyURLLocalService.class)
 	protected LayoutFriendlyURLLocalService layoutFriendlyURLLocalService;
+
 	@BeanReference(type = LayoutFriendlyURLPersistence.class)
 	protected LayoutFriendlyURLPersistence layoutFriendlyURLPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

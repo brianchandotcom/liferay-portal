@@ -33,81 +33,87 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ExpandoValueServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
-		long companyId, String className, String tableName, String columnName,
-		long classPK, Object data)
+			long companyId, String className, String tableName,
+			String columnName, long classPK, Object data)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addValue(companyId, className, tableName, columnName,
-			classPK, data);
+
+		return getService().addValue(
+			companyId, className, tableName, columnName, classPK, data);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
-		long companyId, String className, String tableName, String columnName,
-		long classPK, String data)
+			long companyId, String className, String tableName,
+			String columnName, long classPK, String data)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addValue(companyId, className, tableName, columnName,
-			classPK, data);
+
+		return getService().addValue(
+			companyId, className, tableName, columnName, classPK, data);
 	}
 
-	public static void addValues(long companyId, String className,
-		String tableName, long classPK,
-		java.util.Map<String, java.io.Serializable> attributeValues)
+	public static void addValues(
+			long companyId, String className, String tableName, long classPK,
+			java.util.Map<String, java.io.Serializable> attributeValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addValues(companyId, className, tableName, classPK, attributeValues);
+
+		getService().addValues(
+			companyId, className, tableName, classPK, attributeValues);
 	}
 
 	public static java.util.Map<String, java.io.Serializable> getData(
-		long companyId, String className, String tableName,
-		java.util.Collection<String> columnNames, long classPK)
+			long companyId, String className, String tableName,
+			java.util.Collection<String> columnNames, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getData(companyId, className, tableName, columnNames,
-			classPK);
+
+		return getService().getData(
+			companyId, className, tableName, columnNames, classPK);
 	}
 
-	public static java.io.Serializable getData(long companyId,
-		String className, String tableName, String columnName, long classPK)
+	public static java.io.Serializable getData(
+			long companyId, String className, String tableName,
+			String columnName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getData(companyId, className, tableName, columnName, classPK);
+
+		return getService().getData(
+			companyId, className, tableName, columnName, classPK);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getJSONData(
-		long companyId, String className, String tableName, String columnName,
-		long classPK)
+			long companyId, String className, String tableName,
+			String columnName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getJSONData(companyId, className, tableName, columnName,
-			classPK);
+
+		return getService().getJSONData(
+			companyId, className, tableName, columnName, classPK);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ExpandoValueService getService() {
 		if (_service == null) {
-			_service = (ExpandoValueService)PortalBeanLocatorUtil.locate(ExpandoValueService.class.getName());
+			_service = (ExpandoValueService)PortalBeanLocatorUtil.locate(
+				ExpandoValueService.class.getName());
 
-			ReferenceRegistry.registerReference(ExpandoValueServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ExpandoValueServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ExpandoValueService _service;
+
 }

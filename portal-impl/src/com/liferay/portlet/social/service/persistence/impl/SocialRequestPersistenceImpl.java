@@ -17,7 +17,6 @@ package com.liferay.portlet.social.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -37,10 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-
 import com.liferay.portlet.social.model.impl.SocialRequestImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestModelImpl;
-
 import com.liferay.social.kernel.exception.NoSuchRequestException;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
@@ -66,18 +63,24 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequest>
+public class SocialRequestPersistenceImpl
+	extends BasePersistenceImpl<SocialRequest>
 	implements SocialRequestPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SocialRequestUtil</code> to access the social request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = SocialRequestImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		SocialRequestImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -127,8 +130,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUuid(String uuid, int start, int end,
+	public List<SocialRequest> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
@@ -147,9 +152,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUuid(String uuid, int start, int end,
+	public List<SocialRequest> findByUuid(
+		String uuid, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -157,21 +164,22 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] { uuid };
+			finderArgs = new Object[] {uuid};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
@@ -188,8 +196,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -209,11 +217,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -233,16 +240,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				}
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -271,10 +278,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByUuid_First(String uuid,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByUuid_First(
+			String uuid, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByUuid_First(uuid, orderByComparator);
+
+		SocialRequest socialRequest = fetchByUuid_First(
+			uuid, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -300,8 +309,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUuid_First(String uuid,
-		OrderByComparator<SocialRequest> orderByComparator) {
+	public SocialRequest fetchByUuid_First(
+		String uuid, OrderByComparator<SocialRequest> orderByComparator) {
+
 		List<SocialRequest> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -320,9 +330,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByUuid_Last(String uuid,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByUuid_Last(
+			String uuid, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (socialRequest != null) {
@@ -349,16 +360,17 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUuid_Last(String uuid,
-		OrderByComparator<SocialRequest> orderByComparator) {
+	public SocialRequest fetchByUuid_Last(
+		String uuid, OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<SocialRequest> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -377,9 +389,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByUuid_PrevAndNext(long requestId, String uuid,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByUuid_PrevAndNext(
+			long requestId, String uuid,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		uuid = Objects.toString(uuid, "");
 
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
@@ -391,13 +405,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, socialRequest, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, socialRequest, uuid, orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByUuid_PrevAndNext(session, socialRequest, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, socialRequest, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -409,14 +423,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByUuid_PrevAndNext(Session session,
-		SocialRequest socialRequest, String uuid,
+	protected SocialRequest getByUuid_PrevAndNext(
+		Session session, SocialRequest socialRequest, String uuid,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -437,7 +452,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -509,8 +525,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -532,8 +550,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SocialRequest socialRequest : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -550,10 +569,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		FinderPath finderPath = _finderPathCountByUuid;
 
-		Object[] finderArgs = new Object[] { uuid };
+		Object[] finderArgs = new Object[] {uuid};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -603,8 +622,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "socialRequest.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"socialRequest.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(socialRequest.uuid IS NULL OR socialRequest.uuid = '')";
+
 	private FinderPath _finderPathFetchByUUID_G;
 	private FinderPath _finderPathCountByUUID_G;
 
@@ -619,6 +642,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public SocialRequest findByUUID_G(String uuid, long groupId)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = fetchByUUID_G(uuid, groupId);
 
 		if (socialRequest == null) {
@@ -665,24 +689,26 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
+	public SocialRequest fetchByUUID_G(
+		String uuid, long groupId, boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByUUID_G,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByUUID_G, finderArgs, this);
 		}
 
 		if (result instanceof SocialRequest) {
 			SocialRequest socialRequest = (SocialRequest)result;
 
 			if (!Objects.equals(uuid, socialRequest.getUuid()) ||
-					(groupId != socialRequest.getGroupId())) {
+				(groupId != socialRequest.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -725,8 +751,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				List<SocialRequest> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByUUID_G,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					SocialRequest socialRequest = list.get(0);
@@ -737,8 +763,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByUUID_G,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -765,6 +791,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public SocialRequest removeByUUID_G(String uuid, long groupId)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByUUID_G(uuid, groupId);
 
 		return remove(socialRequest);
@@ -783,10 +810,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		FinderPath finderPath = _finderPathCountByUUID_G;
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -840,9 +867,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "socialRequest.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "socialRequest.groupId = ?";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"socialRequest.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(socialRequest.uuid IS NULL OR socialRequest.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"socialRequest.groupId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
@@ -856,8 +889,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public List<SocialRequest> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -874,8 +907,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
-		int start, int end) {
+	public List<SocialRequest> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -894,9 +928,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<SocialRequest> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -915,9 +952,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		uuid = Objects.toString(uuid, "");
 
 		boolean pagination = true;
@@ -925,30 +964,30 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
 					if (!uuid.equals(socialRequest.getUuid()) ||
-							(companyId != socialRequest.getCompanyId())) {
+						(companyId != socialRequest.getCompanyId())) {
+
 						list = null;
 
 						break;
@@ -961,8 +1000,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -984,11 +1023,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1010,16 +1048,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1049,11 +1087,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByUuid_C_First(uuid, companyId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -1083,10 +1123,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUuid_C_First(String uuid, long companyId,
+	public SocialRequest fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<SocialRequest> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1105,11 +1147,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByUuid_C_Last(uuid, companyId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -1139,16 +1183,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUuid_C_Last(String uuid, long companyId,
+	public SocialRequest fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByUuid_C(uuid, companyId, count - 1,
-				count, orderByComparator);
+		List<SocialRequest> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1168,10 +1214,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByUuid_C_PrevAndNext(long requestId,
-		String uuid, long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByUuid_C_PrevAndNext(
+			long requestId, String uuid, long companyId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		uuid = Objects.toString(uuid, "");
 
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
@@ -1183,13 +1230,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, socialRequest, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, socialRequest, uuid, companyId, orderByComparator,
+				true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByUuid_C_PrevAndNext(session, socialRequest, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, socialRequest, uuid, companyId, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -1201,14 +1250,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByUuid_C_PrevAndNext(Session session,
-		SocialRequest socialRequest, String uuid, long companyId,
-		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+	protected SocialRequest getByUuid_C_PrevAndNext(
+		Session session, SocialRequest socialRequest, String uuid,
+		long companyId, OrderByComparator<SocialRequest> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1231,7 +1282,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1305,8 +1357,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1329,8 +1383,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SocialRequest socialRequest : findByUuid_C(uuid, companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -1348,10 +1405,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		FinderPath finderPath = _finderPathCountByUuid_C;
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1405,9 +1462,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "socialRequest.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(socialRequest.uuid IS NULL OR socialRequest.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "socialRequest.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"socialRequest.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(socialRequest.uuid IS NULL OR socialRequest.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"socialRequest.companyId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -1420,8 +1483,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public List<SocialRequest> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByCompanyId(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -1437,8 +1500,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByCompanyId(long companyId, int start,
-		int end) {
+	public List<SocialRequest> findByCompanyId(
+		long companyId, int start, int end) {
+
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -1456,8 +1520,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<SocialRequest> orderByComparator) {
+	public List<SocialRequest> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator) {
+
 		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
@@ -1476,29 +1542,34 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId };
+			finderArgs = new Object[] {companyId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+			finderArgs = new Object[] {
+				companyId, start, end, orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
@@ -1515,8 +1586,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1527,11 +1598,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1549,16 +1619,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1587,11 +1657,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByCompanyId_First(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByCompanyId_First(
+			long companyId, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByCompanyId_First(companyId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByCompanyId_First(
+			companyId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -1617,10 +1688,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByCompanyId_First(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByCompanyId(companyId, 0, 1,
-				orderByComparator);
+	public SocialRequest fetchByCompanyId_First(
+		long companyId, OrderByComparator<SocialRequest> orderByComparator) {
+
+		List<SocialRequest> list = findByCompanyId(
+			companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1638,11 +1710,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByCompanyId_Last(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByCompanyId_Last(
+			long companyId, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByCompanyId_Last(companyId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByCompanyId_Last(
+			companyId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -1668,16 +1741,17 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByCompanyId_Last(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator) {
+	public SocialRequest fetchByCompanyId_Last(
+		long companyId, OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByCompanyId(companyId, count - 1, count,
-				orderByComparator);
+		List<SocialRequest> list = findByCompanyId(
+			companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1696,9 +1770,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByCompanyId_PrevAndNext(long requestId,
-		long companyId, OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByCompanyId_PrevAndNext(
+			long requestId, long companyId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -1708,13 +1784,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByCompanyId_PrevAndNext(session, socialRequest,
-					companyId, orderByComparator, true);
+			array[0] = getByCompanyId_PrevAndNext(
+				session, socialRequest, companyId, orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByCompanyId_PrevAndNext(session, socialRequest,
-					companyId, orderByComparator, false);
+			array[2] = getByCompanyId_PrevAndNext(
+				session, socialRequest, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1726,14 +1802,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByCompanyId_PrevAndNext(Session session,
-		SocialRequest socialRequest, long companyId,
+	protected SocialRequest getByCompanyId_PrevAndNext(
+		Session session, SocialRequest socialRequest, long companyId,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1745,7 +1822,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1815,8 +1893,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -1838,8 +1918,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SocialRequest socialRequest : findByCompanyId(companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByCompanyId(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -1854,10 +1936,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		Object[] finderArgs = new Object[] { companyId };
+		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1896,7 +1978,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "socialRequest.companyId = ?";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
+		"socialRequest.companyId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
@@ -1943,8 +2027,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUserId(long userId, int start, int end,
+	public List<SocialRequest> findByUserId(
+		long userId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		return findByUserId(userId, start, end, orderByComparator, true);
 	}
 
@@ -1963,29 +2049,32 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByUserId(long userId, int start, int end,
+	public List<SocialRequest> findByUserId(
+		long userId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] { userId };
+			finderArgs = new Object[] {userId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] { userId, start, end, orderByComparator };
+			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
@@ -2002,8 +2091,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2014,11 +2103,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2036,16 +2124,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(userId);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2074,11 +2162,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByUserId_First(long userId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByUserId_First(
+			long userId, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByUserId_First(userId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByUserId_First(
+			userId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -2104,9 +2193,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUserId_First(long userId,
-		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByUserId(userId, 0, 1, orderByComparator);
+	public SocialRequest fetchByUserId_First(
+		long userId, OrderByComparator<SocialRequest> orderByComparator) {
+
+		List<SocialRequest> list = findByUserId(
+			userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2124,11 +2215,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByUserId_Last(long userId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByUserId_Last(
+			long userId, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByUserId_Last(userId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByUserId_Last(
+			userId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -2154,16 +2246,17 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByUserId_Last(long userId,
-		OrderByComparator<SocialRequest> orderByComparator) {
+	public SocialRequest fetchByUserId_Last(
+		long userId, OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByUserId(userId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByUserId(userId, count - 1, count,
-				orderByComparator);
+		List<SocialRequest> list = findByUserId(
+			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2182,9 +2275,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByUserId_PrevAndNext(long requestId,
-		long userId, OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByUserId_PrevAndNext(
+			long requestId, long userId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -2194,13 +2289,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByUserId_PrevAndNext(session, socialRequest, userId,
-					orderByComparator, true);
+			array[0] = getByUserId_PrevAndNext(
+				session, socialRequest, userId, orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByUserId_PrevAndNext(session, socialRequest, userId,
-					orderByComparator, false);
+			array[2] = getByUserId_PrevAndNext(
+				session, socialRequest, userId, orderByComparator, false);
 
 			return array;
 		}
@@ -2212,14 +2307,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByUserId_PrevAndNext(Session session,
-		SocialRequest socialRequest, long userId,
+	protected SocialRequest getByUserId_PrevAndNext(
+		Session session, SocialRequest socialRequest, long userId,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -2231,7 +2327,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -2301,8 +2398,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -2324,8 +2423,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (SocialRequest socialRequest : findByUserId(userId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByUserId(
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -2340,10 +2441,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public int countByUserId(long userId) {
 		FinderPath finderPath = _finderPathCountByUserId;
 
-		Object[] finderArgs = new Object[] { userId };
+		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2382,7 +2483,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_USERID_USERID_2 = "socialRequest.userId = ?";
+	private static final String _FINDER_COLUMN_USERID_USERID_2 =
+		"socialRequest.userId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByReceiverUserId;
 	private FinderPath _finderPathWithoutPaginationFindByReceiverUserId;
 	private FinderPath _finderPathCountByReceiverUserId;
@@ -2395,8 +2498,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public List<SocialRequest> findByReceiverUserId(long receiverUserId) {
-		return findByReceiverUserId(receiverUserId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByReceiverUserId(
+			receiverUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2412,8 +2515,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByReceiverUserId(long receiverUserId,
-		int start, int end) {
+	public List<SocialRequest> findByReceiverUserId(
+		long receiverUserId, int start, int end) {
+
 		return findByReceiverUserId(receiverUserId, start, end, null);
 	}
 
@@ -2431,10 +2535,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByReceiverUserId(long receiverUserId,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
-		return findByReceiverUserId(receiverUserId, start, end,
-			orderByComparator, true);
+	public List<SocialRequest> findByReceiverUserId(
+		long receiverUserId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator) {
+
+		return findByReceiverUserId(
+			receiverUserId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2452,33 +2558,34 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByReceiverUserId(long receiverUserId,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByReceiverUserId(
+		long receiverUserId, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByReceiverUserId;
-			finderArgs = new Object[] { receiverUserId };
+			finderArgs = new Object[] {receiverUserId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByReceiverUserId;
 			finderArgs = new Object[] {
-					receiverUserId,
-					
-					start, end, orderByComparator
-				};
+				receiverUserId, start, end, orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
@@ -2495,8 +2602,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2507,11 +2614,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2529,16 +2635,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(receiverUserId);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2567,11 +2673,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByReceiverUserId_First(long receiverUserId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByReceiverUserId_First(
+			long receiverUserId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByReceiverUserId_First(receiverUserId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByReceiverUserId_First(
+			receiverUserId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -2597,10 +2705,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByReceiverUserId_First(long receiverUserId,
+	public SocialRequest fetchByReceiverUserId_First(
+		long receiverUserId,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByReceiverUserId(receiverUserId, 0, 1,
-				orderByComparator);
+
+		List<SocialRequest> list = findByReceiverUserId(
+			receiverUserId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2618,11 +2728,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByReceiverUserId_Last(long receiverUserId,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByReceiverUserId_Last(
+			long receiverUserId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByReceiverUserId_Last(receiverUserId,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByReceiverUserId_Last(
+			receiverUserId, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -2648,16 +2760,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByReceiverUserId_Last(long receiverUserId,
+	public SocialRequest fetchByReceiverUserId_Last(
+		long receiverUserId,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByReceiverUserId(receiverUserId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByReceiverUserId(receiverUserId,
-				count - 1, count, orderByComparator);
+		List<SocialRequest> list = findByReceiverUserId(
+			receiverUserId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2676,9 +2790,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByReceiverUserId_PrevAndNext(long requestId,
-		long receiverUserId, OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByReceiverUserId_PrevAndNext(
+			long requestId, long receiverUserId,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -2688,13 +2804,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByReceiverUserId_PrevAndNext(session, socialRequest,
-					receiverUserId, orderByComparator, true);
+			array[0] = getByReceiverUserId_PrevAndNext(
+				session, socialRequest, receiverUserId, orderByComparator,
+				true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByReceiverUserId_PrevAndNext(session, socialRequest,
-					receiverUserId, orderByComparator, false);
+			array[2] = getByReceiverUserId_PrevAndNext(
+				session, socialRequest, receiverUserId, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -2706,14 +2824,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByReceiverUserId_PrevAndNext(Session session,
-		SocialRequest socialRequest, long receiverUserId,
+	protected SocialRequest getByReceiverUserId_PrevAndNext(
+		Session session, SocialRequest socialRequest, long receiverUserId,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -2725,7 +2844,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -2795,8 +2915,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(receiverUserId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -2818,8 +2940,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByReceiverUserId(long receiverUserId) {
-		for (SocialRequest socialRequest : findByReceiverUserId(
-				receiverUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByReceiverUserId(
+					receiverUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -2834,10 +2959,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public int countByReceiverUserId(long receiverUserId) {
 		FinderPath finderPath = _finderPathCountByReceiverUserId;
 
-		Object[] finderArgs = new Object[] { receiverUserId };
+		Object[] finderArgs = new Object[] {receiverUserId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2876,7 +3001,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2 = "socialRequest.receiverUserId = ?";
+	private static final String _FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2 =
+		"socialRequest.receiverUserId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByU_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_S;
 	private FinderPath _finderPathCountByU_S;
@@ -2890,8 +3017,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public List<SocialRequest> findByU_S(long userId, int status) {
-		return findByU_S(userId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByU_S(
+			userId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2908,8 +3035,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_S(long userId, int status, int start,
-		int end) {
+	public List<SocialRequest> findByU_S(
+		long userId, int status, int start, int end) {
+
 		return findByU_S(userId, status, start, end, null);
 	}
 
@@ -2928,8 +3056,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_S(long userId, int status, int start,
-		int end, OrderByComparator<SocialRequest> orderByComparator) {
+	public List<SocialRequest> findByU_S(
+		long userId, int status, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator) {
+
 		return findByU_S(userId, status, start, end, orderByComparator, true);
 	}
 
@@ -2949,38 +3079,40 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_S(long userId, int status, int start,
-		int end, OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByU_S(
+		long userId, int status, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByU_S;
-			finderArgs = new Object[] { userId, status };
+			finderArgs = new Object[] {userId, status};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByU_S;
 			finderArgs = new Object[] {
-					userId, status,
-					
-					start, end, orderByComparator
-				};
+				userId, status, start, end, orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
 					if ((userId != socialRequest.getUserId()) ||
-							(status != socialRequest.getStatus())) {
+						(status != socialRequest.getStatus())) {
+
 						list = null;
 
 						break;
@@ -2993,8 +3125,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -3007,11 +3139,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_U_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3031,16 +3162,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3070,11 +3201,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByU_S_First(long userId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByU_S_First(
+			long userId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByU_S_First(userId, status,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByU_S_First(
+			userId, status, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -3104,10 +3237,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByU_S_First(long userId, int status,
+	public SocialRequest fetchByU_S_First(
+		long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByU_S(userId, status, 0, 1,
-				orderByComparator);
+
+		List<SocialRequest> list = findByU_S(
+			userId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3126,11 +3261,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByU_S_Last(long userId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByU_S_Last(
+			long userId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByU_S_Last(userId, status,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByU_S_Last(
+			userId, status, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -3160,16 +3297,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByU_S_Last(long userId, int status,
+	public SocialRequest fetchByU_S_Last(
+		long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByU_S(userId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByU_S(userId, status, count - 1, count,
-				orderByComparator);
+		List<SocialRequest> list = findByU_S(
+			userId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3189,9 +3328,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByU_S_PrevAndNext(long requestId, long userId,
-		int status, OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByU_S_PrevAndNext(
+			long requestId, long userId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -3201,13 +3342,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByU_S_PrevAndNext(session, socialRequest, userId,
-					status, orderByComparator, true);
+			array[0] = getByU_S_PrevAndNext(
+				session, socialRequest, userId, status, orderByComparator,
+				true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByU_S_PrevAndNext(session, socialRequest, userId,
-					status, orderByComparator, false);
+			array[2] = getByU_S_PrevAndNext(
+				session, socialRequest, userId, status, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -3219,14 +3362,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByU_S_PrevAndNext(Session session,
-		SocialRequest socialRequest, long userId, int status,
+	protected SocialRequest getByU_S_PrevAndNext(
+		Session session, SocialRequest socialRequest, long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -3240,7 +3384,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_U_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -3312,8 +3457,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -3336,8 +3483,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByU_S(long userId, int status) {
-		for (SocialRequest socialRequest : findByU_S(userId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByU_S(
+					userId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -3353,10 +3503,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public int countByU_S(long userId, int status) {
 		FinderPath finderPath = _finderPathCountByU_S;
 
-		Object[] finderArgs = new Object[] { userId, status };
+		Object[] finderArgs = new Object[] {userId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3399,8 +3549,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_S_USERID_2 = "socialRequest.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_S_STATUS_2 = "socialRequest.status = ?";
+	private static final String _FINDER_COLUMN_U_S_USERID_2 =
+		"socialRequest.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_S_STATUS_2 =
+		"socialRequest.status = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
@@ -3414,8 +3568,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public List<SocialRequest> findByC_C(long classNameId, long classPK) {
-		return findByC_C(classNameId, classPK, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_C(
+			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -3432,8 +3586,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C(long classNameId, long classPK,
-		int start, int end) {
+	public List<SocialRequest> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
 		return findByC_C(classNameId, classPK, start, end, null);
 	}
 
@@ -3452,10 +3607,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C(long classNameId, long classPK,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
-		return findByC_C(classNameId, classPK, start, end, orderByComparator,
-			true);
+	public List<SocialRequest> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator) {
+
+		return findByC_C(
+			classNameId, classPK, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3474,38 +3631,40 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C(long classNameId, long classPK,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] { classNameId, classPK };
+			finderArgs = new Object[] {classNameId, classPK};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
-					classNameId, classPK,
-					
-					start, end, orderByComparator
-				};
+				classNameId, classPK, start, end, orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
 					if ((classNameId != socialRequest.getClassNameId()) ||
-							(classPK != socialRequest.getClassPK())) {
+						(classPK != socialRequest.getClassPK())) {
+
 						list = null;
 
 						break;
@@ -3518,8 +3677,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -3532,11 +3691,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3556,16 +3714,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(classPK);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3595,11 +3753,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByC_C_First(long classNameId, long classPK,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByC_C_First(
+			long classNameId, long classPK,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByC_C_First(classNameId, classPK,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByC_C_First(
+			classNameId, classPK, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -3629,10 +3789,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByC_C_First(long classNameId, long classPK,
+	public SocialRequest fetchByC_C_First(
+		long classNameId, long classPK,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByC_C(classNameId, classPK, 0, 1,
-				orderByComparator);
+
+		List<SocialRequest> list = findByC_C(
+			classNameId, classPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3651,11 +3813,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByC_C_Last(
+			long classNameId, long classPK,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByC_C_Last(classNameId, classPK,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByC_C_Last(
+			classNameId, classPK, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -3685,16 +3849,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByC_C_Last(long classNameId, long classPK,
+	public SocialRequest fetchByC_C_Last(
+		long classNameId, long classPK,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByC_C(classNameId, classPK, count - 1,
-				count, orderByComparator);
+		List<SocialRequest> list = findByC_C(
+			classNameId, classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3714,10 +3880,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByC_C_PrevAndNext(long requestId,
-		long classNameId, long classPK,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByC_C_PrevAndNext(
+			long requestId, long classNameId, long classPK,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -3727,13 +3894,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByC_C_PrevAndNext(session, socialRequest,
-					classNameId, classPK, orderByComparator, true);
+			array[0] = getByC_C_PrevAndNext(
+				session, socialRequest, classNameId, classPK, orderByComparator,
+				true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByC_C_PrevAndNext(session, socialRequest,
-					classNameId, classPK, orderByComparator, false);
+			array[2] = getByC_C_PrevAndNext(
+				session, socialRequest, classNameId, classPK, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -3745,14 +3914,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByC_C_PrevAndNext(Session session,
-		SocialRequest socialRequest, long classNameId, long classPK,
-		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+	protected SocialRequest getByC_C_PrevAndNext(
+		Session session, SocialRequest socialRequest, long classNameId,
+		long classPK, OrderByComparator<SocialRequest> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -3766,7 +3937,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -3838,8 +4010,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -3862,8 +4036,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (SocialRequest socialRequest : findByC_C(classNameId, classPK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByC_C(
+					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -3879,10 +4056,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public int countByC_C(long classNameId, long classPK) {
 		FinderPath finderPath = _finderPathCountByC_C;
 
-		Object[] finderArgs = new Object[] { classNameId, classPK };
+		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3925,8 +4102,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "socialRequest.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "socialRequest.classPK = ?";
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
+		"socialRequest.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
+		"socialRequest.classPK = ?";
+
 	private FinderPath _finderPathWithPaginationFindByR_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_S;
 	private FinderPath _finderPathCountByR_S;
@@ -3940,8 +4121,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public List<SocialRequest> findByR_S(long receiverUserId, int status) {
-		return findByR_S(receiverUserId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByR_S(
+			receiverUserId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -3958,8 +4139,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByR_S(long receiverUserId, int status,
-		int start, int end) {
+	public List<SocialRequest> findByR_S(
+		long receiverUserId, int status, int start, int end) {
+
 		return findByR_S(receiverUserId, status, start, end, null);
 	}
 
@@ -3978,10 +4160,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByR_S(long receiverUserId, int status,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
-		return findByR_S(receiverUserId, status, start, end, orderByComparator,
-			true);
+	public List<SocialRequest> findByR_S(
+		long receiverUserId, int status, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator) {
+
+		return findByR_S(
+			receiverUserId, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4000,38 +4184,40 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByR_S(long receiverUserId, int status,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByR_S(
+		long receiverUserId, int status, int start, int end,
+		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByR_S;
-			finderArgs = new Object[] { receiverUserId, status };
+			finderArgs = new Object[] {receiverUserId, status};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByR_S;
 			finderArgs = new Object[] {
-					receiverUserId, status,
-					
-					start, end, orderByComparator
-				};
+				receiverUserId, status, start, end, orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
 					if ((receiverUserId != socialRequest.getReceiverUserId()) ||
-							(status != socialRequest.getStatus())) {
+						(status != socialRequest.getStatus())) {
+
 						list = null;
 
 						break;
@@ -4044,8 +4230,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -4058,11 +4244,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_R_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4082,16 +4267,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -4121,11 +4306,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByR_S_First(long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByR_S_First(
+			long receiverUserId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByR_S_First(receiverUserId, status,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByR_S_First(
+			receiverUserId, status, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -4155,10 +4342,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByR_S_First(long receiverUserId, int status,
+	public SocialRequest fetchByR_S_First(
+		long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByR_S(receiverUserId, status, 0, 1,
-				orderByComparator);
+
+		List<SocialRequest> list = findByR_S(
+			receiverUserId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4177,11 +4366,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByR_S_Last(long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByR_S_Last(
+			long receiverUserId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByR_S_Last(receiverUserId, status,
-				orderByComparator);
+
+		SocialRequest socialRequest = fetchByR_S_Last(
+			receiverUserId, status, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -4211,16 +4402,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByR_S_Last(long receiverUserId, int status,
+	public SocialRequest fetchByR_S_Last(
+		long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		int count = countByR_S(receiverUserId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByR_S(receiverUserId, status, count - 1,
-				count, orderByComparator);
+		List<SocialRequest> list = findByR_S(
+			receiverUserId, status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -4240,10 +4433,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByR_S_PrevAndNext(long requestId,
-		long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByR_S_PrevAndNext(
+			long requestId, long receiverUserId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -4253,13 +4447,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByR_S_PrevAndNext(session, socialRequest,
-					receiverUserId, status, orderByComparator, true);
+			array[0] = getByR_S_PrevAndNext(
+				session, socialRequest, receiverUserId, status,
+				orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByR_S_PrevAndNext(session, socialRequest,
-					receiverUserId, status, orderByComparator, false);
+			array[2] = getByR_S_PrevAndNext(
+				session, socialRequest, receiverUserId, status,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -4271,14 +4467,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByR_S_PrevAndNext(Session session,
-		SocialRequest socialRequest, long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+	protected SocialRequest getByR_S_PrevAndNext(
+		Session session, SocialRequest socialRequest, long receiverUserId,
+		int status, OrderByComparator<SocialRequest> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -4292,7 +4490,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_R_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -4364,8 +4563,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -4388,8 +4589,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void removeByR_S(long receiverUserId, int status) {
-		for (SocialRequest socialRequest : findByR_S(receiverUserId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (SocialRequest socialRequest :
+				findByR_S(
+					receiverUserId, status, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -4405,10 +4609,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public int countByR_S(long receiverUserId, int status) {
 		FinderPath finderPath = _finderPathCountByR_S;
 
-		Object[] finderArgs = new Object[] { receiverUserId, status };
+		Object[] finderArgs = new Object[] {receiverUserId, status};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4451,8 +4655,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_R_S_RECEIVERUSERID_2 = "socialRequest.receiverUserId = ? AND ";
-	private static final String _FINDER_COLUMN_R_S_STATUS_2 = "socialRequest.status = ?";
+	private static final String _FINDER_COLUMN_R_S_RECEIVERUSERID_2 =
+		"socialRequest.receiverUserId = ? AND ";
+
+	private static final String _FINDER_COLUMN_R_S_STATUS_2 =
+		"socialRequest.status = ?";
+
 	private FinderPath _finderPathFetchByU_C_C_T_R;
 	private FinderPath _finderPathCountByU_C_C_T_R;
 
@@ -4468,11 +4676,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByU_C_C_T_R(long userId, long classNameId,
-		long classPK, int type, long receiverUserId)
+	public SocialRequest findByU_C_C_T_R(
+			long userId, long classNameId, long classPK, int type,
+			long receiverUserId)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByU_C_C_T_R(userId, classNameId,
-				classPK, type, receiverUserId);
+
+		SocialRequest socialRequest = fetchByU_C_C_T_R(
+			userId, classNameId, classPK, type, receiverUserId);
 
 		if (socialRequest == null) {
 			StringBundler msg = new StringBundler(12);
@@ -4517,10 +4727,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByU_C_C_T_R(long userId, long classNameId,
-		long classPK, int type, long receiverUserId) {
-		return fetchByU_C_C_T_R(userId, classNameId, classPK, type,
-			receiverUserId, true);
+	public SocialRequest fetchByU_C_C_T_R(
+		long userId, long classNameId, long classPK, int type,
+		long receiverUserId) {
+
+		return fetchByU_C_C_T_R(
+			userId, classNameId, classPK, type, receiverUserId, true);
 	}
 
 	/**
@@ -4535,27 +4747,30 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByU_C_C_T_R(long userId, long classNameId,
-		long classPK, int type, long receiverUserId, boolean retrieveFromCache) {
+	public SocialRequest fetchByU_C_C_T_R(
+		long userId, long classNameId, long classPK, int type,
+		long receiverUserId, boolean retrieveFromCache) {
+
 		Object[] finderArgs = new Object[] {
-				userId, classNameId, classPK, type, receiverUserId
-			};
+			userId, classNameId, classPK, type, receiverUserId
+		};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByU_C_C_T_R,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByU_C_C_T_R, finderArgs, this);
 		}
 
 		if (result instanceof SocialRequest) {
 			SocialRequest socialRequest = (SocialRequest)result;
 
 			if ((userId != socialRequest.getUserId()) ||
-					(classNameId != socialRequest.getClassNameId()) ||
-					(classPK != socialRequest.getClassPK()) ||
-					(type != socialRequest.getType()) ||
-					(receiverUserId != socialRequest.getReceiverUserId())) {
+				(classNameId != socialRequest.getClassNameId()) ||
+				(classPK != socialRequest.getClassPK()) ||
+				(type != socialRequest.getType()) ||
+				(receiverUserId != socialRequest.getReceiverUserId())) {
+
 				result = null;
 			}
 		}
@@ -4599,8 +4814,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				List<SocialRequest> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByU_C_C_T_R,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByU_C_C_T_R, finderArgs, list);
 				}
 				else {
 					SocialRequest socialRequest = list.get(0);
@@ -4611,8 +4826,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByU_C_C_T_R,
-					finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByU_C_C_T_R, finderArgs);
 
 				throw processException(e);
 			}
@@ -4640,11 +4855,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the social request that was removed
 	 */
 	@Override
-	public SocialRequest removeByU_C_C_T_R(long userId, long classNameId,
-		long classPK, int type, long receiverUserId)
+	public SocialRequest removeByU_C_C_T_R(
+			long userId, long classNameId, long classPK, int type,
+			long receiverUserId)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = findByU_C_C_T_R(userId, classNameId,
-				classPK, type, receiverUserId);
+
+		SocialRequest socialRequest = findByU_C_C_T_R(
+			userId, classNameId, classPK, type, receiverUserId);
 
 		return remove(socialRequest);
 	}
@@ -4660,16 +4877,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the number of matching social requests
 	 */
 	@Override
-	public int countByU_C_C_T_R(long userId, long classNameId, long classPK,
-		int type, long receiverUserId) {
+	public int countByU_C_C_T_R(
+		long userId, long classNameId, long classPK, int type,
+		long receiverUserId) {
+
 		FinderPath finderPath = _finderPathCountByU_C_C_T_R;
 
 		Object[] finderArgs = new Object[] {
-				userId, classNameId, classPK, type, receiverUserId
-			};
+			userId, classNameId, classPK, type, receiverUserId
+		};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(6);
@@ -4724,11 +4943,21 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_C_C_T_R_USERID_2 = "socialRequest.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_R_CLASSNAMEID_2 = "socialRequest.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_R_CLASSPK_2 = "socialRequest.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_R_TYPE_2 = "socialRequest.type = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_R_RECEIVERUSERID_2 = "socialRequest.receiverUserId = ?";
+	private static final String _FINDER_COLUMN_U_C_C_T_R_USERID_2 =
+		"socialRequest.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_R_CLASSNAMEID_2 =
+		"socialRequest.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_R_CLASSPK_2 =
+		"socialRequest.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_R_TYPE_2 =
+		"socialRequest.type = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_R_RECEIVERUSERID_2 =
+		"socialRequest.receiverUserId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByU_C_C_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_C_C_T_S;
 	private FinderPath _finderPathCountByU_C_C_T_S;
@@ -4744,10 +4973,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_C_C_T_S(long userId, long classNameId,
-		long classPK, int type, int status) {
-		return findByU_C_C_T_S(userId, classNameId, classPK, type, status,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<SocialRequest> findByU_C_C_T_S(
+		long userId, long classNameId, long classPK, int type, int status) {
+
+		return findByU_C_C_T_S(
+			userId, classNameId, classPK, type, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -4767,10 +4998,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_C_C_T_S(long userId, long classNameId,
-		long classPK, int type, int status, int start, int end) {
-		return findByU_C_C_T_S(userId, classNameId, classPK, type, status,
-			start, end, null);
+	public List<SocialRequest> findByU_C_C_T_S(
+		long userId, long classNameId, long classPK, int type, int status,
+		int start, int end) {
+
+		return findByU_C_C_T_S(
+			userId, classNameId, classPK, type, status, start, end, null);
 	}
 
 	/**
@@ -4791,11 +5024,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_C_C_T_S(long userId, long classNameId,
-		long classPK, int type, int status, int start, int end,
+	public List<SocialRequest> findByU_C_C_T_S(
+		long userId, long classNameId, long classPK, int type, int status,
+		int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		return findByU_C_C_T_S(userId, classNameId, classPK, type, status,
-			start, end, orderByComparator, true);
+
+		return findByU_C_C_T_S(
+			userId, classNameId, classPK, type, status, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -4817,42 +5053,46 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByU_C_C_T_S(long userId, long classNameId,
-		long classPK, int type, int status, int start, int end,
-		OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findByU_C_C_T_S(
+		long userId, long classNameId, long classPK, int type, int status,
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByU_C_C_T_S;
-			finderArgs = new Object[] { userId, classNameId, classPK, type, status };
+			finderArgs = new Object[] {
+				userId, classNameId, classPK, type, status
+			};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByU_C_C_T_S;
 			finderArgs = new Object[] {
-					userId, classNameId, classPK, type, status,
-					
-					start, end, orderByComparator
-				};
+				userId, classNameId, classPK, type, status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
 					if ((userId != socialRequest.getUserId()) ||
-							(classNameId != socialRequest.getClassNameId()) ||
-							(classPK != socialRequest.getClassPK()) ||
-							(type != socialRequest.getType()) ||
-							(status != socialRequest.getStatus())) {
+						(classNameId != socialRequest.getClassNameId()) ||
+						(classPK != socialRequest.getClassPK()) ||
+						(type != socialRequest.getType()) ||
+						(status != socialRequest.getStatus())) {
+
 						list = null;
 
 						break;
@@ -4865,8 +5105,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(7 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(7);
@@ -4885,11 +5125,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_U_C_C_T_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4915,16 +5154,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -4957,12 +5196,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByU_C_C_T_S_First(long userId, long classNameId,
-		long classPK, int type, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByU_C_C_T_S_First(
+			long userId, long classNameId, long classPK, int type, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByU_C_C_T_S_First(userId,
-				classNameId, classPK, type, status, orderByComparator);
+
+		SocialRequest socialRequest = fetchByU_C_C_T_S_First(
+			userId, classNameId, classPK, type, status, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -5004,11 +5244,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByU_C_C_T_S_First(long userId, long classNameId,
-		long classPK, int type, int status,
+	public SocialRequest fetchByU_C_C_T_S_First(
+		long userId, long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByU_C_C_T_S(userId, classNameId,
-				classPK, type, status, 0, 1, orderByComparator);
+
+		List<SocialRequest> list = findByU_C_C_T_S(
+			userId, classNameId, classPK, type, status, 0, 1,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5030,12 +5272,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByU_C_C_T_S_Last(long userId, long classNameId,
-		long classPK, int type, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByU_C_C_T_S_Last(
+			long userId, long classNameId, long classPK, int type, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByU_C_C_T_S_Last(userId,
-				classNameId, classPK, type, status, orderByComparator);
+
+		SocialRequest socialRequest = fetchByU_C_C_T_S_Last(
+			userId, classNameId, classPK, type, status, orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -5077,17 +5320,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByU_C_C_T_S_Last(long userId, long classNameId,
-		long classPK, int type, int status,
+	public SocialRequest fetchByU_C_C_T_S_Last(
+		long userId, long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		int count = countByU_C_C_T_S(userId, classNameId, classPK, type, status);
+
+		int count = countByU_C_C_T_S(
+			userId, classNameId, classPK, type, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByU_C_C_T_S(userId, classNameId,
-				classPK, type, status, count - 1, count, orderByComparator);
+		List<SocialRequest> list = findByU_C_C_T_S(
+			userId, classNameId, classPK, type, status, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5110,10 +5356,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByU_C_C_T_S_PrevAndNext(long requestId,
-		long userId, long classNameId, long classPK, int type, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByU_C_C_T_S_PrevAndNext(
+			long requestId, long userId, long classNameId, long classPK,
+			int type, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -5123,15 +5371,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByU_C_C_T_S_PrevAndNext(session, socialRequest,
-					userId, classNameId, classPK, type, status,
-					orderByComparator, true);
+			array[0] = getByU_C_C_T_S_PrevAndNext(
+				session, socialRequest, userId, classNameId, classPK, type,
+				status, orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByU_C_C_T_S_PrevAndNext(session, socialRequest,
-					userId, classNameId, classPK, type, status,
-					orderByComparator, false);
+			array[2] = getByU_C_C_T_S_PrevAndNext(
+				session, socialRequest, userId, classNameId, classPK, type,
+				status, orderByComparator, false);
 
 			return array;
 		}
@@ -5143,15 +5391,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByU_C_C_T_S_PrevAndNext(Session session,
-		SocialRequest socialRequest, long userId, long classNameId,
-		long classPK, int type, int status,
+	protected SocialRequest getByU_C_C_T_S_PrevAndNext(
+		Session session, SocialRequest socialRequest, long userId,
+		long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(8 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -5171,7 +5420,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_U_C_C_T_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -5249,8 +5499,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -5275,11 +5527,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @param status the status
 	 */
 	@Override
-	public void removeByU_C_C_T_S(long userId, long classNameId, long classPK,
-		int type, int status) {
-		for (SocialRequest socialRequest : findByU_C_C_T_S(userId, classNameId,
-				classPK, type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null)) {
+	public void removeByU_C_C_T_S(
+		long userId, long classNameId, long classPK, int type, int status) {
+
+		for (SocialRequest socialRequest :
+				findByU_C_C_T_S(
+					userId, classNameId, classPK, type, status,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -5295,16 +5550,17 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the number of matching social requests
 	 */
 	@Override
-	public int countByU_C_C_T_S(long userId, long classNameId, long classPK,
-		int type, int status) {
+	public int countByU_C_C_T_S(
+		long userId, long classNameId, long classPK, int type, int status) {
+
 		FinderPath finderPath = _finderPathCountByU_C_C_T_S;
 
 		Object[] finderArgs = new Object[] {
-				userId, classNameId, classPK, type, status
-			};
+			userId, classNameId, classPK, type, status
+		};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(6);
@@ -5359,11 +5615,21 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_C_C_T_S_USERID_2 = "socialRequest.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_S_CLASSNAMEID_2 = "socialRequest.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_S_CLASSPK_2 = "socialRequest.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_S_TYPE_2 = "socialRequest.type = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_C_T_S_STATUS_2 = "socialRequest.status = ?";
+	private static final String _FINDER_COLUMN_U_C_C_T_S_USERID_2 =
+		"socialRequest.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_S_CLASSNAMEID_2 =
+		"socialRequest.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_S_CLASSPK_2 =
+		"socialRequest.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_S_TYPE_2 =
+		"socialRequest.type = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_C_C_T_S_STATUS_2 =
+		"socialRequest.status = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_C_T_R_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_T_R_S;
 	private FinderPath _finderPathCountByC_C_T_R_S;
@@ -5379,10 +5645,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C_T_R_S(long classNameId, long classPK,
-		int type, long receiverUserId, int status) {
-		return findByC_C_T_R_S(classNameId, classPK, type, receiverUserId,
-			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<SocialRequest> findByC_C_T_R_S(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status) {
+
+		return findByC_C_T_R_S(
+			classNameId, classPK, type, receiverUserId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -5402,10 +5671,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C_T_R_S(long classNameId, long classPK,
-		int type, long receiverUserId, int status, int start, int end) {
-		return findByC_C_T_R_S(classNameId, classPK, type, receiverUserId,
-			status, start, end, null);
+	public List<SocialRequest> findByC_C_T_R_S(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status, int start, int end) {
+
+		return findByC_C_T_R_S(
+			classNameId, classPK, type, receiverUserId, status, start, end,
+			null);
 	}
 
 	/**
@@ -5426,11 +5698,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C_T_R_S(long classNameId, long classPK,
-		int type, long receiverUserId, int status, int start, int end,
+	public List<SocialRequest> findByC_C_T_R_S(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
-		return findByC_C_T_R_S(classNameId, classPK, type, receiverUserId,
-			status, start, end, orderByComparator, true);
+
+		return findByC_C_T_R_S(
+			classNameId, classPK, type, receiverUserId, status, start, end,
+			orderByComparator, true);
 	}
 
 	/**
@@ -5452,44 +5727,47 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of matching social requests
 	 */
 	@Override
-	public List<SocialRequest> findByC_C_T_R_S(long classNameId, long classPK,
-		int type, long receiverUserId, int status, int start, int end,
+	public List<SocialRequest> findByC_C_T_R_S(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_C_T_R_S;
 			finderArgs = new Object[] {
-					classNameId, classPK, type, receiverUserId, status
-				};
+				classNameId, classPK, type, receiverUserId, status
+			};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_C_T_R_S;
 			finderArgs = new Object[] {
-					classNameId, classPK, type, receiverUserId, status,
-					
-					start, end, orderByComparator
-				};
+				classNameId, classPK, type, receiverUserId, status, start, end,
+				orderByComparator
+			};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
 					if ((classNameId != socialRequest.getClassNameId()) ||
-							(classPK != socialRequest.getClassPK()) ||
-							(type != socialRequest.getType()) ||
-							(receiverUserId != socialRequest.getReceiverUserId()) ||
-							(status != socialRequest.getStatus())) {
+						(classPK != socialRequest.getClassPK()) ||
+						(type != socialRequest.getType()) ||
+						(receiverUserId != socialRequest.getReceiverUserId()) ||
+						(status != socialRequest.getStatus())) {
+
 						list = null;
 
 						break;
@@ -5502,8 +5780,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(7 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					7 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(7);
@@ -5522,11 +5800,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			query.append(_FINDER_COLUMN_C_C_T_R_S_STATUS_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(SocialRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5552,16 +5829,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				qPos.add(status);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -5594,12 +5871,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByC_C_T_R_S_First(long classNameId, long classPK,
-		int type, long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByC_C_T_R_S_First(
+			long classNameId, long classPK, int type, long receiverUserId,
+			int status, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByC_C_T_R_S_First(classNameId,
-				classPK, type, receiverUserId, status, orderByComparator);
+
+		SocialRequest socialRequest = fetchByC_C_T_R_S_First(
+			classNameId, classPK, type, receiverUserId, status,
+			orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -5641,11 +5920,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByC_C_T_R_S_First(long classNameId, long classPK,
-		int type, long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator) {
-		List<SocialRequest> list = findByC_C_T_R_S(classNameId, classPK, type,
-				receiverUserId, status, 0, 1, orderByComparator);
+	public SocialRequest fetchByC_C_T_R_S_First(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status, OrderByComparator<SocialRequest> orderByComparator) {
+
+		List<SocialRequest> list = findByC_C_T_R_S(
+			classNameId, classPK, type, receiverUserId, status, 0, 1,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5667,12 +5948,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest findByC_C_T_R_S_Last(long classNameId, long classPK,
-		int type, long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest findByC_C_T_R_S_Last(
+			long classNameId, long classPK, int type, long receiverUserId,
+			int status, OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
-		SocialRequest socialRequest = fetchByC_C_T_R_S_Last(classNameId,
-				classPK, type, receiverUserId, status, orderByComparator);
+
+		SocialRequest socialRequest = fetchByC_C_T_R_S_Last(
+			classNameId, classPK, type, receiverUserId, status,
+			orderByComparator);
 
 		if (socialRequest != null) {
 			return socialRequest;
@@ -5714,18 +5997,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public SocialRequest fetchByC_C_T_R_S_Last(long classNameId, long classPK,
-		int type, long receiverUserId, int status,
-		OrderByComparator<SocialRequest> orderByComparator) {
-		int count = countByC_C_T_R_S(classNameId, classPK, type,
-				receiverUserId, status);
+	public SocialRequest fetchByC_C_T_R_S_Last(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status, OrderByComparator<SocialRequest> orderByComparator) {
+
+		int count = countByC_C_T_R_S(
+			classNameId, classPK, type, receiverUserId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SocialRequest> list = findByC_C_T_R_S(classNameId, classPK, type,
-				receiverUserId, status, count - 1, count, orderByComparator);
+		List<SocialRequest> list = findByC_C_T_R_S(
+			classNameId, classPK, type, receiverUserId, status, count - 1,
+			count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -5748,10 +6033,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @throws NoSuchRequestException if a social request with the primary key could not be found
 	 */
 	@Override
-	public SocialRequest[] findByC_C_T_R_S_PrevAndNext(long requestId,
-		long classNameId, long classPK, int type, long receiverUserId,
-		int status, OrderByComparator<SocialRequest> orderByComparator)
+	public SocialRequest[] findByC_C_T_R_S_PrevAndNext(
+			long requestId, long classNameId, long classPK, int type,
+			long receiverUserId, int status,
+			OrderByComparator<SocialRequest> orderByComparator)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = findByPrimaryKey(requestId);
 
 		Session session = null;
@@ -5761,15 +6048,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			SocialRequest[] array = new SocialRequestImpl[3];
 
-			array[0] = getByC_C_T_R_S_PrevAndNext(session, socialRequest,
-					classNameId, classPK, type, receiverUserId, status,
-					orderByComparator, true);
+			array[0] = getByC_C_T_R_S_PrevAndNext(
+				session, socialRequest, classNameId, classPK, type,
+				receiverUserId, status, orderByComparator, true);
 
 			array[1] = socialRequest;
 
-			array[2] = getByC_C_T_R_S_PrevAndNext(session, socialRequest,
-					classNameId, classPK, type, receiverUserId, status,
-					orderByComparator, false);
+			array[2] = getByC_C_T_R_S_PrevAndNext(
+				session, socialRequest, classNameId, classPK, type,
+				receiverUserId, status, orderByComparator, false);
 
 			return array;
 		}
@@ -5781,15 +6068,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected SocialRequest getByC_C_T_R_S_PrevAndNext(Session session,
-		SocialRequest socialRequest, long classNameId, long classPK, int type,
-		long receiverUserId, int status,
+	protected SocialRequest getByC_C_T_R_S_PrevAndNext(
+		Session session, SocialRequest socialRequest, long classNameId,
+		long classPK, int type, long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(8 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				8 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -5809,7 +6097,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		query.append(_FINDER_COLUMN_C_C_T_R_S_STATUS_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -5887,8 +6176,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					socialRequest)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						socialRequest)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -5913,11 +6204,15 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @param status the status
 	 */
 	@Override
-	public void removeByC_C_T_R_S(long classNameId, long classPK, int type,
-		long receiverUserId, int status) {
-		for (SocialRequest socialRequest : findByC_C_T_R_S(classNameId,
-				classPK, type, receiverUserId, status, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByC_C_T_R_S(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status) {
+
+		for (SocialRequest socialRequest :
+				findByC_C_T_R_S(
+					classNameId, classPK, type, receiverUserId, status,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(socialRequest);
 		}
 	}
@@ -5933,16 +6228,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the number of matching social requests
 	 */
 	@Override
-	public int countByC_C_T_R_S(long classNameId, long classPK, int type,
-		long receiverUserId, int status) {
+	public int countByC_C_T_R_S(
+		long classNameId, long classPK, int type, long receiverUserId,
+		int status) {
+
 		FinderPath finderPath = _finderPathCountByC_C_T_R_S;
 
 		Object[] finderArgs = new Object[] {
-				classNameId, classPK, type, receiverUserId, status
-			};
+			classNameId, classPK, type, receiverUserId, status
+		};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(6);
@@ -5997,11 +6294,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_T_R_S_CLASSNAMEID_2 = "socialRequest.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_R_S_CLASSPK_2 = "socialRequest.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_R_S_TYPE_2 = "socialRequest.type = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_R_S_RECEIVERUSERID_2 = "socialRequest.receiverUserId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_T_R_S_STATUS_2 = "socialRequest.status = ?";
+	private static final String _FINDER_COLUMN_C_C_T_R_S_CLASSNAMEID_2 =
+		"socialRequest.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_T_R_S_CLASSPK_2 =
+		"socialRequest.classPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_T_R_S_TYPE_2 =
+		"socialRequest.type = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_T_R_S_RECEIVERUSERID_2 =
+		"socialRequest.receiverUserId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_T_R_S_STATUS_2 =
+		"socialRequest.status = ?";
 
 	public SocialRequestPersistenceImpl() {
 		setModelClass(SocialRequest.class);
@@ -6018,20 +6324,24 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void cacheResult(SocialRequest socialRequest) {
-		EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestImpl.class, socialRequest.getPrimaryKey(),
 			socialRequest);
 
-		FinderCacheUtil.putResult(_finderPathFetchByUUID_G,
-			new Object[] { socialRequest.getUuid(), socialRequest.getGroupId() },
+		FinderCacheUtil.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {socialRequest.getUuid(), socialRequest.getGroupId()},
 			socialRequest);
 
-		FinderCacheUtil.putResult(_finderPathFetchByU_C_C_T_R,
+		FinderCacheUtil.putResult(
+			_finderPathFetchByU_C_C_T_R,
 			new Object[] {
 				socialRequest.getUserId(), socialRequest.getClassNameId(),
 				socialRequest.getClassPK(), socialRequest.getType(),
 				socialRequest.getReceiverUserId()
-			}, socialRequest);
+			},
+			socialRequest);
 
 		socialRequest.resetOriginalValues();
 	}
@@ -6045,8 +6355,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public void cacheResult(List<SocialRequest> socialRequests) {
 		for (SocialRequest socialRequest : socialRequests) {
 			if (EntityCacheUtil.getResult(
-						SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRequestImpl.class, socialRequest.getPrimaryKey()) == null) {
+					SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+					SocialRequestImpl.class, socialRequest.getPrimaryKey()) ==
+						null) {
+
 				cacheResult(socialRequest);
 			}
 			else {
@@ -6080,7 +6392,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public void clearCache(SocialRequest socialRequest) {
-		EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.removeResult(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestImpl.class, socialRequest.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -6095,26 +6408,69 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (SocialRequest socialRequest : socialRequests) {
-			EntityCacheUtil.removeResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			EntityCacheUtil.removeResult(
+				SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 				SocialRequestImpl.class, socialRequest.getPrimaryKey());
 
-			clearUniqueFindersCache((SocialRequestModelImpl)socialRequest, true);
+			clearUniqueFindersCache(
+				(SocialRequestModelImpl)socialRequest, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
 		SocialRequestModelImpl socialRequestModelImpl) {
+
 		Object[] args = new Object[] {
+			socialRequestModelImpl.getUuid(),
+			socialRequestModelImpl.getGroupId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByUUID_G, args, socialRequestModelImpl, false);
+
+		args = new Object[] {
+			socialRequestModelImpl.getUserId(),
+			socialRequestModelImpl.getClassNameId(),
+			socialRequestModelImpl.getClassPK(),
+			socialRequestModelImpl.getType(),
+			socialRequestModelImpl.getReceiverUserId()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByU_C_C_T_R, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByU_C_C_T_R, args, socialRequestModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SocialRequestModelImpl socialRequestModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				socialRequestModelImpl.getUuid(),
 				socialRequestModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByUUID_G, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByUUID_G, args,
-			socialRequestModelImpl, false);
+			FinderCacheUtil.removeResult(_finderPathCountByUUID_G, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G, args);
+		}
 
-		args = new Object[] {
+		if ((socialRequestModelImpl.getColumnBitmask() &
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				socialRequestModelImpl.getOriginalUuid(),
+				socialRequestModelImpl.getOriginalGroupId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUUID_G, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				socialRequestModelImpl.getUserId(),
 				socialRequestModelImpl.getClassNameId(),
 				socialRequestModelImpl.getClassPK(),
@@ -6122,57 +6478,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				socialRequestModelImpl.getReceiverUserId()
 			};
 
-		FinderCacheUtil.putResult(_finderPathCountByU_C_C_T_R, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByU_C_C_T_R, args,
-			socialRequestModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		SocialRequestModelImpl socialRequestModelImpl, boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					socialRequestModelImpl.getUuid(),
-					socialRequestModelImpl.getGroupId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUUID_G, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G, args);
-		}
-
-		if ((socialRequestModelImpl.getColumnBitmask() &
-				_finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					socialRequestModelImpl.getOriginalUuid(),
-					socialRequestModelImpl.getOriginalGroupId()
-				};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUUID_G, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByUUID_G, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					socialRequestModelImpl.getUserId(),
-					socialRequestModelImpl.getClassNameId(),
-					socialRequestModelImpl.getClassPK(),
-					socialRequestModelImpl.getType(),
-					socialRequestModelImpl.getReceiverUserId()
-				};
-
 			FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_R, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByU_C_C_T_R, args);
 		}
 
 		if ((socialRequestModelImpl.getColumnBitmask() &
-				_finderPathFetchByU_C_C_T_R.getColumnBitmask()) != 0) {
+			 _finderPathFetchByU_C_C_T_R.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					socialRequestModelImpl.getOriginalUserId(),
-					socialRequestModelImpl.getOriginalClassNameId(),
-					socialRequestModelImpl.getOriginalClassPK(),
-					socialRequestModelImpl.getOriginalType(),
-					socialRequestModelImpl.getOriginalReceiverUserId()
-				};
+				socialRequestModelImpl.getOriginalUserId(),
+				socialRequestModelImpl.getOriginalClassNameId(),
+				socialRequestModelImpl.getOriginalClassPK(),
+				socialRequestModelImpl.getOriginalType(),
+				socialRequestModelImpl.getOriginalReceiverUserId()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_R, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByU_C_C_T_R, args);
@@ -6223,21 +6542,22 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public SocialRequest remove(Serializable primaryKey)
 		throws NoSuchRequestException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			SocialRequest socialRequest = (SocialRequest)session.get(SocialRequestImpl.class,
-					primaryKey);
+			SocialRequest socialRequest = (SocialRequest)session.get(
+				SocialRequestImpl.class, primaryKey);
 
 			if (socialRequest == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchRequestException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchRequestException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(socialRequest);
@@ -6261,8 +6581,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			session = openSession();
 
 			if (!session.contains(socialRequest)) {
-				socialRequest = (SocialRequest)session.get(SocialRequestImpl.class,
-						socialRequest.getPrimaryKeyObj());
+				socialRequest = (SocialRequest)session.get(
+					SocialRequestImpl.class, socialRequest.getPrimaryKeyObj());
 			}
 
 			if (socialRequest != null) {
@@ -6291,19 +6611,21 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(socialRequest.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(socialRequest);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					socialRequest);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in socialRequest proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom SocialRequest implementation " +
-				socialRequest.getClass());
+					socialRequest.getClass());
 		}
 
-		SocialRequestModelImpl socialRequestModelImpl = (SocialRequestModelImpl)socialRequest;
+		SocialRequestModelImpl socialRequestModelImpl =
+			(SocialRequestModelImpl)socialRequest;
 
 		if (Validator.isNull(socialRequest.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -6335,71 +6657,290 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!SocialRequestModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { socialRequestModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {socialRequestModelImpl.getUuid()};
 
 			FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid,
-				args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				socialRequestModelImpl.getUuid(),
+				socialRequestModelImpl.getCompanyId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {socialRequestModelImpl.getCompanyId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByCompanyId, args);
+
+			args = new Object[] {socialRequestModelImpl.getUserId()};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUserId, args);
+
+			args = new Object[] {socialRequestModelImpl.getReceiverUserId()};
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountByReceiverUserId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByReceiverUserId, args);
+
+			args = new Object[] {
+				socialRequestModelImpl.getUserId(),
+				socialRequestModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByU_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByU_S, args);
+
+			args = new Object[] {
+				socialRequestModelImpl.getClassNameId(),
+				socialRequestModelImpl.getClassPK()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_C, args);
+
+			args = new Object[] {
+				socialRequestModelImpl.getReceiverUserId(),
+				socialRequestModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByR_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByR_S, args);
+
+			args = new Object[] {
+				socialRequestModelImpl.getUserId(),
+				socialRequestModelImpl.getClassNameId(),
+				socialRequestModelImpl.getClassPK(),
+				socialRequestModelImpl.getType(),
+				socialRequestModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByU_C_C_T_S, args);
+
+			args = new Object[] {
+				socialRequestModelImpl.getClassNameId(),
+				socialRequestModelImpl.getClassPK(),
+				socialRequestModelImpl.getType(),
+				socialRequestModelImpl.getReceiverUserId(),
+				socialRequestModelImpl.getStatus()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C_T_R_S, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_C_T_R_S, args);
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalUuid()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {socialRequestModelImpl.getUuid()};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalUuid(),
+					socialRequestModelImpl.getOriginalCompanyId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					socialRequestModelImpl.getUuid(),
 					socialRequestModelImpl.getCompanyId()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+			}
 
-			args = new Object[] { socialRequestModelImpl.getCompanyId() };
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCompanyId.
+					 getColumnBitmask()) != 0) {
 
-			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-				args);
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalCompanyId()
+				};
 
-			args = new Object[] { socialRequestModelImpl.getUserId() };
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
 
-			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUserId,
-				args);
+				args = new Object[] {socialRequestModelImpl.getCompanyId()};
 
-			args = new Object[] { socialRequestModelImpl.getReceiverUserId() };
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByCompanyId, args);
+			}
 
-			FinderCacheUtil.removeResult(_finderPathCountByReceiverUserId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByReceiverUserId,
-				args);
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUserId.getColumnBitmask()) !=
+					 0) {
 
-			args = new Object[] {
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalUserId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUserId, args);
+
+				args = new Object[] {socialRequestModelImpl.getUserId()};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUserId, args);
+			}
+
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByReceiverUserId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalReceiverUserId()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByReceiverUserId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByReceiverUserId, args);
+
+				args = new Object[] {
+					socialRequestModelImpl.getReceiverUserId()
+				};
+
+				FinderCacheUtil.removeResult(
+					_finderPathCountByReceiverUserId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByReceiverUserId, args);
+			}
+
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByU_S.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalUserId(),
+					socialRequestModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByU_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByU_S, args);
+
+				args = new Object[] {
 					socialRequestModelImpl.getUserId(),
 					socialRequestModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByU_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByU_S,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByU_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByU_S, args);
+			}
 
-			args = new Object[] {
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalClassNameId(),
+					socialRequestModelImpl.getOriginalClassPK()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
+
+				args = new Object[] {
 					socialRequestModelImpl.getClassNameId(),
 					socialRequestModelImpl.getClassPK()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
+			}
 
-			args = new Object[] {
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByR_S.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalReceiverUserId(),
+					socialRequestModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByR_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByR_S, args);
+
+				args = new Object[] {
 					socialRequestModelImpl.getReceiverUserId(),
 					socialRequestModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByR_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByR_S,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByR_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByR_S, args);
+			}
 
-			args = new Object[] {
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByU_C_C_T_S.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalUserId(),
+					socialRequestModelImpl.getOriginalClassNameId(),
+					socialRequestModelImpl.getOriginalClassPK(),
+					socialRequestModelImpl.getOriginalType(),
+					socialRequestModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByU_C_C_T_S, args);
+
+				args = new Object[] {
 					socialRequestModelImpl.getUserId(),
 					socialRequestModelImpl.getClassNameId(),
 					socialRequestModelImpl.getClassPK(),
@@ -6407,11 +6948,28 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					socialRequestModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByU_C_C_T_S,
-				args);
+				FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByU_C_C_T_S, args);
+			}
 
-			args = new Object[] {
+			if ((socialRequestModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_C_T_R_S.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					socialRequestModelImpl.getOriginalClassNameId(),
+					socialRequestModelImpl.getOriginalClassPK(),
+					socialRequestModelImpl.getOriginalType(),
+					socialRequestModelImpl.getOriginalReceiverUserId(),
+					socialRequestModelImpl.getOriginalStatus()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C_T_R_S, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C_T_R_S, args);
+
+				args = new Object[] {
 					socialRequestModelImpl.getClassNameId(),
 					socialRequestModelImpl.getClassPK(),
 					socialRequestModelImpl.getType(),
@@ -6419,226 +6977,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					socialRequestModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_C_T_R_S, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C_T_R_S,
-				args);
-
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalUuid()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-
-				args = new Object[] { socialRequestModelImpl.getUuid() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalUuid(),
-						socialRequestModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-
-				args = new Object[] {
-						socialRequestModelImpl.getUuid(),
-						socialRequestModelImpl.getCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUuid_C,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
-
-				args = new Object[] { socialRequestModelImpl.getCompanyId() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUserId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalUserId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUserId,
-					args);
-
-				args = new Object[] { socialRequestModelImpl.getUserId() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUserId,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByReceiverUserId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalReceiverUserId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByReceiverUserId,
-					args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByReceiverUserId,
-					args);
-
-				args = new Object[] { socialRequestModelImpl.getReceiverUserId() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByReceiverUserId,
-					args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByReceiverUserId,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByU_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalUserId(),
-						socialRequestModelImpl.getOriginalStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByU_S,
-					args);
-
-				args = new Object[] {
-						socialRequestModelImpl.getUserId(),
-						socialRequestModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByU_S,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalClassNameId(),
-						socialRequestModelImpl.getOriginalClassPK()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
-					args);
-
-				args = new Object[] {
-						socialRequestModelImpl.getClassNameId(),
-						socialRequestModelImpl.getClassPK()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByR_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalReceiverUserId(),
-						socialRequestModelImpl.getOriginalStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByR_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByR_S,
-					args);
-
-				args = new Object[] {
-						socialRequestModelImpl.getReceiverUserId(),
-						socialRequestModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByR_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByR_S,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByU_C_C_T_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalUserId(),
-						socialRequestModelImpl.getOriginalClassNameId(),
-						socialRequestModelImpl.getOriginalClassPK(),
-						socialRequestModelImpl.getOriginalType(),
-						socialRequestModelImpl.getOriginalStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByU_C_C_T_S,
-					args);
-
-				args = new Object[] {
-						socialRequestModelImpl.getUserId(),
-						socialRequestModelImpl.getClassNameId(),
-						socialRequestModelImpl.getClassPK(),
-						socialRequestModelImpl.getType(),
-						socialRequestModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_C_C_T_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByU_C_C_T_S,
-					args);
-			}
-
-			if ((socialRequestModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_C_T_R_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialRequestModelImpl.getOriginalClassNameId(),
-						socialRequestModelImpl.getOriginalClassPK(),
-						socialRequestModelImpl.getOriginalType(),
-						socialRequestModelImpl.getOriginalReceiverUserId(),
-						socialRequestModelImpl.getOriginalStatus()
-					};
-
 				FinderCacheUtil.removeResult(_finderPathCountByC_C_T_R_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C_T_R_S,
-					args);
-
-				args = new Object[] {
-						socialRequestModelImpl.getClassNameId(),
-						socialRequestModelImpl.getClassPK(),
-						socialRequestModelImpl.getType(),
-						socialRequestModelImpl.getReceiverUserId(),
-						socialRequestModelImpl.getStatus()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_C_T_R_S, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C_T_R_S,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C_T_R_S, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestImpl.class, socialRequest.getPrimaryKey(),
 			socialRequest, false);
 
@@ -6660,6 +7006,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public SocialRequest findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchRequestException {
+
 		SocialRequest socialRequest = fetchByPrimaryKey(primaryKey);
 
 		if (socialRequest == null) {
@@ -6667,8 +7014,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchRequestException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchRequestException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return socialRequest;
@@ -6684,6 +7031,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	public SocialRequest findByPrimaryKey(long requestId)
 		throws NoSuchRequestException {
+
 		return findByPrimaryKey((Serializable)requestId);
 	}
 
@@ -6737,8 +7085,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of social requests
 	 */
 	@Override
-	public List<SocialRequest> findAll(int start, int end,
+	public List<SocialRequest> findAll(
+		int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -6756,29 +7106,31 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * @return the ordered range of social requests
 	 */
 	@Override
-	public List<SocialRequest> findAll(int start, int end,
-		OrderByComparator<SocialRequest> orderByComparator,
+	public List<SocialRequest> findAll(
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SocialRequest> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<SocialRequest>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<SocialRequest>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -6786,13 +7138,13 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_SOCIALREQUEST);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -6812,16 +7164,16 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<SocialRequest>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<SocialRequest>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -6859,8 +7211,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -6872,12 +7224,12 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -6918,320 +7270,335 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 * Initializes the social request persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
-		_finderPathCountAll = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-				new String[] {
-					String.class.getName(),
-					
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid", new String[] {String.class.getName()},
+			SocialRequestModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			SocialRequestModelImpl.UUID_COLUMN_BITMASK |
+			SocialRequestModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-				new String[] { String.class.getName() },
-				SocialRequestModelImpl.UUID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			SocialRequestModelImpl.UUID_COLUMN_BITMASK |
+			SocialRequestModelImpl.COMPANYID_COLUMN_BITMASK);
 
-		_finderPathCountByUuid = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-				new String[] { String.class.getName() });
+		_finderPathCountByUuid_C = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
 
-		_finderPathFetchByUUID_G = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByUUID_G",
-				new String[] { String.class.getName(), Long.class.getName() },
-				SocialRequestModelImpl.UUID_COLUMN_BITMASK |
-				SocialRequestModelImpl.GROUPID_COLUMN_BITMASK);
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathCountByUUID_G = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-				new String[] { String.class.getName(), Long.class.getName() });
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCompanyId", new String[] {Long.class.getName()},
+			SocialRequestModelImpl.COMPANYID_COLUMN_BITMASK);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-				new String[] {
-					String.class.getName(), Long.class.getName(),
-					
+		_finderPathCountByCompanyId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByUserId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUserId", new String[] {Long.class.getName()},
+			SocialRequestModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByUserId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByReceiverUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByReceiverUserId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByReceiverUserId", new String[] {Long.class.getName()},
+			SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK);
+
+		_finderPathCountByReceiverUserId = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByReceiverUserId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByU_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByU_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() },
-				SocialRequestModelImpl.UUID_COLUMN_BITMASK |
-				SocialRequestModelImpl.COMPANYID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByU_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByU_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			SocialRequestModelImpl.USERID_COLUMN_BITMASK |
+			SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathCountByUuid_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-				new String[] { String.class.getName(), Long.class.getName() });
+		_finderPathCountByU_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-				new String[] {
-					Long.class.getName(),
-					
+		_finderPathWithPaginationFindByC_C = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-				new String[] { Long.class.getName() },
-				SocialRequestModelImpl.COMPANYID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK);
 
-		_finderPathCountByCompanyId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByC_C = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-				new String[] {
-					Long.class.getName(),
-					
+		_finderPathWithPaginationFindByR_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByR_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-				new String[] { Long.class.getName() },
-				SocialRequestModelImpl.USERID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByR_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByR_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK |
+			SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathCountByUserId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByR_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
-		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReceiverUserId",
-				new String[] {
-					Long.class.getName(),
-					
+		_finderPathFetchByU_C_C_T_R = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByU_C_C_T_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Long.class.getName()
+			},
+			SocialRequestModelImpl.USERID_COLUMN_BITMASK |
+			SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK |
+			SocialRequestModelImpl.TYPE_COLUMN_BITMASK |
+			SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK);
+
+		_finderPathCountByU_C_C_T_R = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C_T_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Long.class.getName()
+			});
+
+		_finderPathWithPaginationFindByU_C_C_T_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByU_C_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByReceiverUserId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByReceiverUserId", new String[] { Long.class.getName() },
-				SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByU_C_C_T_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByU_C_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			},
+			SocialRequestModelImpl.USERID_COLUMN_BITMASK |
+			SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK |
+			SocialRequestModelImpl.TYPE_COLUMN_BITMASK |
+			SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathCountByReceiverUserId = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByReceiverUserId", new String[] { Long.class.getName() });
+		_finderPathCountByU_C_C_T_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			});
 
-		_finderPathWithPaginationFindByU_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_S",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					
+		_finderPathWithPaginationFindByC_C_T_R_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_C_T_R_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByU_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_S",
-				new String[] { Long.class.getName(), Integer.class.getName() },
-				SocialRequestModelImpl.USERID_COLUMN_BITMASK |
-				SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_C_T_R_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED,
+			SocialRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByC_C_T_R_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK |
+			SocialRequestModelImpl.TYPE_COLUMN_BITMASK |
+			SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK |
+			SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
 
-		_finderPathCountByU_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_S",
-				new String[] { Long.class.getName(), Integer.class.getName() });
-
-		_finderPathWithPaginationFindByC_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-				new String[] { Long.class.getName(), Long.class.getName() },
-				SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-				SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK);
-
-		_finderPathCountByC_C = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-				new String[] { Long.class.getName(), Long.class.getName() });
-
-		_finderPathWithPaginationFindByR_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByR_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
-				new String[] { Long.class.getName(), Integer.class.getName() },
-				SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK |
-				SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByR_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
-				new String[] { Long.class.getName(), Integer.class.getName() });
-
-		_finderPathFetchByU_C_C_T_R = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByU_C_C_T_R",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Long.class.getName()
-				},
-				SocialRequestModelImpl.USERID_COLUMN_BITMASK |
-				SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-				SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK |
-				SocialRequestModelImpl.TYPE_COLUMN_BITMASK |
-				SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK);
-
-		_finderPathCountByU_C_C_T_R = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C_T_R",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Long.class.getName()
-				});
-
-		_finderPathWithPaginationFindByU_C_C_T_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C_C_T_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByU_C_C_T_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_C_C_T_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName()
-				},
-				SocialRequestModelImpl.USERID_COLUMN_BITMASK |
-				SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-				SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK |
-				SocialRequestModelImpl.TYPE_COLUMN_BITMASK |
-				SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByU_C_C_T_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C_T_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName()
-				});
-
-		_finderPathWithPaginationFindByC_C_T_R_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_R_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Long.class.getName(),
-					Integer.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
-
-		_finderPathWithoutPaginationFindByC_C_T_R_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED,
-				SocialRequestImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T_R_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Long.class.getName(),
-					Integer.class.getName()
-				},
-				SocialRequestModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-				SocialRequestModelImpl.CLASSPK_COLUMN_BITMASK |
-				SocialRequestModelImpl.TYPE_COLUMN_BITMASK |
-				SocialRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK |
-				SocialRequestModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByC_C_T_R_S = new FinderPath(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-				SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T_R_S",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Long.class.getName(),
-					Integer.class.getName()
-				});
+		_finderPathCountByC_C_T_R_S = new FinderPath(
+			SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			SocialRequestModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T_R_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
 	}
 
 	public void destroy() {
@@ -7243,15 +7610,31 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	private static final String _SQL_SELECT_SOCIALREQUEST = "SELECT socialRequest FROM SocialRequest socialRequest";
-	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE = "SELECT socialRequest FROM SocialRequest socialRequest WHERE ";
-	private static final String _SQL_COUNT_SOCIALREQUEST = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest";
-	private static final String _SQL_COUNT_SOCIALREQUEST_WHERE = "SELECT COUNT(socialRequest) FROM SocialRequest socialRequest WHERE ";
+
+	private static final String _SQL_SELECT_SOCIALREQUEST =
+		"SELECT socialRequest FROM SocialRequest socialRequest";
+
+	private static final String _SQL_SELECT_SOCIALREQUEST_WHERE =
+		"SELECT socialRequest FROM SocialRequest socialRequest WHERE ";
+
+	private static final String _SQL_COUNT_SOCIALREQUEST =
+		"SELECT COUNT(socialRequest) FROM SocialRequest socialRequest";
+
+	private static final String _SQL_COUNT_SOCIALREQUEST_WHERE =
+		"SELECT COUNT(socialRequest) FROM SocialRequest socialRequest WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialRequest.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialRequest exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialRequest exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(SocialRequestPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "type"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No SocialRequest exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No SocialRequest exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SocialRequestPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid", "type"});
+
 }

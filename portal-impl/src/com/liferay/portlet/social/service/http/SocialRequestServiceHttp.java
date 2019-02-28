@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
 import com.liferay.social.kernel.service.SocialRequestServiceUtil;
 
 /**
@@ -54,16 +53,19 @@ import com.liferay.social.kernel.service.SocialRequestServiceUtil;
  */
 @ProviderType
 public class SocialRequestServiceHttp {
-	public static com.liferay.social.kernel.model.SocialRequest updateRequest(
-		HttpPrincipal httpPrincipal, long requestId, int status,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialRequestServiceUtil.class,
-					"updateRequest", _updateRequestParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					requestId, status, themeDisplay);
+	public static com.liferay.social.kernel.model.SocialRequest updateRequest(
+			HttpPrincipal httpPrincipal, long requestId, int status,
+			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialRequestServiceUtil.class, "updateRequest",
+				_updateRequestParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, requestId, status, themeDisplay);
 
 			Object returnObj = null;
 
@@ -71,11 +73,15 @@ public class SocialRequestServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.social.kernel.model.SocialRequest)returnObj;
@@ -87,9 +93,13 @@ public class SocialRequestServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SocialRequestServiceHttp.class);
-	private static final Class<?>[] _updateRequestParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		SocialRequestServiceHttp.class);
+
+	private static final Class<?>[] _updateRequestParameterTypes0 =
+		new Class[] {
 			long.class, int.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
+
 }

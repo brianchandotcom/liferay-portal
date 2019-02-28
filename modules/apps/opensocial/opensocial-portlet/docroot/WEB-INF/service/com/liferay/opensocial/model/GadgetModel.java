@@ -35,7 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface GadgetModel extends BaseModel<Gadget>, ShardedModel, StagedModel {
+public interface GadgetModel
+	extends BaseModel<Gadget>, ShardedModel, StagedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -193,4 +195,5 @@ public interface GadgetModel extends BaseModel<Gadget>, ShardedModel, StagedMode
 	 * @param lastPublishDate the last publish date of this gadget
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
+
 }

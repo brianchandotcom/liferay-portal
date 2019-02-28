@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel,
-	ShardedModel {
+public interface UserIdMapperModel
+	extends BaseModel<UserIdMapper>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -170,4 +171,5 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel,
 	 * @param externalUserId the external user ID of this user ID mapper
 	 */
 	public void setExternalUserId(String externalUserId);
+
 }

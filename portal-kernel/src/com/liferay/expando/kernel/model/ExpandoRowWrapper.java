@@ -33,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ExpandoRowWrapper extends BaseModelWrapper<ExpandoRow>
+public class ExpandoRowWrapper
+	extends BaseModelWrapper<ExpandoRow>
 	implements ExpandoRow, ModelWrapper<ExpandoRow> {
+
 	public ExpandoRowWrapper(ExpandoRow expandoRow) {
 		super(expandoRow);
 	}
@@ -86,60 +88,60 @@ public class ExpandoRowWrapper extends BaseModelWrapper<ExpandoRow>
 	}
 
 	/**
-	* Returns the class pk of this expando row.
-	*
-	* @return the class pk of this expando row
-	*/
+	 * Returns the class pk of this expando row.
+	 *
+	 * @return the class pk of this expando row
+	 */
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	* Returns the company ID of this expando row.
-	*
-	* @return the company ID of this expando row
-	*/
+	 * Returns the company ID of this expando row.
+	 *
+	 * @return the company ID of this expando row
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the modified date of this expando row.
-	*
-	* @return the modified date of this expando row
-	*/
+	 * Returns the modified date of this expando row.
+	 *
+	 * @return the modified date of this expando row
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the primary key of this expando row.
-	*
-	* @return the primary key of this expando row
-	*/
+	 * Returns the primary key of this expando row.
+	 *
+	 * @return the primary key of this expando row
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the row ID of this expando row.
-	*
-	* @return the row ID of this expando row
-	*/
+	 * Returns the row ID of this expando row.
+	 *
+	 * @return the row ID of this expando row
+	 */
 	@Override
 	public long getRowId() {
 		return model.getRowId();
 	}
 
 	/**
-	* Returns the table ID of this expando row.
-	*
-	* @return the table ID of this expando row
-	*/
+	 * Returns the table ID of this expando row.
+	 *
+	 * @return the table ID of this expando row
+	 */
 	@Override
 	public long getTableId() {
 		return model.getTableId();
@@ -151,60 +153,60 @@ public class ExpandoRowWrapper extends BaseModelWrapper<ExpandoRow>
 	}
 
 	/**
-	* Sets the class pk of this expando row.
-	*
-	* @param classPK the class pk of this expando row
-	*/
+	 * Sets the class pk of this expando row.
+	 *
+	 * @param classPK the class pk of this expando row
+	 */
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	* Sets the company ID of this expando row.
-	*
-	* @param companyId the company ID of this expando row
-	*/
+	 * Sets the company ID of this expando row.
+	 *
+	 * @param companyId the company ID of this expando row
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the modified date of this expando row.
-	*
-	* @param modifiedDate the modified date of this expando row
-	*/
+	 * Sets the modified date of this expando row.
+	 *
+	 * @param modifiedDate the modified date of this expando row
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the primary key of this expando row.
-	*
-	* @param primaryKey the primary key of this expando row
-	*/
+	 * Sets the primary key of this expando row.
+	 *
+	 * @param primaryKey the primary key of this expando row
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the row ID of this expando row.
-	*
-	* @param rowId the row ID of this expando row
-	*/
+	 * Sets the row ID of this expando row.
+	 *
+	 * @param rowId the row ID of this expando row
+	 */
 	@Override
 	public void setRowId(long rowId) {
 		model.setRowId(rowId);
 	}
 
 	/**
-	* Sets the table ID of this expando row.
-	*
-	* @param tableId the table ID of this expando row
-	*/
+	 * Sets the table ID of this expando row.
+	 *
+	 * @param tableId the table ID of this expando row
+	 */
 	@Override
 	public void setTableId(long tableId) {
 		model.setTableId(tableId);
@@ -214,4 +216,5 @@ public class ExpandoRowWrapper extends BaseModelWrapper<ExpandoRow>
 	protected ExpandoRowWrapper wrap(ExpandoRow expandoRow) {
 		return new ExpandoRowWrapper(expandoRow);
 	}
+
 }

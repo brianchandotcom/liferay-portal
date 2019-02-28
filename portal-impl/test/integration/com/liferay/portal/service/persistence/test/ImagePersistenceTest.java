@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ImagePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,8 @@ public class ImagePersistenceTest {
 
 		_persistence.remove(newImage);
 
-		Image existingImage = _persistence.fetchByPrimaryKey(newImage.getPrimaryKey());
+		Image existingImage = _persistence.fetchByPrimaryKey(
+			newImage.getPrimaryKey());
 
 		Assert.assertNull(existingImage);
 	}
@@ -131,15 +134,16 @@ public class ImagePersistenceTest {
 
 		_images.add(_persistence.update(newImage));
 
-		Image existingImage = _persistence.findByPrimaryKey(newImage.getPrimaryKey());
+		Image existingImage = _persistence.findByPrimaryKey(
+			newImage.getPrimaryKey());
 
-		Assert.assertEquals(existingImage.getMvccVersion(),
-			newImage.getMvccVersion());
+		Assert.assertEquals(
+			existingImage.getMvccVersion(), newImage.getMvccVersion());
 		Assert.assertEquals(existingImage.getImageId(), newImage.getImageId());
-		Assert.assertEquals(existingImage.getCompanyId(),
-			newImage.getCompanyId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingImage.getModifiedDate()),
+		Assert.assertEquals(
+			existingImage.getCompanyId(), newImage.getCompanyId());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingImage.getModifiedDate()),
 			Time.getShortTimestamp(newImage.getModifiedDate()));
 		Assert.assertEquals(existingImage.getType(), newImage.getType());
 		Assert.assertEquals(existingImage.getHeight(), newImage.getHeight());
@@ -158,7 +162,8 @@ public class ImagePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Image newImage = addImage();
 
-		Image existingImage = _persistence.findByPrimaryKey(newImage.getPrimaryKey());
+		Image existingImage = _persistence.findByPrimaryKey(
+			newImage.getPrimaryKey());
 
 		Assert.assertEquals(existingImage, newImage);
 	}
@@ -172,21 +177,23 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Image> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Image", "mvccVersion",
-			true, "imageId", true, "companyId", true, "modifiedDate", true,
-			"type", true, "height", true, "width", true, "size", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Image", "mvccVersion", true, "imageId", true, "companyId", true,
+			"modifiedDate", true, "type", true, "height", true, "width", true,
+			"size", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Image newImage = addImage();
 
-		Image existingImage = _persistence.fetchByPrimaryKey(newImage.getPrimaryKey());
+		Image existingImage = _persistence.fetchByPrimaryKey(
+			newImage.getPrimaryKey());
 
 		Assert.assertEquals(existingImage, newImage);
 	}
@@ -203,6 +210,7 @@ public class ImagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Image newImage1 = addImage();
 		Image newImage2 = addImage();
 
@@ -211,7 +219,8 @@ public class ImagePersistenceTest {
 		primaryKeys.add(newImage1.getPrimaryKey());
 		primaryKeys.add(newImage2.getPrimaryKey());
 
-		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, images.size());
 		Assert.assertEquals(newImage1, images.get(newImage1.getPrimaryKey()));
@@ -221,6 +230,7 @@ public class ImagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -230,7 +240,8 @@ public class ImagePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(images.isEmpty());
 	}
@@ -238,6 +249,7 @@ public class ImagePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Image newImage = addImage();
 
 		long pk = RandomTestUtil.nextLong();
@@ -247,32 +259,33 @@ public class ImagePersistenceTest {
 		primaryKeys.add(newImage.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, images.size());
 		Assert.assertEquals(newImage, images.get(newImage.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(images.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Image newImage = addImage();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newImage.getPrimaryKey());
 
-		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Image> images = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, images.size());
 		Assert.assertEquals(newImage, images.get(newImage.getPrimaryKey()));
@@ -282,15 +295,19 @@ public class ImagePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ImageLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ImageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Image>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Image>() {
+
 				@Override
 				public void performAction(Image image) {
 					Assert.assertNotNull(image);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -299,15 +316,14 @@ public class ImagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Image newImage = addImage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Image.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
-				newImage.getImageId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("imageId", newImage.getImageId()));
 
 		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -320,11 +336,11 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Image.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("imageId", RandomTestUtil.nextLong()));
 
 		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -332,19 +348,18 @@ public class ImagePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Image newImage = addImage();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Image.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("imageId"));
 
 		Object newImageId = newImage.getImageId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("imageId",
-				new Object[] { newImageId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("imageId", new Object[] {newImageId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -357,13 +372,14 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Image.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("imageId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("imageId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"imageId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -397,4 +413,5 @@ public class ImagePersistenceTest {
 	private List<Image> _images = new ArrayList<Image>();
 	private ImagePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

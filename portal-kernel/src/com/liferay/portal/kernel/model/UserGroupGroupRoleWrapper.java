@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class UserGroupGroupRoleWrapper extends BaseModelWrapper<UserGroupGroupRole>
+public class UserGroupGroupRoleWrapper
+	extends BaseModelWrapper<UserGroupGroupRole>
 	implements UserGroupGroupRole, ModelWrapper<UserGroupGroupRole> {
+
 	public UserGroupGroupRoleWrapper(UserGroupGroupRole userGroupGroupRole) {
 		super(userGroupGroupRole);
 	}
@@ -84,10 +86,10 @@ public class UserGroupGroupRoleWrapper extends BaseModelWrapper<UserGroupGroupRo
 	}
 
 	/**
-	* Returns the company ID of this user group group role.
-	*
-	* @return the company ID of this user group group role
-	*/
+	 * Returns the company ID of this user group group role.
+	 *
+	 * @return the company ID of this user group group role
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
@@ -96,50 +98,54 @@ public class UserGroupGroupRoleWrapper extends BaseModelWrapper<UserGroupGroupRo
 	@Override
 	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getGroup();
 	}
 
 	/**
-	* Returns the group ID of this user group group role.
-	*
-	* @return the group ID of this user group group role
-	*/
+	 * Returns the group ID of this user group group role.
+	 *
+	 * @return the group ID of this user group group role
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the mvcc version of this user group group role.
-	*
-	* @return the mvcc version of this user group group role
-	*/
+	 * Returns the mvcc version of this user group group role.
+	 *
+	 * @return the mvcc version of this user group group role
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this user group group role.
-	*
-	* @return the primary key of this user group group role
-	*/
+	 * Returns the primary key of this user group group role.
+	 *
+	 * @return the primary key of this user group group role
+	 */
 	@Override
-	public com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK getPrimaryKey() {
+	public com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK
+		getPrimaryKey() {
+
 		return model.getPrimaryKey();
 	}
 
 	@Override
 	public Role getRole()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getRole();
 	}
 
 	/**
-	* Returns the role ID of this user group group role.
-	*
-	* @return the role ID of this user group group role
-	*/
+	 * Returns the role ID of this user group group role.
+	 *
+	 * @return the role ID of this user group group role
+	 */
 	@Override
 	public long getRoleId() {
 		return model.getRoleId();
@@ -148,14 +154,15 @@ public class UserGroupGroupRoleWrapper extends BaseModelWrapper<UserGroupGroupRo
 	@Override
 	public UserGroup getUserGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getUserGroup();
 	}
 
 	/**
-	* Returns the user group ID of this user group group role.
-	*
-	* @return the user group ID of this user group group role
-	*/
+	 * Returns the user group ID of this user group group role.
+	 *
+	 * @return the user group ID of this user group group role
+	 */
 	@Override
 	public long getUserGroupId() {
 		return model.getUserGroupId();
@@ -167,61 +174,63 @@ public class UserGroupGroupRoleWrapper extends BaseModelWrapper<UserGroupGroupRo
 	}
 
 	/**
-	* Sets the company ID of this user group group role.
-	*
-	* @param companyId the company ID of this user group group role
-	*/
+	 * Sets the company ID of this user group group role.
+	 *
+	 * @param companyId the company ID of this user group group role
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the group ID of this user group group role.
-	*
-	* @param groupId the group ID of this user group group role
-	*/
+	 * Sets the group ID of this user group group role.
+	 *
+	 * @param groupId the group ID of this user group group role
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the mvcc version of this user group group role.
-	*
-	* @param mvccVersion the mvcc version of this user group group role
-	*/
+	 * Sets the mvcc version of this user group group role.
+	 *
+	 * @param mvccVersion the mvcc version of this user group group role
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this user group group role.
-	*
-	* @param primaryKey the primary key of this user group group role
-	*/
+	 * Sets the primary key of this user group group role.
+	 *
+	 * @param primaryKey the primary key of this user group group role
+	 */
 	@Override
 	public void setPrimaryKey(
-		com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK primaryKey) {
+		com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK
+			primaryKey) {
+
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the role ID of this user group group role.
-	*
-	* @param roleId the role ID of this user group group role
-	*/
+	 * Sets the role ID of this user group group role.
+	 *
+	 * @param roleId the role ID of this user group group role
+	 */
 	@Override
 	public void setRoleId(long roleId) {
 		model.setRoleId(roleId);
 	}
 
 	/**
-	* Sets the user group ID of this user group group role.
-	*
-	* @param userGroupId the user group ID of this user group group role
-	*/
+	 * Sets the user group ID of this user group group role.
+	 *
+	 * @param userGroupId the user group ID of this user group group role
+	 */
 	@Override
 	public void setUserGroupId(long userGroupId) {
 		model.setUserGroupId(userGroupId);
@@ -230,6 +239,8 @@ public class UserGroupGroupRoleWrapper extends BaseModelWrapper<UserGroupGroupRo
 	@Override
 	protected UserGroupGroupRoleWrapper wrap(
 		UserGroupGroupRole userGroupGroupRole) {
+
 		return new UserGroupGroupRoleWrapper(userGroupGroupRole);
 	}
+
 }

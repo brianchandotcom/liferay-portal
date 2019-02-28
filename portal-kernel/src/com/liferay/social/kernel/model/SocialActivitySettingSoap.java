@@ -29,8 +29,10 @@ import java.util.List;
  */
 @ProviderType
 public class SocialActivitySettingSoap implements Serializable {
+
 	public static SocialActivitySettingSoap toSoapModel(
 		SocialActivitySetting model) {
+
 		SocialActivitySettingSoap soapModel = new SocialActivitySettingSoap();
 
 		soapModel.setActivitySettingId(model.getActivitySettingId());
@@ -46,7 +48,9 @@ public class SocialActivitySettingSoap implements Serializable {
 
 	public static SocialActivitySettingSoap[] toSoapModels(
 		SocialActivitySetting[] models) {
-		SocialActivitySettingSoap[] soapModels = new SocialActivitySettingSoap[models.length];
+
+		SocialActivitySettingSoap[] soapModels =
+			new SocialActivitySettingSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,10 +61,12 @@ public class SocialActivitySettingSoap implements Serializable {
 
 	public static SocialActivitySettingSoap[][] toSoapModels(
 		SocialActivitySetting[][] models) {
+
 		SocialActivitySettingSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SocialActivitySettingSoap[models.length][models[0].length];
+			soapModels =
+				new SocialActivitySettingSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SocialActivitySettingSoap[0][0];
@@ -75,13 +81,16 @@ public class SocialActivitySettingSoap implements Serializable {
 
 	public static SocialActivitySettingSoap[] toSoapModels(
 		List<SocialActivitySetting> models) {
-		List<SocialActivitySettingSoap> soapModels = new ArrayList<SocialActivitySettingSoap>(models.size());
+
+		List<SocialActivitySettingSoap> soapModels =
+			new ArrayList<SocialActivitySettingSoap>(models.size());
 
 		for (SocialActivitySetting model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SocialActivitySettingSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new SocialActivitySettingSoap[soapModels.size()]);
 	}
 
 	public SocialActivitySettingSoap() {
@@ -158,4 +167,5 @@ public class SocialActivitySettingSoap implements Serializable {
 	private int _activityType;
 	private String _name;
 	private String _value;
+
 }

@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.EmailAddressImpl")
 @ProviderType
 public interface EmailAddress extends EmailAddressModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.EmailAddressImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<EmailAddress, Long> EMAIL_ADDRESS_ID_ACCESSOR = new Accessor<EmailAddress, Long>() {
+	public static final Accessor<EmailAddress, Long> EMAIL_ADDRESS_ID_ACCESSOR =
+		new Accessor<EmailAddress, Long>() {
+
 			@Override
 			public Long get(EmailAddress emailAddress) {
 				return emailAddress.getEmailAddressId();
@@ -49,8 +52,10 @@ public interface EmailAddress extends EmailAddressModel, PersistedModel {
 			public Class<EmailAddress> getTypeClass() {
 				return EmailAddress.class;
 			}
+
 		};
 
 	public ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

@@ -19,12 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.model.AnnouncementsDeliveryModel;
 import com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -63,24 +60,26 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsDelivery>
+public class AnnouncementsDeliveryModelImpl
+	extends BaseModelImpl<AnnouncementsDelivery>
 	implements AnnouncementsDeliveryModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a announcements delivery model instance should use the <code>AnnouncementsDelivery</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "AnnouncementsDelivery";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "deliveryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "type_", Types.VARCHAR },
-			{ "email", Types.BOOLEAN },
-			{ "sms", Types.BOOLEAN },
-			{ "website", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"deliveryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"type_", Types.VARCHAR},
+		{"email", Types.BOOLEAN}, {"sms", Types.BOOLEAN},
+		{"website", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("deliveryId", Types.BIGINT);
@@ -92,24 +91,43 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		TABLE_COLUMNS_MAP.put("website", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AnnouncementsDelivery (deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
-	public static final String TABLE_SQL_DROP = "drop table AnnouncementsDelivery";
-	public static final String ORDER_BY_JPQL = " ORDER BY announcementsDelivery.deliveryId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY AnnouncementsDelivery.deliveryId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table AnnouncementsDelivery (deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table AnnouncementsDelivery";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY announcementsDelivery.deliveryId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY AnnouncementsDelivery.deliveryId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsDelivery"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsDelivery"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.announcements.kernel.model.AnnouncementsDelivery"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsDelivery"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsDelivery"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.announcements.kernel.model.AnnouncementsDelivery"),
+		true);
+
 	public static final long TYPE_COLUMN_BITMASK = 1L;
+
 	public static final long USERID_COLUMN_BITMASK = 2L;
+
 	public static final long DELIVERYID_COLUMN_BITMASK = 4L;
 
 	/**
@@ -120,6 +138,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	 */
 	public static AnnouncementsDelivery toModel(
 		AnnouncementsDeliverySoap soapModel) {
+
 		if (soapModel == null) {
 			return null;
 		}
@@ -145,11 +164,13 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	 */
 	public static List<AnnouncementsDelivery> toModels(
 		AnnouncementsDeliverySoap[] soapModels) {
+
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<AnnouncementsDelivery> models = new ArrayList<AnnouncementsDelivery>(soapModels.length);
+		List<AnnouncementsDelivery> models =
+			new ArrayList<AnnouncementsDelivery>(soapModels.length);
 
 		for (AnnouncementsDeliverySoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -158,8 +179,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.announcements.kernel.model.AnnouncementsDelivery"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.announcements.kernel.model.AnnouncementsDelivery"));
 
 	public AnnouncementsDeliveryModelImpl() {
 	}
@@ -198,14 +220,18 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<AnnouncementsDelivery, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<AnnouncementsDelivery, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<AnnouncementsDelivery, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AnnouncementsDelivery, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AnnouncementsDelivery, Object> attributeGetterFunction = entry.getValue();
+			Function<AnnouncementsDelivery, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((AnnouncementsDelivery)this));
 		}
 
@@ -217,57 +243,94 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<AnnouncementsDelivery, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<AnnouncementsDelivery, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<AnnouncementsDelivery, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<AnnouncementsDelivery, Object>
+				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
+					attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((AnnouncementsDelivery)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(AnnouncementsDelivery)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<AnnouncementsDelivery, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<AnnouncementsDelivery, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<AnnouncementsDelivery, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<AnnouncementsDelivery, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AnnouncementsDelivery, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AnnouncementsDelivery, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<AnnouncementsDelivery, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AnnouncementsDelivery, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<AnnouncementsDelivery, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<AnnouncementsDelivery, Object>>();
-		Map<String, BiConsumer<AnnouncementsDelivery, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<AnnouncementsDelivery, ?>>();
+		Map<String, Function<AnnouncementsDelivery, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<AnnouncementsDelivery, Object>>();
+		Map<String, BiConsumer<AnnouncementsDelivery, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap
+					<String, BiConsumer<AnnouncementsDelivery, ?>>();
 
-
-		attributeGetterFunctions.put("deliveryId", AnnouncementsDelivery::getDeliveryId);
-		attributeSetterBiConsumers.put("deliveryId", (BiConsumer<AnnouncementsDelivery, Long>)AnnouncementsDelivery::setDeliveryId);
-		attributeGetterFunctions.put("companyId", AnnouncementsDelivery::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<AnnouncementsDelivery, Long>)AnnouncementsDelivery::setCompanyId);
-		attributeGetterFunctions.put("userId", AnnouncementsDelivery::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<AnnouncementsDelivery, Long>)AnnouncementsDelivery::setUserId);
+		attributeGetterFunctions.put(
+			"deliveryId", AnnouncementsDelivery::getDeliveryId);
+		attributeSetterBiConsumers.put(
+			"deliveryId",
+			(BiConsumer<AnnouncementsDelivery, Long>)
+				AnnouncementsDelivery::setDeliveryId);
+		attributeGetterFunctions.put(
+			"companyId", AnnouncementsDelivery::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AnnouncementsDelivery, Long>)
+				AnnouncementsDelivery::setCompanyId);
+		attributeGetterFunctions.put(
+			"userId", AnnouncementsDelivery::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<AnnouncementsDelivery, Long>)
+				AnnouncementsDelivery::setUserId);
 		attributeGetterFunctions.put("type", AnnouncementsDelivery::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<AnnouncementsDelivery, String>)AnnouncementsDelivery::setType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<AnnouncementsDelivery, String>)
+				AnnouncementsDelivery::setType);
 		attributeGetterFunctions.put("email", AnnouncementsDelivery::getEmail);
-		attributeSetterBiConsumers.put("email", (BiConsumer<AnnouncementsDelivery, Boolean>)AnnouncementsDelivery::setEmail);
+		attributeSetterBiConsumers.put(
+			"email",
+			(BiConsumer<AnnouncementsDelivery, Boolean>)
+				AnnouncementsDelivery::setEmail);
 		attributeGetterFunctions.put("sms", AnnouncementsDelivery::getSms);
-		attributeSetterBiConsumers.put("sms", (BiConsumer<AnnouncementsDelivery, Boolean>)AnnouncementsDelivery::setSms);
-		attributeGetterFunctions.put("website", AnnouncementsDelivery::getWebsite);
-		attributeSetterBiConsumers.put("website", (BiConsumer<AnnouncementsDelivery, Boolean>)AnnouncementsDelivery::setWebsite);
+		attributeSetterBiConsumers.put(
+			"sms",
+			(BiConsumer<AnnouncementsDelivery, Boolean>)
+				AnnouncementsDelivery::setSms);
+		attributeGetterFunctions.put(
+			"website", AnnouncementsDelivery::getWebsite);
+		attributeSetterBiConsumers.put(
+			"website",
+			(BiConsumer<AnnouncementsDelivery, Boolean>)
+				AnnouncementsDelivery::setWebsite);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -414,8 +477,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			AnnouncementsDelivery.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AnnouncementsDelivery.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -428,8 +492,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	@Override
 	public AnnouncementsDelivery toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (AnnouncementsDelivery)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -437,7 +502,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public Object clone() {
-		AnnouncementsDeliveryImpl announcementsDeliveryImpl = new AnnouncementsDeliveryImpl();
+		AnnouncementsDeliveryImpl announcementsDeliveryImpl =
+			new AnnouncementsDeliveryImpl();
 
 		announcementsDeliveryImpl.setDeliveryId(getDeliveryId());
 		announcementsDeliveryImpl.setCompanyId(getCompanyId());
@@ -477,7 +543,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 			return false;
 		}
 
-		AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)obj;
+		AnnouncementsDelivery announcementsDelivery =
+			(AnnouncementsDelivery)obj;
 
 		long primaryKey = announcementsDelivery.getPrimaryKey();
 
@@ -508,18 +575,21 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public void resetOriginalValues() {
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = this;
 
-		announcementsDeliveryModelImpl._originalUserId = announcementsDeliveryModelImpl._userId;
+		announcementsDeliveryModelImpl._originalUserId =
+			announcementsDeliveryModelImpl._userId;
 
 		announcementsDeliveryModelImpl._setOriginalUserId = false;
 
-		announcementsDeliveryModelImpl._originalType = announcementsDeliveryModelImpl._type;
+		announcementsDeliveryModelImpl._originalType =
+			announcementsDeliveryModelImpl._type;
 
 		announcementsDeliveryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<AnnouncementsDelivery> toCacheModel() {
-		AnnouncementsDeliveryCacheModel announcementsDeliveryCacheModel = new AnnouncementsDeliveryCacheModel();
+		AnnouncementsDeliveryCacheModel announcementsDeliveryCacheModel =
+			new AnnouncementsDeliveryCacheModel();
 
 		announcementsDeliveryCacheModel.deliveryId = getDeliveryId();
 
@@ -546,21 +616,25 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public String toString() {
-		Map<String, Function<AnnouncementsDelivery, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<AnnouncementsDelivery, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<AnnouncementsDelivery, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AnnouncementsDelivery, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AnnouncementsDelivery, Object> attributeGetterFunction = entry.getValue();
+			Function<AnnouncementsDelivery, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeGetterFunction.apply((AnnouncementsDelivery)this));
+			sb.append(
+				attributeGetterFunction.apply((AnnouncementsDelivery)this));
 			sb.append(", ");
 		}
 
@@ -575,24 +649,28 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<AnnouncementsDelivery, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<AnnouncementsDelivery, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<AnnouncementsDelivery, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AnnouncementsDelivery, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AnnouncementsDelivery, Object> attributeGetterFunction = entry.getValue();
+			Function<AnnouncementsDelivery, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((AnnouncementsDelivery)this));
+			sb.append(
+				attributeGetterFunction.apply((AnnouncementsDelivery)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -601,10 +679,12 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = AnnouncementsDelivery.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		AnnouncementsDelivery.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			AnnouncementsDelivery.class, ModelWrapper.class
-		};
+		AnnouncementsDelivery.class, ModelWrapper.class
+	};
+
 	private long _deliveryId;
 	private long _companyId;
 	private long _userId;
@@ -617,4 +697,5 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	private boolean _website;
 	private long _columnBitmask;
 	private AnnouncementsDelivery _escapedModel;
+
 }

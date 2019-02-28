@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class PortletServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,10 +41,10 @@ public class PortletServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -53,21 +54,24 @@ public class PortletServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
-		long companyId, String portletId, String roles, boolean active)
+			long companyId, String portletId, String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().updatePortlet(companyId, portletId, roles, active);
 	}
 
 	public static PortletService getService() {
 		if (_service == null) {
-			_service = (PortletService)PortalBeanLocatorUtil.locate(PortletService.class.getName());
+			_service = (PortletService)PortalBeanLocatorUtil.locate(
+				PortletService.class.getName());
 
-			ReferenceRegistry.registerReference(PortletServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				PortletServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static PortletService _service;
+
 }

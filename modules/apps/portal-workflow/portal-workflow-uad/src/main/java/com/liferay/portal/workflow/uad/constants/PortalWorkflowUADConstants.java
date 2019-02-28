@@ -19,7 +19,8 @@ package com.liferay.portal.workflow.uad.constants;
  * @generated
  */
 public class PortalWorkflowUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_WORKFLOW_DEFINITION_LINK = {
-			"userId"
-		};
+
+	public static final String[] USER_ID_FIELD_NAMES_WORKFLOW_DEFINITION_LINK =
+		{"userId"};
+
 }

@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,37 +69,31 @@ import java.util.function.Function;
 @JSON(strict = true)
 @ProviderType
 public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a group model instance should use the <code>Group</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Group_";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "creatorUserId", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "parentGroupId", Types.BIGINT },
-			{ "liveGroupId", Types.BIGINT },
-			{ "treePath", Types.VARCHAR },
-			{ "groupKey", Types.VARCHAR },
-			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "type_", Types.INTEGER },
-			{ "typeSettings", Types.CLOB },
-			{ "manualMembership", Types.BOOLEAN },
-			{ "membershipRestriction", Types.INTEGER },
-			{ "friendlyURL", Types.VARCHAR },
-			{ "site", Types.BOOLEAN },
-			{ "remoteStagingGroupCount", Types.INTEGER },
-			{ "inheritContent", Types.BOOLEAN },
-			{ "active_", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"creatorUserId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"parentGroupId", Types.BIGINT},
+		{"liveGroupId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"groupKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"typeSettings", Types.CLOB}, {"manualMembership", Types.BOOLEAN},
+		{"membershipRestriction", Types.INTEGER},
+		{"friendlyURL", Types.VARCHAR}, {"site", Types.BOOLEAN},
+		{"remoteStagingGroupCount", Types.INTEGER},
+		{"inheritContent", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -128,36 +120,64 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
+
 	public static final String TABLE_SQL_DROP = "drop table Group_";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY group_.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY Group_.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Group"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Group"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Group"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Group"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Group"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Group"),
+		true);
+
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
+
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+
 	public static final long FRIENDLYURL_COLUMN_BITMASK = 16L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
+
 	public static final long GROUPKEY_COLUMN_BITMASK = 64L;
+
 	public static final long INHERITCONTENT_COLUMN_BITMASK = 128L;
+
 	public static final long LIVEGROUPID_COLUMN_BITMASK = 256L;
+
 	public static final long NAME_COLUMN_BITMASK = 512L;
+
 	public static final long PARENTGROUPID_COLUMN_BITMASK = 1024L;
+
 	public static final long SITE_COLUMN_BITMASK = 2048L;
+
 	public static final long TREEPATH_COLUMN_BITMASK = 4096L;
+
 	public static final long TYPE_COLUMN_BITMASK = 8192L;
+
 	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
@@ -192,7 +212,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		model.setMembershipRestriction(soapModel.getMembershipRestriction());
 		model.setFriendlyURL(soapModel.getFriendlyURL());
 		model.setSite(soapModel.isSite());
-		model.setRemoteStagingGroupCount(soapModel.getRemoteStagingGroupCount());
+		model.setRemoteStagingGroupCount(
+			soapModel.getRemoteStagingGroupCount());
 		model.setInheritContent(soapModel.isInheritContent());
 		model.setActive(soapModel.isActive());
 
@@ -220,43 +241,73 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public static final String MAPPING_TABLE_GROUPS_ORGS_NAME = "Groups_Orgs";
+
 	public static final Object[][] MAPPING_TABLE_GROUPS_ORGS_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "organizationId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE = "create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId))";
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ORGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_Orgs"), true);
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"organizationId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE =
+		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ORGS =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Groups_Orgs"),
+			true);
+
 	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = "Groups_Roles";
+
 	public static final Object[][] MAPPING_TABLE_GROUPS_ROLES_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE = "create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_Roles"), true);
-	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME = "Groups_UserGroups";
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"roleId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
+		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Groups_Roles"),
+			true);
+
+	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME =
+		"Groups_UserGroups";
+
 	public static final Object[][] MAPPING_TABLE_GROUPS_USERGROUPS_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "userGroupId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_UserGroups"), true);
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"userGroupId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE =
+		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Groups_UserGroups"),
+			true);
+
 	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = "Users_Groups";
+
 	public static final Object[][] MAPPING_TABLE_USERS_GROUPS_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "userId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE = "create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
-	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Users_Groups"), true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Group"));
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"userId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE =
+		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_Groups"),
+			true);
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Group"));
 
 	public GroupModelImpl() {
 	}
@@ -295,14 +346,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Group, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Group, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Group, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Group, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Group, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Group)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Group)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -313,12 +367,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Group, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Group, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Group, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Group, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((Group)this, entry.getValue());
@@ -330,66 +386,102 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Group, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Group, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Group, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Group, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Group, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Group, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Group, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Group, Object>>();
-		Map<String, BiConsumer<Group, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Group, ?>>();
-
+		Map<String, Function<Group, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Group, Object>>();
+		Map<String, BiConsumer<Group, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Group, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Group::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Group, Long>)Group::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Group, Long>)Group::setMvccVersion);
 		attributeGetterFunctions.put("uuid", Group::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<Group, String>)Group::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Group, String>)Group::setUuid);
 		attributeGetterFunctions.put("groupId", Group::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<Group, Long>)Group::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<Group, Long>)Group::setGroupId);
 		attributeGetterFunctions.put("companyId", Group::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Group, Long>)Group::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Group, Long>)Group::setCompanyId);
 		attributeGetterFunctions.put("creatorUserId", Group::getCreatorUserId);
-		attributeSetterBiConsumers.put("creatorUserId", (BiConsumer<Group, Long>)Group::setCreatorUserId);
+		attributeSetterBiConsumers.put(
+			"creatorUserId", (BiConsumer<Group, Long>)Group::setCreatorUserId);
 		attributeGetterFunctions.put("classNameId", Group::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Group, Long>)Group::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId", (BiConsumer<Group, Long>)Group::setClassNameId);
 		attributeGetterFunctions.put("classPK", Group::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<Group, Long>)Group::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<Group, Long>)Group::setClassPK);
 		attributeGetterFunctions.put("parentGroupId", Group::getParentGroupId);
-		attributeSetterBiConsumers.put("parentGroupId", (BiConsumer<Group, Long>)Group::setParentGroupId);
+		attributeSetterBiConsumers.put(
+			"parentGroupId", (BiConsumer<Group, Long>)Group::setParentGroupId);
 		attributeGetterFunctions.put("liveGroupId", Group::getLiveGroupId);
-		attributeSetterBiConsumers.put("liveGroupId", (BiConsumer<Group, Long>)Group::setLiveGroupId);
+		attributeSetterBiConsumers.put(
+			"liveGroupId", (BiConsumer<Group, Long>)Group::setLiveGroupId);
 		attributeGetterFunctions.put("treePath", Group::getTreePath);
-		attributeSetterBiConsumers.put("treePath", (BiConsumer<Group, String>)Group::setTreePath);
+		attributeSetterBiConsumers.put(
+			"treePath", (BiConsumer<Group, String>)Group::setTreePath);
 		attributeGetterFunctions.put("groupKey", Group::getGroupKey);
-		attributeSetterBiConsumers.put("groupKey", (BiConsumer<Group, String>)Group::setGroupKey);
+		attributeSetterBiConsumers.put(
+			"groupKey", (BiConsumer<Group, String>)Group::setGroupKey);
 		attributeGetterFunctions.put("name", Group::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Group, String>)Group::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Group, String>)Group::setName);
 		attributeGetterFunctions.put("description", Group::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<Group, String>)Group::setDescription);
+		attributeSetterBiConsumers.put(
+			"description", (BiConsumer<Group, String>)Group::setDescription);
 		attributeGetterFunctions.put("type", Group::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<Group, Integer>)Group::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<Group, Integer>)Group::setType);
 		attributeGetterFunctions.put("typeSettings", Group::getTypeSettings);
-		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<Group, String>)Group::setTypeSettings);
-		attributeGetterFunctions.put("manualMembership", Group::getManualMembership);
-		attributeSetterBiConsumers.put("manualMembership", (BiConsumer<Group, Boolean>)Group::setManualMembership);
-		attributeGetterFunctions.put("membershipRestriction", Group::getMembershipRestriction);
-		attributeSetterBiConsumers.put("membershipRestriction", (BiConsumer<Group, Integer>)Group::setMembershipRestriction);
+		attributeSetterBiConsumers.put(
+			"typeSettings", (BiConsumer<Group, String>)Group::setTypeSettings);
+		attributeGetterFunctions.put(
+			"manualMembership", Group::getManualMembership);
+		attributeSetterBiConsumers.put(
+			"manualMembership",
+			(BiConsumer<Group, Boolean>)Group::setManualMembership);
+		attributeGetterFunctions.put(
+			"membershipRestriction", Group::getMembershipRestriction);
+		attributeSetterBiConsumers.put(
+			"membershipRestriction",
+			(BiConsumer<Group, Integer>)Group::setMembershipRestriction);
 		attributeGetterFunctions.put("friendlyURL", Group::getFriendlyURL);
-		attributeSetterBiConsumers.put("friendlyURL", (BiConsumer<Group, String>)Group::setFriendlyURL);
+		attributeSetterBiConsumers.put(
+			"friendlyURL", (BiConsumer<Group, String>)Group::setFriendlyURL);
 		attributeGetterFunctions.put("site", Group::getSite);
-		attributeSetterBiConsumers.put("site", (BiConsumer<Group, Boolean>)Group::setSite);
-		attributeGetterFunctions.put("remoteStagingGroupCount", Group::getRemoteStagingGroupCount);
-		attributeSetterBiConsumers.put("remoteStagingGroupCount", (BiConsumer<Group, Integer>)Group::setRemoteStagingGroupCount);
-		attributeGetterFunctions.put("inheritContent", Group::getInheritContent);
-		attributeSetterBiConsumers.put("inheritContent", (BiConsumer<Group, Boolean>)Group::setInheritContent);
+		attributeSetterBiConsumers.put(
+			"site", (BiConsumer<Group, Boolean>)Group::setSite);
+		attributeGetterFunctions.put(
+			"remoteStagingGroupCount", Group::getRemoteStagingGroupCount);
+		attributeSetterBiConsumers.put(
+			"remoteStagingGroupCount",
+			(BiConsumer<Group, Integer>)Group::setRemoteStagingGroupCount);
+		attributeGetterFunctions.put(
+			"inheritContent", Group::getInheritContent);
+		attributeSetterBiConsumers.put(
+			"inheritContent",
+			(BiConsumer<Group, Boolean>)Group::setInheritContent);
 		attributeGetterFunctions.put("active", Group::getActive);
-		attributeSetterBiConsumers.put("active", (BiConsumer<Group, Boolean>)Group::setActive);
+		attributeSetterBiConsumers.put(
+			"active", (BiConsumer<Group, Boolean>)Group::setActive);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -698,8 +790,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getName(), languageId,
-			useDefault);
+		return LocalizationUtil.getLocalization(
+			getName(), languageId, useDefault);
 	}
 
 	@Override
@@ -742,12 +834,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(name)) {
-			setName(LocalizationUtil.updateLocalization(getName(), "Name",
-					name, languageId, defaultLanguageId));
+			setName(
+				LocalizationUtil.updateLocalization(
+					getName(), "Name", name, languageId, defaultLanguageId));
 		}
 		else {
-			setName(LocalizationUtil.removeLocalization(getName(), "Name",
-					languageId));
+			setName(
+				LocalizationUtil.removeLocalization(
+					getName(), "Name", languageId));
 		}
 	}
 
@@ -767,7 +861,9 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			return;
 		}
 
-		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+		setName(
+			LocalizationUtil.updateLocalization(
+				nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -807,8 +903,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getDescription(), languageId,
-			useDefault);
+		return LocalizationUtil.getLocalization(
+			getDescription(), languageId, useDefault);
 	}
 
 	@Override
@@ -840,18 +936,21 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	@Override
-	public void setDescription(String description, Locale locale,
-		Locale defaultLocale) {
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale) {
+
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(LocalizationUtil.updateLocalization(
+			setDescription(
+				LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(LocalizationUtil.removeLocalization(
+			setDescription(
+				LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -867,14 +966,16 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	@Override
-	public void setDescriptionMap(Map<Locale, String> descriptionMap,
-		Locale defaultLocale) {
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale) {
+
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
-				getDescription(), "Description",
+		setDescription(
+			LocalizationUtil.updateLocalization(
+				descriptionMap, getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -1075,8 +1176,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Group.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Group.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1112,7 +1213,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			}
 		}
 
-		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -1130,12 +1232,15 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(Group.class.getName(),
-				getPrimaryKey(), defaultLocale, availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			Group.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -1144,6 +1249,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
+
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -1160,19 +1266,21 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(
+				getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(getDescription(defaultLocale), defaultLocale,
-				defaultLocale);
+			setDescription(
+				getDescription(defaultLocale), defaultLocale, defaultLocale);
 		}
 	}
 
 	@Override
 	public Group toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Group)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Group)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1412,14 +1520,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String toString() {
-		Map<String, Function<Group, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Group, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Group, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Group, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Group, Object> attributeGetterFunction = entry.getValue();
 
@@ -1440,16 +1551,19 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Group, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Group, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Group, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Group, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Group, Object> attributeGetterFunction = entry.getValue();
 
@@ -1465,10 +1579,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Group.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Group.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Group.class, ModelWrapper.class
-		};
+		Group.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -1520,4 +1636,5 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private Group _escapedModel;
+
 }

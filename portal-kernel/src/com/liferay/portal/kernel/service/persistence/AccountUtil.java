@@ -42,6 +42,7 @@ import java.util.Set;
  */
 @ProviderType
 public class AccountUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,13 +75,16 @@ public class AccountUtil {
 	 */
 	public static Map<Serializable, Account> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Account> findWithDynamicQuery(DynamicQuery dynamicQuery) {
+	public static List<Account> findWithDynamicQuery(
+		DynamicQuery dynamicQuery) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -89,6 +93,7 @@ public class AccountUtil {
 	 */
 	public static List<Account> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -98,9 +103,9 @@ public class AccountUtil {
 	public static List<Account> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<Account> orderByComparator) {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -113,47 +118,50 @@ public class AccountUtil {
 	/**
 	 * @see BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
-	public static Account update(Account account, ServiceContext serviceContext) {
+	public static Account update(
+		Account account, ServiceContext serviceContext) {
+
 		return getPersistence().update(account, serviceContext);
 	}
 
 	/**
-	* Caches the account in the entity cache if it is enabled.
-	*
-	* @param account the account
-	*/
+	 * Caches the account in the entity cache if it is enabled.
+	 *
+	 * @param account the account
+	 */
 	public static void cacheResult(Account account) {
 		getPersistence().cacheResult(account);
 	}
 
 	/**
-	* Caches the accounts in the entity cache if it is enabled.
-	*
-	* @param accounts the accounts
-	*/
+	 * Caches the accounts in the entity cache if it is enabled.
+	 *
+	 * @param accounts the accounts
+	 */
 	public static void cacheResult(List<Account> accounts) {
 		getPersistence().cacheResult(accounts);
 	}
 
 	/**
-	* Creates a new account with the primary key. Does not add the account to the database.
-	*
-	* @param accountId the primary key for the new account
-	* @return the new account
-	*/
+	 * Creates a new account with the primary key. Does not add the account to the database.
+	 *
+	 * @param accountId the primary key for the new account
+	 * @return the new account
+	 */
 	public static Account create(long accountId) {
 		return getPersistence().create(accountId);
 	}
 
 	/**
-	* Removes the account with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param accountId the primary key of the account
-	* @return the account that was removed
-	* @throws NoSuchAccountException if a account with the primary key could not be found
-	*/
+	 * Removes the account with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param accountId the primary key of the account
+	 * @return the account that was removed
+	 * @throws NoSuchAccountException if a account with the primary key could not be found
+	 */
 	public static Account remove(long accountId)
 		throws com.liferay.portal.kernel.exception.NoSuchAccountException {
+
 		return getPersistence().remove(accountId);
 	}
 
@@ -162,113 +170,119 @@ public class AccountUtil {
 	}
 
 	/**
-	* Returns the account with the primary key or throws a <code>NoSuchAccountException</code> if it could not be found.
-	*
-	* @param accountId the primary key of the account
-	* @return the account
-	* @throws NoSuchAccountException if a account with the primary key could not be found
-	*/
+	 * Returns the account with the primary key or throws a <code>NoSuchAccountException</code> if it could not be found.
+	 *
+	 * @param accountId the primary key of the account
+	 * @return the account
+	 * @throws NoSuchAccountException if a account with the primary key could not be found
+	 */
 	public static Account findByPrimaryKey(long accountId)
 		throws com.liferay.portal.kernel.exception.NoSuchAccountException {
+
 		return getPersistence().findByPrimaryKey(accountId);
 	}
 
 	/**
-	* Returns the account with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param accountId the primary key of the account
-	* @return the account, or <code>null</code> if a account with the primary key could not be found
-	*/
+	 * Returns the account with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param accountId the primary key of the account
+	 * @return the account, or <code>null</code> if a account with the primary key could not be found
+	 */
 	public static Account fetchByPrimaryKey(long accountId) {
 		return getPersistence().fetchByPrimaryKey(accountId);
 	}
 
 	/**
-	* Returns all the accounts.
-	*
-	* @return the accounts
-	*/
+	 * Returns all the accounts.
+	 *
+	 * @return the accounts
+	 */
 	public static List<Account> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the accounts.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AccountModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of accounts
-	* @param end the upper bound of the range of accounts (not inclusive)
-	* @return the range of accounts
-	*/
+	 * Returns a range of all the accounts.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AccountModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of accounts
+	 * @param end the upper bound of the range of accounts (not inclusive)
+	 * @return the range of accounts
+	 */
 	public static List<Account> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the accounts.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AccountModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of accounts
-	* @param end the upper bound of the range of accounts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of accounts
-	*/
-	public static List<Account> findAll(int start, int end,
-		OrderByComparator<Account> orderByComparator) {
+	 * Returns an ordered range of all the accounts.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AccountModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of accounts
+	 * @param end the upper bound of the range of accounts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of accounts
+	 */
+	public static List<Account> findAll(
+		int start, int end, OrderByComparator<Account> orderByComparator) {
+
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the accounts.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AccountModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of accounts
-	* @param end the upper bound of the range of accounts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of accounts
-	*/
-	public static List<Account> findAll(int start, int end,
-		OrderByComparator<Account> orderByComparator, boolean retrieveFromCache) {
-		return getPersistence()
-				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	 * Returns an ordered range of all the accounts.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AccountModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of accounts
+	 * @param end the upper bound of the range of accounts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of accounts
+	 */
+	public static List<Account> findAll(
+		int start, int end, OrderByComparator<Account> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the accounts from the database.
-	*/
+	 * Removes all the accounts from the database.
+	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of accounts.
-	*
-	* @return the number of accounts
-	*/
+	 * Returns the number of accounts.
+	 *
+	 * @return the number of accounts
+	 */
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
 	public static AccountPersistence getPersistence() {
 		if (_persistence == null) {
-			_persistence = (AccountPersistence)PortalBeanLocatorUtil.locate(AccountPersistence.class.getName());
+			_persistence = (AccountPersistence)PortalBeanLocatorUtil.locate(
+				AccountPersistence.class.getName());
 
-			ReferenceRegistry.registerReference(AccountUtil.class,
-				"_persistence");
+			ReferenceRegistry.registerReference(
+				AccountUtil.class, "_persistence");
 		}
 
 		return _persistence;
 	}
 
 	private static AccountPersistence _persistence;
+
 }

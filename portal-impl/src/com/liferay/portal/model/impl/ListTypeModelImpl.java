@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,21 +57,23 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class ListTypeModelImpl extends BaseModelImpl<ListType>
-	implements ListTypeModel {
+public class ListTypeModelImpl
+	extends BaseModelImpl<ListType> implements ListTypeModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a list type model instance should use the <code>ListType</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ListType";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "listTypeId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "type_", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"listTypeId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -82,23 +82,38 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ListType (mvccVersion LONG default 0 not null,listTypeId LONG not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table ListType (mvccVersion LONG default 0 not null,listTypeId LONG not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table ListType";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY listType.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY ListType.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ListType"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ListType"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ListType"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ListType"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ListType"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ListType"),
+		true);
+
 	public static final long NAME_COLUMN_BITMASK = 1L;
+
 	public static final long TYPE_COLUMN_BITMASK = 2L;
 
 	/**
@@ -142,8 +157,9 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.ListType"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.ListType"));
 
 	public ListTypeModelImpl() {
 	}
@@ -182,14 +198,18 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ListType, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ListType, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<ListType, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ListType, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ListType, Object> attributeGetterFunction = entry.getValue();
+			Function<ListType, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((ListType)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((ListType)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -200,48 +220,63 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<ListType, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<ListType, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<ListType, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<ListType, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((ListType)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(ListType)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<ListType, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<ListType, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<ListType, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<ListType, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ListType, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ListType, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<ListType, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ListType, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ListType, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ListType, Object>>();
-		Map<String, BiConsumer<ListType, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ListType, ?>>();
-
+		Map<String, Function<ListType, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ListType, Object>>();
+		Map<String, BiConsumer<ListType, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ListType, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", ListType::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ListType, Long>)ListType::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ListType, Long>)ListType::setMvccVersion);
 		attributeGetterFunctions.put("listTypeId", ListType::getListTypeId);
-		attributeSetterBiConsumers.put("listTypeId", (BiConsumer<ListType, Long>)ListType::setListTypeId);
+		attributeSetterBiConsumers.put(
+			"listTypeId", (BiConsumer<ListType, Long>)ListType::setListTypeId);
 		attributeGetterFunctions.put("name", ListType::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<ListType, String>)ListType::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<ListType, String>)ListType::setName);
 		attributeGetterFunctions.put("type", ListType::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<ListType, String>)ListType::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<ListType, String>)ListType::setType);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -324,8 +359,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			ListType.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, ListType.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -338,8 +373,9 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	@Override
 	public ListType toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ListType)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (ListType)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -449,16 +485,20 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public String toString() {
-		Map<String, Function<ListType, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ListType, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<ListType, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ListType, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ListType, Object> attributeGetterFunction = entry.getValue();
+			Function<ListType, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -477,18 +517,22 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ListType, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ListType, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<ListType, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ListType, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ListType, Object> attributeGetterFunction = entry.getValue();
+			Function<ListType, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -502,10 +546,12 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = ListType.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		ListType.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ListType.class, ModelWrapper.class
-		};
+		ListType.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _listTypeId;
 	private String _name;
@@ -514,4 +560,5 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	private String _originalType;
 	private long _columnBitmask;
 	private ListType _escapedModel;
+
 }

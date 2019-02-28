@@ -27,26 +27,32 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @Deprecated
 @ProviderType
 public class AssetCategoryPropertyFinderUtil {
+
 	public static int countByG_K(long groupId, String key) {
 		return getFinder().countByG_K(groupId, key);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategoryProperty> findByG_K(
-		long groupId, String key) {
+	public static java.util.List
+		<com.liferay.asset.kernel.model.AssetCategoryProperty> findByG_K(
+			long groupId, String key) {
+
 		return getFinder().findByG_K(groupId, key);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategoryProperty> findByG_K(
-		long groupId, String key, int start, int end) {
+	public static java.util.List
+		<com.liferay.asset.kernel.model.AssetCategoryProperty> findByG_K(
+			long groupId, String key, int start, int end) {
+
 		return getFinder().findByG_K(groupId, key, start, end);
 	}
 
 	public static AssetCategoryPropertyFinder getFinder() {
 		if (_finder == null) {
-			_finder = (AssetCategoryPropertyFinder)PortalBeanLocatorUtil.locate(AssetCategoryPropertyFinder.class.getName());
+			_finder = (AssetCategoryPropertyFinder)PortalBeanLocatorUtil.locate(
+				AssetCategoryPropertyFinder.class.getName());
 
-			ReferenceRegistry.registerReference(AssetCategoryPropertyFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(
+				AssetCategoryPropertyFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -55,9 +61,10 @@ public class AssetCategoryPropertyFinderUtil {
 	public void setFinder(AssetCategoryPropertyFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(AssetCategoryPropertyFinderUtil.class,
-			"_finder");
+		ReferenceRegistry.registerReference(
+			AssetCategoryPropertyFinderUtil.class, "_finder");
 	}
 
 	private static AssetCategoryPropertyFinder _finder;
+
 }

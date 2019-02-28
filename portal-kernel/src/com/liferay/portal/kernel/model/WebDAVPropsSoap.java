@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class WebDAVPropsSoap implements Serializable {
+
 	public static WebDAVPropsSoap toSoapModel(WebDAVProps model) {
 		WebDAVPropsSoap soapModel = new WebDAVPropsSoap();
 
@@ -73,7 +74,8 @@ public class WebDAVPropsSoap implements Serializable {
 	}
 
 	public static WebDAVPropsSoap[] toSoapModels(List<WebDAVProps> models) {
-		List<WebDAVPropsSoap> soapModels = new ArrayList<WebDAVPropsSoap>(models.size());
+		List<WebDAVPropsSoap> soapModels = new ArrayList<WebDAVPropsSoap>(
+			models.size());
 
 		for (WebDAVProps model : models) {
 			soapModels.add(toSoapModel(model));
@@ -165,4 +167,5 @@ public class WebDAVPropsSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _props;
+
 }

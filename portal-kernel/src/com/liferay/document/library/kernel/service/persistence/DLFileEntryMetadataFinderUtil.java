@@ -25,20 +25,28 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class DLFileEntryMetadataFinderUtil {
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> findByMismatchedCompanyId() {
+
+	public static java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
+			findByMismatchedCompanyId() {
+
 		return getFinder().findByMismatchedCompanyId();
 	}
 
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> findByNoStructures() {
+	public static java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
+			findByNoStructures() {
+
 		return getFinder().findByNoStructures();
 	}
 
 	public static DLFileEntryMetadataFinder getFinder() {
 		if (_finder == null) {
-			_finder = (DLFileEntryMetadataFinder)PortalBeanLocatorUtil.locate(DLFileEntryMetadataFinder.class.getName());
+			_finder = (DLFileEntryMetadataFinder)PortalBeanLocatorUtil.locate(
+				DLFileEntryMetadataFinder.class.getName());
 
-			ReferenceRegistry.registerReference(DLFileEntryMetadataFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(
+				DLFileEntryMetadataFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -47,9 +55,10 @@ public class DLFileEntryMetadataFinderUtil {
 	public void setFinder(DLFileEntryMetadataFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(DLFileEntryMetadataFinderUtil.class,
-			"_finder");
+		ReferenceRegistry.registerReference(
+			DLFileEntryMetadataFinderUtil.class, "_finder");
 	}
 
 	private static DLFileEntryMetadataFinder _finder;
+
 }

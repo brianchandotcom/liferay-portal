@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.service.UserTrackerLocalService;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
-
 import com.liferay.users.admin.uad.constants.UsersAdminUADConstants;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUserTrackerUADAnonymizer
 	extends DynamicQueryUADAnonymizer<UserTracker> {
+
 	@Override
-	public void autoAnonymize(UserTracker userTracker, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			UserTracker userTracker, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (userTracker.getUserId() == userId) {
 			delete(userTracker);
 		}
@@ -70,4 +71,5 @@ public abstract class BaseUserTrackerUADAnonymizer
 
 	@Reference
 	protected UserTrackerLocalService userTrackerLocalService;
+
 }

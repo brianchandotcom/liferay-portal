@@ -17,7 +17,6 @@ package com.liferay.portal.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -56,22 +55,25 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRole>
+public class UserGroupGroupRoleModelImpl
+	extends BaseModelImpl<UserGroupGroupRole>
 	implements UserGroupGroupRoleModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a user group group role model instance should use the <code>UserGroupGroupRole</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "UserGroupGroupRole";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "userGroupId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT },
-			{ "companyId", Types.BIGINT }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"userGroupId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"roleId", Types.BIGINT},
+		{"companyId", Types.BIGINT}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -81,24 +83,42 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userGroupId, groupId, roleId))";
+	public static final String TABLE_SQL_CREATE =
+		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userGroupId, groupId, roleId))";
+
 	public static final String TABLE_SQL_DROP = "drop table UserGroupGroupRole";
-	public static final String ORDER_BY_JPQL = " ORDER BY userGroupGroupRole.id.userGroupId ASC, userGroupGroupRole.id.groupId ASC, userGroupGroupRole.id.roleId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY UserGroupGroupRole.userGroupId ASC, UserGroupGroupRole.groupId ASC, UserGroupGroupRole.roleId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY userGroupGroupRole.id.userGroupId ASC, userGroupGroupRole.id.groupId ASC, userGroupGroupRole.id.roleId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY UserGroupGroupRole.userGroupId ASC, UserGroupGroupRole.groupId ASC, UserGroupGroupRole.roleId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.UserGroupGroupRole"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.UserGroupGroupRole"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.UserGroupGroupRole"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.UserGroupGroupRole"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.UserGroupGroupRole"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.UserGroupGroupRole"),
+		true);
+
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
+
 	public static final long ROLEID_COLUMN_BITMASK = 2L;
+
 	public static final long USERGROUPID_COLUMN_BITMASK = 4L;
 
 	/**
@@ -131,11 +151,13 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	 */
 	public static List<UserGroupGroupRole> toModels(
 		UserGroupGroupRoleSoap[] soapModels) {
+
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<UserGroupGroupRole> models = new ArrayList<UserGroupGroupRole>(soapModels.length);
+		List<UserGroupGroupRole> models = new ArrayList<UserGroupGroupRole>(
+			soapModels.length);
 
 		for (UserGroupGroupRoleSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -144,8 +166,9 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.UserGroupGroupRole"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.UserGroupGroupRole"));
 
 	public UserGroupGroupRoleModelImpl() {
 	}
@@ -186,14 +209,18 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<UserGroupGroupRole, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<UserGroupGroupRole, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<UserGroupGroupRole, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<UserGroupGroupRole, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<UserGroupGroupRole, Object> attributeGetterFunction = entry.getValue();
+			Function<UserGroupGroupRole, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((UserGroupGroupRole)this));
 		}
 
@@ -205,53 +232,81 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<UserGroupGroupRole, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<UserGroupGroupRole, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<UserGroupGroupRole, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<UserGroupGroupRole, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((UserGroupGroupRole)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(UserGroupGroupRole)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<UserGroupGroupRole, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<UserGroupGroupRole, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<UserGroupGroupRole, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<UserGroupGroupRole, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<UserGroupGroupRole, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<UserGroupGroupRole, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<UserGroupGroupRole, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserGroupGroupRole, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<UserGroupGroupRole, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<UserGroupGroupRole, Object>>();
-		Map<String, BiConsumer<UserGroupGroupRole, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<UserGroupGroupRole, ?>>();
+		Map<String, Function<UserGroupGroupRole, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<UserGroupGroupRole, Object>>();
+		Map<String, BiConsumer<UserGroupGroupRole, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<UserGroupGroupRole, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", UserGroupGroupRole::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setMvccVersion);
-		attributeGetterFunctions.put("userGroupId", UserGroupGroupRole::getUserGroupId);
-		attributeSetterBiConsumers.put("userGroupId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setUserGroupId);
+		attributeGetterFunctions.put(
+			"mvccVersion", UserGroupGroupRole::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setMvccVersion);
+		attributeGetterFunctions.put(
+			"userGroupId", UserGroupGroupRole::getUserGroupId);
+		attributeSetterBiConsumers.put(
+			"userGroupId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setUserGroupId);
 		attributeGetterFunctions.put("groupId", UserGroupGroupRole::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setGroupId);
 		attributeGetterFunctions.put("roleId", UserGroupGroupRole::getRoleId);
-		attributeSetterBiConsumers.put("roleId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setRoleId);
-		attributeGetterFunctions.put("companyId", UserGroupGroupRole::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"roleId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setRoleId);
+		attributeGetterFunctions.put(
+			"companyId", UserGroupGroupRole::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setCompanyId);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -352,8 +407,9 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	@Override
 	public UserGroupGroupRole toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserGroupGroupRole)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (UserGroupGroupRole)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -361,7 +417,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public Object clone() {
-		UserGroupGroupRoleImpl userGroupGroupRoleImpl = new UserGroupGroupRoleImpl();
+		UserGroupGroupRoleImpl userGroupGroupRoleImpl =
+			new UserGroupGroupRoleImpl();
 
 		userGroupGroupRoleImpl.setMvccVersion(getMvccVersion());
 		userGroupGroupRoleImpl.setUserGroupId(getUserGroupId());
@@ -422,15 +479,18 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	public void resetOriginalValues() {
 		UserGroupGroupRoleModelImpl userGroupGroupRoleModelImpl = this;
 
-		userGroupGroupRoleModelImpl._originalUserGroupId = userGroupGroupRoleModelImpl._userGroupId;
+		userGroupGroupRoleModelImpl._originalUserGroupId =
+			userGroupGroupRoleModelImpl._userGroupId;
 
 		userGroupGroupRoleModelImpl._setOriginalUserGroupId = false;
 
-		userGroupGroupRoleModelImpl._originalGroupId = userGroupGroupRoleModelImpl._groupId;
+		userGroupGroupRoleModelImpl._originalGroupId =
+			userGroupGroupRoleModelImpl._groupId;
 
 		userGroupGroupRoleModelImpl._setOriginalGroupId = false;
 
-		userGroupGroupRoleModelImpl._originalRoleId = userGroupGroupRoleModelImpl._roleId;
+		userGroupGroupRoleModelImpl._originalRoleId =
+			userGroupGroupRoleModelImpl._roleId;
 
 		userGroupGroupRoleModelImpl._setOriginalRoleId = false;
 
@@ -439,7 +499,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public CacheModel<UserGroupGroupRole> toCacheModel() {
-		UserGroupGroupRoleCacheModel userGroupGroupRoleCacheModel = new UserGroupGroupRoleCacheModel();
+		UserGroupGroupRoleCacheModel userGroupGroupRoleCacheModel =
+			new UserGroupGroupRoleCacheModel();
 
 		userGroupGroupRoleCacheModel.userGroupGroupRolePK = getPrimaryKey();
 
@@ -458,17 +519,20 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public String toString() {
-		Map<String, Function<UserGroupGroupRole, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<UserGroupGroupRole, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<UserGroupGroupRole, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<UserGroupGroupRole, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<UserGroupGroupRole, Object> attributeGetterFunction = entry.getValue();
+			Function<UserGroupGroupRole, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -487,19 +551,22 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<UserGroupGroupRole, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<UserGroupGroupRole, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<UserGroupGroupRole, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<UserGroupGroupRole, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<UserGroupGroupRole, Object> attributeGetterFunction = entry.getValue();
+			Function<UserGroupGroupRole, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -513,10 +580,12 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = UserGroupGroupRole.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		UserGroupGroupRole.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			UserGroupGroupRole.class, ModelWrapper.class
-		};
+		UserGroupGroupRole.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _userGroupId;
 	private long _originalUserGroupId;
@@ -530,4 +599,5 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	private long _companyId;
 	private long _columnBitmask;
 	private UserGroupGroupRole _escapedModel;
+
 }

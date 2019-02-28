@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class PasswordPolicyRelWrapper extends BaseModelWrapper<PasswordPolicyRel>
+public class PasswordPolicyRelWrapper
+	extends BaseModelWrapper<PasswordPolicyRel>
 	implements PasswordPolicyRel, ModelWrapper<PasswordPolicyRel> {
+
 	public PasswordPolicyRelWrapper(PasswordPolicyRel passwordPolicyRel) {
 		super(passwordPolicyRel);
 	}
@@ -91,80 +93,80 @@ public class PasswordPolicyRelWrapper extends BaseModelWrapper<PasswordPolicyRel
 	}
 
 	/**
-	* Returns the fully qualified class name of this password policy rel.
-	*
-	* @return the fully qualified class name of this password policy rel
-	*/
+	 * Returns the fully qualified class name of this password policy rel.
+	 *
+	 * @return the fully qualified class name of this password policy rel
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this password policy rel.
-	*
-	* @return the class name ID of this password policy rel
-	*/
+	 * Returns the class name ID of this password policy rel.
+	 *
+	 * @return the class name ID of this password policy rel
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the class pk of this password policy rel.
-	*
-	* @return the class pk of this password policy rel
-	*/
+	 * Returns the class pk of this password policy rel.
+	 *
+	 * @return the class pk of this password policy rel
+	 */
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	* Returns the company ID of this password policy rel.
-	*
-	* @return the company ID of this password policy rel
-	*/
+	 * Returns the company ID of this password policy rel.
+	 *
+	 * @return the company ID of this password policy rel
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the mvcc version of this password policy rel.
-	*
-	* @return the mvcc version of this password policy rel
-	*/
+	 * Returns the mvcc version of this password policy rel.
+	 *
+	 * @return the mvcc version of this password policy rel
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the password policy ID of this password policy rel.
-	*
-	* @return the password policy ID of this password policy rel
-	*/
+	 * Returns the password policy ID of this password policy rel.
+	 *
+	 * @return the password policy ID of this password policy rel
+	 */
 	@Override
 	public long getPasswordPolicyId() {
 		return model.getPasswordPolicyId();
 	}
 
 	/**
-	* Returns the password policy rel ID of this password policy rel.
-	*
-	* @return the password policy rel ID of this password policy rel
-	*/
+	 * Returns the password policy rel ID of this password policy rel.
+	 *
+	 * @return the password policy rel ID of this password policy rel
+	 */
 	@Override
 	public long getPasswordPolicyRelId() {
 		return model.getPasswordPolicyRelId();
 	}
 
 	/**
-	* Returns the primary key of this password policy rel.
-	*
-	* @return the primary key of this password policy rel
-	*/
+	 * Returns the primary key of this password policy rel.
+	 *
+	 * @return the primary key of this password policy rel
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
@@ -181,77 +183,80 @@ public class PasswordPolicyRelWrapper extends BaseModelWrapper<PasswordPolicyRel
 	}
 
 	/**
-	* Sets the class name ID of this password policy rel.
-	*
-	* @param classNameId the class name ID of this password policy rel
-	*/
+	 * Sets the class name ID of this password policy rel.
+	 *
+	 * @param classNameId the class name ID of this password policy rel
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the class pk of this password policy rel.
-	*
-	* @param classPK the class pk of this password policy rel
-	*/
+	 * Sets the class pk of this password policy rel.
+	 *
+	 * @param classPK the class pk of this password policy rel
+	 */
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	* Sets the company ID of this password policy rel.
-	*
-	* @param companyId the company ID of this password policy rel
-	*/
+	 * Sets the company ID of this password policy rel.
+	 *
+	 * @param companyId the company ID of this password policy rel
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the mvcc version of this password policy rel.
-	*
-	* @param mvccVersion the mvcc version of this password policy rel
-	*/
+	 * Sets the mvcc version of this password policy rel.
+	 *
+	 * @param mvccVersion the mvcc version of this password policy rel
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the password policy ID of this password policy rel.
-	*
-	* @param passwordPolicyId the password policy ID of this password policy rel
-	*/
+	 * Sets the password policy ID of this password policy rel.
+	 *
+	 * @param passwordPolicyId the password policy ID of this password policy rel
+	 */
 	@Override
 	public void setPasswordPolicyId(long passwordPolicyId) {
 		model.setPasswordPolicyId(passwordPolicyId);
 	}
 
 	/**
-	* Sets the password policy rel ID of this password policy rel.
-	*
-	* @param passwordPolicyRelId the password policy rel ID of this password policy rel
-	*/
+	 * Sets the password policy rel ID of this password policy rel.
+	 *
+	 * @param passwordPolicyRelId the password policy rel ID of this password policy rel
+	 */
 	@Override
 	public void setPasswordPolicyRelId(long passwordPolicyRelId) {
 		model.setPasswordPolicyRelId(passwordPolicyRelId);
 	}
 
 	/**
-	* Sets the primary key of this password policy rel.
-	*
-	* @param primaryKey the primary key of this password policy rel
-	*/
+	 * Sets the primary key of this password policy rel.
+	 *
+	 * @param primaryKey the primary key of this password policy rel
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	protected PasswordPolicyRelWrapper wrap(PasswordPolicyRel passwordPolicyRel) {
+	protected PasswordPolicyRelWrapper wrap(
+		PasswordPolicyRel passwordPolicyRel) {
+
 		return new PasswordPolicyRelWrapper(passwordPolicyRel);
 	}
+
 }

@@ -62,8 +62,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements RecentLayoutSetBranchLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements RecentLayoutSetBranchLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -80,6 +81,7 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	@Override
 	public RecentLayoutSetBranch addRecentLayoutSetBranch(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
+
 		recentLayoutSetBranch.setNew(true);
 
 		return recentLayoutSetBranchPersistence.update(recentLayoutSetBranch);
@@ -95,6 +97,7 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public RecentLayoutSetBranch createRecentLayoutSetBranch(
 		long recentLayoutSetBranchId) {
+
 		return recentLayoutSetBranchPersistence.create(recentLayoutSetBranchId);
 	}
 
@@ -108,7 +111,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RecentLayoutSetBranch deleteRecentLayoutSetBranch(
-		long recentLayoutSetBranchId) throws PortalException {
+			long recentLayoutSetBranchId)
+		throws PortalException {
+
 		return recentLayoutSetBranchPersistence.remove(recentLayoutSetBranchId);
 	}
 
@@ -122,6 +127,7 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	@Override
 	public RecentLayoutSetBranch deleteRecentLayoutSetBranch(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
+
 		return recentLayoutSetBranchPersistence.remove(recentLayoutSetBranch);
 	}
 
@@ -129,8 +135,8 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(RecentLayoutSetBranch.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			RecentLayoutSetBranch.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -141,7 +147,8 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return recentLayoutSetBranchPersistence.findWithDynamicQuery(dynamicQuery);
+		return recentLayoutSetBranchPersistence.findWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -157,10 +164,11 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return recentLayoutSetBranchPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return recentLayoutSetBranchPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -177,10 +185,12 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return recentLayoutSetBranchPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return recentLayoutSetBranchPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -191,7 +201,8 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return recentLayoutSetBranchPersistence.countWithDynamicQuery(dynamicQuery);
+		return recentLayoutSetBranchPersistence.countWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -202,16 +213,19 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return recentLayoutSetBranchPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return recentLayoutSetBranchPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public RecentLayoutSetBranch fetchRecentLayoutSetBranch(
 		long recentLayoutSetBranchId) {
-		return recentLayoutSetBranchPersistence.fetchByPrimaryKey(recentLayoutSetBranchId);
+
+		return recentLayoutSetBranchPersistence.fetchByPrimaryKey(
+			recentLayoutSetBranchId);
 	}
 
 	/**
@@ -223,15 +237,20 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	@Override
 	public RecentLayoutSetBranch getRecentLayoutSetBranch(
-		long recentLayoutSetBranchId) throws PortalException {
-		return recentLayoutSetBranchPersistence.findByPrimaryKey(recentLayoutSetBranchId);
+			long recentLayoutSetBranchId)
+		throws PortalException {
+
+		return recentLayoutSetBranchPersistence.findByPrimaryKey(
+			recentLayoutSetBranchId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(recentLayoutSetBranchLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			recentLayoutSetBranchLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RecentLayoutSetBranch.class);
 
@@ -242,12 +261,17 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(recentLayoutSetBranchLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			recentLayoutSetBranchLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(RecentLayoutSetBranch.class);
+		indexableActionableDynamicQuery.setModelClass(
+			RecentLayoutSetBranch.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"recentLayoutSetBranchId");
@@ -257,7 +281,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(recentLayoutSetBranchLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			recentLayoutSetBranchLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RecentLayoutSetBranch.class);
 
@@ -271,12 +297,15 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return recentLayoutSetBranchLocalService.deleteRecentLayoutSetBranch((RecentLayoutSetBranch)persistedModel);
+
+		return recentLayoutSetBranchLocalService.deleteRecentLayoutSetBranch(
+			(RecentLayoutSetBranch)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return recentLayoutSetBranchPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -292,8 +321,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @return the range of recent layout set branchs
 	 */
 	@Override
-	public List<RecentLayoutSetBranch> getRecentLayoutSetBranchs(int start,
-		int end) {
+	public List<RecentLayoutSetBranch> getRecentLayoutSetBranchs(
+		int start, int end) {
+
 		return recentLayoutSetBranchPersistence.findAll(start, end);
 	}
 
@@ -317,6 +347,7 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	@Override
 	public RecentLayoutSetBranch updateRecentLayoutSetBranch(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
+
 		return recentLayoutSetBranchPersistence.update(recentLayoutSetBranch);
 	}
 
@@ -325,7 +356,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 *
 	 * @return the recent layout set branch local service
 	 */
-	public RecentLayoutSetBranchLocalService getRecentLayoutSetBranchLocalService() {
+	public RecentLayoutSetBranchLocalService
+		getRecentLayoutSetBranchLocalService() {
+
 		return recentLayoutSetBranchLocalService;
 	}
 
@@ -336,7 +369,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	public void setRecentLayoutSetBranchLocalService(
 		RecentLayoutSetBranchLocalService recentLayoutSetBranchLocalService) {
-		this.recentLayoutSetBranchLocalService = recentLayoutSetBranchLocalService;
+
+		this.recentLayoutSetBranchLocalService =
+			recentLayoutSetBranchLocalService;
 	}
 
 	/**
@@ -344,7 +379,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 *
 	 * @return the recent layout set branch persistence
 	 */
-	public RecentLayoutSetBranchPersistence getRecentLayoutSetBranchPersistence() {
+	public RecentLayoutSetBranchPersistence
+		getRecentLayoutSetBranchPersistence() {
+
 		return recentLayoutSetBranchPersistence;
 	}
 
@@ -355,7 +392,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	public void setRecentLayoutSetBranchPersistence(
 		RecentLayoutSetBranchPersistence recentLayoutSetBranchPersistence) {
-		this.recentLayoutSetBranchPersistence = recentLayoutSetBranchPersistence;
+
+		this.recentLayoutSetBranchPersistence =
+			recentLayoutSetBranchPersistence;
 	}
 
 	/**
@@ -363,7 +402,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -373,7 +414,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -382,7 +425,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 *
 	 * @return the layout set branch local service
 	 */
-	public com.liferay.portal.kernel.service.LayoutSetBranchLocalService getLayoutSetBranchLocalService() {
+	public com.liferay.portal.kernel.service.LayoutSetBranchLocalService
+		getLayoutSetBranchLocalService() {
+
 		return layoutSetBranchLocalService;
 	}
 
@@ -392,7 +437,9 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 * @param layoutSetBranchLocalService the layout set branch local service
 	 */
 	public void setLayoutSetBranchLocalService(
-		com.liferay.portal.kernel.service.LayoutSetBranchLocalService layoutSetBranchLocalService) {
+		com.liferay.portal.kernel.service.LayoutSetBranchLocalService
+			layoutSetBranchLocalService) {
+
 		this.layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}
 
@@ -412,11 +459,13 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	public void setLayoutSetBranchPersistence(
 		LayoutSetBranchPersistence layoutSetBranchPersistence) {
+
 		this.layoutSetBranchPersistence = layoutSetBranchPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.RecentLayoutSetBranch",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.RecentLayoutSetBranch",
 			recentLayoutSetBranchLocalService);
 	}
 
@@ -450,15 +499,16 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = recentLayoutSetBranchPersistence.getDataSource();
+			DataSource dataSource =
+				recentLayoutSetBranchPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -468,15 +518,29 @@ public abstract class RecentLayoutSetBranchLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = RecentLayoutSetBranchLocalService.class)
-	protected RecentLayoutSetBranchLocalService recentLayoutSetBranchLocalService;
+	protected RecentLayoutSetBranchLocalService
+		recentLayoutSetBranchLocalService;
+
 	@BeanReference(type = RecentLayoutSetBranchPersistence.class)
 	protected RecentLayoutSetBranchPersistence recentLayoutSetBranchPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.LayoutSetBranchLocalService.class)
-	protected com.liferay.portal.kernel.service.LayoutSetBranchLocalService layoutSetBranchLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.LayoutSetBranchLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.LayoutSetBranchLocalService
+		layoutSetBranchLocalService;
+
 	@BeanReference(type = LayoutSetBranchPersistence.class)
 	protected LayoutSetBranchPersistence layoutSetBranchPersistence;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

@@ -34,6 +34,7 @@ import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
 @ProviderType
 public abstract class SocialActivitySetBaseImpl
 	extends SocialActivitySetModelImpl implements SocialActivitySet {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SocialActivitySetBaseImpl
 			SocialActivitySetLocalServiceUtil.updateSocialActivitySet(this);
 		}
 	}
+
 }

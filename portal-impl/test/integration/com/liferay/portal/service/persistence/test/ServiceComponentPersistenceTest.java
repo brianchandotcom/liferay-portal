@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -53,14 +46,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ServiceComponentPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -100,7 +102,8 @@ public class ServiceComponentPersistenceTest {
 
 		_persistence.remove(newServiceComponent);
 
-		ServiceComponent existingServiceComponent = _persistence.fetchByPrimaryKey(newServiceComponent.getPrimaryKey());
+		ServiceComponent existingServiceComponent =
+			_persistence.fetchByPrimaryKey(newServiceComponent.getPrimaryKey());
 
 		Assert.assertNull(existingServiceComponent);
 	}
@@ -128,20 +131,26 @@ public class ServiceComponentPersistenceTest {
 
 		_serviceComponents.add(_persistence.update(newServiceComponent));
 
-		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
+		ServiceComponent existingServiceComponent =
+			_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		Assert.assertEquals(existingServiceComponent.getMvccVersion(),
+		Assert.assertEquals(
+			existingServiceComponent.getMvccVersion(),
 			newServiceComponent.getMvccVersion());
-		Assert.assertEquals(existingServiceComponent.getServiceComponentId(),
+		Assert.assertEquals(
+			existingServiceComponent.getServiceComponentId(),
 			newServiceComponent.getServiceComponentId());
-		Assert.assertEquals(existingServiceComponent.getBuildNamespace(),
+		Assert.assertEquals(
+			existingServiceComponent.getBuildNamespace(),
 			newServiceComponent.getBuildNamespace());
-		Assert.assertEquals(existingServiceComponent.getBuildNumber(),
+		Assert.assertEquals(
+			existingServiceComponent.getBuildNumber(),
 			newServiceComponent.getBuildNumber());
-		Assert.assertEquals(existingServiceComponent.getBuildDate(),
+		Assert.assertEquals(
+			existingServiceComponent.getBuildDate(),
 			newServiceComponent.getBuildDate());
-		Assert.assertEquals(existingServiceComponent.getData(),
-			newServiceComponent.getData());
+		Assert.assertEquals(
+			existingServiceComponent.getData(), newServiceComponent.getData());
 	}
 
 	@Test
@@ -166,7 +175,8 @@ public class ServiceComponentPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
-		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
+		ServiceComponent existingServiceComponent =
+			_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
 		Assert.assertEquals(existingServiceComponent, newServiceComponent);
 	}
@@ -180,21 +190,22 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<ServiceComponent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ServiceComponent",
-			"mvccVersion", true, "serviceComponentId", true, "buildNamespace",
-			true, "buildNumber", true, "buildDate", true);
+		return OrderByComparatorFactoryUtil.create(
+			"ServiceComponent", "mvccVersion", true, "serviceComponentId", true,
+			"buildNamespace", true, "buildNumber", true, "buildDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
-		ServiceComponent existingServiceComponent = _persistence.fetchByPrimaryKey(newServiceComponent.getPrimaryKey());
+		ServiceComponent existingServiceComponent =
+			_persistence.fetchByPrimaryKey(newServiceComponent.getPrimaryKey());
 
 		Assert.assertEquals(existingServiceComponent, newServiceComponent);
 	}
@@ -203,7 +214,8 @@ public class ServiceComponentPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		ServiceComponent missingServiceComponent = _persistence.fetchByPrimaryKey(pk);
+		ServiceComponent missingServiceComponent =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingServiceComponent);
 	}
@@ -211,6 +223,7 @@ public class ServiceComponentPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		ServiceComponent newServiceComponent1 = addServiceComponent();
 		ServiceComponent newServiceComponent2 = addServiceComponent();
 
@@ -219,18 +232,22 @@ public class ServiceComponentPersistenceTest {
 		primaryKeys.add(newServiceComponent1.getPrimaryKey());
 		primaryKeys.add(newServiceComponent2.getPrimaryKey());
 
-		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ServiceComponent> serviceComponents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, serviceComponents.size());
-		Assert.assertEquals(newServiceComponent1,
+		Assert.assertEquals(
+			newServiceComponent1,
 			serviceComponents.get(newServiceComponent1.getPrimaryKey()));
-		Assert.assertEquals(newServiceComponent2,
+		Assert.assertEquals(
+			newServiceComponent2,
 			serviceComponents.get(newServiceComponent2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -240,7 +257,8 @@ public class ServiceComponentPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ServiceComponent> serviceComponents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(serviceComponents.isEmpty());
 	}
@@ -248,6 +266,7 @@ public class ServiceComponentPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		long pk = RandomTestUtil.nextLong();
@@ -257,36 +276,39 @@ public class ServiceComponentPersistenceTest {
 		primaryKeys.add(newServiceComponent.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ServiceComponent> serviceComponents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, serviceComponents.size());
-		Assert.assertEquals(newServiceComponent,
+		Assert.assertEquals(
+			newServiceComponent,
 			serviceComponents.get(newServiceComponent.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ServiceComponent> serviceComponents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(serviceComponents.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newServiceComponent.getPrimaryKey());
 
-		Map<Serializable, ServiceComponent> serviceComponents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ServiceComponent> serviceComponents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, serviceComponents.size());
-		Assert.assertEquals(newServiceComponent,
+		Assert.assertEquals(
+			newServiceComponent,
 			serviceComponents.get(newServiceComponent.getPrimaryKey()));
 	}
 
@@ -294,15 +316,19 @@ public class ServiceComponentPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ServiceComponentLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ServiceComponentLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ServiceComponent>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ServiceComponent>() {
+
 				@Override
 				public void performAction(ServiceComponent serviceComponent) {
 					Assert.assertNotNull(serviceComponent);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -311,17 +337,19 @@ public class ServiceComponentPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ServiceComponent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"serviceComponentId",
 				newServiceComponent.getServiceComponentId()));
 
-		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ServiceComponent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -332,32 +360,35 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ServiceComponent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"serviceComponentId", RandomTestUtil.nextLong()));
 
-		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ServiceComponent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ServiceComponent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"serviceComponentId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("serviceComponentId"));
 
-		Object newServiceComponentId = newServiceComponent.getServiceComponentId();
+		Object newServiceComponentId =
+			newServiceComponent.getServiceComponentId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("serviceComponentId",
-				new Object[] { newServiceComponentId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"serviceComponentId", new Object[] {newServiceComponentId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -370,14 +401,16 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ServiceComponent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"serviceComponentId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("serviceComponentId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("serviceComponentId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"serviceComponentId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -390,16 +423,20 @@ public class ServiceComponentPersistenceTest {
 
 		_persistence.clearCache();
 
-		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
+		ServiceComponent existingServiceComponent =
+			_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingServiceComponent.getBuildNamespace(),
-				ReflectionTestUtil.invoke(existingServiceComponent,
-					"getOriginalBuildNamespace", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(
-				existingServiceComponent.getBuildNumber()),
-			ReflectionTestUtil.<Long>invoke(existingServiceComponent,
-				"getOriginalBuildNumber", new Class<?>[0]));
+				ReflectionTestUtil.invoke(
+					existingServiceComponent, "getOriginalBuildNamespace",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingServiceComponent.getBuildNumber()),
+			ReflectionTestUtil.<Long>invoke(
+				existingServiceComponent, "getOriginalBuildNumber",
+				new Class<?>[0]));
 	}
 
 	protected ServiceComponent addServiceComponent() throws Exception {
@@ -422,7 +459,9 @@ public class ServiceComponentPersistenceTest {
 		return serviceComponent;
 	}
 
-	private List<ServiceComponent> _serviceComponents = new ArrayList<ServiceComponent>();
+	private List<ServiceComponent> _serviceComponents =
+		new ArrayList<ServiceComponent>();
 	private ServiceComponentPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

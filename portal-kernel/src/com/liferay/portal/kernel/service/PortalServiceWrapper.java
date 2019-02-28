@@ -24,8 +24,9 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class PortalServiceWrapper implements PortalService,
-	ServiceWrapper<PortalService> {
+public class PortalServiceWrapper
+	implements PortalService, ServiceWrapper<PortalService> {
+
 	public PortalServiceWrapper(PortalService portalService) {
 		_portalService = portalService;
 	}
@@ -41,10 +42,10 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _portalService.getOSGiServiceIdentifier();
@@ -68,19 +69,27 @@ public class PortalServiceWrapper implements PortalService,
 	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
 		String transactionPortletBarText) {
-		_portalService.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
+
+		_portalService.
+			testAddClassNameAndTestTransactionPortletBar_PortalRollback(
+				transactionPortletBarText);
 	}
 
 	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
 		String transactionPortletBarText) {
-		_portalService.testAddClassNameAndTestTransactionPortletBar_PortletRollback(transactionPortletBarText);
+
+		_portalService.
+			testAddClassNameAndTestTransactionPortletBar_PortletRollback(
+				transactionPortletBarText);
 	}
 
 	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
 		String transactionPortletBarText) {
-		_portalService.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
+
+		_portalService.testAddClassNameAndTestTransactionPortletBar_Success(
+			transactionPortletBarText);
 	}
 
 	@Override
@@ -91,6 +100,7 @@ public class PortalServiceWrapper implements PortalService,
 	@Override
 	public void testDeleteClassName()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_portalService.testDeleteClassName();
 	}
 
@@ -120,4 +130,5 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	private PortalService _portalService;
+
 }

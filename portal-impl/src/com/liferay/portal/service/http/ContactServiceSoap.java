@@ -63,13 +63,18 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ContactServiceSoap {
-	public static com.liferay.portal.kernel.model.ContactSoap[] getCompanyContacts(
-		long companyId, int start, int end) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Contact> returnValue = ContactServiceUtil.getCompanyContacts(companyId,
-					start, end);
 
-			return com.liferay.portal.kernel.model.ContactSoap.toSoapModels(returnValue);
+	public static com.liferay.portal.kernel.model.ContactSoap[]
+			getCompanyContacts(long companyId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Contact>
+				returnValue = ContactServiceUtil.getCompanyContacts(
+					companyId, start, end);
+
+			return com.liferay.portal.kernel.model.ContactSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,8 +85,10 @@ public class ContactServiceSoap {
 
 	public static int getCompanyContactsCount(long companyId)
 		throws RemoteException {
+
 		try {
-			int returnValue = ContactServiceUtil.getCompanyContactsCount(companyId);
+			int returnValue = ContactServiceUtil.getCompanyContactsCount(
+				companyId);
 
 			return returnValue;
 		}
@@ -93,11 +100,15 @@ public class ContactServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.ContactSoap getContact(
-		long contactId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Contact returnValue = ContactServiceUtil.getContact(contactId);
+			long contactId)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.ContactSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Contact returnValue =
+				ContactServiceUtil.getContact(contactId);
+
+			return com.liferay.portal.kernel.model.ContactSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -107,14 +118,18 @@ public class ContactServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.ContactSoap[] getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
+			long classNameId, long classPK, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.Contact> orderByComparator)
 		throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Contact> returnValue = ContactServiceUtil.getContacts(classNameId,
-					classPK, start, end, orderByComparator);
 
-			return com.liferay.portal.kernel.model.ContactSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Contact>
+				returnValue = ContactServiceUtil.getContacts(
+					classNameId, classPK, start, end, orderByComparator);
+
+			return com.liferay.portal.kernel.model.ContactSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -125,9 +140,10 @@ public class ContactServiceSoap {
 
 	public static int getContactsCount(long classNameId, long classPK)
 		throws RemoteException {
+
 		try {
-			int returnValue = ContactServiceUtil.getContactsCount(classNameId,
-					classPK);
+			int returnValue = ContactServiceUtil.getContactsCount(
+				classNameId, classPK);
 
 			return returnValue;
 		}
@@ -139,4 +155,5 @@ public class ContactServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ContactServiceSoap.class);
+
 }

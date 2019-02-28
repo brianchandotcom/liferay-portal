@@ -16,7 +16,6 @@ package com.liferay.portlet.exportimport.service.persistence.impl;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +27,9 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class ExportImportConfigurationFinderBaseImpl extends BasePersistenceImpl<ExportImportConfiguration> {
+public class ExportImportConfigurationFinderBaseImpl
+	extends BasePersistenceImpl<ExportImportConfiguration> {
+
 	public ExportImportConfigurationFinderBaseImpl() {
 		setModelClass(ExportImportConfiguration.class);
 	}
@@ -43,7 +44,9 @@ public class ExportImportConfigurationFinderBaseImpl extends BasePersistenceImpl
 	 *
 	 * @return the export import configuration persistence
 	 */
-	public ExportImportConfigurationPersistence getExportImportConfigurationPersistence() {
+	public ExportImportConfigurationPersistence
+		getExportImportConfigurationPersistence() {
+
 		return exportImportConfigurationPersistence;
 	}
 
@@ -53,11 +56,18 @@ public class ExportImportConfigurationFinderBaseImpl extends BasePersistenceImpl
 	 * @param exportImportConfigurationPersistence the export import configuration persistence
 	 */
 	public void setExportImportConfigurationPersistence(
-		ExportImportConfigurationPersistence exportImportConfigurationPersistence) {
-		this.exportImportConfigurationPersistence = exportImportConfigurationPersistence;
+		ExportImportConfigurationPersistence
+			exportImportConfigurationPersistence) {
+
+		this.exportImportConfigurationPersistence =
+			exportImportConfigurationPersistence;
 	}
 
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
-	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(ExportImportConfigurationFinderBaseImpl.class);
+	protected ExportImportConfigurationPersistence
+		exportImportConfigurationPersistence;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportConfigurationFinderBaseImpl.class);
+
 }

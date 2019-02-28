@@ -47,10 +47,13 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface UserGroupGroupRoleLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface UserGroupGroupRoleLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,70 +61,71 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the user group group role to the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroupGroupRole the user group group role
-	* @return the user group group role that was added
-	*/
+	 * Adds the user group group role to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupGroupRole the user group group role
+	 * @return the user group group role that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroupGroupRole addUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole);
 
-	public void addUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds);
+	public void addUserGroupGroupRoles(
+		long userGroupId, long groupId, long[] roleIds);
 
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId);
+	public void addUserGroupGroupRoles(
+		long[] userGroupIds, long groupId, long roleId);
 
 	/**
-	* Creates a new user group group role with the primary key. Does not add the user group group role to the database.
-	*
-	* @param userGroupGroupRolePK the primary key for the new user group group role
-	* @return the new user group group role
-	*/
+	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
+	 *
+	 * @param userGroupGroupRolePK the primary key for the new user group group role
+	 * @return the new user group group role
+	 */
 	@Transactional(enabled = false)
 	public UserGroupGroupRole createUserGroupGroupRole(
 		UserGroupGroupRolePK userGroupGroupRolePK);
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	* Deletes the user group group role from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroupGroupRole the user group group role
-	* @return the user group group role that was removed
-	*/
+	 * Deletes the user group group role from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupGroupRole the user group group role
+	 * @return the user group group role that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public UserGroupGroupRole deleteUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole);
 
 	/**
-	* Deletes the user group group role with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroupGroupRolePK the primary key of the user group group role
-	* @return the user group group role that was removed
-	* @throws PortalException if a user group group role with the primary key could not be found
-	*/
+	 * Deletes the user group group role with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @return the user group group role that was removed
+	 * @throws PortalException if a user group group role with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public UserGroupGroupRole deleteUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK) throws PortalException;
+			UserGroupGroupRolePK userGroupGroupRolePK)
+		throws PortalException;
 
 	public void deleteUserGroupGroupRoles(long groupId, int roleType);
 
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds);
+	public void deleteUserGroupGroupRoles(
+		long userGroupId, long groupId, long[] roleIds);
 
 	public void deleteUserGroupGroupRoles(long userGroupId, long[] groupIds);
 
 	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
 
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId);
+	public void deleteUserGroupGroupRoles(
+		long[] userGroupIds, long groupId, long roleId);
 
 	public void deleteUserGroupGroupRolesByGroupId(long groupId);
 
@@ -133,66 +137,67 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroupGroupRole fetchUserGroupGroupRole(
@@ -205,10 +210,10 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -217,27 +222,28 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the user group group role with the primary key.
-	*
-	* @param userGroupGroupRolePK the primary key of the user group group role
-	* @return the user group group role
-	* @throws PortalException if a user group group role with the primary key could not be found
-	*/
+	 * Returns the user group group role with the primary key.
+	 *
+	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @return the user group group role
+	 * @throws PortalException if a user group group role with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroupGroupRole getUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK) throws PortalException;
+			UserGroupGroupRolePK userGroupGroupRolePK)
+		throws PortalException;
 
 	/**
-	* Returns a range of all the user group group roles.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of user group group roles
-	* @param end the upper bound of the range of user group group roles (not inclusive)
-	* @return the range of user group group roles
-	*/
+	 * Returns a range of all the user group group roles.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of user group group roles
+	 * @param end the upper bound of the range of user group group roles (not inclusive)
+	 * @return the range of user group group roles
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroupGroupRole> getUserGroupGroupRoles(int start, int end);
 
@@ -245,8 +251,8 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public List<UserGroupGroupRole> getUserGroupGroupRoles(long userGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroupGroupRole> getUserGroupGroupRoles(long userGroupId,
-		long groupId);
+	public List<UserGroupGroupRole> getUserGroupGroupRoles(
+		long userGroupId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroupGroupRole> getUserGroupGroupRolesByGroupAndRole(
@@ -256,32 +262,34 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(long userId,
-		long groupId);
+	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(
+		long userId, long groupId);
 
 	/**
-	* Returns the number of user group group roles.
-	*
-	* @return the number of user group group roles
-	*/
+	 * Returns the number of user group group roles.
+	 *
+	 * @return the number of user group group roles
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupGroupRolesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		long roleId);
+	public boolean hasUserGroupGroupRole(
+		long userGroupId, long groupId, long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		String roleName) throws PortalException;
+	public boolean hasUserGroupGroupRole(
+			long userGroupId, long groupId, String roleName)
+		throws PortalException;
 
 	/**
-	* Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userGroupGroupRole the user group group role
-	* @return the user group group role that was updated
-	*/
+	 * Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupGroupRole the user group group role
+	 * @return the user group group role that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroupGroupRole updateUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole);
+
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
-
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.PowwowMeetingService;
 import com.liferay.powwow.service.persistence.PowwowMeetingFinder;
@@ -46,8 +45,10 @@ import javax.sql.DataSource;
  * @see com.liferay.powwow.service.impl.PowwowMeetingServiceImpl
  * @generated
  */
-public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
+public abstract class PowwowMeetingServiceBaseImpl
+	extends BaseServiceImpl
 	implements PowwowMeetingService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,7 +60,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the powwow meeting local service
 	 */
-	public com.liferay.powwow.service.PowwowMeetingLocalService getPowwowMeetingLocalService() {
+	public com.liferay.powwow.service.PowwowMeetingLocalService
+		getPowwowMeetingLocalService() {
+
 		return powwowMeetingLocalService;
 	}
 
@@ -69,7 +72,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param powwowMeetingLocalService the powwow meeting local service
 	 */
 	public void setPowwowMeetingLocalService(
-		com.liferay.powwow.service.PowwowMeetingLocalService powwowMeetingLocalService) {
+		com.liferay.powwow.service.PowwowMeetingLocalService
+			powwowMeetingLocalService) {
+
 		this.powwowMeetingLocalService = powwowMeetingLocalService;
 	}
 
@@ -89,6 +94,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setPowwowMeetingService(
 		PowwowMeetingService powwowMeetingService) {
+
 		this.powwowMeetingService = powwowMeetingService;
 	}
 
@@ -108,6 +114,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setPowwowMeetingPersistence(
 		PowwowMeetingPersistence powwowMeetingPersistence) {
+
 		this.powwowMeetingPersistence = powwowMeetingPersistence;
 	}
 
@@ -125,7 +132,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param powwowMeetingFinder the powwow meeting finder
 	 */
-	public void setPowwowMeetingFinder(PowwowMeetingFinder powwowMeetingFinder) {
+	public void setPowwowMeetingFinder(
+		PowwowMeetingFinder powwowMeetingFinder) {
+
 		this.powwowMeetingFinder = powwowMeetingFinder;
 	}
 
@@ -134,7 +143,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the powwow participant local service
 	 */
-	public com.liferay.powwow.service.PowwowParticipantLocalService getPowwowParticipantLocalService() {
+	public com.liferay.powwow.service.PowwowParticipantLocalService
+		getPowwowParticipantLocalService() {
+
 		return powwowParticipantLocalService;
 	}
 
@@ -144,7 +155,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param powwowParticipantLocalService the powwow participant local service
 	 */
 	public void setPowwowParticipantLocalService(
-		com.liferay.powwow.service.PowwowParticipantLocalService powwowParticipantLocalService) {
+		com.liferay.powwow.service.PowwowParticipantLocalService
+			powwowParticipantLocalService) {
+
 		this.powwowParticipantLocalService = powwowParticipantLocalService;
 	}
 
@@ -153,7 +166,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the powwow participant remote service
 	 */
-	public com.liferay.powwow.service.PowwowParticipantService getPowwowParticipantService() {
+	public com.liferay.powwow.service.PowwowParticipantService
+		getPowwowParticipantService() {
+
 		return powwowParticipantService;
 	}
 
@@ -163,7 +178,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param powwowParticipantService the powwow participant remote service
 	 */
 	public void setPowwowParticipantService(
-		com.liferay.powwow.service.PowwowParticipantService powwowParticipantService) {
+		com.liferay.powwow.service.PowwowParticipantService
+			powwowParticipantService) {
+
 		this.powwowParticipantService = powwowParticipantService;
 	}
 
@@ -183,6 +200,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setPowwowParticipantPersistence(
 		PowwowParticipantPersistence powwowParticipantPersistence) {
+
 		this.powwowParticipantPersistence = powwowParticipantPersistence;
 	}
 
@@ -191,7 +209,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the powwow server local service
 	 */
-	public com.liferay.powwow.service.PowwowServerLocalService getPowwowServerLocalService() {
+	public com.liferay.powwow.service.PowwowServerLocalService
+		getPowwowServerLocalService() {
+
 		return powwowServerLocalService;
 	}
 
@@ -201,7 +221,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param powwowServerLocalService the powwow server local service
 	 */
 	public void setPowwowServerLocalService(
-		com.liferay.powwow.service.PowwowServerLocalService powwowServerLocalService) {
+		com.liferay.powwow.service.PowwowServerLocalService
+			powwowServerLocalService) {
+
 		this.powwowServerLocalService = powwowServerLocalService;
 	}
 
@@ -221,6 +243,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setPowwowServerPersistence(
 		PowwowServerPersistence powwowServerPersistence) {
+
 		this.powwowServerPersistence = powwowServerPersistence;
 	}
 
@@ -229,7 +252,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -239,7 +264,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -248,7 +275,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -258,7 +287,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -267,7 +298,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameService getClassNameService() {
+	public com.liferay.portal.kernel.service.ClassNameService
+		getClassNameService() {
+
 		return classNameService;
 	}
 
@@ -278,6 +311,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setClassNameService(
 		com.liferay.portal.kernel.service.ClassNameService classNameService) {
+
 		this.classNameService = classNameService;
 	}
 
@@ -297,6 +331,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -305,7 +340,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -315,7 +352,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -324,7 +363,9 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -335,6 +376,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -354,6 +396,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setUserService(
 		com.liferay.portal.kernel.service.UserService userService) {
+
 		this.userService = userService;
 	}
 
@@ -413,8 +456,8 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -423,38 +466,82 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.powwow.service.PowwowMeetingLocalService.class)
-	protected com.liferay.powwow.service.PowwowMeetingLocalService powwowMeetingLocalService;
+	@BeanReference(
+		type = com.liferay.powwow.service.PowwowMeetingLocalService.class
+	)
+	protected com.liferay.powwow.service.PowwowMeetingLocalService
+		powwowMeetingLocalService;
+
 	@BeanReference(type = PowwowMeetingService.class)
 	protected PowwowMeetingService powwowMeetingService;
+
 	@BeanReference(type = PowwowMeetingPersistence.class)
 	protected PowwowMeetingPersistence powwowMeetingPersistence;
+
 	@BeanReference(type = PowwowMeetingFinder.class)
 	protected PowwowMeetingFinder powwowMeetingFinder;
-	@BeanReference(type = com.liferay.powwow.service.PowwowParticipantLocalService.class)
-	protected com.liferay.powwow.service.PowwowParticipantLocalService powwowParticipantLocalService;
-	@BeanReference(type = com.liferay.powwow.service.PowwowParticipantService.class)
-	protected com.liferay.powwow.service.PowwowParticipantService powwowParticipantService;
+
+	@BeanReference(
+		type = com.liferay.powwow.service.PowwowParticipantLocalService.class
+	)
+	protected com.liferay.powwow.service.PowwowParticipantLocalService
+		powwowParticipantLocalService;
+
+	@BeanReference(
+		type = com.liferay.powwow.service.PowwowParticipantService.class
+	)
+	protected com.liferay.powwow.service.PowwowParticipantService
+		powwowParticipantService;
+
 	@BeanReference(type = PowwowParticipantPersistence.class)
 	protected PowwowParticipantPersistence powwowParticipantPersistence;
-	@BeanReference(type = com.liferay.powwow.service.PowwowServerLocalService.class)
-	protected com.liferay.powwow.service.PowwowServerLocalService powwowServerLocalService;
+
+	@BeanReference(
+		type = com.liferay.powwow.service.PowwowServerLocalService.class
+	)
+	protected com.liferay.powwow.service.PowwowServerLocalService
+		powwowServerLocalService;
+
 	@BeanReference(type = PowwowServerPersistence.class)
 	protected PowwowServerPersistence powwowServerPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
-	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameService
+		classNameService;
+
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
+
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
 }

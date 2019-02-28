@@ -29,7 +29,10 @@ import java.util.List;
  */
 @ProviderType
 public class SocialActivityLimitSoap implements Serializable {
-	public static SocialActivityLimitSoap toSoapModel(SocialActivityLimit model) {
+
+	public static SocialActivityLimitSoap toSoapModel(
+		SocialActivityLimit model) {
+
 		SocialActivityLimitSoap soapModel = new SocialActivityLimitSoap();
 
 		soapModel.setActivityLimitId(model.getActivityLimitId());
@@ -47,7 +50,9 @@ public class SocialActivityLimitSoap implements Serializable {
 
 	public static SocialActivityLimitSoap[] toSoapModels(
 		SocialActivityLimit[] models) {
-		SocialActivityLimitSoap[] soapModels = new SocialActivityLimitSoap[models.length];
+
+		SocialActivityLimitSoap[] soapModels =
+			new SocialActivityLimitSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,10 +63,12 @@ public class SocialActivityLimitSoap implements Serializable {
 
 	public static SocialActivityLimitSoap[][] toSoapModels(
 		SocialActivityLimit[][] models) {
+
 		SocialActivityLimitSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SocialActivityLimitSoap[models.length][models[0].length];
+			soapModels =
+				new SocialActivityLimitSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SocialActivityLimitSoap[0][0];
@@ -76,13 +83,16 @@ public class SocialActivityLimitSoap implements Serializable {
 
 	public static SocialActivityLimitSoap[] toSoapModels(
 		List<SocialActivityLimit> models) {
-		List<SocialActivityLimitSoap> soapModels = new ArrayList<SocialActivityLimitSoap>(models.size());
+
+		List<SocialActivityLimitSoap> soapModels =
+			new ArrayList<SocialActivityLimitSoap>(models.size());
 
 		for (SocialActivityLimit model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SocialActivityLimitSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new SocialActivityLimitSoap[soapModels.size()]);
 	}
 
 	public SocialActivityLimitSoap() {
@@ -177,4 +187,5 @@ public class SocialActivityLimitSoap implements Serializable {
 	private int _activityType;
 	private String _activityCounterName;
 	private String _value;
+
 }

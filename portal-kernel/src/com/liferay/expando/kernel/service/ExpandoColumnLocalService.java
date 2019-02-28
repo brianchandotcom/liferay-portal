@@ -17,7 +17,6 @@ package com.liferay.expando.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -50,10 +49,13 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface ExpandoColumnLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface ExpandoColumnLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -62,24 +64,25 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public ExpandoColumn addColumn(long tableId, String name, int type)
 		throws PortalException;
 
-	public ExpandoColumn addColumn(long tableId, String name, int type,
-		Object defaultData) throws PortalException;
+	public ExpandoColumn addColumn(
+			long tableId, String name, int type, Object defaultData)
+		throws PortalException;
 
 	/**
-	* Adds the expando column to the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was added
-	*/
+	 * Adds the expando column to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoColumn the expando column
+	 * @return the expando column that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ExpandoColumn addExpandoColumn(ExpandoColumn expandoColumn);
 
 	/**
-	* Creates a new expando column with the primary key. Does not add the expando column to the database.
-	*
-	* @param columnId the primary key for the new expando column
-	* @return the new expando column
-	*/
+	 * Creates a new expando column with the primary key. Does not add the expando column to the database.
+	 *
+	 * @param columnId the primary key for the new expando column
+	 * @return the new expando column
+	 */
 	@Transactional(enabled = false)
 	public ExpandoColumn createExpandoColumn(long columnId);
 
@@ -87,45 +90,49 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 
 	public void deleteColumn(long columnId) throws PortalException;
 
-	public void deleteColumn(long companyId, long classNameId,
-		String tableName, String name) throws PortalException;
+	public void deleteColumn(
+			long companyId, long classNameId, String tableName, String name)
+		throws PortalException;
 
 	public void deleteColumn(long tableId, String name);
 
-	public void deleteColumn(long companyId, String className,
-		String tableName, String name) throws PortalException;
+	public void deleteColumn(
+			long companyId, String className, String tableName, String name)
+		throws PortalException;
 
 	public void deleteColumns(long tableId);
 
-	public void deleteColumns(long companyId, long classNameId, String tableName)
+	public void deleteColumns(
+			long companyId, long classNameId, String tableName)
 		throws PortalException;
 
-	public void deleteColumns(long companyId, String className, String tableName)
+	public void deleteColumns(
+			long companyId, String className, String tableName)
 		throws PortalException;
 
 	/**
-	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was removed
-	*/
+	 * Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoColumn the expando column
+	 * @return the expando column that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ExpandoColumn deleteExpandoColumn(ExpandoColumn expandoColumn);
 
 	/**
-	* Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param columnId the primary key of the expando column
-	* @return the expando column that was removed
-	* @throws PortalException if a expando column with the primary key could not be found
-	*/
+	 * Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param columnId the primary key of the expando column
+	 * @return the expando column that was removed
+	 * @throws PortalException if a expando column with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ExpandoColumn deleteExpandoColumn(long columnId)
 		throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -134,66 +141,67 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn fetchExpandoColumn(long columnId);
@@ -205,64 +213,67 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public ExpandoColumn getColumn(long columnId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long companyId, long classNameId,
-		String tableName, String name);
+	public ExpandoColumn getColumn(
+		long companyId, long classNameId, String tableName, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn getColumn(long tableId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long companyId, String className,
-		String tableName, String name);
+	public ExpandoColumn getColumn(
+		long companyId, String className, String tableName, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getColumns(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long tableId, Collection<String> names);
+	public List<ExpandoColumn> getColumns(
+		long tableId, Collection<String> names);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long companyId, long classNameId,
-		String tableName);
+	public List<ExpandoColumn> getColumns(
+		long companyId, long classNameId, String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long companyId, long classNameId,
-		String tableName, Collection<String> names);
+	public List<ExpandoColumn> getColumns(
+		long companyId, long classNameId, String tableName,
+		Collection<String> names);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long companyId, String className,
-		String tableName);
+	public List<ExpandoColumn> getColumns(
+		long companyId, String className, String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long companyId, String className,
-		String tableName, Collection<String> columnNames);
+	public List<ExpandoColumn> getColumns(
+		long companyId, String className, String tableName,
+		Collection<String> columnNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnsCount(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long companyId, long classNameId,
-		String tableName);
+	public int getColumnsCount(
+		long companyId, long classNameId, String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long companyId, String className,
-		String tableName);
+	public int getColumnsCount(
+		long companyId, String className, String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getDefaultTableColumn(long companyId,
-		long classNameId, String name);
+	public ExpandoColumn getDefaultTableColumn(
+		long companyId, long classNameId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getDefaultTableColumn(long companyId,
-		String className, String name);
+	public ExpandoColumn getDefaultTableColumn(
+		long companyId, String className, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
-		long classNameId);
+	public List<ExpandoColumn> getDefaultTableColumns(
+		long companyId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
-		String className);
+	public List<ExpandoColumn> getDefaultTableColumns(
+		long companyId, String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableColumnsCount(long companyId, long classNameId);
@@ -271,35 +282,34 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public int getDefaultTableColumnsCount(long companyId, String className);
 
 	/**
-	* Returns the expando column with the primary key.
-	*
-	* @param columnId the primary key of the expando column
-	* @return the expando column
-	* @throws PortalException if a expando column with the primary key could not be found
-	*/
+	 * Returns the expando column with the primary key.
+	 *
+	 * @param columnId the primary key of the expando column
+	 * @return the expando column
+	 * @throws PortalException if a expando column with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getExpandoColumn(long columnId)
-		throws PortalException;
+	public ExpandoColumn getExpandoColumn(long columnId) throws PortalException;
 
 	/**
-	* Returns a range of all the expando columns.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of expando columns
-	* @param end the upper bound of the range of expando columns (not inclusive)
-	* @return the range of expando columns
-	*/
+	 * Returns a range of all the expando columns.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @return the range of expando columns
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getExpandoColumns(int start, int end);
 
 	/**
-	* Returns the number of expando columns.
-	*
-	* @return the number of expando columns
-	*/
+	 * Returns the number of expando columns.
+	 *
+	 * @return the number of expando columns
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExpandoColumnsCount();
 
@@ -307,10 +317,10 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -321,18 +331,20 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws PortalException;
 
-	public ExpandoColumn updateColumn(long columnId, String name, int type,
-		Object defaultData) throws PortalException;
+	public ExpandoColumn updateColumn(
+			long columnId, String name, int type, Object defaultData)
+		throws PortalException;
 
 	/**
-	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was updated
-	*/
+	 * Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoColumn the expando column
+	 * @return the expando column that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ExpandoColumn updateExpandoColumn(ExpandoColumn expandoColumn);
 
 	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
 		throws PortalException;
+
 }

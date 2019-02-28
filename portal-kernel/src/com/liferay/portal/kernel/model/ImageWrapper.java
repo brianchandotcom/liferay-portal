@@ -32,8 +32,9 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
-	ModelWrapper<Image> {
+public class ImageWrapper
+	extends BaseModelWrapper<Image> implements Image, ModelWrapper<Image> {
+
 	public ImageWrapper(Image image) {
 		super(image);
 	}
@@ -106,70 +107,70 @@ public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
 	}
 
 	/**
-	* Returns the company ID of this image.
-	*
-	* @return the company ID of this image
-	*/
+	 * Returns the company ID of this image.
+	 *
+	 * @return the company ID of this image
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the height of this image.
-	*
-	* @return the height of this image
-	*/
+	 * Returns the height of this image.
+	 *
+	 * @return the height of this image
+	 */
 	@Override
 	public int getHeight() {
 		return model.getHeight();
 	}
 
 	/**
-	* Returns the image ID of this image.
-	*
-	* @return the image ID of this image
-	*/
+	 * Returns the image ID of this image.
+	 *
+	 * @return the image ID of this image
+	 */
 	@Override
 	public long getImageId() {
 		return model.getImageId();
 	}
 
 	/**
-	* Returns the modified date of this image.
-	*
-	* @return the modified date of this image
-	*/
+	 * Returns the modified date of this image.
+	 *
+	 * @return the modified date of this image
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this image.
-	*
-	* @return the mvcc version of this image
-	*/
+	 * Returns the mvcc version of this image.
+	 *
+	 * @return the mvcc version of this image
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this image.
-	*
-	* @return the primary key of this image
-	*/
+	 * Returns the primary key of this image.
+	 *
+	 * @return the primary key of this image
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the size of this image.
-	*
-	* @return the size of this image
-	*/
+	 * Returns the size of this image.
+	 *
+	 * @return the size of this image
+	 */
 	@Override
 	public int getSize() {
 		return model.getSize();
@@ -181,20 +182,20 @@ public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
 	}
 
 	/**
-	* Returns the type of this image.
-	*
-	* @return the type of this image
-	*/
+	 * Returns the type of this image.
+	 *
+	 * @return the type of this image
+	 */
 	@Override
 	public String getType() {
 		return model.getType();
 	}
 
 	/**
-	* Returns the width of this image.
-	*
-	* @return the width of this image
-	*/
+	 * Returns the width of this image.
+	 *
+	 * @return the width of this image
+	 */
 	@Override
 	public int getWidth() {
 		return model.getWidth();
@@ -206,70 +207,70 @@ public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
 	}
 
 	/**
-	* Sets the company ID of this image.
-	*
-	* @param companyId the company ID of this image
-	*/
+	 * Sets the company ID of this image.
+	 *
+	 * @param companyId the company ID of this image
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the height of this image.
-	*
-	* @param height the height of this image
-	*/
+	 * Sets the height of this image.
+	 *
+	 * @param height the height of this image
+	 */
 	@Override
 	public void setHeight(int height) {
 		model.setHeight(height);
 	}
 
 	/**
-	* Sets the image ID of this image.
-	*
-	* @param imageId the image ID of this image
-	*/
+	 * Sets the image ID of this image.
+	 *
+	 * @param imageId the image ID of this image
+	 */
 	@Override
 	public void setImageId(long imageId) {
 		model.setImageId(imageId);
 	}
 
 	/**
-	* Sets the modified date of this image.
-	*
-	* @param modifiedDate the modified date of this image
-	*/
+	 * Sets the modified date of this image.
+	 *
+	 * @param modifiedDate the modified date of this image
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this image.
-	*
-	* @param mvccVersion the mvcc version of this image
-	*/
+	 * Sets the mvcc version of this image.
+	 *
+	 * @param mvccVersion the mvcc version of this image
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this image.
-	*
-	* @param primaryKey the primary key of this image
-	*/
+	 * Sets the primary key of this image.
+	 *
+	 * @param primaryKey the primary key of this image
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the size of this image.
-	*
-	* @param size the size of this image
-	*/
+	 * Sets the size of this image.
+	 *
+	 * @param size the size of this image
+	 */
 	@Override
 	public void setSize(int size) {
 		model.setSize(size);
@@ -281,20 +282,20 @@ public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
 	}
 
 	/**
-	* Sets the type of this image.
-	*
-	* @param type the type of this image
-	*/
+	 * Sets the type of this image.
+	 *
+	 * @param type the type of this image
+	 */
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	* Sets the width of this image.
-	*
-	* @param width the width of this image
-	*/
+	 * Sets the width of this image.
+	 *
+	 * @param width the width of this image
+	 */
 	@Override
 	public void setWidth(int width) {
 		model.setWidth(width);
@@ -304,4 +305,5 @@ public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
 	protected ImageWrapper wrap(Image image) {
 		return new ImageWrapper(image);
 	}
+
 }

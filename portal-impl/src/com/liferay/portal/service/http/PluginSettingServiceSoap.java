@@ -63,14 +63,20 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PluginSettingServiceSoap {
-	public static com.liferay.portal.kernel.model.PluginSettingSoap updatePluginSetting(
-		long companyId, String pluginId, String pluginType, String roles,
-		boolean active) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.PluginSetting returnValue = PluginSettingServiceUtil.updatePluginSetting(companyId,
-					pluginId, pluginType, roles, active);
 
-			return com.liferay.portal.kernel.model.PluginSettingSoap.toSoapModel(returnValue);
+	public static com.liferay.portal.kernel.model.PluginSettingSoap
+			updatePluginSetting(
+				long companyId, String pluginId, String pluginType,
+				String roles, boolean active)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.PluginSetting returnValue =
+				PluginSettingServiceUtil.updatePluginSetting(
+					companyId, pluginId, pluginType, roles, active);
+
+			return com.liferay.portal.kernel.model.PluginSettingSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -79,5 +85,7 @@ public class PluginSettingServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PluginSettingServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		PluginSettingServiceSoap.class);
+
 }

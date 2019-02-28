@@ -28,27 +28,33 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.MembershipRequestImpl")
 @ProviderType
-public interface MembershipRequest extends MembershipRequestModel, PersistedModel {
+public interface MembershipRequest
+	extends MembershipRequestModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.MembershipRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<MembershipRequest, Long> MEMBERSHIP_REQUEST_ID_ACCESSOR =
-		new Accessor<MembershipRequest, Long>() {
-			@Override
-			public Long get(MembershipRequest membershipRequest) {
-				return membershipRequest.getMembershipRequestId();
-			}
+	public static final Accessor<MembershipRequest, Long>
+		MEMBERSHIP_REQUEST_ID_ACCESSOR =
+			new Accessor<MembershipRequest, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(MembershipRequest membershipRequest) {
+					return membershipRequest.getMembershipRequestId();
+				}
 
-			@Override
-			public Class<MembershipRequest> getTypeClass() {
-				return MembershipRequest.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<MembershipRequest> getTypeClass() {
+					return MembershipRequest.class;
+				}
+
+			};
+
 }

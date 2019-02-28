@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
-	ShardedModel, StagedAuditedModel {
+public interface OrganizationModel
+	extends BaseModel<Organization>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -362,4 +364,5 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 * @param logoId the logo ID of this organization
 	 */
 	public void setLogoId(long logoId);
+
 }

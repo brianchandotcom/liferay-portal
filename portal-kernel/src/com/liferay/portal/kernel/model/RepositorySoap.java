@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class RepositorySoap implements Serializable {
+
 	public static RepositorySoap toSoapModel(Repository model) {
 		RepositorySoap soapModel = new RepositorySoap();
 
@@ -81,7 +82,8 @@ public class RepositorySoap implements Serializable {
 	}
 
 	public static RepositorySoap[] toSoapModels(List<Repository> models) {
-		List<RepositorySoap> soapModels = new ArrayList<RepositorySoap>(models.size());
+		List<RepositorySoap> soapModels = new ArrayList<RepositorySoap>(
+			models.size());
 
 		for (Repository model : models) {
 			soapModels.add(toSoapModel(model));
@@ -245,4 +247,5 @@ public class RepositorySoap implements Serializable {
 	private String _typeSettings;
 	private long _dlFolderId;
 	private Date _lastPublishDate;
+
 }

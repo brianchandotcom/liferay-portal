@@ -27,33 +27,40 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLFileEntryMetadataModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl"
+)
 @ProviderType
-public interface DLFileEntryMetadata extends DLFileEntryMetadataModel,
-	PersistedModel {
+public interface DLFileEntryMetadata
+	extends DLFileEntryMetadataModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DLFileEntryMetadata, Long> FILE_ENTRY_METADATA_ID_ACCESSOR =
-		new Accessor<DLFileEntryMetadata, Long>() {
-			@Override
-			public Long get(DLFileEntryMetadata dlFileEntryMetadata) {
-				return dlFileEntryMetadata.getFileEntryMetadataId();
-			}
+	public static final Accessor<DLFileEntryMetadata, Long>
+		FILE_ENTRY_METADATA_ID_ACCESSOR =
+			new Accessor<DLFileEntryMetadata, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(DLFileEntryMetadata dlFileEntryMetadata) {
+					return dlFileEntryMetadata.getFileEntryMetadataId();
+				}
 
-			@Override
-			public Class<DLFileEntryMetadata> getTypeClass() {
-				return DLFileEntryMetadata.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<DLFileEntryMetadata> getTypeClass() {
+					return DLFileEntryMetadata.class;
+				}
+
+			};
 
 	public DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class ResourcePermissionFinderBaseImpl extends BasePersistenceImpl<ResourcePermission> {
+public class ResourcePermissionFinderBaseImpl
+	extends BasePersistenceImpl<ResourcePermission> {
+
 	public ResourcePermissionFinderBaseImpl() {
 		setModelClass(ResourcePermission.class);
 	}
@@ -44,9 +46,11 @@ public class ResourcePermissionFinderBaseImpl extends BasePersistenceImpl<Resour
 	 */
 	public void setResourcePermissionPersistence(
 		ResourcePermissionPersistence resourcePermissionPersistence) {
+
 		this.resourcePermissionPersistence = resourcePermissionPersistence;
 	}
 
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
+
 }

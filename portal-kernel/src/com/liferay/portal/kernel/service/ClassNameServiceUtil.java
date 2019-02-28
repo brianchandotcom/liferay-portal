@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ClassNameServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,33 +41,37 @@ public class ClassNameServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
 		long classNameId) {
+
 		return getService().fetchByClassNameId(classNameId);
 	}
 
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
 		String value) {
+
 		return getService().fetchClassName(value);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ClassNameService getService() {
 		if (_service == null) {
-			_service = (ClassNameService)PortalBeanLocatorUtil.locate(ClassNameService.class.getName());
+			_service = (ClassNameService)PortalBeanLocatorUtil.locate(
+				ClassNameService.class.getName());
 
-			ReferenceRegistry.registerReference(ClassNameServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ClassNameServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ClassNameService _service;
+
 }

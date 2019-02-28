@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  */
 @ProviderType
 public interface RegionModel extends BaseModel<Region>, MVCCModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -145,4 +146,5 @@ public interface RegionModel extends BaseModel<Region>, MVCCModel {
 	 * @param active the active of this region
 	 */
 	public void setActive(boolean active);
+
 }

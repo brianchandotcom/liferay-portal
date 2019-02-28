@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class CounterLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,10 @@ public class CounterLocalServiceUtil {
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
@@ -77,14 +78,16 @@ public class CounterLocalServiceUtil {
 
 	public static CounterLocalService getService() {
 		if (_service == null) {
-			_service = (CounterLocalService)PortalBeanLocatorUtil.locate(CounterLocalService.class.getName());
+			_service = (CounterLocalService)PortalBeanLocatorUtil.locate(
+				CounterLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(CounterLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				CounterLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static CounterLocalService _service;
+
 }

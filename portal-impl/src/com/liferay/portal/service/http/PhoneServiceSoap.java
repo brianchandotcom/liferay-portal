@@ -63,16 +63,21 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PhoneServiceSoap {
-	public static com.liferay.portal.kernel.model.PhoneSoap addPhone(
-		String className, long classPK, String number, String extension,
-		long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Phone returnValue = PhoneServiceUtil.addPhone(className,
-					classPK, number, extension, typeId, primary, serviceContext);
 
-			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModel(returnValue);
+	public static com.liferay.portal.kernel.model.PhoneSoap addPhone(
+			String className, long classPK, String number, String extension,
+			long typeId, boolean primary,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Phone returnValue =
+				PhoneServiceUtil.addPhone(
+					className, classPK, number, extension, typeId, primary,
+					serviceContext);
+
+			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,11 +98,15 @@ public class PhoneServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PhoneSoap getPhone(
-		long phoneId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Phone returnValue = PhoneServiceUtil.getPhone(phoneId);
+			long phoneId)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Phone returnValue =
+				PhoneServiceUtil.getPhone(phoneId);
+
+			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -107,12 +116,15 @@ public class PhoneServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PhoneSoap[] getPhones(
-		String className, long classPK) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Phone> returnValue = PhoneServiceUtil.getPhones(className,
-					classPK);
+			String className, long classPK)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Phone> returnValue =
+				PhoneServiceUtil.getPhones(className, classPK);
+
+			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -122,13 +134,17 @@ public class PhoneServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.PhoneSoap updatePhone(
-		long phoneId, String number, String extension, long typeId,
-		boolean primary) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Phone returnValue = PhoneServiceUtil.updatePhone(phoneId,
-					number, extension, typeId, primary);
+			long phoneId, String number, String extension, long typeId,
+			boolean primary)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Phone returnValue =
+				PhoneServiceUtil.updatePhone(
+					phoneId, number, extension, typeId, primary);
+
+			return com.liferay.portal.kernel.model.PhoneSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -138,4 +154,5 @@ public class PhoneServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PhoneServiceSoap.class);
+
 }

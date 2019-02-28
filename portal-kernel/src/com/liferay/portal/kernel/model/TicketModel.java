@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel,
-	ShardedModel {
+public interface TicketModel
+	extends AttachedModel, BaseModel<Ticket>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -213,4 +214,5 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel
 	 * @param expirationDate the expiration date of this ticket
 	 */
 	public void setExpirationDate(Date expirationDate);
+
 }

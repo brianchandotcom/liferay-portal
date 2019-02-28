@@ -17,7 +17,6 @@ package com.liferay.portlet.exportimport.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -54,26 +53,33 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class ExportImportConfigurationServiceHttp {
-	public static void deleteExportImportConfiguration(
-		HttpPrincipal httpPrincipal, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(ExportImportConfigurationServiceUtil.class,
-					"deleteExportImportConfiguration",
-					_deleteExportImportConfigurationParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					exportImportConfigurationId);
+	public static void deleteExportImportConfiguration(
+			HttpPrincipal httpPrincipal, long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExportImportConfigurationServiceUtil.class,
+				"deleteExportImportConfiguration",
+				_deleteExportImportConfigurationParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, exportImportConfigurationId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -83,16 +89,21 @@ public class ExportImportConfigurationServiceHttp {
 		}
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
-		HttpPrincipal httpPrincipal, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(ExportImportConfigurationServiceUtil.class,
-					"moveExportImportConfigurationToTrash",
-					_moveExportImportConfigurationToTrashParameterTypes1);
+	public static
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				moveExportImportConfigurationToTrash(
+					HttpPrincipal httpPrincipal,
+					long exportImportConfigurationId)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					exportImportConfigurationId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExportImportConfigurationServiceUtil.class,
+				"moveExportImportConfigurationToTrash",
+				_moveExportImportConfigurationToTrashParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, exportImportConfigurationId);
 
 			Object returnObj = null;
 
@@ -100,14 +111,19 @@ public class ExportImportConfigurationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.exportimport.kernel.model.ExportImportConfiguration)returnObj;
+			return (com.liferay.exportimport.kernel.model.
+				ExportImportConfiguration)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -116,16 +132,21 @@ public class ExportImportConfigurationServiceHttp {
 		}
 	}
 
-	public static com.liferay.exportimport.kernel.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		HttpPrincipal httpPrincipal, long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(ExportImportConfigurationServiceUtil.class,
-					"restoreExportImportConfigurationFromTrash",
-					_restoreExportImportConfigurationFromTrashParameterTypes2);
+	public static
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				restoreExportImportConfigurationFromTrash(
+					HttpPrincipal httpPrincipal,
+					long exportImportConfigurationId)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					exportImportConfigurationId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				ExportImportConfigurationServiceUtil.class,
+				"restoreExportImportConfigurationFromTrash",
+				_restoreExportImportConfigurationFromTrashParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, exportImportConfigurationId);
 
 			Object returnObj = null;
 
@@ -133,14 +154,19 @@ public class ExportImportConfigurationServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.exportimport.kernel.model.ExportImportConfiguration)returnObj;
+			return (com.liferay.exportimport.kernel.model.
+				ExportImportConfiguration)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -149,11 +175,19 @@ public class ExportImportConfigurationServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExportImportConfigurationServiceHttp.class);
-	private static final Class<?>[] _deleteExportImportConfigurationParameterTypes0 =
-		new Class[] { long.class };
-	private static final Class<?>[] _moveExportImportConfigurationToTrashParameterTypes1 =
-		new Class[] { long.class };
-	private static final Class<?>[] _restoreExportImportConfigurationFromTrashParameterTypes2 =
-		new Class[] { long.class };
+	private static Log _log = LogFactoryUtil.getLog(
+		ExportImportConfigurationServiceHttp.class);
+
+	private static final Class<?>[]
+		_deleteExportImportConfigurationParameterTypes0 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_moveExportImportConfigurationToTrashParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_restoreExportImportConfigurationFromTrashParameterTypes2 =
+			new Class[] {long.class};
+
 }

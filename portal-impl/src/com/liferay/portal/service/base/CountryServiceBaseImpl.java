@@ -40,8 +40,9 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.service.impl.CountryServiceImpl
  * @generated
  */
-public abstract class CountryServiceBaseImpl extends BaseServiceImpl
-	implements CountryService, IdentifiableOSGiService {
+public abstract class CountryServiceBaseImpl
+	extends BaseServiceImpl implements CountryService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,7 +90,9 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -99,7 +102,9 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -141,8 +146,8 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -153,8 +158,14 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = CountryService.class)
 	protected CountryService countryService;
+
 	@BeanReference(type = CountryPersistence.class)
 	protected CountryPersistence countryPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
 }

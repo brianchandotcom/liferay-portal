@@ -17,10 +17,8 @@ package com.liferay.portlet.asset.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
-	Externalizable {
+public class AssetVocabularyCacheModel
+	implements CacheModel<AssetVocabulary>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,7 +48,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 			return false;
 		}
 
-		AssetVocabularyCacheModel assetVocabularyCacheModel = (AssetVocabularyCacheModel)obj;
+		AssetVocabularyCacheModel assetVocabularyCacheModel =
+			(AssetVocabularyCacheModel)obj;
 
 		if (vocabularyId == assetVocabularyCacheModel.vocabularyId) {
 			return true;
@@ -207,8 +207,7 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -286,4 +285,5 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	public String description;
 	public String settings;
 	public long lastPublishDate;
+
 }

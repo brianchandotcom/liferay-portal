@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
 import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence;
@@ -65,8 +64,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class SocialActivitySettingLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements SocialActivitySettingLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements SocialActivitySettingLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -83,6 +83,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Override
 	public SocialActivitySetting addSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting) {
+
 		socialActivitySetting.setNew(true);
 
 		return socialActivitySettingPersistence.update(socialActivitySetting);
@@ -98,6 +99,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public SocialActivitySetting createSocialActivitySetting(
 		long activitySettingId) {
+
 		return socialActivitySettingPersistence.create(activitySettingId);
 	}
 
@@ -111,7 +113,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public SocialActivitySetting deleteSocialActivitySetting(
-		long activitySettingId) throws PortalException {
+			long activitySettingId)
+		throws PortalException {
+
 		return socialActivitySettingPersistence.remove(activitySettingId);
 	}
 
@@ -125,6 +129,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Override
 	public SocialActivitySetting deleteSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting) {
+
 		return socialActivitySettingPersistence.remove(socialActivitySetting);
 	}
 
@@ -132,8 +137,8 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(SocialActivitySetting.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			SocialActivitySetting.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -144,7 +149,8 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return socialActivitySettingPersistence.findWithDynamicQuery(dynamicQuery);
+		return socialActivitySettingPersistence.findWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -160,10 +166,11 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return socialActivitySettingPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return socialActivitySettingPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -180,10 +187,12 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return socialActivitySettingPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return socialActivitySettingPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -194,7 +203,8 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return socialActivitySettingPersistence.countWithDynamicQuery(dynamicQuery);
+		return socialActivitySettingPersistence.countWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -205,16 +215,19 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return socialActivitySettingPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return socialActivitySettingPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public SocialActivitySetting fetchSocialActivitySetting(
 		long activitySettingId) {
-		return socialActivitySettingPersistence.fetchByPrimaryKey(activitySettingId);
+
+		return socialActivitySettingPersistence.fetchByPrimaryKey(
+			activitySettingId);
 	}
 
 	/**
@@ -226,15 +239,20 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	@Override
 	public SocialActivitySetting getSocialActivitySetting(
-		long activitySettingId) throws PortalException {
-		return socialActivitySettingPersistence.findByPrimaryKey(activitySettingId);
+			long activitySettingId)
+		throws PortalException {
+
+		return socialActivitySettingPersistence.findByPrimaryKey(
+			activitySettingId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(socialActivitySettingLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			socialActivitySettingLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivitySetting.class);
 
@@ -244,12 +262,17 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(socialActivitySettingLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			socialActivitySettingLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(SocialActivitySetting.class);
+		indexableActionableDynamicQuery.setModelClass(
+			SocialActivitySetting.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"activitySettingId");
@@ -259,7 +282,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(socialActivitySettingLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			socialActivitySettingLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivitySetting.class);
 
@@ -272,12 +297,15 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return socialActivitySettingLocalService.deleteSocialActivitySetting((SocialActivitySetting)persistedModel);
+
+		return socialActivitySettingLocalService.deleteSocialActivitySetting(
+			(SocialActivitySetting)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return socialActivitySettingPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -293,8 +321,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @return the range of social activity settings
 	 */
 	@Override
-	public List<SocialActivitySetting> getSocialActivitySettings(int start,
-		int end) {
+	public List<SocialActivitySetting> getSocialActivitySettings(
+		int start, int end) {
+
 		return socialActivitySettingPersistence.findAll(start, end);
 	}
 
@@ -318,6 +347,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	@Override
 	public SocialActivitySetting updateSocialActivitySetting(
 		SocialActivitySetting socialActivitySetting) {
+
 		return socialActivitySettingPersistence.update(socialActivitySetting);
 	}
 
@@ -326,7 +356,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 *
 	 * @return the social activity setting local service
 	 */
-	public SocialActivitySettingLocalService getSocialActivitySettingLocalService() {
+	public SocialActivitySettingLocalService
+		getSocialActivitySettingLocalService() {
+
 		return socialActivitySettingLocalService;
 	}
 
@@ -337,7 +369,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	public void setSocialActivitySettingLocalService(
 		SocialActivitySettingLocalService socialActivitySettingLocalService) {
-		this.socialActivitySettingLocalService = socialActivitySettingLocalService;
+
+		this.socialActivitySettingLocalService =
+			socialActivitySettingLocalService;
 	}
 
 	/**
@@ -345,7 +379,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 *
 	 * @return the social activity setting persistence
 	 */
-	public SocialActivitySettingPersistence getSocialActivitySettingPersistence() {
+	public SocialActivitySettingPersistence
+		getSocialActivitySettingPersistence() {
+
 		return socialActivitySettingPersistence;
 	}
 
@@ -356,7 +392,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	public void setSocialActivitySettingPersistence(
 		SocialActivitySettingPersistence socialActivitySettingPersistence) {
-		this.socialActivitySettingPersistence = socialActivitySettingPersistence;
+
+		this.socialActivitySettingPersistence =
+			socialActivitySettingPersistence;
 	}
 
 	/**
@@ -364,7 +402,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -374,7 +414,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -383,7 +425,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -393,7 +437,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -413,6 +459,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -421,7 +468,9 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 *
 	 * @return the group local service
 	 */
-	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
+	public com.liferay.portal.kernel.service.GroupLocalService
+		getGroupLocalService() {
+
 		return groupLocalService;
 	}
 
@@ -432,6 +481,7 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	public void setGroupLocalService(
 		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
+
 		this.groupLocalService = groupLocalService;
 	}
 
@@ -472,7 +522,8 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.social.kernel.model.SocialActivitySetting",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.social.kernel.model.SocialActivitySetting",
 			socialActivitySettingLocalService);
 	}
 
@@ -506,15 +557,16 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = socialActivitySettingPersistence.getDataSource();
+			DataSource dataSource =
+				socialActivitySettingPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -524,21 +576,41 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = SocialActivitySettingLocalService.class)
-	protected SocialActivitySettingLocalService socialActivitySettingLocalService;
+	protected SocialActivitySettingLocalService
+		socialActivitySettingLocalService;
+
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
-	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.GroupLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.GroupLocalService
+		groupLocalService;
+
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
+
 	@BeanReference(type = GroupFinder.class)
 	protected GroupFinder groupFinder;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

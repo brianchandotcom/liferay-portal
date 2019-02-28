@@ -32,10 +32,13 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AnnouncementsDeliveryWrapper extends BaseModelWrapper<AnnouncementsDelivery>
+public class AnnouncementsDeliveryWrapper
+	extends BaseModelWrapper<AnnouncementsDelivery>
 	implements AnnouncementsDelivery, ModelWrapper<AnnouncementsDelivery> {
+
 	public AnnouncementsDeliveryWrapper(
 		AnnouncementsDelivery announcementsDelivery) {
+
 		super(announcementsDelivery);
 	}
 
@@ -100,120 +103,120 @@ public class AnnouncementsDeliveryWrapper extends BaseModelWrapper<Announcements
 	}
 
 	/**
-	* Returns the company ID of this announcements delivery.
-	*
-	* @return the company ID of this announcements delivery
-	*/
+	 * Returns the company ID of this announcements delivery.
+	 *
+	 * @return the company ID of this announcements delivery
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the delivery ID of this announcements delivery.
-	*
-	* @return the delivery ID of this announcements delivery
-	*/
+	 * Returns the delivery ID of this announcements delivery.
+	 *
+	 * @return the delivery ID of this announcements delivery
+	 */
 	@Override
 	public long getDeliveryId() {
 		return model.getDeliveryId();
 	}
 
 	/**
-	* Returns the email of this announcements delivery.
-	*
-	* @return the email of this announcements delivery
-	*/
+	 * Returns the email of this announcements delivery.
+	 *
+	 * @return the email of this announcements delivery
+	 */
 	@Override
 	public boolean getEmail() {
 		return model.getEmail();
 	}
 
 	/**
-	* Returns the primary key of this announcements delivery.
-	*
-	* @return the primary key of this announcements delivery
-	*/
+	 * Returns the primary key of this announcements delivery.
+	 *
+	 * @return the primary key of this announcements delivery
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the sms of this announcements delivery.
-	*
-	* @return the sms of this announcements delivery
-	*/
+	 * Returns the sms of this announcements delivery.
+	 *
+	 * @return the sms of this announcements delivery
+	 */
 	@Override
 	public boolean getSms() {
 		return model.getSms();
 	}
 
 	/**
-	* Returns the type of this announcements delivery.
-	*
-	* @return the type of this announcements delivery
-	*/
+	 * Returns the type of this announcements delivery.
+	 *
+	 * @return the type of this announcements delivery
+	 */
 	@Override
 	public String getType() {
 		return model.getType();
 	}
 
 	/**
-	* Returns the user ID of this announcements delivery.
-	*
-	* @return the user ID of this announcements delivery
-	*/
+	 * Returns the user ID of this announcements delivery.
+	 *
+	 * @return the user ID of this announcements delivery
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user uuid of this announcements delivery.
-	*
-	* @return the user uuid of this announcements delivery
-	*/
+	 * Returns the user uuid of this announcements delivery.
+	 *
+	 * @return the user uuid of this announcements delivery
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the website of this announcements delivery.
-	*
-	* @return the website of this announcements delivery
-	*/
+	 * Returns the website of this announcements delivery.
+	 *
+	 * @return the website of this announcements delivery
+	 */
 	@Override
 	public boolean getWebsite() {
 		return model.getWebsite();
 	}
 
 	/**
-	* Returns <code>true</code> if this announcements delivery is email.
-	*
-	* @return <code>true</code> if this announcements delivery is email; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this announcements delivery is email.
+	 *
+	 * @return <code>true</code> if this announcements delivery is email; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isEmail() {
 		return model.isEmail();
 	}
 
 	/**
-	* Returns <code>true</code> if this announcements delivery is sms.
-	*
-	* @return <code>true</code> if this announcements delivery is sms; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this announcements delivery is sms.
+	 *
+	 * @return <code>true</code> if this announcements delivery is sms; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isSms() {
 		return model.isSms();
 	}
 
 	/**
-	* Returns <code>true</code> if this announcements delivery is website.
-	*
-	* @return <code>true</code> if this announcements delivery is website; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this announcements delivery is website.
+	 *
+	 * @return <code>true</code> if this announcements delivery is website; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isWebsite() {
 		return model.isWebsite();
@@ -225,90 +228,90 @@ public class AnnouncementsDeliveryWrapper extends BaseModelWrapper<Announcements
 	}
 
 	/**
-	* Sets the company ID of this announcements delivery.
-	*
-	* @param companyId the company ID of this announcements delivery
-	*/
+	 * Sets the company ID of this announcements delivery.
+	 *
+	 * @param companyId the company ID of this announcements delivery
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the delivery ID of this announcements delivery.
-	*
-	* @param deliveryId the delivery ID of this announcements delivery
-	*/
+	 * Sets the delivery ID of this announcements delivery.
+	 *
+	 * @param deliveryId the delivery ID of this announcements delivery
+	 */
 	@Override
 	public void setDeliveryId(long deliveryId) {
 		model.setDeliveryId(deliveryId);
 	}
 
 	/**
-	* Sets whether this announcements delivery is email.
-	*
-	* @param email the email of this announcements delivery
-	*/
+	 * Sets whether this announcements delivery is email.
+	 *
+	 * @param email the email of this announcements delivery
+	 */
 	@Override
 	public void setEmail(boolean email) {
 		model.setEmail(email);
 	}
 
 	/**
-	* Sets the primary key of this announcements delivery.
-	*
-	* @param primaryKey the primary key of this announcements delivery
-	*/
+	 * Sets the primary key of this announcements delivery.
+	 *
+	 * @param primaryKey the primary key of this announcements delivery
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets whether this announcements delivery is sms.
-	*
-	* @param sms the sms of this announcements delivery
-	*/
+	 * Sets whether this announcements delivery is sms.
+	 *
+	 * @param sms the sms of this announcements delivery
+	 */
 	@Override
 	public void setSms(boolean sms) {
 		model.setSms(sms);
 	}
 
 	/**
-	* Sets the type of this announcements delivery.
-	*
-	* @param type the type of this announcements delivery
-	*/
+	 * Sets the type of this announcements delivery.
+	 *
+	 * @param type the type of this announcements delivery
+	 */
 	@Override
 	public void setType(String type) {
 		model.setType(type);
 	}
 
 	/**
-	* Sets the user ID of this announcements delivery.
-	*
-	* @param userId the user ID of this announcements delivery
-	*/
+	 * Sets the user ID of this announcements delivery.
+	 *
+	 * @param userId the user ID of this announcements delivery
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user uuid of this announcements delivery.
-	*
-	* @param userUuid the user uuid of this announcements delivery
-	*/
+	 * Sets the user uuid of this announcements delivery.
+	 *
+	 * @param userUuid the user uuid of this announcements delivery
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets whether this announcements delivery is website.
-	*
-	* @param website the website of this announcements delivery
-	*/
+	 * Sets whether this announcements delivery is website.
+	 *
+	 * @param website the website of this announcements delivery
+	 */
 	@Override
 	public void setWebsite(boolean website) {
 		model.setWebsite(website);
@@ -317,6 +320,8 @@ public class AnnouncementsDeliveryWrapper extends BaseModelWrapper<Announcements
 	@Override
 	protected AnnouncementsDeliveryWrapper wrap(
 		AnnouncementsDelivery announcementsDelivery) {
+
 		return new AnnouncementsDeliveryWrapper(announcementsDelivery);
 	}
+
 }

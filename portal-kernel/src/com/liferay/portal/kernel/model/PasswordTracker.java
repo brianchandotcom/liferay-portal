@@ -29,13 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.PasswordTrackerImpl")
 @ProviderType
 public interface PasswordTracker extends PasswordTrackerModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PasswordTrackerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PasswordTracker, Long> PASSWORD_TRACKER_ID_ACCESSOR =
-		new Accessor<PasswordTracker, Long>() {
+	public static final Accessor<PasswordTracker, Long>
+		PASSWORD_TRACKER_ID_ACCESSOR = new Accessor<PasswordTracker, Long>() {
+
 			@Override
 			public Long get(PasswordTracker passwordTracker) {
 				return passwordTracker.getPasswordTrackerId();
@@ -50,5 +52,7 @@ public interface PasswordTracker extends PasswordTrackerModel, PersistedModel {
 			public Class<PasswordTracker> getTypeClass() {
 				return PasswordTracker.class;
 			}
+
 		};
+
 }

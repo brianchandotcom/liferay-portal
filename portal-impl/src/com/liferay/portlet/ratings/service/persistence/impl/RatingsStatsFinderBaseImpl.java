@@ -16,7 +16,6 @@ package com.liferay.portlet.ratings.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
@@ -26,7 +25,9 @@ import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
  * @generated
  */
 @Deprecated
-public class RatingsStatsFinderBaseImpl extends BasePersistenceImpl<RatingsStats> {
+public class RatingsStatsFinderBaseImpl
+	extends BasePersistenceImpl<RatingsStats> {
+
 	public RatingsStatsFinderBaseImpl() {
 		setModelClass(RatingsStats.class);
 	}
@@ -47,9 +48,11 @@ public class RatingsStatsFinderBaseImpl extends BasePersistenceImpl<RatingsStats
 	 */
 	public void setRatingsStatsPersistence(
 		RatingsStatsPersistence ratingsStatsPersistence) {
+
 		this.ratingsStatsPersistence = ratingsStatsPersistence;
 	}
 
 	@BeanReference(type = RatingsStatsPersistence.class)
 	protected RatingsStatsPersistence ratingsStatsPersistence;
+
 }

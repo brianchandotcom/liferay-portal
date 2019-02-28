@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ImageServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,28 +41,31 @@ public class ImageServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getImage(imageId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ImageService getService() {
 		if (_service == null) {
-			_service = (ImageService)PortalBeanLocatorUtil.locate(ImageService.class.getName());
+			_service = (ImageService)PortalBeanLocatorUtil.locate(
+				ImageService.class.getName());
 
-			ReferenceRegistry.registerReference(ImageServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ImageServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ImageService _service;
+
 }

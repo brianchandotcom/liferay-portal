@@ -17,7 +17,6 @@ package com.liferay.expando.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -39,9 +38,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface ExpandoColumnService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -50,8 +52,9 @@ public interface ExpandoColumnService extends BaseService {
 	public ExpandoColumn addColumn(long tableId, String name, int type)
 		throws PortalException;
 
-	public ExpandoColumn addColumn(long tableId, String name, int type,
-		Object defaultData) throws PortalException;
+	public ExpandoColumn addColumn(
+			long tableId, String name, int type, Object defaultData)
+		throws PortalException;
 
 	public void deleteColumn(long columnId) throws PortalException;
 
@@ -60,18 +63,20 @@ public interface ExpandoColumnService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws PortalException;
 
-	public ExpandoColumn updateColumn(long columnId, String name, int type,
-		Object defaultData) throws PortalException;
+	public ExpandoColumn updateColumn(
+			long columnId, String name, int type, Object defaultData)
+		throws PortalException;
 
 	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
 		throws PortalException;
+
 }

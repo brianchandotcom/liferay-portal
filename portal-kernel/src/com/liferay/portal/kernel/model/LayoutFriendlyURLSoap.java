@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class LayoutFriendlyURLSoap implements Serializable {
+
 	public static LayoutFriendlyURLSoap toSoapModel(LayoutFriendlyURL model) {
 		LayoutFriendlyURLSoap soapModel = new LayoutFriendlyURLSoap();
 
@@ -53,7 +54,9 @@ public class LayoutFriendlyURLSoap implements Serializable {
 
 	public static LayoutFriendlyURLSoap[] toSoapModels(
 		LayoutFriendlyURL[] models) {
-		LayoutFriendlyURLSoap[] soapModels = new LayoutFriendlyURLSoap[models.length];
+
+		LayoutFriendlyURLSoap[] soapModels =
+			new LayoutFriendlyURLSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -64,10 +67,12 @@ public class LayoutFriendlyURLSoap implements Serializable {
 
 	public static LayoutFriendlyURLSoap[][] toSoapModels(
 		LayoutFriendlyURL[][] models) {
+
 		LayoutFriendlyURLSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutFriendlyURLSoap[models.length][models[0].length];
+			soapModels =
+				new LayoutFriendlyURLSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new LayoutFriendlyURLSoap[0][0];
@@ -82,7 +87,9 @@ public class LayoutFriendlyURLSoap implements Serializable {
 
 	public static LayoutFriendlyURLSoap[] toSoapModels(
 		List<LayoutFriendlyURL> models) {
-		List<LayoutFriendlyURLSoap> soapModels = new ArrayList<LayoutFriendlyURLSoap>(models.size());
+
+		List<LayoutFriendlyURLSoap> soapModels =
+			new ArrayList<LayoutFriendlyURLSoap>(models.size());
 
 		for (LayoutFriendlyURL model : models) {
 			soapModels.add(toSoapModel(model));
@@ -232,4 +239,5 @@ public class LayoutFriendlyURLSoap implements Serializable {
 	private String _friendlyURL;
 	private String _languageId;
 	private Date _lastPublishDate;
+
 }

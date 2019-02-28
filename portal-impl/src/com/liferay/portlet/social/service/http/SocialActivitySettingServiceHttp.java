@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
 import com.liferay.social.kernel.service.SocialActivitySettingServiceUtil;
 
 /**
@@ -54,17 +53,20 @@ import com.liferay.social.kernel.service.SocialActivitySettingServiceUtil;
  */
 @ProviderType
 public class SocialActivitySettingServiceHttp {
-	public static com.liferay.social.kernel.model.SocialActivityDefinition getActivityDefinition(
-		HttpPrincipal httpPrincipal, long groupId, String className,
-		int activityType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"getActivityDefinition",
-					_getActivityDefinitionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className, activityType);
+	public static com.liferay.social.kernel.model.SocialActivityDefinition
+			getActivityDefinition(
+				HttpPrincipal httpPrincipal, long groupId, String className,
+				int activityType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class, "getActivityDefinition",
+				_getActivityDefinitionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, className, activityType);
 
 			Object returnObj = null;
 
@@ -72,14 +74,19 @@ public class SocialActivitySettingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (com.liferay.social.kernel.model.SocialActivityDefinition)returnObj;
+			return (com.liferay.social.kernel.model.SocialActivityDefinition)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,16 +95,20 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivityDefinition> getActivityDefinitions(
-		HttpPrincipal httpPrincipal, long groupId, String className)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"getActivityDefinitions",
-					_getActivityDefinitionsParameterTypes1);
+	public static java.util.List
+		<com.liferay.social.kernel.model.SocialActivityDefinition>
+				getActivityDefinitions(
+					HttpPrincipal httpPrincipal, long groupId, String className)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class,
+				"getActivityDefinitions",
+				_getActivityDefinitionsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, className);
 
 			Object returnObj = null;
 
@@ -105,14 +116,20 @@ public class SocialActivitySettingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (java.util.List<com.liferay.social.kernel.model.SocialActivityDefinition>)returnObj;
+			return (java.util.List
+				<com.liferay.social.kernel.model.SocialActivityDefinition>)
+					returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -121,12 +138,15 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivitySetting> getActivitySettings(
-		HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List
+		<com.liferay.social.kernel.model.SocialActivitySetting>
+				getActivitySettings(HttpPrincipal httpPrincipal, long groupId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
 		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"getActivitySettings", _getActivitySettingsParameterTypes2);
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class, "getActivitySettings",
+				_getActivitySettingsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -136,14 +156,20 @@ public class SocialActivitySettingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
-			return (java.util.List<com.liferay.social.kernel.model.SocialActivitySetting>)returnObj;
+			return (java.util.List
+				<com.liferay.social.kernel.model.SocialActivitySetting>)
+					returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -152,16 +178,19 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
-		HttpPrincipal httpPrincipal, long groupId, String className)
+	public static com.liferay.portal.kernel.json.JSONArray
+			getJSONActivityDefinitions(
+				HttpPrincipal httpPrincipal, long groupId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"getJSONActivityDefinitions",
-					_getJSONActivityDefinitionsParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class,
+				"getJSONActivityDefinitions",
+				_getJSONActivityDefinitionsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, className);
 
 			Object returnObj = null;
 
@@ -169,11 +198,15 @@ public class SocialActivitySettingServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.json.JSONArray)returnObj;
@@ -185,26 +218,32 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	public static void updateActivitySetting(HttpPrincipal httpPrincipal,
-		long groupId, String className, boolean enabled)
+	public static void updateActivitySetting(
+			HttpPrincipal httpPrincipal, long groupId, String className,
+			boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"updateActivitySetting",
-					_updateActivitySettingParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className, enabled);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class, "updateActivitySetting",
+				_updateActivitySettingParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, className, enabled);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -214,27 +253,35 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	public static void updateActivitySetting(HttpPrincipal httpPrincipal,
-		long groupId, String className, int activityType,
-		com.liferay.social.kernel.model.SocialActivityCounterDefinition activityCounterDefinition)
+	public static void updateActivitySetting(
+			HttpPrincipal httpPrincipal, long groupId, String className,
+			int activityType,
+			com.liferay.social.kernel.model.SocialActivityCounterDefinition
+				activityCounterDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"updateActivitySetting",
-					_updateActivitySettingParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className, activityType, activityCounterDefinition);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class, "updateActivitySetting",
+				_updateActivitySettingParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, className, activityType,
+				activityCounterDefinition);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -244,27 +291,37 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	public static void updateActivitySettings(HttpPrincipal httpPrincipal,
-		long groupId, String className, int activityType,
-		java.util.List<com.liferay.social.kernel.model.SocialActivityCounterDefinition> activityCounterDefinitions)
+	public static void updateActivitySettings(
+			HttpPrincipal httpPrincipal, long groupId, String className,
+			int activityType,
+			java.util.List
+				<com.liferay.social.kernel.model.
+					SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SocialActivitySettingServiceUtil.class,
-					"updateActivitySettings",
-					_updateActivitySettingsParameterTypes6);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className, activityType, activityCounterDefinitions);
+		try {
+			MethodKey methodKey = new MethodKey(
+				SocialActivitySettingServiceUtil.class,
+				"updateActivitySettings",
+				_updateActivitySettingsParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, className, activityType,
+				activityCounterDefinitions);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
@@ -274,27 +331,26 @@ public class SocialActivitySettingServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SocialActivitySettingServiceHttp.class);
-	private static final Class<?>[] _getActivityDefinitionParameterTypes0 = new Class[] {
-			long.class, String.class, int.class
-		};
-	private static final Class<?>[] _getActivityDefinitionsParameterTypes1 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[] _getActivitySettingsParameterTypes2 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getJSONActivityDefinitionsParameterTypes3 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[] _updateActivitySettingParameterTypes4 = new Class[] {
-			long.class, String.class, boolean.class
-		};
-	private static final Class<?>[] _updateActivitySettingParameterTypes5 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		SocialActivitySettingServiceHttp.class);
+
+	private static final Class<?>[] _getActivityDefinitionParameterTypes0 =
+		new Class[] {long.class, String.class, int.class};
+	private static final Class<?>[] _getActivityDefinitionsParameterTypes1 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _getActivitySettingsParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getJSONActivityDefinitionsParameterTypes3 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _updateActivitySettingParameterTypes4 =
+		new Class[] {long.class, String.class, boolean.class};
+	private static final Class<?>[] _updateActivitySettingParameterTypes5 =
+		new Class[] {
 			long.class, String.class, int.class,
-			com.liferay.social.kernel.model.SocialActivityCounterDefinition.class
+			com.liferay.social.kernel.model.SocialActivityCounterDefinition.
+				class
 		};
-	private static final Class<?>[] _updateActivitySettingsParameterTypes6 = new Class[] {
-			long.class, String.class, int.class, java.util.List.class
-		};
+	private static final Class<?>[] _updateActivitySettingsParameterTypes6 =
+		new Class[] {long.class, String.class, int.class, java.util.List.class};
+
 }

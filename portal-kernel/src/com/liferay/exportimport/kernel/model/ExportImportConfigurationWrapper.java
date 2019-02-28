@@ -35,11 +35,14 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImportConfiguration>
+public class ExportImportConfigurationWrapper
+	extends BaseModelWrapper<ExportImportConfiguration>
 	implements ExportImportConfiguration,
-		ModelWrapper<ExportImportConfiguration> {
+			   ModelWrapper<ExportImportConfiguration> {
+
 	public ExportImportConfigurationWrapper(
 		ExportImportConfiguration exportImportConfiguration) {
+
 		super(exportImportConfiguration);
 	}
 
@@ -48,8 +51,8 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("exportImportConfigurationId",
-			getExportImportConfigurationId());
+		attributes.put(
+			"exportImportConfigurationId", getExportImportConfigurationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -77,7 +80,7 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 		}
 
 		Long exportImportConfigurationId = (Long)attributes.get(
-				"exportImportConfigurationId");
+			"exportImportConfigurationId");
 
 		if (exportImportConfigurationId != null) {
 			setExportImportConfigurationId(exportImportConfigurationId);
@@ -169,100 +172,100 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 	}
 
 	/**
-	* Returns the company ID of this export import configuration.
-	*
-	* @return the company ID of this export import configuration
-	*/
+	 * Returns the company ID of this export import configuration.
+	 *
+	 * @return the company ID of this export import configuration
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this export import configuration.
-	*
-	* @return the create date of this export import configuration
-	*/
+	 * Returns the create date of this export import configuration.
+	 *
+	 * @return the create date of this export import configuration
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the description of this export import configuration.
-	*
-	* @return the description of this export import configuration
-	*/
+	 * Returns the description of this export import configuration.
+	 *
+	 * @return the description of this export import configuration
+	 */
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	* Returns the export import configuration ID of this export import configuration.
-	*
-	* @return the export import configuration ID of this export import configuration
-	*/
+	 * Returns the export import configuration ID of this export import configuration.
+	 *
+	 * @return the export import configuration ID of this export import configuration
+	 */
 	@Override
 	public long getExportImportConfigurationId() {
 		return model.getExportImportConfigurationId();
 	}
 
 	/**
-	* Returns the group ID of this export import configuration.
-	*
-	* @return the group ID of this export import configuration
-	*/
+	 * Returns the group ID of this export import configuration.
+	 *
+	 * @return the group ID of this export import configuration
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this export import configuration.
-	*
-	* @return the modified date of this export import configuration
-	*/
+	 * Returns the modified date of this export import configuration.
+	 *
+	 * @return the modified date of this export import configuration
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this export import configuration.
-	*
-	* @return the mvcc version of this export import configuration
-	*/
+	 * Returns the mvcc version of this export import configuration.
+	 *
+	 * @return the mvcc version of this export import configuration
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this export import configuration.
-	*
-	* @return the name of this export import configuration
-	*/
+	 * Returns the name of this export import configuration.
+	 *
+	 * @return the name of this export import configuration
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this export import configuration.
-	*
-	* @return the primary key of this export import configuration
-	*/
+	 * Returns the primary key of this export import configuration.
+	 *
+	 * @return the primary key of this export import configuration
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the settings of this export import configuration.
-	*
-	* @return the settings of this export import configuration
-	*/
+	 * Returns the settings of this export import configuration.
+	 *
+	 * @return the settings of this export import configuration
+	 */
 	@Override
 	public String getSettings() {
 		return model.getSettings();
@@ -274,82 +277,83 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 	}
 
 	/**
-	* Returns the status of this export import configuration.
-	*
-	* @return the status of this export import configuration
-	*/
+	 * Returns the status of this export import configuration.
+	 *
+	 * @return the status of this export import configuration
+	 */
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	* Returns the status by user ID of this export import configuration.
-	*
-	* @return the status by user ID of this export import configuration
-	*/
+	 * Returns the status by user ID of this export import configuration.
+	 *
+	 * @return the status by user ID of this export import configuration
+	 */
 	@Override
 	public long getStatusByUserId() {
 		return model.getStatusByUserId();
 	}
 
 	/**
-	* Returns the status by user name of this export import configuration.
-	*
-	* @return the status by user name of this export import configuration
-	*/
+	 * Returns the status by user name of this export import configuration.
+	 *
+	 * @return the status by user name of this export import configuration
+	 */
 	@Override
 	public String getStatusByUserName() {
 		return model.getStatusByUserName();
 	}
 
 	/**
-	* Returns the status by user uuid of this export import configuration.
-	*
-	* @return the status by user uuid of this export import configuration
-	*/
+	 * Returns the status by user uuid of this export import configuration.
+	 *
+	 * @return the status by user uuid of this export import configuration
+	 */
 	@Override
 	public String getStatusByUserUuid() {
 		return model.getStatusByUserUuid();
 	}
 
 	/**
-	* Returns the status date of this export import configuration.
-	*
-	* @return the status date of this export import configuration
-	*/
+	 * Returns the status date of this export import configuration.
+	 *
+	 * @return the status date of this export import configuration
+	 */
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
 	}
 
 	/**
-	* Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.
-	*
-	* @return the trash entry created when this export import configuration was moved to the Recycle Bin
-	*/
+	 * Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.
+	 *
+	 * @return the trash entry created when this export import configuration was moved to the Recycle Bin
+	 */
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getTrashEntry();
 	}
 
 	/**
-	* Returns the class primary key of the trash entry for this export import configuration.
-	*
-	* @return the class primary key of the trash entry for this export import configuration
-	*/
+	 * Returns the class primary key of the trash entry for this export import configuration.
+	 *
+	 * @return the class primary key of the trash entry for this export import configuration
+	 */
 	@Override
 	public long getTrashEntryClassPK() {
 		return model.getTrashEntryClassPK();
 	}
 
 	/**
-	* Returns the trash handler for this export import configuration.
-	*
-	* @return the trash handler for this export import configuration
-	* @deprecated As of Judson (7.1.x), with no direct replacement
-	*/
+	 * Returns the trash handler for this export import configuration.
+	 *
+	 * @return the trash handler for this export import configuration
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
@@ -357,120 +361,120 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 	}
 
 	/**
-	* Returns the type of this export import configuration.
-	*
-	* @return the type of this export import configuration
-	*/
+	 * Returns the type of this export import configuration.
+	 *
+	 * @return the type of this export import configuration
+	 */
 	@Override
 	public int getType() {
 		return model.getType();
 	}
 
 	/**
-	* Returns the user ID of this export import configuration.
-	*
-	* @return the user ID of this export import configuration
-	*/
+	 * Returns the user ID of this export import configuration.
+	 *
+	 * @return the user ID of this export import configuration
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this export import configuration.
-	*
-	* @return the user name of this export import configuration
-	*/
+	 * Returns the user name of this export import configuration.
+	 *
+	 * @return the user name of this export import configuration
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this export import configuration.
-	*
-	* @return the user uuid of this export import configuration
-	*/
+	 * Returns the user uuid of this export import configuration.
+	 *
+	 * @return the user uuid of this export import configuration
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is approved.
-	*
-	* @return <code>true</code> if this export import configuration is approved; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is approved.
+	 *
+	 * @return <code>true</code> if this export import configuration is approved; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isApproved() {
 		return model.isApproved();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is denied.
-	*
-	* @return <code>true</code> if this export import configuration is denied; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is denied.
+	 *
+	 * @return <code>true</code> if this export import configuration is denied; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isDenied() {
 		return model.isDenied();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is a draft.
-	*
-	* @return <code>true</code> if this export import configuration is a draft; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is a draft.
+	 *
+	 * @return <code>true</code> if this export import configuration is a draft; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isDraft() {
 		return model.isDraft();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is expired.
-	*
-	* @return <code>true</code> if this export import configuration is expired; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is expired.
+	 *
+	 * @return <code>true</code> if this export import configuration is expired; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isExpired() {
 		return model.isExpired();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is inactive.
-	*
-	* @return <code>true</code> if this export import configuration is inactive; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is inactive.
+	 *
+	 * @return <code>true</code> if this export import configuration is inactive; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isInactive() {
 		return model.isInactive();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is incomplete.
-	*
-	* @return <code>true</code> if this export import configuration is incomplete; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is incomplete.
+	 *
+	 * @return <code>true</code> if this export import configuration is incomplete; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isIncomplete() {
 		return model.isIncomplete();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this export import configuration is in the Recycle Bin; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this export import configuration is in the Recycle Bin; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isInTrash() {
 		return model.isInTrash();
 	}
 
 	/**
-	* Returns <code>true</code> if the parent of this export import configuration is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this export import configuration is in the Recycle Bin; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if the parent of this export import configuration is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if the parent of this export import configuration is in the Recycle Bin; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isInTrashContainer() {
 		return model.isInTrashContainer();
@@ -487,20 +491,20 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is pending.
-	*
-	* @return <code>true</code> if this export import configuration is pending; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is pending.
+	 *
+	 * @return <code>true</code> if this export import configuration is pending; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isPending() {
 		return model.isPending();
 	}
 
 	/**
-	* Returns <code>true</code> if this export import configuration is scheduled.
-	*
-	* @return <code>true</code> if this export import configuration is scheduled; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this export import configuration is scheduled.
+	 *
+	 * @return <code>true</code> if this export import configuration is scheduled; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isScheduled() {
 		return model.isScheduled();
@@ -512,190 +516,192 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 	}
 
 	/**
-	* Sets the company ID of this export import configuration.
-	*
-	* @param companyId the company ID of this export import configuration
-	*/
+	 * Sets the company ID of this export import configuration.
+	 *
+	 * @param companyId the company ID of this export import configuration
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this export import configuration.
-	*
-	* @param createDate the create date of this export import configuration
-	*/
+	 * Sets the create date of this export import configuration.
+	 *
+	 * @param createDate the create date of this export import configuration
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the description of this export import configuration.
-	*
-	* @param description the description of this export import configuration
-	*/
+	 * Sets the description of this export import configuration.
+	 *
+	 * @param description the description of this export import configuration
+	 */
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	* Sets the export import configuration ID of this export import configuration.
-	*
-	* @param exportImportConfigurationId the export import configuration ID of this export import configuration
-	*/
+	 * Sets the export import configuration ID of this export import configuration.
+	 *
+	 * @param exportImportConfigurationId the export import configuration ID of this export import configuration
+	 */
 	@Override
-	public void setExportImportConfigurationId(long exportImportConfigurationId) {
+	public void setExportImportConfigurationId(
+		long exportImportConfigurationId) {
+
 		model.setExportImportConfigurationId(exportImportConfigurationId);
 	}
 
 	/**
-	* Sets the group ID of this export import configuration.
-	*
-	* @param groupId the group ID of this export import configuration
-	*/
+	 * Sets the group ID of this export import configuration.
+	 *
+	 * @param groupId the group ID of this export import configuration
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this export import configuration.
-	*
-	* @param modifiedDate the modified date of this export import configuration
-	*/
+	 * Sets the modified date of this export import configuration.
+	 *
+	 * @param modifiedDate the modified date of this export import configuration
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this export import configuration.
-	*
-	* @param mvccVersion the mvcc version of this export import configuration
-	*/
+	 * Sets the mvcc version of this export import configuration.
+	 *
+	 * @param mvccVersion the mvcc version of this export import configuration
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this export import configuration.
-	*
-	* @param name the name of this export import configuration
-	*/
+	 * Sets the name of this export import configuration.
+	 *
+	 * @param name the name of this export import configuration
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this export import configuration.
-	*
-	* @param primaryKey the primary key of this export import configuration
-	*/
+	 * Sets the primary key of this export import configuration.
+	 *
+	 * @param primaryKey the primary key of this export import configuration
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the settings of this export import configuration.
-	*
-	* @param settings the settings of this export import configuration
-	*/
+	 * Sets the settings of this export import configuration.
+	 *
+	 * @param settings the settings of this export import configuration
+	 */
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
 	}
 
 	/**
-	* Sets the status of this export import configuration.
-	*
-	* @param status the status of this export import configuration
-	*/
+	 * Sets the status of this export import configuration.
+	 *
+	 * @param status the status of this export import configuration
+	 */
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	* Sets the status by user ID of this export import configuration.
-	*
-	* @param statusByUserId the status by user ID of this export import configuration
-	*/
+	 * Sets the status by user ID of this export import configuration.
+	 *
+	 * @param statusByUserId the status by user ID of this export import configuration
+	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
 		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
-	* Sets the status by user name of this export import configuration.
-	*
-	* @param statusByUserName the status by user name of this export import configuration
-	*/
+	 * Sets the status by user name of this export import configuration.
+	 *
+	 * @param statusByUserName the status by user name of this export import configuration
+	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
 		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
-	* Sets the status by user uuid of this export import configuration.
-	*
-	* @param statusByUserUuid the status by user uuid of this export import configuration
-	*/
+	 * Sets the status by user uuid of this export import configuration.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this export import configuration
+	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
 		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
-	* Sets the status date of this export import configuration.
-	*
-	* @param statusDate the status date of this export import configuration
-	*/
+	 * Sets the status date of this export import configuration.
+	 *
+	 * @param statusDate the status date of this export import configuration
+	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
 	}
 
 	/**
-	* Sets the type of this export import configuration.
-	*
-	* @param type the type of this export import configuration
-	*/
+	 * Sets the type of this export import configuration.
+	 *
+	 * @param type the type of this export import configuration
+	 */
 	@Override
 	public void setType(int type) {
 		model.setType(type);
 	}
 
 	/**
-	* Sets the user ID of this export import configuration.
-	*
-	* @param userId the user ID of this export import configuration
-	*/
+	 * Sets the user ID of this export import configuration.
+	 *
+	 * @param userId the user ID of this export import configuration
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this export import configuration.
-	*
-	* @param userName the user name of this export import configuration
-	*/
+	 * Sets the user name of this export import configuration.
+	 *
+	 * @param userName the user name of this export import configuration
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this export import configuration.
-	*
-	* @param userUuid the user uuid of this export import configuration
-	*/
+	 * Sets the user uuid of this export import configuration.
+	 *
+	 * @param userUuid the user uuid of this export import configuration
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -704,6 +710,8 @@ public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImp
 	@Override
 	protected ExportImportConfigurationWrapper wrap(
 		ExportImportConfiguration exportImportConfiguration) {
+
 		return new ExportImportConfigurationWrapper(exportImportConfiguration);
 	}
+
 }

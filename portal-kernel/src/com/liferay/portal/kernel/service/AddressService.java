@@ -39,18 +39,23 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface AddressService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressServiceUtil} to access the address remote service. Add custom service methods to <code>com.liferay.portal.service.impl.AddressServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Address addAddress(String className, long classPK, String street1,
-		String street2, String street3, String city, String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary,
-		ServiceContext serviceContext) throws PortalException;
+	public Address addAddress(
+			String className, long classPK, String street1, String street2,
+			String street3, String city, String zip, long regionId,
+			long countryId, long typeId, boolean mailing, boolean primary,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteAddress(long addressId) throws PortalException;
 
@@ -62,14 +67,16 @@ public interface AddressService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public Address updateAddress(long addressId, String street1,
-		String street2, String street3, String city, String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary)
+	public Address updateAddress(
+			long addressId, String street1, String street2, String street3,
+			String city, String zip, long regionId, long countryId, long typeId,
+			boolean mailing, boolean primary)
 		throws PortalException;
+
 }

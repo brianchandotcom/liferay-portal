@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class RepositoryEntryBaseImpl extends RepositoryEntryModelImpl
-	implements RepositoryEntry {
+public abstract class RepositoryEntryBaseImpl
+	extends RepositoryEntryModelImpl implements RepositoryEntry {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class RepositoryEntryBaseImpl extends RepositoryEntryModelImpl
 			RepositoryEntryLocalServiceUtil.updateRepositoryEntry(this);
 		}
 	}
+
 }

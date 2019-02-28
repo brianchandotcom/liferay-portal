@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.MembershipRequest;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class MembershipRequestCacheModel implements CacheModel<MembershipRequest>,
-	Externalizable, MVCCModel {
+public class MembershipRequestCacheModel
+	implements CacheModel<MembershipRequest>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,10 +49,13 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 			return false;
 		}
 
-		MembershipRequestCacheModel membershipRequestCacheModel = (MembershipRequestCacheModel)obj;
+		MembershipRequestCacheModel membershipRequestCacheModel =
+			(MembershipRequestCacheModel)obj;
 
-		if ((membershipRequestId == membershipRequestCacheModel.membershipRequestId) &&
-				(mvccVersion == membershipRequestCacheModel.mvccVersion)) {
+		if ((membershipRequestId ==
+				membershipRequestCacheModel.membershipRequestId) &&
+			(mvccVersion == membershipRequestCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -109,7 +112,8 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 
 	@Override
 	public MembershipRequest toEntityModel() {
-		MembershipRequestImpl membershipRequestImpl = new MembershipRequestImpl();
+		MembershipRequestImpl membershipRequestImpl =
+			new MembershipRequestImpl();
 
 		membershipRequestImpl.setMvccVersion(mvccVersion);
 		membershipRequestImpl.setMembershipRequestId(membershipRequestId);
@@ -175,8 +179,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(membershipRequestId);
@@ -220,4 +223,5 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 	public long replyDate;
 	public long replierUserId;
 	public long statusId;
+
 }

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -52,44 +51,48 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface RepositoryLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface RepositoryLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryLocalServiceUtil} to access the repository local service. Add custom service methods to <code>com.liferay.portal.service.impl.RepositoryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Repository addRepository(long userId, long groupId,
-		long classNameId, long parentFolderId, String name, String description,
-		String portletId, UnicodeProperties typeSettingsProperties,
-		boolean hidden, ServiceContext serviceContext)
+	public Repository addRepository(
+			long userId, long groupId, long classNameId, long parentFolderId,
+			String name, String description, String portletId,
+			UnicodeProperties typeSettingsProperties, boolean hidden,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Adds the repository to the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was added
-	*/
+	 * Adds the repository to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @return the repository that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Repository addRepository(Repository repository);
 
 	public void checkRepository(long repositoryId);
 
 	/**
-	* Creates a new repository with the primary key. Does not add the repository to the database.
-	*
-	* @param repositoryId the primary key for the new repository
-	* @return the new repository
-	*/
+	 * Creates a new repository with the primary key. Does not add the repository to the database.
+	 *
+	 * @param repositoryId the primary key for the new repository
+	 * @return the new repository
+	 */
 	@Transactional(enabled = false)
 	public Repository createRepository(long repositoryId);
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -97,90 +100,94 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public void deleteRepositories(long groupId) throws PortalException;
 
 	/**
-	* Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repositoryId the primary key of the repository
-	* @return the repository that was removed
-	* @throws PortalException if a repository with the primary key could not be found
-	*/
+	 * Deletes the repository with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param repositoryId the primary key of the repository
+	 * @return the repository that was removed
+	 * @throws PortalException if a repository with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Repository deleteRepository(long repositoryId)
 		throws PortalException;
 
 	/**
-	* Deletes the repository from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was removed
-	*/
+	 * Deletes the repository from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @return the repository that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public Repository deleteRepository(Repository repository);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RepositoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RepositoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RepositoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RepositoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Repository fetchRepository(long repositoryId);
@@ -189,18 +196,19 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public Repository fetchRepository(long groupId, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository fetchRepository(long groupId, String name,
-		String portletId);
+	public Repository fetchRepository(
+		long groupId, String name, String portletId);
 
 	/**
-	* Returns the repository matching the UUID and group.
-	*
-	* @param uuid the repository's UUID
-	* @param groupId the primary key of the group
-	* @return the matching repository, or <code>null</code> if a matching repository could not be found
-	*/
+	 * Returns the repository matching the UUID and group.
+	 *
+	 * @param uuid the repository's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching repository, or <code>null</code> if a matching repository could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository fetchRepositoryByUuidAndGroupId(String uuid, long groupId);
+	public Repository fetchRepositoryByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -216,10 +224,10 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -228,63 +236,62 @@ public interface RepositoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns a range of all the repositories.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RepositoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of repositories
-	* @param end the upper bound of the range of repositories (not inclusive)
-	* @return the range of repositories
-	*/
+	 * Returns a range of all the repositories.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.RepositoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of repositories
+	 * @param end the upper bound of the range of repositories (not inclusive)
+	 * @return the range of repositories
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Repository> getRepositories(int start, int end);
 
 	/**
-	* Returns all the repositories matching the UUID and company.
-	*
-	* @param uuid the UUID of the repositories
-	* @param companyId the primary key of the company
-	* @return the matching repositories, or an empty list if no matches were found
-	*/
+	 * Returns all the repositories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the repositories
+	 * @param companyId the primary key of the company
+	 * @return the matching repositories, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Repository> getRepositoriesByUuidAndCompanyId(String uuid,
-		long companyId);
+	public List<Repository> getRepositoriesByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	/**
-	* Returns a range of repositories matching the UUID and company.
-	*
-	* @param uuid the UUID of the repositories
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of repositories
-	* @param end the upper bound of the range of repositories (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching repositories, or an empty list if no matches were found
-	*/
+	 * Returns a range of repositories matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the repositories
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of repositories
+	 * @param end the upper bound of the range of repositories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching repositories, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Repository> getRepositoriesByUuidAndCompanyId(String uuid,
-		long companyId, int start, int end,
+	public List<Repository> getRepositoriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<Repository> orderByComparator);
 
 	/**
-	* Returns the number of repositories.
-	*
-	* @return the number of repositories
-	*/
+	 * Returns the number of repositories.
+	 *
+	 * @return the number of repositories
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRepositoriesCount();
 
 	/**
-	* Returns the repository with the primary key.
-	*
-	* @param repositoryId the primary key of the repository
-	* @return the repository
-	* @throws PortalException if a repository with the primary key could not be found
-	*/
+	 * Returns the repository with the primary key.
+	 *
+	 * @param repositoryId the primary key of the repository
+	 * @return the repository
+	 * @throws PortalException if a repository with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository getRepository(long repositoryId)
-		throws PortalException;
+	public Repository getRepository(long repositoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Repository getRepository(long groupId, String portletId)
@@ -295,13 +302,13 @@ public interface RepositoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the repository matching the UUID and group.
-	*
-	* @param uuid the repository's UUID
-	* @param groupId the primary key of the group
-	* @return the matching repository
-	* @throws PortalException if a matching repository could not be found
-	*/
+	 * Returns the repository matching the UUID and group.
+	 *
+	 * @param uuid the repository's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching repository
+	 * @throws PortalException if a matching repository could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Repository getRepositoryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
@@ -310,18 +317,21 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException;
 
-	public void updateRepository(long repositoryId, String name,
-		String description) throws PortalException;
+	public void updateRepository(
+			long repositoryId, String name, String description)
+		throws PortalException;
 
-	public void updateRepository(long repositoryId,
-		UnicodeProperties typeSettingsProperties) throws PortalException;
+	public void updateRepository(
+			long repositoryId, UnicodeProperties typeSettingsProperties)
+		throws PortalException;
 
 	/**
-	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was updated
-	*/
+	 * Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param repository the repository
+	 * @return the repository that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Repository updateRepository(Repository repository);
+
 }

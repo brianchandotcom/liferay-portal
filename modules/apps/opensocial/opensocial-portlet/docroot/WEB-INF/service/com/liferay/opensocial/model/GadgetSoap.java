@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class GadgetSoap implements Serializable {
+
 	public static GadgetSoap toSoapModel(Gadget model) {
 		GadgetSoap soapModel = new GadgetSoap();
 
@@ -175,4 +176,5 @@ public class GadgetSoap implements Serializable {
 	private String _url;
 	private String _portletCategoryNames;
 	private Date _lastPublishDate;
+
 }

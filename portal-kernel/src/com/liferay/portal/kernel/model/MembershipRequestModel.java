@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
-	MVCCModel, ShardedModel {
+public interface MembershipRequestModel
+	extends BaseModel<MembershipRequest>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -241,4 +242,5 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
 	 * @param statusId the status ID of this membership request
 	 */
 	public void setStatusId(long statusId);
+
 }

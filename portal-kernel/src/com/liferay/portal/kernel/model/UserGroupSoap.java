@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class UserGroupSoap implements Serializable {
+
 	public static UserGroupSoap toSoapModel(UserGroup model) {
 		UserGroupSoap soapModel = new UserGroupSoap();
 
@@ -78,7 +79,8 @@ public class UserGroupSoap implements Serializable {
 	}
 
 	public static UserGroupSoap[] toSoapModels(List<UserGroup> models) {
-		List<UserGroupSoap> soapModels = new ArrayList<UserGroupSoap>(models.size());
+		List<UserGroupSoap> soapModels = new ArrayList<UserGroupSoap>(
+			models.size());
 
 		for (UserGroup model : models) {
 			soapModels.add(toSoapModel(model));
@@ -219,4 +221,5 @@ public class UserGroupSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _addedByLDAPImport;
+
 }

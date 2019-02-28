@@ -32,8 +32,9 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class RatingsStatsBaseImpl extends RatingsStatsModelImpl
-	implements RatingsStats {
+public abstract class RatingsStatsBaseImpl
+	extends RatingsStatsModelImpl implements RatingsStats {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class RatingsStatsBaseImpl extends RatingsStatsModelImpl
 			RatingsStatsLocalServiceUtil.updateRatingsStats(this);
 		}
 	}
+
 }

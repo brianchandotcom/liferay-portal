@@ -41,45 +41,48 @@ import javax.servlet.ServletContext;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface ThemeLocalService extends BaseLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ThemeLocalServiceUtil} to access the theme local service. Add custom service methods to <code>com.liferay.portal.service.impl.ThemeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ColorScheme fetchColorScheme(long companyId, String themeId,
-		String colorSchemeId);
+	public ColorScheme fetchColorScheme(
+		long companyId, String themeId, String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletDecorator fetchPortletDecorator(long companyId,
-		String themeId, String colorSchemeId);
+	public PortletDecorator fetchPortletDecorator(
+		long companyId, String themeId, String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Theme fetchTheme(long companyId, String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ColorScheme getColorScheme(long companyId, String themeId,
-		String colorSchemeId);
+	public ColorScheme getColorScheme(
+		long companyId, String themeId, String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getControlPanelThemes(long companyId, long userId);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getPageThemes(long companyId, long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletDecorator getPortletDecorator(long companyId, String themeId,
-		String portletDecoratorId);
+	public PortletDecorator getPortletDecorator(
+		long companyId, String themeId, String portletDecoratorId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Theme getTheme(long companyId, String themeId);
@@ -88,24 +91,26 @@ public interface ThemeLocalService extends BaseLocalService {
 	public List<Theme> getThemes(long companyId);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Theme> getThemes(long companyId, long groupId, long userId,
-		boolean wapTheme);
+	public List<Theme> getThemes(
+		long companyId, long groupId, long userId, boolean wapTheme);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getWARThemes();
 
-	public List<Theme> init(ServletContext servletContext, String themesPath,
-		boolean loadFromServletContext, String[] xmls,
-		PluginPackage pluginPackage);
-
-	public List<Theme> init(String servletContextName,
+	public List<Theme> init(
 		ServletContext servletContext, String themesPath,
 		boolean loadFromServletContext, String[] xmls,
 		PluginPackage pluginPackage);
 
+	public List<Theme> init(
+		String servletContextName, ServletContext servletContext,
+		String themesPath, boolean loadFromServletContext, String[] xmls,
+		PluginPackage pluginPackage);
+
 	public void uninstallThemes(List<Theme> themes);
+
 }

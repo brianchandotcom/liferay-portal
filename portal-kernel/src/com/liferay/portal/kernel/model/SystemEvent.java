@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.SystemEventImpl")
 @ProviderType
 public interface SystemEvent extends SystemEventModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.SystemEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SystemEvent, Long> SYSTEM_EVENT_ID_ACCESSOR = new Accessor<SystemEvent, Long>() {
+	public static final Accessor<SystemEvent, Long> SYSTEM_EVENT_ID_ACCESSOR =
+		new Accessor<SystemEvent, Long>() {
+
 			@Override
 			public Long get(SystemEvent systemEvent) {
 				return systemEvent.getSystemEventId();
@@ -49,9 +52,11 @@ public interface SystemEvent extends SystemEventModel, PersistedModel {
 			public Class<SystemEvent> getTypeClass() {
 				return SystemEvent.class;
 			}
+
 		};
 
 	public String getReferrerClassName();
 
 	public void setReferrerClassName(String referrerClassName);
+
 }

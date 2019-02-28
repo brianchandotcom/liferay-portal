@@ -24,50 +24,60 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class MembershipRequestServiceWrapper implements MembershipRequestService,
-	ServiceWrapper<MembershipRequestService> {
+public class MembershipRequestServiceWrapper
+	implements MembershipRequestService,
+			   ServiceWrapper<MembershipRequestService> {
+
 	public MembershipRequestServiceWrapper(
 		MembershipRequestService membershipRequestService) {
+
 		_membershipRequestService = membershipRequestService;
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
-		long groupId, String comments, ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.MembershipRequest
+			addMembershipRequest(
+				long groupId, String comments, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _membershipRequestService.addMembershipRequest(groupId,
-			comments, serviceContext);
+
+		return _membershipRequestService.addMembershipRequest(
+			groupId, comments, serviceContext);
 	}
 
 	@Override
 	public void deleteMembershipRequests(long groupId, long statusId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_membershipRequestService.deleteMembershipRequests(groupId, statusId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.MembershipRequest getMembershipRequest(
-		long membershipRequestId)
+	public com.liferay.portal.kernel.model.MembershipRequest
+			getMembershipRequest(long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _membershipRequestService.getMembershipRequest(membershipRequestId);
+
+		return _membershipRequestService.getMembershipRequest(
+			membershipRequestId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _membershipRequestService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void updateStatus(long membershipRequestId, String reviewComments,
-		long statusId, ServiceContext serviceContext)
+	public void updateStatus(
+			long membershipRequestId, String reviewComments, long statusId,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_membershipRequestService.updateStatus(membershipRequestId,
-			reviewComments, statusId, serviceContext);
+
+		_membershipRequestService.updateStatus(
+			membershipRequestId, reviewComments, statusId, serviceContext);
 	}
 
 	@Override
@@ -78,8 +88,10 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	@Override
 	public void setWrappedService(
 		MembershipRequestService membershipRequestService) {
+
 		_membershipRequestService = membershipRequestService;
 	}
 
 	private MembershipRequestService _membershipRequestService;
+
 }

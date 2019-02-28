@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.uad.constants.PortalUADConstants;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -39,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseRepositoryUADAnonymizer
 	extends DynamicQueryUADAnonymizer<Repository> {
+
 	@Override
-	public void autoAnonymize(Repository repository, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			Repository repository, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (repository.getUserId() == userId) {
 			repository.setUserId(anonymousUser.getUserId());
 			repository.setUserName(anonymousUser.getFullName());
@@ -72,4 +74,5 @@ public abstract class BaseRepositoryUADAnonymizer
 
 	@Reference
 	protected RepositoryLocalService repositoryLocalService;
+
 }

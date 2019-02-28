@@ -40,60 +40,77 @@ import java.util.Map;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface ResourceBlockService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockServiceUtil} to access the resource block remote service. Add custom service methods to <code>com.liferay.portal.service.impl.ResourceBlockServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addCompanyScopePermission(long scopeGroupId, long companyId,
-		String name, long roleId, String actionId) throws PortalException;
-
-	public void addGroupScopePermission(long scopeGroupId, long companyId,
-		long groupId, String name, long roleId, String actionId)
+	public void addCompanyScopePermission(
+			long scopeGroupId, long companyId, String name, long roleId,
+			String actionId)
 		throws PortalException;
 
-	public void addIndividualScopePermission(long companyId, long groupId,
-		String name, long primKey, long roleId, String actionId)
+	public void addGroupScopePermission(
+			long scopeGroupId, long companyId, long groupId, String name,
+			long roleId, String actionId)
+		throws PortalException;
+
+	public void addIndividualScopePermission(
+			long companyId, long groupId, String name, long primKey,
+			long roleId, String actionId)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public void removeAllGroupScopePermissions(long scopeGroupId,
-		long companyId, String name, long roleId, String actionId)
+	public void removeAllGroupScopePermissions(
+			long scopeGroupId, long companyId, String name, long roleId,
+			String actionId)
 		throws PortalException;
 
-	public void removeCompanyScopePermission(long scopeGroupId, long companyId,
-		String name, long roleId, String actionId) throws PortalException;
-
-	public void removeGroupScopePermission(long scopeGroupId, long companyId,
-		long groupId, String name, long roleId, String actionId)
+	public void removeCompanyScopePermission(
+			long scopeGroupId, long companyId, String name, long roleId,
+			String actionId)
 		throws PortalException;
 
-	public void removeIndividualScopePermission(long companyId, long groupId,
-		String name, long primKey, long roleId, String actionId)
+	public void removeGroupScopePermission(
+			long scopeGroupId, long companyId, long groupId, String name,
+			long roleId, String actionId)
 		throws PortalException;
 
-	public void setCompanyScopePermissions(long scopeGroupId, long companyId,
-		String name, long roleId, List<String> actionIds)
+	public void removeIndividualScopePermission(
+			long companyId, long groupId, String name, long primKey,
+			long roleId, String actionId)
 		throws PortalException;
 
-	public void setGroupScopePermissions(long scopeGroupId, long companyId,
-		long groupId, String name, long roleId, List<String> actionIds)
+	public void setCompanyScopePermissions(
+			long scopeGroupId, long companyId, String name, long roleId,
+			List<String> actionIds)
 		throws PortalException;
 
-	public void setIndividualScopePermissions(long companyId, long groupId,
-		String name, long primKey, long roleId, List<String> actionIds)
+	public void setGroupScopePermissions(
+			long scopeGroupId, long companyId, long groupId, String name,
+			long roleId, List<String> actionIds)
 		throws PortalException;
 
-	public void setIndividualScopePermissions(long companyId, long groupId,
-		String name, long primKey, Map<Long, String[]> roleIdsToActionIds)
+	public void setIndividualScopePermissions(
+			long companyId, long groupId, String name, long primKey,
+			long roleId, List<String> actionIds)
 		throws PortalException;
+
+	public void setIndividualScopePermissions(
+			long companyId, long groupId, String name, long primKey,
+			Map<Long, String[]> roleIdsToActionIds)
+		throws PortalException;
+
 }

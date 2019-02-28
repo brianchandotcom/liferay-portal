@@ -31,8 +31,9 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class RegionWrapper extends BaseModelWrapper<Region> implements Region,
-	ModelWrapper<Region> {
+public class RegionWrapper
+	extends BaseModelWrapper<Region> implements Region, ModelWrapper<Region> {
+
 	public RegionWrapper(Region region) {
 		super(region);
 	}
@@ -91,150 +92,150 @@ public class RegionWrapper extends BaseModelWrapper<Region> implements Region,
 	}
 
 	/**
-	* Returns the active of this region.
-	*
-	* @return the active of this region
-	*/
+	 * Returns the active of this region.
+	 *
+	 * @return the active of this region
+	 */
 	@Override
 	public boolean getActive() {
 		return model.getActive();
 	}
 
 	/**
-	* Returns the country ID of this region.
-	*
-	* @return the country ID of this region
-	*/
+	 * Returns the country ID of this region.
+	 *
+	 * @return the country ID of this region
+	 */
 	@Override
 	public long getCountryId() {
 		return model.getCountryId();
 	}
 
 	/**
-	* Returns the mvcc version of this region.
-	*
-	* @return the mvcc version of this region
-	*/
+	 * Returns the mvcc version of this region.
+	 *
+	 * @return the mvcc version of this region
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this region.
-	*
-	* @return the name of this region
-	*/
+	 * Returns the name of this region.
+	 *
+	 * @return the name of this region
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this region.
-	*
-	* @return the primary key of this region
-	*/
+	 * Returns the primary key of this region.
+	 *
+	 * @return the primary key of this region
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the region code of this region.
-	*
-	* @return the region code of this region
-	*/
+	 * Returns the region code of this region.
+	 *
+	 * @return the region code of this region
+	 */
 	@Override
 	public String getRegionCode() {
 		return model.getRegionCode();
 	}
 
 	/**
-	* Returns the region ID of this region.
-	*
-	* @return the region ID of this region
-	*/
+	 * Returns the region ID of this region.
+	 *
+	 * @return the region ID of this region
+	 */
 	@Override
 	public long getRegionId() {
 		return model.getRegionId();
 	}
 
 	/**
-	* Returns <code>true</code> if this region is active.
-	*
-	* @return <code>true</code> if this region is active; <code>false</code> otherwise
-	*/
+	 * Returns <code>true</code> if this region is active.
+	 *
+	 * @return <code>true</code> if this region is active; <code>false</code> otherwise
+	 */
 	@Override
 	public boolean isActive() {
 		return model.isActive();
 	}
 
 	/**
-	* Sets whether this region is active.
-	*
-	* @param active the active of this region
-	*/
+	 * Sets whether this region is active.
+	 *
+	 * @param active the active of this region
+	 */
 	@Override
 	public void setActive(boolean active) {
 		model.setActive(active);
 	}
 
 	/**
-	* Sets the country ID of this region.
-	*
-	* @param countryId the country ID of this region
-	*/
+	 * Sets the country ID of this region.
+	 *
+	 * @param countryId the country ID of this region
+	 */
 	@Override
 	public void setCountryId(long countryId) {
 		model.setCountryId(countryId);
 	}
 
 	/**
-	* Sets the mvcc version of this region.
-	*
-	* @param mvccVersion the mvcc version of this region
-	*/
+	 * Sets the mvcc version of this region.
+	 *
+	 * @param mvccVersion the mvcc version of this region
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this region.
-	*
-	* @param name the name of this region
-	*/
+	 * Sets the name of this region.
+	 *
+	 * @param name the name of this region
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this region.
-	*
-	* @param primaryKey the primary key of this region
-	*/
+	 * Sets the primary key of this region.
+	 *
+	 * @param primaryKey the primary key of this region
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the region code of this region.
-	*
-	* @param regionCode the region code of this region
-	*/
+	 * Sets the region code of this region.
+	 *
+	 * @param regionCode the region code of this region
+	 */
 	@Override
 	public void setRegionCode(String regionCode) {
 		model.setRegionCode(regionCode);
 	}
 
 	/**
-	* Sets the region ID of this region.
-	*
-	* @param regionId the region ID of this region
-	*/
+	 * Sets the region ID of this region.
+	 *
+	 * @param regionId the region ID of this region
+	 */
 	@Override
 	public void setRegionId(long regionId) {
 		model.setRegionId(regionId);
@@ -244,4 +245,5 @@ public class RegionWrapper extends BaseModelWrapper<Region> implements Region,
 	protected RegionWrapper wrap(Region region) {
 		return new RegionWrapper(region);
 	}
+
 }

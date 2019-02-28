@@ -53,12 +53,14 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class ImageServiceHttp {
+
 	public static com.liferay.portal.kernel.model.Image getImage(
-		HttpPrincipal httpPrincipal, long imageId)
+			HttpPrincipal httpPrincipal, long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		try {
-			MethodKey methodKey = new MethodKey(ImageServiceUtil.class,
-					"getImage", _getImageParameterTypes0);
+			MethodKey methodKey = new MethodKey(
+				ImageServiceUtil.class, "getImage", _getImageParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, imageId);
 
@@ -68,11 +70,15 @@ public class ImageServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.model.Image)returnObj;
@@ -85,7 +91,9 @@ public class ImageServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImageServiceHttp.class);
+
 	private static final Class<?>[] _getImageParameterTypes0 = new Class[] {
-			long.class
-		};
+		long.class
+	};
+
 }

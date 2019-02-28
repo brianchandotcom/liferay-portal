@@ -14,8 +14,11 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.lang.annotation.Annotation;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -130,9 +133,9 @@ public class JSR362BeanProducer {
 		PortletRequest portletRequest = getPortletRequest();
 
 		if (portletRequest == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to @Inject @ContextPath into a portlet bean");
-			}
+			_log.error(
+				new IllegalStateException(
+					_getDependentStringErrorMessage(ContextPath.class)));
 
 			return null;
 		}
@@ -264,9 +267,9 @@ public class JSR362BeanProducer {
 		PortletResponse portletResponse = getPortletResponse();
 
 		if (portletResponse == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to @Inject @Namespace into a portlet bean");
-			}
+			_log.error(
+				new IllegalStateException(
+					_getDependentStringErrorMessage(Namespace.class)));
 
 			return null;
 		}
@@ -322,9 +325,9 @@ public class JSR362BeanProducer {
 		PortletConfig portletConfig = getPortletConfig();
 
 		if (portletConfig == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to @Inject @PortletName into a portlet bean");
-			}
+			_log.error(
+				new IllegalStateException(
+					_getDependentStringErrorMessage(PortletName.class)));
 
 			return null;
 		}
@@ -494,9 +497,9 @@ public class JSR362BeanProducer {
 		PortletRequest portletRequest = getPortletRequest();
 
 		if (portletRequest == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to @Inject @WindowId into a portlet bean");
-			}
+			_log.error(
+				new IllegalStateException(
+					_getDependentStringErrorMessage(WindowId.class)));
 
 			return null;
 		}
@@ -516,6 +519,16 @@ public class JSR362BeanProducer {
 		}
 
 		return portletRequest.getWindowState();
+	}
+
+	private String _getDependentStringErrorMessage(
+		Class<? extends Annotation> annotationClass) {
+
+		return StringBundler.concat(
+			"Unable to @Inject ", annotationClass, " into field because it is ",
+			"a @Dependent String that can only be injected during a request. ",
+			"Annotate the parent class with @PortletRequestScoped instead of ",
+			"@ApplicationScoped.");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

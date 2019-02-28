@@ -25,6 +25,7 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADInfoPanelDisplay;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
@@ -69,6 +70,7 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 				new ViewUADEntitiesDisplay();
 
 			viewUADEntitiesDisplay.setApplicationKey(applicationKey);
+			viewUADEntitiesDisplay.setHierarchy(true);
 
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(renderResponse);
@@ -91,6 +93,12 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 
 			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(className);
 
+			UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
+
+			uadInfoPanelDisplay.setHierarchyView(true);
+			uadInfoPanelDisplay.setTopLevelView(false);
+			uadInfoPanelDisplay.setUadDisplay(uadDisplay);
+
 			Class<?> typeClass = uadDisplay.getTypeClass();
 
 			long parentContainerId = ParamUtil.getLong(
@@ -104,6 +112,8 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				UADWebKeys.UAD_HIERARCHY_DISPLAY, uadHierarchyDisplay);
+			renderRequest.setAttribute(
+				UADWebKeys.UAD_INFO_PANEL_DISPLAY, uadInfoPanelDisplay);
 			renderRequest.setAttribute(
 				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 		}

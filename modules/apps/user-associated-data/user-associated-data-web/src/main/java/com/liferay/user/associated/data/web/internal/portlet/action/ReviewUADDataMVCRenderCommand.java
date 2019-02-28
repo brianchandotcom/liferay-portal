@@ -34,6 +34,7 @@ import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADInfoPanelDisplay;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.search.UADHierarchyResultRowSplitter;
@@ -116,10 +117,20 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			PortletURL currentURL = PortletURLUtil.getCurrent(
 				renderRequest, renderResponse);
 
+			UADInfoPanelDisplay uadInfoPanelDisplay = new UADInfoPanelDisplay();
+
 			UADHierarchyDisplay uadHierarchyDisplay =
 				_uadRegistry.getUADHierarchyDisplay(applicationKey);
 
 			if (uadHierarchyDisplay != null) {
+				UADDisplay<?>[] uadDisplays =
+					uadHierarchyDisplay.getUADDisplays();
+
+				uadInfoPanelDisplay.setUadDisplay(uadDisplays[0]);
+
+				uadInfoPanelDisplay.setHierarchyView(true);
+
+				viewUADEntitiesDisplay.setHierarchy(true);
 				viewUADEntitiesDisplay.setResultRowSplitter(
 					new UADHierarchyResultRowSplitter(
 						LocaleThreadLocal.getThemeDisplayLocale(),
@@ -135,12 +146,6 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 						renderRequest, liferayPortletResponse, applicationKey,
 						currentURL, groupIds, parentContainerClass, 0L,
 						selectedUser, uadHierarchyDisplay));
-
-				UADDisplay<?>[] uadDisplays =
-					uadHierarchyDisplay.getUADDisplays();
-
-				renderRequest.setAttribute(
-					UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplays[0]);
 			}
 			else {
 				String uadRegistryKey = ParamUtil.getString(
@@ -155,6 +160,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				UADDisplay uadDisplay = _uadRegistry.getUADDisplay(
 					uadRegistryKey);
 
+				uadInfoPanelDisplay.setUadDisplay(uadDisplay);
+
 				viewUADEntitiesDisplay.setSearchContainer(
 					_uadReviewDataHelper.getSearchContainer(
 						renderRequest, liferayPortletResponse, currentURL,
@@ -162,12 +169,10 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				viewUADEntitiesDisplay.setTypeName(
 					uadDisplay.getTypeName(
 						LocaleThreadLocal.getThemeDisplayLocale()));
-
 				viewUADEntitiesDisplay.setTypeClasses(
 					new Class<?>[] {uadDisplay.getTypeClass()});
 
-				renderRequest.setAttribute(
-					UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
+				viewUADEntitiesDisplay.setUadRegistryKey(uadRegistryKey);
 			}
 
 			renderRequest.setAttribute(
@@ -181,6 +186,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				UADWebKeys.UAD_APPLICATION_SUMMARY_DISPLAY_LIST,
 				uadApplicationSummaryDisplays);
+			renderRequest.setAttribute(
+				UADWebKeys.UAD_INFO_PANEL_DISPLAY, uadInfoPanelDisplay);
 			renderRequest.setAttribute(
 				UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 		}

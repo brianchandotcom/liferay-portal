@@ -169,7 +169,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		for (String key : parameterMap.keySet()) {
 			if (key.startsWith("primaryKey__")) {
-				return key.substring(key.lastIndexOf("_") + 1);
+				return key.replace("primaryKey__", "");
 			}
 		}
 
@@ -183,7 +183,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 		for (String key : parameterMap.keySet()) {
 			if (key.startsWith("primaryKeys__")) {
-				entityTypes.add(key.substring(key.lastIndexOf("_") + 1));
+				entityTypes.add(key.replace("primaryKeys__", ""));
 			}
 		}
 

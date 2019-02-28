@@ -17,29 +17,37 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<UADEntity> uadEntities = (List<UADEntity>)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_ENTITIES);
-UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_UAD_DISPLAY);
+UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttribute(UADWebKeys.UAD_INFO_PANEL_DISPLAY);
 %>
 
 <div class="sidebar sidebar-light">
 	<c:choose>
-		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
+		<c:when test="<%= uadInfoPanelDisplay.getUadEntitiesCount() == 0 %>">
 			<div class="sidebar-header">
-				<h3 class="sidebar-title"><%= uadDisplay.getTypeName(locale) %></h3>
+				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
+					<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+				</c:if>
 
-				<h5 class="sidebar-subtitle"><%= UADLanguageUtil.getApplicationName(uadDisplay, locale) %></h5>
+				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
 			</div>
 		</c:when>
-		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">
+		<c:when test="<%= uadInfoPanelDisplay.getUadEntitiesCount() == 1 %>">
 
 			<%
-			UADEntity uadEntity = uadEntities.get(0);
+			UADDisplay uadDisplay = uadInfoPanelDisplay.getUadDisplay();
+			UADEntity uadEntity = uadInfoPanelDisplay.getFirstUADEntity();
 
 			Serializable primaryKey = uadEntity.getPrimaryKey();
 
 			Map<String, Object> displayValues = uadDisplay.getFieldValues(uadEntity.getEntity(), uadDisplay.getDisplayFieldNames(), locale);
 
 			String identifierFieldName = uadDisplay.getDisplayFieldNames()[0];
+
+			String actions = "anonymize,delete,edit,view";
+
+			if (!uadEntity.isUserOwned()) {
+				actions = "view";
+			}
 			%>
 
 			<div class="sidebar-header">
@@ -49,9 +57,9 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 					</li>
 				</ul>
 
-				<h3 class="sidebar-title"><%= SafeDisplayValueUtil.get(displayValues.get(identifierFieldName)) %></h3>
+				<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
 
-				<h5 class="sidebar-subtitle"><%= uadDisplay.getTypeName(locale) %></h5>
+				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
 			</div>
 
 			<div class="sidebar-body">
@@ -78,11 +86,13 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 				</dl>
 			</div>
 		</c:when>
-		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
+		<c:when test="<%= uadInfoPanelDisplay.getUadEntitiesCount() > 1 %>">
 			<div class="sidebar-header">
-				<h3 class="sidebar-title"><%= uadDisplay.getTypeName(locale) %></h3>
+				<c:if test="<%= uadInfoPanelDisplay.getTitle(locale) != null %>">
+					<h3 class="sidebar-title"><%= uadInfoPanelDisplay.getTitle(locale) %></h3>
+				</c:if>
 
-				<h5 class="sidebar-subtitle"><liferay-ui:message arguments="<%= uadEntities.size() %>" key="x-items-are-selected" /></h5>
+				<h5 class="sidebar-subtitle"><%= uadInfoPanelDisplay.getSubtitle(locale) %></h5>
 			</div>
 		</c:when>
 	</c:choose>

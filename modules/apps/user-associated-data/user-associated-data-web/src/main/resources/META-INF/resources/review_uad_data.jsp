@@ -122,7 +122,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="panel-group">
-				<c:if test="<%= viewUADEntitiesDisplay.getTypeName() != null %>">
+				<c:if test="<%= !viewUADEntitiesDisplay.isHierarchy() %>">
 					<div class="panel panel-secondary">
 						<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
 							<span class="panel-title">
@@ -226,7 +226,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		}
 	);
 
-	<c:if test="<%= viewUADEntitiesDisplay.getTypeName() != null %>">
+	<c:if test="<%= !viewUADEntitiesDisplay.isHierarchy() %>">
 		registerClickHandler(
 			<portlet:namespace />entitiesTypePanelBody,
 			function(event) {

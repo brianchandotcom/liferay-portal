@@ -24,8 +24,12 @@ SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.get
 
 ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadEntitySearchContainer);
 
+boolean topLevelView = true;
+
 if (uadHierarchyDisplay != null) {
-	uadHierarchyDisplay.addPortletBreadcrumbEntries(request, renderResponse);
+	topLevelView = false;
+
+	uadHierarchyDisplay.addPortletBreadcrumbEntries(request, renderResponse, locale);
 }
 %>
 
@@ -36,20 +40,24 @@ if (uadHierarchyDisplay != null) {
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUadRegistryKey() %>" />
 
 	<%
 	for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
 	%>
 
-		<aui:input name="<%= "primaryKeys__" + typeClass.getSimpleName() %>" type="hidden" />
-		<aui:input name="<%= "uadRegistryKey__" + typeClass.getSimpleName() %>" type="hidden" value="<%= typeClass.getName() %>" />
+		<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
+		<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
 
 	<%
 	}
 	%>
 
 	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/info_panel" var="entityTypeSidebarURL">
+			<liferay-portlet:param name="hierarchyView" value="<%= String.valueOf(viewUADEntitiesDisplay.isHierarchy()) %>" />
+			<liferay-portlet:param name="topLevelView" value="<%= String.valueOf(topLevelView) %>" />
+		</liferay-portlet:resourceURL>
 
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb
@@ -60,12 +68,12 @@ if (uadHierarchyDisplay != null) {
 			/>
 		</div>
 
-		<%--<liferay-frontend:sidebar-panel
+		<liferay-frontend:sidebar-panel
 			resourceURL="<%= entityTypeSidebarURL %>"
 			searchContainerId="UADEntities"
 		>
 			<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:sidebar-panel>--%>
+		</liferay-frontend:sidebar-panel>
 
 		<div class="sidenav-content">
 			<liferay-ui:search-container

@@ -45,8 +45,20 @@ public class ViewUADEntitiesDisplay {
 		return _typeName;
 	}
 
+	public String getUadRegistryKey() {
+		return _uadRegistryKey;
+	}
+
+	public boolean isHierarchy() {
+		return _hierarchy;
+	}
+
 	public void setApplicationKey(String applicationKey) {
 		_applicationKey = applicationKey;
+	}
+
+	public void setHierarchy(boolean hierarchy) {
+		_hierarchy = hierarchy;
 	}
 
 	public void setResultRowSplitter(ResultRowSplitter resultRowSplitter) {
@@ -65,10 +77,16 @@ public class ViewUADEntitiesDisplay {
 		_typeName = typeName;
 	}
 
+	public void setUadRegistryKey(String uadRegistryKey) {
+		_uadRegistryKey = uadRegistryKey;
+	}
+
 	private String _applicationKey;
+	private boolean _hierarchy;
 	private ResultRowSplitter _resultRowSplitter;
 	private SearchContainer<UADEntity> _searchContainer;
 	private List<Class<?>> _typeClasses;
 	private String _typeName;
+	private String _uadRegistryKey = "";
 
 }

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -87,7 +86,8 @@ public class UADHierarchyDisplay {
 	}
 
 	public <T> void addPortletBreadcrumbEntries(
-			HttpServletRequest request, RenderResponse renderResponse)
+			HttpServletRequest request, RenderResponse renderResponse,
+			Locale locale)
 		throws Exception {
 
 		PortletURL baseURL = renderResponse.createRenderURL();
@@ -108,8 +108,6 @@ public class UADHierarchyDisplay {
 		String className = ParamUtil.getString(request, "parentContainerClass");
 
 		UADDisplay uadDisplay = _getUADDisplayByClassName(className);
-
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		String applicationName = UADLanguageUtil.getApplicationName(
 			uadDisplay, locale);

@@ -24,7 +24,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.expando.kernel.util.ExpandoPresetUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -100,21 +99,14 @@ public class ExpandoPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String preset = ParamUtil.getString(actionRequest, "type");
+		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		if (preset.startsWith("Preset")) {
-			ExpandoPresetUtil.addPresetExpando(expandoBridge, preset, name);
-		}
-		else {
-			int type = ParamUtil.getInteger(actionRequest, "type");
+		expandoBridge.addAttribute(name, type);
 
-			expandoBridge.addAttribute(name, type);
-
-			updateProperties(actionRequest, expandoBridge, name);
-		}
+		updateProperties(actionRequest, expandoBridge, name);
 	}
 
 	public void deleteExpando(

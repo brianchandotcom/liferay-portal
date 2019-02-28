@@ -122,32 +122,18 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 					</c:when>
 					<c:otherwise>
 						<aui:select helpMessage="custom-field-type-help" label="field-type" name="type">
-							<optgroup label="<liferay-ui:message key="presets" />">
-								<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
-								<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
-								<aui:option label="selection-of-text-values" value="PresetSelectionStringArray()" />
-								<aui:option label="text-box" value="PresetTextBox()" />
-								<aui:option label="text-box-indexed" value="PresetTextBoxIndexed()" />
-								<aui:option label="text-field-secret" value="PresetTextFieldSecret()" />
-								<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
-							</optgroup>
-
-							<optgroup label="<liferay-ui:message key="primitives" />">
-
-								<%
-								for (int curType : ExpandoColumnConstants.TYPES) {
-									if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY) || (curType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
-										continue;
-									}
-								%>
-
-									<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
-
-								<%
+							<%
+							for (int curType : ExpandoColumnConstants.TYPES) {
+								if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY) || (curType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
+									continue;
 								}
-								%>
+							%>
 
-							</optgroup>
+								<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
+
+							<%
+							}
+							%>
 						</aui:select>
 					</c:otherwise>
 				</c:choose>

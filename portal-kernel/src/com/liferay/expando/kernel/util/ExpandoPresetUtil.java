@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 /**
  * @author Raymond Augé
  * @author Drew Brokke
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class ExpandoPresetUtil {
 
 	public static int addPresetExpando(

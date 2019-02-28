@@ -85,32 +85,20 @@ if (!dlFileEntries.isEmpty()) {
 					<br />
 
 					<aui:select helpMessage="custom-field-type-help" label="type" name="<%= selectName %>">
-						<optgroup label="<liferay-ui:message key="presets" />">
-							<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
-							<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
-							<aui:option label="selection-of-text-values" value="PresetSelectionStringArray()" />
-							<aui:option label="text-box" value="PresetTextBox()" />
-							<aui:option label="text-box-indexed" value="PresetTextBoxIndexed()" />
-							<aui:option label="text-field-secret" value="PresetTextFieldSecret()" />
-							<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
-						</optgroup>
 
-						<optgroup label="<liferay-ui:message key="primitives" />">
-
-							<%
-							for (int curType : ExpandoColumnConstants.TYPES) {
-								if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY)) {
-									continue;
-								}
-							%>
-
-								<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
-
-							<%
+						<%
+						for (int curType : ExpandoColumnConstants.TYPES) {
+							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY)) {
+								continue;
 							}
-							%>
+						%>
 
-						</optgroup>
+							<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
+
+						<%
+						}
+						%>
+
 					</aui:select>
 				</aui:fieldset>
 
@@ -127,16 +115,16 @@ if (!dlFileEntries.isEmpty()) {
 
 <aui:script>
 	function <portlet:namespace />convertDocumentLibraryExtraSettings() {
-		var form = document.getElementById('<portlet:namespace />fm');
+	var form = document.getElementById('<portlet:namespace />fm');
 
-		if (form) {
-			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+	if (form) {
+	var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
-			if (cmd) {
-				cmd.setAttribute('value', 'convert');
-			}
+	if (cmd) {
+	cmd.setAttribute('value', 'convert');
+	}
 
-			submitForm(form);
-		}
+	submitForm(form);
+	}
 	}
 </aui:script>

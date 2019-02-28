@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.expando.kernel.util.ExpandoPresetUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -68,11 +67,6 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, DLFileEntryConstants.getClassName(), 0);
-
-		if (preset.startsWith("Preset")) {
-			return ExpandoPresetUtil.addPresetExpando(
-				expandoBridge, preset, name);
-		}
 
 		int type = GetterUtil.getInteger(preset);
 

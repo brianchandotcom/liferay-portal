@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
@@ -139,12 +140,11 @@ public class DefaultDLPortletToolbarContributor
 
 		long repositoryId = _getRepositoryId(themeDisplay, folder);
 
-		if (themeDisplay.getScopeGroupId() != repositoryId) {
-			menuItems.add(
-				_getPortletTitleAddBasicDocumentMenuItem(
-					folder, themeDisplay, portletRequest));
-		}
-		else {
+		menuItems.add(
+			_getPortletTitleAddBasicDocumentMenuItem(
+				folder, themeDisplay, portletRequest));
+
+		if (themeDisplay.getScopeGroupId() == repositoryId) {
 			menuItems.addAll(
 				_getPortletTitleAddDocumentTypeMenuItems(
 					folder, themeDisplay, portletRequest));
@@ -529,8 +529,7 @@ public class DefaultDLPortletToolbarContributor
 
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
-				_portal.getHttpServletRequest(portletRequest),
-				"basic-document"));
+				_portal.getHttpServletRequest(portletRequest), "file-upload"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -564,11 +563,15 @@ public class DefaultDLPortletToolbarContributor
 
 		for (DLFileEntryType fileEntryType : fileEntryTypes) {
 			try {
-				MenuItem urlMenuItem = getFileEntryTypeMenuItem(
-					portletRequest, folder, fileEntryTypes, fileEntryType,
-					themeDisplay);
+				if (fileEntryType.getFileEntryTypeId() !=
+						DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT) {
 
-				menuItems.add(urlMenuItem);
+					MenuItem urlMenuItem = getFileEntryTypeMenuItem(
+						portletRequest, folder, fileEntryTypes, fileEntryType,
+						themeDisplay);
+
+					menuItems.add(urlMenuItem);
+				}
 			}
 			catch (PortalException pe) {
 				_log.error(

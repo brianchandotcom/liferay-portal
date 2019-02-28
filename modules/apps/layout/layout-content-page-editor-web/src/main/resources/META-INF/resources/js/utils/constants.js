@@ -45,3 +45,56 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
 	fragmentList: 'fragments-editor-fragment-list',
 	section: 'fragments-editor-section'
 };
+
+/**
+ * Available editable field config keys
+ */
+export const EDITABLE_FIELD_CONFIG_KEYS = {
+	textAlignment: 'textAlignment',
+	textColor: 'textColor',
+	textStyle: 'textStyle'
+};
+
+/**
+ * Available values for textStyle config key
+ */
+export const TEXT_STYLES = [
+	{
+		label: Liferay.Language.get('small'),
+		textStyleId: 'small'
+	},
+	{
+		label: Liferay.Language.get('regular'),
+		textStyleId: 'regular'
+	},
+	{
+		label: Liferay.Language.get('medium'),
+		textStyleId: 'medium'
+	},
+	{
+		label: Liferay.Language.get('large'),
+		textStyleId: 'large'
+	}
+];
+
+/**
+ * Available values for textAlignmentOptions config key
+ */
+export const TEXT_ALIGNMENT_OPTIONS = [
+	{
+		label: Liferay.Language.get('center'),
+		textAlignmentId: 'center'
+	},
+	{
+		label: Liferay.Language.get('justify'),
+		textAlignmentId: 'justify'
+	},
+	{
+		label: Liferay.Language.get('left'),
+		textAlignmentId: 'left'
+	},
+	{
+		label: Liferay.Language.get('right'),
+		textAlignmentId: 'right'
+	}
+];

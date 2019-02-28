@@ -18,6 +18,7 @@ export const SELECT_MAPPEABLE_FIELD = 'selectMappeableField';
 export const SELECT_MAPPEABLE_TYPE = 'selectMappeableType';
 export const TOGGLE_SIDEBAR = 'toggleSidebar';
 export const UPDATE_ACTIVE_ITEM = 'updateActiveItem';
+export const UPDATE_CONFIG_ATTRIBUTES = 'updateConfigAttributes';
 export const UPDATE_DROP_TARGET = 'updateDragTarget';
 export const UPDATE_EDITABLE_VALUE = 'updateEditableValue';
 export const UPDATE_HIGHLIGHT_MAPPING_STATUS = 'updateHighlightMappingStatus';

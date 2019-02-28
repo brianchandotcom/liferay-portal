@@ -88,7 +88,8 @@ public class LayoutModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"parentPlid", Types.BIGINT},
 		{"leftPlid", Types.BIGINT}, {"rightPlid", Types.BIGINT},
 		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
-		{"parentLayoutId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"parentLayoutId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
 		{"keywords", Types.VARCHAR}, {"robots", Types.VARCHAR},
 		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
@@ -99,8 +100,7 @@ public class LayoutModelImpl
 		{"layoutPrototypeUuid", Types.VARCHAR},
 		{"layoutPrototypeLinkEnabled", Types.BOOLEAN},
 		{"sourcePrototypeLayoutUuid", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"publishDate", Types.TIMESTAMP}
+		{"publishDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -122,6 +122,8 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentLayoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
@@ -140,14 +142,12 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("layoutPrototypeUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPrototypeLinkEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourcePrototypeLayoutUuid", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("publishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null,classNameId LONG,classPK LONG,publishDate DATE null)";
+		"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -236,6 +236,8 @@ public class LayoutModelImpl
 		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setLayoutId(soapModel.getLayoutId());
 		model.setParentLayoutId(soapModel.getParentLayoutId());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
@@ -256,10 +258,8 @@ public class LayoutModelImpl
 			soapModel.isLayoutPrototypeLinkEnabled());
 		model.setSourcePrototypeLayoutUuid(
 			soapModel.getSourcePrototypeLayoutUuid());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
 		model.setPublishDate(soapModel.getPublishDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -431,6 +431,12 @@ public class LayoutModelImpl
 		attributeSetterBiConsumers.put(
 			"parentLayoutId",
 			(BiConsumer<Layout, Long>)Layout::setParentLayoutId);
+		attributeGetterFunctions.put("classNameId", Layout::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId", (BiConsumer<Layout, Long>)Layout::setClassNameId);
+		attributeGetterFunctions.put("classPK", Layout::getClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<Layout, Long>)Layout::setClassPK);
 		attributeGetterFunctions.put("name", Layout::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<Layout, String>)Layout::setName);
@@ -494,20 +500,14 @@ public class LayoutModelImpl
 		attributeSetterBiConsumers.put(
 			"sourcePrototypeLayoutUuid",
 			(BiConsumer<Layout, String>)Layout::setSourcePrototypeLayoutUuid);
+		attributeGetterFunctions.put("publishDate", Layout::getPublishDate);
+		attributeSetterBiConsumers.put(
+			"publishDate", (BiConsumer<Layout, Date>)Layout::setPublishDate);
 		attributeGetterFunctions.put(
 			"lastPublishDate", Layout::getLastPublishDate);
 		attributeSetterBiConsumers.put(
 			"lastPublishDate",
 			(BiConsumer<Layout, Date>)Layout::setLastPublishDate);
-		attributeGetterFunctions.put("classNameId", Layout::getClassNameId);
-		attributeSetterBiConsumers.put(
-			"classNameId", (BiConsumer<Layout, Long>)Layout::setClassNameId);
-		attributeGetterFunctions.put("classPK", Layout::getClassPK);
-		attributeSetterBiConsumers.put(
-			"classPK", (BiConsumer<Layout, Long>)Layout::setClassPK);
-		attributeGetterFunctions.put("publishDate", Layout::getPublishDate);
-		attributeSetterBiConsumers.put(
-			"publishDate", (BiConsumer<Layout, Date>)Layout::setPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -822,6 +822,48 @@ public class LayoutModelImpl
 
 	public long getOriginalParentLayoutId() {
 		return _originalParentLayoutId;
+	}
+
+	@Override
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return "";
+		}
+
+		return PortalUtil.getClassName(getClassNameId());
+	}
+
+	@Override
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	@JSON
+	@Override
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	@Override
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	@JSON
@@ -1623,59 +1665,6 @@ public class LayoutModelImpl
 
 	@JSON
 	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
-	@Override
-	public String getClassName() {
-		if (getClassNameId() <= 0) {
-			return "";
-		}
-
-		return PortalUtil.getClassName(getClassNameId());
-	}
-
-	@Override
-	public void setClassName(String className) {
-		long classNameId = 0;
-
-		if (Validator.isNotNull(className)) {
-			classNameId = PortalUtil.getClassNameId(className);
-		}
-
-		setClassNameId(classNameId);
-	}
-
-	@JSON
-	@Override
-	public long getClassNameId() {
-		return _classNameId;
-	}
-
-	@Override
-	public void setClassNameId(long classNameId) {
-		_classNameId = classNameId;
-	}
-
-	@JSON
-	@Override
-	public long getClassPK() {
-		return _classPK;
-	}
-
-	@Override
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
-	@JSON
-	@Override
 	public Date getPublishDate() {
 		return _publishDate;
 	}
@@ -1683,6 +1672,17 @@ public class LayoutModelImpl
 	@Override
 	public void setPublishDate(Date publishDate) {
 		_publishDate = publishDate;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	public long getNestedSetsTreeNodeLeft() {
@@ -1908,6 +1908,8 @@ public class LayoutModelImpl
 		layoutImpl.setPrivateLayout(isPrivateLayout());
 		layoutImpl.setLayoutId(getLayoutId());
 		layoutImpl.setParentLayoutId(getParentLayoutId());
+		layoutImpl.setClassNameId(getClassNameId());
+		layoutImpl.setClassPK(getClassPK());
 		layoutImpl.setName(getName());
 		layoutImpl.setTitle(getTitle());
 		layoutImpl.setDescription(getDescription());
@@ -1927,10 +1929,8 @@ public class LayoutModelImpl
 		layoutImpl.setLayoutPrototypeLinkEnabled(
 			isLayoutPrototypeLinkEnabled());
 		layoutImpl.setSourcePrototypeLayoutUuid(getSourcePrototypeLayoutUuid());
-		layoutImpl.setLastPublishDate(getLastPublishDate());
-		layoutImpl.setClassNameId(getClassNameId());
-		layoutImpl.setClassPK(getClassPK());
 		layoutImpl.setPublishDate(getPublishDate());
+		layoutImpl.setLastPublishDate(getLastPublishDate());
 
 		layoutImpl.resetOriginalValues();
 
@@ -2131,6 +2131,10 @@ public class LayoutModelImpl
 
 		layoutCacheModel.parentLayoutId = getParentLayoutId();
 
+		layoutCacheModel.classNameId = getClassNameId();
+
+		layoutCacheModel.classPK = getClassPK();
+
 		layoutCacheModel.name = getName();
 
 		String name = layoutCacheModel.name;
@@ -2252,19 +2256,6 @@ public class LayoutModelImpl
 			layoutCacheModel.sourcePrototypeLayoutUuid = null;
 		}
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			layoutCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			layoutCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
-		layoutCacheModel.classNameId = getClassNameId();
-
-		layoutCacheModel.classPK = getClassPK();
-
 		Date publishDate = getPublishDate();
 
 		if (publishDate != null) {
@@ -2272,6 +2263,15 @@ public class LayoutModelImpl
 		}
 		else {
 			layoutCacheModel.publishDate = Long.MIN_VALUE;
+		}
+
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			layoutCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			layoutCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
 		return layoutCacheModel;
@@ -2377,6 +2377,8 @@ public class LayoutModelImpl
 	private long _parentLayoutId;
 	private long _originalParentLayoutId;
 	private boolean _setOriginalParentLayoutId;
+	private long _classNameId;
+	private long _classPK;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _title;
@@ -2408,10 +2410,8 @@ public class LayoutModelImpl
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
 	private String _originalSourcePrototypeLayoutUuid;
-	private Date _lastPublishDate;
-	private long _classNameId;
-	private long _classPK;
 	private Date _publishDate;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private Layout _escapedModel;
 

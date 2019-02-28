@@ -16,6 +16,10 @@ package com.liferay.sharing.document.library.internal.frontend.taglib.dynamic.se
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.frontend.taglib.dynamic.section.DynamicSection;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -27,7 +31,7 @@ import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryModel;
-import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.ByteArrayOutputStream;
@@ -77,10 +81,8 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 		FileEntry fileEntry = (FileEntry)request.getAttribute(
 			"info_panel.jsp-fileEntry");
 
-		int countSharingEntryToUserIds =
-			_sharingEntryLocalService.getFromUserSharingEntriesCount(
-				themeDisplay.getUserId(), classNameId,
-				fileEntry.getFileEntryId());
+		int countSharingEntryToUserIds = _getSharingEntriesCount(
+			classNameId, fileEntry.getFileEntryId());
 
 		if (countSharingEntryToUserIds == 0) {
 			return sb;
@@ -90,10 +92,8 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 			"info_panel_file_entry.jsp-countSharingEntryToUserIds",
 			countSharingEntryToUserIds);
 
-		List<SharingEntry> fromUserSharingEntries =
-			_sharingEntryLocalService.getFromUserSharingEntries(
-				themeDisplay.getUserId(), classNameId,
-				fileEntry.getFileEntryId(), 0, 4);
+		List<SharingEntry> fromUserSharingEntries = _getSharingEntries(
+			classNameId, fileEntry.getFileEntryId());
 
 		Stream<SharingEntry> fromUserSharingEntriesStream =
 			fromUserSharingEntries.stream();
@@ -135,6 +135,35 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 		return new StringBundler(string);
 	}
 
+	private List<SharingEntry> _getSharingEntries(
+		long classNameId, long classPK) {
+
+		try {
+			return _sharingEntryService.getSharingEntries(
+				classNameId, classPK, 0, 4);
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
+	}
+
+	private int _getSharingEntriesCount(long classNameId, long classPK) {
+		try {
+			return _sharingEntryService.getSharingEntriesCount(
+				classNameId, classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
+			return 0;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLInfoPanelFileEntryOwnerDynamicSection.class);
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -147,7 +176,7 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
+	private SharingEntryService _sharingEntryService;
 
 	@Reference
 	private UserLocalService _userLocalService;

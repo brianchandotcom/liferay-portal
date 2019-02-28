@@ -125,7 +125,10 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 		SharingEntry sharingEntry = sharingEntryLocalService.getSharingEntry(
 			sharingEntryId);
 
-		if (getUserId() != sharingEntry.getFromUserId()) {
+		if ((getUserId() != sharingEntry.getFromUserId()) &&
+			!_isOwnerOrAdmin(
+				sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {
+
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), sharingEntry.getModelClassName(), sharingEntryId,
 				ActionKeys.DELETE);

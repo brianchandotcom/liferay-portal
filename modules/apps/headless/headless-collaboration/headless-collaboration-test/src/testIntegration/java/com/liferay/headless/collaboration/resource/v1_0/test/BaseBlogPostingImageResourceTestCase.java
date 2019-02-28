@@ -20,22 +20,35 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.headless.collaboration.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.collaboration.resource.v1_0.BlogPostingImageResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.net.URL;
+
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -182,6 +195,97 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Collection<EntityField> getEntityFields() throws Exception {
+		if (!(_blogPostingImageResource instanceof EntityModelResource)) {
+			throw new UnsupportedOperationException(
+				"Resource is not an instance of EntityModelResource");
+		}
+
+		EntityModelResource entityModelResource =
+			(EntityModelResource)_blogPostingImageResource;
+
+		EntityModel entityModel = entityModelResource.getEntityModel(null);
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		return entityFieldsMap.values();
+	}
+
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		Collection<EntityField> entityFields = getEntityFields();
+
+		Stream<EntityField> stream = entityFields.stream();
+
+		return stream.filter(
+			entityField -> Objects.equals(entityField.getType(), type)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	protected String getFilterString(
+		EntityField entityField, String operator,
+		BlogPostingImage blogPostingImage) {
+
+		StringBundler sb = new StringBundler();
+
+		String entityFieldName = entityField.getName();
+
+		sb.append(entityFieldName);
+
+		sb.append(" ");
+		sb.append(operator);
+		sb.append(" ");
+
+		if (entityFieldName.equals("contentUrl")) {
+			sb.append("'");
+			sb.append(String.valueOf(blogPostingImage.getContentUrl()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("encodingFormat")) {
+			sb.append("'");
+			sb.append(String.valueOf(blogPostingImage.getEncodingFormat()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("fileExtension")) {
+			sb.append("'");
+			sb.append(String.valueOf(blogPostingImage.getFileExtension()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("sizeInBytes")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("title")) {
+			sb.append("'");
+			sb.append(String.valueOf(blogPostingImage.getTitle()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid entity field " + entityFieldName);
 	}
 
 	protected boolean invokeDeleteBlogPostingImage(Long blogPostingImageId)
@@ -493,6 +597,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	};
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper();
 
+	@Inject
+	private BlogPostingImageResource _blogPostingImageResource;
+
+	private final DateFormat _dateFormat =
+		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	private URL _resourceURL;
 
 }

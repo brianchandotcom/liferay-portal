@@ -1821,7 +1821,9 @@ definition {
 			);
 		}
 
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${webContentTitle}");
+		AssetPublisherPortlet.clickShowFullContent(
+			assetTitle = "${webContentTitle}"
+		);
 
 		AssertVisible(locator1 = "Icon#SHARE");
 

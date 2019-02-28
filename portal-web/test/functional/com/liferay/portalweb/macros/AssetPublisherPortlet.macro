@@ -23,6 +23,20 @@ definition {
 		SiteSelector.viewSite(site = "${siteName}");
 	}
 
+	macro clickShowFullContent {
+		Click(
+			locator1 = "AP#ASSET_ABSTRACT_SHOW_FULL_CONTENT",
+			key_assetTitle = "${assetTitle}"
+		);
+	}
+
+	macro clickViewInContext {
+		Click(
+			locator1 = "AP#ASSET_ABSTRACT_VIEW_IN_CONTEXT",
+			key_assetTitle = "${assetTitle}"
+		);
+	}
+
 	macro configureAddSiteScopes {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
@@ -908,7 +922,9 @@ definition {
 
 		AssertTextEquals(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${assetTitle}");
 
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${assetTitle}");
+		AssetPublisherPortlet.clickShowFullContent(
+			assetTitle = "${assetTitle}"
+		);
 
 		AssertTextEquals(
 			locator1 = "APAsset#ASSET_TITLE_HEADER",

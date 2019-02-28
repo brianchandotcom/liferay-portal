@@ -80,6 +80,10 @@ definition {
 			value1 = "${webContentContent}"
 		);
 
+		AssetPublisherPortlet.clickViewInContext(
+			assetTitle = "${webContentTitle}"
+		);
+
 		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${webContentTitle}");
 
 		for (var content : list "${contentList}") {

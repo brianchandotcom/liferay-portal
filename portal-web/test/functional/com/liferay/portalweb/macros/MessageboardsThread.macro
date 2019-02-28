@@ -1208,7 +1208,9 @@ definition {
 			value1 = "${threadBody}"
 		);
 
-		AssertClick(locator1 = "AP#ASSET_ABSTRACT_TITLE", value1 = "${threadSubject}");
+		AssetPublisherPortlet.clickShowFullContent(
+			assetTitle = "${threadSubject}"
+		);
 
 		AssertVisible(locator1 = "Icon#SHARE");
 

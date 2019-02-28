@@ -29,6 +29,10 @@ public abstract class MenuItem extends BaseUIItem implements UIActionItem {
 		return _label;
 	}
 
+	public boolean hasSeparator() {
+		return _separator;
+	}
+
 	@Override
 	public void setIcon(String icon) {
 		_icon = icon;
@@ -39,7 +43,12 @@ public abstract class MenuItem extends BaseUIItem implements UIActionItem {
 		_label = label;
 	}
 
+	public void setSeparator(boolean separator) {
+		_separator = separator;
+	}
+
 	private String _icon;
 	private String _label;
+	private boolean _separator;
 
 }

@@ -310,6 +310,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testDefaultStorageAdapter() {
+		Assert.assertNotNull(
+			_storageAdapterRegistry.getDefaultStorageAdapter());
+	}
+
+	@Test
 	public void testDocLibraryField() throws Exception {
 		String definition = read("ddm-structure-doc-lib-field.xsd");
 
@@ -685,10 +691,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	protected void setUpJSONStorageAdapter() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		StorageAdapterRegistry storageAdapterRegistry = registry.getService(
+		_storageAdapterRegistry = registry.getService(
 			StorageAdapterRegistry.class);
 
-		_jsonStorageAdapter = storageAdapterRegistry.getStorageAdapter(
+		_jsonStorageAdapter = _storageAdapterRegistry.getStorageAdapter(
 			StorageType.JSON.toString());
 	}
 
@@ -721,5 +727,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private StorageAdapter _jsonStorageAdapter;
+	private StorageAdapterRegistry _storageAdapterRegistry;
 
 }

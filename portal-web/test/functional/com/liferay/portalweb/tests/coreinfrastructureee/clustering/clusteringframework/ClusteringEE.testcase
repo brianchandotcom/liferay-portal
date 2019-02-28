@@ -541,8 +541,8 @@ definition {
 			scriptFile = "groovy-script-portal-cache-get.groovy"
 		);
 
-		Clustering.viewTextNotPresentOnSpecificNode(
-			exceptionText = "Cluster Test Command is null",
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Put test.key into test.cache",
 			nodePort = "9080"
 		);
 

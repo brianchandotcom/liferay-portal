@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
+ * @author Alan Huang
  */
 public class YMLWhitespaceCheck extends WhitespaceCheck {
 

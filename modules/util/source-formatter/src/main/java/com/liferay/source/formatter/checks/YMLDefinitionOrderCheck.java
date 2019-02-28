@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
+ * @author Alan Huang
  */
 public class YMLDefinitionOrderCheck extends BaseFileCheck {
 

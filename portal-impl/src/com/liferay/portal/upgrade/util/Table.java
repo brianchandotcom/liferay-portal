@@ -41,6 +41,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 
+import java.math.BigDecimal;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -432,6 +434,14 @@ public class Table {
 				value = GetterUtil.getString(rs.getString(name));
 			}
 		}
+		else if (t == Types.DECIMAL) {
+			try {
+				value = _getBigDecimal(rs.getBigDecimal(name));
+			}
+			catch (SQLException sqle) {
+				value = _getBigDecimal(rs.getString(name));
+			}
+		}
 		else if (t == Types.DOUBLE) {
 			value = GetterUtil.getDouble(rs.getDouble(name));
 		}
@@ -577,6 +587,9 @@ public class Table {
 
 			ps.setString(paramIndex, value);
 		}
+		else if (t == Types.DECIMAL) {
+			ps.setBigDecimal(paramIndex, _getBigDecimal(value));
+		}
 		else if (t == Types.DOUBLE) {
 			ps.setDouble(paramIndex, GetterUtil.getDouble(value));
 		}
@@ -681,6 +694,28 @@ public class Table {
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
+	}
+
+	private BigDecimal _getBigDecimal(Object value) {
+		if (value instanceof BigDecimal) {
+			return (BigDecimal)value;
+		}
+		else if (value instanceof String) {
+			String valueString = (String)value;
+
+			if (Validator.isNull(valueString)) {
+				return BigDecimal.ZERO;
+			}
+
+			try {
+				return new BigDecimal(valueString.trim());
+			}
+			catch (NumberFormatException nfe) {
+				return BigDecimal.ZERO;
+			}
+		}
+
+		return BigDecimal.ZERO;
 	}
 
 	private static final String[][] _SAFE_TABLE_CHARS = {

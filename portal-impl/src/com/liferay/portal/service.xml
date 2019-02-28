@@ -609,6 +609,8 @@
 		<column name="privateLayout" type="boolean" />
 		<column accessor="true" name="layoutId" type="long" />
 		<column name="parentLayoutId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
@@ -627,10 +629,8 @@
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />
-		<column name="lastPublishDate" type="Date" />
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
 		<column name="publishDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

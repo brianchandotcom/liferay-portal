@@ -285,16 +285,11 @@ public class OpenAPIParserUtil {
 	private static String _getJavaDataType(
 		String type, String format, String propertySchemaName) {
 
-		if (StringUtil.equals(format, "date-time") &&
-			StringUtil.equals(type, "string")) {
+		String javaDataType = _openAPIDataTypeMap.get(
+			new AbstractMap.SimpleImmutableEntry<>(type, format));
 
-			return "Date";
-		}
-
-		if (StringUtil.equals(format, "int64") &&
-			StringUtil.equals(type, "integer")) {
-
-			return "Long";
+		if (javaDataType != null) {
+			return javaDataType;
 		}
 
 		if (StringUtil.equalsIgnoreCase(type, "object") &&

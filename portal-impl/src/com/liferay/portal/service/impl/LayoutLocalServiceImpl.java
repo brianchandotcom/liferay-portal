@@ -154,6 +154,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the layout ID of the parent layout (optionally
 	 *         {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param  classNameId the class name ID of the entity
+	 * @param  classPK the primary key of the entity
 	 * @param  nameMap the layout's locales and localized names
 	 * @param  titleMap the layout's locales and localized titles
 	 * @param  descriptionMap the layout's locales and localized descriptions
@@ -170,8 +172,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  classNameId the class name ID of the entity
-	 * @param  classPK the primary key of the entity
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts
@@ -192,11 +192,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public Layout addLayout(
 			long userId, long groupId, boolean privateLayout,
-			long parentLayoutId, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			String type, String typeSettings, boolean hidden, boolean system,
-			Map<Locale, String> friendlyURLMap, long classNameId, long classPK,
+			long parentLayoutId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, String type, String typeSettings,
+			boolean hidden, boolean system, Map<Locale, String> friendlyURLMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -247,6 +247,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setPrivateLayout(privateLayout);
 		layout.setLayoutId(layoutId);
 		layout.setParentLayoutId(parentLayoutId);
+		layout.setClassNameId(classNameId);
+		layout.setClassPK(classPK);
 		layout.setNameMap(nameMap);
 		layout.setTitleMap(titleMap);
 		layout.setDescriptionMap(descriptionMap);
@@ -257,8 +259,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setSystem(system);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
-		layout.setClassNameId(classNameId);
-		layout.setClassPK(classPK);
 		layout.setPublishDate(now);
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
@@ -435,9 +435,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
-			system, friendlyURLMap, 0, 0, serviceContext);
+			userId, groupId, privateLayout, parentLayoutId, 0, 0, nameMap,
+			titleMap, descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, system, friendlyURLMap, serviceContext);
 	}
 
 	/**

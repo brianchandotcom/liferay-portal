@@ -566,6 +566,10 @@ public class SharingEntryLocalServiceUtil {
 		return getService().getSharingEntriesCount();
 	}
 
+	public static int getSharingEntriesCount(long classNameId, long classPK) {
+		return getService().getSharingEntriesCount(classNameId, classPK);
+	}
+
 	/**
 	 * Returns the sharing entry with the primary key.
 	 *

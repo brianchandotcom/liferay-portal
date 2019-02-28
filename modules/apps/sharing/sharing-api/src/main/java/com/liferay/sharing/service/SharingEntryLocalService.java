@@ -470,6 +470,9 @@ public interface SharingEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSharingEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSharingEntriesCount(long classNameId, long classPK);
+
 	/**
 	 * Returns the sharing entry with the primary key.
 	 *

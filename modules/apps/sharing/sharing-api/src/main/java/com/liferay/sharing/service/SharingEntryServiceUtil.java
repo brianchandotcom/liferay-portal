@@ -143,6 +143,12 @@ public class SharingEntryServiceUtil {
 		return getService().getSharingEntries(classNameId, classPK, start, end);
 	}
 
+	public static int getSharingEntriesCount(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSharingEntriesCount(classNameId, classPK);
+	}
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *

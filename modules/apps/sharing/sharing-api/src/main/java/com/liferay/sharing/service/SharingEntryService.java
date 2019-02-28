@@ -137,6 +137,10 @@ public interface SharingEntryService extends BaseService {
 			long classNameId, long classPK, int start, int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSharingEntriesCount(long classNameId, long classPK)
+		throws PortalException;
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *

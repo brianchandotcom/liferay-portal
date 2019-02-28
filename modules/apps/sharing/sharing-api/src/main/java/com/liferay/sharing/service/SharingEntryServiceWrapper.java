@@ -142,6 +142,14 @@ public class SharingEntryServiceWrapper
 			classNameId, classPK, start, end);
 	}
 
+	@Override
+	public int getSharingEntriesCount(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.getSharingEntriesCount(
+			classNameId, classPK);
+	}
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *

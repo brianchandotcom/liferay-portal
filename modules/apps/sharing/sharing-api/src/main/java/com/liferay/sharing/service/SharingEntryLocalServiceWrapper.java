@@ -601,6 +601,12 @@ public class SharingEntryLocalServiceWrapper
 		return _sharingEntryLocalService.getSharingEntriesCount();
 	}
 
+	@Override
+	public int getSharingEntriesCount(long classNameId, long classPK) {
+		return _sharingEntryLocalService.getSharingEntriesCount(
+			classNameId, classPK);
+	}
+
 	/**
 	 * Returns the sharing entry with the primary key.
 	 *

@@ -35,8 +35,7 @@ import java.util.Map;
 public class DTOOpenAPIParser {
 
 	public static List<JavaMethodParameter> getJavaMethodParameters(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
 		Map<String, Schema> propertySchemas = null;
 
@@ -71,23 +70,16 @@ public class DTOOpenAPIParser {
 				new JavaMethodParameter(parameterName, parameterType));
 		}
 
-		if (!fullyQualifiedNames) {
-			return javaMethodParameters;
-		}
-
-		return OpenAPIParserUtil.toFullyQualifiedJavaMethodParameters(
-			configYAML, javaMethodParameters, openAPIYAML);
+		return javaMethodParameters;
 	}
 
 	public static List<JavaMethodParameter> getJavaMethodParameters(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
 
 		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 
 		return getJavaMethodParameters(
-			configYAML, openAPIYAML, schemas.get(schemaName),
-			fullyQualifiedNames);
+			configYAML, openAPIYAML, schemas.get(schemaName));
 	}
 
 	private static String _getParameterType(

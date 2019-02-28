@@ -93,7 +93,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 		<#assign
 			arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaMethodParameters)
 			firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0]
@@ -668,7 +668,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 			if (entityFieldName.equals("${javaMethodParameter.parameterName}")) {
 				<#if stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>
 					sb.append(_dateFormat.format(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()));
@@ -694,7 +694,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			{
 				<#assign randomDataTypes = ["java.lang.Boolean", "java.lang.Double", "java.lang.Long", "java.lang.String"] />
 
-				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 					<#if randomDataTypes?seq_contains(javaMethodParameter.parameterType)>
 						${javaMethodParameter.parameterName} = RandomTestUtil.random${javaMethodParameter.parameterType}();
 					<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.util.Date")>

@@ -55,8 +55,7 @@ import java.util.stream.Stream;
 public class ResourceOpenAPIParser {
 
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -97,12 +96,7 @@ public class ResourceOpenAPIParser {
 				});
 		}
 
-		if (!fullyQualifiedNames) {
-			return javaMethodSignatures;
-		}
-
-		return OpenAPIParserUtil.toFullyQualifiedJavaMethodSignatures(
-			configYAML, javaMethodSignatures, openAPIYAML);
+		return javaMethodSignatures;
 	}
 
 	public static String getMethodAnnotations(

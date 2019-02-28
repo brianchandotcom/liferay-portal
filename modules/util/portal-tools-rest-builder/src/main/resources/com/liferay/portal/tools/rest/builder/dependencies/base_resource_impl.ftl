@@ -54,7 +54,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("/${openAPIYAML.info.version}")
 public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Resource {
 
-	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
+	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
@@ -71,7 +71,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 
 				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
 
-				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schemaName, false) as javaMethodParameter>
+				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schemaName) as javaMethodParameter>
 					<#if !freeMarkerTool.isSchemaParameter(javaMethodParameter, openAPIYAML) && !stringUtil.equals(javaMethodParameter.parameterName, "id")>
 						if (Validator.isNotNull(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}())) {
 							existing${schemaName}.set${javaMethodParameter.parameterName?cap_first}(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}());

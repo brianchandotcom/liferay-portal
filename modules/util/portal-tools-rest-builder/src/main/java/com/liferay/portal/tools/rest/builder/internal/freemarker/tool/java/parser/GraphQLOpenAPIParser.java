@@ -41,8 +41,7 @@ import java.util.TreeSet;
 public class GraphQLOpenAPIParser {
 
 	public static List<JavaMethodSignature> getJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
@@ -53,16 +52,10 @@ public class GraphQLOpenAPIParser {
 		for (String schemaName : schemas.keySet()) {
 			javaMethodSignatures.addAll(
 				_getJavaMethodSignatures(
-					configYAML, graphQLType, openAPIYAML, schemaName,
-					fullyQualifiedNames));
+					configYAML, graphQLType, openAPIYAML, schemaName));
 		}
 
-		if (!fullyQualifiedNames) {
-			return javaMethodSignatures;
-		}
-
-		return OpenAPIParserUtil.toFullyQualifiedJavaMethodSignatures(
-			configYAML, javaMethodSignatures, openAPIYAML);
+		return javaMethodSignatures;
 	}
 
 	public static String getMethodAnnotations(
@@ -141,13 +134,13 @@ public class GraphQLOpenAPIParser {
 
 	private static List<JavaMethodSignature> _getJavaMethodSignatures(
 		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
-		String schemaName, boolean fullyQualifiedNames) {
+		String schemaName) {
 
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
 		List<JavaMethodSignature> resourceJavaMethodSignatures =
 			ResourceOpenAPIParser.getJavaMethodSignatures(
-				configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
+				configYAML, openAPIYAML, schemaName);
 
 		for (JavaMethodSignature resourceJavaMethodSignature :
 				resourceJavaMethodSignatures) {

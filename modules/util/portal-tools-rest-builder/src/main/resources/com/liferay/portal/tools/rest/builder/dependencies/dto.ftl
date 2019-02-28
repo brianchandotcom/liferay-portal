@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 		public ${javaMethodParameter.parameterType} get${javaMethodParameter.parameterName?cap_first}() {
 			return ${javaMethodParameter.parameterName};
 		}
@@ -53,7 +53,7 @@ public class ${schemaName} {
 
 		sb.append("{");
 
-		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
 			<#if !javaMethodParameter?is_first>
 				sb.append(", ");
 			</#if>

@@ -38,19 +38,17 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodParameter> getDTOJavaMethodParameters(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
 		return DTOOpenAPIParser.getJavaMethodParameters(
-			configYAML, openAPIYAML, schema, fullyQualifiedNames);
+			configYAML, openAPIYAML, schema);
 	}
 
 	public List<JavaMethodParameter> getDTOJavaMethodParameters(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
 
 		return DTOOpenAPIParser.getJavaMethodParameters(
-			configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
+			configYAML, openAPIYAML, schemaName);
 	}
 
 	public String getGraphQLArguments(
@@ -60,11 +58,10 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
-		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, String graphQLType, OpenAPIYAML openAPIYAML) {
 
 		return GraphQLOpenAPIParser.getJavaMethodSignatures(
-			configYAML, graphQLType, openAPIYAML, fullyQualifiedNames);
+			configYAML, graphQLType, openAPIYAML);
 	}
 
 	public String getGraphQLMethodAnnotations(
@@ -98,11 +95,10 @@ public class FreeMarkerTool {
 	}
 
 	public List<JavaMethodSignature> getResourceJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
-		boolean fullyQualifiedNames) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
 
 		return ResourceOpenAPIParser.getJavaMethodSignatures(
-			configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
+			configYAML, openAPIYAML, schemaName);
 	}
 
 	public String getResourceMethodAnnotations(

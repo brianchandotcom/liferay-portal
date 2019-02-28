@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 @Generated("")
 public class Query {
 
-	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "query", openAPIYAML, false) />
+	<#assign javaMethodSignatures = freeMarkerTool.getGraphQLJavaMethodSignatures(configYAML, "query", openAPIYAML) />
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}

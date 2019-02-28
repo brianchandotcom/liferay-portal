@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
+
 /**
  * Provides the remote service interface for CTDLFolder. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -49,6 +51,10 @@ public interface CTDLFolderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTDLFolderServiceUtil} to access the ctdl folder remote service. Add custom service methods to <code>com.liferay.document.library.change.tracking.service.impl.CTDLFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(long groupId,
+		long folderId, String[] mimeTypes, boolean includeMountFolders,
+		QueryDefinition<?> queryDefinition) throws PortalException;
 
 	/**
 	* NOTE FOR DEVELOPERS:

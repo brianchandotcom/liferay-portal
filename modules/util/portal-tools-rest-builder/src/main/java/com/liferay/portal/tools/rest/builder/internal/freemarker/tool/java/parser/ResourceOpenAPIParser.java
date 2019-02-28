@@ -369,8 +369,15 @@ public class ResourceOpenAPIParser {
 
 		urls.add(httpMethod);
 
-		List<Parameter> parameters = _getPathParameters(
-			operation.getParameters());
+		List<Parameter> parameters = operation.getParameters();
+
+		Stream<Parameter> stream = parameters.stream();
+
+		parameters = stream.filter(
+			parameter -> StringUtil.equals(parameter.getIn(), "path")
+		).collect(
+			Collectors.toList()
+		);
 
 		for (Parameter parameter : parameters) {
 			String name = parameter.getName();
@@ -380,11 +387,22 @@ public class ResourceOpenAPIParser {
 			urls.add("");
 		}
 
-		if (_isGetToSameSchema(httpMethod, returnType, schemaName)) {
-			urls.add(TextFormatter.formatPlural(schemaName));
+		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
+			String className = returnType.substring(5, returnType.length() - 1);
+
+			String simpleClassName = className.substring(
+				className.lastIndexOf(".") + 1);
+
+			if (Objects.equals(simpleClassName, schemaName)) {
+				urls.add(TextFormatter.formatPlural(schemaName));
+			}
 		}
 
-		if (_isPostToSameSchema(httpMethod, path, schemaName, urls.size())) {
+		String lastSegment = PathUtil.getLastSegment(path, urls.size());
+
+		if (httpMethod.equals("post") &&
+			lastSegment.equals(TextFormatter.formatPlural(schemaName))) {
+
 			urls.add(schemaName);
 		}
 
@@ -457,18 +475,6 @@ public class ResourceOpenAPIParser {
 		return "";
 	}
 
-	private static List<Parameter> _getPathParameters(
-		List<Parameter> parameters) {
-
-		Stream<Parameter> stream = parameters.stream();
-
-		return stream.filter(
-			parameter -> StringUtil.equals(parameter.getIn(), "path")
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	private static String _getReturnType(
 		Map<String, String> javaDataTypeMap, OpenAPIYAML openAPIYAML,
 		Operation operation) {
@@ -518,37 +524,6 @@ public class ResourceOpenAPIParser {
 		}
 
 		return "boolean";
-	}
-
-	private static boolean _isGetToSameSchema(
-		String httpMethod, String returnType, String schemaName) {
-
-		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
-			String className = returnType.substring(5, returnType.length() - 1);
-
-			String simpleClassName = className.substring(
-				className.lastIndexOf(".") + 1);
-
-			if (Objects.equals(simpleClassName, schemaName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static boolean _isPostToSameSchema(
-		String httpMethod, String path, String schemaName, int segmentNumber) {
-
-		String lastSegment = PathUtil.getLastSegment(path, segmentNumber);
-
-		if (httpMethod.equals("post") &&
-			lastSegment.equals(TextFormatter.formatPlural(schemaName))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static boolean _isSchemaMethod(

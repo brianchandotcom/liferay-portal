@@ -35,39 +35,6 @@ public class MultiVMPoolUtil {
 		_multiVMPool.clear();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCache(String)}
-	 */
-	@Deprecated
-	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getCache(String portalCacheName) {
-
-		return getPortalCache(portalCacheName);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCache(String, boolean)}
-	 */
-	@Deprecated
-	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getCache(String portalCacheName, boolean blocking) {
-
-		return getPortalCache(portalCacheName, blocking);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCacheManager()}
-	 */
-	@Deprecated
-	public static <K extends Serializable, V extends Serializable>
-		PortalCacheManager<K, V> getCacheManager() {
-
-		return getPortalCacheManager();
-	}
-
 	public static <K extends Serializable, V extends Serializable>
 		PortalCache<K, V> getPortalCache(String portalCacheName) {
 
@@ -94,15 +61,6 @@ public class MultiVMPoolUtil {
 		PortalCacheManager<K, V> getPortalCacheManager() {
 
 		return (PortalCacheManager<K, V>)_multiVMPool.getPortalCacheManager();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #removePortalCache(String)}
-	 */
-	@Deprecated
-	public static void removeCache(String portalCacheName) {
-		removePortalCache(portalCacheName);
 	}
 
 	public static void removePortalCache(String portalCacheName) {

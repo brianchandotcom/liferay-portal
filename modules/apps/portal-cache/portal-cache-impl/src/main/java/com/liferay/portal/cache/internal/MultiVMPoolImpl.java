@@ -50,42 +50,6 @@ public class MultiVMPoolImpl implements MultiVMPool {
 		portalCacheManager.clearAll();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCache(String)}
-	 */
-	@Deprecated
-	@Override
-	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
-		String portalCacheName) {
-
-		return getPortalCache(portalCacheName);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCache(String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
-		String portalCacheName, boolean blocking) {
-
-		return getPortalCache(portalCacheName, blocking);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalCacheManager()}
-	 */
-	@Deprecated
-	@Override
-	public PortalCacheManager<? extends Serializable, ? extends Serializable>
-		getCacheManager() {
-
-		return getPortalCacheManager();
-	}
-
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName) {
@@ -129,16 +93,6 @@ public class MultiVMPoolImpl implements MultiVMPool {
 		}
 
 		return _portalCacheManager;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #removePortalCache(String)}
-	 */
-	@Deprecated
-	@Override
-	public void removeCache(String portalCacheName) {
-		removePortalCache(portalCacheName);
 	}
 
 	@Override

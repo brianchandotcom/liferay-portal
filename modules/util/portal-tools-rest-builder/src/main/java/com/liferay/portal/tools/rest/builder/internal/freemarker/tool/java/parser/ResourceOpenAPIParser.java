@@ -59,6 +59,8 @@ public class ResourceOpenAPIParser {
 			return Collections.emptyList();
 		}
 
+		Map<String, String> javaDataTypeMap =
+			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
@@ -68,21 +70,23 @@ public class ResourceOpenAPIParser {
 			_visitOperations(
 				pathItem,
 				operation -> {
-					String returnType = _getReturnType(openAPIYAML, operation);
+					String returnType = _getReturnType(
+						javaDataTypeMap, openAPIYAML, operation);
 					List<String> tags = operation.getTags();
 
 					if (!_isSchemaMethod(schemaName, tags, returnType)) {
 						return;
 					}
 
+					List<JavaMethodParameter> javaMethodParameters =
+						_getJavaMethodParameters(javaDataTypeMap, operation);
 					String methodName = _getMethodName(
 						operation, path, returnType, schemaName);
 
 					javaMethodSignatures.add(
 						new JavaMethodSignature(
 							path, pathItem, operation, schemaName,
-							_getJavaMethodParameters(operation), methodName,
-							returnType));
+							javaMethodParameters, methodName, returnType));
 				});
 		}
 
@@ -161,18 +165,18 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static JavaMethodParameter _getJavaMethodParameter(
-		Parameter parameter) {
+		Map<String, String> javaDataTypeMap, Parameter parameter) {
 
 		String parameterName = CamelCaseUtil.toCamelCase(
 			parameter.getName(), false);
-		String parameterType = OpenAPIParserUtil.getJavaMethodParameterType(
-			null, parameter.getSchema());
+		String parameterType = OpenAPIParserUtil.getJavaDataType(
+			javaDataTypeMap, parameter.getSchema());
 
 		return new JavaMethodParameter(parameterName, parameterType);
 	}
 
 	private static List<JavaMethodParameter> _getJavaMethodParameters(
-		Operation operation) {
+		Map<String, String> javaDataTypeMap, Operation operation) {
 
 		if ((operation == null) || (operation.getParameters() == null)) {
 			return Collections.emptyList();
@@ -208,7 +212,8 @@ public class ResourceOpenAPIParser {
 				}
 			}
 
-			javaMethodParameters.add(_getJavaMethodParameter(parameter));
+			javaMethodParameters.add(
+				_getJavaMethodParameter(javaDataTypeMap, parameter));
 		}
 
 		if (parameterNames.contains("filter")) {
@@ -250,19 +255,18 @@ public class ResourceOpenAPIParser {
 
 			if (multipartBodyJavaMethodParameter == null) {
 				for (Content content : contents.values()) {
-					String schemaName =
-						OpenAPIParserUtil.getJavaMethodParameterType(
-							null, content.getSchema());
+					String parameterType = OpenAPIParserUtil.getJavaDataType(
+						javaDataTypeMap, content.getSchema());
 
 					String parameterName = StringUtil.lowerCaseFirstLetter(
-						schemaName);
+						parameterType);
 
-					if (StringUtil.equals(schemaName, "Long")) {
+					if (StringUtil.equals(parameterType, "Long")) {
 						parameterName = "referenceId";
 					}
 
 					javaMethodParameters.add(
-						new JavaMethodParameter(parameterName, schemaName));
+						new JavaMethodParameter(parameterName, parameterType));
 				}
 			}
 			else {
@@ -462,7 +466,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getReturnType(
-		OpenAPIYAML openAPIYAML, Operation operation) {
+		Map<String, String> javaDataTypeMap, OpenAPIYAML openAPIYAML,
+		Operation operation) {
 
 		Map<String, Response> responses = operation.getResponses();
 
@@ -484,12 +489,12 @@ public class ResourceOpenAPIParser {
 					continue;
 				}
 
-				String javaMethodParameterType =
-					OpenAPIParserUtil.getJavaMethodParameterType(null, schema);
+				String javaDataType = OpenAPIParserUtil.getJavaDataType(
+					javaDataTypeMap, schema);
 
-				if (javaMethodParameterType.endsWith("[]")) {
-					String s = javaMethodParameterType.substring(
-						0, javaMethodParameterType.length() - 2);
+				if (javaDataType.endsWith("[]")) {
+					String s = javaDataType.substring(
+						0, javaDataType.length() - 2);
 
 					return "Page<" + s + ">";
 				}

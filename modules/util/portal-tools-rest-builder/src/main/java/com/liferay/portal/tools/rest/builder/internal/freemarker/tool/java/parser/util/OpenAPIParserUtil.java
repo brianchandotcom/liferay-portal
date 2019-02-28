@@ -236,27 +236,6 @@ public class OpenAPIParserUtil {
 		return schemaNames;
 	}
 
-	public static String getSimpleClassName(String type) {
-		String simpleClassName = type;
-
-		if (simpleClassName.endsWith("[]")) {
-			simpleClassName = simpleClassName.substring(
-				0, simpleClassName.length() - 2);
-		}
-
-		if (simpleClassName.endsWith(">")) {
-			simpleClassName = simpleClassName.substring(
-				0, simpleClassName.indexOf("<"));
-		}
-
-		if (simpleClassName.indexOf('.') != -1) {
-			simpleClassName = simpleClassName.substring(
-				simpleClassName.lastIndexOf(".") + 1);
-		}
-
-		return simpleClassName;
-	}
-
 	public static boolean hasHTTPMethod(
 		JavaMethodSignature javaMethodSignature, String... httpMethods) {
 
@@ -274,8 +253,22 @@ public class OpenAPIParserUtil {
 	public static boolean isSchemaParameter(
 		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML) {
 
-		String simpleClassName = getSimpleClassName(
-			javaMethodParameter.getParameterType());
+		String simpleClassName = javaMethodParameter.getParameterType();
+
+		if (simpleClassName.endsWith("[]")) {
+			simpleClassName = simpleClassName.substring(
+				0, simpleClassName.length() - 2);
+		}
+
+		if (simpleClassName.endsWith(">")) {
+			simpleClassName = simpleClassName.substring(
+				0, simpleClassName.indexOf("<"));
+		}
+
+		if (simpleClassName.indexOf('.') != -1) {
+			simpleClassName = simpleClassName.substring(
+				simpleClassName.lastIndexOf(".") + 1);
+		}
 
 		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 

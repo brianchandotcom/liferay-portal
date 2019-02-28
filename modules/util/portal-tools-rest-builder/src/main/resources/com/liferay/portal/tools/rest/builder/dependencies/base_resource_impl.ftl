@@ -1,12 +1,12 @@
-package ${configYAML.apiPackagePath}.internal.resource.${versionDirName};
+package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 	</#list>
 </#compress>
 
-import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
+import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.petra.function.UnsafeFunction;
@@ -57,7 +57,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "String")>
@@ -65,21 +65,21 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());
 			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && !javaMethodSignature.operation.requestBody.content?keys?seq_contains("multipart/form-data")>
-				<#assign firstJavaParameter = javaMethodSignature.javaParameters[0] />
+				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
 
 				preparePatch(${schemaVarName});
 
-				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaParameter.parameterName});
+				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
 
-				<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schemaName, false) as javaParameter>
-					<#if !freeMarkerTool.isSchemaParameter(javaParameter, openAPIYAML) && !stringUtil.equals(javaParameter.parameterName, "id")>
-						if (Validator.isNotNull(${schemaVarName}.get${javaParameter.parameterName?cap_first}())) {
-							existing${schemaName}.set${javaParameter.parameterName?cap_first}(${schemaVarName}.get${javaParameter.parameterName?cap_first}());
+				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schemaName, false) as javaMethodParameter>
+					<#if !freeMarkerTool.isSchemaParameter(javaMethodParameter, openAPIYAML) && !stringUtil.equals(javaMethodParameter.parameterName, "id")>
+						if (Validator.isNotNull(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}())) {
+							existing${schemaName}.set${javaMethodParameter.parameterName?cap_first}(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}());
 						}
 					</#if>
 				</#list>
 
-				return put${schemaName}(${firstJavaParameter.parameterName}, existing${schemaName});
+				return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
 			<#else>
 				return new ${javaMethodSignature.returnType}();
 			</#if>

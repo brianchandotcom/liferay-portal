@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.resource.${versionDirName}.test;
+package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 

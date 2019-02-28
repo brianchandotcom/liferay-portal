@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class DTOOpenAPIParser {
 
-	public static List<JavaParameter> getJavaParameters(
+	public static List<JavaMethodParameter> getJavaMethodParameters(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
 		boolean fullyQualifiedNames) {
 
@@ -52,7 +52,7 @@ public class DTOOpenAPIParser {
 			return Collections.emptyList();
 		}
 
-		List<JavaParameter> javaParameters = new ArrayList<>(
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>(
 			propertySchemas.size());
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
@@ -61,28 +61,28 @@ public class DTOOpenAPIParser {
 
 			String parameterName = CamelCaseUtil.toCamelCase(
 				propertySchemaName, false);
-			String parameterType = OpenAPIParserUtil.getJavaParameterType(
+			String parameterType = OpenAPIParserUtil.getJavaMethodParameterType(
 				propertySchemaName, propertySchema);
 
-			javaParameters.add(
-				new JavaParameter(null, parameterName, parameterType));
+			javaMethodParameters.add(
+				new JavaMethodParameter(parameterName, parameterType));
 		}
 
 		if (!fullyQualifiedNames) {
-			return javaParameters;
+			return javaMethodParameters;
 		}
 
-		return OpenAPIParserUtil.toFullyQualifiedJavaParameters(
-			configYAML, javaParameters, openAPIYAML);
+		return OpenAPIParserUtil.toFullyQualifiedJavaMethodParameters(
+			configYAML, javaMethodParameters, openAPIYAML);
 	}
 
-	public static List<JavaParameter> getJavaParameters(
+	public static List<JavaMethodParameter> getJavaMethodParameters(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
 		boolean fullyQualifiedNames) {
 
 		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 
-		return getJavaParameters(
+		return getJavaMethodParameters(
 			configYAML, openAPIYAML, schemas.get(schemaName),
 			fullyQualifiedNames);
 	}

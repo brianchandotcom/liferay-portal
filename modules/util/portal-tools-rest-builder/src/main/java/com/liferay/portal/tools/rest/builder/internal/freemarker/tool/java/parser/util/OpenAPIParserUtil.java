@@ -16,8 +16,8 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
@@ -39,11 +39,13 @@ import java.util.TreeSet;
  */
 public class OpenAPIParserUtil {
 
-	public static String getArguments(List<JavaParameter> javaParameters) {
+	public static String getArguments(
+		List<JavaMethodParameter> javaMethodParameters) {
+
 		StringBuilder sb = new StringBuilder();
 
-		for (JavaParameter javaParameter : javaParameters) {
-			sb.append(javaParameter.getParameterName());
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			sb.append(javaMethodParameter.getParameterName());
 			sb.append(',');
 		}
 
@@ -86,7 +88,7 @@ public class OpenAPIParserUtil {
 		return StringUtil.lowerCase(clazz.getSimpleName());
 	}
 
-	public static String getJavaParameterType(
+	public static String getJavaMethodParameterType(
 		String propertySchemaName, Schema schema) {
 
 		Items items = schema.getItems();
@@ -137,7 +139,7 @@ public class OpenAPIParserUtil {
 	}
 
 	public static String getParameter(
-		JavaParameter javaParameter, String parameterAnnotation) {
+		JavaMethodParameter javaMethodParameter, String parameterAnnotation) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -146,9 +148,9 @@ public class OpenAPIParserUtil {
 			sb.append(' ');
 		}
 
-		sb.append(javaParameter.getParameterType());
+		sb.append(javaMethodParameter.getParameterType());
 		sb.append(' ');
-		sb.append(javaParameter.getParameterName());
+		sb.append(javaMethodParameter.getParameterName());
 
 		return sb.toString();
 	}
@@ -192,10 +194,10 @@ public class OpenAPIParserUtil {
 	}
 
 	public static boolean isSchemaParameter(
-		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML) {
 
 		String simpleClassName = getSimpleClassName(
-			javaParameter.getParameterType());
+			javaMethodParameter.getParameterType());
 
 		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 
@@ -221,6 +223,30 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
+	public static List<JavaMethodParameter>
+		toFullyQualifiedJavaMethodParameters(
+			ConfigYAML configYAML,
+			List<JavaMethodParameter> javaMethodParameters,
+			OpenAPIYAML openAPIYAML) {
+
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+		List<JavaMethodParameter> newJavaMethodParameters = new ArrayList<>();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			String parameterType = _toFullyQualifiedType(
+				configYAML, openAPIYAML, schemas.keySet(),
+				javaMethodParameter.getParameterType());
+
+			JavaMethodParameter newJavaMethodParameter =
+				new JavaMethodParameter(
+					javaMethodParameter.getParameterName(), parameterType);
+
+			newJavaMethodParameters.add(newJavaMethodParameter);
+		}
+
+		return newJavaMethodParameters;
+	}
+
 	public static List<JavaMethodSignature>
 		toFullyQualifiedJavaMethodSignatures(
 			ConfigYAML configYAML,
@@ -231,9 +257,10 @@ public class OpenAPIParserUtil {
 		List<JavaMethodSignature> newJavaMethodSignatures = new ArrayList<>();
 
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
-			List<JavaParameter> javaParameters = toFullyQualifiedJavaParameters(
-				configYAML, javaMethodSignature.getJavaParameters(),
-				openAPIYAML);
+			List<JavaMethodParameter> javaMethodParameters =
+				toFullyQualifiedJavaMethodParameters(
+					configYAML, javaMethodSignature.getJavaMethodParameters(),
+					openAPIYAML);
 			String returnType = _toFullyQualifiedType(
 				configYAML, openAPIYAML, schemas.keySet(),
 				javaMethodSignature.getReturnType());
@@ -243,35 +270,13 @@ public class OpenAPIParserUtil {
 					javaMethodSignature.getPath(),
 					javaMethodSignature.getPathItem(),
 					javaMethodSignature.getOperation(),
-					javaMethodSignature.getSchemaName(), javaParameters,
+					javaMethodSignature.getSchemaName(), javaMethodParameters,
 					javaMethodSignature.getMethodName(), returnType);
 
 			newJavaMethodSignatures.add(newJavaMethodSignature);
 		}
 
 		return newJavaMethodSignatures;
-	}
-
-	public static List<JavaParameter> toFullyQualifiedJavaParameters(
-		ConfigYAML configYAML, List<JavaParameter> javaParameters,
-		OpenAPIYAML openAPIYAML) {
-
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
-		List<JavaParameter> newJavaParameters = new ArrayList<>();
-
-		for (JavaParameter javaParameter : javaParameters) {
-			String parameterType = _toFullyQualifiedType(
-				configYAML, openAPIYAML, schemas.keySet(),
-				javaParameter.getParameterType());
-
-			JavaParameter newJavaParameter = new JavaParameter(
-				javaParameter.getOperation(), javaParameter.getParameterName(),
-				parameterType);
-
-			newJavaParameters.add(newJavaParameter);
-		}
-
-		return newJavaParameters;
 	}
 
 	private static String _getJavaDataType(
@@ -303,7 +308,7 @@ public class OpenAPIParserUtil {
 		String simpleClassName) {
 
 		String apiPackagePath = configYAML.getApiPackagePath();
-		String versionDirName = OpenAPIUtil.getVersionDirName(openAPIYAML);
+		String escapedVersion = OpenAPIUtil.escapeVersion(openAPIYAML);
 
 		for (String schemaName : schemaNames) {
 			if (Objects.equals(simpleClassName, schemaName)) {
@@ -311,7 +316,7 @@ public class OpenAPIParserUtil {
 
 				sb.append(apiPackagePath);
 				sb.append(".dto.");
-				sb.append(versionDirName);
+				sb.append(escapedVersion);
 				sb.append(".");
 				sb.append(schemaName);
 
@@ -323,7 +328,7 @@ public class OpenAPIParserUtil {
 
 				sb.append(apiPackagePath);
 				sb.append(".dto.");
-				sb.append(versionDirName);
+				sb.append(escapedVersion);
 				sb.append(".");
 				sb.append(schemaName);
 				sb.append("Impl");

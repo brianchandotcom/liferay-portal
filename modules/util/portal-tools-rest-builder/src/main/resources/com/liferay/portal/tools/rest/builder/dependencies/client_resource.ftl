@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.client.resource.${versionDirName};
+package ${configYAML.apiPackagePath}.client.resource.${escapedVersion};
 
 import javax.annotation.Generated;
 

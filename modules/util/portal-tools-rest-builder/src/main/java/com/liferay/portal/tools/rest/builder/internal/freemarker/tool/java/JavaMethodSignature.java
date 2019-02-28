@@ -26,20 +26,20 @@ public class JavaMethodSignature {
 
 	public JavaMethodSignature(
 		String path, PathItem pathItem, Operation operation, String schemaName,
-		List<JavaParameter> javaParameters, String methodName,
+		List<JavaMethodParameter> javaMethodParameters, String methodName,
 		String returnType) {
 
 		_path = path;
 		_pathItem = pathItem;
 		_operation = operation;
 		_schemaName = schemaName;
-		_javaParameters = javaParameters;
+		_javaMethodParameters = javaMethodParameters;
 		_methodName = methodName;
 		_returnType = returnType;
 	}
 
-	public List<JavaParameter> getJavaParameters() {
-		return _javaParameters;
+	public List<JavaMethodParameter> getJavaMethodParameters() {
+		return _javaMethodParameters;
 	}
 
 	public String getMethodName() {
@@ -66,7 +66,7 @@ public class JavaMethodSignature {
 		return _schemaName;
 	}
 
-	private final List<JavaParameter> _javaParameters;
+	private final List<JavaMethodParameter> _javaMethodParameters;
 	private final String _methodName;
 	private final Operation _operation;
 	private final String _path;

@@ -34,6 +34,24 @@ import java.util.regex.Pattern;
  */
 public class OpenAPIUtil {
 
+	public static String escapeVersion(OpenAPIYAML openAPIYAML) {
+		Info info = openAPIYAML.getInfo();
+
+		String version = info.getVersion();
+
+		if (Validator.isNull(version)) {
+			return null;
+		}
+
+		Matcher matcher = _nondigitPattern.matcher(version);
+
+		String escapedVersion = matcher.replaceAll("_");
+
+		matcher = _leadingUnderscorePattern.matcher(escapedVersion);
+
+		return "v" + matcher.replaceFirst("");
+	}
+
 	public static Map<String, Schema> getAllSchemas(OpenAPIYAML openAPIYAML) {
 		Map<String, Schema> allSchemas = new TreeMap<>();
 
@@ -74,24 +92,6 @@ public class OpenAPIUtil {
 		}
 
 		return allSchemas;
-	}
-
-	public static String escapeVersion(OpenAPIYAML openAPIYAML) {
-		Info info = openAPIYAML.getInfo();
-
-		String version = info.getVersion();
-
-		if (Validator.isNull(version)) {
-			return null;
-		}
-
-		Matcher matcher = _nondigitPattern.matcher(version);
-
-		String versionDirName = matcher.replaceAll("_");
-
-		matcher = _leadingUnderscorePattern.matcher(versionDirName);
-
-		return "v" + matcher.replaceFirst("");
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

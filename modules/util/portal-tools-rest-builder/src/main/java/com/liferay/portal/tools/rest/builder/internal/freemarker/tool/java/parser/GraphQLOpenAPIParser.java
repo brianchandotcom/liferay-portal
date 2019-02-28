@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
@@ -82,19 +82,21 @@ public class GraphQLOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (JavaParameter javaParameter : javaParameters) {
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
 			String parameterAnnotation = null;
 
 			if (annotation) {
-				parameterAnnotation = _getParameterAnnotation(javaParameter);
+				parameterAnnotation = _getParameterAnnotation(
+					javaMethodParameter, operation);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
-				javaParameter, parameterAnnotation);
+				javaMethodParameter, parameterAnnotation);
 
 			sb.append(parameter);
 
@@ -106,6 +108,31 @@ public class GraphQLOpenAPIParser {
 		}
 
 		return sb.toString();
+	}
+
+	private static List<JavaMethodParameter> _getJavaMethodParameters(
+		JavaMethodSignature resourceJavaMethodSignature) {
+
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+		for (JavaMethodParameter javaMethodParameter :
+				resourceJavaMethodSignature.getJavaMethodParameters()) {
+
+			String parameterType = javaMethodParameter.getParameterType();
+
+			if (Objects.equals(parameterType, "Pagination")) {
+				javaMethodParameters.add(
+					new JavaMethodParameter("pageSize", "int"));
+
+				javaMethodParameters.add(
+					new JavaMethodParameter("page", "int"));
+			}
+			else {
+				javaMethodParameters.add(javaMethodParameter);
+			}
+		}
+
+		return javaMethodParameters;
 	}
 
 	private static List<JavaMethodSignature> _getJavaMethodSignatures(
@@ -133,56 +160,30 @@ public class GraphQLOpenAPIParser {
 				returnType = "Collection<".concat(returnType.substring(5));
 			}
 
-			List<JavaParameter> javaParameters = _getJavaParameters(
-				resourceJavaMethodSignature);
+			List<JavaMethodParameter> javaMethodParameters =
+				_getJavaMethodParameters(resourceJavaMethodSignature);
 
 			javaMethodSignatures.add(
 				new JavaMethodSignature(
 					resourceJavaMethodSignature.getPath(),
 					resourceJavaMethodSignature.getPathItem(), operation,
-					resourceJavaMethodSignature.getSchemaName(), javaParameters,
+					resourceJavaMethodSignature.getSchemaName(),
+					javaMethodParameters,
 					resourceJavaMethodSignature.getMethodName(), returnType));
 		}
 
 		return javaMethodSignatures;
 	}
 
-	private static List<JavaParameter> _getJavaParameters(
-		JavaMethodSignature resourceJavaMethodSignature) {
-
-		List<JavaParameter> javaParameters = new ArrayList<>();
-
-		for (JavaParameter javaParameter :
-				resourceJavaMethodSignature.getJavaParameters()) {
-
-			String parameterType = javaParameter.getParameterType();
-
-			if (Objects.equals(parameterType, "Pagination")) {
-				javaParameters.add(
-					new JavaParameter(
-						javaParameter.getOperation(), "pageSize", "int"));
-
-				javaParameters.add(
-					new JavaParameter(
-						javaParameter.getOperation(), "page", "int"));
-			}
-			else {
-				javaParameters.add(javaParameter);
-			}
-		}
-
-		return javaParameters;
-	}
-
-	private static String _getParameterAnnotation(JavaParameter javaParameter) {
-		Operation operation = javaParameter.getOperation();
+	private static String _getParameterAnnotation(
+		JavaMethodParameter javaMethodParameter, Operation operation) {
 
 		for (Parameter parameter : operation.getParameters()) {
 			String parameterName = CamelCaseUtil.toCamelCase(
 				parameter.getName(), false);
 
 			if (!Objects.equals(
-					parameterName, javaParameter.getParameterName())) {
+					parameterName, javaMethodParameter.getParameterName())) {
 
 				continue;
 			}
@@ -203,7 +204,7 @@ public class GraphQLOpenAPIParser {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("@GraphQLName(\"");
-		sb.append(javaParameter.getParameterType());
+		sb.append(javaMethodParameter.getParameterType());
 		sb.append("\")");
 
 		return sb.toString();

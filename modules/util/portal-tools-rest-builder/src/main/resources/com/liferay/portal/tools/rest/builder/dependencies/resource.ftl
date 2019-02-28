@@ -1,8 +1,8 @@
-package ${configYAML.apiPackagePath}.resource.${versionDirName};
+package ${configYAML.apiPackagePath}.resource.${escapedVersion};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
 	</#list>
 </#compress>
 
@@ -29,7 +29,7 @@ import javax.annotation.Generated;
 public interface ${schemaName}Resource {
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)}) throws Exception;
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)}) throws Exception;
 	</#list>
 
 	public void setContextCompany(Company contextCompany);

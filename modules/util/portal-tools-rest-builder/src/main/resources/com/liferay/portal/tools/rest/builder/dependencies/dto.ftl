@@ -1,4 +1,4 @@
-package ${configYAML.apiPackagePath}.dto.${versionDirName};
+package ${configYAML.apiPackagePath}.dto.${escapedVersion};
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,19 +24,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} {
 
-	<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
-		public ${javaParameter.parameterType} get${javaParameter.parameterName?cap_first}() {
-			return ${javaParameter.parameterName};
+	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+		public ${javaMethodParameter.parameterType} get${javaMethodParameter.parameterName?cap_first}() {
+			return ${javaMethodParameter.parameterName};
 		}
 
-		public void set${javaParameter.parameterName?cap_first}(${javaParameter.parameterType} ${javaParameter.parameterName}) {
-			this.${javaParameter.parameterName} = ${javaParameter.parameterName};
+		public void set${javaMethodParameter.parameterName?cap_first}(${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}) {
+			this.${javaMethodParameter.parameterName} = ${javaMethodParameter.parameterName};
 		}
 
 		@JsonIgnore
-		public void set${javaParameter.parameterName?cap_first}(UnsafeSupplier<${javaParameter.parameterType}, Exception> ${javaParameter.parameterName}UnsafeSupplier) {
+		public void set${javaMethodParameter.parameterName?cap_first}(UnsafeSupplier<${javaMethodParameter.parameterType}, Exception> ${javaMethodParameter.parameterName}UnsafeSupplier) {
 			try {
-				${javaParameter.parameterName} = ${javaParameter.parameterName}UnsafeSupplier.get();
+				${javaMethodParameter.parameterName} = ${javaMethodParameter.parameterName}UnsafeSupplier.get();
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
@@ -45,7 +45,7 @@ public class ${schemaName} {
 
 		@GraphQLField
 		@JsonProperty
-		protected ${javaParameter.parameterType} ${javaParameter.parameterName};
+		protected ${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName};
 	</#list>
 
 	public String toString() {
@@ -53,19 +53,19 @@ public class ${schemaName} {
 
 		sb.append("{");
 
-		<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
-			<#if !javaParameter?is_first>
+		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+			<#if !javaMethodParameter?is_first>
 				sb.append(", ");
 			</#if>
 
-			sb.append("\"${javaParameter.parameterName}\": ");
+			sb.append("\"${javaMethodParameter.parameterName}\": ");
 
-			<#if stringUtil.equals(javaParameter.parameterType, "Date") || stringUtil.equals(javaParameter.parameterType, "String") || javaParameter.parameterType?contains("[]")>
+			<#if stringUtil.equals(javaMethodParameter.parameterType, "Date") || stringUtil.equals(javaMethodParameter.parameterType, "String") || javaMethodParameter.parameterType?contains("[]")>
 				sb.append("\"");
-				sb.append(${javaParameter.parameterName});
+				sb.append(${javaMethodParameter.parameterName});
 				sb.append("\"");
 			<#else>
-				sb.append(${javaParameter.parameterName});
+				sb.append(${javaMethodParameter.parameterName});
 			</#if>
 		</#list>
 

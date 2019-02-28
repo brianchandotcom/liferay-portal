@@ -17,8 +17,8 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.PathUtil;
@@ -81,7 +81,7 @@ public class ResourceOpenAPIParser {
 					javaMethodSignatures.add(
 						new JavaMethodSignature(
 							path, pathItem, operation, schemaName,
-							_getJavaParameters(operation), methodName,
+							_getJavaMethodParameters(operation), methodName,
 							returnType));
 				});
 		}
@@ -132,19 +132,21 @@ public class ResourceOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (JavaParameter javaParameter : javaParameters) {
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
 			String parameterAnnotation = null;
 
 			if (annotation) {
-				parameterAnnotation = _getParameterAnnotation(javaParameter);
+				parameterAnnotation = _getParameterAnnotation(
+					javaMethodParameter, operation);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
-				javaParameter, parameterAnnotation);
+				javaMethodParameter, parameterAnnotation);
 
 			sb.append(parameter);
 
@@ -158,23 +160,25 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
-	private static JavaParameter _getJavaParameter(
-		Operation operation, Parameter parameter) {
+	private static JavaMethodParameter _getJavaMethodParameter(
+		Parameter parameter) {
 
 		String parameterName = CamelCaseUtil.toCamelCase(
 			parameter.getName(), false);
-		String parameterType = OpenAPIParserUtil.getJavaParameterType(
+		String parameterType = OpenAPIParserUtil.getJavaMethodParameterType(
 			null, parameter.getSchema());
 
-		return new JavaParameter(operation, parameterName, parameterType);
+		return new JavaMethodParameter(parameterName, parameterType);
 	}
 
-	private static List<JavaParameter> _getJavaParameters(Operation operation) {
+	private static List<JavaMethodParameter> _getJavaMethodParameters(
+		Operation operation) {
+
 		if ((operation == null) || (operation.getParameters() == null)) {
 			return Collections.emptyList();
 		}
 
-		List<JavaParameter> javaParameters = new ArrayList<>();
+		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -204,50 +208,51 @@ public class ResourceOpenAPIParser {
 				}
 			}
 
-			javaParameters.add(_getJavaParameter(operation, parameter));
+			javaMethodParameters.add(_getJavaMethodParameter(parameter));
 		}
 
 		if (parameterNames.contains("filter")) {
-			JavaParameter javaParameter = new JavaParameter(
-				operation, "filter", "Filter");
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"filter", "Filter");
 
-			javaParameters.add(javaParameter);
+			javaMethodParameters.add(javaMethodParameter);
 		}
 
 		if (parameterNames.contains("page") &&
 			parameterNames.contains("pageSize")) {
 
-			JavaParameter javaParameter = new JavaParameter(
-				operation, "pagination", "Pagination");
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"pagination", "Pagination");
 
-			javaParameters.add(javaParameter);
+			javaMethodParameters.add(javaMethodParameter);
 		}
 
 		if (parameterNames.contains("sort")) {
-			JavaParameter javaParameter = new JavaParameter(
-				operation, "sorts", "Sort[]");
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"sorts", "Sort[]");
 
-			javaParameters.add(javaParameter);
+			javaMethodParameters.add(javaMethodParameter);
 		}
 
 		RequestBody requestBody = operation.getRequestBody();
 
 		if (requestBody != null) {
-			JavaParameter multipartBodyJavaParameter = null;
+			JavaMethodParameter multipartBodyJavaMethodParameter = null;
 
 			Map<String, Content> contents = requestBody.getContent();
 
 			for (Map.Entry<String, Content> entry : contents.entrySet()) {
 				if (Objects.equals(entry.getKey(), "multipart/form-data")) {
-					multipartBodyJavaParameter = new JavaParameter(
-						operation, "multipartBody", "MultipartBody");
+					multipartBodyJavaMethodParameter = new JavaMethodParameter(
+						"multipartBody", "MultipartBody");
 				}
 			}
 
-			if (multipartBodyJavaParameter == null) {
+			if (multipartBodyJavaMethodParameter == null) {
 				for (Content content : contents.values()) {
-					String schemaName = OpenAPIParserUtil.getJavaParameterType(
-						null, content.getSchema());
+					String schemaName =
+						OpenAPIParserUtil.getJavaMethodParameterType(
+							null, content.getSchema());
 
 					String parameterName = StringUtil.lowerCaseFirstLetter(
 						schemaName);
@@ -256,17 +261,16 @@ public class ResourceOpenAPIParser {
 						parameterName = "referenceId";
 					}
 
-					javaParameters.add(
-						new JavaParameter(
-							operation, parameterName, schemaName));
+					javaMethodParameters.add(
+						new JavaMethodParameter(parameterName, schemaName));
 				}
 			}
 			else {
-				javaParameters.add(multipartBodyJavaParameter);
+				javaMethodParameters.add(multipartBodyJavaMethodParameter);
 			}
 		}
 
-		return javaParameters;
+		return javaMethodParameters;
 	}
 
 	private static List<String> _getMediaTypes(Map<String, Content> contents) {
@@ -385,8 +389,8 @@ public class ResourceOpenAPIParser {
 		return String.join("", urls);
 	}
 
-	private static String _getParameterAnnotation(JavaParameter javaParameter) {
-		Operation operation = javaParameter.getOperation();
+	private static String _getParameterAnnotation(
+		JavaMethodParameter javaMethodParameter, Operation operation) {
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -396,7 +400,7 @@ public class ResourceOpenAPIParser {
 			parameterNames.add(parameter.getName());
 		}
 
-		String parameterType = javaParameter.getParameterType();
+		String parameterType = javaMethodParameter.getParameterType();
 
 		if (Objects.equals(parameterType, "Filter") &&
 			parameterNames.contains("filter")) {
@@ -422,7 +426,7 @@ public class ResourceOpenAPIParser {
 				parameter.getName(), false);
 
 			if (!Objects.equals(
-					parameterName, javaParameter.getParameterName())) {
+					parameterName, javaMethodParameter.getParameterName())) {
 
 				continue;
 			}
@@ -480,12 +484,12 @@ public class ResourceOpenAPIParser {
 					continue;
 				}
 
-				String javaParameterType =
-					OpenAPIParserUtil.getJavaParameterType(null, schema);
+				String javaMethodParameterType =
+					OpenAPIParserUtil.getJavaMethodParameterType(null, schema);
 
-				if (javaParameterType.endsWith("[]")) {
-					String s = javaParameterType.substring(
-						0, javaParameterType.length() - 2);
+				if (javaMethodParameterType.endsWith("[]")) {
+					String s = javaMethodParameterType.substring(
+						0, javaMethodParameterType.length() - 2);
 
 					return "Page<" + s + ">";
 				}

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.GraphQLOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceOpenAPIParser;
@@ -37,24 +37,26 @@ public class FreeMarkerTool {
 		return _instance;
 	}
 
-	public List<JavaParameter> getDTOJavaParameters(
+	public List<JavaMethodParameter> getDTOJavaMethodParameters(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
 		boolean fullyQualifiedNames) {
 
-		return DTOOpenAPIParser.getJavaParameters(
+		return DTOOpenAPIParser.getJavaMethodParameters(
 			configYAML, openAPIYAML, schema, fullyQualifiedNames);
 	}
 
-	public List<JavaParameter> getDTOJavaParameters(
+	public List<JavaMethodParameter> getDTOJavaMethodParameters(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
 		boolean fullyQualifiedNames) {
 
-		return DTOOpenAPIParser.getJavaParameters(
+		return DTOOpenAPIParser.getJavaMethodParameters(
 			configYAML, openAPIYAML, schemaName, fullyQualifiedNames);
 	}
 
-	public String getGraphQLArguments(List<JavaParameter> javaParameters) {
-		return OpenAPIParserUtil.getArguments(javaParameters);
+	public String getGraphQLArguments(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		return OpenAPIParserUtil.getArguments(javaMethodParameters);
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
@@ -72,9 +74,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getGraphQLParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
 
-		return GraphQLOpenAPIParser.getParameters(javaParameters, annotation);
+		return GraphQLOpenAPIParser.getParameters(
+			javaMethodParameters, operation, annotation);
 	}
 
 	public Set<String> getGraphQLSchemaNames(
@@ -87,8 +91,10 @@ public class FreeMarkerTool {
 		return OpenAPIParserUtil.getHTTPMethod(operation);
 	}
 
-	public String getResourceArguments(List<JavaParameter> javaParameters) {
-		return OpenAPIParserUtil.getArguments(javaParameters);
+	public String getResourceArguments(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		return OpenAPIParserUtil.getArguments(javaMethodParameters);
 	}
 
 	public List<JavaMethodSignature> getResourceJavaMethodSignatures(
@@ -106,9 +112,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceParameters(
-		List<JavaParameter> javaParameters, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
 
-		return ResourceOpenAPIParser.getParameters(javaParameters, annotation);
+		return ResourceOpenAPIParser.getParameters(
+			javaMethodParameters, operation, annotation);
 	}
 
 	public boolean hasHTTPMethod(
@@ -119,9 +127,10 @@ public class FreeMarkerTool {
 	}
 
 	public boolean isSchemaParameter(
-		JavaParameter javaParameter, OpenAPIYAML openAPIYAML) {
+		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML) {
 
-		return OpenAPIParserUtil.isSchemaParameter(javaParameter, openAPIYAML);
+		return OpenAPIParserUtil.isSchemaParameter(
+			javaMethodParameter, openAPIYAML);
 	}
 
 	private FreeMarkerTool() {

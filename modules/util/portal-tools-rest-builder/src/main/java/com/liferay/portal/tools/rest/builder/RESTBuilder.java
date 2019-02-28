@@ -118,13 +118,13 @@ public class RESTBuilder {
 
 			context.put("openAPIYAML", openAPIYAML);
 
-			String versionDirName = OpenAPIUtil.getVersionDirName(openAPIYAML);
+			String escapedVersion = OpenAPIUtil.escapeVersion(openAPIYAML);
 
-			context.put("versionDirName", versionDirName);
+			context.put("escapedVersion", escapedVersion);
 
-			_createGraphQLMutationFile(context, versionDirName);
-			_createGraphQLQueryFile(context, versionDirName);
-			_createGraphQLServletDataFile(context, versionDirName);
+			_createGraphQLMutationFile(context, escapedVersion);
+			_createGraphQLQueryFile(context, escapedVersion);
+			_createGraphQLServletDataFile(context, escapedVersion);
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 				String schemaName = entry.getKey();
@@ -142,21 +142,21 @@ public class RESTBuilder {
 				_putSchema(context, schema, schemaName);
 
 				_createBaseResourceImplFile(
-					context, schemaName, versionDirName);
-				_createPropertiesFile(context, schemaName, versionDirName);
-				_createResourceFile(context, schemaName, versionDirName);
-				_createResourceImplFile(context, schemaName, versionDirName);
+					context, escapedVersion, schemaName);
+				_createPropertiesFile(context, escapedVersion, schemaName);
+				_createResourceFile(context, escapedVersion, schemaName);
+				_createResourceImplFile(context, escapedVersion, schemaName);
 
 				if (Validator.isNotNull(_configYAML.getClientDir())) {
 					_createClientResourceFile(
-						context, schemaName, versionDirName);
+						context, escapedVersion, schemaName);
 				}
 
 				if (Validator.isNotNull(_configYAML.getTestDir())) {
 					_createBaseResourceTestCaseFile(
-						context, schemaName, versionDirName);
+						context, escapedVersion, schemaName);
 					_createResourceTestFile(
-						context, schemaName, versionDirName);
+						context, escapedVersion, schemaName);
 				}
 			}
 
@@ -166,10 +166,10 @@ public class RESTBuilder {
 
 				_putSchema(context, schema, schemaName);
 
-				_createDTOFile(context, schemaName, versionDirName);
+				_createDTOFile(context, escapedVersion, schemaName);
 
 				if (Validator.isNotNull(_configYAML.getClientDir())) {
-					_createClientDTOFile(context, schemaName, versionDirName);
+					_createClientDTOFile(context, escapedVersion, schemaName);
 				}
 			}
 		}
@@ -215,8 +215,8 @@ public class RESTBuilder {
 	}
 
 	private void _createBaseResourceImplFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -229,7 +229,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/internal/resource/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/Base");
 		sb.append(schemaName);
 		sb.append("ResourceImpl.java");
@@ -245,8 +245,8 @@ public class RESTBuilder {
 	}
 
 	private void _createBaseResourceTestCaseFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -259,7 +259,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/resource/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/test/Base");
 		sb.append(schemaName);
 		sb.append("ResourceTestCase.java");
@@ -275,8 +275,8 @@ public class RESTBuilder {
 	}
 
 	private void _createClientDTOFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -289,7 +289,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/client/dto/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/");
 		sb.append(schemaName);
 		sb.append(".java");
@@ -305,8 +305,8 @@ public class RESTBuilder {
 	}
 
 	private void _createClientResourceFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -319,7 +319,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/client/resource/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/");
 		sb.append(schemaName);
 		sb.append("Resource.java");
@@ -335,8 +335,8 @@ public class RESTBuilder {
 	}
 
 	private void _createDTOFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -349,7 +349,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/dto/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/");
 		sb.append(schemaName);
 		sb.append(".java");
@@ -364,7 +364,7 @@ public class RESTBuilder {
 	}
 
 	private void _createGraphQLMutationFile(
-			Map<String, Object> context, String versionDirName)
+			Map<String, Object> context, String escapedVersion)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -377,7 +377,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/internal/graphql/mutation/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/Mutation.java");
 
 		File file = new File(sb.toString());
@@ -391,7 +391,7 @@ public class RESTBuilder {
 	}
 
 	private void _createGraphQLQueryFile(
-			Map<String, Object> context, String versionDirName)
+			Map<String, Object> context, String escapedVersion)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -404,7 +404,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/internal/graphql/query/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/Query.java");
 
 		File file = new File(sb.toString());
@@ -418,7 +418,7 @@ public class RESTBuilder {
 	}
 
 	private void _createGraphQLServletDataFile(
-			Map<String, Object> context, String versionDirName)
+			Map<String, Object> context, String escapedVersion)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -431,7 +431,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/internal/graphql/servlet/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/ServletDataImpl.java");
 
 		File file = new File(sb.toString());
@@ -445,15 +445,15 @@ public class RESTBuilder {
 	}
 
 	private void _createPropertiesFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(_configYAML.getImplDir());
 		sb.append("/../resources/OSGI-INF/liferay/rest/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/");
 		sb.append(CamelCaseUtil.fromCamelCase(schemaName));
 		sb.append(".properties");
@@ -467,8 +467,8 @@ public class RESTBuilder {
 	}
 
 	private void _createResourceFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -481,7 +481,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/resource/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/");
 		sb.append(schemaName);
 		sb.append("Resource.java");
@@ -497,8 +497,8 @@ public class RESTBuilder {
 	}
 
 	private void _createResourceImplFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -511,7 +511,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/internal/resource/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/");
 		sb.append(schemaName);
 		sb.append("ResourceImpl.java");
@@ -531,8 +531,8 @@ public class RESTBuilder {
 	}
 
 	private void _createResourceTestFile(
-			Map<String, Object> context, String schemaName,
-			String versionDirName)
+			Map<String, Object> context, String escapedVersion,
+			String schemaName)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -545,7 +545,7 @@ public class RESTBuilder {
 		sb.append(apiPackagePath.replace('.', '/'));
 
 		sb.append("/resource/");
-		sb.append(versionDirName);
+		sb.append(escapedVersion);
 		sb.append("/test/");
 		sb.append(schemaName);
 		sb.append("ResourceTest.java");

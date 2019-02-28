@@ -1,7 +1,7 @@
-package ${configYAML.apiPackagePath}.internal.graphql.servlet.${versionDirName};
+package ${configYAML.apiPackagePath}.internal.graphql.servlet.${escapedVersion};
 
-import ${configYAML.apiPackagePath}.internal.graphql.mutation.${versionDirName}.Mutation;
-import ${configYAML.apiPackagePath}.internal.graphql.query.${versionDirName}.Query;
+import ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion}.Mutation;
+import ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion}.Query;
 
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -24,7 +24,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public String getPath() {
-		return "${configYAML.application.baseURI}-graphql/${versionDirName}";
+		return "${configYAML.application.baseURI}-graphql/${escapedVersion}";
 	}
 
 	@Override

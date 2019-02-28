@@ -1,10 +1,10 @@
-package ${configYAML.apiPackagePath}.internal.graphql.query.${versionDirName};
+package ${configYAML.apiPackagePath}.internal.graphql.query.${escapedVersion};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
-		import ${configYAML.apiPackagePath}.internal.resource.${versionDirName}.${schemaName}ResourceImpl;
-		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+		import ${configYAML.apiPackagePath}.internal.resource.${escapedVersion}.${schemaName}ResourceImpl;
+		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 	</#list>
 </#compress>
 
@@ -39,7 +39,7 @@ public class Query {
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaParameters, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 			<#assign schemaName = javaMethodSignature.schemaName />
 
 			<#if stringUtil.equals(javaMethodSignature.returnType, "Response")>
@@ -51,7 +51,7 @@ public class Query {
 
 				${schemaName?uncap_first}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters) />
+				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters) />
 
 				Page paginationPage = ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${arguments?replace("pageSize,page", "Pagination.of(pageSize, page)")});
 
@@ -61,7 +61,7 @@ public class Query {
 
 				${schemaName?uncap_first}Resource.setContextCompany(CompanyLocalServiceUtil.getCompany(CompanyThreadLocal.getCompanyId()));
 
-				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters)});
+				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)});
 			</#if>
 		}
 	</#list>

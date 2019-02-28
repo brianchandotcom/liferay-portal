@@ -1,9 +1,9 @@
-package ${configYAML.apiPackagePath}.resource.${versionDirName}.test;
+package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
 <#compress>
 	<#list allSchemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
-		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 	</#list>
 </#compress>
 
@@ -94,9 +94,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName, false) as javaMethodSignature>
 		<#assign
-			arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaParameters)
-			firstJavaParameter = javaMethodSignature.javaParameters[0]
-			parameters = freeMarkerTool.getResourceParameters(javaMethodSignature.javaParameters, false)
+			arguments = freeMarkerTool.getResourceArguments(javaMethodSignature.javaMethodParameters)
+			firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0]
+			parameters = freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, false)
 		/>
 
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
@@ -113,7 +113,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<")>
-			<#if stringUtil.equals(firstJavaParameter.parameterName, "filter") || stringUtil.equals(firstJavaParameter.parameterName, "pagination") || stringUtil.equals(firstJavaParameter.parameterName, "sorts")>
+			<#if stringUtil.equals(firstJavaMethodParameter.parameterName, "filter") || stringUtil.equals(firstJavaMethodParameter.parameterName, "pagination") || stringUtil.equals(firstJavaMethodParameter.parameterName, "sorts")>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 					Assert.assertTrue(true);
@@ -121,12 +121,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#else>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-					${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}();
+					${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();
 
-					${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
-					${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
+					${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
+					${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
 
-					Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+					Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 					<#if parameters?contains("Filter filter")>
 						, (String)null
@@ -157,7 +157,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							return;
 						}
 
-						${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}();
+						${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();
 
 						${schemaName} ${schemaVarName}1 = random${schemaName}();
 						${schemaName} ${schemaVarName}2 = random${schemaName}();
@@ -166,14 +166,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 							BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), DateUtils.addMinutes(new Date(), -2));
 						}
 
-						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, ${schemaVarName}1);
+						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, ${schemaVarName}1);
 
 						Thread.sleep(1000);
 
-						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, ${schemaVarName}2);
+						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, ${schemaVarName}2);
 
 						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+							Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 							, getFilterString(entityField, "eq", ${schemaVarName}1)
 
@@ -199,13 +199,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 							return;
 						}
 
-						${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}();
+						${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();
 
-						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
-						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
+						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
+						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
 
 						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+							Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 							, getFilterString(entityField, "eq", ${schemaVarName}1)
 
@@ -227,13 +227,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if parameters?contains("Pagination pagination")>
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithPagination() throws Exception {
-						${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}();
+						${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();
 
-						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
-						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
-						${schemaName} ${schemaVarName}3 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, random${schemaName}());
+						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
+						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
+						${schemaName} ${schemaVarName}3 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, random${schemaName}());
 
-						Page<${schemaName}> page1 = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+						Page<${schemaName}> page1 = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 						<#if parameters?contains("Filter filter")>
 							, (String)null
@@ -251,7 +251,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						Assert.assertEquals(${schemaVarNames}1.toString(), 2, ${schemaVarNames}1.size());
 
-						Page<${schemaName}> page2 = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+						Page<${schemaName}> page2 = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 						<#if parameters?contains("Filter filter")>
 							, (String)null
@@ -291,7 +291,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							return;
 						}
 
-						${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}();
+						${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();
 
 						${schemaName} ${schemaVarName}1 = random${schemaName}();
 						${schemaName} ${schemaVarName}2 = random${schemaName}();
@@ -300,14 +300,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 							BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), DateUtils.addMinutes(new Date(), -2));
 						}
 
-						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, ${schemaVarName}1);
+						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, ${schemaVarName}1);
 
 						Thread.sleep(1000);
 
-						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, ${schemaVarName}2);
+						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, ${schemaVarName}2);
 
 						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> ascPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+							Page<${schemaName}> ascPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 							<#if parameters?contains("Filter filter")>
 								, (String)null
@@ -323,7 +323,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 							assertEquals(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)ascPage.getItems());
 
-							Page<${schemaName}> descPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+							Page<${schemaName}> descPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 							<#if parameters?contains("Filter filter")>
 								, (String)null
@@ -349,7 +349,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							return;
 						}
 
-						${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}();
+						${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}();
 
 						${schemaName} ${schemaVarName}1 = random${schemaName}();
 						${schemaName} ${schemaVarName}2 = random${schemaName}();
@@ -359,11 +359,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 							BeanUtils.setProperty(${schemaVarName}2, entityField.getName(), "Bbb");
 						}
 
-						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, ${schemaVarName}1);
-						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterName}, ${schemaVarName}2);
+						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, ${schemaVarName}1);
+						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterName}, ${schemaVarName}2);
 
 						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> ascPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+							Page<${schemaName}> ascPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 							<#if parameters?contains("Filter filter")>
 								, (String)null
@@ -379,7 +379,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 							assertEquals(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)ascPage.getItems());
 
-							Page<${schemaName}> descPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaParameter.parameterName}
+							Page<${schemaName}> descPage = invoke${javaMethodSignature.methodName?cap_first}(${firstJavaMethodParameter.parameterName}
 
 							<#if parameters?contains("Filter filter")>
 								, (String)null
@@ -398,12 +398,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 					}
 				</#if>
 
-				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaParameter.parameterType} ${firstJavaParameter.parameterName}, ${schemaName} ${schemaVarName}) throws Exception {
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${firstJavaMethodParameter.parameterType} ${firstJavaMethodParameter.parameterName}, ${schemaName} ${schemaVarName}) throws Exception {
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				}
 
-				protected ${firstJavaParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${firstJavaParameter.parameterName?cap_first}() throws Exception {
-					<#if stringUtil.equals(firstJavaParameter.parameterName, "contentSpaceId")>
+				protected ${firstJavaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${firstJavaMethodParameter.parameterName?cap_first}() throws Exception {
+					<#if stringUtil.equals(firstJavaMethodParameter.parameterName, "contentSpaceId")>
 						return testGroup.getGroupId();
 					<#else>
 						throw new UnsupportedOperationException("This method needs to be implemented");
@@ -502,7 +502,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if hasFilterAndSorts>
 				options.setLocation(_${javaMethodSignature.methodName?remove_ending("Page")}Location(${invokeArguments}));
 			<#else>
-				options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaParameter.parameterName}));
+				options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaMethodParameter.parameterName}));
 			</#if>
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
@@ -536,7 +536,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if hasFilterAndSorts>
 				options.setLocation(_${javaMethodSignature.methodName?remove_ending("Page")}Location(${invokeArguments}));
 			<#else>
-				options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaParameter.parameterName}));
+				options.setLocation(_resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaMethodParameter.parameterName}));
 			</#if>
 
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
@@ -552,7 +552,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#if hasFilterAndSorts>
 			private String _${javaMethodSignature.methodName?remove_ending("Page")}Location(${invokeParameters}) {
-				String url = _resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaParameter.parameterName});
+				String url = _resourceURL + _toPath("${javaMethodSignature.path}", ${firstJavaMethodParameter.parameterName});
 
 				url += "?filter=" + URLCodec.encodeURL(filterString);
 				url += "&page=" + pagination.getPageNumber();
@@ -667,15 +667,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
-			if (entityFieldName.equals("${javaParameter.parameterName}")) {
-				<#if stringUtil.equals(javaParameter.parameterType, "Date")>
-					sb.append(_dateFormat.format(${schemaVarName}.get${javaParameter.parameterName?cap_first}()));
+		<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+			if (entityFieldName.equals("${javaMethodParameter.parameterName}")) {
+				<#if stringUtil.equals(javaMethodParameter.parameterType, "Date")>
+					sb.append(_dateFormat.format(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()));
 
 					return sb.toString();
-				<#elseif stringUtil.equals(javaParameter.parameterType, "String")>
+				<#elseif stringUtil.equals(javaMethodParameter.parameterType, "String")>
 					sb.append("'");
-					sb.append(String.valueOf(${schemaVarName}.get${javaParameter.parameterName?cap_first}()));
+					sb.append(String.valueOf(${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()));
 					sb.append("'");
 
 					return sb.toString();
@@ -693,11 +693,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 			{
 				<#assign randomDataTypes = ["Boolean", "Double", "Long", "String"] />
 
-				<#list freeMarkerTool.getDTOJavaParameters(configYAML, openAPIYAML, schema, false) as javaParameter>
-					<#if randomDataTypes?seq_contains(javaParameter.parameterType)>
-						${javaParameter.parameterName} = RandomTestUtil.random${javaParameter.parameterType}();
-					<#elseif stringUtil.equals(javaParameter.parameterType, "Date")>
-						${javaParameter.parameterName} = RandomTestUtil.nextDate();
+				<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema, false) as javaMethodParameter>
+					<#if randomDataTypes?seq_contains(javaMethodParameter.parameterType)>
+						${javaMethodParameter.parameterName} = RandomTestUtil.random${javaMethodParameter.parameterType}();
+					<#elseif stringUtil.equals(javaMethodParameter.parameterType, "Date")>
+						${javaMethodParameter.parameterName} = RandomTestUtil.nextDate();
 					</#if>
 				</#list>
 			}

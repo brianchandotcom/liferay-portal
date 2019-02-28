@@ -1,10 +1,10 @@
-package ${configYAML.apiPackagePath}.internal.graphql.mutation.${versionDirName};
+package ${configYAML.apiPackagePath}.internal.graphql.mutation.${escapedVersion};
 
 <#compress>
 	<#list openAPIYAML.components.schemas?keys as schemaName>
-		import ${configYAML.apiPackagePath}.dto.${versionDirName}.${schemaName};
-		import ${configYAML.apiPackagePath}.internal.resource.${versionDirName}.${schemaName}ResourceImpl;
-		import ${configYAML.apiPackagePath}.resource.${versionDirName}.${schemaName}Resource;
+		import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+		import ${configYAML.apiPackagePath}.internal.resource.${escapedVersion}.${schemaName}ResourceImpl;
+		import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 	</#list>
 </#compress>
 
@@ -37,7 +37,7 @@ public class Mutation {
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaParameters, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -47,7 +47,7 @@ public class Mutation {
 
 				${schemaName}Resource ${schemaName?uncap_first}Resource = _create${schemaName}Resource();
 
-				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaParameters)});
+				return ${schemaName?uncap_first}Resource.${javaMethodSignature.methodName}(${freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters)});
 			</#if>
 		}
 	</#list>

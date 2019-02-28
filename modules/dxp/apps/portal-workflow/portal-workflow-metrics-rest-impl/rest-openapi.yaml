@@ -1,196 +1,196 @@
 components:
-  schemas:
-    Process:
-      description: https://www.schema.org/Process
-      properties:
-        id:
-          format: int64
-          type: integer
-        instanceCount:
-          type: integer
-        ontimeInstanceCount:
-          type: integer
-        overdueInstanceCount:
-          type: integer
-        title:
-          type: string
-      type: object
-    SLA:
-      description: https://www.schema.org/SLA
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        duration:
-          format: int64
-          type: integer
-        processId:
-          format: int64
-          type: integer
-        startNodeNames:
-          type: array
-          items:
-            type: string
-        pauseNodeNames:
-          type: array
-          items:
-            type: string
-        stopNodeNames:
-          type: array
-          items:
-            type: string
-      type: object
+    schemas:
+        Process:
+            description: https://www.schema.org/Process
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                instanceCount:
+                    type: integer
+                ontimeInstanceCount:
+                    type: integer
+                overdueInstanceCount:
+                    type: integer
+                title:
+                    type: string
+            type: object
+        SLA:
+            description: https://www.schema.org/SLA
+            properties:
+                description:
+                    type: string
+                duration:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                pauseNodeNames:
+                    items:
+                        type: string
+                    type: array
+                processId:
+                    format: int64
+                    type: integer
+                startNodeNames:
+                    items:
+                        type: string
+                    type: array
+                stopNodeNames:
+                    items:
+                        type: string
+                    type: array
+            type: object
 info:
-  description: ""
-  title: ""
-  version: v1.0
+    description: ""
+    title: ""
+    version: v1.0
 openapi: 3.0.1
 paths:
-  "/processes":
-    get:
-      parameters:
-        - in: query
-          name: page
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: title
-          schema:
-            type: string
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/Process"
-                type: array
-          description: ""
-      tags: ["Process"]
-  "/processes/{process-id}/slas":
-    get:
-      parameters:
-        - in: query
-          name: page
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: pageSize
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: process-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/SLA"
-                type: array
-          description: ""
-      tags: ["SLA"]
-    post:
-      parameters:
-       - in: path
-         name: process-id
-         required: true
-         schema:
-           format: int64
-           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SLA"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SLA"
-          description: ""
-      tags: ["SLA"]
-  "/processes/{process-id}/slas/{sla-id}":
-   delete:
-      parameters:
-        - in: path
-          name: process-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: path
-          name: sla-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        204:
-          content:
-            application/json: {}
-          description: ""
-      tags: ["SLA"]
-   get:
-      parameters:
-        - in: path
-          name: process-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-        - in: path
-          name: sla-id
-          required: true
-          schema:
-            format: int64
-            type: integer
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SLA"
-          description: ""
-      tags: ["SLA"]
-   put:
-      parameters:
-       - in: path
-         name: process-id
-         required: true
-         schema:
-           format: int64
-           type: integer
-       - in: path
-         name: sla-id
-         required: true
-         schema:
-            format: int64
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SLA"
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SLA"
-          description: ""
-      tags: ["SLA"]
+    "/processes":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: title
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Process"
+                                type: array
+                    description: ""
+            tags: ["Process"]
+    "/processes/{process-id}/slas":
+        get:
+            parameters:
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SLA"
+                                type: array
+                    description: ""
+            tags: ["SLA"]
+        post:
+            parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                    description: ""
+            tags: ["SLA"]
+    "/processes/{process-id}/slas/{sla-id}":
+        delete:
+            parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: sla-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["SLA"]
+        get:
+            parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: sla-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                    description: ""
+            tags: ["SLA"]
+        put:
+            parameters:
+                - in: path
+                  name: process-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: sla-id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                    description: ""
+            tags: ["SLA"]

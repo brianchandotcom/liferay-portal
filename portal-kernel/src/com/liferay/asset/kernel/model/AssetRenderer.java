@@ -124,6 +124,20 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public String getURLDownload(ThemeDisplay themeDisplay);
 
+	public default PortletURL getURLEdit(HttpServletRequest request)
+		throws Exception {
+
+		return null;
+	}
+
+	public default PortletURL getURLEdit(
+			HttpServletRequest request, WindowState windowState,
+			PortletURL redirectURL)
+		throws Exception {
+
+		return null;
+	}
+
 	public PortletURL getURLEdit(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

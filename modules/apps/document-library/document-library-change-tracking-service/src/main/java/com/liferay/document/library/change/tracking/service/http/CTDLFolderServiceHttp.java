@@ -54,6 +54,41 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class CTDLFolderServiceHttp {
+	public static java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		String[] mimeTypes, boolean includeMountFolders,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CTDLFolderServiceUtil.class,
+					"getFoldersAndFileEntriesAndFileShortcuts",
+					_getFoldersAndFileEntriesAndFileShortcutsParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					folderId, mimeTypes, includeMountFolders, queryDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<Object>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,
 		String[] mimeTypes, boolean includeMountFolders,
@@ -62,7 +97,7 @@ public class CTDLFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CTDLFolderServiceUtil.class,
 					"getFoldersAndFileEntriesAndFileShortcutsCount",
-					_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes0);
+					_getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, mimeTypes, includeMountFolders, queryDefinition);
@@ -90,7 +125,12 @@ public class CTDLFolderServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CTDLFolderServiceHttp.class);
-	private static final Class<?>[] _getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes0 =
+	private static final Class<?>[] _getFoldersAndFileEntriesAndFileShortcutsParameterTypes0 =
+		new Class[] {
+			long.class, long.class, String[].class, boolean.class,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition.class
+		};
+	private static final Class<?>[] _getFoldersAndFileEntriesAndFileShortcutsCountParameterTypes1 =
 		new Class[] {
 			long.class, long.class, String[].class, boolean.class,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition.class

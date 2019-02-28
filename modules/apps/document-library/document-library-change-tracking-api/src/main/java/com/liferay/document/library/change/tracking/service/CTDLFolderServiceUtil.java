@@ -40,6 +40,15 @@ public class CTDLFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.document.library.change.tracking.service.impl.CTDLFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
+			mimeTypes, includeMountFolders, queryDefinition);
+	}
 
 	/**
 	* NOTE FOR DEVELOPERS:

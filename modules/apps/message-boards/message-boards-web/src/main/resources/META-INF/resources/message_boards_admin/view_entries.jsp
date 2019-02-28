@@ -113,15 +113,15 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-							<h4>
+							<h2 class="h5">
 								<aui:a href="<%= rowURL.toString() %>">
 									<%= curCategory.getName() %>
 								</aui:a>
-							</h4>
+							</h2>
 
-							<h5 class="text-default">
+							<span class="text-default">
 								<%= curCategory.getDescription() %>
-							</h5>
+							</span>
 
 							<%
 							int subcategoriesCount = categoryDisplay.getSubcategoriesCount(curCategory);
@@ -194,9 +194,9 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
 
-									<h5 class="text-default">
+									<span class="text-default">
 										<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
-									</h5>
+									</span>
 								</c:when>
 								<c:otherwise>
 
@@ -212,13 +212,13 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 									String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
 									%>
 
-									<h5 class="text-default">
+									<span class="text-default">
 										<liferay-ui:message arguments="<%= new String[] {messageUserName, lastPostDateDescription} %>" key="x-replied-x-ago" />
-									</h5>
+									</span>
 								</c:otherwise>
 							</c:choose>
 
-							<h4>
+							<h2 class="h5">
 								<aui:a href="<%= rowURL.toString() %>">
 									<c:if test="<%= message != null %>">
 										<c:choose>
@@ -243,7 +243,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 								<c:if test="<%= thread.isQuestion() %>">
 									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
 								</c:if>
-							</h4>
+							</h2>
 
 							<span class="h6">
 								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />

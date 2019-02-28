@@ -89,11 +89,11 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 					%>
 
-					<h5 class="text-default">
+					<span class="text-default">
 						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(PortalUtil.getUserName(ban.getUserId(), StringPool.BLANK)), modifiedDateDescription} %>" key="banned-by-x-x-ago" />
-					</h5>
+					</span>
 
-					<h4>
+					<h2 class="h5">
 
 						<%
 						User bannedUser = UserLocalServiceUtil.fetchUser(ban.getBanUserId());
@@ -109,13 +109,13 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 								<%= HtmlUtil.escape(PortalUtil.getUserName(ban.getBanUserId(), StringPool.BLANK)) %>
 							</c:otherwise>
 						</c:choose>
-					</h4>
+					</h2>
 
-					<h5 class="text-default">
+					<span class="text-default">
 						<liferay-ui:message key="unban-date" />
 
 						<%= dateFormatDateTime.format(com.liferay.message.boards.util.MBUtil.getUnbanDate(ban, PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL)) %>
-					</h5>
+					</span>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp

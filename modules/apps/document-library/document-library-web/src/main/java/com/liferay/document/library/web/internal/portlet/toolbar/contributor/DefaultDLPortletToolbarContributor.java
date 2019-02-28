@@ -140,10 +140,6 @@ public class DefaultDLPortletToolbarContributor
 
 		long repositoryId = _getRepositoryId(themeDisplay, folder);
 
-		menuItems.add(
-			_getPortletTitleAddBasicDocumentMenuItem(
-				folder, themeDisplay, portletRequest));
-
 		if (themeDisplay.getScopeGroupId() == repositoryId) {
 			menuItems.addAll(
 				_getPortletTitleAddDocumentTypeMenuItems(
@@ -478,19 +474,20 @@ public class DefaultDLPortletToolbarContributor
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
+		menuItems.add(
+			_getPortletTitleAddBasicDocumentMenuItem(
+				folder, themeDisplay, portletRequest));
+
 		addPortletTitleAddFolderMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
-
-		addPortletTitleAddShortcutMenuItem(
-			menuItems, folder, themeDisplay, portletRequest);
-
-		addPortletTitleAddRepositoryMenuItem(
 			menuItems, folder, themeDisplay, portletRequest);
 
 		addPortletTitleAddMultipleDocumentsMenuItem(
 			menuItems, folder, themeDisplay, portletRequest);
 
-		addPortletTitleAddDocumentMenuItems(
+		addPortletTitleAddRepositoryMenuItem(
+			menuItems, folder, themeDisplay, portletRequest);
+
+		addPortletTitleAddShortcutMenuItem(
 			menuItems, folder, themeDisplay, portletRequest);
 
 		MenuItem lastStaticMenuItem = menuItems.get(menuItems.size() - 1);
@@ -503,6 +500,9 @@ public class DefaultDLPortletToolbarContributor
 				menuItems, folder, themeDisplay, portletRequest,
 				portletResponse);
 		}
+
+		addPortletTitleAddDocumentMenuItems(
+			menuItems, folder, themeDisplay, portletRequest);
 
 		if (lastStaticMenuItem != menuItems.get(menuItems.size() - 1)) {
 			lastStaticMenuItem.setSeparator(true);

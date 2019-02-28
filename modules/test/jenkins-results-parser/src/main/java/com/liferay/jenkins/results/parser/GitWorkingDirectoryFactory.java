@@ -37,8 +37,10 @@ public class GitWorkingDirectoryFactory {
 		try {
 			String gitRepositoryDirPath = gitRepositoryDir.getCanonicalPath();
 
-			if (_gitWorkingDirectories.containsKey(gitRepositoryDirPath)) {
-				return _gitWorkingDirectories.get(gitRepositoryDirPath);
+			String key = gitRepositoryDirPath + "-" + upstreamBranchName;
+
+			if (_gitWorkingDirectories.containsKey(key)) {
+				return _gitWorkingDirectories.get(key);
 			}
 
 			if (gitRepositoryName == null) {
@@ -68,10 +70,9 @@ public class GitWorkingDirectoryFactory {
 					gitRepositoryName);
 			}
 
-			_gitWorkingDirectories.put(
-				gitRepositoryDirPath, gitWorkingDirectory);
+			_gitWorkingDirectories.put(key, gitWorkingDirectory);
 
-			return _gitWorkingDirectories.get(gitRepositoryDirPath);
+			return gitWorkingDirectory;
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

@@ -61,6 +61,15 @@
 				margin-right: 320px;
 			}
 		}
+
+		.contextual-sidebar.closed {
+			visibility: visible;
+			width: 320px;
+		}
+
+		.contextual-sidebar-btn {
+			display: none;
+		}
 	}
 
 	@include media-query(null, $screen-md-max) {
@@ -70,8 +79,18 @@
 			}
 		}
 
-		.contextual-sidebar {
-			display: none;
+		.contextual-sidebar.closed {
+			transform: translateX(100%);
+			visibility: hidden;
+		}
+
+		.contextual-sidebar.open {
+			transform: translateX(0);
+			visibility: visible;
+		}
+
+		.contextual-sidebar-btn {
+			display: initial;
 		}
 	}
 

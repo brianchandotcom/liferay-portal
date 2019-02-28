@@ -80,15 +80,15 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 			menuItems.add(
 				_createURLMenuItem(
-					portletRequest, folder, "google-docs",
+					portletRequest, folder, "google-doc",
 					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
 			menuItems.add(
 				_createURLMenuItem(
-					portletRequest, folder, "google-slides",
+					portletRequest, folder, "google-slide",
 					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
 			menuItems.add(
 				_createURLMenuItem(
-					portletRequest, folder, "google-sheets",
+					portletRequest, folder, "google-sheet",
 					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
 		}
 		catch (PortalException pe) {

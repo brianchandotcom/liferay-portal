@@ -14,12 +14,16 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
@@ -90,6 +94,15 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
+	private List<ObjectValuePair<SharingEntry, User>> _getAllSharingEntries(
+		long classNameId, long classPK) {
+
+		List<SharingEntry> fromUserSharingEntries =
+			_sharingEntryLocalService.getSharingEntries(classNameId, classPK);
+
+		return _getSharingEntryUserObjectValuePairs(fromUserSharingEntries);
+	}
+
 	private JSONArray _getCollaboratorsJSONArray(RenderRequest renderRequest)
 		throws PortletException {
 
@@ -108,22 +121,19 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				return JSONFactoryUtil.createJSONArray();
 			}
 
-			List<SharingEntry> fromUserSharingEntries =
-				_sharingEntryLocalService.getFromUserSharingEntries(
-					themeDisplay.getUserId(), classNameId, classPK, 0,
-					countSharingEntryToUserIds);
-
 			List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
-				new ArrayList<>();
+				null;
 
-			for (SharingEntry sharingEntry : fromUserSharingEntries) {
-				User toUser = _userLocalService.fetchUser(
-					sharingEntry.getToUserId());
+			if (_isOwnerOrAdmin(
+					themeDisplay.getPermissionChecker(), classNameId,
+					classPK)) {
 
-				if (toUser != null) {
-					sharingEntryToUserOVPs.add(
-						new ObjectValuePair<>(sharingEntry, toUser));
-				}
+				sharingEntryToUserOVPs = _getAllSharingEntries(
+					classNameId, classPK);
+			}
+			else {
+				sharingEntryToUserOVPs = _getDirectSharingEntries(
+					classNameId, classPK, themeDisplay);
 			}
 
 			JSONArray collaboratorsJSONArray =
@@ -186,6 +196,16 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
+	}
+
+	private List<ObjectValuePair<SharingEntry, User>> _getDirectSharingEntries(
+		long classNameId, long classPK, ThemeDisplay themeDisplay) {
+
+		List<SharingEntry> fromUserSharingEntries =
+			_sharingEntryLocalService.getFromUserSharingEntries(
+				themeDisplay.getUserId(), classNameId, classPK);
+
+		return _getSharingEntryUserObjectValuePairs(fromUserSharingEntries);
 	}
 
 	private String _getManageCollaboratorsActionURL(
@@ -251,12 +271,63 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return sharingEntryPermissionDisplaySelectOptionsJSONArray;
 	}
 
+	private List<ObjectValuePair<SharingEntry, User>>
+		_getSharingEntryUserObjectValuePairs(
+			List<SharingEntry> fromUserSharingEntries) {
+
+		List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
+			new ArrayList<>();
+
+		for (SharingEntry sharingEntry : fromUserSharingEntries) {
+			User toUser = _userLocalService.fetchUser(
+				sharingEntry.getToUserId());
+
+			if (toUser != null) {
+				sharingEntryToUserOVPs.add(
+					new ObjectValuePair<>(sharingEntry, toUser));
+			}
+		}
+
+		return sharingEntryToUserOVPs;
+	}
+
 	private String _getSpritemap(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
 	}
+
+	private boolean _isOwnerOrAdmin(
+		PermissionChecker permissionChecker, long classNameId, long classPK) {
+
+		if (permissionChecker.isOmniadmin() ||
+			permissionChecker.isCompanyAdmin()) {
+
+			return true;
+		}
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return false;
+		}
+
+		if (permissionChecker.isGroupAdmin(assetEntry.getGroupId()) ||
+			permissionChecker.hasOwnerPermission(
+				assetEntry.getCompanyId(), assetEntry.getClassName(),
+				assetEntry.getClassPK(), assetEntry.getUserId(),
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

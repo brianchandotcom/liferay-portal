@@ -75,14 +75,14 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 					new String[] {
 						"[$CONTEXT_PATH$]", "[$PACKAGE_NAME$]",
 						"[$PACKAGE_VERSION$]", "[$PORTLET_ELEMENT_ID$]",
-						"[$PORTLET_NAMESPACE$]", "[$PORTLET_PREFERENCES$]",
-						"[$SETTINGS$]"
+						"[$PORTLET_INSTANCE_CONFIGURATION$]",
+						"[$PORTLET_NAMESPACE$]", "[$SYSTEM_CONFIGURATION$]"
 					},
 					new String[] {
 						renderRequest.getContextPath(), _packageName,
 						_packageVersion, portletElementId,
-						renderResponse.getNamespace(),
-						_getPortletPreferences(renderRequest), _getSettings()
+						_getPortletInstanceConfiguration(renderRequest),
+						renderResponse.getNamespace(), _getSystemConfiguration()
 					}));
 
 			printWriter.flush();
@@ -95,12 +95,12 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 	@Override
 	public void updated(Dictionary<String, ?> properties) {
 		if (properties == null) {
-			_settings.set(Collections.emptyMap());
+			_configuration.set(Collections.emptyMap());
 
 			return;
 		}
 
-		Map<String, String> settings = new HashMap<>();
+		Map<String, String> configuration = new HashMap<>();
 
 		Enumeration<String> keys = properties.keys();
 
@@ -111,10 +111,10 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 				continue;
 			}
 
-			settings.put(key, String.valueOf(properties.get(key)));
+			configuration.put(key, String.valueOf(properties.get(key)));
 		}
 
-		_settings.set(settings);
+		_configuration.set(configuration);
 	}
 
 	private static String _loadTemplate(String name) {
@@ -130,7 +130,9 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		return StringPool.BLANK;
 	}
 
-	private String _getPortletPreferences(RenderRequest renderRequest) {
+	private String _getPortletInstanceConfiguration(
+		RenderRequest renderRequest) {
+
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
 		JSONObject portletPreferencesJSONObject =
@@ -156,8 +158,8 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		return portletPreferencesJSONObject.toJSONString();
 	}
 
-	private String _getSettings() {
-		return _jsonFactory.looseSerialize(_settings.get());
+	private String _getSystemConfiguration() {
+		return _jsonFactory.looseSerialize(_configuration.get());
 	}
 
 	private static final String _TPL_HTML;
@@ -171,10 +173,10 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		_TPL_JAVA_SCRIPT = _loadTemplate("bootstrap.js.tpl");
 	}
 
+	private final AtomicReference<Map<String, String>> _configuration =
+		new AtomicReference<>();
 	private final JSONFactory _jsonFactory;
 	private final String _packageName;
 	private final String _packageVersion;
-	private final AtomicReference<Map<String, String>> _settings =
-		new AtomicReference<>();
 
 }

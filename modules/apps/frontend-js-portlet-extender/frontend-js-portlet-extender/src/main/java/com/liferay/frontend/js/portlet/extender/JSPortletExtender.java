@@ -253,7 +253,7 @@ public class JSPortletExtender {
 							bundleContext, packageJSONObject);
 
 					JSONObject portletPreferencesJSONObject = _parse(
-						bundle.getEntry("features/preferences.json"));
+						bundle.getEntry("features/portletPreferences.json"));
 
 					if (portletPreferencesJSONObject != null) {
 						_registerConfigurationActionService(

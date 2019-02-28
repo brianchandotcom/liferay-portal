@@ -154,6 +154,42 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.apio.architect.impl.jar!jackson-annotations.jar</file-name>
+				<version>2.9.6</version>
+				<project-name>Jackson-annotations</project-name>
+				<project-url>http://github.com/FasterXML/jackson</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.apio.architect.impl.jar!jackson-core.jar</file-name>
+				<version>2.9.6</version>
+				<project-name>Jackson-core</project-name>
+				<project-url>https://github.com/FasterXML/jackson-core</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.apio.architect.impl.jar!jackson-databind.jar</file-name>
+				<version>2.9.6</version>
+				<project-name>jackson-databind</project-name>
+				<project-url>http://github.com/FasterXML/jackson</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.apio.architect.impl.jar!javax.inject.jar</file-name>
 				<version>1</version>
 				<project-name>javax.inject</project-name>
@@ -270,6 +306,42 @@
 				<project-name>com.liferay:nl.captcha.simplecaptcha</project-name>
 			</library>
 			<library>
+				<file-name>com.liferay.change.tracking.service.jar!jackson-annotations.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-annotations</project-name>
+				<project-url>http://github.com/FasterXML/jackson</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.change.tracking.service.jar!jackson-core.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-core</project-name>
+				<project-url>https://github.com/FasterXML/jackson-core</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.change.tracking.service.jar!jackson-databind.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>jackson-databind</project-name>
+				<project-url>http://github.com/FasterXML/jackson</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!guava.jar</file-name>
 				<version>19.0.20150826</version>
 				<project-name>Guava: Google Core Libraries for Java</project-name>
@@ -295,12 +367,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.configuration.admin.web.jar!org.apache.felix.fileinstall.jar</file-name>
-				<version>3.5.4.LIFERAY-PATCHED-3</version>
+				<version>3.5.4.LIFERAY-PATCHED-4</version>
 				<project-name>Apache Felix File Install</project-name>
 				<project-url>http://felix.apache.org/site/apache-felix-file-install.html</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>http://www.apache.org/licenses/LICENSE-2.0.txt</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1560,7 +1632,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.layout.type.controller.content.jar!org.jsoup.jar</file-name>
+				<file-name>com.liferay.layout.content.page.editor.web.jar!org.jsoup.jar</file-name>
 				<version>1.10.2.LIFERAY-PATCHED-3</version>
 				<project-name>org.jsoup</project-name>
 				<licenses>
@@ -1884,10 +1956,10 @@
 				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-8</version>
 				<project-name>JSP implementation</project-name>
-				<project-url>http://jsp.java.net</project-url>
+				<project-url>http://glassfish.org</project-url>
 				<licenses>
 					<license>
-						<license-name>CDDL + GPLv2 with classpath exception</license-name>
+						<license-name>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-name>
 						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
 					</license>
 				</licenses>
@@ -1908,10 +1980,10 @@
 				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
 				<version>2.3.3-b02.LIFERAY-PATCHED-8</version>
 				<project-name>JSP implementation</project-name>
-				<project-url>http://jsp.java.net</project-url>
+				<project-url>http://glassfish.org</project-url>
 				<licenses>
 					<license>
-						<license-name>CDDL + GPLv2 with classpath exception</license-name>
+						<license-name>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-name>
 						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
 					</license>
 				</licenses>
@@ -2159,14 +2231,26 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!antlr-runtime.jar</file-name>
-				<version>3.5</version>
-				<project-name>ANTLR 3 Runtime</project-name>
+				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!antlr4-runtime.jar</file-name>
+				<version>4.5.3</version>
+				<project-name>ANTLR 4 Runtime</project-name>
 				<project-url>http://www.antlr.org</project-url>
 				<licenses>
 					<license>
-						<license-name>BSD licence</license-name>
-						<license-url>http://antlr.org/license.html</license-url>
+						<license-name>The BSD License</license-name>
+						<license-url>http://www.antlr.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!asm-debug-all.jar</file-name>
+				<version>5.1</version>
+				<project-name>ASM all classes with debug info</project-name>
+				<project-url>http://asm.objectweb.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2398,14 +2482,13 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!jts.jar</file-name>
-				<version>1.13</version>
-				<project-name>JTS Topology Suite</project-name>
-				<project-url>http://sourceforge.net/projects/jts-topo-suite</project-url>
+				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!jts-core.jar</file-name>
+				<version>1.15.0</version>
+				<project-name>jts-core</project-name>
 				<licenses>
 					<license>
-						<license-name>Lesser General Public License (LGPL)</license-name>
-						<license-url>http://www.gnu.org/copyleft/lesser.txt</license-url>
+						<license-name>Eclipse Publish License, Version 1.0</license-name>
+						<license-url>https://github.com/locationtech/jts/blob/master/LICENSE_EPLv1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2414,6 +2497,18 @@
 				<version>6.5.0</version>
 				<project-name>org.elasticsearch.plugin#lang-mustache;6.5.0</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!lang-painless.jar</file-name>
+				<version>6.5.0</version>
+				<project-name>org.elasticsearch.plugin#lang-painless;6.5.0</project-name>
+				<project-url>https://github.com/codelibs/elasticsearch-module</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -2710,9 +2805,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!spatial4j.jar</file-name>
-				<version>0.6</version>
+				<version>0.7</version>
 				<project-name>Spatial4J</project-name>
-				<project-url>http://www.locationtech.org/projects/locationtech.spatial4j</project-url>
+				<project-url>https://projects.eclipse.org/projects/locationtech.spatial4j</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -2734,7 +2829,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!t-digest.jar</file-name>
-				<version>3.0</version>
+				<version>3.2</version>
 				<project-name>T-Digest</project-name>
 				<project-url>https://github.com/tdunning/t-digest</project-url>
 				<licenses>
@@ -2793,10 +2888,9 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!batik-css.jar</file-name>
-				<version>1.7</version>
-				<project-name>Batik CSS engine</project-name>
-				<project-url>http://xmlgraphics.apache.org/batik/</project-url>
+				<file-name>com.liferay.portal.security.antisamy.jar!batik-constants.jar</file-name>
+				<version>1.10</version>
+				<project-name>org.apache.xmlgraphics:batik-constants</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -2805,10 +2899,20 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!batik-ext.jar</file-name>
-				<version>1.7</version>
-				<project-name>Batik external code</project-name>
-				<project-url>http://xmlgraphics.apache.org/batik/</project-url>
+				<file-name>com.liferay.portal.security.antisamy.jar!batik-css.jar</file-name>
+				<version>1.10</version>
+				<project-name>org.apache.xmlgraphics:batik-css</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.antisamy.jar!batik-i18n.jar</file-name>
+				<version>1.10</version>
+				<project-name>org.apache.xmlgraphics:batik-i18n</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -2818,13 +2922,36 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-util.jar</file-name>
-				<version>1.7</version>
-				<project-name>Batik utility library</project-name>
-				<project-url>http://xmlgraphics.apache.org/batik/</project-url>
+				<version>1.10</version>
+				<project-name>org.apache.xmlgraphics:batik-util</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.antisamy.jar!commons-io.jar</file-name>
+				<version>1.3.1</version>
+				<project-name>Commons IO</project-name>
+				<project-url>http://jakarta.apache.org/commons/io/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.antisamy.jar!commons-logging.jar</file-name>
+				<version>1.0.4</version>
+				<project-name>Logging</project-name>
+				<project-url>http://jakarta.apache.org/commons/logging/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2869,6 +2996,18 @@
 				<version>1.3.04</version>
 				<project-name>XML Commons External Components XML APIs Extensions</project-name>
 				<project-url>http://xml.apache.org/commons/components/external/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.antisamy.jar!xmlgraphics-commons.jar</file-name>
+				<version>2.2</version>
+				<project-name>Apache XML Graphics Commons</project-name>
+				<project-url>http://xmlgraphics.apache.org/commons/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -3134,17 +3273,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.openid.impl.jar!httpclient.jar</file-name>
-				<version>4.1</version>
-				<project-name>HttpComponents HttpClient</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.impl.jar!httpcore.jar</file-name>
 				<version>4.1</version>
 				<project-name>HttpComponents HttpCore</project-name>
@@ -3178,6 +3306,11 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.sso.openid.impl.jar!org.apache.httpcomponents.httpclient.jar</file-name>
+				<version>4.1.3.LIFERAY-PATCHED-1</version>
+				<project-name>org.apache.httpcomponents.httpclient</project-name>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.impl.jar!org.apache.xml.resolver.jar</file-name>
@@ -3302,7 +3435,12 @@
 			<library>
 				<file-name>com.liferay.portal.store.jcr.jar!concurrent.jar</file-name>
 				<version>1.3.4</version>
-				<project-name>concurrent:concurrent</project-name>
+				<project-name>Dough Lea's util.concurrent package</project-name>
+				<licenses>
+					<license>
+						<license-name>Public domain, Sun Microsoystems</license-name>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.jcr.jar!jackrabbit-api.jar</file-name>
@@ -3733,6 +3871,162 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.vulcan.api.jar!graphql-java-annotations.jar</file-name>
+				<version>5.4</version>
+				<project-name>graphql-java-annotations</project-name>
+				<project-url>https://github.com/graphql-java/graphql-java-annotations</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.api.jar!jackson-dataformat-xml.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-dataformat-XML</project-name>
+				<project-url>http://wiki.fasterxml.com/JacksonExtensionXmlDataBinding</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.api.jar!snakeyaml.jar</file-name>
+				<version>1.23</version>
+				<project-name>SnakeYAML</project-name>
+				<project-url>http://www.snakeyaml.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!antlr4-runtime.jar</file-name>
+				<version>4.7.1</version>
+				<project-name>ANTLR 4 Runtime</project-name>
+				<project-url>http://www.antlr.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The BSD License</license-name>
+						<license-url>http://www.antlr.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!commons-codec.jar</file-name>
+				<version>1.10</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>http://commons.apache.org/proper/commons-codec/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java-annotations.jar</file-name>
+				<version>5.4</version>
+				<project-name>graphql-java-annotations</project-name>
+				<project-url>https://github.com/graphql-java/graphql-java-annotations</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java-servlet.jar</file-name>
+				<version>6.1.3</version>
+				<project-name>graphql-java-servlet</project-name>
+				<project-url>https://github.com/graphql-java/graphql-java-servlet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
+				<version>8.0</version>
+				<project-name>graphql-java</project-name>
+				<project-url>https://github.com/graphql-java/graphql-java</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT</license-name>
+						<license-url>https://github.com/graphql-java/graphql-java/blob/master/LICENSE.md</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
+				<version>20.0</version>
+				<project-name>Guava: Google Core Libraries for Java</project-name>
+				<project-url>https://github.com/google/guava/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-dataformat-xml.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-dataformat-XML</project-name>
+				<project-url>http://wiki.fasterxml.com/JacksonExtensionXmlDataBinding</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-datatype-jdk8.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson datatype: jdk8</project-name>
+				<project-url>https://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jdk8</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!java-dataloader.jar</file-name>
+				<version>2.1.1</version>
+				<project-name>java-dataloader</project-name>
+				<project-url>https://github.com/graphql-java/java-dataloader</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.vulcan.impl.jar!reactive-streams.jar</file-name>
+				<version>1.0.2</version>
+				<project-name>reactive-streams</project-name>
+				<project-url>http://www.reactive-streams.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>CC0</license-name>
+						<license-url>http://creativecommons.org/publicdomain/zero/1.0/</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.workflow.kaleo.service.jar!jabsorb.jar</file-name>
 				<version>1.3.1</version>
 				<project-name>org.jabsorb:jabsorb</project-name>
@@ -3992,6 +4286,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.segments.content.targeting.upgrade.jar!commons-lang3.jar</file-name>
+				<version>3.8</version>
+				<project-name>Apache Commons Lang</project-name>
+				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.segments.service.jar!commons-lang3.jar</file-name>
+				<version>3.8</version>
+				<project-name>Apache Commons Lang</project-name>
+				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.segments.service.jar!jackson-jaxrs-base.jar</file-name>
 				<version>2.9.7</version>
 				<project-name>Jackson-JAXRS-base</project-name>
@@ -4197,7 +4515,12 @@
 			<library>
 				<file-name>com.liferay.web.proxy.web.jar!concurrent.jar</file-name>
 				<version>1.3.4</version>
-				<project-name>concurrent:concurrent</project-name>
+				<project-name>Dough Lea's util.concurrent package</project-name>
+				<licenses>
+					<license>
+						<license-name>Public domain, Sun Microsoystems</license-name>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.web.proxy.web.jar!org.portletbridge.core.jar</file-name>
@@ -4540,6 +4863,18 @@
 				<version>2.2.4</version>
 				<project-name>Gson</project-name>
 				<project-url>http://code.google.com/p/google-gson</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/guava.jar</file-name>
+				<version>16.0.1</version>
+				<project-name>Guava</project-name>
+				<project-url>https://opensource.google.com/projects/guava</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -5862,6 +6197,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/commons-math3.jar</file-name>
+				<version>3.6.1</version>
+				<project-name>Commons Math</project-name>
+				<project-url>http://commons.apache.org/math</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/commons-pool.jar</file-name>
 				<version>1.5.4</version>
 				<project-name>Commons Pool</project-name>
@@ -5990,7 +6337,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/fontbox.jar</file-name>
-				<version>1.8.12</version>
+				<version>2.0.13</version>
 				<project-name>PDFBox</project-name>
 				<project-url>http://pdfbox.apache.org</project-url>
 				<licenses>
@@ -7591,7 +7938,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xbean.jar</file-name>
-				<version>2.5.0</version>
+				<version>3.0.2</version>
 				<project-name>XMLBeans</project-name>
 				<project-url>http://xmlbeans.apache.org</project-url>
 				<licenses>
@@ -7601,7 +7948,6 @@
 						<copyright-notice>Copyright (c) 2004-2009 The Apache Software Foundation</copyright-notice>
 					</license>
 				</licenses>
-				<comments>Removed org.w3c.* because it conflicts with xml-apis.jar. Removed META-INF/INDEX.LIST because of complications with class loading in Windows. See LPS-9385.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/xercesImpl.jar</file-name>

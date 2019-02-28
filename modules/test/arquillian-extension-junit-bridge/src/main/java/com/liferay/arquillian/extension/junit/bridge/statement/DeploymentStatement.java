@@ -122,8 +122,7 @@ public class DeploymentStatement extends Statement {
 		jar.setManifest(_createManifest(jar, project));
 
 		jar.putResource(
-			"/arquillian.remote.marker",
-			new ByteResource(System.currentTimeMillis(), new byte[0]));
+			"/arquillian.remote.marker", new ByteResource(new byte[0]));
 
 		return jar;
 	}
@@ -214,9 +213,7 @@ public class DeploymentStatement extends Statement {
 
 					byte[] bytes = byteArrayOutputStream.toByteArray();
 
-					resources.put(
-						name,
-						new ByteResource(System.currentTimeMillis(), bytes));
+					resources.put(name, new ByteResource(bytes));
 
 				}
 			}
@@ -294,15 +291,15 @@ public class DeploymentStatement extends Statement {
 
 	private static class ByteResource extends AbstractResource {
 
-		public ByteResource(long modified, byte[] bytes) {
-			super(modified);
-
-			_bytes = bytes;
+		@Override
+		protected byte[] getBytes() {
+			return _bytes;
 		}
 
-		@Override
-		protected byte[] getBytes() throws Exception {
-			return _bytes;
+		private ByteResource(byte[] bytes) {
+			super(System.currentTimeMillis());
+
+			_bytes = bytes;
 		}
 
 		private final byte[] _bytes;

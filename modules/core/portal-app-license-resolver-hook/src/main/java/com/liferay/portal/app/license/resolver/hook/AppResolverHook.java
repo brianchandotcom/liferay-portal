@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.Collection;
@@ -167,16 +170,16 @@ public class AppResolverHook implements ResolverHook {
 	private Properties _getAppLicenseProperties(Bundle bundle) {
 		Properties properties = new Properties();
 
-		try {
-			URL url = bundle.getEntry("/META-INF/marketplace.properties");
+		URL url = bundle.getEntry("/META-INF/marketplace.properties");
 
-			if (url != null) {
-				properties.load(url.openStream());
+		if (url != null) {
+			try (InputStream inputStream = url.openStream()) {
+				properties.load(inputStream);
 			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to read bundle properties", e);
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to read bundle properties", ioe);
+				}
 			}
 		}
 

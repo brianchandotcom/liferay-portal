@@ -102,8 +102,23 @@ public class OpenAPIParserUtil {
 				String itemsFormat = items.getFormat();
 				String itemsType = items.getType();
 
-				String javaDataType = _getJavaDataType(
-					itemsType, itemsFormat, propertySchemaName);
+				String javaDataType = null;
+
+				if (StringUtil.equalsIgnoreCase(itemsType, "object") &&
+					(propertySchemaName != null)) {
+
+					javaDataType = StringUtil.upperCaseFirstLetter(
+						propertySchemaName);
+				}
+				else {
+					javaDataType = _openAPIDataTypeMap.get(
+						new AbstractMap.SimpleImmutableEntry<>(
+							itemsType, itemsFormat));
+				}
+
+				if (javaDataType == null) {
+					javaDataType = StringUtil.upperCaseFirstLetter(itemsType);
+				}
 
 				return javaDataType + "[]";
 			}
@@ -118,8 +133,25 @@ public class OpenAPIParserUtil {
 		}
 
 		if (type != null) {
-			return _getJavaDataType(
-				type, schema.getFormat(), propertySchemaName);
+			String javaDataType = null;
+
+			if (StringUtil.equalsIgnoreCase(type, "object") &&
+				(propertySchemaName != null)) {
+
+				javaDataType = StringUtil.upperCaseFirstLetter(
+					propertySchemaName);
+			}
+			else {
+				javaDataType = _openAPIDataTypeMap.get(
+					new AbstractMap.SimpleImmutableEntry<>(
+						type, schema.getFormat()));
+			}
+
+			if (javaDataType == null) {
+				javaDataType = StringUtil.upperCaseFirstLetter(type);
+			}
+
+			return javaDataType;
 		}
 
 		List<Schema> allOfSchemas = schema.getAllOfSchemas();
@@ -280,25 +312,6 @@ public class OpenAPIParserUtil {
 		}
 
 		return newJavaMethodSignatures;
-	}
-
-	private static String _getJavaDataType(
-		String type, String format, String propertySchemaName) {
-
-		String javaDataType = _openAPIDataTypeMap.get(
-			new AbstractMap.SimpleImmutableEntry<>(type, format));
-
-		if (javaDataType != null) {
-			return javaDataType;
-		}
-
-		if (StringUtil.equalsIgnoreCase(type, "object") &&
-			(propertySchemaName != null)) {
-
-			return StringUtil.upperCaseFirstLetter(propertySchemaName);
-		}
-
-		return StringUtil.upperCaseFirstLetter(type);
 	}
 
 	private static String _toFullyQualifiedClassName(

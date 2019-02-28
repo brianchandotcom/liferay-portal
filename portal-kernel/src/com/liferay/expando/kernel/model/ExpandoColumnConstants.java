@@ -14,11 +14,13 @@
 
 package com.liferay.expando.kernel.model;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
@@ -168,6 +170,43 @@ public class ExpandoColumnConstants {
 	};
 
 	public static final String UNKNOWN_LABEL = "Unknown";
+
+	public static final String getDefaultDisplayTypeProperty(
+		int type, UnicodeProperties properties) {
+
+		if ((type == BOOLEAN) || (type == BOOLEAN_ARRAY) ||
+			(type == DATE_ARRAY) || (type == DOUBLE_ARRAY) ||
+			(type == FLOAT_ARRAY) || (type == INTEGER_ARRAY) ||
+			(type == LONG_ARRAY) || (type == NUMBER_ARRAY) ||
+			(type == SHORT_ARRAY) || (type == STRING_ARRAY) ||
+			(type == STRING_ARRAY_LOCALIZED)) {
+
+			return PROPERTY_DISPLAY_TYPE_SELECTION_LIST;
+		}
+		else if (type == DATE) {
+			return PROPERTY_DISPLAY_TYPE_DATE;
+		}
+		else if ((type == DOUBLE) || (type == FLOAT) || (type == INTEGER) ||
+				 (type == LONG) || (type == NUMBER) || (type == SHORT)) {
+
+			return PROPERTY_DISPLAY_TYPE_NUMBER;
+		}
+		else if (type == GEOLOCATION) {
+			return PROPERTY_DISPLAY_TYPE_GEOLOCATION;
+		}
+		else if ((type == STRING) || (type == STRING_LOCALIZED)) {
+			int propertyHeight = GetterUtil.getInteger(
+				properties.get(PROPERTY_HEIGHT));
+
+			if (propertyHeight > 0) {
+				return PROPERTY_DISPLAY_TYPE_TEXT_BOX;
+			}
+
+			return PROPERTY_DISPLAY_TYPE_TEXT_FIELD;
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static final Serializable getSerializable(int type, String value) {
 		if (type == BOOLEAN) {

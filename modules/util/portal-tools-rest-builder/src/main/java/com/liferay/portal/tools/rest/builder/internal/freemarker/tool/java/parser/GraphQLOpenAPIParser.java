@@ -14,10 +14,10 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -180,7 +180,7 @@ public class GraphQLOpenAPIParser {
 
 		for (Parameter parameter : operation.getParameters()) {
 			String parameterName = CamelCaseUtil.toCamelCase(
-				parameter.getName(), false);
+				parameter.getName());
 
 			if (!Objects.equals(
 					parameterName, javaMethodParameter.getParameterName())) {

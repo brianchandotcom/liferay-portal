@@ -14,13 +14,13 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -166,8 +166,7 @@ public class ResourceOpenAPIParser {
 	private static JavaMethodParameter _getJavaMethodParameter(
 		Map<String, String> javaDataTypeMap, Parameter parameter) {
 
-		String parameterName = CamelCaseUtil.toCamelCase(
-			parameter.getName(), false);
+		String parameterName = CamelCaseUtil.toCamelCase(parameter.getName());
 		String parameterType = OpenAPIParserUtil.getJavaDataType(
 			javaDataTypeMap, parameter.getSchema());
 
@@ -385,10 +384,11 @@ public class ResourceOpenAPIParser {
 		);
 
 		for (Parameter parameter : parameters) {
-			String name = parameter.getName();
+			String text = parameter.getName();
 
-			methodNameSegments.add(
-				CamelCaseUtil.toCamelCase(name.replace("-id", ""), true));
+			text = CamelCaseUtil.toCamelCase(text.replace("-id", ""));
+
+			methodNameSegments.add(StringUtil.upperCaseFirstLetter(text));
 		}
 
 		if (httpMethod.equals("get") && returnType.startsWith("Page<")) {
@@ -411,7 +411,9 @@ public class ResourceOpenAPIParser {
 			String pathSegment = pathSegments[
 				methodNameSegments.size() + parameters.size()];
 
-			String text = CamelCaseUtil.toCamelCase(pathSegment, true);
+			String text = CamelCaseUtil.toCamelCase(pathSegment);
+
+			text = StringUtil.upperCaseFirstLetter(text);
 
 			if (text.equals(TextFormatter.formatPlural(schemaName))) {
 				methodNameSegments.add(schemaName);
@@ -424,8 +426,9 @@ public class ResourceOpenAPIParser {
 			String pathSegment = pathSegments[
 				methodNameSegments.size() + parameters.size()];
 
-			methodNameSegments.add(
-				CamelCaseUtil.toCamelCase(pathSegment, true));
+			String text = CamelCaseUtil.toCamelCase(pathSegment);
+
+			methodNameSegments.add(StringUtil.upperCaseFirstLetter(text));
 		}
 
 		if (StringUtil.startsWith(returnType, "Page<")) {
@@ -469,7 +472,7 @@ public class ResourceOpenAPIParser {
 
 		for (Parameter parameter : operation.getParameters()) {
 			String parameterName = CamelCaseUtil.toCamelCase(
-				parameter.getName(), false);
+				parameter.getName());
 
 			if (!Objects.equals(
 					parameterName, javaMethodParameter.getParameterName())) {

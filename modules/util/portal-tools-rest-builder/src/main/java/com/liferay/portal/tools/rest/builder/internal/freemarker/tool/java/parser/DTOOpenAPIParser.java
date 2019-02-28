@@ -14,11 +14,11 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser;
 
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
-import com.liferay.portal.tools.rest.builder.internal.util.CamelCaseUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -63,7 +63,7 @@ public class DTOOpenAPIParser {
 			Schema propertySchema = entry.getValue();
 
 			String parameterName = CamelCaseUtil.toCamelCase(
-				propertySchemaName, false);
+				propertySchemaName);
 			String parameterType = _getParameterType(
 				javaDataTypeMap, propertySchema, propertySchemaName);
 

@@ -78,8 +78,12 @@ public class ScopedBeanManagerThreadLocal {
 			unsafeRunnable.run();
 		}
 		finally {
-			if (empty) {
-				scopedBeanManagers.pop();
+			if (!scopedBeanManagers.isEmpty()) {
+				ScopedBeanManager scopedBeanManager = scopedBeanManagers.pop();
+
+				if (scopedBeanManagers.isEmpty()) {
+					scopedBeanManager.destroyScopedBeans();
+				}
 			}
 		}
 	}

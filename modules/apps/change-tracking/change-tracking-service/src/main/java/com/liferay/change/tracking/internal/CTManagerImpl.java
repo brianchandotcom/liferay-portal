@@ -57,15 +57,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTManager.class)
 public class CTManagerImpl implements CTManager {
 
+	@Override
 	public Optional<CTEntryAggregate> addRelatedCTEntry(
 		long userId, CTEntry ownerCTEntry, CTEntry relatedCTEntry) {
 
 		return addRelatedCTEntry(userId, ownerCTEntry, relatedCTEntry, false);
 	}
 
+	@Override
 	public Optional<CTEntryAggregate> addRelatedCTEntry(
 		long userId, CTEntry ownerCTEntry, CTEntry relatedCTEntry,
 		boolean force) {
+
+		if ((ownerCTEntry == null) || (relatedCTEntry == null)) {
+			return Optional.empty();
+		}
 
 		Optional<CTCollection> activeCTCollectionOptional =
 			_ctEngineManager.getActiveCTCollectionOptional(userId);
@@ -94,6 +100,19 @@ public class CTManagerImpl implements CTManager {
 
 			return Optional.empty();
 		}
+	}
+
+	@Override
+	public Optional<CTEntryAggregate> addRelatedCTEntry(
+		long userId, long ownerCTEntryId, long relatedCTEntryId) {
+
+		CTEntry ownerCTEntry = _ctEntryLocalService.fetchCTEntry(
+			ownerCTEntryId);
+
+		CTEntry relatedCTEntry = _ctEntryLocalService.fetchCTEntry(
+			relatedCTEntryId);
+
+		return addRelatedCTEntry(userId, ownerCTEntry, relatedCTEntry, false);
 	}
 
 	@Override
@@ -390,10 +409,26 @@ public class CTManagerImpl implements CTManager {
 
 			serviceContext.setAttribute("force", force);
 
-			return Optional.of(
-				_ctEntryLocalService.addCTEntry(
-					userId, classNameId, classPK, resourcePrimKey, changeType,
-					ctCollection.getCtCollectionId(), serviceContext));
+			Optional<CTEntry> previousModelChangeCTEntryOptional =
+				getLatestModelChangeCTEntryOptional(userId, resourcePrimKey);
+
+			// creating a new change entry
+
+			CTEntry ctEntry = _ctEntryLocalService.addCTEntry(
+				userId, classNameId, classPK, resourcePrimKey, changeType,
+				ctCollection.getCtCollectionId(), serviceContext);
+
+			// updating existing related change entry aggregate
+
+			previousModelChangeCTEntryOptional.flatMap(
+				latestModelChangeCTEntry -> getCTEntryAggregate(
+					latestModelChangeCTEntry, ctCollection)
+			).ifPresent(
+				ctEntryAggregate -> _updateCTEntryInCTEntryAggregate(
+					ctEntryAggregate, ctEntry, force)
+			);
+
+			return Optional.of(ctEntry);
 		}
 		catch (DuplicateCTEntryException dctee) {
 			StringBundler sb = new StringBundler(8);
@@ -476,14 +511,8 @@ public class CTManagerImpl implements CTManager {
 				ctEntryAggregate, relatedCTEntry);
 		}
 		else {
-			if (force) {
-				_updateCTEntryInCTEntryAggregate(
-					ctEntryAggregate, relatedCTEntry);
-			}
-			else {
-				_updateCTEntryInCTEntryAggregate(
-					_copyCTEntryAggregate(ctEntryAggregate), relatedCTEntry);
-			}
+			_updateCTEntryInCTEntryAggregate(
+				ctEntryAggregate, relatedCTEntry, force);
 		}
 
 		return ctEntryAggregate;
@@ -581,6 +610,26 @@ public class CTManagerImpl implements CTManager {
 				_ctEntryAggregateLocalService.addCTEntry(
 					ctEntryAggregate, ctEntry);
 			});
+	}
+
+	private void _updateCTEntryInCTEntryAggregate(
+		CTEntryAggregate ctEntryAggregate, CTEntry ctEntry, boolean force) {
+
+		if (!force) {
+			try {
+				ctEntryAggregate = _copyCTEntryAggregate(ctEntryAggregate);
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to copy change tracking entry aggregate " +
+						ctEntryAggregate.getCtEntryAggregateId(),
+					pe);
+
+				return;
+			}
+		}
+
+		_updateCTEntryInCTEntryAggregate(ctEntryAggregate, ctEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CTManagerImpl.class);

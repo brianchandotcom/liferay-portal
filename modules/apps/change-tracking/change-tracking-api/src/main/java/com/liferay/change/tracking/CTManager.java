@@ -69,6 +69,20 @@ public interface CTManager {
 		boolean force);
 
 	/**
+	 * Puts a model change to a change entry aggregate associated with the owner
+	 * model change. If there is no change aggregate associated with the owner
+	 * it creates a new one. Also creates a new aggregate if the related entry
+	 * was already part of the aggregate, and it is being changed.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  ownerCTEntryId the primary key of the owner of the change bag
+	 * @param  relatedCTEntryId the primary key of the change to add to the bag
+	 * @return the created or updated change entry aggregate
+	 */
+	public Optional<CTEntryAggregate> addRelatedCTEntry(
+		long userId, long ownerCTEntryId, long relatedCTEntryId);
+
+	/**
 	 * Executes a model addition or update using the given supplier, with
 	 * setting and un-setting the flag that indicates the update before and
 	 * after the operation. Therefore during the execution {@link

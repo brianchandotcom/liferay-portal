@@ -79,6 +79,21 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								<aui:button cssClass="btn-sm" data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= journalEditArticleDisplayContext.getSaveButtonLabel() %>" />
 							</c:if>
 						</c:if>
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						String contextualSidebarId = renderResponse.getNamespace() + "contextualSidebar";
+
+						data.put("target", "#" + contextualSidebarId);
+						data.put("toggle", "sidenav");
+						data.put("type", "fixed-push");
+						data.put("type-mobile", "fixed");
+						%>
+
+						<aui:a cssClass="btn btn-default btn-sm btn-unstyled contextual-sidebar-btn" data="<%= data %>" href="javascript:;">
+							<aui:icon cssClass="icon-monospaced" image="cog" markupView="lexicon" />
+						</aui:a>
 					</div>
 				</li>
 			</ul>
@@ -145,7 +160,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		</div>
 	</div>
 
-	<div class="contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light">
+	<div class="closed contextual-sidebar contextual-sidebar-visible edit-article-sidebar sidebar-light sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= contextualSidebarId %>">
 		<div class="sidebar-body">
 			<liferay-frontend:form-navigator
 				formModelBean="<%= article %>"

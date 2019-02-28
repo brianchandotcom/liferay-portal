@@ -1,4 +1,4 @@
-import {ADD_FRAGMENT_ENTRY_LINK, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
+import {ADD_FRAGMENT_ENTRY_LINK, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
 import {add, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
@@ -273,6 +273,81 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 							resolve(nextState);
 						}
 					);
+			}
+			else {
+				resolve(nextState);
+			}
+		}
+	);
+}
+
+function updateFragmentEntryLinkConfigReducer(state, actionType, payload) {
+	let nextState = state;
+
+	return new Promise(
+		resolve => {
+			if (actionType === UPDATE_CONFIG_ATTRIBUTES) {
+				const {
+					fragmentEntryLinkId,
+					editableId,
+					config
+				} = payload;
+
+				let {editableValues} = nextState.fragmentEntryLinks[fragmentEntryLinkId];
+
+				Object.entries(config).forEach(
+					entry => {
+						const [key, value] = entry;
+
+						const keysTreeArray = [
+							EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+							editableId,
+							'config',
+							key
+						];
+
+						editableValues = setIn(
+							editableValues,
+							keysTreeArray,
+							value
+						);
+					}
+				);
+
+				const formData = new FormData();
+
+				formData.append(
+					`${nextState.portletNamespace}fragmentEntryLinkId`,
+					fragmentEntryLinkId
+				);
+
+				formData.append(
+					`${nextState.portletNamespace}editableValues`,
+					JSON.stringify(editableValues)
+				);
+
+				fetch(
+					nextState.editFragmentEntryLinkURL,
+					{
+						body: formData,
+						credentials: 'include',
+						method: 'POST'
+					}
+				).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							[
+								'fragmentEntryLinks',
+								fragmentEntryLinkId,
+								'editableValues'
+							],
+							editableValues
+						);
+
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);
@@ -708,5 +783,6 @@ export {
 	getFragmentEntryLinkContent,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
-	updateEditableValueReducer
+	updateEditableValueReducer,
+	updateFragmentEntryLinkConfigReducer
 };

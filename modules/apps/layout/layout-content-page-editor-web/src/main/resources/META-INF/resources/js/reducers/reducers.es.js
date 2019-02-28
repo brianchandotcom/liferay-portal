@@ -1,4 +1,4 @@
-import {addFragmentEntryLinkReducer, moveFragmentEntryLinkReducer, removeFragmentEntryLinkReducer, updateEditableValueReducer} from './fragments.es';
+import {addFragmentEntryLinkReducer, moveFragmentEntryLinkReducer, removeFragmentEntryLinkReducer, updateEditableValueReducer, updateFragmentEntryLinkConfigReducer} from './fragments.es';
 import {addPortletReducer} from './portlets.es';
 import {addSectionReducer, moveSectionReducer, removeSectionReducer, updateSectionConfigReducer} from './sections.es';
 import {hideFragmentsEditorSidebarReducer, toggleFragmentsEditorSidebarReducer} from './sidebar.es';
@@ -35,7 +35,8 @@ const reducers = [
 	updateDropTargetReducer,
 	updateEditableValueReducer,
 	updateHoveredItemReducer,
-	updateSectionConfigReducer
+	updateSectionConfigReducer,
+	updateFragmentEntryLinkConfigReducer
 ];
 
 export {reducers};

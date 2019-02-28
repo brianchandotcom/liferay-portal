@@ -26,4 +26,6 @@ public interface ChildrenAggregation extends FieldAggregation {
 
 	public String getChildType();
 
+	public void setChildType(String childType);
+
 }

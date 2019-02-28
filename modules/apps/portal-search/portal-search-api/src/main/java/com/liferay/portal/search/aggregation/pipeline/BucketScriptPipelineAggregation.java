@@ -34,4 +34,6 @@ public interface BucketScriptPipelineAggregation extends PipelineAggregation {
 
 	public Script getScript();
 
+	public void setFormat(String format);
+
 }

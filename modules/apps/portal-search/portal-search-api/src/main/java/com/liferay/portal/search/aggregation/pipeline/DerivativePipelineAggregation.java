@@ -30,4 +30,10 @@ public interface DerivativePipelineAggregation extends PipelineAggregation {
 
 	public String getUnit();
 
+	public void setFormat(String format);
+
+	public void setGapPolicy(GapPolicy gapPolicy);
+
+	public void setUnit(String unit);
+
 }

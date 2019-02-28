@@ -30,6 +30,10 @@ public interface SerialDiffPipelineAggregation extends PipelineAggregation {
 
 	public Integer getLag();
 
+	public void setFormat(String format);
+
+	public void setGapPolicy(GapPolicy gapPolicy);
+
 	public void setLag(Integer lag);
 
 }

@@ -190,8 +190,8 @@ public class CTEntryWrapper
 	}
 
 	@Override
-	public java.util.List<CTEntryAggregate> getCTEntryBAggregates() {
-		return model.getCTEntryBAggregates();
+	public java.util.List<CTEntryAggregate> getCTEntryAggregates() {
+		return model.getCTEntryAggregates();
 	}
 
 	/**

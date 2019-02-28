@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
-	ShardedModel, StagedAuditedModel {
+public interface UserGroupModel
+	extends BaseModel<UserGroup>, MVCCModel, ShardedModel, StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -277,4 +278,5 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 * @param addedByLDAPImport the added by ldap import of this user group
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
+
 }

@@ -29,13 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.PasswordPolicyImpl")
 @ProviderType
 public interface PasswordPolicy extends PasswordPolicyModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PasswordPolicyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PasswordPolicy, Long> PASSWORD_POLICY_ID_ACCESSOR =
-		new Accessor<PasswordPolicy, Long>() {
+	public static final Accessor<PasswordPolicy, Long>
+		PASSWORD_POLICY_ID_ACCESSOR = new Accessor<PasswordPolicy, Long>() {
+
 			@Override
 			public Long get(PasswordPolicy passwordPolicy) {
 				return passwordPolicy.getPasswordPolicyId();
@@ -50,5 +52,7 @@ public interface PasswordPolicy extends PasswordPolicyModel, PersistedModel {
 			public Class<PasswordPolicy> getTypeClass() {
 				return PasswordPolicy.class;
 			}
+
 		};
+
 }

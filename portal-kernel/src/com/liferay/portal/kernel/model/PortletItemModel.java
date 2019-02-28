@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
-	MVCCModel, ShardedModel, TypedModel {
+public interface PortletItemModel
+	extends BaseModel<PortletItem>, GroupedModel, MVCCModel, ShardedModel,
+			TypedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -252,4 +254,5 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
+
 }

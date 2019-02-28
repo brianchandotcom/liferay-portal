@@ -46,10 +46,13 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface LayoutBranchLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface LayoutBranchLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,47 +60,49 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the layout branch to the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutBranch the layout branch
-	* @return the layout branch that was added
-	*/
+	 * Adds the layout branch to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutBranch the layout branch
+	 * @return the layout branch that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch addLayoutBranch(LayoutBranch layoutBranch);
 
-	public LayoutBranch addLayoutBranch(long layoutSetBranchId, long plid,
-		String name, String description, boolean master,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutBranch addLayoutBranch(
+			long layoutSetBranchId, long plid, String name, String description,
+			boolean master, ServiceContext serviceContext)
+		throws PortalException;
 
-	public LayoutBranch addLayoutBranch(long layoutRevisionId, String name,
-		String description, boolean master, ServiceContext serviceContext)
+	public LayoutBranch addLayoutBranch(
+			long layoutRevisionId, String name, String description,
+			boolean master, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Creates a new layout branch with the primary key. Does not add the layout branch to the database.
-	*
-	* @param layoutBranchId the primary key for the new layout branch
-	* @return the new layout branch
-	*/
+	 * Creates a new layout branch with the primary key. Does not add the layout branch to the database.
+	 *
+	 * @param layoutBranchId the primary key for the new layout branch
+	 * @return the new layout branch
+	 */
 	@Transactional(enabled = false)
 	public LayoutBranch createLayoutBranch(long layoutBranchId);
 
 	/**
-	* Deletes the layout branch from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutBranch the layout branch
-	* @return the layout branch that was removed
-	*/
+	 * Deletes the layout branch from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutBranch the layout branch
+	 * @return the layout branch that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutBranch deleteLayoutBranch(LayoutBranch layoutBranch);
 
 	/**
-	* Deletes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutBranchId the primary key of the layout branch
-	* @return the layout branch that was removed
-	* @throws PortalException if a layout branch with the primary key could not be found
-	*/
+	 * Deletes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutBranchId the primary key of the layout branch
+	 * @return the layout branch that was removed
+	 * @throws PortalException if a layout branch with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutBranch deleteLayoutBranch(long layoutBranchId)
 		throws PortalException;
@@ -106,8 +111,8 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -116,66 +121,67 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutBranch fetchLayoutBranch(long layoutBranchId);
@@ -187,40 +193,40 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the layout branch with the primary key.
-	*
-	* @param layoutBranchId the primary key of the layout branch
-	* @return the layout branch
-	* @throws PortalException if a layout branch with the primary key could not be found
-	*/
+	 * Returns the layout branch with the primary key.
+	 *
+	 * @param layoutBranchId the primary key of the layout branch
+	 * @return the layout branch
+	 * @throws PortalException if a layout branch with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutBranch getLayoutBranch(long layoutBranchId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutBranch> getLayoutBranches(long layoutSetBranchId,
-		long plid, int start, int end,
+	public List<LayoutBranch> getLayoutBranches(
+		long layoutSetBranchId, long plid, int start, int end,
 		OrderByComparator<LayoutBranch> orderByComparator);
 
 	/**
-	* Returns a range of all the layout branchs.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of layout branchs
-	* @param end the upper bound of the range of layout branchs (not inclusive)
-	* @return the range of layout branchs
-	*/
+	 * Returns a range of all the layout branchs.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of layout branchs
+	 * @param end the upper bound of the range of layout branchs (not inclusive)
+	 * @return the range of layout branchs
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutBranch> getLayoutBranchs(int start, int end);
 
 	/**
-	* Returns the number of layout branchs.
-	*
-	* @return the number of layout branchs
-	*/
+	 * Returns the number of layout branchs.
+	 *
+	 * @return the number of layout branchs
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutBranchsCount();
 
@@ -233,14 +239,15 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId,
-		long plid, ServiceContext serviceContext) throws PortalException;
+	public LayoutBranch getMasterLayoutBranch(
+			long layoutSetBranchId, long plid, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -249,15 +256,17 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutBranch the layout branch
-	* @return the layout branch that was updated
-	*/
+	 * Updates the layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutBranch the layout branch
+	 * @return the layout branch that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch);
 
-	public LayoutBranch updateLayoutBranch(long layoutBranchId, String name,
-		String description, ServiceContext serviceContext)
+	public LayoutBranch updateLayoutBranch(
+			long layoutBranchId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

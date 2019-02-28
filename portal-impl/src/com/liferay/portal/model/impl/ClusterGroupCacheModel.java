@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClusterGroup;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
-	Externalizable, MVCCModel {
+public class ClusterGroupCacheModel
+	implements CacheModel<ClusterGroup>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,10 +47,12 @@ public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
 			return false;
 		}
 
-		ClusterGroupCacheModel clusterGroupCacheModel = (ClusterGroupCacheModel)obj;
+		ClusterGroupCacheModel clusterGroupCacheModel =
+			(ClusterGroupCacheModel)obj;
 
 		if ((clusterGroupId == clusterGroupCacheModel.clusterGroupId) &&
-				(mvccVersion == clusterGroupCacheModel.mvccVersion)) {
+			(mvccVersion == clusterGroupCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -133,8 +135,7 @@ public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(clusterGroupId);
@@ -161,4 +162,5 @@ public class ClusterGroupCacheModel implements CacheModel<ClusterGroup>,
 	public String name;
 	public String clusterNodeIds;
 	public boolean wholeCluster;
+
 }

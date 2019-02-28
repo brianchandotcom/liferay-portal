@@ -33,8 +33,9 @@ import com.liferay.portal.kernel.model.TypedModel;
  * @generated
  */
 @ProviderType
-public interface SocialActivitySettingModel extends BaseModel<SocialActivitySetting>,
-	ShardedModel, TypedModel {
+public interface SocialActivitySettingModel
+	extends BaseModel<SocialActivitySetting>, ShardedModel, TypedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -168,4 +169,5 @@ public interface SocialActivitySettingModel extends BaseModel<SocialActivitySett
 	 * @param value the value of this social activity setting
 	 */
 	public void setValue(String value);
+
 }

@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ClassNameBaseImpl extends ClassNameModelImpl
-	implements ClassName {
+public abstract class ClassNameBaseImpl
+	extends ClassNameModelImpl implements ClassName {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ClassNameBaseImpl extends ClassNameModelImpl
 			ClassNameLocalServiceUtil.updateClassName(this);
 		}
 	}
+
 }

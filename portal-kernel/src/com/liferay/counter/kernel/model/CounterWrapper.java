@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class CounterWrapper extends BaseModelWrapper<Counter> implements Counter,
-	ModelWrapper<Counter> {
+public class CounterWrapper
+	extends BaseModelWrapper<Counter>
+	implements Counter, ModelWrapper<Counter> {
+
 	public CounterWrapper(Counter counter) {
 		super(counter);
 	}
@@ -64,60 +66,60 @@ public class CounterWrapper extends BaseModelWrapper<Counter> implements Counter
 	}
 
 	/**
-	* Returns the current ID of this counter.
-	*
-	* @return the current ID of this counter
-	*/
+	 * Returns the current ID of this counter.
+	 *
+	 * @return the current ID of this counter
+	 */
 	@Override
 	public long getCurrentId() {
 		return model.getCurrentId();
 	}
 
 	/**
-	* Returns the name of this counter.
-	*
-	* @return the name of this counter
-	*/
+	 * Returns the name of this counter.
+	 *
+	 * @return the name of this counter
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this counter.
-	*
-	* @return the primary key of this counter
-	*/
+	 * Returns the primary key of this counter.
+	 *
+	 * @return the primary key of this counter
+	 */
 	@Override
 	public String getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Sets the current ID of this counter.
-	*
-	* @param currentId the current ID of this counter
-	*/
+	 * Sets the current ID of this counter.
+	 *
+	 * @param currentId the current ID of this counter
+	 */
 	@Override
 	public void setCurrentId(long currentId) {
 		model.setCurrentId(currentId);
 	}
 
 	/**
-	* Sets the name of this counter.
-	*
-	* @param name the name of this counter
-	*/
+	 * Sets the name of this counter.
+	 *
+	 * @param name the name of this counter
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this counter.
-	*
-	* @param primaryKey the primary key of this counter
-	*/
+	 * Sets the primary key of this counter.
+	 *
+	 * @param primaryKey the primary key of this counter
+	 */
 	@Override
 	public void setPrimaryKey(String primaryKey) {
 		model.setPrimaryKey(primaryKey);
@@ -127,4 +129,5 @@ public class CounterWrapper extends BaseModelWrapper<Counter> implements Counter
 	protected CounterWrapper wrap(Counter counter) {
 		return new CounterWrapper(counter);
 	}
+
 }

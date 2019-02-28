@@ -52,15 +52,17 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PermissionServiceSoap {
+
 	/**
-	* Checks to see if the group has permission to the service.
-	*
-	* @param groupId the primary key of the group
-	* @param name the service name
-	* @param primKey the primary key of the service
-	*/
+	 * Checks to see if the group has permission to the service.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param name the service name
+	 * @param primKey the primary key of the service
+	 */
 	public static void checkPermission(long groupId, String name, long primKey)
 		throws RemoteException {
+
 		try {
 			PermissionServiceUtil.checkPermission(groupId, name, primKey);
 		}
@@ -72,14 +74,16 @@ public class PermissionServiceSoap {
 	}
 
 	/**
-	* Checks to see if the group has permission to the service.
-	*
-	* @param groupId the primary key of the group
-	* @param name the service name
-	* @param primKey the primary key of the service
-	*/
-	public static void checkPermission(long groupId, String name, String primKey)
+	 * Checks to see if the group has permission to the service.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param name the service name
+	 * @param primKey the primary key of the service
+	 */
+	public static void checkPermission(
+			long groupId, String name, String primKey)
 		throws RemoteException {
+
 		try {
 			PermissionServiceUtil.checkPermission(groupId, name, primKey);
 		}
@@ -90,5 +94,7 @@ public class PermissionServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PermissionServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		PermissionServiceSoap.class);
+
 }

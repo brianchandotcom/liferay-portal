@@ -34,6 +34,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServic
 @ProviderType
 public abstract class AnnouncementsDeliveryBaseImpl
 	extends AnnouncementsDeliveryModelImpl implements AnnouncementsDelivery {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,10 +43,13 @@ public abstract class AnnouncementsDeliveryBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			AnnouncementsDeliveryLocalServiceUtil.addAnnouncementsDelivery(this);
+			AnnouncementsDeliveryLocalServiceUtil.addAnnouncementsDelivery(
+				this);
 		}
 		else {
-			AnnouncementsDeliveryLocalServiceUtil.updateAnnouncementsDelivery(this);
+			AnnouncementsDeliveryLocalServiceUtil.updateAnnouncementsDelivery(
+				this);
 		}
 	}
+
 }

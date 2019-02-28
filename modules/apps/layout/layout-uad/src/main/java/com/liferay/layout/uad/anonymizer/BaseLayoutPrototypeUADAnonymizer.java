@@ -15,13 +15,11 @@
 package com.liferay.layout.uad.anonymizer;
 
 import com.liferay.layout.uad.constants.LayoutUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLayoutPrototypeUADAnonymizer
 	extends DynamicQueryUADAnonymizer<LayoutPrototype> {
+
 	@Override
-	public void autoAnonymize(LayoutPrototype layoutPrototype, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			LayoutPrototype layoutPrototype, long userId, User anonymousUser)
+		throws PortalException {
+
 		if (layoutPrototype.getUserId() == userId) {
 			layoutPrototype.setUserId(anonymousUser.getUserId());
 			layoutPrototype.setUserName(anonymousUser.getFullName());
@@ -52,8 +53,7 @@ public abstract class BaseLayoutPrototypeUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutPrototype layoutPrototype)
-		throws PortalException {
+	public void delete(LayoutPrototype layoutPrototype) throws PortalException {
 		layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototype);
 	}
 
@@ -74,4 +74,5 @@ public abstract class BaseLayoutPrototypeUADAnonymizer
 
 	@Reference
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
+
 }

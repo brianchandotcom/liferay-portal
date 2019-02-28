@@ -17,7 +17,6 @@ package com.liferay.exportimport.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -38,27 +37,34 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface ExportImportConfigurationService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationServiceUtil} to access the export import configuration remote service. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void deleteExportImportConfiguration(
-		long exportImportConfigurationId) throws PortalException;
+			long exportImportConfigurationId)
+		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	public ExportImportConfiguration moveExportImportConfigurationToTrash(
-		long exportImportConfigurationId) throws PortalException;
+			long exportImportConfigurationId)
+		throws PortalException;
 
 	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		long exportImportConfigurationId) throws PortalException;
+			long exportImportConfigurationId)
+		throws PortalException;
+
 }

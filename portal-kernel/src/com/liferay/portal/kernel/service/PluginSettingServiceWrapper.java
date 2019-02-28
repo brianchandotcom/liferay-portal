@@ -24,18 +24,20 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class PluginSettingServiceWrapper implements PluginSettingService,
-	ServiceWrapper<PluginSettingService> {
+public class PluginSettingServiceWrapper
+	implements PluginSettingService, ServiceWrapper<PluginSettingService> {
+
 	public PluginSettingServiceWrapper(
 		PluginSettingService pluginSettingService) {
+
 		_pluginSettingService = pluginSettingService;
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _pluginSettingService.getOSGiServiceIdentifier();
@@ -43,11 +45,12 @@ public class PluginSettingServiceWrapper implements PluginSettingService,
 
 	@Override
 	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		long companyId, String pluginId, String pluginType, String roles,
-		boolean active)
+			long companyId, String pluginId, String pluginType, String roles,
+			boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pluginSettingService.updatePluginSetting(companyId, pluginId,
-			pluginType, roles, active);
+
+		return _pluginSettingService.updatePluginSetting(
+			companyId, pluginId, pluginType, roles, active);
 	}
 
 	@Override
@@ -61,4 +64,5 @@ public class PluginSettingServiceWrapper implements PluginSettingService,
 	}
 
 	private PluginSettingService _pluginSettingService;
+
 }

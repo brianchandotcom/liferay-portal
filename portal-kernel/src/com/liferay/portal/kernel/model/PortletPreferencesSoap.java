@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class PortletPreferencesSoap implements Serializable {
+
 	public static PortletPreferencesSoap toSoapModel(PortletPreferences model) {
 		PortletPreferencesSoap soapModel = new PortletPreferencesSoap();
 
@@ -46,7 +47,9 @@ public class PortletPreferencesSoap implements Serializable {
 
 	public static PortletPreferencesSoap[] toSoapModels(
 		PortletPreferences[] models) {
-		PortletPreferencesSoap[] soapModels = new PortletPreferencesSoap[models.length];
+
+		PortletPreferencesSoap[] soapModels =
+			new PortletPreferencesSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,10 +60,12 @@ public class PortletPreferencesSoap implements Serializable {
 
 	public static PortletPreferencesSoap[][] toSoapModels(
 		PortletPreferences[][] models) {
+
 		PortletPreferencesSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new PortletPreferencesSoap[models.length][models[0].length];
+			soapModels =
+				new PortletPreferencesSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new PortletPreferencesSoap[0][0];
@@ -75,13 +80,16 @@ public class PortletPreferencesSoap implements Serializable {
 
 	public static PortletPreferencesSoap[] toSoapModels(
 		List<PortletPreferences> models) {
-		List<PortletPreferencesSoap> soapModels = new ArrayList<PortletPreferencesSoap>(models.size());
+
+		List<PortletPreferencesSoap> soapModels =
+			new ArrayList<PortletPreferencesSoap>(models.size());
 
 		for (PortletPreferences model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new PortletPreferencesSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new PortletPreferencesSoap[soapModels.size()]);
 	}
 
 	public PortletPreferencesSoap() {
@@ -167,4 +175,5 @@ public class PortletPreferencesSoap implements Serializable {
 	private long _plid;
 	private String _portletId;
 	private String _preferences;
+
 }

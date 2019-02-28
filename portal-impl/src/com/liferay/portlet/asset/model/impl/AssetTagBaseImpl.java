@@ -32,8 +32,9 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AssetTagBaseImpl extends AssetTagModelImpl
-	implements AssetTag {
+public abstract class AssetTagBaseImpl
+	extends AssetTagModelImpl implements AssetTag {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class AssetTagBaseImpl extends AssetTagModelImpl
 			AssetTagLocalServiceUtil.updateAssetTag(this);
 		}
 	}
+
 }

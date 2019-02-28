@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -68,30 +65,28 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
-	implements EmailAddressModel {
+public class EmailAddressModelImpl
+	extends BaseModelImpl<EmailAddress> implements EmailAddressModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a email address model instance should use the <code>EmailAddress</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "EmailAddress";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "emailAddressId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "address", Types.VARCHAR },
-			{ "typeId", Types.BIGINT },
-			{ "primary_", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"emailAddressId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"address", Types.VARCHAR}, {"typeId", Types.BIGINT},
+		{"primary_", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -109,28 +104,50 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table EmailAddress (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,typeId LONG,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table EmailAddress (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,typeId LONG,primary_ BOOLEAN)";
+
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
-	public static final String ORDER_BY_JPQL = " ORDER BY emailAddress.createDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY EmailAddress.createDate ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY emailAddress.createDate ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY EmailAddress.createDate ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.EmailAddress"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.EmailAddress"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.EmailAddress"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.EmailAddress"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.EmailAddress"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.EmailAddress"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
 	public static final long PRIMARY_COLUMN_BITMASK = 8L;
+
 	public static final long USERID_COLUMN_BITMASK = 16L;
+
 	public static final long UUID_COLUMN_BITMASK = 32L;
+
 	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
@@ -174,7 +191,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			return null;
 		}
 
-		List<EmailAddress> models = new ArrayList<EmailAddress>(soapModels.length);
+		List<EmailAddress> models = new ArrayList<EmailAddress>(
+			soapModels.length);
 
 		for (EmailAddressSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -183,8 +201,9 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.EmailAddress"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.EmailAddress"));
 
 	public EmailAddressModelImpl() {
 	}
@@ -223,13 +242,18 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<EmailAddress, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<EmailAddress, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<EmailAddress, Object> attributeGetterFunction = entry.getValue();
+			Function<EmailAddress, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((EmailAddress)this));
 		}
 
@@ -241,67 +265,103 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<EmailAddress, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<EmailAddress, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<EmailAddress, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<EmailAddress, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((EmailAddress)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(EmailAddress)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<EmailAddress, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<EmailAddress, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<EmailAddress, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<EmailAddress, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<EmailAddress, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<EmailAddress, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<EmailAddress, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<EmailAddress, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<EmailAddress, Object>>();
-		Map<String, BiConsumer<EmailAddress, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<EmailAddress, ?>>();
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<EmailAddress, Object>>();
+		Map<String, BiConsumer<EmailAddress, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<EmailAddress, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", EmailAddress::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<EmailAddress, Long>)EmailAddress::setMvccVersion);
+		attributeGetterFunctions.put(
+			"mvccVersion", EmailAddress::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<EmailAddress, Long>)EmailAddress::setMvccVersion);
 		attributeGetterFunctions.put("uuid", EmailAddress::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<EmailAddress, String>)EmailAddress::setUuid);
-		attributeGetterFunctions.put("emailAddressId", EmailAddress::getEmailAddressId);
-		attributeSetterBiConsumers.put("emailAddressId", (BiConsumer<EmailAddress, Long>)EmailAddress::setEmailAddressId);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<EmailAddress, String>)EmailAddress::setUuid);
+		attributeGetterFunctions.put(
+			"emailAddressId", EmailAddress::getEmailAddressId);
+		attributeSetterBiConsumers.put(
+			"emailAddressId",
+			(BiConsumer<EmailAddress, Long>)EmailAddress::setEmailAddressId);
 		attributeGetterFunctions.put("companyId", EmailAddress::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<EmailAddress, Long>)EmailAddress::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<EmailAddress, Long>)EmailAddress::setCompanyId);
 		attributeGetterFunctions.put("userId", EmailAddress::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<EmailAddress, Long>)EmailAddress::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<EmailAddress, Long>)EmailAddress::setUserId);
 		attributeGetterFunctions.put("userName", EmailAddress::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<EmailAddress, String>)EmailAddress::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<EmailAddress, String>)EmailAddress::setUserName);
 		attributeGetterFunctions.put("createDate", EmailAddress::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<EmailAddress, Date>)EmailAddress::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", EmailAddress::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<EmailAddress, Date>)EmailAddress::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", EmailAddress::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<EmailAddress, Long>)EmailAddress::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<EmailAddress, Date>)EmailAddress::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", EmailAddress::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<EmailAddress, Date>)EmailAddress::setModifiedDate);
+		attributeGetterFunctions.put(
+			"classNameId", EmailAddress::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<EmailAddress, Long>)EmailAddress::setClassNameId);
 		attributeGetterFunctions.put("classPK", EmailAddress::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<EmailAddress, Long>)EmailAddress::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<EmailAddress, Long>)EmailAddress::setClassPK);
 		attributeGetterFunctions.put("address", EmailAddress::getAddress);
-		attributeSetterBiConsumers.put("address", (BiConsumer<EmailAddress, String>)EmailAddress::setAddress);
+		attributeSetterBiConsumers.put(
+			"address",
+			(BiConsumer<EmailAddress, String>)EmailAddress::setAddress);
 		attributeGetterFunctions.put("typeId", EmailAddress::getTypeId);
-		attributeSetterBiConsumers.put("typeId", (BiConsumer<EmailAddress, Long>)EmailAddress::setTypeId);
+		attributeSetterBiConsumers.put(
+			"typeId", (BiConsumer<EmailAddress, Long>)EmailAddress::setTypeId);
 		attributeGetterFunctions.put("primary", EmailAddress::getPrimary);
-		attributeSetterBiConsumers.put("primary", (BiConsumer<EmailAddress, Boolean>)EmailAddress::setPrimary);
+		attributeSetterBiConsumers.put(
+			"primary",
+			(BiConsumer<EmailAddress, Boolean>)EmailAddress::setPrimary);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -584,8 +644,9 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				EmailAddress.class.getName()), getClassNameId());
+		return new StagedModelType(
+			PortalUtil.getClassNameId(EmailAddress.class.getName()),
+			getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -594,8 +655,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			EmailAddress.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), EmailAddress.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -608,8 +669,9 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	@Override
 	public EmailAddress toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (EmailAddress)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (EmailAddress)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -642,7 +704,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public int compareTo(EmailAddress emailAddress) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(), emailAddress.getCreateDate());
+		value = DateUtil.compareTo(
+			getCreateDate(), emailAddress.getCreateDate());
 
 		if (value != 0) {
 			return value;
@@ -694,7 +757,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		emailAddressModelImpl._originalUuid = emailAddressModelImpl._uuid;
 
-		emailAddressModelImpl._originalCompanyId = emailAddressModelImpl._companyId;
+		emailAddressModelImpl._originalCompanyId =
+			emailAddressModelImpl._companyId;
 
 		emailAddressModelImpl._setOriginalCompanyId = false;
 
@@ -704,7 +768,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		emailAddressModelImpl._setModifiedDate = false;
 
-		emailAddressModelImpl._originalClassNameId = emailAddressModelImpl._classNameId;
+		emailAddressModelImpl._originalClassNameId =
+			emailAddressModelImpl._classNameId;
 
 		emailAddressModelImpl._setOriginalClassNameId = false;
 
@@ -721,7 +786,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public CacheModel<EmailAddress> toCacheModel() {
-		EmailAddressCacheModel emailAddressCacheModel = new EmailAddressCacheModel();
+		EmailAddressCacheModel emailAddressCacheModel =
+			new EmailAddressCacheModel();
 
 		emailAddressCacheModel.mvccVersion = getMvccVersion();
 
@@ -786,16 +852,20 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public String toString() {
-		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<EmailAddress, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<EmailAddress, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<EmailAddress, Object> attributeGetterFunction = entry.getValue();
+			Function<EmailAddress, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -814,18 +884,22 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<EmailAddress, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<EmailAddress, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<EmailAddress, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<EmailAddress, Object> attributeGetterFunction = entry.getValue();
+			Function<EmailAddress, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -839,10 +913,12 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = EmailAddress.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		EmailAddress.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			EmailAddress.class, ModelWrapper.class
-		};
+		EmailAddress.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -870,4 +946,5 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private boolean _setOriginalPrimary;
 	private long _columnBitmask;
 	private EmailAddress _escapedModel;
+
 }

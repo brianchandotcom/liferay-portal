@@ -32,8 +32,9 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil
  * @generated
  */
 @ProviderType
-public abstract class DLFileVersionBaseImpl extends DLFileVersionModelImpl
-	implements DLFileVersion {
+public abstract class DLFileVersionBaseImpl
+	extends DLFileVersionModelImpl implements DLFileVersion {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,4 +58,5 @@ public abstract class DLFileVersionBaseImpl extends DLFileVersionModelImpl
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 	}
+
 }

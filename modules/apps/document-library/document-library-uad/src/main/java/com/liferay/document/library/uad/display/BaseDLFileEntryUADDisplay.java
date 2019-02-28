@@ -17,17 +17,15 @@ package com.liferay.document.library.uad.display;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
-
-import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the DLFileEntry UAD display.
@@ -41,16 +39,18 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseDLFileEntryUADDisplay extends BaseModelUADDisplay<DLFileEntry> {
+public abstract class BaseDLFileEntryUADDisplay
+	extends BaseModelUADDisplay<DLFileEntry> {
+
 	@Override
 	public DLFileEntry get(Serializable primaryKey) throws PortalException {
-		return dlFileEntryLocalService.getDLFileEntry(Long.valueOf(
-				primaryKey.toString()));
+		return dlFileEntryLocalService.getDLFileEntry(
+			Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] { "fileName", "extension", "title", "description" };
+		return new String[] {"fileName", "extension", "title", "description"};
 	}
 
 	@Override
@@ -69,8 +69,9 @@ public abstract class BaseDLFileEntryUADDisplay extends BaseModelUADDisplay<DLFi
 	}
 
 	@Override
-	protected List<DLFileEntry> doGetRange(DynamicQuery dynamicQuery,
-		int start, int end) {
+	protected List<DLFileEntry> doGetRange(
+		DynamicQuery dynamicQuery, int start, int end) {
+
 		return dlFileEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -81,4 +82,5 @@ public abstract class BaseDLFileEntryUADDisplay extends BaseModelUADDisplay<DLFi
 
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;
+
 }

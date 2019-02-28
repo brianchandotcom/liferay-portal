@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class LayoutSetBaseImpl extends LayoutSetModelImpl
-	implements LayoutSet {
+public abstract class LayoutSetBaseImpl
+	extends LayoutSetModelImpl implements LayoutSet {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class LayoutSetBaseImpl extends LayoutSetModelImpl
 			LayoutSetLocalServiceUtil.updateLayoutSet(this);
 		}
 	}
+
 }

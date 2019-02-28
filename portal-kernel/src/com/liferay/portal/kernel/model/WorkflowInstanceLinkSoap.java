@@ -30,8 +30,10 @@ import java.util.List;
  */
 @ProviderType
 public class WorkflowInstanceLinkSoap implements Serializable {
+
 	public static WorkflowInstanceLinkSoap toSoapModel(
 		WorkflowInstanceLink model) {
+
 		WorkflowInstanceLinkSoap soapModel = new WorkflowInstanceLinkSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
@@ -51,7 +53,9 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 
 	public static WorkflowInstanceLinkSoap[] toSoapModels(
 		WorkflowInstanceLink[] models) {
-		WorkflowInstanceLinkSoap[] soapModels = new WorkflowInstanceLinkSoap[models.length];
+
+		WorkflowInstanceLinkSoap[] soapModels =
+			new WorkflowInstanceLinkSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -62,10 +66,12 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 
 	public static WorkflowInstanceLinkSoap[][] toSoapModels(
 		WorkflowInstanceLink[][] models) {
+
 		WorkflowInstanceLinkSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new WorkflowInstanceLinkSoap[models.length][models[0].length];
+			soapModels =
+				new WorkflowInstanceLinkSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new WorkflowInstanceLinkSoap[0][0];
@@ -80,13 +86,16 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 
 	public static WorkflowInstanceLinkSoap[] toSoapModels(
 		List<WorkflowInstanceLink> models) {
-		List<WorkflowInstanceLinkSoap> soapModels = new ArrayList<WorkflowInstanceLinkSoap>(models.size());
+
+		List<WorkflowInstanceLinkSoap> soapModels =
+			new ArrayList<WorkflowInstanceLinkSoap>(models.size());
 
 		for (WorkflowInstanceLink model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new WorkflowInstanceLinkSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new WorkflowInstanceLinkSoap[soapModels.size()]);
 	}
 
 	public WorkflowInstanceLinkSoap() {
@@ -199,4 +208,5 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _workflowInstanceId;
+
 }

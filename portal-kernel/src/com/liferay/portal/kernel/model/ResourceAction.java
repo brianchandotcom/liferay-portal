@@ -29,13 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.ResourceActionImpl")
 @ProviderType
 public interface ResourceAction extends ResourceActionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ResourceActionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ResourceAction, Long> RESOURCE_ACTION_ID_ACCESSOR =
-		new Accessor<ResourceAction, Long>() {
+	public static final Accessor<ResourceAction, Long>
+		RESOURCE_ACTION_ID_ACCESSOR = new Accessor<ResourceAction, Long>() {
+
 			@Override
 			public Long get(ResourceAction resourceAction) {
 				return resourceAction.getResourceActionId();
@@ -50,5 +52,7 @@ public interface ResourceAction extends ResourceActionModel, PersistedModel {
 			public Class<ResourceAction> getTypeClass() {
 				return ResourceAction.class;
 			}
+
 		};
+
 }

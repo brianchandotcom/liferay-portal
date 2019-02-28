@@ -17,7 +17,6 @@ package com.liferay.portlet.announcements.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.announcements.kernel.service.AnnouncementsFlagServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -64,8 +63,8 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class AnnouncementsFlagServiceSoap {
-	public static void addFlag(long entryId, int value)
-		throws RemoteException {
+
+	public static void addFlag(long entryId, int value) throws RemoteException {
 		try {
 			AnnouncementsFlagServiceUtil.addFlag(entryId, value);
 		}
@@ -87,13 +86,17 @@ public class AnnouncementsFlagServiceSoap {
 		}
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsFlagSoap getFlag(
-		long entryId, int value) throws RemoteException {
-		try {
-			com.liferay.announcements.kernel.model.AnnouncementsFlag returnValue =
-				AnnouncementsFlagServiceUtil.getFlag(entryId, value);
+	public static com.liferay.announcements.kernel.model.AnnouncementsFlagSoap
+			getFlag(long entryId, int value)
+		throws RemoteException {
 
-			return com.liferay.announcements.kernel.model.AnnouncementsFlagSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.announcements.kernel.model.AnnouncementsFlag
+				returnValue = AnnouncementsFlagServiceUtil.getFlag(
+					entryId, value);
+
+			return com.liferay.announcements.kernel.model.AnnouncementsFlagSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -102,5 +105,7 @@ public class AnnouncementsFlagServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AnnouncementsFlagServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		AnnouncementsFlagServiceSoap.class);
+
 }

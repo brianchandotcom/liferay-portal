@@ -26,126 +26,146 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class StagingLocalServiceWrapper implements StagingLocalService,
-	ServiceWrapper<StagingLocalService> {
+public class StagingLocalServiceWrapper
+	implements StagingLocalService, ServiceWrapper<StagingLocalService> {
+
 	public StagingLocalServiceWrapper(StagingLocalService stagingLocalService) {
 		_stagingLocalService = stagingLocalService;
 	}
 
 	@Override
-	public void checkDefaultLayoutSetBranches(long userId,
-		com.liferay.portal.kernel.model.Group liveGroup,
-		boolean branchingPublic, boolean branchingPrivate, boolean remote,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void checkDefaultLayoutSetBranches(
+			long userId, com.liferay.portal.kernel.model.Group liveGroup,
+			boolean branchingPublic, boolean branchingPrivate, boolean remote,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.checkDefaultLayoutSetBranches(userId, liveGroup,
-			branchingPublic, branchingPrivate, remote, serviceContext);
+
+		_stagingLocalService.checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, remote,
+			serviceContext);
 	}
 
 	@Override
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_stagingLocalService.cleanUpStagingRequest(stagingRequestId);
 	}
 
 	@Override
 	public long createStagingRequest(long userId, long groupId, String checksum)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _stagingLocalService.createStagingRequest(userId, groupId,
-			checksum);
+
+		return _stagingLocalService.createStagingRequest(
+			userId, groupId, checksum);
 	}
 
 	@Override
 	public void disableStaging(
-		com.liferay.portal.kernel.model.Group liveGroup,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.model.Group liveGroup,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_stagingLocalService.disableStaging(liveGroup, serviceContext);
 	}
 
 	@Override
-	public void disableStaging(javax.portlet.PortletRequest portletRequest,
-		com.liferay.portal.kernel.model.Group liveGroup,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void disableStaging(
+			javax.portlet.PortletRequest portletRequest,
+			com.liferay.portal.kernel.model.Group liveGroup,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.disableStaging(portletRequest, liveGroup,
+
+		_stagingLocalService.disableStaging(
+			portletRequest, liveGroup, serviceContext);
+	}
+
+	@Override
+	public void enableLocalStaging(
+			long userId, com.liferay.portal.kernel.model.Group liveGroup,
+			boolean branchingPublic, boolean branchingPrivate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_stagingLocalService.enableLocalStaging(
+			userId, liveGroup, branchingPublic, branchingPrivate,
 			serviceContext);
 	}
 
 	@Override
-	public void enableLocalStaging(long userId,
-		com.liferay.portal.kernel.model.Group liveGroup,
-		boolean branchingPublic, boolean branchingPrivate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void enableRemoteStaging(
+			long userId, com.liferay.portal.kernel.model.Group stagingGroup,
+			boolean branchingPublic, boolean branchingPrivate,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.enableLocalStaging(userId, liveGroup,
-			branchingPublic, branchingPrivate, serviceContext);
-	}
 
-	@Override
-	public void enableRemoteStaging(long userId,
-		com.liferay.portal.kernel.model.Group stagingGroup,
-		boolean branchingPublic, boolean branchingPrivate,
-		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection, long remoteGroupId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.enableRemoteStaging(userId, stagingGroup,
-			branchingPublic, branchingPrivate, remoteAddress, remotePort,
-			remotePathContext, secureConnection, remoteGroupId, serviceContext);
+		_stagingLocalService.enableRemoteStaging(
+			userId, stagingGroup, branchingPublic, branchingPrivate,
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, serviceContext);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _stagingLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
+	 */
 	@Deprecated
 	@Override
-	public com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
-		java.util.Map<String, String[]> parameterMap)
+	public com.liferay.exportimport.kernel.lar.MissingReferences
+			publishStagingRequest(
+				long userId, long stagingRequestId, boolean privateLayout,
+				java.util.Map<String, String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _stagingLocalService.publishStagingRequest(userId,
-			stagingRequestId, privateLayout, parameterMap);
+
+		return _stagingLocalService.publishStagingRequest(
+			userId, stagingRequestId, privateLayout, parameterMap);
 	}
 
 	@Override
-	public com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long userId, long stagingRequestId,
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
+	public com.liferay.exportimport.kernel.lar.MissingReferences
+			publishStagingRequest(
+				long userId, long stagingRequestId,
+				com.liferay.exportimport.kernel.model.ExportImportConfiguration
+					exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _stagingLocalService.publishStagingRequest(userId,
-			stagingRequestId, exportImportConfiguration);
+
+		return _stagingLocalService.publishStagingRequest(
+			userId, stagingRequestId, exportImportConfiguration);
 	}
 
 	@Override
-	public void updateStagingRequest(long userId, long stagingRequestId,
-		String fileName, byte[] bytes)
+	public void updateStagingRequest(
+			long userId, long stagingRequestId, String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.updateStagingRequest(userId, stagingRequestId,
-			fileName, bytes);
+
+		_stagingLocalService.updateStagingRequest(
+			userId, stagingRequestId, fileName, bytes);
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#publishStagingRequest(long, long, boolean, Map)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #publishStagingRequest(long, long, boolean, Map)}
+	 */
 	@Deprecated
 	@Override
-	public com.liferay.exportimport.kernel.lar.MissingReferences validateStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
-		java.util.Map<String, String[]> parameterMap) {
-		return _stagingLocalService.validateStagingRequest(userId,
-			stagingRequestId, privateLayout, parameterMap);
+	public com.liferay.exportimport.kernel.lar.MissingReferences
+		validateStagingRequest(
+			long userId, long stagingRequestId, boolean privateLayout,
+			java.util.Map<String, String[]> parameterMap) {
+
+		return _stagingLocalService.validateStagingRequest(
+			userId, stagingRequestId, privateLayout, parameterMap);
 	}
 
 	@Override
@@ -159,4 +179,5 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	private StagingLocalService _stagingLocalService;
+
 }

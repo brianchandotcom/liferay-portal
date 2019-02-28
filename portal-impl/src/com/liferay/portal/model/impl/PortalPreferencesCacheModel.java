@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PortalPreferences;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences>,
-	Externalizable, MVCCModel {
+public class PortalPreferencesCacheModel
+	implements CacheModel<PortalPreferences>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,10 +47,13 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 			return false;
 		}
 
-		PortalPreferencesCacheModel portalPreferencesCacheModel = (PortalPreferencesCacheModel)obj;
+		PortalPreferencesCacheModel portalPreferencesCacheModel =
+			(PortalPreferencesCacheModel)obj;
 
-		if ((portalPreferencesId == portalPreferencesCacheModel.portalPreferencesId) &&
-				(mvccVersion == portalPreferencesCacheModel.mvccVersion)) {
+		if ((portalPreferencesId ==
+				portalPreferencesCacheModel.portalPreferencesId) &&
+			(mvccVersion == portalPreferencesCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -95,7 +98,8 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 
 	@Override
 	public PortalPreferences toEntityModel() {
-		PortalPreferencesImpl portalPreferencesImpl = new PortalPreferencesImpl();
+		PortalPreferencesImpl portalPreferencesImpl =
+			new PortalPreferencesImpl();
 
 		portalPreferencesImpl.setMvccVersion(mvccVersion);
 		portalPreferencesImpl.setPortalPreferencesId(portalPreferencesId);
@@ -127,8 +131,7 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(portalPreferencesId);
@@ -150,4 +153,5 @@ public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences
 	public long ownerId;
 	public int ownerType;
 	public String preferences;
+
 }

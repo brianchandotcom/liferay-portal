@@ -15,13 +15,10 @@
 package com.liferay.users.admin.uad.exporter;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.service.UserTrackerLocalService;
-
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
-
 import com.liferay.users.admin.uad.constants.UsersAdminUADConstants;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,7 +35,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseUserTrackerUADExporter extends DynamicQueryUADExporter<UserTracker> {
+public abstract class BaseUserTrackerUADExporter
+	extends DynamicQueryUADExporter<UserTracker> {
+
 	@Override
 	public Class<UserTracker> getTypeClass() {
 		return UserTracker.class;
@@ -78,4 +77,5 @@ public abstract class BaseUserTrackerUADExporter extends DynamicQueryUADExporter
 
 	@Reference
 	protected UserTrackerLocalService userTrackerLocalService;
+
 }

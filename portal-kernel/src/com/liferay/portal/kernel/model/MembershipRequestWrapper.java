@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class MembershipRequestWrapper extends BaseModelWrapper<MembershipRequest>
+public class MembershipRequestWrapper
+	extends BaseModelWrapper<MembershipRequest>
 	implements MembershipRequest, ModelWrapper<MembershipRequest> {
+
 	public MembershipRequestWrapper(MembershipRequest membershipRequest) {
 		super(membershipRequest);
 	}
@@ -127,140 +129,140 @@ public class MembershipRequestWrapper extends BaseModelWrapper<MembershipRequest
 	}
 
 	/**
-	* Returns the comments of this membership request.
-	*
-	* @return the comments of this membership request
-	*/
+	 * Returns the comments of this membership request.
+	 *
+	 * @return the comments of this membership request
+	 */
 	@Override
 	public String getComments() {
 		return model.getComments();
 	}
 
 	/**
-	* Returns the company ID of this membership request.
-	*
-	* @return the company ID of this membership request
-	*/
+	 * Returns the company ID of this membership request.
+	 *
+	 * @return the company ID of this membership request
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this membership request.
-	*
-	* @return the create date of this membership request
-	*/
+	 * Returns the create date of this membership request.
+	 *
+	 * @return the create date of this membership request
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the group ID of this membership request.
-	*
-	* @return the group ID of this membership request
-	*/
+	 * Returns the group ID of this membership request.
+	 *
+	 * @return the group ID of this membership request
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the membership request ID of this membership request.
-	*
-	* @return the membership request ID of this membership request
-	*/
+	 * Returns the membership request ID of this membership request.
+	 *
+	 * @return the membership request ID of this membership request
+	 */
 	@Override
 	public long getMembershipRequestId() {
 		return model.getMembershipRequestId();
 	}
 
 	/**
-	* Returns the mvcc version of this membership request.
-	*
-	* @return the mvcc version of this membership request
-	*/
+	 * Returns the mvcc version of this membership request.
+	 *
+	 * @return the mvcc version of this membership request
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this membership request.
-	*
-	* @return the primary key of this membership request
-	*/
+	 * Returns the primary key of this membership request.
+	 *
+	 * @return the primary key of this membership request
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the replier user ID of this membership request.
-	*
-	* @return the replier user ID of this membership request
-	*/
+	 * Returns the replier user ID of this membership request.
+	 *
+	 * @return the replier user ID of this membership request
+	 */
 	@Override
 	public long getReplierUserId() {
 		return model.getReplierUserId();
 	}
 
 	/**
-	* Returns the replier user uuid of this membership request.
-	*
-	* @return the replier user uuid of this membership request
-	*/
+	 * Returns the replier user uuid of this membership request.
+	 *
+	 * @return the replier user uuid of this membership request
+	 */
 	@Override
 	public String getReplierUserUuid() {
 		return model.getReplierUserUuid();
 	}
 
 	/**
-	* Returns the reply comments of this membership request.
-	*
-	* @return the reply comments of this membership request
-	*/
+	 * Returns the reply comments of this membership request.
+	 *
+	 * @return the reply comments of this membership request
+	 */
 	@Override
 	public String getReplyComments() {
 		return model.getReplyComments();
 	}
 
 	/**
-	* Returns the reply date of this membership request.
-	*
-	* @return the reply date of this membership request
-	*/
+	 * Returns the reply date of this membership request.
+	 *
+	 * @return the reply date of this membership request
+	 */
 	@Override
 	public Date getReplyDate() {
 		return model.getReplyDate();
 	}
 
 	/**
-	* Returns the status ID of this membership request.
-	*
-	* @return the status ID of this membership request
-	*/
+	 * Returns the status ID of this membership request.
+	 *
+	 * @return the status ID of this membership request
+	 */
 	@Override
 	public long getStatusId() {
 		return model.getStatusId();
 	}
 
 	/**
-	* Returns the user ID of this membership request.
-	*
-	* @return the user ID of this membership request
-	*/
+	 * Returns the user ID of this membership request.
+	 *
+	 * @return the user ID of this membership request
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user uuid of this membership request.
-	*
-	* @return the user uuid of this membership request
-	*/
+	 * Returns the user uuid of this membership request.
+	 *
+	 * @return the user uuid of this membership request
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -272,147 +274,150 @@ public class MembershipRequestWrapper extends BaseModelWrapper<MembershipRequest
 	}
 
 	/**
-	* Sets the comments of this membership request.
-	*
-	* @param comments the comments of this membership request
-	*/
+	 * Sets the comments of this membership request.
+	 *
+	 * @param comments the comments of this membership request
+	 */
 	@Override
 	public void setComments(String comments) {
 		model.setComments(comments);
 	}
 
 	/**
-	* Sets the company ID of this membership request.
-	*
-	* @param companyId the company ID of this membership request
-	*/
+	 * Sets the company ID of this membership request.
+	 *
+	 * @param companyId the company ID of this membership request
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this membership request.
-	*
-	* @param createDate the create date of this membership request
-	*/
+	 * Sets the create date of this membership request.
+	 *
+	 * @param createDate the create date of this membership request
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the group ID of this membership request.
-	*
-	* @param groupId the group ID of this membership request
-	*/
+	 * Sets the group ID of this membership request.
+	 *
+	 * @param groupId the group ID of this membership request
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the membership request ID of this membership request.
-	*
-	* @param membershipRequestId the membership request ID of this membership request
-	*/
+	 * Sets the membership request ID of this membership request.
+	 *
+	 * @param membershipRequestId the membership request ID of this membership request
+	 */
 	@Override
 	public void setMembershipRequestId(long membershipRequestId) {
 		model.setMembershipRequestId(membershipRequestId);
 	}
 
 	/**
-	* Sets the mvcc version of this membership request.
-	*
-	* @param mvccVersion the mvcc version of this membership request
-	*/
+	 * Sets the mvcc version of this membership request.
+	 *
+	 * @param mvccVersion the mvcc version of this membership request
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this membership request.
-	*
-	* @param primaryKey the primary key of this membership request
-	*/
+	 * Sets the primary key of this membership request.
+	 *
+	 * @param primaryKey the primary key of this membership request
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the replier user ID of this membership request.
-	*
-	* @param replierUserId the replier user ID of this membership request
-	*/
+	 * Sets the replier user ID of this membership request.
+	 *
+	 * @param replierUserId the replier user ID of this membership request
+	 */
 	@Override
 	public void setReplierUserId(long replierUserId) {
 		model.setReplierUserId(replierUserId);
 	}
 
 	/**
-	* Sets the replier user uuid of this membership request.
-	*
-	* @param replierUserUuid the replier user uuid of this membership request
-	*/
+	 * Sets the replier user uuid of this membership request.
+	 *
+	 * @param replierUserUuid the replier user uuid of this membership request
+	 */
 	@Override
 	public void setReplierUserUuid(String replierUserUuid) {
 		model.setReplierUserUuid(replierUserUuid);
 	}
 
 	/**
-	* Sets the reply comments of this membership request.
-	*
-	* @param replyComments the reply comments of this membership request
-	*/
+	 * Sets the reply comments of this membership request.
+	 *
+	 * @param replyComments the reply comments of this membership request
+	 */
 	@Override
 	public void setReplyComments(String replyComments) {
 		model.setReplyComments(replyComments);
 	}
 
 	/**
-	* Sets the reply date of this membership request.
-	*
-	* @param replyDate the reply date of this membership request
-	*/
+	 * Sets the reply date of this membership request.
+	 *
+	 * @param replyDate the reply date of this membership request
+	 */
 	@Override
 	public void setReplyDate(Date replyDate) {
 		model.setReplyDate(replyDate);
 	}
 
 	/**
-	* Sets the status ID of this membership request.
-	*
-	* @param statusId the status ID of this membership request
-	*/
+	 * Sets the status ID of this membership request.
+	 *
+	 * @param statusId the status ID of this membership request
+	 */
 	@Override
 	public void setStatusId(long statusId) {
 		model.setStatusId(statusId);
 	}
 
 	/**
-	* Sets the user ID of this membership request.
-	*
-	* @param userId the user ID of this membership request
-	*/
+	 * Sets the user ID of this membership request.
+	 *
+	 * @param userId the user ID of this membership request
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user uuid of this membership request.
-	*
-	* @param userUuid the user uuid of this membership request
-	*/
+	 * Sets the user uuid of this membership request.
+	 *
+	 * @param userUuid the user uuid of this membership request
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	protected MembershipRequestWrapper wrap(MembershipRequest membershipRequest) {
+	protected MembershipRequestWrapper wrap(
+		MembershipRequest membershipRequest) {
+
 		return new MembershipRequestWrapper(membershipRequest);
 	}
+
 }

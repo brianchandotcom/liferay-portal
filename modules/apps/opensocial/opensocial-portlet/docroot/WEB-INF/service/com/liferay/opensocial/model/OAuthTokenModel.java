@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface OAuthTokenModel extends AuditedModel, BaseModel<OAuthToken>,
-	ShardedModel {
+public interface OAuthTokenModel
+	extends AuditedModel, BaseModel<OAuthToken>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -285,4 +286,5 @@ public interface OAuthTokenModel extends AuditedModel, BaseModel<OAuthToken>,
 	 * @param expiration the expiration of this o auth token
 	 */
 	public void setExpiration(long expiration);
+
 }

@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataUtil;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -37,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -53,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class DLFileEntryMetadataPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -74,7 +75,8 @@ public class DLFileEntryMetadataPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<DLFileEntryMetadata> iterator = _dlFileEntryMetadatas.iterator();
+		Iterator<DLFileEntryMetadata> iterator =
+			_dlFileEntryMetadatas.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -100,7 +102,9 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		_persistence.remove(newDLFileEntryMetadata);
 
-		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.fetchByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
+		DLFileEntryMetadata existingDLFileEntryMetadata =
+			_persistence.fetchByPrimaryKey(
+				newDLFileEntryMetadata.getPrimaryKey());
 
 		Assert.assertNull(existingDLFileEntryMetadata);
 	}
@@ -130,21 +134,30 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		_dlFileEntryMetadatas.add(_persistence.update(newDLFileEntryMetadata));
 
-		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
+		DLFileEntryMetadata existingDLFileEntryMetadata =
+			_persistence.findByPrimaryKey(
+				newDLFileEntryMetadata.getPrimaryKey());
 
-		Assert.assertEquals(existingDLFileEntryMetadata.getUuid(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getUuid(),
 			newDLFileEntryMetadata.getUuid());
-		Assert.assertEquals(existingDLFileEntryMetadata.getFileEntryMetadataId(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getFileEntryMetadataId(),
 			newDLFileEntryMetadata.getFileEntryMetadataId());
-		Assert.assertEquals(existingDLFileEntryMetadata.getCompanyId(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getCompanyId(),
 			newDLFileEntryMetadata.getCompanyId());
-		Assert.assertEquals(existingDLFileEntryMetadata.getDDMStorageId(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getDDMStorageId(),
 			newDLFileEntryMetadata.getDDMStorageId());
-		Assert.assertEquals(existingDLFileEntryMetadata.getDDMStructureId(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getDDMStructureId(),
 			newDLFileEntryMetadata.getDDMStructureId());
-		Assert.assertEquals(existingDLFileEntryMetadata.getFileEntryId(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getFileEntryId(),
 			newDLFileEntryMetadata.getFileEntryId());
-		Assert.assertEquals(existingDLFileEntryMetadata.getFileVersionId(),
+		Assert.assertEquals(
+			existingDLFileEntryMetadata.getFileVersionId(),
 			newDLFileEntryMetadata.getFileVersionId());
 	}
 
@@ -182,8 +195,8 @@ public class DLFileEntryMetadataPersistenceTest {
 
 	@Test
 	public void testCountByD_F() throws Exception {
-		_persistence.countByD_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByD_F(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByD_F(0L, 0L);
 	}
@@ -192,9 +205,12 @@ public class DLFileEntryMetadataPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
-		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
+		DLFileEntryMetadata existingDLFileEntryMetadata =
+			_persistence.findByPrimaryKey(
+				newDLFileEntryMetadata.getPrimaryKey());
 
-		Assert.assertEquals(existingDLFileEntryMetadata, newDLFileEntryMetadata);
+		Assert.assertEquals(
+			existingDLFileEntryMetadata, newDLFileEntryMetadata);
 	}
 
 	@Test(expected = NoSuchFileEntryMetadataException.class)
@@ -206,31 +222,35 @@ public class DLFileEntryMetadataPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<DLFileEntryMetadata> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("DLFileEntryMetadata",
-			"uuid", true, "fileEntryMetadataId", true, "companyId", true,
-			"DDMStorageId", true, "DDMStructureId", true, "fileEntryId", true,
-			"fileVersionId", true);
+		return OrderByComparatorFactoryUtil.create(
+			"DLFileEntryMetadata", "uuid", true, "fileEntryMetadataId", true,
+			"companyId", true, "DDMStorageId", true, "DDMStructureId", true,
+			"fileEntryId", true, "fileVersionId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
-		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.fetchByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
+		DLFileEntryMetadata existingDLFileEntryMetadata =
+			_persistence.fetchByPrimaryKey(
+				newDLFileEntryMetadata.getPrimaryKey());
 
-		Assert.assertEquals(existingDLFileEntryMetadata, newDLFileEntryMetadata);
+		Assert.assertEquals(
+			existingDLFileEntryMetadata, newDLFileEntryMetadata);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		DLFileEntryMetadata missingDLFileEntryMetadata = _persistence.fetchByPrimaryKey(pk);
+		DLFileEntryMetadata missingDLFileEntryMetadata =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingDLFileEntryMetadata);
 	}
@@ -238,6 +258,7 @@ public class DLFileEntryMetadataPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		DLFileEntryMetadata newDLFileEntryMetadata1 = addDLFileEntryMetadata();
 		DLFileEntryMetadata newDLFileEntryMetadata2 = addDLFileEntryMetadata();
 
@@ -246,18 +267,22 @@ public class DLFileEntryMetadataPersistenceTest {
 		primaryKeys.add(newDLFileEntryMetadata1.getPrimaryKey());
 		primaryKeys.add(newDLFileEntryMetadata2.getPrimaryKey());
 
-		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, dlFileEntryMetadatas.size());
-		Assert.assertEquals(newDLFileEntryMetadata1,
+		Assert.assertEquals(
+			newDLFileEntryMetadata1,
 			dlFileEntryMetadatas.get(newDLFileEntryMetadata1.getPrimaryKey()));
-		Assert.assertEquals(newDLFileEntryMetadata2,
+		Assert.assertEquals(
+			newDLFileEntryMetadata2,
 			dlFileEntryMetadatas.get(newDLFileEntryMetadata2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -267,7 +292,8 @@ public class DLFileEntryMetadataPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(dlFileEntryMetadatas.isEmpty());
 	}
@@ -275,6 +301,7 @@ public class DLFileEntryMetadataPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
 		long pk = RandomTestUtil.nextLong();
@@ -284,36 +311,39 @@ public class DLFileEntryMetadataPersistenceTest {
 		primaryKeys.add(newDLFileEntryMetadata.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, dlFileEntryMetadatas.size());
-		Assert.assertEquals(newDLFileEntryMetadata,
+		Assert.assertEquals(
+			newDLFileEntryMetadata,
 			dlFileEntryMetadatas.get(newDLFileEntryMetadata.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(dlFileEntryMetadatas.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newDLFileEntryMetadata.getPrimaryKey());
 
-		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, DLFileEntryMetadata> dlFileEntryMetadatas =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, dlFileEntryMetadatas.size());
-		Assert.assertEquals(newDLFileEntryMetadata,
+		Assert.assertEquals(
+			newDLFileEntryMetadata,
 			dlFileEntryMetadatas.get(newDLFileEntryMetadata.getPrimaryKey()));
 	}
 
@@ -321,16 +351,22 @@ public class DLFileEntryMetadataPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			DLFileEntryMetadataLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLFileEntryMetadata>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<DLFileEntryMetadata>() {
+
 				@Override
 				public void performAction(
 					DLFileEntryMetadata dlFileEntryMetadata) {
+
 					Assert.assertNotNull(dlFileEntryMetadata);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -339,53 +375,59 @@ public class DLFileEntryMetadataPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileEntryMetadata.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryMetadataId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fileEntryMetadataId",
 				newDLFileEntryMetadata.getFileEntryMetadataId()));
 
-		List<DLFileEntryMetadata> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileEntryMetadata> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		DLFileEntryMetadata existingDLFileEntryMetadata = result.get(0);
 
-		Assert.assertEquals(existingDLFileEntryMetadata, newDLFileEntryMetadata);
+		Assert.assertEquals(
+			existingDLFileEntryMetadata, newDLFileEntryMetadata);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileEntryMetadata.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryMetadataId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fileEntryMetadataId", RandomTestUtil.nextLong()));
 
-		List<DLFileEntryMetadata> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileEntryMetadata> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileEntryMetadata.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"fileEntryMetadataId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("fileEntryMetadataId"));
 
-		Object newFileEntryMetadataId = newDLFileEntryMetadata.getFileEntryMetadataId();
+		Object newFileEntryMetadataId =
+			newDLFileEntryMetadata.getFileEntryMetadataId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("fileEntryMetadataId",
-				new Object[] { newFileEntryMetadataId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"fileEntryMetadataId", new Object[] {newFileEntryMetadataId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -393,19 +435,22 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		Object existingFileEntryMetadataId = result.get(0);
 
-		Assert.assertEquals(existingFileEntryMetadataId, newFileEntryMetadataId);
+		Assert.assertEquals(
+			existingFileEntryMetadataId, newFileEntryMetadataId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileEntryMetadata.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"fileEntryMetadataId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("fileEntryMetadataId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("fileEntryMetadataId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"fileEntryMetadataId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -418,20 +463,23 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
+		DLFileEntryMetadata existingDLFileEntryMetadata =
+			_persistence.findByPrimaryKey(
+				newDLFileEntryMetadata.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingDLFileEntryMetadata.getDDMStructureId()),
-			ReflectionTestUtil.<Long>invoke(existingDLFileEntryMetadata,
-				"getOriginalDDMStructureId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingDLFileEntryMetadata.getFileVersionId()),
-			ReflectionTestUtil.<Long>invoke(existingDLFileEntryMetadata,
-				"getOriginalFileVersionId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingDLFileEntryMetadata.getDDMStructureId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDLFileEntryMetadata, "getOriginalDDMStructureId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingDLFileEntryMetadata.getFileVersionId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDLFileEntryMetadata, "getOriginalFileVersionId",
+				new Class<?>[0]));
 	}
 
-	protected DLFileEntryMetadata addDLFileEntryMetadata()
-		throws Exception {
+	protected DLFileEntryMetadata addDLFileEntryMetadata() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		DLFileEntryMetadata dlFileEntryMetadata = _persistence.create(pk);
@@ -453,7 +501,9 @@ public class DLFileEntryMetadataPersistenceTest {
 		return dlFileEntryMetadata;
 	}
 
-	private List<DLFileEntryMetadata> _dlFileEntryMetadatas = new ArrayList<DLFileEntryMetadata>();
+	private List<DLFileEntryMetadata> _dlFileEntryMetadatas =
+		new ArrayList<DLFileEntryMetadata>();
 	private DLFileEntryMetadataPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

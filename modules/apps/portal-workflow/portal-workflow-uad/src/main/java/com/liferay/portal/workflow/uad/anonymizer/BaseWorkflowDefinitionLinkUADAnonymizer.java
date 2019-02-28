@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.workflow.uad.constants.PortalWorkflowUADConstants;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -39,21 +38,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseWorkflowDefinitionLinkUADAnonymizer
 	extends DynamicQueryUADAnonymizer<WorkflowDefinitionLink> {
+
 	@Override
-	public void autoAnonymize(WorkflowDefinitionLink workflowDefinitionLink,
-		long userId, User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			WorkflowDefinitionLink workflowDefinitionLink, long userId,
+			User anonymousUser)
+		throws PortalException {
+
 		if (workflowDefinitionLink.getUserId() == userId) {
 			workflowDefinitionLink.setUserId(anonymousUser.getUserId());
 			workflowDefinitionLink.setUserName(anonymousUser.getFullName());
 		}
 
-		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(workflowDefinitionLink);
+		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			workflowDefinitionLink);
 	}
 
 	@Override
 	public void delete(WorkflowDefinitionLink workflowDefinitionLink)
 		throws PortalException {
-		workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLink);
+
+		workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
 	}
 
 	@Override
@@ -68,9 +74,12 @@ public abstract class BaseWorkflowDefinitionLinkUADAnonymizer
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return PortalWorkflowUADConstants.USER_ID_FIELD_NAMES_WORKFLOW_DEFINITION_LINK;
+		return PortalWorkflowUADConstants.
+			USER_ID_FIELD_NAMES_WORKFLOW_DEFINITION_LINK;
 	}
 
 	@Reference
-	protected WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
+	protected WorkflowDefinitionLinkLocalService
+		workflowDefinitionLinkLocalService;
+
 }

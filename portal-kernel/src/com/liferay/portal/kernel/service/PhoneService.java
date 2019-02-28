@@ -39,25 +39,29 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface PhoneService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneServiceUtil} to access the phone remote service. Add custom service methods to <code>com.liferay.portal.service.impl.PhoneServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Phone addPhone(String className, long classPK, String number,
-		String extension, long typeId, boolean primary,
-		ServiceContext serviceContext) throws PortalException;
+	public Phone addPhone(
+			String className, long classPK, String number, String extension,
+			long typeId, boolean primary, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deletePhone(long phoneId) throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -67,6 +71,9 @@ public interface PhoneService extends BaseService {
 	public List<Phone> getPhones(String className, long classPK)
 		throws PortalException;
 
-	public Phone updatePhone(long phoneId, String number, String extension,
-		long typeId, boolean primary) throws PortalException;
+	public Phone updatePhone(
+			long phoneId, String number, String extension, long typeId,
+			boolean primary)
+		throws PortalException;
+
 }

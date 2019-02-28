@@ -19,21 +19,29 @@ package com.liferay.layout.uad.constants;
  * @generated
  */
 public class LayoutUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_LAYOUT = { "userId" };
-	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_BRANCH = { "userId" };
+
+	public static final String[] USER_ID_FIELD_NAMES_LAYOUT = {"userId"};
+
+	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_BRANCH = {"userId"};
+
 	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_FRIENDLY_URL = {
-			"userId"
-		};
+		"userId"
+	};
+
 	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_PROTOTYPE = {
-			"userId"
-		};
+		"userId"
+	};
+
 	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_REVISION = {
-			"userId", "statusByUserId"
-		};
+		"userId", "statusByUserId"
+	};
+
 	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_SET_BRANCH = {
-			"userId"
-		};
+		"userId"
+	};
+
 	public static final String[] USER_ID_FIELD_NAMES_LAYOUT_SET_PROTOTYPE = {
-			"userId"
-		};
+		"userId"
+	};
+
 }

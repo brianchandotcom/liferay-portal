@@ -39,29 +39,32 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface EmailAddressService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EmailAddressServiceUtil} to access the email address remote service. Add custom service methods to <code>com.liferay.portal.service.impl.EmailAddressServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public EmailAddress addEmailAddress(String className, long classPK,
-		String address, long typeId, boolean primary,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void deleteEmailAddress(long emailAddressId)
+	public EmailAddress addEmailAddress(
+			String className, long classPK, String address, long typeId,
+			boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteEmailAddress(long emailAddressId) throws PortalException;
+
 	/**
-	* Returns the email address with the primary key.
-	*
-	* @param emailAddressId the primary key of the email address
-	* @return the email address with the primary key, or <code>null</code> if
-	an email address with the primary key could not be found or if
-	the user did not have permission to view the email address
-	*/
+	 * Returns the email address with the primary key.
+	 *
+	 * @param emailAddressId the primary key of the email address
+	 * @return the email address with the primary key, or <code>null</code> if
+	 an email address with the primary key could not be found or if
+	 the user did not have permission to view the email address
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public EmailAddress fetchEmailAddress(long emailAddressId)
 		throws PortalException;
@@ -75,12 +78,14 @@ public interface EmailAddressService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public EmailAddress updateEmailAddress(long emailAddressId, String address,
-		long typeId, boolean primary) throws PortalException;
+	public EmailAddress updateEmailAddress(
+			long emailAddressId, String address, long typeId, boolean primary)
+		throws PortalException;
+
 }

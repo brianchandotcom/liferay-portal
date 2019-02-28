@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class RecentLayoutSetBranchPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -73,7 +75,8 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<RecentLayoutSetBranch> iterator = _recentLayoutSetBranchs.iterator();
+		Iterator<RecentLayoutSetBranch> iterator =
+			_recentLayoutSetBranchs.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -95,11 +98,14 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
 		_persistence.remove(newRecentLayoutSetBranch);
 
-		RecentLayoutSetBranch existingRecentLayoutSetBranch = _persistence.fetchByPrimaryKey(newRecentLayoutSetBranch.getPrimaryKey());
+		RecentLayoutSetBranch existingRecentLayoutSetBranch =
+			_persistence.fetchByPrimaryKey(
+				newRecentLayoutSetBranch.getPrimaryKey());
 
 		Assert.assertNull(existingRecentLayoutSetBranch);
 	}
@@ -113,7 +119,8 @@ public class RecentLayoutSetBranchPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RecentLayoutSetBranch newRecentLayoutSetBranch = _persistence.create(pk);
+		RecentLayoutSetBranch newRecentLayoutSetBranch = _persistence.create(
+			pk);
 
 		newRecentLayoutSetBranch.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -123,28 +130,38 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		newRecentLayoutSetBranch.setUserId(RandomTestUtil.nextLong());
 
-		newRecentLayoutSetBranch.setLayoutSetBranchId(RandomTestUtil.nextLong());
+		newRecentLayoutSetBranch.setLayoutSetBranchId(
+			RandomTestUtil.nextLong());
 
 		newRecentLayoutSetBranch.setLayoutSetId(RandomTestUtil.nextLong());
 
-		_recentLayoutSetBranchs.add(_persistence.update(
-				newRecentLayoutSetBranch));
+		_recentLayoutSetBranchs.add(
+			_persistence.update(newRecentLayoutSetBranch));
 
-		RecentLayoutSetBranch existingRecentLayoutSetBranch = _persistence.findByPrimaryKey(newRecentLayoutSetBranch.getPrimaryKey());
+		RecentLayoutSetBranch existingRecentLayoutSetBranch =
+			_persistence.findByPrimaryKey(
+				newRecentLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingRecentLayoutSetBranch.getMvccVersion(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getMvccVersion(),
 			newRecentLayoutSetBranch.getMvccVersion());
-		Assert.assertEquals(existingRecentLayoutSetBranch.getRecentLayoutSetBranchId(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getRecentLayoutSetBranchId(),
 			newRecentLayoutSetBranch.getRecentLayoutSetBranchId());
-		Assert.assertEquals(existingRecentLayoutSetBranch.getGroupId(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getGroupId(),
 			newRecentLayoutSetBranch.getGroupId());
-		Assert.assertEquals(existingRecentLayoutSetBranch.getCompanyId(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getCompanyId(),
 			newRecentLayoutSetBranch.getCompanyId());
-		Assert.assertEquals(existingRecentLayoutSetBranch.getUserId(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getUserId(),
 			newRecentLayoutSetBranch.getUserId());
-		Assert.assertEquals(existingRecentLayoutSetBranch.getLayoutSetBranchId(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getLayoutSetBranchId(),
 			newRecentLayoutSetBranch.getLayoutSetBranchId());
-		Assert.assertEquals(existingRecentLayoutSetBranch.getLayoutSetId(),
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch.getLayoutSetId(),
 			newRecentLayoutSetBranch.getLayoutSetId());
 	}
 
@@ -171,20 +188,23 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testCountByU_L() throws Exception {
-		_persistence.countByU_L(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByU_L(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByU_L(0L, 0L);
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
-		RecentLayoutSetBranch existingRecentLayoutSetBranch = _persistence.findByPrimaryKey(newRecentLayoutSetBranch.getPrimaryKey());
+		RecentLayoutSetBranch existingRecentLayoutSetBranch =
+			_persistence.findByPrimaryKey(
+				newRecentLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingRecentLayoutSetBranch,
-			newRecentLayoutSetBranch);
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch, newRecentLayoutSetBranch);
 	}
 
 	@Test(expected = NoSuchRecentLayoutSetBranchException.class)
@@ -196,32 +216,36 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<RecentLayoutSetBranch> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("RecentLayoutSetBranch",
-			"mvccVersion", true, "recentLayoutSetBranchId", true, "groupId",
-			true, "companyId", true, "userId", true, "layoutSetBranchId", true,
-			"layoutSetId", true);
+		return OrderByComparatorFactoryUtil.create(
+			"RecentLayoutSetBranch", "mvccVersion", true,
+			"recentLayoutSetBranchId", true, "groupId", true, "companyId", true,
+			"userId", true, "layoutSetBranchId", true, "layoutSetId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
-		RecentLayoutSetBranch existingRecentLayoutSetBranch = _persistence.fetchByPrimaryKey(newRecentLayoutSetBranch.getPrimaryKey());
+		RecentLayoutSetBranch existingRecentLayoutSetBranch =
+			_persistence.fetchByPrimaryKey(
+				newRecentLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingRecentLayoutSetBranch,
-			newRecentLayoutSetBranch);
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch, newRecentLayoutSetBranch);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RecentLayoutSetBranch missingRecentLayoutSetBranch = _persistence.fetchByPrimaryKey(pk);
+		RecentLayoutSetBranch missingRecentLayoutSetBranch =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingRecentLayoutSetBranch);
 	}
@@ -229,21 +253,27 @@ public class RecentLayoutSetBranchPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch1 = addRecentLayoutSetBranch();
-		RecentLayoutSetBranch newRecentLayoutSetBranch2 = addRecentLayoutSetBranch();
+
+		RecentLayoutSetBranch newRecentLayoutSetBranch1 =
+			addRecentLayoutSetBranch();
+		RecentLayoutSetBranch newRecentLayoutSetBranch2 =
+			addRecentLayoutSetBranch();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRecentLayoutSetBranch1.getPrimaryKey());
 		primaryKeys.add(newRecentLayoutSetBranch2.getPrimaryKey());
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, recentLayoutSetBranchs.size());
-		Assert.assertEquals(newRecentLayoutSetBranch1,
+		Assert.assertEquals(
+			newRecentLayoutSetBranch1,
 			recentLayoutSetBranchs.get(
 				newRecentLayoutSetBranch1.getPrimaryKey()));
-		Assert.assertEquals(newRecentLayoutSetBranch2,
+		Assert.assertEquals(
+			newRecentLayoutSetBranch2,
 			recentLayoutSetBranchs.get(
 				newRecentLayoutSetBranch2.getPrimaryKey()));
 	}
@@ -251,6 +281,7 @@ public class RecentLayoutSetBranchPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -260,7 +291,8 @@ public class RecentLayoutSetBranchPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(recentLayoutSetBranchs.isEmpty());
 	}
@@ -268,7 +300,9 @@ public class RecentLayoutSetBranchPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -277,53 +311,65 @@ public class RecentLayoutSetBranchPersistenceTest {
 		primaryKeys.add(newRecentLayoutSetBranch.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, recentLayoutSetBranchs.size());
-		Assert.assertEquals(newRecentLayoutSetBranch,
-			recentLayoutSetBranchs.get(newRecentLayoutSetBranch.getPrimaryKey()));
+		Assert.assertEquals(
+			newRecentLayoutSetBranch,
+			recentLayoutSetBranchs.get(
+				newRecentLayoutSetBranch.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(recentLayoutSetBranchs.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRecentLayoutSetBranch.getPrimaryKey());
 
-		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutSetBranch> recentLayoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, recentLayoutSetBranchs.size());
-		Assert.assertEquals(newRecentLayoutSetBranch,
-			recentLayoutSetBranchs.get(newRecentLayoutSetBranch.getPrimaryKey()));
+		Assert.assertEquals(
+			newRecentLayoutSetBranch,
+			recentLayoutSetBranchs.get(
+				newRecentLayoutSetBranch.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = RecentLayoutSetBranchLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			RecentLayoutSetBranchLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RecentLayoutSetBranch>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<RecentLayoutSetBranch>() {
+
 				@Override
 				public void performAction(
 					RecentLayoutSetBranch recentLayoutSetBranch) {
+
 					Assert.assertNotNull(recentLayoutSetBranch);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -332,54 +378,62 @@ public class RecentLayoutSetBranchPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("recentLayoutSetBranchId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recentLayoutSetBranchId",
 				newRecentLayoutSetBranch.getRecentLayoutSetBranchId()));
 
-		List<RecentLayoutSetBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<RecentLayoutSetBranch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		RecentLayoutSetBranch existingRecentLayoutSetBranch = result.get(0);
 
-		Assert.assertEquals(existingRecentLayoutSetBranch,
-			newRecentLayoutSetBranch);
+		Assert.assertEquals(
+			existingRecentLayoutSetBranch, newRecentLayoutSetBranch);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("recentLayoutSetBranchId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recentLayoutSetBranchId", RandomTestUtil.nextLong()));
 
-		List<RecentLayoutSetBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<RecentLayoutSetBranch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"recentLayoutSetBranchId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("recentLayoutSetBranchId"));
 
-		Object newRecentLayoutSetBranchId = newRecentLayoutSetBranch.getRecentLayoutSetBranchId();
+		Object newRecentLayoutSetBranchId =
+			newRecentLayoutSetBranch.getRecentLayoutSetBranchId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("recentLayoutSetBranchId",
-				new Object[] { newRecentLayoutSetBranchId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"recentLayoutSetBranchId",
+				new Object[] {newRecentLayoutSetBranchId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -387,20 +441,22 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		Object existingRecentLayoutSetBranchId = result.get(0);
 
-		Assert.assertEquals(existingRecentLayoutSetBranchId,
-			newRecentLayoutSetBranchId);
+		Assert.assertEquals(
+			existingRecentLayoutSetBranchId, newRecentLayoutSetBranchId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"recentLayoutSetBranchId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("recentLayoutSetBranchId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("recentLayoutSetBranchId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"recentLayoutSetBranchId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -409,24 +465,30 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		RecentLayoutSetBranch newRecentLayoutSetBranch = addRecentLayoutSetBranch();
+		RecentLayoutSetBranch newRecentLayoutSetBranch =
+			addRecentLayoutSetBranch();
 
 		_persistence.clearCache();
 
-		RecentLayoutSetBranch existingRecentLayoutSetBranch = _persistence.findByPrimaryKey(newRecentLayoutSetBranch.getPrimaryKey());
+		RecentLayoutSetBranch existingRecentLayoutSetBranch =
+			_persistence.findByPrimaryKey(
+				newRecentLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingRecentLayoutSetBranch.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingRecentLayoutSetBranch,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingRecentLayoutSetBranch.getLayoutSetId()),
-			ReflectionTestUtil.<Long>invoke(existingRecentLayoutSetBranch,
-				"getOriginalLayoutSetId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRecentLayoutSetBranch.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRecentLayoutSetBranch, "getOriginalUserId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRecentLayoutSetBranch.getLayoutSetId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRecentLayoutSetBranch, "getOriginalLayoutSetId",
+				new Class<?>[0]));
 	}
 
 	protected RecentLayoutSetBranch addRecentLayoutSetBranch()
 		throws Exception {
+
 		long pk = RandomTestUtil.nextLong();
 
 		RecentLayoutSetBranch recentLayoutSetBranch = _persistence.create(pk);
@@ -448,7 +510,9 @@ public class RecentLayoutSetBranchPersistenceTest {
 		return recentLayoutSetBranch;
 	}
 
-	private List<RecentLayoutSetBranch> _recentLayoutSetBranchs = new ArrayList<RecentLayoutSetBranch>();
+	private List<RecentLayoutSetBranch> _recentLayoutSetBranchs =
+		new ArrayList<RecentLayoutSetBranch>();
 	private RecentLayoutSetBranchPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

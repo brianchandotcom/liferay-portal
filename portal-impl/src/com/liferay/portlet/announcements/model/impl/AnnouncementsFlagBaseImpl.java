@@ -34,6 +34,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUti
 @ProviderType
 public abstract class AnnouncementsFlagBaseImpl
 	extends AnnouncementsFlagModelImpl implements AnnouncementsFlag {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class AnnouncementsFlagBaseImpl
 			AnnouncementsFlagLocalServiceUtil.updateAnnouncementsFlag(this);
 		}
 	}
+
 }

@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -58,26 +56,26 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
-	implements UserTrackerModel {
+public class UserTrackerModelImpl
+	extends BaseModelImpl<UserTracker> implements UserTrackerModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a user tracker model instance should use the <code>UserTracker</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "UserTracker";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "userTrackerId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "sessionId", Types.VARCHAR },
-			{ "remoteAddr", Types.VARCHAR },
-			{ "remoteHost", Types.VARCHAR },
-			{ "userAgent", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"userTrackerId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"sessionId", Types.VARCHAR},
+		{"remoteAddr", Types.VARCHAR}, {"remoteHost", Types.VARCHAR},
+		{"userAgent", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -91,28 +89,49 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		TABLE_COLUMNS_MAP.put("userAgent", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserTracker (mvccVersion LONG default 0 not null,userTrackerId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,sessionId VARCHAR(200) null,remoteAddr VARCHAR(75) null,remoteHost VARCHAR(75) null,userAgent VARCHAR(200) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table UserTracker (mvccVersion LONG default 0 not null,userTrackerId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,sessionId VARCHAR(200) null,remoteAddr VARCHAR(75) null,remoteHost VARCHAR(75) null,userAgent VARCHAR(200) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table UserTracker";
-	public static final String ORDER_BY_JPQL = " ORDER BY userTracker.userTrackerId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY UserTracker.userTrackerId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY userTracker.userTrackerId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY UserTracker.userTrackerId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.UserTracker"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.UserTracker"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.UserTracker"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.UserTracker"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.UserTracker"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.UserTracker"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long SESSIONID_COLUMN_BITMASK = 2L;
+
 	public static final long USERID_COLUMN_BITMASK = 4L;
+
 	public static final long USERTRACKERID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.UserTracker"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.UserTracker"));
 
 	public UserTrackerModelImpl() {
 	}
@@ -151,13 +170,18 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<UserTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<UserTracker, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<UserTracker, Object> attributeGetterFunction = entry.getValue();
+			Function<UserTracker, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((UserTracker)this));
 		}
 
@@ -169,58 +193,88 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<UserTracker, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<UserTracker, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<UserTracker, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<UserTracker, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((UserTracker)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(UserTracker)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<UserTracker, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<UserTracker, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<UserTracker, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<UserTracker, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<UserTracker, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<UserTracker, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<UserTracker, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserTracker, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<UserTracker, Object>>();
-		Map<String, BiConsumer<UserTracker, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<UserTracker, ?>>();
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<UserTracker, Object>>();
+		Map<String, BiConsumer<UserTracker, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<UserTracker, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", UserTracker::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserTracker, Long>)UserTracker::setMvccVersion);
-		attributeGetterFunctions.put("userTrackerId", UserTracker::getUserTrackerId);
-		attributeSetterBiConsumers.put("userTrackerId", (BiConsumer<UserTracker, Long>)UserTracker::setUserTrackerId);
+		attributeGetterFunctions.put(
+			"mvccVersion", UserTracker::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<UserTracker, Long>)UserTracker::setMvccVersion);
+		attributeGetterFunctions.put(
+			"userTrackerId", UserTracker::getUserTrackerId);
+		attributeSetterBiConsumers.put(
+			"userTrackerId",
+			(BiConsumer<UserTracker, Long>)UserTracker::setUserTrackerId);
 		attributeGetterFunctions.put("companyId", UserTracker::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserTracker, Long>)UserTracker::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<UserTracker, Long>)UserTracker::setCompanyId);
 		attributeGetterFunctions.put("userId", UserTracker::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<UserTracker, Long>)UserTracker::setUserId);
-		attributeGetterFunctions.put("modifiedDate", UserTracker::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<UserTracker, Date>)UserTracker::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<UserTracker, Long>)UserTracker::setUserId);
+		attributeGetterFunctions.put(
+			"modifiedDate", UserTracker::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<UserTracker, Date>)UserTracker::setModifiedDate);
 		attributeGetterFunctions.put("sessionId", UserTracker::getSessionId);
-		attributeSetterBiConsumers.put("sessionId", (BiConsumer<UserTracker, String>)UserTracker::setSessionId);
+		attributeSetterBiConsumers.put(
+			"sessionId",
+			(BiConsumer<UserTracker, String>)UserTracker::setSessionId);
 		attributeGetterFunctions.put("remoteAddr", UserTracker::getRemoteAddr);
-		attributeSetterBiConsumers.put("remoteAddr", (BiConsumer<UserTracker, String>)UserTracker::setRemoteAddr);
+		attributeSetterBiConsumers.put(
+			"remoteAddr",
+			(BiConsumer<UserTracker, String>)UserTracker::setRemoteAddr);
 		attributeGetterFunctions.put("remoteHost", UserTracker::getRemoteHost);
-		attributeSetterBiConsumers.put("remoteHost", (BiConsumer<UserTracker, String>)UserTracker::setRemoteHost);
+		attributeSetterBiConsumers.put(
+			"remoteHost",
+			(BiConsumer<UserTracker, String>)UserTracker::setRemoteHost);
 		attributeGetterFunctions.put("userAgent", UserTracker::getUserAgent);
-		attributeSetterBiConsumers.put("userAgent", (BiConsumer<UserTracker, String>)UserTracker::setUserAgent);
+		attributeSetterBiConsumers.put(
+			"userAgent",
+			(BiConsumer<UserTracker, String>)UserTracker::setUserAgent);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -389,8 +443,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			UserTracker.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), UserTracker.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -403,8 +457,9 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	@Override
 	public UserTracker toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (UserTracker)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (UserTracker)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -485,7 +540,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public void resetOriginalValues() {
 		UserTrackerModelImpl userTrackerModelImpl = this;
 
-		userTrackerModelImpl._originalCompanyId = userTrackerModelImpl._companyId;
+		userTrackerModelImpl._originalCompanyId =
+			userTrackerModelImpl._companyId;
 
 		userTrackerModelImpl._setOriginalCompanyId = false;
 
@@ -493,14 +549,16 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 		userTrackerModelImpl._setOriginalUserId = false;
 
-		userTrackerModelImpl._originalSessionId = userTrackerModelImpl._sessionId;
+		userTrackerModelImpl._originalSessionId =
+			userTrackerModelImpl._sessionId;
 
 		userTrackerModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<UserTracker> toCacheModel() {
-		UserTrackerCacheModel userTrackerCacheModel = new UserTrackerCacheModel();
+		UserTrackerCacheModel userTrackerCacheModel =
+			new UserTrackerCacheModel();
 
 		userTrackerCacheModel.mvccVersion = getMvccVersion();
 
@@ -556,16 +614,20 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public String toString() {
-		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<UserTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<UserTracker, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<UserTracker, Object> attributeGetterFunction = entry.getValue();
+			Function<UserTracker, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -584,18 +646,22 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<UserTracker, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<UserTracker, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<UserTracker, Object> attributeGetterFunction = entry.getValue();
+			Function<UserTracker, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -609,10 +675,12 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = UserTracker.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		UserTracker.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			UserTracker.class, ModelWrapper.class
-		};
+		UserTracker.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _userTrackerId;
 	private long _companyId;
@@ -629,4 +697,5 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	private String _userAgent;
 	private long _columnBitmask;
 	private UserTracker _escapedModel;
+
 }

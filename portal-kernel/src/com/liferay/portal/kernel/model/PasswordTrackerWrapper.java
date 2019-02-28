@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class PasswordTrackerWrapper extends BaseModelWrapper<PasswordTracker>
+public class PasswordTrackerWrapper
+	extends BaseModelWrapper<PasswordTracker>
 	implements PasswordTracker, ModelWrapper<PasswordTracker> {
+
 	public PasswordTrackerWrapper(PasswordTracker passwordTracker) {
 		super(passwordTracker);
 	}
@@ -92,80 +94,80 @@ public class PasswordTrackerWrapper extends BaseModelWrapper<PasswordTracker>
 	}
 
 	/**
-	* Returns the company ID of this password tracker.
-	*
-	* @return the company ID of this password tracker
-	*/
+	 * Returns the company ID of this password tracker.
+	 *
+	 * @return the company ID of this password tracker
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this password tracker.
-	*
-	* @return the create date of this password tracker
-	*/
+	 * Returns the create date of this password tracker.
+	 *
+	 * @return the create date of this password tracker
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the mvcc version of this password tracker.
-	*
-	* @return the mvcc version of this password tracker
-	*/
+	 * Returns the mvcc version of this password tracker.
+	 *
+	 * @return the mvcc version of this password tracker
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the password of this password tracker.
-	*
-	* @return the password of this password tracker
-	*/
+	 * Returns the password of this password tracker.
+	 *
+	 * @return the password of this password tracker
+	 */
 	@Override
 	public String getPassword() {
 		return model.getPassword();
 	}
 
 	/**
-	* Returns the password tracker ID of this password tracker.
-	*
-	* @return the password tracker ID of this password tracker
-	*/
+	 * Returns the password tracker ID of this password tracker.
+	 *
+	 * @return the password tracker ID of this password tracker
+	 */
 	@Override
 	public long getPasswordTrackerId() {
 		return model.getPasswordTrackerId();
 	}
 
 	/**
-	* Returns the primary key of this password tracker.
-	*
-	* @return the primary key of this password tracker
-	*/
+	 * Returns the primary key of this password tracker.
+	 *
+	 * @return the primary key of this password tracker
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the user ID of this password tracker.
-	*
-	* @return the user ID of this password tracker
-	*/
+	 * Returns the user ID of this password tracker.
+	 *
+	 * @return the user ID of this password tracker
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user uuid of this password tracker.
-	*
-	* @return the user uuid of this password tracker
-	*/
+	 * Returns the user uuid of this password tracker.
+	 *
+	 * @return the user uuid of this password tracker
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -177,80 +179,80 @@ public class PasswordTrackerWrapper extends BaseModelWrapper<PasswordTracker>
 	}
 
 	/**
-	* Sets the company ID of this password tracker.
-	*
-	* @param companyId the company ID of this password tracker
-	*/
+	 * Sets the company ID of this password tracker.
+	 *
+	 * @param companyId the company ID of this password tracker
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this password tracker.
-	*
-	* @param createDate the create date of this password tracker
-	*/
+	 * Sets the create date of this password tracker.
+	 *
+	 * @param createDate the create date of this password tracker
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the mvcc version of this password tracker.
-	*
-	* @param mvccVersion the mvcc version of this password tracker
-	*/
+	 * Sets the mvcc version of this password tracker.
+	 *
+	 * @param mvccVersion the mvcc version of this password tracker
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the password of this password tracker.
-	*
-	* @param password the password of this password tracker
-	*/
+	 * Sets the password of this password tracker.
+	 *
+	 * @param password the password of this password tracker
+	 */
 	@Override
 	public void setPassword(String password) {
 		model.setPassword(password);
 	}
 
 	/**
-	* Sets the password tracker ID of this password tracker.
-	*
-	* @param passwordTrackerId the password tracker ID of this password tracker
-	*/
+	 * Sets the password tracker ID of this password tracker.
+	 *
+	 * @param passwordTrackerId the password tracker ID of this password tracker
+	 */
 	@Override
 	public void setPasswordTrackerId(long passwordTrackerId) {
 		model.setPasswordTrackerId(passwordTrackerId);
 	}
 
 	/**
-	* Sets the primary key of this password tracker.
-	*
-	* @param primaryKey the primary key of this password tracker
-	*/
+	 * Sets the primary key of this password tracker.
+	 *
+	 * @param primaryKey the primary key of this password tracker
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the user ID of this password tracker.
-	*
-	* @param userId the user ID of this password tracker
-	*/
+	 * Sets the user ID of this password tracker.
+	 *
+	 * @param userId the user ID of this password tracker
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user uuid of this password tracker.
-	*
-	* @param userUuid the user uuid of this password tracker
-	*/
+	 * Sets the user uuid of this password tracker.
+	 *
+	 * @param userUuid the user uuid of this password tracker
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -260,4 +262,5 @@ public class PasswordTrackerWrapper extends BaseModelWrapper<PasswordTracker>
 	protected PasswordTrackerWrapper wrap(PasswordTracker passwordTracker) {
 		return new PasswordTrackerWrapper(passwordTracker);
 	}
+
 }

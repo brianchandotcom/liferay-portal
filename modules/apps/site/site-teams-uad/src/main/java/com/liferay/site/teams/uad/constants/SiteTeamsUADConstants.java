@@ -19,5 +19,7 @@ package com.liferay.site.teams.uad.constants;
  * @generated
  */
 public class SiteTeamsUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_TEAM = { "userId" };
+
+	public static final String[] USER_ID_FIELD_NAMES_TEAM = {"userId"};
+
 }

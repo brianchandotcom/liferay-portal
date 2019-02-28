@@ -28,15 +28,21 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see DLFileEntryModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl"
+)
 @ProviderType
-public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel {
+public interface DLFileEntry
+	extends DLFileEntryModel, PersistedModel, TreeModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<DLFileEntry, Long> FILE_ENTRY_ID_ACCESSOR = new Accessor<DLFileEntry, Long>() {
+	public static final Accessor<DLFileEntry, Long> FILE_ENTRY_ID_ACCESSOR =
+		new Accessor<DLFileEntry, Long>() {
+
 			@Override
 			public Long get(DLFileEntry dlFileEntry) {
 				return dlFileEntry.getFileEntryId();
@@ -51,6 +57,7 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 			public Class<DLFileEntry> getTypeClass() {
 				return DLFileEntry.class;
 			}
+
 		};
 
 	@Override
@@ -65,16 +72,18 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 
 	public long getDataRepositoryId();
 
-	public java.util.Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.Map
+		<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+				getDDMFormValuesMap(long fileVersionId)
+			throws com.liferay.portal.kernel.exception.PortalException;
 
 	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getExtraSettingsProperties();
 
 	public java.util.List<DLFileShortcut> getFileShortcuts();
 
@@ -109,5 +118,7 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 	public boolean isInHiddenFolder();
 
 	public void setExtraSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties extraSettingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			extraSettingsProperties);
+
 }

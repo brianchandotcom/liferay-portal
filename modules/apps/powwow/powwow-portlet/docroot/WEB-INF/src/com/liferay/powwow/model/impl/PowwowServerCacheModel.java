@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
-
 import com.liferay.powwow.model.PowwowServer;
 
 import java.io.Externalizable;
@@ -37,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
-	Externalizable {
+public class PowwowServerCacheModel
+	implements CacheModel<PowwowServer>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,7 +48,8 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 			return false;
 		}
 
-		PowwowServerCacheModel powwowServerCacheModel = (PowwowServerCacheModel)obj;
+		PowwowServerCacheModel powwowServerCacheModel =
+			(PowwowServerCacheModel)obj;
 
 		if (powwowServerId == powwowServerCacheModel.powwowServerId) {
 			return true;
@@ -187,8 +187,7 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(powwowServerId);
 
 		objectOutput.writeLong(companyId);
@@ -255,4 +254,5 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 	public String apiKey;
 	public String secret;
 	public boolean active;
+
 }

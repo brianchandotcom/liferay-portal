@@ -32,8 +32,9 @@ import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PowwowMeetingBaseImpl extends PowwowMeetingModelImpl
-	implements PowwowMeeting {
+public abstract class PowwowMeetingBaseImpl
+	extends PowwowMeetingModelImpl implements PowwowMeeting {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class PowwowMeetingBaseImpl extends PowwowMeetingModelImpl
 			PowwowMeetingLocalServiceUtil.updatePowwowMeeting(this);
 		}
 	}
+
 }

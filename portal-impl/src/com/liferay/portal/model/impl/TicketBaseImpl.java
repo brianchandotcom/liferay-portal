@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
  */
 @ProviderType
 public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
 			TicketLocalServiceUtil.updateTicket(this);
 		}
 	}
+
 }

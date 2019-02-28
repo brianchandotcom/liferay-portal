@@ -39,8 +39,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
-	LocalizedModel, ShardedModel, StagedGroupedModel {
+public interface DLFileEntryTypeModel
+	extends BaseModel<DLFileEntryType>, LocalizedModel, ShardedModel,
+			StagedGroupedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -399,8 +401,8 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(String description, Locale locale,
-		Locale defaultLocale);
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -417,8 +419,8 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 * @param descriptionMap the locales and localized descriptions of this document library file entry type
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(Map<Locale, String> descriptionMap,
-		Locale defaultLocale);
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
 	 * Returns the last publish date of this document library file entry type.
@@ -448,4 +450,5 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
+
 }

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -53,32 +52,36 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface PasswordPolicyLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface PasswordPolicyLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyLocalServiceUtil} to access the password policy local service. Add custom service methods to <code>com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PasswordPolicy addPasswordPolicy(long userId, boolean defaultPolicy,
-		String name, String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		String regex, boolean history, int historyCount, boolean expireable,
-		long maxAge, long warningTime, int graceLimit, boolean lockout,
-		int maxFailure, long lockoutDuration, long resetFailureCount,
-		long resetTicketMaxAge, ServiceContext serviceContext)
+	public PasswordPolicy addPasswordPolicy(
+			long userId, boolean defaultPolicy, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Adds the password policy to the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was added
-	*/
+	 * Adds the password policy to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param passwordPolicy the password policy
+	 * @return the password policy that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PasswordPolicy addPasswordPolicy(PasswordPolicy passwordPolicy);
 
@@ -86,11 +89,11 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Creates a new password policy with the primary key. Does not add the password policy to the database.
-	*
-	* @param passwordPolicyId the primary key for the new password policy
-	* @return the new password policy
-	*/
+	 * Creates a new password policy with the primary key. Does not add the password policy to the database.
+	 *
+	 * @param passwordPolicyId the primary key for the new password policy
+	 * @return the new password policy
+	 */
 	@Transactional(enabled = false)
 	public PasswordPolicy createPasswordPolicy(long passwordPolicyId);
 
@@ -98,31 +101,34 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the password policy with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicyId the primary key of the password policy
-	* @return the password policy that was removed
-	* @throws PortalException if a password policy with the primary key could not be found
-	*/
+	 * Deletes the password policy with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param passwordPolicyId the primary key of the password policy
+	 * @return the password policy that was removed
+	 * @throws PortalException if a password policy with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public PasswordPolicy deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException;
 
 	/**
-	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was removed
-	* @throws PortalException
-	*/
+	 * Deletes the password policy from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param passwordPolicy the password policy
+	 * @return the password policy that was removed
+	 * @throws PortalException
+	 */
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public PasswordPolicy deletePasswordPolicy(PasswordPolicy passwordPolicy)
 		throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -131,66 +137,67 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PasswordPolicy fetchPasswordPolicy(long passwordPolicyId);
@@ -199,15 +206,15 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	public PasswordPolicy fetchPasswordPolicy(long companyId, String name);
 
 	/**
-	* Returns the password policy with the matching UUID and company.
-	*
-	* @param uuid the password policy's UUID
-	* @param companyId the primary key of the company
-	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
-	*/
+	 * Returns the password policy with the matching UUID and company.
+	 *
+	 * @param uuid the password policy's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching password policy, or <code>null</code> if a matching password policy could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(String uuid,
-		long companyId);
+	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -224,52 +231,54 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* Returns a range of all the password policies.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of password policies
-	* @param end the upper bound of the range of password policies (not inclusive)
-	* @return the range of password policies
-	*/
+	 * Returns a range of all the password policies.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of password policies
+	 * @param end the upper bound of the range of password policies (not inclusive)
+	 * @return the range of password policies
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PasswordPolicy> getPasswordPolicies(int start, int end);
 
 	/**
-	* Returns the number of password policies.
-	*
-	* @return the number of password policies
-	*/
+	 * Returns the number of password policies.
+	 *
+	 * @return the number of password policies
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPasswordPoliciesCount();
 
 	/**
-	* Returns the password policy with the primary key.
-	*
-	* @param passwordPolicyId the primary key of the password policy
-	* @return the password policy
-	* @throws PortalException if a password policy with the primary key could not be found
-	*/
+	 * Returns the password policy with the primary key.
+	 *
+	 * @param passwordPolicyId the primary key of the password policy
+	 * @return the password policy
+	 * @throws PortalException if a password policy with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PasswordPolicy getPasswordPolicy(long passwordPolicyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy getPasswordPolicy(long companyId,
-		boolean defaultPolicy) throws PortalException;
+	public PasswordPolicy getPasswordPolicy(
+			long companyId, boolean defaultPolicy)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy getPasswordPolicy(long companyId,
-		long[] organizationIds) throws PortalException;
+	public PasswordPolicy getPasswordPolicy(
+			long companyId, long[] organizationIds)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PasswordPolicy getPasswordPolicyByUser(User user)
@@ -281,16 +290,17 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the password policy with the matching UUID and company.
-	*
-	* @param uuid the password policy's UUID
-	* @param companyId the primary key of the company
-	* @return the matching password policy
-	* @throws PortalException if a matching password policy could not be found
-	*/
+	 * Returns the password policy with the matching UUID and company.
+	 *
+	 * @param uuid the password policy's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching password policy
+	 * @throws PortalException if a matching password policy could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PasswordPolicy getPasswordPolicyByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException;
+	public PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -298,29 +308,32 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PasswordPolicy> search(long companyId, String name, int start,
-		int end, OrderByComparator<PasswordPolicy> obc);
+	public List<PasswordPolicy> search(
+		long companyId, String name, int start, int end,
+		OrderByComparator<PasswordPolicy> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, String name);
 
-	public PasswordPolicy updatePasswordPolicy(long passwordPolicyId,
-		String name, String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		String regex, boolean history, int historyCount, boolean expireable,
-		long maxAge, long warningTime, int graceLimit, boolean lockout,
-		int maxFailure, long lockoutDuration, long resetFailureCount,
-		long resetTicketMaxAge, ServiceContext serviceContext)
+	public PasswordPolicy updatePasswordPolicy(
+			long passwordPolicyId, String name, String description,
+			boolean changeable, boolean changeRequired, long minAge,
+			boolean checkSyntax, boolean allowDictionaryWords,
+			int minAlphanumeric, int minLength, int minLowerCase,
+			int minNumbers, int minSymbols, int minUpperCase, String regex,
+			boolean history, int historyCount, boolean expireable, long maxAge,
+			long warningTime, int graceLimit, boolean lockout, int maxFailure,
+			long lockoutDuration, long resetFailureCount,
+			long resetTicketMaxAge, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicy the password policy
-	* @return the password policy that was updated
-	*/
+	 * Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param passwordPolicy the password policy
+	 * @return the password policy that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PasswordPolicy updatePasswordPolicy(PasswordPolicy passwordPolicy);
+
 }

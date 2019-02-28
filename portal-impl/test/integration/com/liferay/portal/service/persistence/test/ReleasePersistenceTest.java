@@ -37,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ReleasePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +103,8 @@ public class ReleasePersistenceTest {
 
 		_persistence.remove(newRelease);
 
-		Release existingRelease = _persistence.fetchByPrimaryKey(newRelease.getPrimaryKey());
+		Release existingRelease = _persistence.fetchByPrimaryKey(
+			newRelease.getPrimaryKey());
 
 		Assert.assertNull(existingRelease);
 	}
@@ -139,32 +142,34 @@ public class ReleasePersistenceTest {
 
 		_releases.add(_persistence.update(newRelease));
 
-		Release existingRelease = _persistence.findByPrimaryKey(newRelease.getPrimaryKey());
+		Release existingRelease = _persistence.findByPrimaryKey(
+			newRelease.getPrimaryKey());
 
-		Assert.assertEquals(existingRelease.getMvccVersion(),
-			newRelease.getMvccVersion());
-		Assert.assertEquals(existingRelease.getReleaseId(),
-			newRelease.getReleaseId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingRelease.getCreateDate()),
+		Assert.assertEquals(
+			existingRelease.getMvccVersion(), newRelease.getMvccVersion());
+		Assert.assertEquals(
+			existingRelease.getReleaseId(), newRelease.getReleaseId());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRelease.getCreateDate()),
 			Time.getShortTimestamp(newRelease.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingRelease.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRelease.getModifiedDate()),
 			Time.getShortTimestamp(newRelease.getModifiedDate()));
-		Assert.assertEquals(existingRelease.getServletContextName(),
+		Assert.assertEquals(
+			existingRelease.getServletContextName(),
 			newRelease.getServletContextName());
-		Assert.assertEquals(existingRelease.getSchemaVersion(),
-			newRelease.getSchemaVersion());
-		Assert.assertEquals(existingRelease.getBuildNumber(),
-			newRelease.getBuildNumber());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingRelease.getBuildDate()),
+		Assert.assertEquals(
+			existingRelease.getSchemaVersion(), newRelease.getSchemaVersion());
+		Assert.assertEquals(
+			existingRelease.getBuildNumber(), newRelease.getBuildNumber());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRelease.getBuildDate()),
 			Time.getShortTimestamp(newRelease.getBuildDate()));
-		Assert.assertEquals(existingRelease.isVerified(),
-			newRelease.isVerified());
+		Assert.assertEquals(
+			existingRelease.isVerified(), newRelease.isVerified());
 		Assert.assertEquals(existingRelease.getState(), newRelease.getState());
-		Assert.assertEquals(existingRelease.getTestString(),
-			newRelease.getTestString());
+		Assert.assertEquals(
+			existingRelease.getTestString(), newRelease.getTestString());
 	}
 
 	@Test
@@ -180,7 +185,8 @@ public class ReleasePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Release newRelease = addRelease();
 
-		Release existingRelease = _persistence.findByPrimaryKey(newRelease.getPrimaryKey());
+		Release existingRelease = _persistence.findByPrimaryKey(
+			newRelease.getPrimaryKey());
 
 		Assert.assertEquals(existingRelease, newRelease);
 	}
@@ -194,23 +200,24 @@ public class ReleasePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Release> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Release_", "mvccVersion",
-			true, "releaseId", true, "createDate", true, "modifiedDate", true,
-			"servletContextName", true, "schemaVersion", true, "buildNumber",
-			true, "buildDate", true, "verified", true, "state", true,
-			"testString", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Release_", "mvccVersion", true, "releaseId", true, "createDate",
+			true, "modifiedDate", true, "servletContextName", true,
+			"schemaVersion", true, "buildNumber", true, "buildDate", true,
+			"verified", true, "state", true, "testString", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Release newRelease = addRelease();
 
-		Release existingRelease = _persistence.fetchByPrimaryKey(newRelease.getPrimaryKey());
+		Release existingRelease = _persistence.fetchByPrimaryKey(
+			newRelease.getPrimaryKey());
 
 		Assert.assertEquals(existingRelease, newRelease);
 	}
@@ -227,6 +234,7 @@ public class ReleasePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Release newRelease1 = addRelease();
 		Release newRelease2 = addRelease();
 
@@ -235,18 +243,20 @@ public class ReleasePersistenceTest {
 		primaryKeys.add(newRelease1.getPrimaryKey());
 		primaryKeys.add(newRelease2.getPrimaryKey());
 
-		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, releases.size());
-		Assert.assertEquals(newRelease1,
-			releases.get(newRelease1.getPrimaryKey()));
-		Assert.assertEquals(newRelease2,
-			releases.get(newRelease2.getPrimaryKey()));
+		Assert.assertEquals(
+			newRelease1, releases.get(newRelease1.getPrimaryKey()));
+		Assert.assertEquals(
+			newRelease2, releases.get(newRelease2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -256,7 +266,8 @@ public class ReleasePersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(releases.isEmpty());
 	}
@@ -264,6 +275,7 @@ public class ReleasePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Release newRelease = addRelease();
 
 		long pk = RandomTestUtil.nextLong();
@@ -273,50 +285,57 @@ public class ReleasePersistenceTest {
 		primaryKeys.add(newRelease.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, releases.size());
-		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
+		Assert.assertEquals(
+			newRelease, releases.get(newRelease.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(releases.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Release newRelease = addRelease();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRelease.getPrimaryKey());
 
-		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Release> releases = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, releases.size());
-		Assert.assertEquals(newRelease, releases.get(newRelease.getPrimaryKey()));
+		Assert.assertEquals(
+			newRelease, releases.get(newRelease.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ReleaseLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ReleaseLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Release>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Release>() {
+
 				@Override
 				public void performAction(Release release) {
 					Assert.assertNotNull(release);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -325,15 +344,14 @@ public class ReleasePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Release newRelease = addRelease();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Release.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("releaseId",
-				newRelease.getReleaseId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("releaseId", newRelease.getReleaseId()));
 
 		List<Release> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -346,11 +364,11 @@ public class ReleasePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Release.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("releaseId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("releaseId", RandomTestUtil.nextLong()));
 
 		List<Release> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -358,19 +376,19 @@ public class ReleasePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Release newRelease = addRelease();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Release.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("releaseId"));
 
 		Object newReleaseId = newRelease.getReleaseId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("releaseId",
-				new Object[] { newReleaseId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"releaseId", new Object[] {newReleaseId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -383,13 +401,14 @@ public class ReleasePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Release.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("releaseId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("releaseId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"releaseId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -402,12 +421,15 @@ public class ReleasePersistenceTest {
 
 		_persistence.clearCache();
 
-		Release existingRelease = _persistence.findByPrimaryKey(newRelease.getPrimaryKey());
+		Release existingRelease = _persistence.findByPrimaryKey(
+			newRelease.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(
+		Assert.assertTrue(
+			Objects.equals(
 				existingRelease.getServletContextName(),
-				ReflectionTestUtil.invoke(existingRelease,
-					"getOriginalServletContextName", new Class<?>[0])));
+				ReflectionTestUtil.invoke(
+					existingRelease, "getOriginalServletContextName",
+					new Class<?>[0])));
 	}
 
 	protected Release addRelease() throws Exception {
@@ -443,4 +465,5 @@ public class ReleasePersistenceTest {
 	private List<Release> _releases = new ArrayList<Release>();
 	private ReleasePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

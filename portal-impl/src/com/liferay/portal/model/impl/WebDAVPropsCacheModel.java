@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.WebDAVProps;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
-	Externalizable, MVCCModel {
+public class WebDAVPropsCacheModel
+	implements CacheModel<WebDAVProps>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,10 +49,12 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 			return false;
 		}
 
-		WebDAVPropsCacheModel webDAVPropsCacheModel = (WebDAVPropsCacheModel)obj;
+		WebDAVPropsCacheModel webDAVPropsCacheModel =
+			(WebDAVPropsCacheModel)obj;
 
 		if ((webDavPropsId == webDAVPropsCacheModel.webDavPropsId) &&
-				(mvccVersion == webDAVPropsCacheModel.mvccVersion)) {
+			(mvccVersion == webDAVPropsCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -155,8 +157,7 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(webDavPropsId);
@@ -185,4 +186,5 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 	public long classNameId;
 	public long classPK;
 	public String props;
+
 }

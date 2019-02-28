@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
-	MVCCModel, ShardedModel {
+public interface WebDAVPropsModel
+	extends AttachedModel, BaseModel<WebDAVProps>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -184,4 +185,5 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	 * @param props the props of this web dav props
 	 */
 	public void setProps(String props);
+
 }

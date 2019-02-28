@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.social.kernel.model.SocialRelationModel;
 
@@ -55,24 +52,25 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
-	implements SocialRelationModel {
+public class SocialRelationModelImpl
+	extends BaseModelImpl<SocialRelation> implements SocialRelationModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social relation model instance should use the <code>SocialRelation</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SocialRelation";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
-			{ "relationId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "createDate", Types.BIGINT },
-			{ "userId1", Types.BIGINT },
-			{ "userId2", Types.BIGINT },
-			{ "type_", Types.INTEGER }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"uuid_", Types.VARCHAR}, {"relationId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.BIGINT},
+		{"userId1", Types.BIGINT}, {"userId2", Types.BIGINT},
+		{"type_", Types.INTEGER}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -84,30 +82,53 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
+
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
-	public static final String ORDER_BY_JPQL = " ORDER BY socialRelation.relationId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SocialRelation.relationId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY socialRelation.relationId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SocialRelation.relationId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialRelation"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialRelation"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialRelation"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialRelation"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialRelation"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialRelation"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long TYPE_COLUMN_BITMASK = 2L;
+
 	public static final long USERID1_COLUMN_BITMASK = 4L;
+
 	public static final long USERID2_COLUMN_BITMASK = 8L;
+
 	public static final long UUID_COLUMN_BITMASK = 16L;
+
 	public static final long RELATIONID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.social.kernel.model.SocialRelation"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.social.kernel.model.SocialRelation"));
 
 	public SocialRelationModelImpl() {
 	}
@@ -146,13 +167,18 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SocialRelation, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialRelation, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialRelation, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialRelation, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SocialRelation)this));
 		}
 
@@ -164,55 +190,80 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SocialRelation, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SocialRelation, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SocialRelation, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SocialRelation, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SocialRelation)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SocialRelation)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SocialRelation, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SocialRelation, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SocialRelation, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SocialRelation, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialRelation, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialRelation, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SocialRelation, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialRelation, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SocialRelation, Object>>();
-		Map<String, BiConsumer<SocialRelation, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SocialRelation, ?>>();
-
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SocialRelation, Object>>();
+		Map<String, BiConsumer<SocialRelation, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SocialRelation, ?>>();
 
 		attributeGetterFunctions.put("uuid", SocialRelation::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<SocialRelation, String>)SocialRelation::setUuid);
-		attributeGetterFunctions.put("relationId", SocialRelation::getRelationId);
-		attributeSetterBiConsumers.put("relationId", (BiConsumer<SocialRelation, Long>)SocialRelation::setRelationId);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<SocialRelation, String>)SocialRelation::setUuid);
+		attributeGetterFunctions.put(
+			"relationId", SocialRelation::getRelationId);
+		attributeSetterBiConsumers.put(
+			"relationId",
+			(BiConsumer<SocialRelation, Long>)SocialRelation::setRelationId);
 		attributeGetterFunctions.put("companyId", SocialRelation::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialRelation, Long>)SocialRelation::setCompanyId);
-		attributeGetterFunctions.put("createDate", SocialRelation::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SocialRelation, Long>)SocialRelation::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SocialRelation, Long>)SocialRelation::setCompanyId);
+		attributeGetterFunctions.put(
+			"createDate", SocialRelation::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SocialRelation, Long>)SocialRelation::setCreateDate);
 		attributeGetterFunctions.put("userId1", SocialRelation::getUserId1);
-		attributeSetterBiConsumers.put("userId1", (BiConsumer<SocialRelation, Long>)SocialRelation::setUserId1);
+		attributeSetterBiConsumers.put(
+			"userId1",
+			(BiConsumer<SocialRelation, Long>)SocialRelation::setUserId1);
 		attributeGetterFunctions.put("userId2", SocialRelation::getUserId2);
-		attributeSetterBiConsumers.put("userId2", (BiConsumer<SocialRelation, Long>)SocialRelation::setUserId2);
+		attributeSetterBiConsumers.put(
+			"userId2",
+			(BiConsumer<SocialRelation, Long>)SocialRelation::setUserId2);
 		attributeGetterFunctions.put("type", SocialRelation::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<SocialRelation, Integer>)SocialRelation::setType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<SocialRelation, Integer>)SocialRelation::setType);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -354,8 +405,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SocialRelation.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SocialRelation.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -368,8 +419,9 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	@Override
 	public SocialRelation toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialRelation)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SocialRelation)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -450,15 +502,18 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		socialRelationModelImpl._originalUuid = socialRelationModelImpl._uuid;
 
-		socialRelationModelImpl._originalCompanyId = socialRelationModelImpl._companyId;
+		socialRelationModelImpl._originalCompanyId =
+			socialRelationModelImpl._companyId;
 
 		socialRelationModelImpl._setOriginalCompanyId = false;
 
-		socialRelationModelImpl._originalUserId1 = socialRelationModelImpl._userId1;
+		socialRelationModelImpl._originalUserId1 =
+			socialRelationModelImpl._userId1;
 
 		socialRelationModelImpl._setOriginalUserId1 = false;
 
-		socialRelationModelImpl._originalUserId2 = socialRelationModelImpl._userId2;
+		socialRelationModelImpl._originalUserId2 =
+			socialRelationModelImpl._userId2;
 
 		socialRelationModelImpl._setOriginalUserId2 = false;
 
@@ -471,7 +526,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public CacheModel<SocialRelation> toCacheModel() {
-		SocialRelationCacheModel socialRelationCacheModel = new SocialRelationCacheModel();
+		SocialRelationCacheModel socialRelationCacheModel =
+			new SocialRelationCacheModel();
 
 		socialRelationCacheModel.uuid = getUuid();
 
@@ -498,16 +554,20 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public String toString() {
-		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SocialRelation, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialRelation, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialRelation, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialRelation, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -526,18 +586,22 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SocialRelation, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SocialRelation, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialRelation, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialRelation, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialRelation, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -551,10 +615,12 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SocialRelation.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SocialRelation.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SocialRelation.class, ModelWrapper.class
-		};
+		SocialRelation.class, ModelWrapper.class
+	};
+
 	private String _uuid;
 	private String _originalUuid;
 	private long _relationId;
@@ -573,4 +639,5 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private boolean _setOriginalType;
 	private long _columnBitmask;
 	private SocialRelation _escapedModel;
+
 }

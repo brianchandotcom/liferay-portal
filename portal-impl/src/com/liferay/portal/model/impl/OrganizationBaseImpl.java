@@ -17,7 +17,6 @@ package com.liferay.portal.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -38,8 +37,9 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-public abstract class OrganizationBaseImpl extends OrganizationModelImpl
-	implements Organization {
+public abstract class OrganizationBaseImpl
+	extends OrganizationModelImpl implements Organization {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,10 +65,11 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 		while (organization != null) {
 			organizations.add(organization);
 
-			organization = OrganizationLocalServiceUtil.fetchOrganization(organization.getParentOrganizationId());
+			organization = OrganizationLocalServiceUtil.fetchOrganization(
+				organization.getParentOrganizationId());
 		}
 
-		StringBundler sb = new StringBundler((organizations.size() * 2) + 1);
+		StringBundler sb = new StringBundler(organizations.size() * 2 + 1);
 
 		sb.append("/");
 
@@ -90,4 +91,5 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 
 		OrganizationLocalServiceUtil.updateOrganization(organization);
 	}
+
 }

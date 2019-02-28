@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class TicketSoap implements Serializable {
+
 	public static TicketSoap toSoapModel(Ticket model) {
 		TicketSoap soapModel = new TicketSoap();
 
@@ -185,4 +186,5 @@ public class TicketSoap implements Serializable {
 	private int _type;
 	private String _extraInfo;
 	private Date _expirationDate;
+
 }

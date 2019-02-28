@@ -62,8 +62,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class WebDAVPropsLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements WebDAVPropsLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements WebDAVPropsLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -107,6 +108,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	@Override
 	public WebDAVProps deleteWebDAVProps(long webDavPropsId)
 		throws PortalException {
+
 		return webDAVPropsPersistence.remove(webDavPropsId);
 	}
 
@@ -126,8 +128,8 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(WebDAVProps.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			WebDAVProps.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -154,10 +156,11 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return webDAVPropsPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return webDAVPropsPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -174,10 +177,12 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return webDAVPropsPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return webDAVPropsPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -199,10 +204,11 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return webDAVPropsPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return webDAVPropsPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -220,12 +226,14 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	@Override
 	public WebDAVProps getWebDAVProps(long webDavPropsId)
 		throws PortalException {
+
 		return webDAVPropsPersistence.findByPrimaryKey(webDavPropsId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(webDAVPropsLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -237,10 +245,14 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(webDAVPropsLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			webDAVPropsLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(WebDAVProps.class);
 
@@ -252,6 +264,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
+
 		actionableDynamicQuery.setBaseLocalService(webDAVPropsLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WebDAVProps.class);
@@ -265,12 +278,15 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return webDAVPropsLocalService.deleteWebDAVProps((WebDAVProps)persistedModel);
+
+		return webDAVPropsLocalService.deleteWebDAVProps(
+			(WebDAVProps)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return webDAVPropsPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -328,6 +344,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 */
 	public void setWebDAVPropsLocalService(
 		WebDAVPropsLocalService webDAVPropsLocalService) {
+
 		this.webDAVPropsLocalService = webDAVPropsLocalService;
 	}
 
@@ -347,6 +364,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 */
 	public void setWebDAVPropsPersistence(
 		WebDAVPropsPersistence webDAVPropsPersistence) {
+
 		this.webDAVPropsPersistence = webDAVPropsPersistence;
 	}
 
@@ -355,7 +373,9 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -365,7 +385,9 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -374,7 +396,9 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -384,7 +408,9 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -404,11 +430,13 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.WebDAVProps",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.WebDAVProps",
 			webDAVPropsLocalService);
 	}
 
@@ -449,8 +477,8 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -461,14 +489,27 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 
 	@BeanReference(type = WebDAVPropsLocalService.class)
 	protected WebDAVPropsLocalService webDAVPropsLocalService;
+
 	@BeanReference(type = WebDAVPropsPersistence.class)
 	protected WebDAVPropsPersistence webDAVPropsPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

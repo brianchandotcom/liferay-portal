@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLFolderServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -65,17 +64,22 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class DLFolderServiceSoap {
-	public static com.liferay.document.library.kernel.model.DLFolderSoap addFolder(
-		long groupId, long repositoryId, boolean mountPoint,
-		long parentFolderId, String name, String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			addFolder(
+				long groupId, long repositoryId, boolean mountPoint,
+				long parentFolderId, String name, String description,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
+
 		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.addFolder(groupId,
-					repositoryId, mountPoint, parentFolderId, name,
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.addFolder(
+					groupId, repositoryId, mountPoint, parentFolderId, name,
 					description, serviceContext);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -95,8 +99,10 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+	public static void deleteFolder(
+			long folderId, boolean includeTrashedEntries)
 		throws RemoteException {
+
 		try {
 			DLFolderServiceUtil.deleteFolder(folderId, includeTrashedEntries);
 		}
@@ -107,8 +113,10 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static void deleteFolder(long groupId, long parentFolderId,
-		String name) throws RemoteException {
+	public static void deleteFolder(
+			long groupId, long parentFolderId, String name)
+		throws RemoteException {
+
 		try {
 			DLFolderServiceUtil.deleteFolder(groupId, parentFolderId, name);
 		}
@@ -119,11 +127,14 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static int getFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, int status) throws RemoteException {
+	public static int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status)
+		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(groupId,
-					folderId, status);
+			int returnValue =
+				DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(
+					groupId, folderId, status);
 
 			return returnValue;
 		}
@@ -134,12 +145,14 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static int getFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, int status, String[] mimeTypes)
+	public static int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status, String[] mimeTypes)
 		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(groupId,
-					folderId, status, mimeTypes);
+			int returnValue =
+				DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(
+					groupId, folderId, status, mimeTypes);
 
 			return returnValue;
 		}
@@ -150,12 +163,16 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFolderSoap getFolder(
-		long folderId) throws RemoteException {
-		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.getFolder(folderId);
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			getFolder(long folderId)
+		throws RemoteException {
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.getFolder(folderId);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -164,14 +181,16 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFolderSoap getFolder(
-		long groupId, long parentFolderId, String name)
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			getFolder(long groupId, long parentFolderId, String name)
 		throws RemoteException {
-		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.getFolder(groupId,
-					parentFolderId, name);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.getFolder(groupId, parentFolderId, name);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -182,9 +201,10 @@ public class DLFolderServiceSoap {
 
 	public static Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
+
 		try {
-			java.util.List<Long> returnValue = DLFolderServiceUtil.getFolderIds(groupId,
-					folderId);
+			java.util.List<Long> returnValue = DLFolderServiceUtil.getFolderIds(
+				groupId, folderId);
 
 			return returnValue.toArray(new Long[returnValue.size()]);
 		}
@@ -195,35 +215,44 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFolderSoap[] getFolders(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> obc)
+	public static com.liferay.document.library.kernel.model.DLFolderSoap[]
+			getFolders(
+				long groupId, long parentFolderId, int status,
+				boolean includeMountfolders, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFolder> obc)
 		throws RemoteException {
+
 		try {
-			java.util.List<com.liferay.document.library.kernel.model.DLFolder> returnValue =
-				DLFolderServiceUtil.getFolders(groupId, parentFolderId, status,
-					includeMountfolders, start, end, obc);
-
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFolderSoap[] getFolders(
-		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> obc)
-		throws RemoteException {
-		try {
-			java.util.List<com.liferay.document.library.kernel.model.DLFolder> returnValue =
-				DLFolderServiceUtil.getFolders(groupId, parentFolderId, start,
+			java.util.List<com.liferay.document.library.kernel.model.DLFolder>
+				returnValue = DLFolderServiceUtil.getFolders(
+					groupId, parentFolderId, status, includeMountfolders, start,
 					end, obc);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModels(returnValue);
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFolderSoap[]
+			getFolders(
+				long groupId, long parentFolderId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFolder> obc)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.document.library.kernel.model.DLFolder>
+				returnValue = DLFolderServiceUtil.getFolders(
+					groupId, parentFolderId, start, end, obc);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -233,11 +262,15 @@ public class DLFolderServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status, boolean includeMountFolders)
+			long groupId, long folderId, int status,
+			boolean includeMountFolders)
 		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-					folderId, status, includeMountFolders);
+			int returnValue =
+				DLFolderServiceUtil.
+					getFoldersAndFileEntriesAndFileShortcutsCount(
+						groupId, folderId, status, includeMountFolders);
 
 			return returnValue;
 		}
@@ -249,11 +282,16 @@ public class DLFolderServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status, String[] mimeTypes,
-		boolean includeMountFolders) throws RemoteException {
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-					folderId, status, mimeTypes, includeMountFolders);
+			int returnValue =
+				DLFolderServiceUtil.
+					getFoldersAndFileEntriesAndFileShortcutsCount(
+						groupId, folderId, status, mimeTypes,
+						includeMountFolders);
 
 			return returnValue;
 		}
@@ -265,13 +303,18 @@ public class DLFolderServiceSoap {
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, String[] mimeTypes,
-		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
+				queryDefinition)
 		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-					folderId, mimeTypes, includeMountFolders, queryDefinition);
+			int returnValue =
+				DLFolderServiceUtil.
+					getFoldersAndFileEntriesAndFileShortcutsCount(
+						groupId, folderId, mimeTypes, includeMountFolders,
+						queryDefinition);
 
 			return returnValue;
 		}
@@ -284,9 +327,10 @@ public class DLFolderServiceSoap {
 
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getFoldersCount(groupId,
-					parentFolderId);
+			int returnValue = DLFolderServiceUtil.getFoldersCount(
+				groupId, parentFolderId);
 
 			return returnValue;
 		}
@@ -297,31 +341,38 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static int getFoldersCount(long groupId, long parentFolderId,
-		int status, boolean includeMountfolders) throws RemoteException {
-		try {
-			int returnValue = DLFolderServiceUtil.getFoldersCount(groupId,
-					parentFolderId, status, includeMountfolders);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFolderSoap[] getMountFolders(
-		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFolder> obc)
+	public static int getFoldersCount(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders)
 		throws RemoteException {
-		try {
-			java.util.List<com.liferay.document.library.kernel.model.DLFolder> returnValue =
-				DLFolderServiceUtil.getMountFolders(groupId, parentFolderId,
-					start, end, obc);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModels(returnValue);
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersCount(
+				groupId, parentFolderId, status, includeMountfolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFolderSoap[]
+			getMountFolders(
+				long groupId, long parentFolderId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFolder> obc)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.document.library.kernel.model.DLFolder>
+				returnValue = DLFolderServiceUtil.getMountFolders(
+					groupId, parentFolderId, start, end, obc);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -332,9 +383,10 @@ public class DLFolderServiceSoap {
 
 	public static int getMountFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
+
 		try {
-			int returnValue = DLFolderServiceUtil.getMountFoldersCount(groupId,
-					parentFolderId);
+			int returnValue = DLFolderServiceUtil.getMountFoldersCount(
+				groupId, parentFolderId);
 
 			return returnValue;
 		}
@@ -346,15 +398,17 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#getSubfolderIds(List, long, long, boolean)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #getSubfolderIds(List, long, long, boolean)}
+	 */
 	@Deprecated
-	public static void getSubfolderIds(Long[] folderIds, long groupId,
-		long folderId) throws RemoteException {
+	public static void getSubfolderIds(
+			Long[] folderIds, long groupId, long folderId)
+		throws RemoteException {
+
 		try {
-			DLFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
-				groupId, folderId);
+			DLFolderServiceUtil.getSubfolderIds(
+				ListUtil.toList(folderIds), groupId, folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -363,11 +417,13 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static void getSubfolderIds(Long[] folderIds, long groupId,
-		long folderId, boolean recurse) throws RemoteException {
+	public static void getSubfolderIds(
+			Long[] folderIds, long groupId, long folderId, boolean recurse)
+		throws RemoteException {
+
 		try {
-			DLFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
-				groupId, folderId, recurse);
+			DLFolderServiceUtil.getSubfolderIds(
+				ListUtil.toList(folderIds), groupId, folderId, recurse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -376,11 +432,13 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static Long[] getSubfolderIds(long groupId, long folderId,
-		boolean recurse) throws RemoteException {
+	public static Long[] getSubfolderIds(
+			long groupId, long folderId, boolean recurse)
+		throws RemoteException {
+
 		try {
-			java.util.List<Long> returnValue = DLFolderServiceUtil.getSubfolderIds(groupId,
-					folderId, recurse);
+			java.util.List<Long> returnValue =
+				DLFolderServiceUtil.getSubfolderIds(groupId, folderId, recurse);
 
 			return returnValue.toArray(new Long[returnValue.size()]);
 		}
@@ -391,8 +449,7 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static boolean hasFolderLock(long folderId)
-		throws RemoteException {
+	public static boolean hasFolderLock(long folderId) throws RemoteException {
 		try {
 			boolean returnValue = DLFolderServiceUtil.hasFolderLock(folderId);
 
@@ -407,8 +464,10 @@ public class DLFolderServiceSoap {
 
 	public static boolean hasInheritableLock(long folderId)
 		throws RemoteException {
+
 		try {
-			boolean returnValue = DLFolderServiceUtil.hasInheritableLock(folderId);
+			boolean returnValue = DLFolderServiceUtil.hasInheritableLock(
+				folderId);
 
 			return returnValue;
 		}
@@ -419,8 +478,7 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static boolean isFolderLocked(long folderId)
-		throws RemoteException {
+	public static boolean isFolderLocked(long folderId) throws RemoteException {
 		try {
 			boolean returnValue = DLFolderServiceUtil.isFolderLocked(folderId);
 
@@ -435,8 +493,10 @@ public class DLFolderServiceSoap {
 
 	public static com.liferay.portal.kernel.lock.Lock lockFolder(long folderId)
 		throws RemoteException {
+
 		try {
-			com.liferay.portal.kernel.lock.Lock returnValue = DLFolderServiceUtil.lockFolder(folderId);
+			com.liferay.portal.kernel.lock.Lock returnValue =
+				DLFolderServiceUtil.lockFolder(folderId);
 
 			return returnValue;
 		}
@@ -448,11 +508,14 @@ public class DLFolderServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.lock.Lock lockFolder(
-		long folderId, String owner, boolean inheritable, long expirationTime)
+			long folderId, String owner, boolean inheritable,
+			long expirationTime)
 		throws RemoteException {
+
 		try {
-			com.liferay.portal.kernel.lock.Lock returnValue = DLFolderServiceUtil.lockFolder(folderId,
-					owner, inheritable, expirationTime);
+			com.liferay.portal.kernel.lock.Lock returnValue =
+				DLFolderServiceUtil.lockFolder(
+					folderId, owner, inheritable, expirationTime);
 
 			return returnValue;
 		}
@@ -463,15 +526,19 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFolderSoap moveFolder(
-		long folderId, long parentFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			moveFolder(
+				long folderId, long parentFolderId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.moveFolder(folderId,
-					parentFolderId, serviceContext);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.moveFolder(
+					folderId, parentFolderId, serviceContext);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -481,11 +548,13 @@ public class DLFolderServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
-		String lockUuid, long companyId, long expirationTime)
+			String lockUuid, long companyId, long expirationTime)
 		throws RemoteException {
+
 		try {
-			com.liferay.portal.kernel.lock.Lock returnValue = DLFolderServiceUtil.refreshFolderLock(lockUuid,
-					companyId, expirationTime);
+			com.liferay.portal.kernel.lock.Lock returnValue =
+				DLFolderServiceUtil.refreshFolderLock(
+					lockUuid, companyId, expirationTime);
 
 			return returnValue;
 		}
@@ -496,11 +565,13 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static void unlockFolder(long groupId, long parentFolderId,
-		String name, String lockUuid) throws RemoteException {
+	public static void unlockFolder(
+			long groupId, long parentFolderId, String name, String lockUuid)
+		throws RemoteException {
+
 		try {
-			DLFolderServiceUtil.unlockFolder(groupId, parentFolderId, name,
-				lockUuid);
+			DLFolderServiceUtil.unlockFolder(
+				groupId, parentFolderId, name, lockUuid);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -511,6 +582,7 @@ public class DLFolderServiceSoap {
 
 	public static void unlockFolder(long folderId, String lockUuid)
 		throws RemoteException {
+
 		try {
 			DLFolderServiceUtil.unlockFolder(folderId, lockUuid);
 		}
@@ -521,19 +593,23 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFolderSoap updateFolder(
-		long folderId, long parentFolderId, String name, String description,
-		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
-		int restrictionType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			updateFolder(
+				long folderId, long parentFolderId, String name,
+				String description, long defaultFileEntryTypeId,
+				Long[] fileEntryTypeIds, int restrictionType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
-					parentFolderId, name, description, defaultFileEntryTypeId,
-					ListUtil.toList(fileEntryTypeIds), restrictionType,
-					serviceContext);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.updateFolder(
+					folderId, parentFolderId, name, description,
+					defaultFileEntryTypeId, ListUtil.toList(fileEntryTypeIds),
+					restrictionType, serviceContext);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -543,24 +619,28 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
-	#updateFolder(long, String, String, long, List, int,
-	ServiceContext)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
+	 #updateFolder(long, String, String, long, List, int,
+	 ServiceContext)}
+	 */
 	@Deprecated
-	public static com.liferay.document.library.kernel.model.DLFolderSoap updateFolder(
-		long folderId, String name, String description,
-		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			updateFolder(
+				long folderId, String name, String description,
+				long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
+				boolean overrideFileEntryTypes,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
+
 		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
-					name, description, defaultFileEntryTypeId,
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.updateFolder(
+					folderId, name, description, defaultFileEntryTypeId,
 					ListUtil.toList(fileEntryTypeIds), overrideFileEntryTypes,
 					serviceContext);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -569,19 +649,23 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFolderSoap updateFolder(
-		long folderId, String name, String description,
-		long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
-		int restrictionType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.document.library.kernel.model.DLFolderSoap
+			updateFolder(
+				long folderId, String name, String description,
+				long defaultFileEntryTypeId, Long[] fileEntryTypeIds,
+				int restrictionType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
+
 		try {
-			com.liferay.document.library.kernel.model.DLFolder returnValue = DLFolderServiceUtil.updateFolder(folderId,
-					name, description, defaultFileEntryTypeId,
+			com.liferay.document.library.kernel.model.DLFolder returnValue =
+				DLFolderServiceUtil.updateFolder(
+					folderId, name, description, defaultFileEntryTypeId,
 					ListUtil.toList(fileEntryTypeIds), restrictionType,
 					serviceContext);
 
-			return com.liferay.document.library.kernel.model.DLFolderSoap.toSoapModel(returnValue);
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -592,9 +676,10 @@ public class DLFolderServiceSoap {
 
 	public static boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws RemoteException {
+
 		try {
-			boolean returnValue = DLFolderServiceUtil.verifyInheritableLock(folderId,
-					lockUuid);
+			boolean returnValue = DLFolderServiceUtil.verifyInheritableLock(
+				folderId, lockUuid);
 
 			return returnValue;
 		}
@@ -606,4 +691,5 @@ public class DLFolderServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLFolderServiceSoap.class);
+
 }

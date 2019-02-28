@@ -22,62 +22,79 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface UserGroupFinder {
-	public int countByKeywords(long companyId, String keywords,
+
+	public int countByKeywords(
+		long companyId, String keywords,
 		java.util.LinkedHashMap<String, Object> params);
 
-	public int countByC_N_D(long companyId, String name, String description,
+	public int countByC_N_D(
+		long companyId, String name, String description,
 		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
-	public int countByC_N_D(long companyId, String[] names,
-		String[] descriptions, java.util.LinkedHashMap<String, Object> params,
-		boolean andOperator);
+	public int countByC_N_D(
+		long companyId, String[] names, String[] descriptions,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
-	public int filterCountByKeywords(long companyId, String keywords,
+	public int filterCountByKeywords(
+		long companyId, String keywords,
 		java.util.LinkedHashMap<String, Object> params);
 
-	public int filterCountByC_N_D(long companyId, String name,
-		String description, java.util.LinkedHashMap<String, Object> params,
-		boolean andOperator);
-
-	public int filterCountByC_N_D(long companyId, String[] names,
-		String[] descriptions, java.util.LinkedHashMap<String, Object> params,
-		boolean andOperator);
-
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> filterFindByKeywords(
-		long companyId, String keywords,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
-
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> filterFindByC_N_D(
+	public int filterCountByC_N_D(
 		long companyId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> filterFindByC_N_D(
+	public int filterCountByC_N_D(
 		long companyId, String[] names, String[] descriptions,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
 
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> findByKeywords(
-		long companyId, String keywords,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		filterFindByKeywords(
+			long companyId, String keywords,
+			java.util.LinkedHashMap<String, Object> params, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserGroup> obc);
 
-	public com.liferay.portal.kernel.model.UserGroup findByC_N(long companyId,
-		String name)
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		filterFindByC_N_D(
+			long companyId, String name, String description,
+			java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserGroup> obc);
+
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		filterFindByC_N_D(
+			long companyId, String[] names, String[] descriptions,
+			java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserGroup> obc);
+
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		findByKeywords(
+			long companyId, String keywords,
+			java.util.LinkedHashMap<String, Object> params, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserGroup> obc);
+
+	public com.liferay.portal.kernel.model.UserGroup findByC_N(
+			long companyId, String name)
 		throws com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> findByC_N_D(
-		long companyId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		findByC_N_D(
+			long companyId, String name, String description,
+			java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserGroup> obc);
 
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> findByC_N_D(
-		long companyId, String[] names, String[] descriptions,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
+		findByC_N_D(
+			long companyId, String[] names, String[] descriptions,
+			java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserGroup> obc);
+
 }

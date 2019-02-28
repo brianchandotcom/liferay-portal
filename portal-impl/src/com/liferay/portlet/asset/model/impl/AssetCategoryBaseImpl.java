@@ -32,8 +32,9 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AssetCategoryBaseImpl extends AssetCategoryModelImpl
-	implements AssetCategory {
+public abstract class AssetCategoryBaseImpl
+	extends AssetCategoryModelImpl implements AssetCategory {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class AssetCategoryBaseImpl extends AssetCategoryModelImpl
 			AssetCategoryLocalServiceUtil.updateAssetCategory(this);
 		}
 	}
+
 }

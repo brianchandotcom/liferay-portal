@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class UserGroupRoleFinderBaseImpl extends BasePersistenceImpl<UserGroupRole> {
+public class UserGroupRoleFinderBaseImpl
+	extends BasePersistenceImpl<UserGroupRole> {
+
 	public UserGroupRoleFinderBaseImpl() {
 		setModelClass(UserGroupRole.class);
 	}
@@ -44,9 +46,11 @@ public class UserGroupRoleFinderBaseImpl extends BasePersistenceImpl<UserGroupRo
 	 */
 	public void setUserGroupRolePersistence(
 		UserGroupRolePersistence userGroupRolePersistence) {
+
 		this.userGroupRolePersistence = userGroupRolePersistence;
 	}
 
 	@BeanReference(type = UserGroupRolePersistence.class)
 	protected UserGroupRolePersistence userGroupRolePersistence;
+
 }

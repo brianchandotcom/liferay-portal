@@ -52,6 +52,7 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PortalServiceSoap {
+
 	public static String getAutoDeployDirectory() throws RemoteException {
 		try {
 			String returnValue = PortalServiceUtil.getAutoDeployDirectory();
@@ -93,6 +94,7 @@ public class PortalServiceSoap {
 
 	public static void testAddClassName_Rollback(String classNameValue)
 		throws RemoteException {
+
 		try {
 			PortalServiceUtil.testAddClassName_Rollback(classNameValue);
 		}
@@ -105,6 +107,7 @@ public class PortalServiceSoap {
 
 	public static void testAddClassName_Success(String classNameValue)
 		throws RemoteException {
+
 		try {
 			PortalServiceUtil.testAddClassName_Success(classNameValue);
 		}
@@ -115,10 +118,15 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		String transactionPortletBarText) throws RemoteException {
+	public static void
+			testAddClassNameAndTestTransactionPortletBar_PortalRollback(
+				String transactionPortletBarText)
+		throws RemoteException {
+
 		try {
-			PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortalRollback(transactionPortletBarText);
+			PortalServiceUtil.
+				testAddClassNameAndTestTransactionPortletBar_PortalRollback(
+					transactionPortletBarText);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -127,10 +135,15 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		String transactionPortletBarText) throws RemoteException {
+	public static void
+			testAddClassNameAndTestTransactionPortletBar_PortletRollback(
+				String transactionPortletBarText)
+		throws RemoteException {
+
 		try {
-			PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_PortletRollback(transactionPortletBarText);
+			PortalServiceUtil.
+				testAddClassNameAndTestTransactionPortletBar_PortletRollback(
+					transactionPortletBarText);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -140,9 +153,13 @@ public class PortalServiceSoap {
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_Success(
-		String transactionPortletBarText) throws RemoteException {
+			String transactionPortletBarText)
+		throws RemoteException {
+
 		try {
-			PortalServiceUtil.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
+			PortalServiceUtil.
+				testAddClassNameAndTestTransactionPortletBar_Success(
+					transactionPortletBarText);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -153,6 +170,7 @@ public class PortalServiceSoap {
 
 	public static void testAutoSyncHibernateSessionStateOnTxCreation()
 		throws RemoteException {
+
 		try {
 			PortalServiceUtil.testAutoSyncHibernateSessionStateOnTxCreation();
 		}
@@ -212,4 +230,5 @@ public class PortalServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortalServiceSoap.class);
+
 }

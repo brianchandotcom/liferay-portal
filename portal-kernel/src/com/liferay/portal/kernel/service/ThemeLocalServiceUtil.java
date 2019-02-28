@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ThemeLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,70 +41,84 @@ public class ThemeLocalServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.ColorScheme fetchColorScheme(
 		long companyId, String themeId, String colorSchemeId) {
+
 		return getService().fetchColorScheme(companyId, themeId, colorSchemeId);
 	}
 
-	public static com.liferay.portal.kernel.model.PortletDecorator fetchPortletDecorator(
-		long companyId, String themeId, String colorSchemeId) {
-		return getService()
-				   .fetchPortletDecorator(companyId, themeId, colorSchemeId);
+	public static com.liferay.portal.kernel.model.PortletDecorator
+		fetchPortletDecorator(
+			long companyId, String themeId, String colorSchemeId) {
+
+		return getService().fetchPortletDecorator(
+			companyId, themeId, colorSchemeId);
 	}
 
 	public static com.liferay.portal.kernel.model.Theme fetchTheme(
 		long companyId, String themeId) {
+
 		return getService().fetchTheme(companyId, themeId);
 	}
 
 	public static com.liferay.portal.kernel.model.ColorScheme getColorScheme(
 		long companyId, String themeId, String colorSchemeId) {
+
 		return getService().getColorScheme(companyId, themeId, colorSchemeId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> getControlPanelThemes(
-		long companyId, long userId) {
+	public static java.util.List<com.liferay.portal.kernel.model.Theme>
+		getControlPanelThemes(long companyId, long userId) {
+
 		return getService().getControlPanelThemes(companyId, userId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> getPageThemes(
-		long companyId, long groupId, long userId) {
+	public static java.util.List<com.liferay.portal.kernel.model.Theme>
+		getPageThemes(long companyId, long groupId, long userId) {
+
 		return getService().getPageThemes(companyId, groupId, userId);
 	}
 
-	public static com.liferay.portal.kernel.model.PortletDecorator getPortletDecorator(
-		long companyId, String themeId, String portletDecoratorId) {
-		return getService()
-				   .getPortletDecorator(companyId, themeId, portletDecoratorId);
+	public static com.liferay.portal.kernel.model.PortletDecorator
+		getPortletDecorator(
+			long companyId, String themeId, String portletDecoratorId) {
+
+		return getService().getPortletDecorator(
+			companyId, themeId, portletDecoratorId);
 	}
 
 	public static com.liferay.portal.kernel.model.Theme getTheme(
 		long companyId, String themeId) {
+
 		return getService().getTheme(companyId, themeId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
-		long companyId) {
+	public static java.util.List<com.liferay.portal.kernel.model.Theme>
+		getThemes(long companyId) {
+
 		return getService().getThemes(companyId);
 	}
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
+	 */
 	@Deprecated
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme) {
+	public static java.util.List<com.liferay.portal.kernel.model.Theme>
+		getThemes(long companyId, long groupId, long userId, boolean wapTheme) {
+
 		return getService().getThemes(companyId, groupId, userId, wapTheme);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> getWARThemes() {
+	public static java.util.List<com.liferay.portal.kernel.model.Theme>
+		getWARThemes() {
+
 		return getService().getWARThemes();
 	}
 
@@ -111,35 +126,40 @@ public class ThemeLocalServiceUtil {
 		javax.servlet.ServletContext servletContext, String themesPath,
 		boolean loadFromServletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		return getService()
-				   .init(servletContext, themesPath, loadFromServletContext,
-			xmls, pluginPackage);
+
+		return getService().init(
+			servletContext, themesPath, loadFromServletContext, xmls,
+			pluginPackage);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Theme> init(
 		String servletContextName, javax.servlet.ServletContext servletContext,
 		String themesPath, boolean loadFromServletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		return getService()
-				   .init(servletContextName, servletContext, themesPath,
+
+		return getService().init(
+			servletContextName, servletContext, themesPath,
 			loadFromServletContext, xmls, pluginPackage);
 	}
 
 	public static void uninstallThemes(
 		java.util.List<com.liferay.portal.kernel.model.Theme> themes) {
+
 		getService().uninstallThemes(themes);
 	}
 
 	public static ThemeLocalService getService() {
 		if (_service == null) {
-			_service = (ThemeLocalService)PortalBeanLocatorUtil.locate(ThemeLocalService.class.getName());
+			_service = (ThemeLocalService)PortalBeanLocatorUtil.locate(
+				ThemeLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(ThemeLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ThemeLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ThemeLocalService _service;
+
 }

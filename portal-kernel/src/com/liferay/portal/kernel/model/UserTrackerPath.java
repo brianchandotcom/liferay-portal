@@ -29,13 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.UserTrackerPathImpl")
 @ProviderType
 public interface UserTrackerPath extends UserTrackerPathModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserTrackerPathImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<UserTrackerPath, Long> USER_TRACKER_PATH_ID_ACCESSOR =
-		new Accessor<UserTrackerPath, Long>() {
+	public static final Accessor<UserTrackerPath, Long>
+		USER_TRACKER_PATH_ID_ACCESSOR = new Accessor<UserTrackerPath, Long>() {
+
 			@Override
 			public Long get(UserTrackerPath userTrackerPath) {
 				return userTrackerPath.getUserTrackerPathId();
@@ -50,5 +52,7 @@ public interface UserTrackerPath extends UserTrackerPathModel, PersistedModel {
 			public Class<UserTrackerPath> getTypeClass() {
 				return UserTrackerPath.class;
 			}
+
 		};
+
 }

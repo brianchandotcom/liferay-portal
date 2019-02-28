@@ -42,25 +42,30 @@ import java.util.Map;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface LayoutPrototypeService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPrototypeServiceUtil} to access the layout prototype remote service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutPrototypeServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutPrototype addLayoutPrototype(Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutPrototype addLayoutPrototype(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#addLayoutPrototype(Map, Map, boolean, ServiceContext)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #addLayoutPrototype(Map, Map, boolean, ServiceContext)}
+	 */
 	@Deprecated
-	public LayoutPrototype addLayoutPrototype(Map<Locale, String> nameMap,
-		String description, boolean active, ServiceContext serviceContext)
+	public LayoutPrototype addLayoutPrototype(
+			Map<Locale, String> nameMap, String description, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteLayoutPrototype(long layoutPrototypeId)
@@ -75,28 +80,33 @@ public interface LayoutPrototypeService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPrototype> search(long companyId, Boolean active,
-		OrderByComparator<LayoutPrototype> obc) throws PortalException;
+	public List<LayoutPrototype> search(
+			long companyId, Boolean active,
+			OrderByComparator<LayoutPrototype> obc)
+		throws PortalException;
 
-	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-		boolean active, ServiceContext serviceContext)
+	public LayoutPrototype updateLayoutPrototype(
+			long layoutPrototypeId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#updateLayoutPrototype(long, Map, Map, boolean,
-	ServiceContext)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #updateLayoutPrototype(long, Map, Map, boolean,
+	 ServiceContext)}
+	 */
 	@Deprecated
-	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
-		Map<Locale, String> nameMap, String description, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+	public LayoutPrototype updateLayoutPrototype(
+			long layoutPrototypeId, Map<Locale, String> nameMap,
+			String description, boolean active, ServiceContext serviceContext)
+		throws PortalException;
+
 }

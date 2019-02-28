@@ -17,11 +17,8 @@ package com.liferay.document.library.uad.exporter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,7 +35,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseDLFileEntryUADExporter extends DynamicQueryUADExporter<DLFileEntry> {
+public abstract class BaseDLFileEntryUADExporter
+	extends DynamicQueryUADExporter<DLFileEntry> {
+
 	@Override
 	public Class<DLFileEntry> getTypeClass() {
 		return DLFileEntry.class;
@@ -98,4 +97,5 @@ public abstract class BaseDLFileEntryUADExporter extends DynamicQueryUADExporter
 
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;
+
 }

@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats>,
-	ShardedModel {
+public interface RatingsStatsModel
+	extends AttachedModel, BaseModel<RatingsStats>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -167,4 +168,5 @@ public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats
 	 * @param averageScore the average score of this ratings stats
 	 */
 	public void setAverageScore(double averageScore);
+
 }

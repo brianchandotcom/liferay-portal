@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
-	MVCCModel, ShardedModel {
+public interface PortletPreferencesModel
+	extends BaseModel<PortletPreferences>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -169,4 +170,5 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
 	 * @param preferences the preferences of this portlet preferences
 	 */
 	public void setPreferences(String preferences);
+
 }

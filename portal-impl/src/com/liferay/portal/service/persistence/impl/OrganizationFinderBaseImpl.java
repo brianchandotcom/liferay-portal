@@ -27,7 +27,9 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class OrganizationFinderBaseImpl extends BasePersistenceImpl<Organization> {
+public class OrganizationFinderBaseImpl
+	extends BasePersistenceImpl<Organization> {
+
 	public OrganizationFinderBaseImpl() {
 		setModelClass(Organization.class);
 	}
@@ -53,10 +55,14 @@ public class OrganizationFinderBaseImpl extends BasePersistenceImpl<Organization
 	 */
 	public void setOrganizationPersistence(
 		OrganizationPersistence organizationPersistence) {
+
 		this.organizationPersistence = organizationPersistence;
 	}
 
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(OrganizationFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrganizationFinderBaseImpl.class);
+
 }

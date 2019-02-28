@@ -15,13 +15,10 @@
 package com.liferay.notifications.uad.exporter;
 
 import com.liferay.notifications.uad.constants.NotificationsUADConstants;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
-
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUserNotificationEventUADExporter
 	extends DynamicQueryUADExporter<UserNotificationEvent> {
+
 	@Override
 	public Class<UserNotificationEvent> getTypeClass() {
 		return UserNotificationEvent.class;
@@ -52,7 +50,8 @@ public abstract class BaseUserNotificationEventUADExporter
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return NotificationsUADConstants.USER_ID_FIELD_NAMES_USER_NOTIFICATION_EVENT;
+		return NotificationsUADConstants.
+			USER_ID_FIELD_NAMES_USER_NOTIFICATION_EVENT;
 	}
 
 	@Override
@@ -78,5 +77,7 @@ public abstract class BaseUserNotificationEventUADExporter
 	}
 
 	@Reference
-	protected UserNotificationEventLocalService userNotificationEventLocalService;
+	protected UserNotificationEventLocalService
+		userNotificationEventLocalService;
+
 }

@@ -24,35 +24,38 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class LayoutRevisionServiceWrapper implements LayoutRevisionService,
-	ServiceWrapper<LayoutRevisionService> {
+public class LayoutRevisionServiceWrapper
+	implements LayoutRevisionService, ServiceWrapper<LayoutRevisionService> {
+
 	public LayoutRevisionServiceWrapper(
 		LayoutRevisionService layoutRevisionService) {
+
 		_layoutRevisionService = layoutRevisionService;
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutRevision addLayoutRevision(
-		long userId, long layoutSetBranchId, long layoutBranchId,
-		long parentLayoutRevisionId, boolean head, long plid,
-		long portletPreferencesPlid, boolean privateLayout, String name,
-		String title, String description, String keywords, String robots,
-		String typeSettings, boolean iconImage, long iconImageId,
-		String themeId, String colorSchemeId, String css,
-		ServiceContext serviceContext)
+			long userId, long layoutSetBranchId, long layoutBranchId,
+			long parentLayoutRevisionId, boolean head, long plid,
+			long portletPreferencesPlid, boolean privateLayout, String name,
+			String title, String description, String keywords, String robots,
+			String typeSettings, boolean iconImage, long iconImageId,
+			String themeId, String colorSchemeId, String css,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevisionService.addLayoutRevision(userId,
-			layoutSetBranchId, layoutBranchId, parentLayoutRevisionId, head,
-			plid, portletPreferencesPlid, privateLayout, name, title,
-			description, keywords, robots, typeSettings, iconImage,
-			iconImageId, themeId, colorSchemeId, css, serviceContext);
+
+		return _layoutRevisionService.addLayoutRevision(
+			userId, layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
+			head, plid, portletPreferencesPlid, privateLayout, name, title,
+			description, keywords, robots, typeSettings, iconImage, iconImageId,
+			themeId, colorSchemeId, css, serviceContext);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _layoutRevisionService.getOSGiServiceIdentifier();
@@ -69,4 +72,5 @@ public class LayoutRevisionServiceWrapper implements LayoutRevisionService,
 	}
 
 	private LayoutRevisionService _layoutRevisionService;
+
 }

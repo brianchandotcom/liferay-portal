@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @generated
  */
 @Deprecated
-public class ResourceTypePermissionFinderBaseImpl extends BasePersistenceImpl<ResourceTypePermission> {
+public class ResourceTypePermissionFinderBaseImpl
+	extends BasePersistenceImpl<ResourceTypePermission> {
+
 	public ResourceTypePermissionFinderBaseImpl() {
 		setModelClass(ResourceTypePermission.class);
 	}
@@ -35,7 +37,9 @@ public class ResourceTypePermissionFinderBaseImpl extends BasePersistenceImpl<Re
 	 *
 	 * @return the resource type permission persistence
 	 */
-	public ResourceTypePermissionPersistence getResourceTypePermissionPersistence() {
+	public ResourceTypePermissionPersistence
+		getResourceTypePermissionPersistence() {
+
 		return resourceTypePermissionPersistence;
 	}
 
@@ -46,9 +50,13 @@ public class ResourceTypePermissionFinderBaseImpl extends BasePersistenceImpl<Re
 	 */
 	public void setResourceTypePermissionPersistence(
 		ResourceTypePermissionPersistence resourceTypePermissionPersistence) {
-		this.resourceTypePermissionPersistence = resourceTypePermissionPersistence;
+
+		this.resourceTypePermissionPersistence =
+			resourceTypePermissionPersistence;
 	}
 
 	@BeanReference(type = ResourceTypePermissionPersistence.class)
-	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
+	protected ResourceTypePermissionPersistence
+		resourceTypePermissionPersistence;
+
 }

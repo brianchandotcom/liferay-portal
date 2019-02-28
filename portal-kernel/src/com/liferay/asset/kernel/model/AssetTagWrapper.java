@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,8 +34,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AssetTagWrapper extends BaseModelWrapper<AssetTag>
+public class AssetTagWrapper
+	extends BaseModelWrapper<AssetTag>
 	implements AssetTag, ModelWrapper<AssetTag> {
+
 	public AssetTagWrapper(AssetTag assetTag) {
 		super(assetTag);
 	}
@@ -130,130 +131,130 @@ public class AssetTagWrapper extends BaseModelWrapper<AssetTag>
 	}
 
 	/**
-	* Returns the asset count of this asset tag.
-	*
-	* @return the asset count of this asset tag
-	*/
+	 * Returns the asset count of this asset tag.
+	 *
+	 * @return the asset count of this asset tag
+	 */
 	@Override
 	public int getAssetCount() {
 		return model.getAssetCount();
 	}
 
 	/**
-	* Returns the company ID of this asset tag.
-	*
-	* @return the company ID of this asset tag
-	*/
+	 * Returns the company ID of this asset tag.
+	 *
+	 * @return the company ID of this asset tag
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this asset tag.
-	*
-	* @return the create date of this asset tag
-	*/
+	 * Returns the create date of this asset tag.
+	 *
+	 * @return the create date of this asset tag
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the group ID of this asset tag.
-	*
-	* @return the group ID of this asset tag
-	*/
+	 * Returns the group ID of this asset tag.
+	 *
+	 * @return the group ID of this asset tag
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the last publish date of this asset tag.
-	*
-	* @return the last publish date of this asset tag
-	*/
+	 * Returns the last publish date of this asset tag.
+	 *
+	 * @return the last publish date of this asset tag
+	 */
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	* Returns the modified date of this asset tag.
-	*
-	* @return the modified date of this asset tag
-	*/
+	 * Returns the modified date of this asset tag.
+	 *
+	 * @return the modified date of this asset tag
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this asset tag.
-	*
-	* @return the name of this asset tag
-	*/
+	 * Returns the name of this asset tag.
+	 *
+	 * @return the name of this asset tag
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this asset tag.
-	*
-	* @return the primary key of this asset tag
-	*/
+	 * Returns the primary key of this asset tag.
+	 *
+	 * @return the primary key of this asset tag
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the tag ID of this asset tag.
-	*
-	* @return the tag ID of this asset tag
-	*/
+	 * Returns the tag ID of this asset tag.
+	 *
+	 * @return the tag ID of this asset tag
+	 */
 	@Override
 	public long getTagId() {
 		return model.getTagId();
 	}
 
 	/**
-	* Returns the user ID of this asset tag.
-	*
-	* @return the user ID of this asset tag
-	*/
+	 * Returns the user ID of this asset tag.
+	 *
+	 * @return the user ID of this asset tag
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this asset tag.
-	*
-	* @return the user name of this asset tag
-	*/
+	 * Returns the user name of this asset tag.
+	 *
+	 * @return the user name of this asset tag
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this asset tag.
-	*
-	* @return the user uuid of this asset tag
-	*/
+	 * Returns the user uuid of this asset tag.
+	 *
+	 * @return the user uuid of this asset tag
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this asset tag.
-	*
-	* @return the uuid of this asset tag
-	*/
+	 * Returns the uuid of this asset tag.
+	 *
+	 * @return the uuid of this asset tag
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -265,130 +266,130 @@ public class AssetTagWrapper extends BaseModelWrapper<AssetTag>
 	}
 
 	/**
-	* Sets the asset count of this asset tag.
-	*
-	* @param assetCount the asset count of this asset tag
-	*/
+	 * Sets the asset count of this asset tag.
+	 *
+	 * @param assetCount the asset count of this asset tag
+	 */
 	@Override
 	public void setAssetCount(int assetCount) {
 		model.setAssetCount(assetCount);
 	}
 
 	/**
-	* Sets the company ID of this asset tag.
-	*
-	* @param companyId the company ID of this asset tag
-	*/
+	 * Sets the company ID of this asset tag.
+	 *
+	 * @param companyId the company ID of this asset tag
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this asset tag.
-	*
-	* @param createDate the create date of this asset tag
-	*/
+	 * Sets the create date of this asset tag.
+	 *
+	 * @param createDate the create date of this asset tag
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the group ID of this asset tag.
-	*
-	* @param groupId the group ID of this asset tag
-	*/
+	 * Sets the group ID of this asset tag.
+	 *
+	 * @param groupId the group ID of this asset tag
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the last publish date of this asset tag.
-	*
-	* @param lastPublishDate the last publish date of this asset tag
-	*/
+	 * Sets the last publish date of this asset tag.
+	 *
+	 * @param lastPublishDate the last publish date of this asset tag
+	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	* Sets the modified date of this asset tag.
-	*
-	* @param modifiedDate the modified date of this asset tag
-	*/
+	 * Sets the modified date of this asset tag.
+	 *
+	 * @param modifiedDate the modified date of this asset tag
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this asset tag.
-	*
-	* @param name the name of this asset tag
-	*/
+	 * Sets the name of this asset tag.
+	 *
+	 * @param name the name of this asset tag
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this asset tag.
-	*
-	* @param primaryKey the primary key of this asset tag
-	*/
+	 * Sets the primary key of this asset tag.
+	 *
+	 * @param primaryKey the primary key of this asset tag
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the tag ID of this asset tag.
-	*
-	* @param tagId the tag ID of this asset tag
-	*/
+	 * Sets the tag ID of this asset tag.
+	 *
+	 * @param tagId the tag ID of this asset tag
+	 */
 	@Override
 	public void setTagId(long tagId) {
 		model.setTagId(tagId);
 	}
 
 	/**
-	* Sets the user ID of this asset tag.
-	*
-	* @param userId the user ID of this asset tag
-	*/
+	 * Sets the user ID of this asset tag.
+	 *
+	 * @param userId the user ID of this asset tag
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this asset tag.
-	*
-	* @param userName the user name of this asset tag
-	*/
+	 * Sets the user name of this asset tag.
+	 *
+	 * @param userName the user name of this asset tag
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this asset tag.
-	*
-	* @param userUuid the user uuid of this asset tag
-	*/
+	 * Sets the user uuid of this asset tag.
+	 *
+	 * @param userUuid the user uuid of this asset tag
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this asset tag.
-	*
-	* @param uuid the uuid of this asset tag
-	*/
+	 * Sets the uuid of this asset tag.
+	 *
+	 * @param uuid the uuid of this asset tag
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -403,4 +404,5 @@ public class AssetTagWrapper extends BaseModelWrapper<AssetTag>
 	protected AssetTagWrapper wrap(AssetTag assetTag) {
 		return new AssetTagWrapper(assetTag);
 	}
+
 }

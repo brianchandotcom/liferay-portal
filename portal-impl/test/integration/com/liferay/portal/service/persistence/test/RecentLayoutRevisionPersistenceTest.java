@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class RecentLayoutRevisionPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -73,7 +75,8 @@ public class RecentLayoutRevisionPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<RecentLayoutRevision> iterator = _recentLayoutRevisions.iterator();
+		Iterator<RecentLayoutRevision> iterator =
+			_recentLayoutRevisions.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -95,11 +98,14 @@ public class RecentLayoutRevisionPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
 		_persistence.remove(newRecentLayoutRevision);
 
-		RecentLayoutRevision existingRecentLayoutRevision = _persistence.fetchByPrimaryKey(newRecentLayoutRevision.getPrimaryKey());
+		RecentLayoutRevision existingRecentLayoutRevision =
+			_persistence.fetchByPrimaryKey(
+				newRecentLayoutRevision.getPrimaryKey());
 
 		Assert.assertNull(existingRecentLayoutRevision);
 	}
@@ -129,25 +135,36 @@ public class RecentLayoutRevisionPersistenceTest {
 
 		newRecentLayoutRevision.setPlid(RandomTestUtil.nextLong());
 
-		_recentLayoutRevisions.add(_persistence.update(newRecentLayoutRevision));
+		_recentLayoutRevisions.add(
+			_persistence.update(newRecentLayoutRevision));
 
-		RecentLayoutRevision existingRecentLayoutRevision = _persistence.findByPrimaryKey(newRecentLayoutRevision.getPrimaryKey());
+		RecentLayoutRevision existingRecentLayoutRevision =
+			_persistence.findByPrimaryKey(
+				newRecentLayoutRevision.getPrimaryKey());
 
-		Assert.assertEquals(existingRecentLayoutRevision.getMvccVersion(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getMvccVersion(),
 			newRecentLayoutRevision.getMvccVersion());
-		Assert.assertEquals(existingRecentLayoutRevision.getRecentLayoutRevisionId(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getRecentLayoutRevisionId(),
 			newRecentLayoutRevision.getRecentLayoutRevisionId());
-		Assert.assertEquals(existingRecentLayoutRevision.getGroupId(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getGroupId(),
 			newRecentLayoutRevision.getGroupId());
-		Assert.assertEquals(existingRecentLayoutRevision.getCompanyId(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getCompanyId(),
 			newRecentLayoutRevision.getCompanyId());
-		Assert.assertEquals(existingRecentLayoutRevision.getUserId(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getUserId(),
 			newRecentLayoutRevision.getUserId());
-		Assert.assertEquals(existingRecentLayoutRevision.getLayoutRevisionId(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getLayoutRevisionId(),
 			newRecentLayoutRevision.getLayoutRevisionId());
-		Assert.assertEquals(existingRecentLayoutRevision.getLayoutSetBranchId(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getLayoutSetBranchId(),
 			newRecentLayoutRevision.getLayoutSetBranchId());
-		Assert.assertEquals(existingRecentLayoutRevision.getPlid(),
+		Assert.assertEquals(
+			existingRecentLayoutRevision.getPlid(),
 			newRecentLayoutRevision.getPlid());
 	}
 
@@ -174,20 +191,24 @@ public class RecentLayoutRevisionPersistenceTest {
 
 	@Test
 	public void testCountByU_L_P() throws Exception {
-		_persistence.countByU_L_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByU_L_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByU_L_P(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
-		RecentLayoutRevision existingRecentLayoutRevision = _persistence.findByPrimaryKey(newRecentLayoutRevision.getPrimaryKey());
+		RecentLayoutRevision existingRecentLayoutRevision =
+			_persistence.findByPrimaryKey(
+				newRecentLayoutRevision.getPrimaryKey());
 
-		Assert.assertEquals(existingRecentLayoutRevision,
-			newRecentLayoutRevision);
+		Assert.assertEquals(
+			existingRecentLayoutRevision, newRecentLayoutRevision);
 	}
 
 	@Test(expected = NoSuchRecentLayoutRevisionException.class)
@@ -199,32 +220,37 @@ public class RecentLayoutRevisionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<RecentLayoutRevision> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("RecentLayoutRevision",
-			"mvccVersion", true, "recentLayoutRevisionId", true, "groupId",
-			true, "companyId", true, "userId", true, "layoutRevisionId", true,
-			"layoutSetBranchId", true, "plid", true);
+		return OrderByComparatorFactoryUtil.create(
+			"RecentLayoutRevision", "mvccVersion", true,
+			"recentLayoutRevisionId", true, "groupId", true, "companyId", true,
+			"userId", true, "layoutRevisionId", true, "layoutSetBranchId", true,
+			"plid", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
-		RecentLayoutRevision existingRecentLayoutRevision = _persistence.fetchByPrimaryKey(newRecentLayoutRevision.getPrimaryKey());
+		RecentLayoutRevision existingRecentLayoutRevision =
+			_persistence.fetchByPrimaryKey(
+				newRecentLayoutRevision.getPrimaryKey());
 
-		Assert.assertEquals(existingRecentLayoutRevision,
-			newRecentLayoutRevision);
+		Assert.assertEquals(
+			existingRecentLayoutRevision, newRecentLayoutRevision);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		RecentLayoutRevision missingRecentLayoutRevision = _persistence.fetchByPrimaryKey(pk);
+		RecentLayoutRevision missingRecentLayoutRevision =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingRecentLayoutRevision);
 	}
@@ -232,26 +258,35 @@ public class RecentLayoutRevisionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision1 = addRecentLayoutRevision();
-		RecentLayoutRevision newRecentLayoutRevision2 = addRecentLayoutRevision();
+
+		RecentLayoutRevision newRecentLayoutRevision1 =
+			addRecentLayoutRevision();
+		RecentLayoutRevision newRecentLayoutRevision2 =
+			addRecentLayoutRevision();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRecentLayoutRevision1.getPrimaryKey());
 		primaryKeys.add(newRecentLayoutRevision2.getPrimaryKey());
 
-		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, recentLayoutRevisions.size());
-		Assert.assertEquals(newRecentLayoutRevision1,
-			recentLayoutRevisions.get(newRecentLayoutRevision1.getPrimaryKey()));
-		Assert.assertEquals(newRecentLayoutRevision2,
-			recentLayoutRevisions.get(newRecentLayoutRevision2.getPrimaryKey()));
+		Assert.assertEquals(
+			newRecentLayoutRevision1,
+			recentLayoutRevisions.get(
+				newRecentLayoutRevision1.getPrimaryKey()));
+		Assert.assertEquals(
+			newRecentLayoutRevision2,
+			recentLayoutRevisions.get(
+				newRecentLayoutRevision2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -261,7 +296,8 @@ public class RecentLayoutRevisionPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(recentLayoutRevisions.isEmpty());
 	}
@@ -269,7 +305,9 @@ public class RecentLayoutRevisionPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -278,36 +316,40 @@ public class RecentLayoutRevisionPersistenceTest {
 		primaryKeys.add(newRecentLayoutRevision.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, recentLayoutRevisions.size());
-		Assert.assertEquals(newRecentLayoutRevision,
+		Assert.assertEquals(
+			newRecentLayoutRevision,
 			recentLayoutRevisions.get(newRecentLayoutRevision.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(recentLayoutRevisions.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newRecentLayoutRevision.getPrimaryKey());
 
-		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, RecentLayoutRevision> recentLayoutRevisions =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, recentLayoutRevisions.size());
-		Assert.assertEquals(newRecentLayoutRevision,
+		Assert.assertEquals(
+			newRecentLayoutRevision,
 			recentLayoutRevisions.get(newRecentLayoutRevision.getPrimaryKey()));
 	}
 
@@ -315,16 +357,22 @@ public class RecentLayoutRevisionPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = RecentLayoutRevisionLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			RecentLayoutRevisionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RecentLayoutRevision>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<RecentLayoutRevision>() {
+
 				@Override
 				public void performAction(
 					RecentLayoutRevision recentLayoutRevision) {
+
 					Assert.assertNotNull(recentLayoutRevision);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -333,54 +381,62 @@ public class RecentLayoutRevisionPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutRevision.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutRevision.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("recentLayoutRevisionId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recentLayoutRevisionId",
 				newRecentLayoutRevision.getRecentLayoutRevisionId()));
 
-		List<RecentLayoutRevision> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<RecentLayoutRevision> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		RecentLayoutRevision existingRecentLayoutRevision = result.get(0);
 
-		Assert.assertEquals(existingRecentLayoutRevision,
-			newRecentLayoutRevision);
+		Assert.assertEquals(
+			existingRecentLayoutRevision, newRecentLayoutRevision);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutRevision.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutRevision.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("recentLayoutRevisionId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"recentLayoutRevisionId", RandomTestUtil.nextLong()));
 
-		List<RecentLayoutRevision> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<RecentLayoutRevision> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutRevision.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutRevision.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"recentLayoutRevisionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("recentLayoutRevisionId"));
 
-		Object newRecentLayoutRevisionId = newRecentLayoutRevision.getRecentLayoutRevisionId();
+		Object newRecentLayoutRevisionId =
+			newRecentLayoutRevision.getRecentLayoutRevisionId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("recentLayoutRevisionId",
-				new Object[] { newRecentLayoutRevisionId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"recentLayoutRevisionId",
+				new Object[] {newRecentLayoutRevisionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -388,20 +444,22 @@ public class RecentLayoutRevisionPersistenceTest {
 
 		Object existingRecentLayoutRevisionId = result.get(0);
 
-		Assert.assertEquals(existingRecentLayoutRevisionId,
-			newRecentLayoutRevisionId);
+		Assert.assertEquals(
+			existingRecentLayoutRevisionId, newRecentLayoutRevisionId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RecentLayoutRevision.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RecentLayoutRevision.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"recentLayoutRevisionId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("recentLayoutRevisionId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("recentLayoutRevisionId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"recentLayoutRevisionId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -410,27 +468,33 @@ public class RecentLayoutRevisionPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		RecentLayoutRevision newRecentLayoutRevision = addRecentLayoutRevision();
+		RecentLayoutRevision newRecentLayoutRevision =
+			addRecentLayoutRevision();
 
 		_persistence.clearCache();
 
-		RecentLayoutRevision existingRecentLayoutRevision = _persistence.findByPrimaryKey(newRecentLayoutRevision.getPrimaryKey());
+		RecentLayoutRevision existingRecentLayoutRevision =
+			_persistence.findByPrimaryKey(
+				newRecentLayoutRevision.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingRecentLayoutRevision.getUserId()),
-			ReflectionTestUtil.<Long>invoke(existingRecentLayoutRevision,
-				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingRecentLayoutRevision.getLayoutSetBranchId()),
-			ReflectionTestUtil.<Long>invoke(existingRecentLayoutRevision,
-				"getOriginalLayoutSetBranchId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingRecentLayoutRevision.getPlid()),
-			ReflectionTestUtil.<Long>invoke(existingRecentLayoutRevision,
-				"getOriginalPlid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRecentLayoutRevision.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRecentLayoutRevision, "getOriginalUserId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRecentLayoutRevision.getLayoutSetBranchId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRecentLayoutRevision, "getOriginalLayoutSetBranchId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingRecentLayoutRevision.getPlid()),
+			ReflectionTestUtil.<Long>invoke(
+				existingRecentLayoutRevision, "getOriginalPlid",
+				new Class<?>[0]));
 	}
 
-	protected RecentLayoutRevision addRecentLayoutRevision()
-		throws Exception {
+	protected RecentLayoutRevision addRecentLayoutRevision() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		RecentLayoutRevision recentLayoutRevision = _persistence.create(pk);
@@ -454,7 +518,9 @@ public class RecentLayoutRevisionPersistenceTest {
 		return recentLayoutRevision;
 	}
 
-	private List<RecentLayoutRevision> _recentLayoutRevisions = new ArrayList<RecentLayoutRevision>();
+	private List<RecentLayoutRevision> _recentLayoutRevisions =
+		new ArrayList<RecentLayoutRevision>();
 	private RecentLayoutRevisionPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

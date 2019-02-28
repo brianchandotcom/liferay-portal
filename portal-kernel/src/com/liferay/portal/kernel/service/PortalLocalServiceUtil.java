@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class PortalLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,24 +41,26 @@ public class PortalLocalServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static PortalLocalService getService() {
 		if (_service == null) {
-			_service = (PortalLocalService)PortalBeanLocatorUtil.locate(PortalLocalService.class.getName());
+			_service = (PortalLocalService)PortalBeanLocatorUtil.locate(
+				PortalLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(PortalLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				PortalLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static PortalLocalService _service;
+
 }

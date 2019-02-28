@@ -37,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class LayoutSetBranchPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +103,8 @@ public class LayoutSetBranchPersistenceTest {
 
 		_persistence.remove(newLayoutSetBranch);
 
-		LayoutSetBranch existingLayoutSetBranch = _persistence.fetchByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
+		LayoutSetBranch existingLayoutSetBranch =
+			_persistence.fetchByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
 
 		Assert.assertNull(existingLayoutSetBranch);
 	}
@@ -149,53 +152,70 @@ public class LayoutSetBranchPersistenceTest {
 
 		newLayoutSetBranch.setSettings(RandomTestUtil.randomString());
 
-		newLayoutSetBranch.setLayoutSetPrototypeUuid(RandomTestUtil.randomString());
+		newLayoutSetBranch.setLayoutSetPrototypeUuid(
+			RandomTestUtil.randomString());
 
-		newLayoutSetBranch.setLayoutSetPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
+		newLayoutSetBranch.setLayoutSetPrototypeLinkEnabled(
+			RandomTestUtil.randomBoolean());
 
 		_layoutSetBranchs.add(_persistence.update(newLayoutSetBranch));
 
-		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
+		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(
+			newLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutSetBranch.getMvccVersion(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getMvccVersion(),
 			newLayoutSetBranch.getMvccVersion());
-		Assert.assertEquals(existingLayoutSetBranch.getLayoutSetBranchId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getLayoutSetBranchId(),
 			newLayoutSetBranch.getLayoutSetBranchId());
-		Assert.assertEquals(existingLayoutSetBranch.getGroupId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getGroupId(),
 			newLayoutSetBranch.getGroupId());
-		Assert.assertEquals(existingLayoutSetBranch.getCompanyId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getCompanyId(),
 			newLayoutSetBranch.getCompanyId());
-		Assert.assertEquals(existingLayoutSetBranch.getUserId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getUserId(),
 			newLayoutSetBranch.getUserId());
-		Assert.assertEquals(existingLayoutSetBranch.getUserName(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getUserName(),
 			newLayoutSetBranch.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingLayoutSetBranch.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayoutSetBranch.getCreateDate()),
 			Time.getShortTimestamp(newLayoutSetBranch.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingLayoutSetBranch.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayoutSetBranch.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutSetBranch.getModifiedDate()));
-		Assert.assertEquals(existingLayoutSetBranch.isPrivateLayout(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.isPrivateLayout(),
 			newLayoutSetBranch.isPrivateLayout());
-		Assert.assertEquals(existingLayoutSetBranch.getName(),
-			newLayoutSetBranch.getName());
-		Assert.assertEquals(existingLayoutSetBranch.getDescription(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getName(), newLayoutSetBranch.getName());
+		Assert.assertEquals(
+			existingLayoutSetBranch.getDescription(),
 			newLayoutSetBranch.getDescription());
-		Assert.assertEquals(existingLayoutSetBranch.isMaster(),
-			newLayoutSetBranch.isMaster());
-		Assert.assertEquals(existingLayoutSetBranch.getLogoId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.isMaster(), newLayoutSetBranch.isMaster());
+		Assert.assertEquals(
+			existingLayoutSetBranch.getLogoId(),
 			newLayoutSetBranch.getLogoId());
-		Assert.assertEquals(existingLayoutSetBranch.getThemeId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getThemeId(),
 			newLayoutSetBranch.getThemeId());
-		Assert.assertEquals(existingLayoutSetBranch.getColorSchemeId(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getColorSchemeId(),
 			newLayoutSetBranch.getColorSchemeId());
-		Assert.assertEquals(existingLayoutSetBranch.getCss(),
-			newLayoutSetBranch.getCss());
-		Assert.assertEquals(existingLayoutSetBranch.getSettings(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getCss(), newLayoutSetBranch.getCss());
+		Assert.assertEquals(
+			existingLayoutSetBranch.getSettings(),
 			newLayoutSetBranch.getSettings());
-		Assert.assertEquals(existingLayoutSetBranch.getLayoutSetPrototypeUuid(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.getLayoutSetPrototypeUuid(),
 			newLayoutSetBranch.getLayoutSetPrototypeUuid());
-		Assert.assertEquals(existingLayoutSetBranch.isLayoutSetPrototypeLinkEnabled(),
+		Assert.assertEquals(
+			existingLayoutSetBranch.isLayoutSetPrototypeLinkEnabled(),
 			newLayoutSetBranch.isLayoutSetPrototypeLinkEnabled());
 	}
 
@@ -208,37 +228,39 @@ public class LayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByG_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByG_P_N() throws Exception {
-		_persistence.countByG_P_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), "");
+		_persistence.countByG_P_N(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
 
 		_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(), "null");
 
-		_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
-			(String)null);
+		_persistence.countByG_P_N(
+			0L, RandomTestUtil.randomBoolean(), (String)null);
 	}
 
 	@Test
 	public void testCountByG_P_M() throws Exception {
-		_persistence.countByG_P_M(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_P_M(0L, RandomTestUtil.randomBoolean(),
+		_persistence.countByG_P_M(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P_M(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
-		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
+		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(
+			newLayoutSetBranch.getPrimaryKey());
 
 		Assert.assertEquals(existingLayoutSetBranch, newLayoutSetBranch);
 	}
@@ -252,31 +274,33 @@ public class LayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<LayoutSetBranch> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("LayoutSetBranch",
-			"mvccVersion", true, "layoutSetBranchId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "privateLayout", true, "name", true,
-			"description", true, "master", true, "logoId", true, "themeId",
-			true, "colorSchemeId", true, "layoutSetPrototypeUuid", true,
-			"layoutSetPrototypeLinkEnabled", true);
+		return OrderByComparatorFactoryUtil.create(
+			"LayoutSetBranch", "mvccVersion", true, "layoutSetBranchId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "privateLayout",
+			true, "name", true, "description", true, "master", true, "logoId",
+			true, "themeId", true, "colorSchemeId", true,
+			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
-		LayoutSetBranch existingLayoutSetBranch = _persistence.fetchByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
+		LayoutSetBranch existingLayoutSetBranch =
+			_persistence.fetchByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
 
 		Assert.assertEquals(existingLayoutSetBranch, newLayoutSetBranch);
 	}
@@ -285,7 +309,8 @@ public class LayoutSetBranchPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		LayoutSetBranch missingLayoutSetBranch = _persistence.fetchByPrimaryKey(pk);
+		LayoutSetBranch missingLayoutSetBranch = _persistence.fetchByPrimaryKey(
+			pk);
 
 		Assert.assertNull(missingLayoutSetBranch);
 	}
@@ -293,6 +318,7 @@ public class LayoutSetBranchPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		LayoutSetBranch newLayoutSetBranch1 = addLayoutSetBranch();
 		LayoutSetBranch newLayoutSetBranch2 = addLayoutSetBranch();
 
@@ -301,18 +327,22 @@ public class LayoutSetBranchPersistenceTest {
 		primaryKeys.add(newLayoutSetBranch1.getPrimaryKey());
 		primaryKeys.add(newLayoutSetBranch2.getPrimaryKey());
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, layoutSetBranchs.size());
-		Assert.assertEquals(newLayoutSetBranch1,
+		Assert.assertEquals(
+			newLayoutSetBranch1,
 			layoutSetBranchs.get(newLayoutSetBranch1.getPrimaryKey()));
-		Assert.assertEquals(newLayoutSetBranch2,
+		Assert.assertEquals(
+			newLayoutSetBranch2,
 			layoutSetBranchs.get(newLayoutSetBranch2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -322,7 +352,8 @@ public class LayoutSetBranchPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(layoutSetBranchs.isEmpty());
 	}
@@ -330,6 +361,7 @@ public class LayoutSetBranchPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
 		long pk = RandomTestUtil.nextLong();
@@ -339,36 +371,39 @@ public class LayoutSetBranchPersistenceTest {
 		primaryKeys.add(newLayoutSetBranch.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, layoutSetBranchs.size());
-		Assert.assertEquals(newLayoutSetBranch,
+		Assert.assertEquals(
+			newLayoutSetBranch,
 			layoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(layoutSetBranchs.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newLayoutSetBranch.getPrimaryKey());
 
-		Map<Serializable, LayoutSetBranch> layoutSetBranchs = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, LayoutSetBranch> layoutSetBranchs =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, layoutSetBranchs.size());
-		Assert.assertEquals(newLayoutSetBranch,
+		Assert.assertEquals(
+			newLayoutSetBranch,
 			layoutSetBranchs.get(newLayoutSetBranch.getPrimaryKey()));
 	}
 
@@ -376,15 +411,19 @@ public class LayoutSetBranchPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = LayoutSetBranchLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			LayoutSetBranchLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutSetBranch>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<LayoutSetBranch>() {
+
 				@Override
 				public void performAction(LayoutSetBranch layoutSetBranch) {
 					Assert.assertNotNull(layoutSetBranch);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -393,17 +432,19 @@ public class LayoutSetBranchPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetBranchId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutSetBranchId",
 				newLayoutSetBranch.getLayoutSetBranchId()));
 
-		List<LayoutSetBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutSetBranch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -414,32 +455,34 @@ public class LayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetBranchId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutSetBranchId", RandomTestUtil.nextLong()));
 
-		List<LayoutSetBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutSetBranch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"layoutSetBranchId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("layoutSetBranchId"));
 
 		Object newLayoutSetBranchId = newLayoutSetBranch.getLayoutSetBranchId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutSetBranchId",
-				new Object[] { newLayoutSetBranchId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"layoutSetBranchId", new Object[] {newLayoutSetBranchId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -452,14 +495,15 @@ public class LayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutSetBranch.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"layoutSetBranchId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("layoutSetBranchId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutSetBranchId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"layoutSetBranchId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -472,18 +516,25 @@ public class LayoutSetBranchPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
+		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(
+			newLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingLayoutSetBranch.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingLayoutSetBranch,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Boolean.valueOf(
-				existingLayoutSetBranch.getPrivateLayout()),
-			ReflectionTestUtil.<Boolean>invoke(existingLayoutSetBranch,
-				"getOriginalPrivateLayout", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingLayoutSetBranch.getName(),
-				ReflectionTestUtil.invoke(existingLayoutSetBranch,
-					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingLayoutSetBranch.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutSetBranch, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Boolean.valueOf(existingLayoutSetBranch.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(
+				existingLayoutSetBranch, "getOriginalPrivateLayout",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingLayoutSetBranch.getName(),
+				ReflectionTestUtil.invoke(
+					existingLayoutSetBranch, "getOriginalName",
+					new Class<?>[0])));
 	}
 
 	protected LayoutSetBranch addLayoutSetBranch() throws Exception {
@@ -523,16 +574,20 @@ public class LayoutSetBranchPersistenceTest {
 
 		layoutSetBranch.setSettings(RandomTestUtil.randomString());
 
-		layoutSetBranch.setLayoutSetPrototypeUuid(RandomTestUtil.randomString());
+		layoutSetBranch.setLayoutSetPrototypeUuid(
+			RandomTestUtil.randomString());
 
-		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
+		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(
+			RandomTestUtil.randomBoolean());
 
 		_layoutSetBranchs.add(_persistence.update(layoutSetBranch));
 
 		return layoutSetBranch;
 	}
 
-	private List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<LayoutSetBranch>();
+	private List<LayoutSetBranch> _layoutSetBranchs =
+		new ArrayList<LayoutSetBranch>();
 	private LayoutSetBranchPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

@@ -22,5 +22,8 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface ServiceComponentFinder {
-	public java.util.List<com.liferay.portal.kernel.model.ServiceComponent> findByMaxBuildNumber();
+
+	public java.util.List<com.liferay.portal.kernel.model.ServiceComponent>
+		findByMaxBuildNumber();
+
 }

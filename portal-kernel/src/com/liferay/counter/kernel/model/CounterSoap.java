@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class CounterSoap implements Serializable {
+
 	public static CounterSoap toSoapModel(Counter model) {
 		CounterSoap soapModel = new CounterSoap();
 
@@ -66,7 +67,8 @@ public class CounterSoap implements Serializable {
 	}
 
 	public static CounterSoap[] toSoapModels(List<Counter> models) {
-		List<CounterSoap> soapModels = new ArrayList<CounterSoap>(models.size());
+		List<CounterSoap> soapModels = new ArrayList<CounterSoap>(
+			models.size());
 
 		for (Counter model : models) {
 			soapModels.add(toSoapModel(model));
@@ -104,4 +106,5 @@ public class CounterSoap implements Serializable {
 
 	private String _name;
 	private long _currentId;
+
 }

@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -54,23 +52,24 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
-	implements ServiceComponentModel {
+public class ServiceComponentModelImpl
+	extends BaseModelImpl<ServiceComponent> implements ServiceComponentModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a service component model instance should use the <code>ServiceComponent</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ServiceComponent";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "serviceComponentId", Types.BIGINT },
-			{ "buildNamespace", Types.VARCHAR },
-			{ "buildNumber", Types.BIGINT },
-			{ "buildDate", Types.BIGINT },
-			{ "data_", Types.CLOB }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"serviceComponentId", Types.BIGINT},
+		{"buildNamespace", Types.VARCHAR}, {"buildNumber", Types.BIGINT},
+		{"buildDate", Types.BIGINT}, {"data_", Types.CLOB}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -81,26 +80,45 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0 not null,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table ServiceComponent (mvccVersion LONG default 0 not null,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
+
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
-	public static final String ORDER_BY_JPQL = " ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY ServiceComponent.buildNamespace DESC, ServiceComponent.buildNumber DESC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY ServiceComponent.buildNamespace DESC, ServiceComponent.buildNumber DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ServiceComponent"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ServiceComponent"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ServiceComponent"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ServiceComponent"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ServiceComponent"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ServiceComponent"),
+		true);
+
 	public static final long BUILDNAMESPACE_COLUMN_BITMASK = 1L;
+
 	public static final long BUILDNUMBER_COLUMN_BITMASK = 2L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.ServiceComponent"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.ServiceComponent"));
 
 	public ServiceComponentModelImpl() {
 	}
@@ -139,14 +157,18 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ServiceComponent, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<ServiceComponent, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<ServiceComponent, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ServiceComponent, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ServiceComponent, Object> attributeGetterFunction = entry.getValue();
+			Function<ServiceComponent, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((ServiceComponent)this));
 		}
 
@@ -158,54 +180,85 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<ServiceComponent, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<ServiceComponent, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<ServiceComponent, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<ServiceComponent, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((ServiceComponent)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(ServiceComponent)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<ServiceComponent, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<ServiceComponent, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<ServiceComponent, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<ServiceComponent, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ServiceComponent, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ServiceComponent, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<ServiceComponent, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ServiceComponent, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ServiceComponent, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<ServiceComponent, Object>>();
-		Map<String, BiConsumer<ServiceComponent, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ServiceComponent, ?>>();
+		Map<String, Function<ServiceComponent, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap<String, Function<ServiceComponent, Object>>();
+		Map<String, BiConsumer<ServiceComponent, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<ServiceComponent, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", ServiceComponent::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setMvccVersion);
-		attributeGetterFunctions.put("serviceComponentId", ServiceComponent::getServiceComponentId);
-		attributeSetterBiConsumers.put("serviceComponentId", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setServiceComponentId);
-		attributeGetterFunctions.put("buildNamespace", ServiceComponent::getBuildNamespace);
-		attributeSetterBiConsumers.put("buildNamespace", (BiConsumer<ServiceComponent, String>)ServiceComponent::setBuildNamespace);
-		attributeGetterFunctions.put("buildNumber", ServiceComponent::getBuildNumber);
-		attributeSetterBiConsumers.put("buildNumber", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setBuildNumber);
-		attributeGetterFunctions.put("buildDate", ServiceComponent::getBuildDate);
-		attributeSetterBiConsumers.put("buildDate", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setBuildDate);
+		attributeGetterFunctions.put(
+			"mvccVersion", ServiceComponent::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ServiceComponent, Long>)
+				ServiceComponent::setMvccVersion);
+		attributeGetterFunctions.put(
+			"serviceComponentId", ServiceComponent::getServiceComponentId);
+		attributeSetterBiConsumers.put(
+			"serviceComponentId",
+			(BiConsumer<ServiceComponent, Long>)
+				ServiceComponent::setServiceComponentId);
+		attributeGetterFunctions.put(
+			"buildNamespace", ServiceComponent::getBuildNamespace);
+		attributeSetterBiConsumers.put(
+			"buildNamespace",
+			(BiConsumer<ServiceComponent, String>)
+				ServiceComponent::setBuildNamespace);
+		attributeGetterFunctions.put(
+			"buildNumber", ServiceComponent::getBuildNumber);
+		attributeSetterBiConsumers.put(
+			"buildNumber",
+			(BiConsumer<ServiceComponent, Long>)
+				ServiceComponent::setBuildNumber);
+		attributeGetterFunctions.put(
+			"buildDate", ServiceComponent::getBuildDate);
+		attributeSetterBiConsumers.put(
+			"buildDate",
+			(BiConsumer<ServiceComponent, Long>)ServiceComponent::setBuildDate);
 		attributeGetterFunctions.put("data", ServiceComponent::getData);
-		attributeSetterBiConsumers.put("data", (BiConsumer<ServiceComponent, String>)ServiceComponent::setData);
+		attributeSetterBiConsumers.put(
+			"data",
+			(BiConsumer<ServiceComponent, String>)ServiceComponent::setData);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -306,8 +359,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			ServiceComponent.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, ServiceComponent.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -320,8 +373,9 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	@Override
 	public ServiceComponent toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ServiceComponent)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (ServiceComponent)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -347,8 +401,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public int compareTo(ServiceComponent serviceComponent) {
 		int value = 0;
 
-		value = getBuildNamespace()
-					.compareTo(serviceComponent.getBuildNamespace());
+		value = getBuildNamespace().compareTo(
+			serviceComponent.getBuildNamespace());
 
 		value = value * -1;
 
@@ -416,9 +470,11 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public void resetOriginalValues() {
 		ServiceComponentModelImpl serviceComponentModelImpl = this;
 
-		serviceComponentModelImpl._originalBuildNamespace = serviceComponentModelImpl._buildNamespace;
+		serviceComponentModelImpl._originalBuildNamespace =
+			serviceComponentModelImpl._buildNamespace;
 
-		serviceComponentModelImpl._originalBuildNumber = serviceComponentModelImpl._buildNumber;
+		serviceComponentModelImpl._originalBuildNumber =
+			serviceComponentModelImpl._buildNumber;
 
 		serviceComponentModelImpl._setOriginalBuildNumber = false;
 
@@ -427,7 +483,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public CacheModel<ServiceComponent> toCacheModel() {
-		ServiceComponentCacheModel serviceComponentCacheModel = new ServiceComponentCacheModel();
+		ServiceComponentCacheModel serviceComponentCacheModel =
+			new ServiceComponentCacheModel();
 
 		serviceComponentCacheModel.mvccVersion = getMvccVersion();
 
@@ -458,17 +515,20 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toString() {
-		Map<String, Function<ServiceComponent, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<ServiceComponent, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<ServiceComponent, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ServiceComponent, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ServiceComponent, Object> attributeGetterFunction = entry.getValue();
+			Function<ServiceComponent, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -487,19 +547,22 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ServiceComponent, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<ServiceComponent, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<ServiceComponent, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ServiceComponent, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ServiceComponent, Object> attributeGetterFunction = entry.getValue();
+			Function<ServiceComponent, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -513,10 +576,12 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = ServiceComponent.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		ServiceComponent.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ServiceComponent.class, ModelWrapper.class
-		};
+		ServiceComponent.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _serviceComponentId;
 	private String _buildNamespace;
@@ -528,4 +593,5 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private String _data;
 	private long _columnBitmask;
 	private ServiceComponent _escapedModel;
+
 }

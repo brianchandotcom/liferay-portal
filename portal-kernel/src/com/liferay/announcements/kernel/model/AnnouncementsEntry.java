@@ -27,16 +27,21 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AnnouncementsEntryModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.announcements.model.impl.AnnouncementsEntryImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.announcements.model.impl.AnnouncementsEntryImpl"
+)
 @ProviderType
-public interface AnnouncementsEntry extends AnnouncementsEntryModel,
-	PersistedModel {
+public interface AnnouncementsEntry
+	extends AnnouncementsEntryModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AnnouncementsEntry, Long> ENTRY_ID_ACCESSOR = new Accessor<AnnouncementsEntry, Long>() {
+	public static final Accessor<AnnouncementsEntry, Long> ENTRY_ID_ACCESSOR =
+		new Accessor<AnnouncementsEntry, Long>() {
+
 			@Override
 			public Long get(AnnouncementsEntry announcementsEntry) {
 				return announcementsEntry.getEntryId();
@@ -51,8 +56,10 @@ public interface AnnouncementsEntry extends AnnouncementsEntryModel,
 			public Class<AnnouncementsEntry> getTypeClass() {
 				return AnnouncementsEntry.class;
 			}
+
 		};
 
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class UserGroupCacheModel implements CacheModel<UserGroup>,
-	Externalizable, MVCCModel {
+public class UserGroupCacheModel
+	implements CacheModel<UserGroup>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +52,8 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		UserGroupCacheModel userGroupCacheModel = (UserGroupCacheModel)obj;
 
 		if ((userGroupId == userGroupCacheModel.userGroupId) &&
-				(mvccVersion == userGroupCacheModel.mvccVersion)) {
+			(mvccVersion == userGroupCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -202,8 +203,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -268,4 +268,5 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	public String name;
 	public String description;
 	public boolean addedByLDAPImport;
+
 }

@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SocialActivityModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.social.model.impl.SocialActivityImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.social.model.impl.SocialActivityImpl"
+)
 @ProviderType
 public interface SocialActivity extends SocialActivityModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivityImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SocialActivity, Long> ACTIVITY_ID_ACCESSOR = new Accessor<SocialActivity, Long>() {
+	public static final Accessor<SocialActivity, Long> ACTIVITY_ID_ACCESSOR =
+		new Accessor<SocialActivity, Long>() {
+
 			@Override
 			public Long get(SocialActivity socialActivity) {
 				return socialActivity.getActivityId();
@@ -50,6 +55,7 @@ public interface SocialActivity extends SocialActivityModel, PersistedModel {
 			public Class<SocialActivity> getTypeClass() {
 				return SocialActivity.class;
 			}
+
 		};
 
 	public com.liferay.asset.kernel.model.AssetEntry getAssetEntry();
@@ -67,4 +73,5 @@ public interface SocialActivity extends SocialActivityModel, PersistedModel {
 
 	public void setExtraDataValue(String key, String value)
 		throws com.liferay.portal.kernel.json.JSONException;
+
 }

@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress>,
-	MVCCModel, ShardedModel, StagedAuditedModel {
+public interface EmailAddressModel
+	extends AttachedModel, BaseModel<EmailAddress>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -289,4 +291,5 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	 * @param primary the primary of this email address
 	 */
 	public void setPrimary(boolean primary);
+
 }

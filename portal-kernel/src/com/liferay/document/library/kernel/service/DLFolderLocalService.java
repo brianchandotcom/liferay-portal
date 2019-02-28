@@ -17,9 +17,7 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -61,102 +59,112 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface DLFolderLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface DLFolderLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFolderLocalServiceUtil} to access the document library folder local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		DLFolder dlFolder);
+	public void addDLFileEntryTypeDLFolder(
+		long fileEntryTypeId, DLFolder dlFolder);
 
 	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId);
 
-	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		List<DLFolder> dlFolders);
+	public void addDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, List<DLFolder> dlFolders);
 
-	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		long[] folderIds);
+	public void addDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, long[] folderIds);
 
 	/**
-	* Adds the document library folder to the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFolder the document library folder
-	* @return the document library folder that was added
-	*/
+	 * Adds the document library folder to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlFolder the document library folder
+	 * @return the document library folder that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder addDLFolder(DLFolder dlFolder);
 
-	public DLFolder addFolder(long userId, long groupId, long repositoryId,
-		boolean mountPoint, long parentFolderId, String name,
-		String description, boolean hidden, ServiceContext serviceContext)
+	public DLFolder addFolder(
+			long userId, long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			boolean hidden, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
 	/**
-	* Creates a new document library folder with the primary key. Does not add the document library folder to the database.
-	*
-	* @param folderId the primary key for the new document library folder
-	* @return the new document library folder
-	*/
+	 * Creates a new document library folder with the primary key. Does not add the document library folder to the database.
+	 *
+	 * @param folderId the primary key for the new document library folder
+	 * @return the new document library folder
+	 */
 	@Transactional(enabled = false)
 	public DLFolder createDLFolder(long folderId);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#deleteAllByGroup(long)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #deleteAllByGroup(long)}
+	 */
 	@Deprecated
 	public void deleteAll(long groupId) throws PortalException;
 
 	public void deleteAllByGroup(long groupId) throws PortalException;
 
-	public void deleteAllByRepository(long repositoryId)
-		throws PortalException;
+	public void deleteAllByRepository(long repositoryId) throws PortalException;
 
-	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		DLFolder dlFolder);
+	public void deleteDLFileEntryTypeDLFolder(
+		long fileEntryTypeId, DLFolder dlFolder);
 
-	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		long folderId);
+	public void deleteDLFileEntryTypeDLFolder(
+		long fileEntryTypeId, long folderId);
 
-	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		List<DLFolder> dlFolders);
+	public void deleteDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, List<DLFolder> dlFolders);
 
-	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		long[] folderIds);
+	public void deleteDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, long[] folderIds);
 
 	/**
-	* Deletes the document library folder from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFolder the document library folder
-	* @return the document library folder that was removed
-	*/
+	 * Deletes the document library folder from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlFolder the document library folder
+	 * @return the document library folder that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteDLFolder(DLFolder dlFolder);
 
 	/**
-	* Deletes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param folderId the primary key of the document library folder
-	* @return the document library folder that was removed
-	* @throws PortalException if a document library folder with the primary key could not be found
-	*/
+	 * Deletes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder that was removed
+	 * @throws PortalException if a document library folder with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteDLFolder(long folderId) throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public DLFolder deleteFolder(DLFolder dlFolder) throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public DLFolder deleteFolder(DLFolder dlFolder,
-		boolean includeTrashedEntries) throws PortalException;
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
+	public DLFolder deleteFolder(
+			DLFolder dlFolder, boolean includeTrashedEntries)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteFolder(long folderId) throws PortalException;
@@ -166,12 +174,13 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
-	public DLFolder deleteFolder(long userId, long folderId,
-		boolean includeTrashedEntries) throws PortalException;
+	public DLFolder deleteFolder(
+			long userId, long folderId, boolean includeTrashedEntries)
+		throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -180,77 +189,78 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder fetchDLFolder(long folderId);
 
 	/**
-	* Returns the document library folder matching the UUID and group.
-	*
-	* @param uuid the document library folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	*/
+	 * Returns the document library folder matching the UUID and group.
+	 *
+	 * @param uuid the document library folder's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder fetchDLFolderByUuidAndGroupId(String uuid, long groupId);
 
@@ -276,92 +286,93 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		int start, int end);
+	public List<DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator);
+	public List<DLFolder> getDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFileEntryTypeDLFoldersCount(long fileEntryTypeId);
 
 	/**
-	* Returns the fileEntryTypeIds of the document library file entry types associated with the document library folder.
-	*
-	* @param folderId the folderId of the document library folder
-	* @return long[] the fileEntryTypeIds of document library file entry types associated with the document library folder
-	*/
+	 * Returns the fileEntryTypeIds of the document library file entry types associated with the document library folder.
+	 *
+	 * @param folderId the folderId of the document library folder
+	 * @return long[] the fileEntryTypeIds of document library file entry types associated with the document library folder
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getDLFileEntryTypePrimaryKeys(long folderId);
 
 	/**
-	* Returns the document library folder with the primary key.
-	*
-	* @param folderId the primary key of the document library folder
-	* @return the document library folder
-	* @throws PortalException if a document library folder with the primary key could not be found
-	*/
+	 * Returns the document library folder with the primary key.
+	 *
+	 * @param folderId the primary key of the document library folder
+	 * @return the document library folder
+	 * @throws PortalException if a document library folder with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder getDLFolder(long folderId) throws PortalException;
 
 	/**
-	* Returns the document library folder matching the UUID and group.
-	*
-	* @param uuid the document library folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library folder
-	* @throws PortalException if a matching document library folder could not be found
-	*/
+	 * Returns the document library folder matching the UUID and group.
+	 *
+	 * @param uuid the document library folder's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library folder
+	 * @throws PortalException if a matching document library folder could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder getDLFolderByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
 	/**
-	* Returns a range of all the document library folders.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library folders
-	* @param end the upper bound of the range of document library folders (not inclusive)
-	* @return the range of document library folders
-	*/
+	 * Returns a range of all the document library folders.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of document library folders
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFolder> getDLFolders(int start, int end);
 
 	/**
-	* Returns all the document library folders matching the UUID and company.
-	*
-	* @param uuid the UUID of the document library folders
-	* @param companyId the primary key of the company
-	* @return the matching document library folders, or an empty list if no matches were found
-	*/
+	 * Returns all the document library folders matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the document library folders
+	 * @param companyId the primary key of the company
+	 * @return the matching document library folders, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getDLFoldersByUuidAndCompanyId(String uuid,
-		long companyId);
+	public List<DLFolder> getDLFoldersByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	/**
-	* Returns a range of document library folders matching the UUID and company.
-	*
-	* @param uuid the UUID of the document library folders
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of document library folders
-	* @param end the upper bound of the range of document library folders (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching document library folders, or an empty list if no matches were found
-	*/
+	 * Returns a range of document library folders matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the document library folders
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching document library folders, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getDLFoldersByUuidAndCompanyId(String uuid,
-		long companyId, int start, int end,
+	public List<DLFolder> getDLFoldersByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator);
 
 	/**
-	* Returns the number of document library folders.
-	*
-	* @return the number of document library folders
-	*/
+	 * Returns the number of document library folders.
+	 *
+	 * @return the number of document library folders
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFoldersCount();
 
@@ -370,12 +381,12 @@ public interface DLFolderLocalService extends BaseLocalService,
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFileEntriesAndFileShortcuts(long groupId,
-		long folderId, QueryDefinition<?> queryDefinition);
+	public List<Object> getFileEntriesAndFileShortcuts(
+		long groupId, long folderId, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
-		QueryDefinition<?> queryDefinition);
+	public int getFileEntriesAndFileShortcutsCount(
+		long groupId, long folderId, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder getFolder(long folderId) throws PortalException;
@@ -388,9 +399,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public long getFolderId(long companyId, long folderId);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#getGroupFolderIds(long, long)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #getGroupFolderIds(long, long)}
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getFolderIds(long groupId, long parentFolderId);
@@ -399,50 +410,53 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public List<DLFolder> getFolders(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getFolders(long groupId, long parentFolderId,
-		boolean includeMountfolders);
+	public List<DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getFolders(long groupId, long parentFolderId,
+	public List<DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int start, int end, OrderByComparator<DLFolder> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFolder> getFolders(
+		long groupId, long parentFolderId, int status,
 		boolean includeMountfolders, int start, int end,
 		OrderByComparator<DLFolder> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getFolders(long groupId, long parentFolderId,
-		int status, boolean includeMountfolders, int start, int end,
+	public List<DLFolder> getFolders(
+		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getFolders(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator<DLFolder> obc);
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(long groupId,
-		long folderId, String[] mimeTypes, boolean includeMountFolders,
-		QueryDefinition<?> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, String[] mimeTypes, boolean includeMountFolders,
-		QueryDefinition<?> queryDefinition);
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long groupId, long folderId, String[] mimeTypes,
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId,
-		boolean includeMountfolders);
+	public int getFoldersCount(
+		long groupId, long parentFolderId, boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId, int status,
+	public int getFoldersCount(
+		long groupId, long parentFolderId, int status,
 		boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getGroupFolderIds(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getGroupSubfolderIds(List<Long> folderIds, long groupId,
-		long folderId);
+	public void getGroupSubfolderIds(
+		List<Long> folderIds, long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -451,8 +465,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DLFolder getMountFolder(long repositoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getMountFolders(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator<DLFolder> obc);
+	public List<DLFolder> getMountFolders(
+		long groupId, long parentFolderId, int start, int end,
+		OrderByComparator<DLFolder> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMountFoldersCount(long groupId, long parentFolderId);
@@ -461,10 +476,10 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public List<DLFolder> getNoAssetFolders();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -473,36 +488,36 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getRepositoryFolderIds(long repositoryId,
-		long parentFolderId);
+	public List<Long> getRepositoryFolderIds(
+		long repositoryId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getRepositoryFolders(long repositoryId, int start,
-		int end);
+	public List<DLFolder> getRepositoryFolders(
+		long repositoryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRepositoryFoldersCount(long repositoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getRepositorySubfolderIds(List<Long> folderIds,
-		long repositoryId, long folderId);
+	public void getRepositorySubfolderIds(
+		List<Long> folderIds, long repositoryId, long folderId);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#getGroupSubfolderIds(List, long, long)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #getGroupSubfolderIds(List, long, long)}
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<Long> folderIds, long groupId,
-		long folderId);
+	public void getSubfolderIds(
+		List<Long> folderIds, long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getUniqueFolderName(String uuid, long groupId,
-		long parentFolderId, String name, int count);
+	public String getUniqueFolderName(
+		String uuid, long groupId, long parentFolderId, String name, int count);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		long folderId);
+	public boolean hasDLFileEntryTypeDLFolder(
+		long fileEntryTypeId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFileEntryTypeDLFolders(long fileEntryTypeId);
@@ -513,99 +528,117 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasInheritableLock(long folderId);
 
-	public Lock lockFolder(long userId, long folderId)
+	public Lock lockFolder(long userId, long folderId) throws PortalException;
+
+	public Lock lockFolder(
+			long userId, long folderId, String owner, boolean inheritable,
+			long expirationTime)
 		throws PortalException;
 
-	public Lock lockFolder(long userId, long folderId, String owner,
-		boolean inheritable, long expirationTime) throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
-	public DLFolder moveFolder(long userId, long folderId, long parentFolderId,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFolder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
 
-	public void rebuildTree(long companyId, long parentFolderId,
-		String parentTreePath, boolean reindex) throws PortalException;
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			boolean reindex)
+		throws PortalException;
 
-	public void setDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		long[] folderIds);
+	public void setDLFileEntryTypeDLFolders(
+		long fileEntryTypeId, long[] folderIds);
 
-	public void unlockFolder(long groupId, long parentFolderId, String name,
-		String lockUuid) throws PortalException;
+	public void unlockFolder(
+			long groupId, long parentFolderId, String name, String lockUuid)
+		throws PortalException;
 
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException;
 
 	/**
-	* Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFolder the document library folder
-	* @return the document library folder that was updated
-	*/
+	 * Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlFolder the document library folder
+	 * @return the document library folder that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateDLFolder(DLFolder dlFolder);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#updateFolder(long, long, String, String, long, List, int,
-	ServiceContext)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #updateFolder(long, long, String, String, long, List, int,
+	 ServiceContext)}
+	 */
 	@Deprecated
-	public DLFolder updateFolder(long folderId, long parentFolderId,
-		String name, String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFolder updateFolder(long folderId, long parentFolderId,
-		String name, String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, int restrictionType,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced {@link
-	#updateFolder(long, long, String, String, long, List, int,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public DLFolder updateFolder(long folderId, String name,
-		String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFolder updateFolder(long folderId, String name,
-		String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, int restrictionType,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #
-	updateFolderAndFileEntryTypes(long, long, long, String,
-	String, long, List, int, ServiceContext)}
-	*/
-	@Deprecated
-	public DLFolder updateFolderAndFileEntryTypes(long userId, long folderId,
-		long parentFolderId, String name, String description,
-		long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-		boolean overrideFileEntryTypes, ServiceContext serviceContext)
+	public DLFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException;
 
-	public DLFolder updateFolderAndFileEntryTypes(long userId, long folderId,
-		long parentFolderId, String name, String description,
-		long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-		int restrictionType, ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			int restrictionType, ServiceContext serviceContext)
 		throws PortalException;
 
-	@BufferedIncrement(configuration = "DLFolderEntry", incrementClass = DateOverrideIncrement.class)
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced {@link
+	 #updateFolder(long, long, String, String, long, List, int,
+	 ServiceContext)}
+	 */
+	@Deprecated
+	public DLFolder updateFolder(
+			long folderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder updateFolder(
+			long folderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			int restrictionType, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #
+	 updateFolderAndFileEntryTypes(long, long, long, String,
+	 String, long, List, int, ServiceContext)}
+	 */
+	@Deprecated
+	public DLFolder updateFolderAndFileEntryTypes(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long defaultFileEntryTypeId,
+			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public DLFolder updateFolderAndFileEntryTypes(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long defaultFileEntryTypeId,
+			List<Long> fileEntryTypeIds, int restrictionType,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@BufferedIncrement(
+		configuration = "DLFolderEntry",
+		incrementClass = DateOverrideIncrement.class
+	)
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException;
 
-	public DLFolder updateStatus(long userId, long folderId, int status,
-		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
+	public DLFolder updateStatus(
+			long userId, long folderId, int status,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException;
+
 }

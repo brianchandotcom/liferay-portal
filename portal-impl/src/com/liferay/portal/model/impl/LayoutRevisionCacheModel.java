@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
-	Externalizable, MVCCModel {
+public class LayoutRevisionCacheModel
+	implements CacheModel<LayoutRevision>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,10 +49,12 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 			return false;
 		}
 
-		LayoutRevisionCacheModel layoutRevisionCacheModel = (LayoutRevisionCacheModel)obj;
+		LayoutRevisionCacheModel layoutRevisionCacheModel =
+			(LayoutRevisionCacheModel)obj;
 
 		if ((layoutRevisionId == layoutRevisionCacheModel.layoutRevisionId) &&
-				(mvccVersion == layoutRevisionCacheModel.mvccVersion)) {
+			(mvccVersion == layoutRevisionCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -317,8 +319,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(layoutRevisionId);
@@ -461,4 +462,5 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+
 }

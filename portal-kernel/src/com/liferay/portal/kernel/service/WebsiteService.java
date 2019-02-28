@@ -39,25 +39,29 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface WebsiteService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteServiceUtil} to access the website remote service. Add custom service methods to <code>com.liferay.portal.service.impl.WebsiteServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Website addWebsite(String className, long classPK, String url,
-		long typeId, boolean primary, ServiceContext serviceContext)
+	public Website addWebsite(
+			String className, long classPK, String url, long typeId,
+			boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteWebsite(long websiteId) throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -67,6 +71,8 @@ public interface WebsiteService extends BaseService {
 	public List<Website> getWebsites(String className, long classPK)
 		throws PortalException;
 
-	public Website updateWebsite(long websiteId, String url, long typeId,
-		boolean primary) throws PortalException;
+	public Website updateWebsite(
+			long websiteId, String url, long typeId, boolean primary)
+		throws PortalException;
+
 }

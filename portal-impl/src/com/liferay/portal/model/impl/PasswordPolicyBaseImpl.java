@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PasswordPolicyBaseImpl extends PasswordPolicyModelImpl
-	implements PasswordPolicy {
+public abstract class PasswordPolicyBaseImpl
+	extends PasswordPolicyModelImpl implements PasswordPolicy {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class PasswordPolicyBaseImpl extends PasswordPolicyModelImpl
 			PasswordPolicyLocalServiceUtil.updatePasswordPolicy(this);
 		}
 	}
+
 }

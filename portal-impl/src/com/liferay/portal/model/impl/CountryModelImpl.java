@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,26 +57,25 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class CountryModelImpl extends BaseModelImpl<Country>
-	implements CountryModel {
+public class CountryModelImpl
+	extends BaseModelImpl<Country> implements CountryModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a country model instance should use the <code>Country</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Country";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "countryId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "a2", Types.VARCHAR },
-			{ "a3", Types.VARCHAR },
-			{ "number_", Types.VARCHAR },
-			{ "idd_", Types.VARCHAR },
-			{ "zipRequired", Types.BOOLEAN },
-			{ "active_", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"a2", Types.VARCHAR}, {"a3", Types.VARCHAR},
+		{"number_", Types.VARCHAR}, {"idd_", Types.VARCHAR},
+		{"zipRequired", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -92,25 +89,42 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Country (mvccVersion LONG default 0 not null,countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Country (mvccVersion LONG default 0 not null,countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
+
 	public static final String TABLE_SQL_DROP = "drop table Country";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY country.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY Country.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Country"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Country"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Country"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Country"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Country"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Country"),
+		true);
+
 	public static final long A2_COLUMN_BITMASK = 1L;
+
 	public static final long A3_COLUMN_BITMASK = 2L;
+
 	public static final long ACTIVE_COLUMN_BITMASK = 4L;
+
 	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
@@ -159,8 +173,9 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Country"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Country"));
 
 	public CountryModelImpl() {
 	}
@@ -199,14 +214,18 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Country, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Country, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Country, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Country, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Country, Object> attributeGetterFunction = entry.getValue();
+			Function<Country, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Country)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Country)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -217,57 +236,78 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Country, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Country, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Country, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Country, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Country)this, entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Country)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Country, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<Country, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Country, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Country, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Country, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Country, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Country, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Country, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Country, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Country, Object>>();
-		Map<String, BiConsumer<Country, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Country, ?>>();
-
+		Map<String, Function<Country, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Country, Object>>();
+		Map<String, BiConsumer<Country, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Country, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Country::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Country, Long>)Country::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Country, Long>)Country::setMvccVersion);
 		attributeGetterFunctions.put("countryId", Country::getCountryId);
-		attributeSetterBiConsumers.put("countryId", (BiConsumer<Country, Long>)Country::setCountryId);
+		attributeSetterBiConsumers.put(
+			"countryId", (BiConsumer<Country, Long>)Country::setCountryId);
 		attributeGetterFunctions.put("name", Country::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Country, String>)Country::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Country, String>)Country::setName);
 		attributeGetterFunctions.put("a2", Country::getA2);
-		attributeSetterBiConsumers.put("a2", (BiConsumer<Country, String>)Country::setA2);
+		attributeSetterBiConsumers.put(
+			"a2", (BiConsumer<Country, String>)Country::setA2);
 		attributeGetterFunctions.put("a3", Country::getA3);
-		attributeSetterBiConsumers.put("a3", (BiConsumer<Country, String>)Country::setA3);
+		attributeSetterBiConsumers.put(
+			"a3", (BiConsumer<Country, String>)Country::setA3);
 		attributeGetterFunctions.put("number", Country::getNumber);
-		attributeSetterBiConsumers.put("number", (BiConsumer<Country, String>)Country::setNumber);
+		attributeSetterBiConsumers.put(
+			"number", (BiConsumer<Country, String>)Country::setNumber);
 		attributeGetterFunctions.put("idd", Country::getIdd);
-		attributeSetterBiConsumers.put("idd", (BiConsumer<Country, String>)Country::setIdd);
+		attributeSetterBiConsumers.put(
+			"idd", (BiConsumer<Country, String>)Country::setIdd);
 		attributeGetterFunctions.put("zipRequired", Country::getZipRequired);
-		attributeSetterBiConsumers.put("zipRequired", (BiConsumer<Country, Boolean>)Country::setZipRequired);
+		attributeSetterBiConsumers.put(
+			"zipRequired",
+			(BiConsumer<Country, Boolean>)Country::setZipRequired);
 		attributeGetterFunctions.put("active", Country::getActive);
-		attributeSetterBiConsumers.put("active", (BiConsumer<Country, Boolean>)Country::setActive);
+		attributeSetterBiConsumers.put(
+			"active", (BiConsumer<Country, Boolean>)Country::setActive);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -454,8 +494,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Country.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, Country.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -468,8 +508,9 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	@Override
 	public Country toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Country)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Country)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -618,16 +659,20 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Country, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Country, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Country, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Country, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Country, Object> attributeGetterFunction = entry.getValue();
+			Function<Country, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -646,18 +691,22 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Country, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Country, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Country, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Country, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Country, Object> attributeGetterFunction = entry.getValue();
+			Function<Country, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -671,10 +720,12 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Country.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Country.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Country.class, ModelWrapper.class
-		};
+		Country.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _countryId;
 	private String _name;
@@ -691,4 +742,5 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private Country _escapedModel;
+
 }

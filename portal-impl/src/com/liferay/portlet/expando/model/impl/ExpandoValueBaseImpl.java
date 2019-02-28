@@ -32,8 +32,9 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ExpandoValueBaseImpl extends ExpandoValueModelImpl
-	implements ExpandoValue {
+public abstract class ExpandoValueBaseImpl
+	extends ExpandoValueModelImpl implements ExpandoValue {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ExpandoValueBaseImpl extends ExpandoValueModelImpl
 			ExpandoValueLocalServiceUtil.updateExpandoValue(this);
 		}
 	}
+
 }

@@ -17,7 +17,6 @@ package com.liferay.tasks.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -43,9 +42,7 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
-
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalService;
 import com.liferay.tasks.service.persistence.TasksEntryFinder;
@@ -70,8 +67,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class TasksEntryLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements TasksEntryLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements TasksEntryLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,6 +113,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	@Override
 	public TasksEntry deleteTasksEntry(long tasksEntryId)
 		throws PortalException {
+
 		return tasksEntryPersistence.remove(tasksEntryId);
 	}
 
@@ -129,6 +128,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	@Override
 	public TasksEntry deleteTasksEntry(TasksEntry tasksEntry)
 		throws PortalException {
+
 		return tasksEntryPersistence.remove(tasksEntry);
 	}
 
@@ -136,8 +136,8 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(TasksEntry.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			TasksEntry.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -164,10 +164,11 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return tasksEntryPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return tasksEntryPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -184,10 +185,12 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return tasksEntryPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return tasksEntryPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -209,10 +212,11 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return tasksEntryPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return tasksEntryPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -228,14 +232,14 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @throws PortalException if a tasks entry with the primary key could not be found
 	 */
 	@Override
-	public TasksEntry getTasksEntry(long tasksEntryId)
-		throws PortalException {
+	public TasksEntry getTasksEntry(long tasksEntryId) throws PortalException {
 		return tasksEntryPersistence.findByPrimaryKey(tasksEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(tasksEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -247,10 +251,14 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(tasksEntryLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			tasksEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(TasksEntry.class);
 
@@ -262,6 +270,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
+
 		actionableDynamicQuery.setBaseLocalService(tasksEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TasksEntry.class);
@@ -275,12 +284,15 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return tasksEntryLocalService.deleteTasksEntry((TasksEntry)persistedModel);
+
+		return tasksEntryLocalService.deleteTasksEntry(
+			(TasksEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return tasksEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -338,6 +350,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setTasksEntryLocalService(
 		TasksEntryLocalService tasksEntryLocalService) {
+
 		this.tasksEntryLocalService = tasksEntryLocalService;
 	}
 
@@ -357,6 +370,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setTasksEntryPersistence(
 		TasksEntryPersistence tasksEntryPersistence) {
+
 		this.tasksEntryPersistence = tasksEntryPersistence;
 	}
 
@@ -383,7 +397,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -393,7 +409,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -402,7 +420,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -412,7 +432,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -432,6 +454,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -440,7 +463,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -450,7 +475,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -459,7 +486,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -470,6 +499,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -496,7 +526,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the user notification event local service
 	 */
-	public com.liferay.portal.kernel.service.UserNotificationEventLocalService getUserNotificationEventLocalService() {
+	public com.liferay.portal.kernel.service.UserNotificationEventLocalService
+		getUserNotificationEventLocalService() {
+
 		return userNotificationEventLocalService;
 	}
 
@@ -506,8 +538,11 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @param userNotificationEventLocalService the user notification event local service
 	 */
 	public void setUserNotificationEventLocalService(
-		com.liferay.portal.kernel.service.UserNotificationEventLocalService userNotificationEventLocalService) {
-		this.userNotificationEventLocalService = userNotificationEventLocalService;
+		com.liferay.portal.kernel.service.UserNotificationEventLocalService
+			userNotificationEventLocalService) {
+
+		this.userNotificationEventLocalService =
+			userNotificationEventLocalService;
 	}
 
 	/**
@@ -515,7 +550,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the user notification event persistence
 	 */
-	public UserNotificationEventPersistence getUserNotificationEventPersistence() {
+	public UserNotificationEventPersistence
+		getUserNotificationEventPersistence() {
+
 		return userNotificationEventPersistence;
 	}
 
@@ -526,7 +563,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setUserNotificationEventPersistence(
 		UserNotificationEventPersistence userNotificationEventPersistence) {
-		this.userNotificationEventPersistence = userNotificationEventPersistence;
+
+		this.userNotificationEventPersistence =
+			userNotificationEventPersistence;
 	}
 
 	/**
@@ -534,7 +573,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the asset entry local service
 	 */
-	public com.liferay.asset.kernel.service.AssetEntryLocalService getAssetEntryLocalService() {
+	public com.liferay.asset.kernel.service.AssetEntryLocalService
+		getAssetEntryLocalService() {
+
 		return assetEntryLocalService;
 	}
 
@@ -544,7 +585,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @param assetEntryLocalService the asset entry local service
 	 */
 	public void setAssetEntryLocalService(
-		com.liferay.asset.kernel.service.AssetEntryLocalService assetEntryLocalService) {
+		com.liferay.asset.kernel.service.AssetEntryLocalService
+			assetEntryLocalService) {
+
 		this.assetEntryLocalService = assetEntryLocalService;
 	}
 
@@ -564,6 +607,7 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setAssetEntryPersistence(
 		AssetEntryPersistence assetEntryPersistence) {
+
 		this.assetEntryPersistence = assetEntryPersistence;
 	}
 
@@ -572,7 +616,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 *
 	 * @return the social activity local service
 	 */
-	public com.liferay.social.kernel.service.SocialActivityLocalService getSocialActivityLocalService() {
+	public com.liferay.social.kernel.service.SocialActivityLocalService
+		getSocialActivityLocalService() {
+
 		return socialActivityLocalService;
 	}
 
@@ -582,7 +628,9 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 * @param socialActivityLocalService the social activity local service
 	 */
 	public void setSocialActivityLocalService(
-		com.liferay.social.kernel.service.SocialActivityLocalService socialActivityLocalService) {
+		com.liferay.social.kernel.service.SocialActivityLocalService
+			socialActivityLocalService) {
+
 		this.socialActivityLocalService = socialActivityLocalService;
 	}
 
@@ -602,12 +650,13 @@ public abstract class TasksEntryLocalServiceBaseImpl
 	 */
 	public void setSocialActivityPersistence(
 		SocialActivityPersistence socialActivityPersistence) {
+
 		this.socialActivityPersistence = socialActivityPersistence;
 	}
 
 	public void afterPropertiesSet() {
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.tasks.model.TasksEntry",
-			tasksEntryLocalService);
+		PersistedModelLocalServiceRegistryUtil.register(
+			"com.liferay.tasks.model.TasksEntry", tasksEntryLocalService);
 	}
 
 	public void destroy() {
@@ -647,8 +696,8 @@ public abstract class TasksEntryLocalServiceBaseImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -659,32 +708,69 @@ public abstract class TasksEntryLocalServiceBaseImpl
 
 	@BeanReference(type = TasksEntryLocalService.class)
 	protected TasksEntryLocalService tasksEntryLocalService;
+
 	@BeanReference(type = TasksEntryPersistence.class)
 	protected TasksEntryPersistence tasksEntryPersistence;
+
 	@BeanReference(type = TasksEntryFinder.class)
 	protected TasksEntryFinder tasksEntryFinder;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserNotificationEventLocalService.class)
-	protected com.liferay.portal.kernel.service.UserNotificationEventLocalService userNotificationEventLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.UserNotificationEventLocalService.class
+	)
+	protected
+		com.liferay.portal.kernel.service.UserNotificationEventLocalService
+			userNotificationEventLocalService;
+
 	@BeanReference(type = UserNotificationEventPersistence.class)
 	protected UserNotificationEventPersistence userNotificationEventPersistence;
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetEntryLocalService.class)
-	protected com.liferay.asset.kernel.service.AssetEntryLocalService assetEntryLocalService;
+
+	@BeanReference(
+		type = com.liferay.asset.kernel.service.AssetEntryLocalService.class
+	)
+	protected com.liferay.asset.kernel.service.AssetEntryLocalService
+		assetEntryLocalService;
+
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
-	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityLocalService.class)
-	protected com.liferay.social.kernel.service.SocialActivityLocalService socialActivityLocalService;
+
+	@BeanReference(
+		type = com.liferay.social.kernel.service.SocialActivityLocalService.class
+	)
+	protected com.liferay.social.kernel.service.SocialActivityLocalService
+		socialActivityLocalService;
+
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
+
 }

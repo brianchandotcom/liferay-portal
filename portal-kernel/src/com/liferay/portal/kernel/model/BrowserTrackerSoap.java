@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class BrowserTrackerSoap implements Serializable {
+
 	public static BrowserTrackerSoap toSoapModel(BrowserTracker model) {
 		BrowserTrackerSoap soapModel = new BrowserTrackerSoap();
 
@@ -51,11 +52,14 @@ public class BrowserTrackerSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static BrowserTrackerSoap[][] toSoapModels(BrowserTracker[][] models) {
+	public static BrowserTrackerSoap[][] toSoapModels(
+		BrowserTracker[][] models) {
+
 		BrowserTrackerSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new BrowserTrackerSoap[models.length][models[0].length];
+			soapModels =
+				new BrowserTrackerSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new BrowserTrackerSoap[0][0];
@@ -68,8 +72,11 @@ public class BrowserTrackerSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static BrowserTrackerSoap[] toSoapModels(List<BrowserTracker> models) {
-		List<BrowserTrackerSoap> soapModels = new ArrayList<BrowserTrackerSoap>(models.size());
+	public static BrowserTrackerSoap[] toSoapModels(
+		List<BrowserTracker> models) {
+
+		List<BrowserTrackerSoap> soapModels = new ArrayList<BrowserTrackerSoap>(
+			models.size());
 
 		for (BrowserTracker model : models) {
 			soapModels.add(toSoapModel(model));
@@ -134,4 +141,5 @@ public class BrowserTrackerSoap implements Serializable {
 	private long _companyId;
 	private long _userId;
 	private long _browserKey;
+
 }

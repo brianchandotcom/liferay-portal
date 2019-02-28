@@ -33,14 +33,16 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ContactServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.ContactServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.Contact> getCompanyContacts(
-		long companyId, int start, int end)
+	public static java.util.List<com.liferay.portal.kernel.model.Contact>
+			getCompanyContacts(long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getCompanyContacts(companyId, start, end);
 	}
 
@@ -49,44 +51,50 @@ public class ContactServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Contact getContact(
-		long contactId)
+			long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getContact(contactId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
+	public static java.util.List<com.liferay.portal.kernel.model.Contact>
+			getContacts(
+				long classNameId, long classPK, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.Contact> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getContacts(classNameId, classPK, start, end,
-			orderByComparator);
+
+		return getService().getContacts(
+			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	public static int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getContactsCount(classNameId, classPK);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static ContactService getService() {
 		if (_service == null) {
-			_service = (ContactService)PortalBeanLocatorUtil.locate(ContactService.class.getName());
+			_service = (ContactService)PortalBeanLocatorUtil.locate(
+				ContactService.class.getName());
 
-			ReferenceRegistry.registerReference(ContactServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ContactServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ContactService _service;
+
 }

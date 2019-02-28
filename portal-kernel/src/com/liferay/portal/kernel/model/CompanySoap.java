@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class CompanySoap implements Serializable {
+
 	public static CompanySoap toSoapModel(Company model) {
 		CompanySoap soapModel = new CompanySoap();
 
@@ -75,7 +76,8 @@ public class CompanySoap implements Serializable {
 	}
 
 	public static CompanySoap[] toSoapModels(List<Company> models) {
-		List<CompanySoap> soapModels = new ArrayList<CompanySoap>(models.size());
+		List<CompanySoap> soapModels = new ArrayList<CompanySoap>(
+			models.size());
 
 		for (Company model : models) {
 			soapModels.add(toSoapModel(model));
@@ -202,4 +204,5 @@ public class CompanySoap implements Serializable {
 	private boolean _system;
 	private int _maxUsers;
 	private boolean _active;
+
 }

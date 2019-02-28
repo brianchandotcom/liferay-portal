@@ -19,12 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagModel;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagSoap;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -65,23 +62,24 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
-	implements AnnouncementsFlagModel {
+public class AnnouncementsFlagModelImpl
+	extends BaseModelImpl<AnnouncementsFlag> implements AnnouncementsFlagModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a announcements flag model instance should use the <code>AnnouncementsFlag</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "AnnouncementsFlag";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "flagId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "createDate", Types.TIMESTAMP },
-			{ "entryId", Types.BIGINT },
-			{ "value", Types.INTEGER }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"flagId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"entryId", Types.BIGINT}, {"value", Types.INTEGER}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("flagId", Types.BIGINT);
@@ -92,25 +90,44 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		TABLE_COLUMNS_MAP.put("value", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AnnouncementsFlag (flagId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
+	public static final String TABLE_SQL_CREATE =
+		"create table AnnouncementsFlag (flagId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
+
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsFlag";
-	public static final String ORDER_BY_JPQL = " ORDER BY announcementsFlag.userId ASC, announcementsFlag.createDate ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY AnnouncementsFlag.userId ASC, AnnouncementsFlag.createDate ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY announcementsFlag.userId ASC, announcementsFlag.createDate ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY AnnouncementsFlag.userId ASC, AnnouncementsFlag.createDate ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsFlag"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsFlag"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.announcements.kernel.model.AnnouncementsFlag"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsFlag"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.announcements.kernel.model.AnnouncementsFlag"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.announcements.kernel.model.AnnouncementsFlag"),
+		true);
+
 	public static final long ENTRYID_COLUMN_BITMASK = 1L;
+
 	public static final long USERID_COLUMN_BITMASK = 2L;
+
 	public static final long VALUE_COLUMN_BITMASK = 4L;
+
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
@@ -144,11 +161,13 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	 */
 	public static List<AnnouncementsFlag> toModels(
 		AnnouncementsFlagSoap[] soapModels) {
+
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<AnnouncementsFlag> models = new ArrayList<AnnouncementsFlag>(soapModels.length);
+		List<AnnouncementsFlag> models = new ArrayList<AnnouncementsFlag>(
+			soapModels.length);
 
 		for (AnnouncementsFlagSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -157,8 +176,9 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.announcements.kernel.model.AnnouncementsFlag"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.announcements.kernel.model.AnnouncementsFlag"));
 
 	public AnnouncementsFlagModelImpl() {
 	}
@@ -197,14 +217,18 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<AnnouncementsFlag, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AnnouncementsFlag, Object> attributeGetterFunction = entry.getValue();
+			Function<AnnouncementsFlag, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((AnnouncementsFlag)this));
 		}
 
@@ -216,55 +240,82 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<AnnouncementsFlag, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<AnnouncementsFlag, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<AnnouncementsFlag, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<AnnouncementsFlag, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((AnnouncementsFlag)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(AnnouncementsFlag)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<AnnouncementsFlag, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<AnnouncementsFlag, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<AnnouncementsFlag, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<AnnouncementsFlag, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AnnouncementsFlag, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AnnouncementsFlag, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<AnnouncementsFlag, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AnnouncementsFlag, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<AnnouncementsFlag, Object>>();
-		Map<String, BiConsumer<AnnouncementsFlag, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<AnnouncementsFlag, ?>>();
-
+		Map<String, Function<AnnouncementsFlag, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<AnnouncementsFlag, Object>>();
+		Map<String, BiConsumer<AnnouncementsFlag, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<AnnouncementsFlag, ?>>();
 
 		attributeGetterFunctions.put("flagId", AnnouncementsFlag::getFlagId);
-		attributeSetterBiConsumers.put("flagId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setFlagId);
-		attributeGetterFunctions.put("companyId", AnnouncementsFlag::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"flagId",
+			(BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setFlagId);
+		attributeGetterFunctions.put(
+			"companyId", AnnouncementsFlag::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AnnouncementsFlag, Long>)
+				AnnouncementsFlag::setCompanyId);
 		attributeGetterFunctions.put("userId", AnnouncementsFlag::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setUserId);
-		attributeGetterFunctions.put("createDate", AnnouncementsFlag::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<AnnouncementsFlag, Date>)AnnouncementsFlag::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setUserId);
+		attributeGetterFunctions.put(
+			"createDate", AnnouncementsFlag::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<AnnouncementsFlag, Date>)
+				AnnouncementsFlag::setCreateDate);
 		attributeGetterFunctions.put("entryId", AnnouncementsFlag::getEntryId);
-		attributeSetterBiConsumers.put("entryId", (BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setEntryId);
+		attributeSetterBiConsumers.put(
+			"entryId",
+			(BiConsumer<AnnouncementsFlag, Long>)AnnouncementsFlag::setEntryId);
 		attributeGetterFunctions.put("value", AnnouncementsFlag::getValue);
-		attributeSetterBiConsumers.put("value", (BiConsumer<AnnouncementsFlag, Integer>)AnnouncementsFlag::setValue);
+		attributeSetterBiConsumers.put(
+			"value",
+			(BiConsumer<AnnouncementsFlag, Integer>)
+				AnnouncementsFlag::setValue);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -393,8 +444,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			AnnouncementsFlag.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AnnouncementsFlag.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -407,8 +458,9 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	@Override
 	public AnnouncementsFlag toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AnnouncementsFlag)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (AnnouncementsFlag)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -416,7 +468,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public Object clone() {
-		AnnouncementsFlagImpl announcementsFlagImpl = new AnnouncementsFlagImpl();
+		AnnouncementsFlagImpl announcementsFlagImpl =
+			new AnnouncementsFlagImpl();
 
 		announcementsFlagImpl.setFlagId(getFlagId());
 		announcementsFlagImpl.setCompanyId(getCompanyId());
@@ -448,8 +501,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 			return value;
 		}
 
-		value = DateUtil.compareTo(getCreateDate(),
-				announcementsFlag.getCreateDate());
+		value = DateUtil.compareTo(
+			getCreateDate(), announcementsFlag.getCreateDate());
 
 		if (value != 0) {
 			return value;
@@ -499,15 +552,18 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public void resetOriginalValues() {
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl = this;
 
-		announcementsFlagModelImpl._originalUserId = announcementsFlagModelImpl._userId;
+		announcementsFlagModelImpl._originalUserId =
+			announcementsFlagModelImpl._userId;
 
 		announcementsFlagModelImpl._setOriginalUserId = false;
 
-		announcementsFlagModelImpl._originalEntryId = announcementsFlagModelImpl._entryId;
+		announcementsFlagModelImpl._originalEntryId =
+			announcementsFlagModelImpl._entryId;
 
 		announcementsFlagModelImpl._setOriginalEntryId = false;
 
-		announcementsFlagModelImpl._originalValue = announcementsFlagModelImpl._value;
+		announcementsFlagModelImpl._originalValue =
+			announcementsFlagModelImpl._value;
 
 		announcementsFlagModelImpl._setOriginalValue = false;
 
@@ -516,7 +572,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public CacheModel<AnnouncementsFlag> toCacheModel() {
-		AnnouncementsFlagCacheModel announcementsFlagCacheModel = new AnnouncementsFlagCacheModel();
+		AnnouncementsFlagCacheModel announcementsFlagCacheModel =
+			new AnnouncementsFlagCacheModel();
 
 		announcementsFlagCacheModel.flagId = getFlagId();
 
@@ -542,17 +599,20 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toString() {
-		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<AnnouncementsFlag, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AnnouncementsFlag, Object> attributeGetterFunction = entry.getValue();
+			Function<AnnouncementsFlag, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -571,19 +631,22 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<AnnouncementsFlag, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<AnnouncementsFlag, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AnnouncementsFlag, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AnnouncementsFlag, Object> attributeGetterFunction = entry.getValue();
+			Function<AnnouncementsFlag, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -597,10 +660,12 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = AnnouncementsFlag.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		AnnouncementsFlag.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			AnnouncementsFlag.class, ModelWrapper.class
-		};
+		AnnouncementsFlag.class, ModelWrapper.class
+	};
+
 	private long _flagId;
 	private long _companyId;
 	private long _userId;
@@ -615,4 +680,5 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	private boolean _setOriginalValue;
 	private long _columnBitmask;
 	private AnnouncementsFlag _escapedModel;
+
 }

@@ -54,68 +54,74 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface PortletPreferencesLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface PortletPreferencesLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesLocalServiceUtil} to access the portlet preferences local service. Add custom service methods to <code>com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PortletPreferences addPortletPreferences(long companyId,
-		long ownerId, int ownerType, long plid, String portletId,
-		Portlet portlet, String defaultPreferences);
+	public PortletPreferences addPortletPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, Portlet portlet, String defaultPreferences);
 
 	/**
-	* Adds the portlet preferences to the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferences the portlet preferences
-	* @return the portlet preferences that was added
-	*/
+	 * Adds the portlet preferences to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param portletPreferences the portlet preferences
+	 * @return the portlet preferences that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PortletPreferences addPortletPreferences(
 		PortletPreferences portletPreferences);
 
 	/**
-	* Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
-	*
-	* @param portletPreferencesId the primary key for the new portlet preferences
-	* @return the new portlet preferences
-	*/
+	 * Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
+	 *
+	 * @param portletPreferencesId the primary key for the new portlet preferences
+	 * @return the new portlet preferences
+	 */
 	@Transactional(enabled = false)
 	public PortletPreferences createPortletPreferences(
 		long portletPreferencesId);
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	* Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences that was removed
-	* @throws PortalException if a portlet preferences with the primary key could not be found
-	*/
+	 * Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param portletPreferencesId the primary key of the portlet preferences
+	 * @return the portlet preferences that was removed
+	 * @throws PortalException if a portlet preferences with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public PortletPreferences deletePortletPreferences(
-		long portletPreferencesId) throws PortalException;
+			long portletPreferencesId)
+		throws PortalException;
 
-	public void deletePortletPreferences(long ownerId, int ownerType, long plid);
+	public void deletePortletPreferences(
+		long ownerId, int ownerType, long plid);
 
-	public void deletePortletPreferences(long ownerId, int ownerType,
-		long plid, String portletId) throws PortalException;
+	public void deletePortletPreferences(
+			long ownerId, int ownerType, long plid, String portletId)
+		throws PortalException;
 
 	/**
-	* Deletes the portlet preferences from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferences the portlet preferences
-	* @return the portlet preferences that was removed
-	*/
+	 * Deletes the portlet preferences from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param portletPreferences the portlet preferences
+	 * @return the portlet preferences that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public PortletPreferences deletePortletPreferences(
 		PortletPreferences portletPreferences);
@@ -128,77 +134,80 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortletPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortletPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortletPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortletPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletPreferences fetchPortletPreferences(long portletPreferencesId);
+	public PortletPreferences fetchPortletPreferences(
+		long portletPreferencesId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletPreferences fetchPortletPreferences(long ownerId,
-		int ownerType, long plid, String portletId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences fetchPreferences(long companyId,
+	public PortletPreferences fetchPortletPreferences(
 		long ownerId, int ownerType, long plid, String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public javax.portlet.PortletPreferences fetchPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences fetchPreferences(
@@ -215,10 +224,10 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -227,8 +236,8 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Settings getPortletInstanceSettings(long companyId, long groupId,
-		String portletId,
+	public Settings getPortletInstanceSettings(
+		long companyId, long groupId, String portletId,
 		PortletInstanceSettingsLocator portletInstanceSettingsLocator,
 		Settings portalPreferencesSettings);
 
@@ -236,105 +245,125 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public List<PortletPreferences> getPortletPreferences();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortletPreferences> getPortletPreferences(int ownerType,
-		long plid, String portletId);
+	public List<PortletPreferences> getPortletPreferences(
+		int ownerType, long plid, String portletId);
 
 	/**
-	* Returns the portlet preferences with the primary key.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences
-	* @throws PortalException if a portlet preferences with the primary key could not be found
-	*/
+	 * Returns the portlet preferences with the primary key.
+	 *
+	 * @param portletPreferencesId the primary key of the portlet preferences
+	 * @return the portlet preferences
+	 * @throws PortalException if a portlet preferences with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PortletPreferences getPortletPreferences(long portletPreferencesId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortletPreferences> getPortletPreferences(long ownerId,
-		int ownerType, long plid);
+	public List<PortletPreferences> getPortletPreferences(
+		long ownerId, int ownerType, long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletPreferences getPortletPreferences(long ownerId,
-		int ownerType, long plid, String portletId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortletPreferences> getPortletPreferences(long companyId,
-		long ownerId, int ownerType, String portletId)
+	public PortletPreferences getPortletPreferences(
+			long ownerId, int ownerType, long plid, String portletId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortletPreferences> getPortletPreferences(long companyId,
-		long groupId, long ownerId, int ownerType, String portletId,
-		boolean privateLayout);
+	public List<PortletPreferences> getPortletPreferences(
+			long companyId, long ownerId, int ownerType, String portletId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortletPreferences> getPortletPreferences(long plid,
-		String portletId);
+	public List<PortletPreferences> getPortletPreferences(
+		long companyId, long groupId, long ownerId, int ownerType,
+		String portletId, boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortletPreferences> getPortletPreferencesByOwnerId(long ownerId);
+	public List<PortletPreferences> getPortletPreferences(
+		long plid, String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PortletPreferences> getPortletPreferencesByOwnerId(
+		long ownerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PortletPreferences> getPortletPreferencesByPlid(long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(int ownerType, long plid,
-		String portletId);
+	public long getPortletPreferencesCount(
+		int ownerType, long plid, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getPortletPreferencesCount(int ownerType, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(long ownerId, int ownerType,
-		long plid, Portlet portlet, boolean excludeDefaultPreferences);
+	public long getPortletPreferencesCount(
+		long ownerId, int ownerType, long plid, Portlet portlet,
+		boolean excludeDefaultPreferences);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(long ownerId, int ownerType,
-		String portletId, boolean excludeDefaultPreferences);
+	public long getPortletPreferencesCount(
+		long ownerId, int ownerType, String portletId,
+		boolean excludeDefaultPreferences);
 
 	/**
-	* Returns a range of all the portlet preferenceses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortletPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of portlet preferenceses
-	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	* @return the range of portlet preferenceses
-	*/
+	 * Returns a range of all the portlet preferenceses.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortletPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of portlet preferenceses
+	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
+	 * @return the range of portlet preferenceses
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PortletPreferences> getPortletPreferenceses(int start, int end);
 
 	/**
-	* Returns the number of portlet preferenceses.
-	*
-	* @return the number of portlet preferenceses
-	*/
+	 * Returns the number of portlet preferenceses.
+	 *
+	 * @return the number of portlet preferenceses
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPortletPreferencesesCount();
 
-	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
-		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
-	}
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.springframework.dao.DataIntegrityViolationException"
+			)
+		}
 	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType, long plid, String portletId);
+	public javax.portlet.PortletPreferences getPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId);
 
-	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
-		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
-	}
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.springframework.dao.DataIntegrityViolationException"
+			)
+		}
 	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType, long plid, String portletId,
-		String defaultPreferences);
+	public javax.portlet.PortletPreferences getPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences);
 
-	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
-		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
-	}
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.springframework.dao.DataIntegrityViolationException"
+			)
+		}
 	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(
@@ -346,26 +375,28 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getStrictPreferences(
-		long companyId, long ownerId, int ownerType, long plid, String portletId);
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getStrictPreferences(
 		PortletPreferencesIds portletPreferencesIds);
 
 	/**
-	* Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferences the portlet preferences
-	* @return the portlet preferences that was updated
-	*/
+	 * Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param portletPreferences the portlet preferences
+	 * @return the portlet preferences that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public PortletPreferences updatePortletPreferences(
 		PortletPreferences portletPreferences);
 
-	public PortletPreferences updatePreferences(long ownerId, int ownerType,
-		long plid, String portletId,
+	public PortletPreferences updatePreferences(
+		long ownerId, int ownerType, long plid, String portletId,
 		javax.portlet.PortletPreferences portletPreferences);
 
-	public PortletPreferences updatePreferences(long ownerId, int ownerType,
-		long plid, String portletId, String xml);
+	public PortletPreferences updatePreferences(
+		long ownerId, int ownerType, long plid, String portletId, String xml);
+
 }

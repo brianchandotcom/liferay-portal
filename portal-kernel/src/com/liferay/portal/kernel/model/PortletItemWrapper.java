@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class PortletItemWrapper extends BaseModelWrapper<PortletItem>
+public class PortletItemWrapper
+	extends BaseModelWrapper<PortletItem>
 	implements PortletItem, ModelWrapper<PortletItem> {
+
 	public PortletItemWrapper(PortletItem portletItem) {
 		super(portletItem);
 	}
@@ -127,140 +129,140 @@ public class PortletItemWrapper extends BaseModelWrapper<PortletItem>
 	}
 
 	/**
-	* Returns the fully qualified class name of this portlet item.
-	*
-	* @return the fully qualified class name of this portlet item
-	*/
+	 * Returns the fully qualified class name of this portlet item.
+	 *
+	 * @return the fully qualified class name of this portlet item
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this portlet item.
-	*
-	* @return the class name ID of this portlet item
-	*/
+	 * Returns the class name ID of this portlet item.
+	 *
+	 * @return the class name ID of this portlet item
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the company ID of this portlet item.
-	*
-	* @return the company ID of this portlet item
-	*/
+	 * Returns the company ID of this portlet item.
+	 *
+	 * @return the company ID of this portlet item
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this portlet item.
-	*
-	* @return the create date of this portlet item
-	*/
+	 * Returns the create date of this portlet item.
+	 *
+	 * @return the create date of this portlet item
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the group ID of this portlet item.
-	*
-	* @return the group ID of this portlet item
-	*/
+	 * Returns the group ID of this portlet item.
+	 *
+	 * @return the group ID of this portlet item
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this portlet item.
-	*
-	* @return the modified date of this portlet item
-	*/
+	 * Returns the modified date of this portlet item.
+	 *
+	 * @return the modified date of this portlet item
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this portlet item.
-	*
-	* @return the mvcc version of this portlet item
-	*/
+	 * Returns the mvcc version of this portlet item.
+	 *
+	 * @return the mvcc version of this portlet item
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this portlet item.
-	*
-	* @return the name of this portlet item
-	*/
+	 * Returns the name of this portlet item.
+	 *
+	 * @return the name of this portlet item
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the portlet ID of this portlet item.
-	*
-	* @return the portlet ID of this portlet item
-	*/
+	 * Returns the portlet ID of this portlet item.
+	 *
+	 * @return the portlet ID of this portlet item
+	 */
 	@Override
 	public String getPortletId() {
 		return model.getPortletId();
 	}
 
 	/**
-	* Returns the portlet item ID of this portlet item.
-	*
-	* @return the portlet item ID of this portlet item
-	*/
+	 * Returns the portlet item ID of this portlet item.
+	 *
+	 * @return the portlet item ID of this portlet item
+	 */
 	@Override
 	public long getPortletItemId() {
 		return model.getPortletItemId();
 	}
 
 	/**
-	* Returns the primary key of this portlet item.
-	*
-	* @return the primary key of this portlet item
-	*/
+	 * Returns the primary key of this portlet item.
+	 *
+	 * @return the primary key of this portlet item
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the user ID of this portlet item.
-	*
-	* @return the user ID of this portlet item
-	*/
+	 * Returns the user ID of this portlet item.
+	 *
+	 * @return the user ID of this portlet item
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this portlet item.
-	*
-	* @return the user name of this portlet item
-	*/
+	 * Returns the user name of this portlet item.
+	 *
+	 * @return the user name of this portlet item
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this portlet item.
-	*
-	* @return the user uuid of this portlet item
-	*/
+	 * Returns the user uuid of this portlet item.
+	 *
+	 * @return the user uuid of this portlet item
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -277,130 +279,130 @@ public class PortletItemWrapper extends BaseModelWrapper<PortletItem>
 	}
 
 	/**
-	* Sets the class name ID of this portlet item.
-	*
-	* @param classNameId the class name ID of this portlet item
-	*/
+	 * Sets the class name ID of this portlet item.
+	 *
+	 * @param classNameId the class name ID of this portlet item
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the company ID of this portlet item.
-	*
-	* @param companyId the company ID of this portlet item
-	*/
+	 * Sets the company ID of this portlet item.
+	 *
+	 * @param companyId the company ID of this portlet item
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this portlet item.
-	*
-	* @param createDate the create date of this portlet item
-	*/
+	 * Sets the create date of this portlet item.
+	 *
+	 * @param createDate the create date of this portlet item
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the group ID of this portlet item.
-	*
-	* @param groupId the group ID of this portlet item
-	*/
+	 * Sets the group ID of this portlet item.
+	 *
+	 * @param groupId the group ID of this portlet item
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this portlet item.
-	*
-	* @param modifiedDate the modified date of this portlet item
-	*/
+	 * Sets the modified date of this portlet item.
+	 *
+	 * @param modifiedDate the modified date of this portlet item
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this portlet item.
-	*
-	* @param mvccVersion the mvcc version of this portlet item
-	*/
+	 * Sets the mvcc version of this portlet item.
+	 *
+	 * @param mvccVersion the mvcc version of this portlet item
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this portlet item.
-	*
-	* @param name the name of this portlet item
-	*/
+	 * Sets the name of this portlet item.
+	 *
+	 * @param name the name of this portlet item
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the portlet ID of this portlet item.
-	*
-	* @param portletId the portlet ID of this portlet item
-	*/
+	 * Sets the portlet ID of this portlet item.
+	 *
+	 * @param portletId the portlet ID of this portlet item
+	 */
 	@Override
 	public void setPortletId(String portletId) {
 		model.setPortletId(portletId);
 	}
 
 	/**
-	* Sets the portlet item ID of this portlet item.
-	*
-	* @param portletItemId the portlet item ID of this portlet item
-	*/
+	 * Sets the portlet item ID of this portlet item.
+	 *
+	 * @param portletItemId the portlet item ID of this portlet item
+	 */
 	@Override
 	public void setPortletItemId(long portletItemId) {
 		model.setPortletItemId(portletItemId);
 	}
 
 	/**
-	* Sets the primary key of this portlet item.
-	*
-	* @param primaryKey the primary key of this portlet item
-	*/
+	 * Sets the primary key of this portlet item.
+	 *
+	 * @param primaryKey the primary key of this portlet item
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the user ID of this portlet item.
-	*
-	* @param userId the user ID of this portlet item
-	*/
+	 * Sets the user ID of this portlet item.
+	 *
+	 * @param userId the user ID of this portlet item
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this portlet item.
-	*
-	* @param userName the user name of this portlet item
-	*/
+	 * Sets the user name of this portlet item.
+	 *
+	 * @param userName the user name of this portlet item
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this portlet item.
-	*
-	* @param userUuid the user uuid of this portlet item
-	*/
+	 * Sets the user uuid of this portlet item.
+	 *
+	 * @param userUuid the user uuid of this portlet item
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -410,4 +412,5 @@ public class PortletItemWrapper extends BaseModelWrapper<PortletItem>
 	protected PortletItemWrapper wrap(PortletItem portletItem) {
 		return new PortletItemWrapper(portletItem);
 	}
+
 }

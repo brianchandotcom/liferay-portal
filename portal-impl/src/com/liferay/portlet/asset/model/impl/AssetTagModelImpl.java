@@ -19,14 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetTagSoap;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -67,28 +63,27 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
-	implements AssetTagModel {
+public class AssetTagModelImpl
+	extends BaseModelImpl<AssetTag> implements AssetTagModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a asset tag model instance should use the <code>AssetTag</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "AssetTag";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
-			{ "tagId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
-			{ "assetCount", Types.INTEGER },
-			{ "lastPublishDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"uuid_", Types.VARCHAR}, {"tagId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"assetCount", Types.INTEGER},
+		{"lastPublishDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -104,25 +99,42 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null)";
+
 	public static final String TABLE_SQL_DROP = "drop table AssetTag";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTag.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTag.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.asset.kernel.model.AssetTag"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.asset.kernel.model.AssetTag"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetTag"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.asset.kernel.model.AssetTag"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.asset.kernel.model.AssetTag"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetTag"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -173,18 +185,27 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		return models;
 	}
 
-	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME = "AssetEntries_AssetTags";
-	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "entryId", Types.BIGINT },
-			{ "tagId", Types.BIGINT }
+	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME =
+		"AssetEntries_AssetTags";
+
+	public static final Object[][]
+		MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_COLUMNS = {
+			{"companyId", Types.BIGINT}, {"entryId", Types.BIGINT},
+			{"tagId", Types.BIGINT}
 		};
-	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE = "create table AssetEntries_AssetTags (companyId LONG not null,entryId LONG not null,tagId LONG not null,primary key (entryId, tagId))";
-	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+
+	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE =
+		"create table AssetEntries_AssetTags (companyId LONG not null,entryId LONG not null,tagId LONG not null,primary key (entryId, tagId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.AssetEntries_AssetTags"),
 			true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.asset.kernel.model.AssetTag"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.asset.kernel.model.AssetTag"));
 
 	public AssetTagModelImpl() {
 	}
@@ -223,14 +244,18 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<AssetTag, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetTag, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<AssetTag, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AssetTag, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AssetTag, Object> attributeGetterFunction = entry.getValue();
+			Function<AssetTag, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((AssetTag)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((AssetTag)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -241,62 +266,87 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<AssetTag, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<AssetTag, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<AssetTag, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<AssetTag, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((AssetTag)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(AssetTag)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<AssetTag, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<AssetTag, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<AssetTag, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<AssetTag, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<AssetTag, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<AssetTag, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<AssetTag, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetTag, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<AssetTag, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<AssetTag, Object>>();
-		Map<String, BiConsumer<AssetTag, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<AssetTag, ?>>();
-
+		Map<String, Function<AssetTag, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetTag, Object>>();
+		Map<String, BiConsumer<AssetTag, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetTag, ?>>();
 
 		attributeGetterFunctions.put("uuid", AssetTag::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<AssetTag, String>)AssetTag::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<AssetTag, String>)AssetTag::setUuid);
 		attributeGetterFunctions.put("tagId", AssetTag::getTagId);
-		attributeSetterBiConsumers.put("tagId", (BiConsumer<AssetTag, Long>)AssetTag::setTagId);
+		attributeSetterBiConsumers.put(
+			"tagId", (BiConsumer<AssetTag, Long>)AssetTag::setTagId);
 		attributeGetterFunctions.put("groupId", AssetTag::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetTag, Long>)AssetTag::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<AssetTag, Long>)AssetTag::setGroupId);
 		attributeGetterFunctions.put("companyId", AssetTag::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetTag, Long>)AssetTag::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<AssetTag, Long>)AssetTag::setCompanyId);
 		attributeGetterFunctions.put("userId", AssetTag::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetTag, Long>)AssetTag::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<AssetTag, Long>)AssetTag::setUserId);
 		attributeGetterFunctions.put("userName", AssetTag::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetTag, String>)AssetTag::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<AssetTag, String>)AssetTag::setUserName);
 		attributeGetterFunctions.put("createDate", AssetTag::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetTag, Date>)AssetTag::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<AssetTag, Date>)AssetTag::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", AssetTag::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetTag, Date>)AssetTag::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<AssetTag, Date>)AssetTag::setModifiedDate);
 		attributeGetterFunctions.put("name", AssetTag::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<AssetTag, String>)AssetTag::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<AssetTag, String>)AssetTag::setName);
 		attributeGetterFunctions.put("assetCount", AssetTag::getAssetCount);
-		attributeSetterBiConsumers.put("assetCount", (BiConsumer<AssetTag, Integer>)AssetTag::setAssetCount);
-		attributeGetterFunctions.put("lastPublishDate", AssetTag::getLastPublishDate);
-		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<AssetTag, Date>)AssetTag::setLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"assetCount",
+			(BiConsumer<AssetTag, Integer>)AssetTag::setAssetCount);
+		attributeGetterFunctions.put(
+			"lastPublishDate", AssetTag::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<AssetTag, Date>)AssetTag::setLastPublishDate);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -503,8 +553,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				AssetTag.class.getName()));
+		return new StagedModelType(
+			PortalUtil.getClassNameId(AssetTag.class.getName()));
 	}
 
 	public long getColumnBitmask() {
@@ -513,8 +563,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			AssetTag.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AssetTag.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -527,8 +577,9 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	@Override
 	public AssetTag toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (AssetTag)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (AssetTag)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -696,16 +747,20 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public String toString() {
-		Map<String, Function<AssetTag, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetTag, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<AssetTag, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AssetTag, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AssetTag, Object> attributeGetterFunction = entry.getValue();
+			Function<AssetTag, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -724,18 +779,22 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<AssetTag, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<AssetTag, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<AssetTag, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<AssetTag, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<AssetTag, Object> attributeGetterFunction = entry.getValue();
+			Function<AssetTag, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -749,10 +808,12 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = AssetTag.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		AssetTag.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			AssetTag.class, ModelWrapper.class
-		};
+		AssetTag.class, ModelWrapper.class
+	};
+
 	private String _uuid;
 	private String _originalUuid;
 	private long _tagId;
@@ -773,4 +834,5 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetTag _escapedModel;
+
 }

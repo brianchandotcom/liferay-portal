@@ -26,52 +26,61 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class PowwowParticipantServiceWrapper implements PowwowParticipantService,
-	ServiceWrapper<PowwowParticipantService> {
+public class PowwowParticipantServiceWrapper
+	implements PowwowParticipantService,
+			   ServiceWrapper<PowwowParticipantService> {
+
 	public PowwowParticipantServiceWrapper(
 		PowwowParticipantService powwowParticipantService) {
+
 		_powwowParticipantService = powwowParticipantService;
 	}
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant)
+			com.liferay.powwow.model.PowwowParticipant powwowParticipant)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowParticipantService.deletePowwowParticipant(powwowParticipant);
+
+		return _powwowParticipantService.deletePowwowParticipant(
+			powwowParticipant);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _powwowParticipantService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public java.util.List<com.liferay.powwow.model.PowwowParticipant> getPowwowParticipants(
-		long powwowMeetingId)
+	public java.util.List<com.liferay.powwow.model.PowwowParticipant>
+			getPowwowParticipants(long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _powwowParticipantService.getPowwowParticipants(powwowMeetingId);
 	}
 
 	@Override
 	public int getPowwowParticipantsCount(long powwowMeetingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowParticipantService.getPowwowParticipantsCount(powwowMeetingId);
+
+		return _powwowParticipantService.getPowwowParticipantsCount(
+			powwowMeetingId);
 	}
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, String name,
-		long participantUserId, String emailAddress, int type, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long powwowParticipantId, long powwowMeetingId, String name,
+			long participantUserId, String emailAddress, int type, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _powwowParticipantService.updatePowwowParticipant(powwowParticipantId,
-			powwowMeetingId, name, participantUserId, emailAddress, type,
-			status, serviceContext);
+
+		return _powwowParticipantService.updatePowwowParticipant(
+			powwowParticipantId, powwowMeetingId, name, participantUserId,
+			emailAddress, type, status, serviceContext);
 	}
 
 	@Override
@@ -82,8 +91,10 @@ public class PowwowParticipantServiceWrapper implements PowwowParticipantService
 	@Override
 	public void setWrappedService(
 		PowwowParticipantService powwowParticipantService) {
+
 		_powwowParticipantService = powwowParticipantService;
 	}
 
 	private PowwowParticipantService _powwowParticipantService;
+
 }

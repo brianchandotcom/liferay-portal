@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.BrowserTracker;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
-	Externalizable, MVCCModel {
+public class BrowserTrackerCacheModel
+	implements CacheModel<BrowserTracker>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,10 +47,12 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 			return false;
 		}
 
-		BrowserTrackerCacheModel browserTrackerCacheModel = (BrowserTrackerCacheModel)obj;
+		BrowserTrackerCacheModel browserTrackerCacheModel =
+			(BrowserTrackerCacheModel)obj;
 
 		if ((browserTrackerId == browserTrackerCacheModel.browserTrackerId) &&
-				(mvccVersion == browserTrackerCacheModel.mvccVersion)) {
+			(mvccVersion == browserTrackerCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -122,8 +124,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(browserTrackerId);
@@ -140,4 +141,5 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 	public long companyId;
 	public long userId;
 	public long browserKey;
+
 }

@@ -53,25 +53,31 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class LayoutRevisionServiceHttp {
-	public static com.liferay.portal.kernel.model.LayoutRevision addLayoutRevision(
-		HttpPrincipal httpPrincipal, long userId, long layoutSetBranchId,
-		long layoutBranchId, long parentLayoutRevisionId, boolean head,
-		long plid, long portletPreferencesPlid, boolean privateLayout,
-		String name, String title, String description, String keywords,
-		String robots, String typeSettings, boolean iconImage,
-		long iconImageId, String themeId, String colorSchemeId, String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(LayoutRevisionServiceUtil.class,
-					"addLayoutRevision", _addLayoutRevisionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					layoutSetBranchId, layoutBranchId, parentLayoutRevisionId,
-					head, plid, portletPreferencesPlid, privateLayout, name,
-					title, description, keywords, robots, typeSettings,
-					iconImage, iconImageId, themeId, colorSchemeId, css,
-					serviceContext);
+	public static com.liferay.portal.kernel.model.LayoutRevision
+			addLayoutRevision(
+				HttpPrincipal httpPrincipal, long userId,
+				long layoutSetBranchId, long layoutBranchId,
+				long parentLayoutRevisionId, boolean head, long plid,
+				long portletPreferencesPlid, boolean privateLayout, String name,
+				String title, String description, String keywords,
+				String robots, String typeSettings, boolean iconImage,
+				long iconImageId, String themeId, String colorSchemeId,
+				String css,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutRevisionServiceUtil.class, "addLayoutRevision",
+				_addLayoutRevisionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, layoutSetBranchId, layoutBranchId,
+				parentLayoutRevisionId, head, plid, portletPreferencesPlid,
+				privateLayout, name, title, description, keywords, robots,
+				typeSettings, iconImage, iconImageId, themeId, colorSchemeId,
+				css, serviceContext);
 
 			Object returnObj = null;
 
@@ -79,11 +85,15 @@ public class LayoutRevisionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.portal.kernel.model.LayoutRevision)returnObj;
@@ -95,12 +105,16 @@ public class LayoutRevisionServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionServiceHttp.class);
-	private static final Class<?>[] _addLayoutRevisionParameterTypes0 = new Class[] {
+	private static Log _log = LogFactoryUtil.getLog(
+		LayoutRevisionServiceHttp.class);
+
+	private static final Class<?>[] _addLayoutRevisionParameterTypes0 =
+		new Class[] {
 			long.class, long.class, long.class, long.class, boolean.class,
 			long.class, long.class, boolean.class, String.class, String.class,
 			String.class, String.class, String.class, String.class,
 			boolean.class, long.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+
 }

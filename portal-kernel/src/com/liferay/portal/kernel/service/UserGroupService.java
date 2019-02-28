@@ -39,9 +39,12 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface UserGroupService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,169 +52,172 @@ public interface UserGroupService extends BaseService {
 	 */
 
 	/**
-	* Adds the user groups to the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userGroupIds the primary keys of the user groups
-	*/
+	 * Adds the user groups to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param userGroupIds the primary keys of the user groups
+	 */
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException;
 
 	/**
-	* Adds the user groups to the team
-	*
-	* @param teamId the primary key of the team
-	* @param userGroupIds the primary keys of the user groups
-	*/
+	 * Adds the user groups to the team
+	 *
+	 * @param teamId the primary key of the team
+	 * @param userGroupIds the primary keys of the user groups
+	 */
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException;
 
 	/**
-	* Adds a user group.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user group,
-	* including its resources, metadata, and internal data structures.
-	* </p>
-	*
-	* @param name the user group's name
-	* @param description the user group's description
-	* @return the user group
-	* @deprecated As of Newton (6.2.x), replaced by {@link
-	#addUserGroup(String, String, ServiceContext)}
-	*/
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal data structures.
+	 * </p>
+	 *
+	 * @param name the user group's name
+	 * @param description the user group's description
+	 * @return the user group
+	 * @deprecated As of Newton (6.2.x), replaced by {@link
+	 #addUserGroup(String, String, ServiceContext)}
+	 */
 	@Deprecated
 	public UserGroup addUserGroup(String name, String description)
 		throws PortalException;
 
 	/**
-	* Adds a user group.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user group,
-	* including its resources, metadata, and internal data structures.
-	* </p>
-	*
-	* @param name the user group's name
-	* @param description the user group's description
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set expando bridge attributes for the
-	user group.
-	* @return the user group
-	*/
-	public UserGroup addUserGroup(String name, String description,
-		ServiceContext serviceContext) throws PortalException;
+	 * Adds a user group.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user group,
+	 * including its resources, metadata, and internal data structures.
+	 * </p>
+	 *
+	 * @param name the user group's name
+	 * @param description the user group's description
+	 * @param serviceContext the service context to be applied (optionally
+	 <code>null</code>). Can set expando bridge attributes for the
+	 user group.
+	 * @return the user group
+	 */
+	public UserGroup addUserGroup(
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
-	* Deletes the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	*/
+	 * Deletes the user group.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 */
 	public void deleteUserGroup(long userGroupId) throws PortalException;
 
 	/**
-	* Fetches the user group with the primary key.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group with the primary key
-	*/
+	 * Fetches the user group with the primary key.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @return the user group with the primary key
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup fetchUserGroup(long userGroupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> getGtUserGroups(long gtUserGroupId, long companyId,
-		long parentUserGroupId, int size);
+	public List<UserGroup> getGtUserGroups(
+		long gtUserGroupId, long companyId, long parentUserGroupId, int size);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* Returns the user group with the primary key.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group with the primary key
-	*/
+	 * Returns the user group with the primary key.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @return the user group with the primary key
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup getUserGroup(long userGroupId) throws PortalException;
 
 	/**
-	* Returns the user group with the name.
-	*
-	* @param name the user group's name
-	* @return the user group with the name
-	*/
+	 * Returns the user group with the name.
+	 *
+	 * @param name the user group's name
+	 * @return the user group with the name
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup getUserGroup(String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> getUserGroups(long companyId)
-		throws PortalException;
+	public List<UserGroup> getUserGroups(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> getUserGroups(long companyId, String name,
-		int start, int end);
+	public List<UserGroup> getUserGroups(
+		long companyId, String name, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupsCount(long companyId, String name);
 
 	/**
-	* Returns all the user groups to which the user belongs.
-	*
-	* @param userId the primary key of the user
-	* @return the user groups to which the user belongs
-	*/
+	 * Returns all the user groups to which the user belongs.
+	 *
+	 * @param userId the primary key of the user
+	 * @return the user groups to which the user belongs
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroup> getUserUserGroups(long userId)
 		throws PortalException;
 
 	/**
-	* Removes the user groups from the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userGroupIds the primary keys of the user groups
-	*/
+	 * Removes the user groups from the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param userGroupIds the primary keys of the user groups
+	 */
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException;
 
 	/**
-	* Removes the user groups from the team.
-	*
-	* @param teamId the primary key of the team
-	* @param userGroupIds the primary keys of the user groups
-	*/
+	 * Removes the user groups from the team.
+	 *
+	 * @param teamId the primary key of the team
+	 * @param userGroupIds the primary keys of the user groups
+	 */
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException;
 
 	/**
-	* Updates the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param name the user group's name
-	* @param description the the user group's description
-	* @return the user group
-	* @deprecated As of Newton (6.2.x), replaced by {@link
-	#updateUserGroup(long, String, String, ServiceContext)}
-	*/
+	 * Updates the user group.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @param name the user group's name
+	 * @param description the the user group's description
+	 * @return the user group
+	 * @deprecated As of Newton (6.2.x), replaced by {@link
+	 #updateUserGroup(long, String, String, ServiceContext)}
+	 */
 	@Deprecated
-	public UserGroup updateUserGroup(long userGroupId, String name,
-		String description) throws PortalException;
+	public UserGroup updateUserGroup(
+			long userGroupId, String name, String description)
+		throws PortalException;
 
 	/**
-	* Updates the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param name the user group's name
-	* @param description the the user group's description
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set expando bridge attributes for the
-	user group.
-	* @return the user group
-	*/
-	public UserGroup updateUserGroup(long userGroupId, String name,
-		String description, ServiceContext serviceContext)
+	 * Updates the user group.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @param name the user group's name
+	 * @param description the the user group's description
+	 * @param serviceContext the service context to be applied (optionally
+	 <code>null</code>). Can set expando bridge attributes for the
+	 user group.
+	 * @return the user group
+	 */
+	public UserGroup updateUserGroup(
+			long userGroupId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

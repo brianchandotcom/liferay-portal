@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class VirtualHostWrapper extends BaseModelWrapper<VirtualHost>
+public class VirtualHostWrapper
+	extends BaseModelWrapper<VirtualHost>
 	implements VirtualHost, ModelWrapper<VirtualHost> {
+
 	public VirtualHostWrapper(VirtualHost virtualHost) {
 		super(virtualHost);
 	}
@@ -84,60 +86,60 @@ public class VirtualHostWrapper extends BaseModelWrapper<VirtualHost>
 	}
 
 	/**
-	* Returns the company ID of this virtual host.
-	*
-	* @return the company ID of this virtual host
-	*/
+	 * Returns the company ID of this virtual host.
+	 *
+	 * @return the company ID of this virtual host
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the hostname of this virtual host.
-	*
-	* @return the hostname of this virtual host
-	*/
+	 * Returns the hostname of this virtual host.
+	 *
+	 * @return the hostname of this virtual host
+	 */
 	@Override
 	public String getHostname() {
 		return model.getHostname();
 	}
 
 	/**
-	* Returns the layout set ID of this virtual host.
-	*
-	* @return the layout set ID of this virtual host
-	*/
+	 * Returns the layout set ID of this virtual host.
+	 *
+	 * @return the layout set ID of this virtual host
+	 */
 	@Override
 	public long getLayoutSetId() {
 		return model.getLayoutSetId();
 	}
 
 	/**
-	* Returns the mvcc version of this virtual host.
-	*
-	* @return the mvcc version of this virtual host
-	*/
+	 * Returns the mvcc version of this virtual host.
+	 *
+	 * @return the mvcc version of this virtual host
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this virtual host.
-	*
-	* @return the primary key of this virtual host
-	*/
+	 * Returns the primary key of this virtual host.
+	 *
+	 * @return the primary key of this virtual host
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the virtual host ID of this virtual host.
-	*
-	* @return the virtual host ID of this virtual host
-	*/
+	 * Returns the virtual host ID of this virtual host.
+	 *
+	 * @return the virtual host ID of this virtual host
+	 */
 	@Override
 	public long getVirtualHostId() {
 		return model.getVirtualHostId();
@@ -149,60 +151,60 @@ public class VirtualHostWrapper extends BaseModelWrapper<VirtualHost>
 	}
 
 	/**
-	* Sets the company ID of this virtual host.
-	*
-	* @param companyId the company ID of this virtual host
-	*/
+	 * Sets the company ID of this virtual host.
+	 *
+	 * @param companyId the company ID of this virtual host
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the hostname of this virtual host.
-	*
-	* @param hostname the hostname of this virtual host
-	*/
+	 * Sets the hostname of this virtual host.
+	 *
+	 * @param hostname the hostname of this virtual host
+	 */
 	@Override
 	public void setHostname(String hostname) {
 		model.setHostname(hostname);
 	}
 
 	/**
-	* Sets the layout set ID of this virtual host.
-	*
-	* @param layoutSetId the layout set ID of this virtual host
-	*/
+	 * Sets the layout set ID of this virtual host.
+	 *
+	 * @param layoutSetId the layout set ID of this virtual host
+	 */
 	@Override
 	public void setLayoutSetId(long layoutSetId) {
 		model.setLayoutSetId(layoutSetId);
 	}
 
 	/**
-	* Sets the mvcc version of this virtual host.
-	*
-	* @param mvccVersion the mvcc version of this virtual host
-	*/
+	 * Sets the mvcc version of this virtual host.
+	 *
+	 * @param mvccVersion the mvcc version of this virtual host
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this virtual host.
-	*
-	* @param primaryKey the primary key of this virtual host
-	*/
+	 * Sets the primary key of this virtual host.
+	 *
+	 * @param primaryKey the primary key of this virtual host
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the virtual host ID of this virtual host.
-	*
-	* @param virtualHostId the virtual host ID of this virtual host
-	*/
+	 * Sets the virtual host ID of this virtual host.
+	 *
+	 * @param virtualHostId the virtual host ID of this virtual host
+	 */
 	@Override
 	public void setVirtualHostId(long virtualHostId) {
 		model.setVirtualHostId(virtualHostId);
@@ -212,4 +214,5 @@ public class VirtualHostWrapper extends BaseModelWrapper<VirtualHost>
 	protected VirtualHostWrapper wrap(VirtualHost virtualHost) {
 		return new VirtualHostWrapper(virtualHost);
 	}
+
 }

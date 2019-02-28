@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Repository;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class RepositoryCacheModel implements CacheModel<Repository>,
-	Externalizable, MVCCModel {
+public class RepositoryCacheModel
+	implements CacheModel<Repository>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +52,8 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		RepositoryCacheModel repositoryCacheModel = (RepositoryCacheModel)obj;
 
 		if ((repositoryId == repositoryCacheModel.repositoryId) &&
-				(mvccVersion == repositoryCacheModel.mvccVersion)) {
+			(mvccVersion == repositoryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -227,8 +228,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -306,4 +306,5 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	public String typeSettings;
 	public long dlFolderId;
 	public long lastPublishDate;
+
 }

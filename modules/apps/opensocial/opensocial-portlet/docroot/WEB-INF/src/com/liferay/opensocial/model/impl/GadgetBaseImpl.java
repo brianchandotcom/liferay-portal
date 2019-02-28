@@ -33,6 +33,7 @@ import com.liferay.opensocial.service.GadgetLocalServiceUtil;
  */
 @ProviderType
 public abstract class GadgetBaseImpl extends GadgetModelImpl implements Gadget {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class GadgetBaseImpl extends GadgetModelImpl implements Gadget {
 			GadgetLocalServiceUtil.updateGadget(this);
 		}
 	}
+
 }

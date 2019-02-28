@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Phone;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
-	MVCCModel {
+public class PhoneCacheModel
+	implements CacheModel<Phone>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +52,8 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		PhoneCacheModel phoneCacheModel = (PhoneCacheModel)obj;
 
 		if ((phoneId == phoneCacheModel.phoneId) &&
-				(mvccVersion == phoneCacheModel.mvccVersion)) {
+			(mvccVersion == phoneCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -202,8 +203,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -266,4 +266,5 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	public String extension;
 	public long typeId;
 	public boolean primary;
+
 }

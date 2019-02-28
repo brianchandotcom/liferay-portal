@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCModel,
-	ShardedModel, StagedAuditedModel {
+public interface PasswordPolicyModel
+	extends BaseModel<PasswordPolicy>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -641,4 +643,5 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCMode
 	 * @param resetTicketMaxAge the reset ticket max age of this password policy
 	 */
 	public void setResetTicketMaxAge(long resetTicketMaxAge);
+
 }

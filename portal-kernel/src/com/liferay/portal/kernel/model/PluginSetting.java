@@ -29,13 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.PluginSettingImpl")
 @ProviderType
 public interface PluginSetting extends PluginSettingModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PluginSettingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<PluginSetting, Long> PLUGIN_SETTING_ID_ACCESSOR =
-		new Accessor<PluginSetting, Long>() {
+	public static final Accessor<PluginSetting, Long>
+		PLUGIN_SETTING_ID_ACCESSOR = new Accessor<PluginSetting, Long>() {
+
 			@Override
 			public Long get(PluginSetting pluginSetting) {
 				return pluginSetting.getPluginSettingId();
@@ -50,40 +52,42 @@ public interface PluginSetting extends PluginSettingModel, PersistedModel {
 			public Class<PluginSetting> getTypeClass() {
 				return PluginSetting.class;
 			}
+
 		};
 
 	/**
-	* Adds a role to the list of roles.
-	*/
+	 * Adds a role to the list of roles.
+	 */
 	public void addRole(String role);
 
 	/**
-	* Returns an array of required roles of the plugin.
-	*
-	* @return an array of required roles of the plugin
-	*/
+	 * Returns an array of required roles of the plugin.
+	 *
+	 * @return an array of required roles of the plugin
+	 */
 	public String[] getRolesArray();
 
 	/**
-	* Returns <code>true</code> if the user has permission to use this plugin
-	*
-	* @param userId the primary key of the user
-	* @return <code>true</code> if the user has permission to use this plugin
-	*/
+	 * Returns <code>true</code> if the user has permission to use this plugin
+	 *
+	 * @param userId the primary key of the user
+	 * @return <code>true</code> if the user has permission to use this plugin
+	 */
 	public boolean hasPermission(long userId);
 
 	/**
-	* Returns <code>true</code> if the plugin has a role with the specified
-	* name.
-	*
-	* @param roleName the role name
-	* @return <code>true</code> if the plugin has a role with the specified
-	name
-	*/
+	 * Returns <code>true</code> if the plugin has a role with the specified
+	 * name.
+	 *
+	 * @param roleName the role name
+	 * @return <code>true</code> if the plugin has a role with the specified
+	 name
+	 */
 	public boolean hasRoleWithName(String roleName);
 
 	/**
-	* Sets an array of required roles of the plugin.
-	*/
+	 * Sets an array of required roles of the plugin.
+	 */
 	public void setRolesArray(String[] rolesArray);
+
 }

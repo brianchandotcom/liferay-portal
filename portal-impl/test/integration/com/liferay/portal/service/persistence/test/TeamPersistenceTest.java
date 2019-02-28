@@ -37,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class TeamPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +103,8 @@ public class TeamPersistenceTest {
 
 		_persistence.remove(newTeam);
 
-		Team existingTeam = _persistence.fetchByPrimaryKey(newTeam.getPrimaryKey());
+		Team existingTeam = _persistence.fetchByPrimaryKey(
+			newTeam.getPrimaryKey());
 
 		Assert.assertNull(existingTeam);
 	}
@@ -141,26 +144,29 @@ public class TeamPersistenceTest {
 
 		_teams.add(_persistence.update(newTeam));
 
-		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
+		Team existingTeam = _persistence.findByPrimaryKey(
+			newTeam.getPrimaryKey());
 
-		Assert.assertEquals(existingTeam.getMvccVersion(),
-			newTeam.getMvccVersion());
+		Assert.assertEquals(
+			existingTeam.getMvccVersion(), newTeam.getMvccVersion());
 		Assert.assertEquals(existingTeam.getUuid(), newTeam.getUuid());
 		Assert.assertEquals(existingTeam.getTeamId(), newTeam.getTeamId());
-		Assert.assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
+		Assert.assertEquals(
+			existingTeam.getCompanyId(), newTeam.getCompanyId());
 		Assert.assertEquals(existingTeam.getUserId(), newTeam.getUserId());
 		Assert.assertEquals(existingTeam.getUserName(), newTeam.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(existingTeam.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTeam.getCreateDate()),
 			Time.getShortTimestamp(newTeam.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingTeam.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTeam.getModifiedDate()),
 			Time.getShortTimestamp(newTeam.getModifiedDate()));
 		Assert.assertEquals(existingTeam.getGroupId(), newTeam.getGroupId());
 		Assert.assertEquals(existingTeam.getName(), newTeam.getName());
-		Assert.assertEquals(existingTeam.getDescription(),
-			newTeam.getDescription());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingTeam.getLastPublishDate()),
+		Assert.assertEquals(
+			existingTeam.getDescription(), newTeam.getDescription());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingTeam.getLastPublishDate()),
 			Time.getShortTimestamp(newTeam.getLastPublishDate()));
 	}
 
@@ -211,7 +217,8 @@ public class TeamPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Team newTeam = addTeam();
 
-		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
+		Team existingTeam = _persistence.findByPrimaryKey(
+			newTeam.getPrimaryKey());
 
 		Assert.assertEquals(existingTeam, newTeam);
 	}
@@ -225,29 +232,30 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Team> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Team", "mvccVersion", true,
-			"uuid", true, "teamId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"groupId", true, "name", true, "description", true,
-			"lastPublishDate", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Team", "mvccVersion", true, "uuid", true, "teamId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "groupId", true, "name", true,
+			"description", true, "lastPublishDate", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Team newTeam = addTeam();
 
-		Team existingTeam = _persistence.fetchByPrimaryKey(newTeam.getPrimaryKey());
+		Team existingTeam = _persistence.fetchByPrimaryKey(
+			newTeam.getPrimaryKey());
 
 		Assert.assertEquals(existingTeam, newTeam);
 	}
@@ -264,6 +272,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Team newTeam1 = addTeam();
 		Team newTeam2 = addTeam();
 
@@ -272,7 +281,8 @@ public class TeamPersistenceTest {
 		primaryKeys.add(newTeam1.getPrimaryKey());
 		primaryKeys.add(newTeam2.getPrimaryKey());
 
-		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, teams.size());
 		Assert.assertEquals(newTeam1, teams.get(newTeam1.getPrimaryKey()));
@@ -282,6 +292,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -291,7 +302,8 @@ public class TeamPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(teams.isEmpty());
 	}
@@ -299,6 +311,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Team newTeam = addTeam();
 
 		long pk = RandomTestUtil.nextLong();
@@ -308,32 +321,33 @@ public class TeamPersistenceTest {
 		primaryKeys.add(newTeam.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, teams.size());
 		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(teams.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Team newTeam = addTeam();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newTeam.getPrimaryKey());
 
-		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Team> teams = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, teams.size());
 		Assert.assertEquals(newTeam, teams.get(newTeam.getPrimaryKey()));
@@ -343,15 +357,19 @@ public class TeamPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = TeamLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			TeamLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Team>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Team>() {
+
 				@Override
 				public void performAction(Team team) {
 					Assert.assertNotNull(team);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -360,15 +378,14 @@ public class TeamPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Team newTeam = addTeam();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Team.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId",
-				newTeam.getTeamId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("teamId", newTeam.getTeamId()));
 
 		List<Team> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -381,11 +398,11 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Team.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("teamId", RandomTestUtil.nextLong()));
 
 		List<Team> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -393,19 +410,18 @@ public class TeamPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Team newTeam = addTeam();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Team.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("teamId"));
 
 		Object newTeamId = newTeam.getTeamId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("teamId",
-				new Object[] { newTeamId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("teamId", new Object[] {newTeamId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -418,13 +434,14 @@ public class TeamPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Team.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("teamId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("teamId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"teamId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -437,21 +454,28 @@ public class TeamPersistenceTest {
 
 		_persistence.clearCache();
 
-		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
+		Team existingTeam = _persistence.findByPrimaryKey(
+			newTeam.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingTeam.getUuid(),
-				ReflectionTestUtil.invoke(existingTeam, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingTeam.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingTeam, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingTeam.getUuid(),
+				ReflectionTestUtil.invoke(
+					existingTeam, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingTeam.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingTeam, "getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(existingTeam.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingTeam, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingTeam.getName(),
-				ReflectionTestUtil.invoke(existingTeam, "getOriginalName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingTeam.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingTeam, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingTeam.getName(),
+				ReflectionTestUtil.invoke(
+					existingTeam, "getOriginalName", new Class<?>[0])));
 	}
 
 	protected Team addTeam() throws Exception {
@@ -489,4 +513,5 @@ public class TeamPersistenceTest {
 	private List<Team> _teams = new ArrayList<Team>();
 	private TeamPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

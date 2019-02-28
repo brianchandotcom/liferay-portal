@@ -19,9 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.model.ExpandoValueModel;
 import com.liferay.expando.kernel.model.ExpandoValueSoap;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -58,25 +56,25 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
-	implements ExpandoValueModel {
+public class ExpandoValueModelImpl
+	extends BaseModelImpl<ExpandoValue> implements ExpandoValueModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a expando value model instance should use the <code>ExpandoValue</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ExpandoValue";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "valueId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "tableId", Types.BIGINT },
-			{ "columnId", Types.BIGINT },
-			{ "rowId_", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "data_", Types.CLOB }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"valueId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"tableId", Types.BIGINT}, {"columnId", Types.BIGINT},
+		{"rowId_", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"data_", Types.CLOB}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("valueId", Types.BIGINT);
@@ -89,27 +87,48 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoValue (valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table ExpandoValue (valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
+
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";
-	public static final String ORDER_BY_JPQL = " ORDER BY expandoValue.tableId ASC, expandoValue.rowId ASC, expandoValue.columnId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY ExpandoValue.tableId ASC, ExpandoValue.rowId_ ASC, ExpandoValue.columnId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY expandoValue.tableId ASC, expandoValue.rowId ASC, expandoValue.columnId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY ExpandoValue.tableId ASC, ExpandoValue.rowId_ ASC, ExpandoValue.columnId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.expando.kernel.model.ExpandoValue"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.expando.kernel.model.ExpandoValue"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.expando.kernel.model.ExpandoValue"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.expando.kernel.model.ExpandoValue"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.expando.kernel.model.ExpandoValue"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.expando.kernel.model.ExpandoValue"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long COLUMNID_COLUMN_BITMASK = 4L;
+
 	public static final long DATA_COLUMN_BITMASK = 8L;
+
 	public static final long ROWID_COLUMN_BITMASK = 16L;
+
 	public static final long TABLEID_COLUMN_BITMASK = 32L;
 
 	/**
@@ -148,7 +167,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 			return null;
 		}
 
-		List<ExpandoValue> models = new ArrayList<ExpandoValue>(soapModels.length);
+		List<ExpandoValue> models = new ArrayList<ExpandoValue>(
+			soapModels.length);
 
 		for (ExpandoValueSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -157,8 +177,9 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.expando.kernel.model.ExpandoValue"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.expando.kernel.model.ExpandoValue"));
 
 	public ExpandoValueModelImpl() {
 	}
@@ -197,13 +218,18 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<ExpandoValue, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ExpandoValue, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ExpandoValue, Object> attributeGetterFunction = entry.getValue();
+			Function<ExpandoValue, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((ExpandoValue)this));
 		}
 
@@ -215,57 +241,81 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<ExpandoValue, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<ExpandoValue, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<ExpandoValue, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<ExpandoValue, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((ExpandoValue)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(ExpandoValue)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<ExpandoValue, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<ExpandoValue, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<ExpandoValue, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<ExpandoValue, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ExpandoValue, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ExpandoValue, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<ExpandoValue, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ExpandoValue, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ExpandoValue, Object>>();
-		Map<String, BiConsumer<ExpandoValue, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ExpandoValue, ?>>();
-
+		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ExpandoValue, Object>>();
+		Map<String, BiConsumer<ExpandoValue, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ExpandoValue, ?>>();
 
 		attributeGetterFunctions.put("valueId", ExpandoValue::getValueId);
-		attributeSetterBiConsumers.put("valueId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setValueId);
+		attributeSetterBiConsumers.put(
+			"valueId",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setValueId);
 		attributeGetterFunctions.put("companyId", ExpandoValue::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setCompanyId);
 		attributeGetterFunctions.put("tableId", ExpandoValue::getTableId);
-		attributeSetterBiConsumers.put("tableId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setTableId);
+		attributeSetterBiConsumers.put(
+			"tableId",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setTableId);
 		attributeGetterFunctions.put("columnId", ExpandoValue::getColumnId);
-		attributeSetterBiConsumers.put("columnId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setColumnId);
+		attributeSetterBiConsumers.put(
+			"columnId",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setColumnId);
 		attributeGetterFunctions.put("rowId", ExpandoValue::getRowId);
-		attributeSetterBiConsumers.put("rowId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setRowId);
-		attributeGetterFunctions.put("classNameId", ExpandoValue::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"rowId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setRowId);
+		attributeGetterFunctions.put(
+			"classNameId", ExpandoValue::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setClassNameId);
 		attributeGetterFunctions.put("classPK", ExpandoValue::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setClassPK);
 		attributeGetterFunctions.put("data", ExpandoValue::getData);
-		attributeSetterBiConsumers.put("data", (BiConsumer<ExpandoValue, String>)ExpandoValue::setData);
+		attributeSetterBiConsumers.put(
+			"data", (BiConsumer<ExpandoValue, String>)ExpandoValue::setData);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -458,8 +508,9 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	@Override
 	public ExpandoValue toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ExpandoValue)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (ExpandoValue)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -577,7 +628,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 		expandoValueModelImpl._setOriginalTableId = false;
 
-		expandoValueModelImpl._originalColumnId = expandoValueModelImpl._columnId;
+		expandoValueModelImpl._originalColumnId =
+			expandoValueModelImpl._columnId;
 
 		expandoValueModelImpl._setOriginalColumnId = false;
 
@@ -585,7 +637,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 		expandoValueModelImpl._setOriginalRowId = false;
 
-		expandoValueModelImpl._originalClassNameId = expandoValueModelImpl._classNameId;
+		expandoValueModelImpl._originalClassNameId =
+			expandoValueModelImpl._classNameId;
 
 		expandoValueModelImpl._setOriginalClassNameId = false;
 
@@ -600,7 +653,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	@Override
 	public CacheModel<ExpandoValue> toCacheModel() {
-		ExpandoValueCacheModel expandoValueCacheModel = new ExpandoValueCacheModel();
+		ExpandoValueCacheModel expandoValueCacheModel =
+			new ExpandoValueCacheModel();
 
 		expandoValueCacheModel.valueId = getValueId();
 
@@ -629,16 +683,20 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	@Override
 	public String toString() {
-		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<ExpandoValue, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ExpandoValue, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ExpandoValue, Object> attributeGetterFunction = entry.getValue();
+			Function<ExpandoValue, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -657,18 +715,22 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<ExpandoValue, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ExpandoValue, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ExpandoValue, Object> attributeGetterFunction = entry.getValue();
+			Function<ExpandoValue, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -682,10 +744,12 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = ExpandoValue.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		ExpandoValue.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ExpandoValue.class, ModelWrapper.class
-		};
+		ExpandoValue.class, ModelWrapper.class
+	};
+
 	private long _valueId;
 	private long _companyId;
 	private long _tableId;
@@ -707,4 +771,5 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	private String _originalData;
 	private long _columnBitmask;
 	private ExpandoValue _escapedModel;
+
 }

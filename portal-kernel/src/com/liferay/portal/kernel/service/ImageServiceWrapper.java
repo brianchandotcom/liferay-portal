@@ -24,8 +24,9 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class ImageServiceWrapper implements ImageService,
-	ServiceWrapper<ImageService> {
+public class ImageServiceWrapper
+	implements ImageService, ServiceWrapper<ImageService> {
+
 	public ImageServiceWrapper(ImageService imageService) {
 		_imageService = imageService;
 	}
@@ -33,14 +34,15 @@ public class ImageServiceWrapper implements ImageService,
 	@Override
 	public com.liferay.portal.kernel.model.Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _imageService.getImage(imageId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _imageService.getOSGiServiceIdentifier();
@@ -57,4 +59,5 @@ public class ImageServiceWrapper implements ImageService,
 	}
 
 	private ImageService _imageService;
+
 }

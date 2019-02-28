@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class SocialRelationSoap implements Serializable {
+
 	public static SocialRelationSoap toSoapModel(SocialRelation model) {
 		SocialRelationSoap soapModel = new SocialRelationSoap();
 
@@ -53,11 +54,14 @@ public class SocialRelationSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SocialRelationSoap[][] toSoapModels(SocialRelation[][] models) {
+	public static SocialRelationSoap[][] toSoapModels(
+		SocialRelation[][] models) {
+
 		SocialRelationSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SocialRelationSoap[models.length][models[0].length];
+			soapModels =
+				new SocialRelationSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SocialRelationSoap[0][0];
@@ -70,8 +74,11 @@ public class SocialRelationSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SocialRelationSoap[] toSoapModels(List<SocialRelation> models) {
-		List<SocialRelationSoap> soapModels = new ArrayList<SocialRelationSoap>(models.size());
+	public static SocialRelationSoap[] toSoapModels(
+		List<SocialRelation> models) {
+
+		List<SocialRelationSoap> soapModels = new ArrayList<SocialRelationSoap>(
+			models.size());
 
 		for (SocialRelation model : models) {
 			soapModels.add(toSoapModel(model));
@@ -154,4 +161,5 @@ public class SocialRelationSoap implements Serializable {
 	private long _userId1;
 	private long _userId2;
 	private int _type;
+
 }

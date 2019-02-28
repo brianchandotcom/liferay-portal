@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ContactBaseImpl extends ContactModelImpl
-	implements Contact {
+public abstract class ContactBaseImpl
+	extends ContactModelImpl implements Contact {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ContactBaseImpl extends ContactModelImpl
 			ContactLocalServiceUtil.updateContact(this);
 		}
 	}
+
 }

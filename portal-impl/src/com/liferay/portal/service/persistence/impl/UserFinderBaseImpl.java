@@ -28,6 +28,7 @@ import java.util.Set;
  * @generated
  */
 public class UserFinderBaseImpl extends BasePersistenceImpl<User> {
+
 	public UserFinderBaseImpl() {
 		setModelClass(User.class);
 	}
@@ -57,5 +58,8 @@ public class UserFinderBaseImpl extends BasePersistenceImpl<User> {
 
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(UserFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserFinderBaseImpl.class);
+
 }

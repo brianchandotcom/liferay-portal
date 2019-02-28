@@ -17,11 +17,9 @@ package com.liferay.document.library.uad.anonymizer;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDLFolderUADAnonymizer
 	extends DynamicQueryUADAnonymizer<DLFolder> {
+
 	@Override
-	public void autoAnonymize(DLFolder dlFolder, long userId, User anonymousUser)
+	public void autoAnonymize(
+			DLFolder dlFolder, long userId, User anonymousUser)
 		throws PortalException {
+
 		if (dlFolder.getUserId() == userId) {
 			dlFolder.setUserId(anonymousUser.getUserId());
 			dlFolder.setUserName(anonymousUser.getFullName());
@@ -78,4 +79,5 @@ public abstract class BaseDLFolderUADAnonymizer
 
 	@Reference
 	protected DLFolderLocalService dlFolderLocalService;
+
 }

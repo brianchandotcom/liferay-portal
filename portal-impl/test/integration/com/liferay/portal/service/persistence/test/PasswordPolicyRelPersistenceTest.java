@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class PasswordPolicyRelPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,9 @@ public class PasswordPolicyRelPersistenceTest {
 
 		_persistence.remove(newPasswordPolicyRel);
 
-		PasswordPolicyRel existingPasswordPolicyRel = _persistence.fetchByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
+		PasswordPolicyRel existingPasswordPolicyRel =
+			_persistence.fetchByPrimaryKey(
+				newPasswordPolicyRel.getPrimaryKey());
 
 		Assert.assertNull(existingPasswordPolicyRel);
 	}
@@ -127,19 +131,26 @@ public class PasswordPolicyRelPersistenceTest {
 
 		_passwordPolicyRels.add(_persistence.update(newPasswordPolicyRel));
 
-		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
+		PasswordPolicyRel existingPasswordPolicyRel =
+			_persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
 
-		Assert.assertEquals(existingPasswordPolicyRel.getMvccVersion(),
+		Assert.assertEquals(
+			existingPasswordPolicyRel.getMvccVersion(),
 			newPasswordPolicyRel.getMvccVersion());
-		Assert.assertEquals(existingPasswordPolicyRel.getPasswordPolicyRelId(),
+		Assert.assertEquals(
+			existingPasswordPolicyRel.getPasswordPolicyRelId(),
 			newPasswordPolicyRel.getPasswordPolicyRelId());
-		Assert.assertEquals(existingPasswordPolicyRel.getCompanyId(),
+		Assert.assertEquals(
+			existingPasswordPolicyRel.getCompanyId(),
 			newPasswordPolicyRel.getCompanyId());
-		Assert.assertEquals(existingPasswordPolicyRel.getPasswordPolicyId(),
+		Assert.assertEquals(
+			existingPasswordPolicyRel.getPasswordPolicyId(),
 			newPasswordPolicyRel.getPasswordPolicyId());
-		Assert.assertEquals(existingPasswordPolicyRel.getClassNameId(),
+		Assert.assertEquals(
+			existingPasswordPolicyRel.getClassNameId(),
 			newPasswordPolicyRel.getClassNameId());
-		Assert.assertEquals(existingPasswordPolicyRel.getClassPK(),
+		Assert.assertEquals(
+			existingPasswordPolicyRel.getClassPK(),
 			newPasswordPolicyRel.getClassPK());
 	}
 
@@ -152,8 +163,8 @@ public class PasswordPolicyRelPersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_C(0L, 0L);
 	}
@@ -162,7 +173,8 @@ public class PasswordPolicyRelPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
-		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
+		PasswordPolicyRel existingPasswordPolicyRel =
+			_persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
 
 		Assert.assertEquals(existingPasswordPolicyRel, newPasswordPolicyRel);
 	}
@@ -176,21 +188,24 @@ public class PasswordPolicyRelPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<PasswordPolicyRel> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("PasswordPolicyRel",
-			"mvccVersion", true, "passwordPolicyRelId", true, "companyId",
-			true, "passwordPolicyId", true, "classNameId", true, "classPK", true);
+		return OrderByComparatorFactoryUtil.create(
+			"PasswordPolicyRel", "mvccVersion", true, "passwordPolicyRelId",
+			true, "companyId", true, "passwordPolicyId", true, "classNameId",
+			true, "classPK", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
-		PasswordPolicyRel existingPasswordPolicyRel = _persistence.fetchByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
+		PasswordPolicyRel existingPasswordPolicyRel =
+			_persistence.fetchByPrimaryKey(
+				newPasswordPolicyRel.getPrimaryKey());
 
 		Assert.assertEquals(existingPasswordPolicyRel, newPasswordPolicyRel);
 	}
@@ -199,7 +214,8 @@ public class PasswordPolicyRelPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		PasswordPolicyRel missingPasswordPolicyRel = _persistence.fetchByPrimaryKey(pk);
+		PasswordPolicyRel missingPasswordPolicyRel =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingPasswordPolicyRel);
 	}
@@ -207,6 +223,7 @@ public class PasswordPolicyRelPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		PasswordPolicyRel newPasswordPolicyRel1 = addPasswordPolicyRel();
 		PasswordPolicyRel newPasswordPolicyRel2 = addPasswordPolicyRel();
 
@@ -215,18 +232,22 @@ public class PasswordPolicyRelPersistenceTest {
 		primaryKeys.add(newPasswordPolicyRel1.getPrimaryKey());
 		primaryKeys.add(newPasswordPolicyRel2.getPrimaryKey());
 
-		Map<Serializable, PasswordPolicyRel> passwordPolicyRels = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordPolicyRel> passwordPolicyRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, passwordPolicyRels.size());
-		Assert.assertEquals(newPasswordPolicyRel1,
+		Assert.assertEquals(
+			newPasswordPolicyRel1,
 			passwordPolicyRels.get(newPasswordPolicyRel1.getPrimaryKey()));
-		Assert.assertEquals(newPasswordPolicyRel2,
+		Assert.assertEquals(
+			newPasswordPolicyRel2,
 			passwordPolicyRels.get(newPasswordPolicyRel2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -236,7 +257,8 @@ public class PasswordPolicyRelPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, PasswordPolicyRel> passwordPolicyRels = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordPolicyRel> passwordPolicyRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(passwordPolicyRels.isEmpty());
 	}
@@ -244,6 +266,7 @@ public class PasswordPolicyRelPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
 		long pk = RandomTestUtil.nextLong();
@@ -253,36 +276,39 @@ public class PasswordPolicyRelPersistenceTest {
 		primaryKeys.add(newPasswordPolicyRel.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, PasswordPolicyRel> passwordPolicyRels = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordPolicyRel> passwordPolicyRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, passwordPolicyRels.size());
-		Assert.assertEquals(newPasswordPolicyRel,
+		Assert.assertEquals(
+			newPasswordPolicyRel,
 			passwordPolicyRels.get(newPasswordPolicyRel.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordPolicyRel> passwordPolicyRels = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordPolicyRel> passwordPolicyRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(passwordPolicyRels.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newPasswordPolicyRel.getPrimaryKey());
 
-		Map<Serializable, PasswordPolicyRel> passwordPolicyRels = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordPolicyRel> passwordPolicyRels =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, passwordPolicyRels.size());
-		Assert.assertEquals(newPasswordPolicyRel,
+		Assert.assertEquals(
+			newPasswordPolicyRel,
 			passwordPolicyRels.get(newPasswordPolicyRel.getPrimaryKey()));
 	}
 
@@ -290,15 +316,20 @@ public class PasswordPolicyRelPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = PasswordPolicyRelLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			PasswordPolicyRelLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PasswordPolicyRel>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<PasswordPolicyRel>() {
+
 				@Override
 				public void performAction(PasswordPolicyRel passwordPolicyRel) {
 					Assert.assertNotNull(passwordPolicyRel);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -307,17 +338,19 @@ public class PasswordPolicyRelPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordPolicyRel.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyRelId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"passwordPolicyRelId",
 				newPasswordPolicyRel.getPasswordPolicyRelId()));
 
-		List<PasswordPolicyRel> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordPolicyRel> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -328,32 +361,35 @@ public class PasswordPolicyRelPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordPolicyRel.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyRelId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"passwordPolicyRelId", RandomTestUtil.nextLong()));
 
-		List<PasswordPolicyRel> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordPolicyRel> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordPolicyRel.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"passwordPolicyRelId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("passwordPolicyRelId"));
 
-		Object newPasswordPolicyRelId = newPasswordPolicyRel.getPasswordPolicyRelId();
+		Object newPasswordPolicyRelId =
+			newPasswordPolicyRel.getPasswordPolicyRelId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordPolicyRelId",
-				new Object[] { newPasswordPolicyRelId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"passwordPolicyRelId", new Object[] {newPasswordPolicyRelId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -361,19 +397,22 @@ public class PasswordPolicyRelPersistenceTest {
 
 		Object existingPasswordPolicyRelId = result.get(0);
 
-		Assert.assertEquals(existingPasswordPolicyRelId, newPasswordPolicyRelId);
+		Assert.assertEquals(
+			existingPasswordPolicyRelId, newPasswordPolicyRelId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordPolicyRel.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"passwordPolicyRelId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("passwordPolicyRelId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordPolicyRelId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"passwordPolicyRelId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -386,19 +425,22 @@ public class PasswordPolicyRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
+		PasswordPolicyRel existingPasswordPolicyRel =
+			_persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(
-				existingPasswordPolicyRel.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingPasswordPolicyRel,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingPasswordPolicyRel.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingPasswordPolicyRel,
-				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingPasswordPolicyRel.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingPasswordPolicyRel, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingPasswordPolicyRel.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingPasswordPolicyRel, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
-	protected PasswordPolicyRel addPasswordPolicyRel()
-		throws Exception {
+	protected PasswordPolicyRel addPasswordPolicyRel() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		PasswordPolicyRel passwordPolicyRel = _persistence.create(pk);
@@ -418,7 +460,9 @@ public class PasswordPolicyRelPersistenceTest {
 		return passwordPolicyRel;
 	}
 
-	private List<PasswordPolicyRel> _passwordPolicyRels = new ArrayList<PasswordPolicyRel>();
+	private List<PasswordPolicyRel> _passwordPolicyRels =
+		new ArrayList<PasswordPolicyRel>();
 	private PasswordPolicyRelPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

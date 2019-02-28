@@ -42,6 +42,7 @@ import java.util.Set;
  */
 @ProviderType
 public class ImageUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,6 +75,7 @@ public class ImageUtil {
 	 */
 	public static Map<Serializable, Image> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -87,19 +89,21 @@ public class ImageUtil {
 	/**
 	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
-	public static List<Image> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end) {
+	public static List<Image> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
 	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
-	public static List<Image> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator<Image> orderByComparator) {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+	public static List<Image> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<Image> orderByComparator) {
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -117,194 +121,204 @@ public class ImageUtil {
 	}
 
 	/**
-	* Returns all the images where size &lt; &#63;.
-	*
-	* @param size the size
-	* @return the matching images
-	*/
+	 * Returns all the images where size &lt; &#63;.
+	 *
+	 * @param size the size
+	 * @return the matching images
+	 */
 	public static List<Image> findByLtSize(int size) {
 		return getPersistence().findByLtSize(size);
 	}
 
 	/**
-	* Returns a range of all the images where size &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param size the size
-	* @param start the lower bound of the range of images
-	* @param end the upper bound of the range of images (not inclusive)
-	* @return the range of matching images
-	*/
+	 * Returns a range of all the images where size &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param size the size
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @return the range of matching images
+	 */
 	public static List<Image> findByLtSize(int size, int start, int end) {
 		return getPersistence().findByLtSize(size, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the images where size &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param size the size
-	* @param start the lower bound of the range of images
-	* @param end the upper bound of the range of images (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching images
-	*/
-	public static List<Image> findByLtSize(int size, int start, int end,
+	 * Returns an ordered range of all the images where size &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param size the size
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching images
+	 */
+	public static List<Image> findByLtSize(
+		int size, int start, int end,
 		OrderByComparator<Image> orderByComparator) {
-		return getPersistence().findByLtSize(size, start, end, orderByComparator);
+
+		return getPersistence().findByLtSize(
+			size, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the images where size &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param size the size
-	* @param start the lower bound of the range of images
-	* @param end the upper bound of the range of images (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching images
-	*/
-	public static List<Image> findByLtSize(int size, int start, int end,
+	 * Returns an ordered range of all the images where size &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param size the size
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching images
+	 */
+	public static List<Image> findByLtSize(
+		int size, int start, int end,
 		OrderByComparator<Image> orderByComparator, boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByLtSize(size, start, end, orderByComparator,
-			retrieveFromCache);
+
+		return getPersistence().findByLtSize(
+			size, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first image in the ordered set where size &lt; &#63;.
-	*
-	* @param size the size
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching image
-	* @throws NoSuchImageException if a matching image could not be found
-	*/
-	public static Image findByLtSize_First(int size,
-		OrderByComparator<Image> orderByComparator)
+	 * Returns the first image in the ordered set where size &lt; &#63;.
+	 *
+	 * @param size the size
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching image
+	 * @throws NoSuchImageException if a matching image could not be found
+	 */
+	public static Image findByLtSize_First(
+			int size, OrderByComparator<Image> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchImageException {
+
 		return getPersistence().findByLtSize_First(size, orderByComparator);
 	}
 
 	/**
-	* Returns the first image in the ordered set where size &lt; &#63;.
-	*
-	* @param size the size
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching image, or <code>null</code> if a matching image could not be found
-	*/
-	public static Image fetchByLtSize_First(int size,
-		OrderByComparator<Image> orderByComparator) {
+	 * Returns the first image in the ordered set where size &lt; &#63;.
+	 *
+	 * @param size the size
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching image, or <code>null</code> if a matching image could not be found
+	 */
+	public static Image fetchByLtSize_First(
+		int size, OrderByComparator<Image> orderByComparator) {
+
 		return getPersistence().fetchByLtSize_First(size, orderByComparator);
 	}
 
 	/**
-	* Returns the last image in the ordered set where size &lt; &#63;.
-	*
-	* @param size the size
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching image
-	* @throws NoSuchImageException if a matching image could not be found
-	*/
-	public static Image findByLtSize_Last(int size,
-		OrderByComparator<Image> orderByComparator)
+	 * Returns the last image in the ordered set where size &lt; &#63;.
+	 *
+	 * @param size the size
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching image
+	 * @throws NoSuchImageException if a matching image could not be found
+	 */
+	public static Image findByLtSize_Last(
+			int size, OrderByComparator<Image> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchImageException {
+
 		return getPersistence().findByLtSize_Last(size, orderByComparator);
 	}
 
 	/**
-	* Returns the last image in the ordered set where size &lt; &#63;.
-	*
-	* @param size the size
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching image, or <code>null</code> if a matching image could not be found
-	*/
-	public static Image fetchByLtSize_Last(int size,
-		OrderByComparator<Image> orderByComparator) {
+	 * Returns the last image in the ordered set where size &lt; &#63;.
+	 *
+	 * @param size the size
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching image, or <code>null</code> if a matching image could not be found
+	 */
+	public static Image fetchByLtSize_Last(
+		int size, OrderByComparator<Image> orderByComparator) {
+
 		return getPersistence().fetchByLtSize_Last(size, orderByComparator);
 	}
 
 	/**
-	* Returns the images before and after the current image in the ordered set where size &lt; &#63;.
-	*
-	* @param imageId the primary key of the current image
-	* @param size the size
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next image
-	* @throws NoSuchImageException if a image with the primary key could not be found
-	*/
-	public static Image[] findByLtSize_PrevAndNext(long imageId, int size,
-		OrderByComparator<Image> orderByComparator)
+	 * Returns the images before and after the current image in the ordered set where size &lt; &#63;.
+	 *
+	 * @param imageId the primary key of the current image
+	 * @param size the size
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next image
+	 * @throws NoSuchImageException if a image with the primary key could not be found
+	 */
+	public static Image[] findByLtSize_PrevAndNext(
+			long imageId, int size, OrderByComparator<Image> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchImageException {
-		return getPersistence()
-				   .findByLtSize_PrevAndNext(imageId, size, orderByComparator);
+
+		return getPersistence().findByLtSize_PrevAndNext(
+			imageId, size, orderByComparator);
 	}
 
 	/**
-	* Removes all the images where size &lt; &#63; from the database.
-	*
-	* @param size the size
-	*/
+	 * Removes all the images where size &lt; &#63; from the database.
+	 *
+	 * @param size the size
+	 */
 	public static void removeByLtSize(int size) {
 		getPersistence().removeByLtSize(size);
 	}
 
 	/**
-	* Returns the number of images where size &lt; &#63;.
-	*
-	* @param size the size
-	* @return the number of matching images
-	*/
+	 * Returns the number of images where size &lt; &#63;.
+	 *
+	 * @param size the size
+	 * @return the number of matching images
+	 */
 	public static int countByLtSize(int size) {
 		return getPersistence().countByLtSize(size);
 	}
 
 	/**
-	* Caches the image in the entity cache if it is enabled.
-	*
-	* @param image the image
-	*/
+	 * Caches the image in the entity cache if it is enabled.
+	 *
+	 * @param image the image
+	 */
 	public static void cacheResult(Image image) {
 		getPersistence().cacheResult(image);
 	}
 
 	/**
-	* Caches the images in the entity cache if it is enabled.
-	*
-	* @param images the images
-	*/
+	 * Caches the images in the entity cache if it is enabled.
+	 *
+	 * @param images the images
+	 */
 	public static void cacheResult(List<Image> images) {
 		getPersistence().cacheResult(images);
 	}
 
 	/**
-	* Creates a new image with the primary key. Does not add the image to the database.
-	*
-	* @param imageId the primary key for the new image
-	* @return the new image
-	*/
+	 * Creates a new image with the primary key. Does not add the image to the database.
+	 *
+	 * @param imageId the primary key for the new image
+	 * @return the new image
+	 */
 	public static Image create(long imageId) {
 		return getPersistence().create(imageId);
 	}
 
 	/**
-	* Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param imageId the primary key of the image
-	* @return the image that was removed
-	* @throws NoSuchImageException if a image with the primary key could not be found
-	*/
+	 * Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param imageId the primary key of the image
+	 * @return the image that was removed
+	 * @throws NoSuchImageException if a image with the primary key could not be found
+	 */
 	public static Image remove(long imageId)
 		throws com.liferay.portal.kernel.exception.NoSuchImageException {
+
 		return getPersistence().remove(imageId);
 	}
 
@@ -313,112 +327,119 @@ public class ImageUtil {
 	}
 
 	/**
-	* Returns the image with the primary key or throws a <code>NoSuchImageException</code> if it could not be found.
-	*
-	* @param imageId the primary key of the image
-	* @return the image
-	* @throws NoSuchImageException if a image with the primary key could not be found
-	*/
+	 * Returns the image with the primary key or throws a <code>NoSuchImageException</code> if it could not be found.
+	 *
+	 * @param imageId the primary key of the image
+	 * @return the image
+	 * @throws NoSuchImageException if a image with the primary key could not be found
+	 */
 	public static Image findByPrimaryKey(long imageId)
 		throws com.liferay.portal.kernel.exception.NoSuchImageException {
+
 		return getPersistence().findByPrimaryKey(imageId);
 	}
 
 	/**
-	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param imageId the primary key of the image
-	* @return the image, or <code>null</code> if a image with the primary key could not be found
-	*/
+	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param imageId the primary key of the image
+	 * @return the image, or <code>null</code> if a image with the primary key could not be found
+	 */
 	public static Image fetchByPrimaryKey(long imageId) {
 		return getPersistence().fetchByPrimaryKey(imageId);
 	}
 
 	/**
-	* Returns all the images.
-	*
-	* @return the images
-	*/
+	 * Returns all the images.
+	 *
+	 * @return the images
+	 */
 	public static List<Image> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of images
-	* @param end the upper bound of the range of images (not inclusive)
-	* @return the range of images
-	*/
+	 * Returns a range of all the images.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @return the range of images
+	 */
 	public static List<Image> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of images
-	* @param end the upper bound of the range of images (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of images
-	*/
-	public static List<Image> findAll(int start, int end,
-		OrderByComparator<Image> orderByComparator) {
+	 * Returns an ordered range of all the images.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of images
+	 */
+	public static List<Image> findAll(
+		int start, int end, OrderByComparator<Image> orderByComparator) {
+
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of images
-	* @param end the upper bound of the range of images (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of images
-	*/
-	public static List<Image> findAll(int start, int end,
-		OrderByComparator<Image> orderByComparator, boolean retrieveFromCache) {
-		return getPersistence()
-				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	 * Returns an ordered range of all the images.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ImageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of images
+	 * @param end the upper bound of the range of images (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of images
+	 */
+	public static List<Image> findAll(
+		int start, int end, OrderByComparator<Image> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the images from the database.
-	*/
+	 * Removes all the images from the database.
+	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of images.
-	*
-	* @return the number of images
-	*/
+	 * Returns the number of images.
+	 *
+	 * @return the number of images
+	 */
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
 	public static ImagePersistence getPersistence() {
 		if (_persistence == null) {
-			_persistence = (ImagePersistence)PortalBeanLocatorUtil.locate(ImagePersistence.class.getName());
+			_persistence = (ImagePersistence)PortalBeanLocatorUtil.locate(
+				ImagePersistence.class.getName());
 
-			ReferenceRegistry.registerReference(ImageUtil.class, "_persistence");
+			ReferenceRegistry.registerReference(
+				ImageUtil.class, "_persistence");
 		}
 
 		return _persistence;
 	}
 
 	private static ImagePersistence _persistence;
+
 }

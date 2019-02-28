@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
@@ -34,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class RepositoryWrapper extends BaseModelWrapper<Repository>
+public class RepositoryWrapper
+	extends BaseModelWrapper<Repository>
 	implements Repository, ModelWrapper<Repository> {
+
 	public RepositoryWrapper(Repository repository) {
 		super(repository);
 	}
@@ -164,195 +165,197 @@ public class RepositoryWrapper extends BaseModelWrapper<Repository>
 	}
 
 	/**
-	* Returns the fully qualified class name of this repository.
-	*
-	* @return the fully qualified class name of this repository
-	*/
+	 * Returns the fully qualified class name of this repository.
+	 *
+	 * @return the fully qualified class name of this repository
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this repository.
-	*
-	* @return the class name ID of this repository
-	*/
+	 * Returns the class name ID of this repository.
+	 *
+	 * @return the class name ID of this repository
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the company ID of this repository.
-	*
-	* @return the company ID of this repository
-	*/
+	 * Returns the company ID of this repository.
+	 *
+	 * @return the company ID of this repository
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this repository.
-	*
-	* @return the create date of this repository
-	*/
+	 * Returns the create date of this repository.
+	 *
+	 * @return the create date of this repository
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the description of this repository.
-	*
-	* @return the description of this repository
-	*/
+	 * Returns the description of this repository.
+	 *
+	 * @return the description of this repository
+	 */
 	@Override
 	public String getDescription() {
 		return model.getDescription();
 	}
 
 	/**
-	* Returns the dl folder ID of this repository.
-	*
-	* @return the dl folder ID of this repository
-	*/
+	 * Returns the dl folder ID of this repository.
+	 *
+	 * @return the dl folder ID of this repository
+	 */
 	@Override
 	public long getDlFolderId() {
 		return model.getDlFolderId();
 	}
 
 	/**
-	* Returns the group ID of this repository.
-	*
-	* @return the group ID of this repository
-	*/
+	 * Returns the group ID of this repository.
+	 *
+	 * @return the group ID of this repository
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the last publish date of this repository.
-	*
-	* @return the last publish date of this repository
-	*/
+	 * Returns the last publish date of this repository.
+	 *
+	 * @return the last publish date of this repository
+	 */
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	* Returns the modified date of this repository.
-	*
-	* @return the modified date of this repository
-	*/
+	 * Returns the modified date of this repository.
+	 *
+	 * @return the modified date of this repository
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this repository.
-	*
-	* @return the mvcc version of this repository
-	*/
+	 * Returns the mvcc version of this repository.
+	 *
+	 * @return the mvcc version of this repository
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this repository.
-	*
-	* @return the name of this repository
-	*/
+	 * Returns the name of this repository.
+	 *
+	 * @return the name of this repository
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the portlet ID of this repository.
-	*
-	* @return the portlet ID of this repository
-	*/
+	 * Returns the portlet ID of this repository.
+	 *
+	 * @return the portlet ID of this repository
+	 */
 	@Override
 	public String getPortletId() {
 		return model.getPortletId();
 	}
 
 	/**
-	* Returns the primary key of this repository.
-	*
-	* @return the primary key of this repository
-	*/
+	 * Returns the primary key of this repository.
+	 *
+	 * @return the primary key of this repository
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the repository ID of this repository.
-	*
-	* @return the repository ID of this repository
-	*/
+	 * Returns the repository ID of this repository.
+	 *
+	 * @return the repository ID of this repository
+	 */
 	@Override
 	public long getRepositoryId() {
 		return model.getRepositoryId();
 	}
 
 	/**
-	* Returns the type settings of this repository.
-	*
-	* @return the type settings of this repository
-	*/
+	 * Returns the type settings of this repository.
+	 *
+	 * @return the type settings of this repository
+	 */
 	@Override
 	public String getTypeSettings() {
 		return model.getTypeSettings();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties() {
+
 		return model.getTypeSettingsProperties();
 	}
 
 	/**
-	* Returns the user ID of this repository.
-	*
-	* @return the user ID of this repository
-	*/
+	 * Returns the user ID of this repository.
+	 *
+	 * @return the user ID of this repository
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this repository.
-	*
-	* @return the user name of this repository
-	*/
+	 * Returns the user name of this repository.
+	 *
+	 * @return the user name of this repository
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this repository.
-	*
-	* @return the user uuid of this repository
-	*/
+	 * Returns the user uuid of this repository.
+	 *
+	 * @return the user uuid of this repository
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this repository.
-	*
-	* @return the uuid of this repository
-	*/
+	 * Returns the uuid of this repository.
+	 *
+	 * @return the uuid of this repository
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -369,140 +372,140 @@ public class RepositoryWrapper extends BaseModelWrapper<Repository>
 	}
 
 	/**
-	* Sets the class name ID of this repository.
-	*
-	* @param classNameId the class name ID of this repository
-	*/
+	 * Sets the class name ID of this repository.
+	 *
+	 * @param classNameId the class name ID of this repository
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the company ID of this repository.
-	*
-	* @param companyId the company ID of this repository
-	*/
+	 * Sets the company ID of this repository.
+	 *
+	 * @param companyId the company ID of this repository
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this repository.
-	*
-	* @param createDate the create date of this repository
-	*/
+	 * Sets the create date of this repository.
+	 *
+	 * @param createDate the create date of this repository
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the description of this repository.
-	*
-	* @param description the description of this repository
-	*/
+	 * Sets the description of this repository.
+	 *
+	 * @param description the description of this repository
+	 */
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
 	}
 
 	/**
-	* Sets the dl folder ID of this repository.
-	*
-	* @param dlFolderId the dl folder ID of this repository
-	*/
+	 * Sets the dl folder ID of this repository.
+	 *
+	 * @param dlFolderId the dl folder ID of this repository
+	 */
 	@Override
 	public void setDlFolderId(long dlFolderId) {
 		model.setDlFolderId(dlFolderId);
 	}
 
 	/**
-	* Sets the group ID of this repository.
-	*
-	* @param groupId the group ID of this repository
-	*/
+	 * Sets the group ID of this repository.
+	 *
+	 * @param groupId the group ID of this repository
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the last publish date of this repository.
-	*
-	* @param lastPublishDate the last publish date of this repository
-	*/
+	 * Sets the last publish date of this repository.
+	 *
+	 * @param lastPublishDate the last publish date of this repository
+	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	* Sets the modified date of this repository.
-	*
-	* @param modifiedDate the modified date of this repository
-	*/
+	 * Sets the modified date of this repository.
+	 *
+	 * @param modifiedDate the modified date of this repository
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this repository.
-	*
-	* @param mvccVersion the mvcc version of this repository
-	*/
+	 * Sets the mvcc version of this repository.
+	 *
+	 * @param mvccVersion the mvcc version of this repository
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this repository.
-	*
-	* @param name the name of this repository
-	*/
+	 * Sets the name of this repository.
+	 *
+	 * @param name the name of this repository
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the portlet ID of this repository.
-	*
-	* @param portletId the portlet ID of this repository
-	*/
+	 * Sets the portlet ID of this repository.
+	 *
+	 * @param portletId the portlet ID of this repository
+	 */
 	@Override
 	public void setPortletId(String portletId) {
 		model.setPortletId(portletId);
 	}
 
 	/**
-	* Sets the primary key of this repository.
-	*
-	* @param primaryKey the primary key of this repository
-	*/
+	 * Sets the primary key of this repository.
+	 *
+	 * @param primaryKey the primary key of this repository
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the repository ID of this repository.
-	*
-	* @param repositoryId the repository ID of this repository
-	*/
+	 * Sets the repository ID of this repository.
+	 *
+	 * @param repositoryId the repository ID of this repository
+	 */
 	@Override
 	public void setRepositoryId(long repositoryId) {
 		model.setRepositoryId(repositoryId);
 	}
 
 	/**
-	* Sets the type settings of this repository.
-	*
-	* @param typeSettings the type settings of this repository
-	*/
+	 * Sets the type settings of this repository.
+	 *
+	 * @param typeSettings the type settings of this repository
+	 */
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
@@ -510,45 +513,47 @@ public class RepositoryWrapper extends BaseModelWrapper<Repository>
 
 	@Override
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties) {
+
 		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
-	* Sets the user ID of this repository.
-	*
-	* @param userId the user ID of this repository
-	*/
+	 * Sets the user ID of this repository.
+	 *
+	 * @param userId the user ID of this repository
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this repository.
-	*
-	* @param userName the user name of this repository
-	*/
+	 * Sets the user name of this repository.
+	 *
+	 * @param userName the user name of this repository
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this repository.
-	*
-	* @param userUuid the user uuid of this repository
-	*/
+	 * Sets the user uuid of this repository.
+	 *
+	 * @param userUuid the user uuid of this repository
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this repository.
-	*
-	* @param uuid the uuid of this repository
-	*/
+	 * Sets the uuid of this repository.
+	 *
+	 * @param uuid the uuid of this repository
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -563,4 +568,5 @@ public class RepositoryWrapper extends BaseModelWrapper<Repository>
 	protected RepositoryWrapper wrap(Repository repository) {
 		return new RepositoryWrapper(repository);
 	}
+
 }

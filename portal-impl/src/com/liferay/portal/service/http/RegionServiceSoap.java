@@ -63,14 +63,18 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class RegionServiceSoap {
+
 	public static com.liferay.portal.kernel.model.RegionSoap addRegion(
-		long countryId, String regionCode, String name, boolean active)
+			long countryId, String regionCode, String name, boolean active)
 		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.addRegion(countryId,
-					regionCode, name, active);
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Region returnValue =
+				RegionServiceUtil.addRegion(
+					countryId, regionCode, name, active);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,11 +84,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap fetchRegion(
-		long regionId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.fetchRegion(regionId);
+			long regionId)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Region returnValue =
+				RegionServiceUtil.fetchRegion(regionId);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -94,12 +102,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap fetchRegion(
-		long countryId, String regionCode) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.fetchRegion(countryId,
-					regionCode);
+			long countryId, String regionCode)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Region returnValue =
+				RegionServiceUtil.fetchRegion(countryId, regionCode);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -109,11 +120,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap getRegion(
-		long regionId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.getRegion(regionId);
+			long regionId)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Region returnValue =
+				RegionServiceUtil.getRegion(regionId);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -123,12 +138,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap getRegion(
-		long countryId, String regionCode) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.Region returnValue = RegionServiceUtil.getRegion(countryId,
-					regionCode);
+			long countryId, String regionCode)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.model.Region returnValue =
+				RegionServiceUtil.getRegion(countryId, regionCode);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -139,10 +157,13 @@ public class RegionServiceSoap {
 
 	public static com.liferay.portal.kernel.model.RegionSoap[] getRegions()
 		throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Region> returnValue = RegionServiceUtil.getRegions();
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Region> returnValue =
+				RegionServiceUtil.getRegions();
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -152,11 +173,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap[] getRegions(
-		boolean active) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Region> returnValue = RegionServiceUtil.getRegions(active);
+			boolean active)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Region> returnValue =
+				RegionServiceUtil.getRegions(active);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -166,11 +191,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap[] getRegions(
-		long countryId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Region> returnValue = RegionServiceUtil.getRegions(countryId);
+			long countryId)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Region> returnValue =
+				RegionServiceUtil.getRegions(countryId);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -180,12 +209,15 @@ public class RegionServiceSoap {
 	}
 
 	public static com.liferay.portal.kernel.model.RegionSoap[] getRegions(
-		long countryId, boolean active) throws RemoteException {
-		try {
-			java.util.List<com.liferay.portal.kernel.model.Region> returnValue = RegionServiceUtil.getRegions(countryId,
-					active);
+			long countryId, boolean active)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Region> returnValue =
+				RegionServiceUtil.getRegions(countryId, active);
+
+			return com.liferay.portal.kernel.model.RegionSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -195,4 +227,5 @@ public class RegionServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RegionServiceSoap.class);
+
 }

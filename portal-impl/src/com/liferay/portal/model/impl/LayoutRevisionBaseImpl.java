@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class LayoutRevisionBaseImpl extends LayoutRevisionModelImpl
-	implements LayoutRevision {
+public abstract class LayoutRevisionBaseImpl
+	extends LayoutRevisionModelImpl implements LayoutRevision {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class LayoutRevisionBaseImpl extends LayoutRevisionModelImpl
 			LayoutRevisionLocalServiceUtil.updateLayoutRevision(this);
 		}
 	}
+
 }

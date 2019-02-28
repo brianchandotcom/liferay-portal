@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class AssetCategorySoap implements Serializable {
+
 	public static AssetCategorySoap toSoapModel(AssetCategory model) {
 		AssetCategorySoap soapModel = new AssetCategorySoap();
 
@@ -82,7 +83,8 @@ public class AssetCategorySoap implements Serializable {
 	}
 
 	public static AssetCategorySoap[] toSoapModels(List<AssetCategory> models) {
-		List<AssetCategorySoap> soapModels = new ArrayList<AssetCategorySoap>(models.size());
+		List<AssetCategorySoap> soapModels = new ArrayList<AssetCategorySoap>(
+			models.size());
 
 		for (AssetCategory model : models) {
 			soapModels.add(toSoapModel(model));
@@ -255,4 +257,5 @@ public class AssetCategorySoap implements Serializable {
 	private String _description;
 	private long _vocabularyId;
 	private Date _lastPublishDate;
+
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 @ProviderType
 public abstract class WorkflowInstanceLinkBaseImpl
 	extends WorkflowInstanceLinkModelImpl implements WorkflowInstanceLink {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -45,7 +46,9 @@ public abstract class WorkflowInstanceLinkBaseImpl
 			WorkflowInstanceLinkLocalServiceUtil.addWorkflowInstanceLink(this);
 		}
 		else {
-			WorkflowInstanceLinkLocalServiceUtil.updateWorkflowInstanceLink(this);
+			WorkflowInstanceLinkLocalServiceUtil.updateWorkflowInstanceLink(
+				this);
 		}
 	}
+
 }

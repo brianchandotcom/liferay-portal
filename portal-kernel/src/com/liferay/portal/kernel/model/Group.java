@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.GroupImpl")
 @ProviderType
 public interface Group extends GroupModel, PersistedModel, TreeModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.GroupImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Group, Long> GROUP_ID_ACCESSOR = new Accessor<Group, Long>() {
+	public static final Accessor<Group, Long> GROUP_ID_ACCESSOR =
+		new Accessor<Group, Long>() {
+
 			@Override
 			public Long get(Group group) {
 				return group.getGroupId();
@@ -49,6 +52,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 			public Class<Group> getTypeClass() {
 				return Group.class;
 			}
+
 		};
 
 	public void clearStagingGroup();
@@ -58,16 +62,16 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.util.List<Group> getChildren(boolean site);
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#getChildrenWithLayouts(boolean, int, int,
-	OrderByComparator)}
-	*/
-	@Deprecated()
-	public java.util.List<Group> getChildrenWithLayouts(boolean site,
-		int start, int end);
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #getChildrenWithLayouts(boolean, int, int,
+	 OrderByComparator)}
+	 */
+	@Deprecated
+	public java.util.List<Group> getChildrenWithLayouts(
+		boolean site, int start, int end);
 
-	public java.util.List<Group> getChildrenWithLayouts(boolean site,
-		int start, int end,
+	public java.util.List<Group> getChildrenWithLayouts(
+		boolean site, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Group> obc);
 
 	public int getChildrenWithLayoutsCount(boolean site);
@@ -78,7 +82,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public java.util.List<Group> getDescendants(boolean site);
 
-	@com.liferay.portal.kernel.json.JSON()
+	@com.liferay.portal.kernel.json.JSON
 	public String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -97,8 +101,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public String getIconURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
-	public String getLayoutRootNodeName(boolean privateLayout,
-		java.util.Locale locale);
+	public String getLayoutRootNodeName(
+		boolean privateLayout, java.util.Locale locale);
 
 	public Group getLiveGroup();
 
@@ -112,9 +116,11 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public Group getParentGroup();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getParentLiveGroupTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getParentLiveGroupTypeSettingsProperties();
 
-	public String getPathFriendlyURL(boolean privateLayout,
+	public String getPathFriendlyURL(
+		boolean privateLayout,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public LayoutSet getPrivateLayoutSet();
@@ -128,7 +134,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public long getRemoteLiveGroupId();
 
 	public String getScopeDescriptiveName(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public String getScopeLabel(
@@ -138,7 +144,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public String getTypeLabel();
 
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties();
 
 	public String getTypeSettingsProperty(String key);
 
@@ -157,9 +164,9 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean hasStagingGroup();
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #hasAncestor}
-	*/
-	@Deprecated()
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #hasAncestor}
+	 */
+	@Deprecated
 	public boolean isChild(long groupId);
 
 	public boolean isCompany();
@@ -187,8 +194,9 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean isRoot();
 
 	public boolean isShowSite(
-		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker,
-		boolean privateSite)
+			com.liferay.portal.kernel.security.permission.PermissionChecker
+				permissionChecker,
+			boolean privateSite)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isStaged();
@@ -206,5 +214,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean isUserPersonalSite();
 
 	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties);
+
 }

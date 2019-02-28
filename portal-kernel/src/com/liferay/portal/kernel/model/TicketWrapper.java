@@ -32,8 +32,9 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class TicketWrapper extends BaseModelWrapper<Ticket> implements Ticket,
-	ModelWrapper<Ticket> {
+public class TicketWrapper
+	extends BaseModelWrapper<Ticket> implements Ticket, ModelWrapper<Ticket> {
+
 	public TicketWrapper(Ticket ticket) {
 		super(ticket);
 	}
@@ -120,120 +121,120 @@ public class TicketWrapper extends BaseModelWrapper<Ticket> implements Ticket,
 	}
 
 	/**
-	* Returns the fully qualified class name of this ticket.
-	*
-	* @return the fully qualified class name of this ticket
-	*/
+	 * Returns the fully qualified class name of this ticket.
+	 *
+	 * @return the fully qualified class name of this ticket
+	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
 	}
 
 	/**
-	* Returns the class name ID of this ticket.
-	*
-	* @return the class name ID of this ticket
-	*/
+	 * Returns the class name ID of this ticket.
+	 *
+	 * @return the class name ID of this ticket
+	 */
 	@Override
 	public long getClassNameId() {
 		return model.getClassNameId();
 	}
 
 	/**
-	* Returns the class pk of this ticket.
-	*
-	* @return the class pk of this ticket
-	*/
+	 * Returns the class pk of this ticket.
+	 *
+	 * @return the class pk of this ticket
+	 */
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
 	}
 
 	/**
-	* Returns the company ID of this ticket.
-	*
-	* @return the company ID of this ticket
-	*/
+	 * Returns the company ID of this ticket.
+	 *
+	 * @return the company ID of this ticket
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this ticket.
-	*
-	* @return the create date of this ticket
-	*/
+	 * Returns the create date of this ticket.
+	 *
+	 * @return the create date of this ticket
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the expiration date of this ticket.
-	*
-	* @return the expiration date of this ticket
-	*/
+	 * Returns the expiration date of this ticket.
+	 *
+	 * @return the expiration date of this ticket
+	 */
 	@Override
 	public Date getExpirationDate() {
 		return model.getExpirationDate();
 	}
 
 	/**
-	* Returns the extra info of this ticket.
-	*
-	* @return the extra info of this ticket
-	*/
+	 * Returns the extra info of this ticket.
+	 *
+	 * @return the extra info of this ticket
+	 */
 	@Override
 	public String getExtraInfo() {
 		return model.getExtraInfo();
 	}
 
 	/**
-	* Returns the key of this ticket.
-	*
-	* @return the key of this ticket
-	*/
+	 * Returns the key of this ticket.
+	 *
+	 * @return the key of this ticket
+	 */
 	@Override
 	public String getKey() {
 		return model.getKey();
 	}
 
 	/**
-	* Returns the mvcc version of this ticket.
-	*
-	* @return the mvcc version of this ticket
-	*/
+	 * Returns the mvcc version of this ticket.
+	 *
+	 * @return the mvcc version of this ticket
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the primary key of this ticket.
-	*
-	* @return the primary key of this ticket
-	*/
+	 * Returns the primary key of this ticket.
+	 *
+	 * @return the primary key of this ticket
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the ticket ID of this ticket.
-	*
-	* @return the ticket ID of this ticket
-	*/
+	 * Returns the ticket ID of this ticket.
+	 *
+	 * @return the ticket ID of this ticket
+	 */
 	@Override
 	public long getTicketId() {
 		return model.getTicketId();
 	}
 
 	/**
-	* Returns the type of this ticket.
-	*
-	* @return the type of this ticket
-	*/
+	 * Returns the type of this ticket.
+	 *
+	 * @return the type of this ticket
+	 */
 	@Override
 	public int getType() {
 		return model.getType();
@@ -255,110 +256,110 @@ public class TicketWrapper extends BaseModelWrapper<Ticket> implements Ticket,
 	}
 
 	/**
-	* Sets the class name ID of this ticket.
-	*
-	* @param classNameId the class name ID of this ticket
-	*/
+	 * Sets the class name ID of this ticket.
+	 *
+	 * @param classNameId the class name ID of this ticket
+	 */
 	@Override
 	public void setClassNameId(long classNameId) {
 		model.setClassNameId(classNameId);
 	}
 
 	/**
-	* Sets the class pk of this ticket.
-	*
-	* @param classPK the class pk of this ticket
-	*/
+	 * Sets the class pk of this ticket.
+	 *
+	 * @param classPK the class pk of this ticket
+	 */
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
 	}
 
 	/**
-	* Sets the company ID of this ticket.
-	*
-	* @param companyId the company ID of this ticket
-	*/
+	 * Sets the company ID of this ticket.
+	 *
+	 * @param companyId the company ID of this ticket
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this ticket.
-	*
-	* @param createDate the create date of this ticket
-	*/
+	 * Sets the create date of this ticket.
+	 *
+	 * @param createDate the create date of this ticket
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the expiration date of this ticket.
-	*
-	* @param expirationDate the expiration date of this ticket
-	*/
+	 * Sets the expiration date of this ticket.
+	 *
+	 * @param expirationDate the expiration date of this ticket
+	 */
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		model.setExpirationDate(expirationDate);
 	}
 
 	/**
-	* Sets the extra info of this ticket.
-	*
-	* @param extraInfo the extra info of this ticket
-	*/
+	 * Sets the extra info of this ticket.
+	 *
+	 * @param extraInfo the extra info of this ticket
+	 */
 	@Override
 	public void setExtraInfo(String extraInfo) {
 		model.setExtraInfo(extraInfo);
 	}
 
 	/**
-	* Sets the key of this ticket.
-	*
-	* @param key the key of this ticket
-	*/
+	 * Sets the key of this ticket.
+	 *
+	 * @param key the key of this ticket
+	 */
 	@Override
 	public void setKey(String key) {
 		model.setKey(key);
 	}
 
 	/**
-	* Sets the mvcc version of this ticket.
-	*
-	* @param mvccVersion the mvcc version of this ticket
-	*/
+	 * Sets the mvcc version of this ticket.
+	 *
+	 * @param mvccVersion the mvcc version of this ticket
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this ticket.
-	*
-	* @param primaryKey the primary key of this ticket
-	*/
+	 * Sets the primary key of this ticket.
+	 *
+	 * @param primaryKey the primary key of this ticket
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the ticket ID of this ticket.
-	*
-	* @param ticketId the ticket ID of this ticket
-	*/
+	 * Sets the ticket ID of this ticket.
+	 *
+	 * @param ticketId the ticket ID of this ticket
+	 */
 	@Override
 	public void setTicketId(long ticketId) {
 		model.setTicketId(ticketId);
 	}
 
 	/**
-	* Sets the type of this ticket.
-	*
-	* @param type the type of this ticket
-	*/
+	 * Sets the type of this ticket.
+	 *
+	 * @param type the type of this ticket
+	 */
 	@Override
 	public void setType(int type) {
 		model.setType(type);
@@ -368,4 +369,5 @@ public class TicketWrapper extends BaseModelWrapper<Ticket> implements Ticket,
 	protected TicketWrapper wrap(Ticket ticket) {
 		return new TicketWrapper(ticket);
 	}
+
 }

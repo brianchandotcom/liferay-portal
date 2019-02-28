@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -61,20 +59,23 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class ClassNameModelImpl extends BaseModelImpl<ClassName>
-	implements ClassNameModel {
+public class ClassNameModelImpl
+	extends BaseModelImpl<ClassName> implements ClassNameModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a class name model instance should use the <code>ClassName</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ClassName_";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "value", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"value", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -82,23 +83,40 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ClassName_ (mvccVersion LONG default 0 not null,classNameId LONG not null primary key,value VARCHAR(200) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table ClassName_ (mvccVersion LONG default 0 not null,classNameId LONG not null primary key,value VARCHAR(200) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table ClassName_";
-	public static final String ORDER_BY_JPQL = " ORDER BY className.classNameId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY ClassName_.classNameId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY className.classNameId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY ClassName_.classNameId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ClassName"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ClassName"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ClassName"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.ClassName"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.ClassName"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.ClassName"),
+		true);
+
 	public static final long VALUE_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 
 	/**
@@ -141,8 +159,9 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.ClassName"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.ClassName"));
 
 	public ClassNameModelImpl() {
 	}
@@ -181,14 +200,18 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ClassName, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ClassName, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<ClassName, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ClassName, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ClassName, Object> attributeGetterFunction = entry.getValue();
+			Function<ClassName, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((ClassName)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((ClassName)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -199,46 +222,61 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<ClassName, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<ClassName, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<ClassName, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<ClassName, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((ClassName)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(ClassName)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<ClassName, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<ClassName, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<ClassName, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<ClassName, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<ClassName, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<ClassName, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<ClassName, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ClassName, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ClassName, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ClassName, Object>>();
-		Map<String, BiConsumer<ClassName, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ClassName, ?>>();
-
+		Map<String, Function<ClassName, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ClassName, Object>>();
+		Map<String, BiConsumer<ClassName, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ClassName, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", ClassName::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ClassName, Long>)ClassName::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ClassName, Long>)ClassName::setMvccVersion);
 		attributeGetterFunctions.put("classNameId", ClassName::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<ClassName, Long>)ClassName::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<ClassName, Long>)ClassName::setClassNameId);
 		attributeGetterFunctions.put("value", ClassName::getValue);
-		attributeSetterBiConsumers.put("value", (BiConsumer<ClassName, String>)ClassName::setValue);
+		attributeSetterBiConsumers.put(
+			"value", (BiConsumer<ClassName, String>)ClassName::setValue);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -315,8 +353,8 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			ClassName.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, ClassName.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -329,8 +367,9 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	@Override
 	public ClassName toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (ClassName)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (ClassName)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -431,16 +470,20 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	@Override
 	public String toString() {
-		Map<String, Function<ClassName, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ClassName, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<ClassName, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ClassName, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ClassName, Object> attributeGetterFunction = entry.getValue();
+			Function<ClassName, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -459,18 +502,22 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ClassName, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ClassName, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<ClassName, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<ClassName, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<ClassName, Object> attributeGetterFunction = entry.getValue();
+			Function<ClassName, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -484,14 +531,17 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = ClassName.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		ClassName.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ClassName.class, ModelWrapper.class
-		};
+		ClassName.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _classNameId;
 	private String _value;
 	private String _originalValue;
 	private long _columnBitmask;
 	private ClassName _escapedModel;
+
 }

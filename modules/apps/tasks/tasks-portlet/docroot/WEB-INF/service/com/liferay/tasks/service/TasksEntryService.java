@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
 import com.liferay.tasks.model.TasksEntry;
 
 /**
@@ -40,40 +39,46 @@ import com.liferay.tasks.model.TasksEntry;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface TasksEntryService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TasksEntryServiceUtil} to access the tasks entry remote service. Add custom service methods to <code>com.liferay.tasks.service.impl.TasksEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public TasksEntry addTasksEntry(String title, int priority,
-		long assigneeUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
-		int dueDateHour, int dueDateMinute, boolean neverDue,
-		ServiceContext serviceContext) throws PortalException;
+	public TasksEntry addTasksEntry(
+			String title, int priority, long assigneeUserId, int dueDateMonth,
+			int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
+			boolean neverDue, ServiceContext serviceContext)
+		throws PortalException;
 
 	public TasksEntry deleteTasksEntry(long tasksEntryId)
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public TasksEntry getTasksEntry(long tasksEntryId)
+	public TasksEntry getTasksEntry(long tasksEntryId) throws PortalException;
+
+	public TasksEntry updateTasksEntry(
+			long tasksEntryId, String title, int priority, long assigneeUserId,
+			long resolverUserId, int dueDateMonth, int dueDateDay,
+			int dueDateYear, int dueDateHour, int dueDateMinute,
+			boolean neverDue, int status, ServiceContext serviceContext)
 		throws PortalException;
 
-	public TasksEntry updateTasksEntry(long tasksEntryId, String title,
-		int priority, long assigneeUserId, long resolverUserId,
-		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
-		int dueDateMinute, boolean neverDue, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	public TasksEntry updateTasksEntryStatus(long tasksEntryId,
-		long resolverUserId, int status, ServiceContext serviceContext)
+	public TasksEntry updateTasksEntryStatus(
+			long tasksEntryId, long resolverUserId, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
+
 }

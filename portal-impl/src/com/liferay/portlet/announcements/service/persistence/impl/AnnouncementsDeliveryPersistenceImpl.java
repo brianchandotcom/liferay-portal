@@ -19,9 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -39,7 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl;
 
@@ -64,18 +61,24 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<AnnouncementsDelivery>
+public class AnnouncementsDeliveryPersistenceImpl
+	extends BasePersistenceImpl<AnnouncementsDelivery>
 	implements AnnouncementsDeliveryPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>AnnouncementsDeliveryUtil</code> to access the announcements delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = AnnouncementsDeliveryImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		AnnouncementsDeliveryImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -107,8 +110,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the range of matching announcements deliveries
 	 */
 	@Override
-	public List<AnnouncementsDelivery> findByUserId(long userId, int start,
-		int end) {
+	public List<AnnouncementsDelivery> findByUserId(
+		long userId, int start, int end) {
+
 		return findByUserId(userId, start, end, null);
 	}
 
@@ -126,8 +130,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the ordered range of matching announcements deliveries
 	 */
 	@Override
-	public List<AnnouncementsDelivery> findByUserId(long userId, int start,
-		int end, OrderByComparator<AnnouncementsDelivery> orderByComparator) {
+	public List<AnnouncementsDelivery> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
+
 		return findByUserId(userId, start, end, orderByComparator, true);
 	}
 
@@ -146,29 +152,32 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the ordered range of matching announcements deliveries
 	 */
 	@Override
-	public List<AnnouncementsDelivery> findByUserId(long userId, int start,
-		int end, OrderByComparator<AnnouncementsDelivery> orderByComparator,
+	public List<AnnouncementsDelivery> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] { userId };
+			finderArgs = new Object[] {userId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] { userId, start, end, orderByComparator };
+			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
 		List<AnnouncementsDelivery> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsDelivery announcementsDelivery : list) {
@@ -185,8 +194,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -197,11 +206,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -219,16 +227,16 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				qPos.add(userId);
 
 				if (!pagination) {
-					list = (List<AnnouncementsDelivery>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<AnnouncementsDelivery>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<AnnouncementsDelivery>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<AnnouncementsDelivery>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -257,11 +265,13 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	 */
 	@Override
-	public AnnouncementsDelivery findByUserId_First(long userId,
-		OrderByComparator<AnnouncementsDelivery> orderByComparator)
+	public AnnouncementsDelivery findByUserId_First(
+			long userId,
+			OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws NoSuchDeliveryException {
-		AnnouncementsDelivery announcementsDelivery = fetchByUserId_First(userId,
-				orderByComparator);
+
+		AnnouncementsDelivery announcementsDelivery = fetchByUserId_First(
+			userId, orderByComparator);
 
 		if (announcementsDelivery != null) {
 			return announcementsDelivery;
@@ -287,10 +297,12 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the first matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	 */
 	@Override
-	public AnnouncementsDelivery fetchByUserId_First(long userId,
+	public AnnouncementsDelivery fetchByUserId_First(
+		long userId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
-		List<AnnouncementsDelivery> list = findByUserId(userId, 0, 1,
-				orderByComparator);
+
+		List<AnnouncementsDelivery> list = findByUserId(
+			userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -308,11 +320,13 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	 */
 	@Override
-	public AnnouncementsDelivery findByUserId_Last(long userId,
-		OrderByComparator<AnnouncementsDelivery> orderByComparator)
+	public AnnouncementsDelivery findByUserId_Last(
+			long userId,
+			OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws NoSuchDeliveryException {
-		AnnouncementsDelivery announcementsDelivery = fetchByUserId_Last(userId,
-				orderByComparator);
+
+		AnnouncementsDelivery announcementsDelivery = fetchByUserId_Last(
+			userId, orderByComparator);
 
 		if (announcementsDelivery != null) {
 			return announcementsDelivery;
@@ -338,16 +352,18 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the last matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	 */
 	@Override
-	public AnnouncementsDelivery fetchByUserId_Last(long userId,
+	public AnnouncementsDelivery fetchByUserId_Last(
+		long userId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
+
 		int count = countByUserId(userId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<AnnouncementsDelivery> list = findByUserId(userId, count - 1,
-				count, orderByComparator);
+		List<AnnouncementsDelivery> list = findByUserId(
+			userId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -366,10 +382,13 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	 */
 	@Override
-	public AnnouncementsDelivery[] findByUserId_PrevAndNext(long deliveryId,
-		long userId, OrderByComparator<AnnouncementsDelivery> orderByComparator)
+	public AnnouncementsDelivery[] findByUserId_PrevAndNext(
+			long deliveryId, long userId,
+			OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws NoSuchDeliveryException {
-		AnnouncementsDelivery announcementsDelivery = findByPrimaryKey(deliveryId);
+
+		AnnouncementsDelivery announcementsDelivery = findByPrimaryKey(
+			deliveryId);
 
 		Session session = null;
 
@@ -378,13 +397,15 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 			AnnouncementsDelivery[] array = new AnnouncementsDeliveryImpl[3];
 
-			array[0] = getByUserId_PrevAndNext(session, announcementsDelivery,
-					userId, orderByComparator, true);
+			array[0] = getByUserId_PrevAndNext(
+				session, announcementsDelivery, userId, orderByComparator,
+				true);
 
 			array[1] = announcementsDelivery;
 
-			array[2] = getByUserId_PrevAndNext(session, announcementsDelivery,
-					userId, orderByComparator, false);
+			array[2] = getByUserId_PrevAndNext(
+				session, announcementsDelivery, userId, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -396,15 +417,16 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		}
 	}
 
-	protected AnnouncementsDelivery getByUserId_PrevAndNext(Session session,
-		AnnouncementsDelivery announcementsDelivery, long userId,
-		OrderByComparator<AnnouncementsDelivery> orderByComparator,
+	protected AnnouncementsDelivery getByUserId_PrevAndNext(
+		Session session, AnnouncementsDelivery announcementsDelivery,
+		long userId, OrderByComparator<AnnouncementsDelivery> orderByComparator,
 		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -416,7 +438,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -486,8 +509,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					announcementsDelivery)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						announcementsDelivery)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -509,8 +534,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (AnnouncementsDelivery announcementsDelivery : findByUserId(
-				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (AnnouncementsDelivery announcementsDelivery :
+				findByUserId(
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(announcementsDelivery);
 		}
 	}
@@ -525,10 +552,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	public int countByUserId(long userId) {
 		FinderPath finderPath = _finderPathCountByUserId;
 
-		Object[] finderArgs = new Object[] { userId };
+		Object[] finderArgs = new Object[] {userId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -567,7 +594,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_USERID_USERID_2 = "announcementsDelivery.userId = ?";
+	private static final String _FINDER_COLUMN_USERID_USERID_2 =
+		"announcementsDelivery.userId = ?";
+
 	private FinderPath _finderPathFetchByU_T;
 	private FinderPath _finderPathCountByU_T;
 
@@ -582,6 +611,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery findByU_T(long userId, String type)
 		throws NoSuchDeliveryException {
+
 		AnnouncementsDelivery announcementsDelivery = fetchByU_T(userId, type);
 
 		if (announcementsDelivery == null) {
@@ -628,24 +658,27 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	 */
 	@Override
-	public AnnouncementsDelivery fetchByU_T(long userId, String type,
-		boolean retrieveFromCache) {
+	public AnnouncementsDelivery fetchByU_T(
+		long userId, String type, boolean retrieveFromCache) {
+
 		type = Objects.toString(type, "");
 
-		Object[] finderArgs = new Object[] { userId, type };
+		Object[] finderArgs = new Object[] {userId, type};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByU_T,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByU_T, finderArgs, this);
 		}
 
 		if (result instanceof AnnouncementsDelivery) {
-			AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)result;
+			AnnouncementsDelivery announcementsDelivery =
+				(AnnouncementsDelivery)result;
 
 			if ((userId != announcementsDelivery.getUserId()) ||
-					!Objects.equals(type, announcementsDelivery.getType())) {
+				!Objects.equals(type, announcementsDelivery.getType())) {
+
 				result = null;
 			}
 		}
@@ -688,8 +721,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				List<AnnouncementsDelivery> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByU_T,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByU_T, finderArgs, list);
 				}
 				else {
 					AnnouncementsDelivery announcementsDelivery = list.get(0);
@@ -727,6 +760,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery removeByU_T(long userId, String type)
 		throws NoSuchDeliveryException {
+
 		AnnouncementsDelivery announcementsDelivery = findByU_T(userId, type);
 
 		return remove(announcementsDelivery);
@@ -745,10 +779,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 		FinderPath finderPath = _finderPathCountByU_T;
 
-		Object[] finderArgs = new Object[] { userId, type };
+		Object[] finderArgs = new Object[] {userId, type};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -802,16 +836,22 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_T_USERID_2 = "announcementsDelivery.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "announcementsDelivery.type = ?";
-	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(announcementsDelivery.type IS NULL OR announcementsDelivery.type = '')";
+	private static final String _FINDER_COLUMN_U_T_USERID_2 =
+		"announcementsDelivery.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_T_TYPE_2 =
+		"announcementsDelivery.type = ?";
+
+	private static final String _FINDER_COLUMN_U_T_TYPE_3 =
+		"(announcementsDelivery.type IS NULL OR announcementsDelivery.type = '')";
 
 	public AnnouncementsDeliveryPersistenceImpl() {
 		setModelClass(AnnouncementsDelivery.class);
 
 		setModelImplClass(AnnouncementsDeliveryImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED);
+		setEntityCacheEnabled(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -821,15 +861,18 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public void cacheResult(AnnouncementsDelivery announcementsDelivery) {
-		EntityCacheUtil.putResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsDeliveryImpl.class,
 			announcementsDelivery.getPrimaryKey(), announcementsDelivery);
 
-		FinderCacheUtil.putResult(_finderPathFetchByU_T,
+		FinderCacheUtil.putResult(
+			_finderPathFetchByU_T,
 			new Object[] {
 				announcementsDelivery.getUserId(),
 				announcementsDelivery.getType()
-			}, announcementsDelivery);
+			},
+			announcementsDelivery);
 
 		announcementsDelivery.resetOriginalValues();
 	}
@@ -840,12 +883,17 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @param announcementsDeliveries the announcements deliveries
 	 */
 	@Override
-	public void cacheResult(List<AnnouncementsDelivery> announcementsDeliveries) {
-		for (AnnouncementsDelivery announcementsDelivery : announcementsDeliveries) {
+	public void cacheResult(
+		List<AnnouncementsDelivery> announcementsDeliveries) {
+
+		for (AnnouncementsDelivery announcementsDelivery :
+				announcementsDeliveries) {
+
 			if (EntityCacheUtil.getResult(
-						AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsDeliveryImpl.class,
-						announcementsDelivery.getPrimaryKey()) == null) {
+					AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+					AnnouncementsDeliveryImpl.class,
+					announcementsDelivery.getPrimaryKey()) == null) {
+
 				cacheResult(announcementsDelivery);
 			}
 			else {
@@ -879,64 +927,73 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public void clearCache(AnnouncementsDelivery announcementsDelivery) {
-		EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.removeResult(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsDeliveryImpl.class,
 			announcementsDelivery.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery,
-			true);
+		clearUniqueFindersCache(
+			(AnnouncementsDeliveryModelImpl)announcementsDelivery, true);
 	}
 
 	@Override
-	public void clearCache(List<AnnouncementsDelivery> announcementsDeliveries) {
+	public void clearCache(
+		List<AnnouncementsDelivery> announcementsDeliveries) {
+
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (AnnouncementsDelivery announcementsDelivery : announcementsDeliveries) {
-			EntityCacheUtil.removeResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		for (AnnouncementsDelivery announcementsDelivery :
+				announcementsDeliveries) {
+
+			EntityCacheUtil.removeResult(
+				AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsDeliveryImpl.class,
 				announcementsDelivery.getPrimaryKey());
 
-			clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery,
-				true);
+			clearUniqueFindersCache(
+				(AnnouncementsDeliveryModelImpl)announcementsDelivery, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl) {
-		Object[] args = new Object[] {
-				announcementsDeliveryModelImpl.getUserId(),
-				announcementsDeliveryModelImpl.getType()
-			};
 
-		FinderCacheUtil.putResult(_finderPathCountByU_T, args, Long.valueOf(1),
-			false);
-		FinderCacheUtil.putResult(_finderPathFetchByU_T, args,
-			announcementsDeliveryModelImpl, false);
+		Object[] args = new Object[] {
+			announcementsDeliveryModelImpl.getUserId(),
+			announcementsDeliveryModelImpl.getType()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByU_T, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByU_T, args, announcementsDeliveryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl,
 		boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					announcementsDeliveryModelImpl.getUserId(),
-					announcementsDeliveryModelImpl.getType()
-				};
+				announcementsDeliveryModelImpl.getUserId(),
+				announcementsDeliveryModelImpl.getType()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_T, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByU_T, args);
 		}
 
 		if ((announcementsDeliveryModelImpl.getColumnBitmask() &
-				_finderPathFetchByU_T.getColumnBitmask()) != 0) {
+			 _finderPathFetchByU_T.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					announcementsDeliveryModelImpl.getOriginalUserId(),
-					announcementsDeliveryModelImpl.getOriginalType()
-				};
+				announcementsDeliveryModelImpl.getOriginalUserId(),
+				announcementsDeliveryModelImpl.getOriginalType()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_T, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByU_T, args);
@@ -951,7 +1008,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public AnnouncementsDelivery create(long deliveryId) {
-		AnnouncementsDelivery announcementsDelivery = new AnnouncementsDeliveryImpl();
+		AnnouncementsDelivery announcementsDelivery =
+			new AnnouncementsDeliveryImpl();
 
 		announcementsDelivery.setNew(true);
 		announcementsDelivery.setPrimaryKey(deliveryId);
@@ -971,6 +1029,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery remove(long deliveryId)
 		throws NoSuchDeliveryException {
+
 		return remove((Serializable)deliveryId);
 	}
 
@@ -984,21 +1043,23 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery remove(Serializable primaryKey)
 		throws NoSuchDeliveryException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)session.get(AnnouncementsDeliveryImpl.class,
-					primaryKey);
+			AnnouncementsDelivery announcementsDelivery =
+				(AnnouncementsDelivery)session.get(
+					AnnouncementsDeliveryImpl.class, primaryKey);
 
 			if (announcementsDelivery == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchDeliveryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchDeliveryException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(announcementsDelivery);
@@ -1017,14 +1078,16 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	protected AnnouncementsDelivery removeImpl(
 		AnnouncementsDelivery announcementsDelivery) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			if (!session.contains(announcementsDelivery)) {
-				announcementsDelivery = (AnnouncementsDelivery)session.get(AnnouncementsDeliveryImpl.class,
-						announcementsDelivery.getPrimaryKeyObj());
+				announcementsDelivery = (AnnouncementsDelivery)session.get(
+					AnnouncementsDeliveryImpl.class,
+					announcementsDelivery.getPrimaryKeyObj());
 			}
 
 			if (announcementsDelivery != null) {
@@ -1048,25 +1111,30 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery updateImpl(
 		AnnouncementsDelivery announcementsDelivery) {
+
 		boolean isNew = announcementsDelivery.isNew();
 
-		if (!(announcementsDelivery instanceof AnnouncementsDeliveryModelImpl)) {
+		if (!(announcementsDelivery instanceof
+				AnnouncementsDeliveryModelImpl)) {
+
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(announcementsDelivery.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(announcementsDelivery);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					announcementsDelivery);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in announcementsDelivery proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom AnnouncementsDelivery implementation " +
-				announcementsDelivery.getClass());
+					announcementsDelivery.getClass());
 		}
 
-		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
+		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl =
+			(AnnouncementsDeliveryModelImpl)announcementsDelivery;
 
 		Session session = null;
 
@@ -1079,7 +1147,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				announcementsDelivery.setNew(false);
 			}
 			else {
-				announcementsDelivery = (AnnouncementsDelivery)session.merge(announcementsDelivery);
+				announcementsDelivery = (AnnouncementsDelivery)session.merge(
+					announcementsDelivery);
 			}
 		}
 		catch (Exception e) {
@@ -1092,45 +1161,51 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!AnnouncementsDeliveryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
+		else if (isNew) {
 			Object[] args = new Object[] {
+				announcementsDeliveryModelImpl.getUserId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByUserId, args);
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((announcementsDeliveryModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUserId.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					announcementsDeliveryModelImpl.getOriginalUserId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUserId, args);
+
+				args = new Object[] {
 					announcementsDeliveryModelImpl.getUserId()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUserId,
-				args);
-
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((announcementsDeliveryModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByUserId.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						announcementsDeliveryModelImpl.getOriginalUserId()
-					};
-
 				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUserId,
-					args);
-
-				args = new Object[] { announcementsDeliveryModelImpl.getUserId() };
-
-				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByUserId,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByUserId, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsDeliveryImpl.class,
-			announcementsDelivery.getPrimaryKey(), announcementsDelivery, false);
+			announcementsDelivery.getPrimaryKey(), announcementsDelivery,
+			false);
 
 		clearUniqueFindersCache(announcementsDeliveryModelImpl, false);
 		cacheUniqueFindersCache(announcementsDeliveryModelImpl);
@@ -1150,15 +1225,17 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchDeliveryException {
-		AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(primaryKey);
+
+		AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(
+			primaryKey);
 
 		if (announcementsDelivery == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchDeliveryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchDeliveryException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return announcementsDelivery;
@@ -1174,6 +1251,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	@Override
 	public AnnouncementsDelivery findByPrimaryKey(long deliveryId)
 		throws NoSuchDeliveryException {
+
 		return findByPrimaryKey((Serializable)deliveryId);
 	}
 
@@ -1227,8 +1305,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the ordered range of announcements deliveries
 	 */
 	@Override
-	public List<AnnouncementsDelivery> findAll(int start, int end,
+	public List<AnnouncementsDelivery> findAll(
+		int start, int end,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -1246,29 +1326,32 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * @return the ordered range of announcements deliveries
 	 */
 	@Override
-	public List<AnnouncementsDelivery> findAll(int start, int end,
+	public List<AnnouncementsDelivery> findAll(
+		int start, int end,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AnnouncementsDelivery> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<AnnouncementsDelivery>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1276,13 +1359,13 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_ANNOUNCEMENTSDELIVERY);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1290,7 +1373,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				sql = _SQL_SELECT_ANNOUNCEMENTSDELIVERY;
 
 				if (pagination) {
-					sql = sql.concat(AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL);
+					sql = sql.concat(
+						AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL);
 				}
 			}
 
@@ -1302,16 +1386,16 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<AnnouncementsDelivery>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<AnnouncementsDelivery>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<AnnouncementsDelivery>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<AnnouncementsDelivery>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1349,8 +1433,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1362,12 +1446,12 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -1408,58 +1492,63 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 * Initializes the announcements delivery persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsDeliveryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsDeliveryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countAll", new String[0]);
+		_finderPathCountAll = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-				new String[] {
-					Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+		_finderPathWithPaginationFindByUserId = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsDeliveryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-				new String[] { Long.class.getName() },
-				AnnouncementsDeliveryModelImpl.USERID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsDeliveryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+			new String[] {Long.class.getName()},
+			AnnouncementsDeliveryModelImpl.USERID_COLUMN_BITMASK);
 
-		_finderPathCountByUserId = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByUserId", new String[] { Long.class.getName() });
+		_finderPathCountByUserId = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] {Long.class.getName()});
 
-		_finderPathFetchByU_T = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsDeliveryImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByU_T",
-				new String[] { Long.class.getName(), String.class.getName() },
-				AnnouncementsDeliveryModelImpl.USERID_COLUMN_BITMASK |
-				AnnouncementsDeliveryModelImpl.TYPE_COLUMN_BITMASK);
+		_finderPathFetchByU_T = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsDeliveryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByU_T",
+			new String[] {Long.class.getName(), String.class.getName()},
+			AnnouncementsDeliveryModelImpl.USERID_COLUMN_BITMASK |
+			AnnouncementsDeliveryModelImpl.TYPE_COLUMN_BITMASK);
 
-		_finderPathCountByU_T = new FinderPath(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED,
-				Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByU_T",
-				new String[] { Long.class.getName(), String.class.getName() });
+		_finderPathCountByU_T = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
+			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
 	public void destroy() {
@@ -1471,15 +1560,32 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery";
-	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE ";
-	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY = "SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery";
-	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE = "SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery WHERE ";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsDelivery.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsDelivery exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsDelivery exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(AnnouncementsDeliveryPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type"
-			});
+
+	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY =
+		"SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery";
+
+	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE =
+		"SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE ";
+
+	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY =
+		"SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery";
+
+	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE =
+		"SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery WHERE ";
+
+	private static final String _ORDER_BY_ENTITY_ALIAS =
+		"announcementsDelivery.";
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No AnnouncementsDelivery exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No AnnouncementsDelivery exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnnouncementsDeliveryPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"type"});
+
 }

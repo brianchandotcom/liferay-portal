@@ -15,13 +15,11 @@
 package com.liferay.layout.uad.anonymizer;
 
 import com.liferay.layout.uad.constants.LayoutUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,21 +38,28 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLayoutFriendlyURLUADAnonymizer
 	extends DynamicQueryUADAnonymizer<LayoutFriendlyURL> {
+
 	@Override
-	public void autoAnonymize(LayoutFriendlyURL layoutFriendlyURL, long userId,
-		User anonymousUser) throws PortalException {
+	public void autoAnonymize(
+			LayoutFriendlyURL layoutFriendlyURL, long userId,
+			User anonymousUser)
+		throws PortalException {
+
 		if (layoutFriendlyURL.getUserId() == userId) {
 			layoutFriendlyURL.setUserId(anonymousUser.getUserId());
 			layoutFriendlyURL.setUserName(anonymousUser.getFullName());
 		}
 
-		layoutFriendlyURLLocalService.updateLayoutFriendlyURL(layoutFriendlyURL);
+		layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
+			layoutFriendlyURL);
 	}
 
 	@Override
 	public void delete(LayoutFriendlyURL layoutFriendlyURL)
 		throws PortalException {
-		layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(layoutFriendlyURL);
+
+		layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+			layoutFriendlyURL);
 	}
 
 	@Override
@@ -74,4 +79,5 @@ public abstract class BaseLayoutFriendlyURLUADAnonymizer
 
 	@Reference
 	protected LayoutFriendlyURLLocalService layoutFriendlyURLLocalService;
+
 }

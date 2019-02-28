@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,24 +57,25 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
-	implements PluginSettingModel {
+public class PluginSettingModelImpl
+	extends BaseModelImpl<PluginSetting> implements PluginSettingModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a plugin setting model instance should use the <code>PluginSetting</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "PluginSetting";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "pluginSettingId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "pluginId", Types.VARCHAR },
-			{ "pluginType", Types.VARCHAR },
-			{ "roles", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"pluginSettingId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"pluginId", Types.VARCHAR},
+		{"pluginType", Types.VARCHAR}, {"roles", Types.VARCHAR},
+		{"active_", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -88,25 +87,44 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PluginSetting (mvccVersion LONG default 0 not null,pluginSettingId LONG not null primary key,companyId LONG,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table PluginSetting (mvccVersion LONG default 0 not null,pluginSettingId LONG not null primary key,companyId LONG,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN)";
+
 	public static final String TABLE_SQL_DROP = "drop table PluginSetting";
-	public static final String ORDER_BY_JPQL = " ORDER BY pluginSetting.pluginSettingId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY PluginSetting.pluginSettingId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY pluginSetting.pluginSettingId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY PluginSetting.pluginSettingId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.PluginSetting"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.PluginSetting"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.PluginSetting"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.PluginSetting"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.PluginSetting"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.PluginSetting"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long PLUGINID_COLUMN_BITMASK = 2L;
+
 	public static final long PLUGINTYPE_COLUMN_BITMASK = 4L;
+
 	public static final long PLUGINSETTINGID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -144,7 +162,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 			return null;
 		}
 
-		List<PluginSetting> models = new ArrayList<PluginSetting>(soapModels.length);
+		List<PluginSetting> models = new ArrayList<PluginSetting>(
+			soapModels.length);
 
 		for (PluginSettingSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -153,8 +172,9 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.PluginSetting"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.PluginSetting"));
 
 	public PluginSettingModelImpl() {
 	}
@@ -193,13 +213,18 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<PluginSetting, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<PluginSetting, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<PluginSetting, Object> attributeGetterFunction = entry.getValue();
+			Function<PluginSetting, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((PluginSetting)this));
 		}
 
@@ -211,55 +236,81 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<PluginSetting, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<PluginSetting, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<PluginSetting, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<PluginSetting, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((PluginSetting)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(PluginSetting)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<PluginSetting, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<PluginSetting, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<PluginSetting, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<PluginSetting, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<PluginSetting, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<PluginSetting, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<PluginSetting, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PluginSetting, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PluginSetting, Object>>();
-		Map<String, BiConsumer<PluginSetting, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PluginSetting, ?>>();
+		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<PluginSetting, Object>>();
+		Map<String, BiConsumer<PluginSetting, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<PluginSetting, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", PluginSetting::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PluginSetting, Long>)PluginSetting::setMvccVersion);
-		attributeGetterFunctions.put("pluginSettingId", PluginSetting::getPluginSettingId);
-		attributeSetterBiConsumers.put("pluginSettingId", (BiConsumer<PluginSetting, Long>)PluginSetting::setPluginSettingId);
+		attributeGetterFunctions.put(
+			"mvccVersion", PluginSetting::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<PluginSetting, Long>)PluginSetting::setMvccVersion);
+		attributeGetterFunctions.put(
+			"pluginSettingId", PluginSetting::getPluginSettingId);
+		attributeSetterBiConsumers.put(
+			"pluginSettingId",
+			(BiConsumer<PluginSetting, Long>)PluginSetting::setPluginSettingId);
 		attributeGetterFunctions.put("companyId", PluginSetting::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<PluginSetting, Long>)PluginSetting::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<PluginSetting, Long>)PluginSetting::setCompanyId);
 		attributeGetterFunctions.put("pluginId", PluginSetting::getPluginId);
-		attributeSetterBiConsumers.put("pluginId", (BiConsumer<PluginSetting, String>)PluginSetting::setPluginId);
-		attributeGetterFunctions.put("pluginType", PluginSetting::getPluginType);
-		attributeSetterBiConsumers.put("pluginType", (BiConsumer<PluginSetting, String>)PluginSetting::setPluginType);
+		attributeSetterBiConsumers.put(
+			"pluginId",
+			(BiConsumer<PluginSetting, String>)PluginSetting::setPluginId);
+		attributeGetterFunctions.put(
+			"pluginType", PluginSetting::getPluginType);
+		attributeSetterBiConsumers.put(
+			"pluginType",
+			(BiConsumer<PluginSetting, String>)PluginSetting::setPluginType);
 		attributeGetterFunctions.put("roles", PluginSetting::getRoles);
-		attributeSetterBiConsumers.put("roles", (BiConsumer<PluginSetting, String>)PluginSetting::setRoles);
+		attributeSetterBiConsumers.put(
+			"roles",
+			(BiConsumer<PluginSetting, String>)PluginSetting::setRoles);
 		attributeGetterFunctions.put("active", PluginSetting::getActive);
-		attributeSetterBiConsumers.put("active", (BiConsumer<PluginSetting, Boolean>)PluginSetting::setActive);
+		attributeSetterBiConsumers.put(
+			"active",
+			(BiConsumer<PluginSetting, Boolean>)PluginSetting::setActive);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -398,8 +449,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			PluginSetting.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), PluginSetting.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -412,8 +463,9 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	@Override
 	public PluginSetting toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (PluginSetting)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (PluginSetting)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -492,20 +544,24 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	public void resetOriginalValues() {
 		PluginSettingModelImpl pluginSettingModelImpl = this;
 
-		pluginSettingModelImpl._originalCompanyId = pluginSettingModelImpl._companyId;
+		pluginSettingModelImpl._originalCompanyId =
+			pluginSettingModelImpl._companyId;
 
 		pluginSettingModelImpl._setOriginalCompanyId = false;
 
-		pluginSettingModelImpl._originalPluginId = pluginSettingModelImpl._pluginId;
+		pluginSettingModelImpl._originalPluginId =
+			pluginSettingModelImpl._pluginId;
 
-		pluginSettingModelImpl._originalPluginType = pluginSettingModelImpl._pluginType;
+		pluginSettingModelImpl._originalPluginType =
+			pluginSettingModelImpl._pluginType;
 
 		pluginSettingModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<PluginSetting> toCacheModel() {
-		PluginSettingCacheModel pluginSettingCacheModel = new PluginSettingCacheModel();
+		PluginSettingCacheModel pluginSettingCacheModel =
+			new PluginSettingCacheModel();
 
 		pluginSettingCacheModel.mvccVersion = getMvccVersion();
 
@@ -544,16 +600,20 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public String toString() {
-		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<PluginSetting, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<PluginSetting, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<PluginSetting, Object> attributeGetterFunction = entry.getValue();
+			Function<PluginSetting, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -572,18 +632,22 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<PluginSetting, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<PluginSetting, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<PluginSetting, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<PluginSetting, Object> attributeGetterFunction = entry.getValue();
+			Function<PluginSetting, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -597,10 +661,12 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = PluginSetting.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		PluginSetting.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			PluginSetting.class, ModelWrapper.class
-		};
+		PluginSetting.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _pluginSettingId;
 	private long _companyId;
@@ -614,4 +680,5 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	private boolean _active;
 	private long _columnBitmask;
 	private PluginSetting _escapedModel;
+
 }

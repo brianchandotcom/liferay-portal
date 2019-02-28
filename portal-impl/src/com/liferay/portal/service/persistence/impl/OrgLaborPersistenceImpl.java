@@ -17,7 +17,6 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -59,18 +58,23 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
-	implements OrgLaborPersistence {
+public class OrgLaborPersistenceImpl
+	extends BasePersistenceImpl<OrgLabor> implements OrgLaborPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>OrgLaborUtil</code> to access the org labor persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = OrgLaborImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		OrgLaborImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -86,8 +90,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public List<OrgLabor> findByOrganizationId(long organizationId) {
-		return findByOrganizationId(organizationId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByOrganizationId(
+			organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -103,8 +107,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the range of matching org labors
 	 */
 	@Override
-	public List<OrgLabor> findByOrganizationId(long organizationId, int start,
-		int end) {
+	public List<OrgLabor> findByOrganizationId(
+		long organizationId, int start, int end) {
+
 		return findByOrganizationId(organizationId, start, end, null);
 	}
 
@@ -122,10 +127,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the ordered range of matching org labors
 	 */
 	@Override
-	public List<OrgLabor> findByOrganizationId(long organizationId, int start,
-		int end, OrderByComparator<OrgLabor> orderByComparator) {
-		return findByOrganizationId(organizationId, start, end,
-			orderByComparator, true);
+	public List<OrgLabor> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<OrgLabor> orderByComparator) {
+
+		return findByOrganizationId(
+			organizationId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -143,33 +150,34 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the ordered range of matching org labors
 	 */
 	@Override
-	public List<OrgLabor> findByOrganizationId(long organizationId, int start,
-		int end, OrderByComparator<OrgLabor> orderByComparator,
+	public List<OrgLabor> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<OrgLabor> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByOrganizationId;
-			finderArgs = new Object[] { organizationId };
+			finderArgs = new Object[] {organizationId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByOrganizationId;
 			finderArgs = new Object[] {
-					organizationId,
-					
-					start, end, orderByComparator
-				};
+				organizationId, start, end, orderByComparator
+			};
 		}
 
 		List<OrgLabor> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<OrgLabor>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<OrgLabor>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OrgLabor orgLabor : list) {
@@ -186,8 +194,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -198,11 +206,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			query.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(OrgLaborModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -220,16 +227,16 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 				qPos.add(organizationId);
 
 				if (!pagination) {
-					list = (List<OrgLabor>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<OrgLabor>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<OrgLabor>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<OrgLabor>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -258,11 +265,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @throws NoSuchOrgLaborException if a matching org labor could not be found
 	 */
 	@Override
-	public OrgLabor findByOrganizationId_First(long organizationId,
-		OrderByComparator<OrgLabor> orderByComparator)
+	public OrgLabor findByOrganizationId_First(
+			long organizationId, OrderByComparator<OrgLabor> orderByComparator)
 		throws NoSuchOrgLaborException {
-		OrgLabor orgLabor = fetchByOrganizationId_First(organizationId,
-				orderByComparator);
+
+		OrgLabor orgLabor = fetchByOrganizationId_First(
+			organizationId, orderByComparator);
 
 		if (orgLabor != null) {
 			return orgLabor;
@@ -288,10 +296,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
 	 */
 	@Override
-	public OrgLabor fetchByOrganizationId_First(long organizationId,
-		OrderByComparator<OrgLabor> orderByComparator) {
-		List<OrgLabor> list = findByOrganizationId(organizationId, 0, 1,
-				orderByComparator);
+	public OrgLabor fetchByOrganizationId_First(
+		long organizationId, OrderByComparator<OrgLabor> orderByComparator) {
+
+		List<OrgLabor> list = findByOrganizationId(
+			organizationId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -309,11 +318,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @throws NoSuchOrgLaborException if a matching org labor could not be found
 	 */
 	@Override
-	public OrgLabor findByOrganizationId_Last(long organizationId,
-		OrderByComparator<OrgLabor> orderByComparator)
+	public OrgLabor findByOrganizationId_Last(
+			long organizationId, OrderByComparator<OrgLabor> orderByComparator)
 		throws NoSuchOrgLaborException {
-		OrgLabor orgLabor = fetchByOrganizationId_Last(organizationId,
-				orderByComparator);
+
+		OrgLabor orgLabor = fetchByOrganizationId_Last(
+			organizationId, orderByComparator);
 
 		if (orgLabor != null) {
 			return orgLabor;
@@ -339,16 +349,17 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
 	 */
 	@Override
-	public OrgLabor fetchByOrganizationId_Last(long organizationId,
-		OrderByComparator<OrgLabor> orderByComparator) {
+	public OrgLabor fetchByOrganizationId_Last(
+		long organizationId, OrderByComparator<OrgLabor> orderByComparator) {
+
 		int count = countByOrganizationId(organizationId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<OrgLabor> list = findByOrganizationId(organizationId, count - 1,
-				count, orderByComparator);
+		List<OrgLabor> list = findByOrganizationId(
+			organizationId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -367,9 +378,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	 */
 	@Override
-	public OrgLabor[] findByOrganizationId_PrevAndNext(long orgLaborId,
-		long organizationId, OrderByComparator<OrgLabor> orderByComparator)
+	public OrgLabor[] findByOrganizationId_PrevAndNext(
+			long orgLaborId, long organizationId,
+			OrderByComparator<OrgLabor> orderByComparator)
 		throws NoSuchOrgLaborException {
+
 		OrgLabor orgLabor = findByPrimaryKey(orgLaborId);
 
 		Session session = null;
@@ -379,13 +392,13 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 			OrgLabor[] array = new OrgLaborImpl[3];
 
-			array[0] = getByOrganizationId_PrevAndNext(session, orgLabor,
-					organizationId, orderByComparator, true);
+			array[0] = getByOrganizationId_PrevAndNext(
+				session, orgLabor, organizationId, orderByComparator, true);
 
 			array[1] = orgLabor;
 
-			array[2] = getByOrganizationId_PrevAndNext(session, orgLabor,
-					organizationId, orderByComparator, false);
+			array[2] = getByOrganizationId_PrevAndNext(
+				session, orgLabor, organizationId, orderByComparator, false);
 
 			return array;
 		}
@@ -397,14 +410,15 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		}
 	}
 
-	protected OrgLabor getByOrganizationId_PrevAndNext(Session session,
-		OrgLabor orgLabor, long organizationId,
+	protected OrgLabor getByOrganizationId_PrevAndNext(
+		Session session, OrgLabor orgLabor, long organizationId,
 		OrderByComparator<OrgLabor> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -416,7 +430,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		query.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -486,8 +501,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		qPos.add(organizationId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					orgLabor)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(orgLabor)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -509,8 +525,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public void removeByOrganizationId(long organizationId) {
-		for (OrgLabor orgLabor : findByOrganizationId(organizationId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (OrgLabor orgLabor :
+				findByOrganizationId(
+					organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(orgLabor);
 		}
 	}
@@ -525,10 +544,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public int countByOrganizationId(long organizationId) {
 		FinderPath finderPath = _finderPathCountByOrganizationId;
 
-		Object[] finderArgs = new Object[] { organizationId };
+		Object[] finderArgs = new Object[] {organizationId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -567,7 +586,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2 = "orgLabor.organizationId = ?";
+	private static final String _FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2 =
+		"orgLabor.organizationId = ?";
 
 	public OrgLaborPersistenceImpl() {
 		setModelClass(OrgLabor.class);
@@ -584,8 +604,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public void cacheResult(OrgLabor orgLabor) {
-		EntityCacheUtil.putResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-			OrgLaborImpl.class, orgLabor.getPrimaryKey(), orgLabor);
+		EntityCacheUtil.putResult(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED, OrgLaborImpl.class,
+			orgLabor.getPrimaryKey(), orgLabor);
 
 		orgLabor.resetOriginalValues();
 	}
@@ -599,8 +620,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	public void cacheResult(List<OrgLabor> orgLabors) {
 		for (OrgLabor orgLabor : orgLabors) {
 			if (EntityCacheUtil.getResult(
-						OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-						OrgLaborImpl.class, orgLabor.getPrimaryKey()) == null) {
+					OrgLaborModelImpl.ENTITY_CACHE_ENABLED, OrgLaborImpl.class,
+					orgLabor.getPrimaryKey()) == null) {
+
 				cacheResult(orgLabor);
 			}
 			else {
@@ -634,8 +656,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public void clearCache(OrgLabor orgLabor) {
-		EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-			OrgLaborImpl.class, orgLabor.getPrimaryKey());
+		EntityCacheUtil.removeResult(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED, OrgLaborImpl.class,
+			orgLabor.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -647,8 +670,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (OrgLabor orgLabor : orgLabors) {
-			EntityCacheUtil.removeResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborImpl.class, orgLabor.getPrimaryKey());
+			EntityCacheUtil.removeResult(
+				OrgLaborModelImpl.ENTITY_CACHE_ENABLED, OrgLaborImpl.class,
+				orgLabor.getPrimaryKey());
 		}
 	}
 
@@ -692,21 +716,22 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	@Override
 	public OrgLabor remove(Serializable primaryKey)
 		throws NoSuchOrgLaborException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			OrgLabor orgLabor = (OrgLabor)session.get(OrgLaborImpl.class,
-					primaryKey);
+			OrgLabor orgLabor = (OrgLabor)session.get(
+				OrgLaborImpl.class, primaryKey);
 
 			if (orgLabor == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchOrgLaborException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchOrgLaborException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(orgLabor);
@@ -730,8 +755,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			session = openSession();
 
 			if (!session.contains(orgLabor)) {
-				orgLabor = (OrgLabor)session.get(OrgLaborImpl.class,
-						orgLabor.getPrimaryKeyObj());
+				orgLabor = (OrgLabor)session.get(
+					OrgLaborImpl.class, orgLabor.getPrimaryKeyObj());
 			}
 
 			if (orgLabor != null) {
@@ -764,12 +789,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in orgLabor proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom OrgLabor implementation " +
-				orgLabor.getClass());
+					orgLabor.getClass());
 		}
 
 		OrgLaborModelImpl orgLaborModelImpl = (OrgLaborModelImpl)orgLabor;
@@ -798,44 +823,50 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!OrgLaborModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { orgLaborModelImpl.getOrganizationId() };
+		else if (isNew) {
+			Object[] args = new Object[] {
+				orgLaborModelImpl.getOrganizationId()
+			};
 
-			FinderCacheUtil.removeResult(_finderPathCountByOrganizationId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByOrganizationId,
-				args);
+			FinderCacheUtil.removeResult(
+				_finderPathCountByOrganizationId, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByOrganizationId, args);
 
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
-
 		else {
 			if ((orgLaborModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByOrganizationId.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByOrganizationId.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						orgLaborModelImpl.getOriginalOrganizationId()
-					};
+					orgLaborModelImpl.getOriginalOrganizationId()
+				};
 
-				FinderCacheUtil.removeResult(_finderPathCountByOrganizationId,
-					args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByOrganizationId,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathCountByOrganizationId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByOrganizationId, args);
 
-				args = new Object[] { orgLaborModelImpl.getOrganizationId() };
+				args = new Object[] {orgLaborModelImpl.getOrganizationId()};
 
-				FinderCacheUtil.removeResult(_finderPathCountByOrganizationId,
-					args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByOrganizationId,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathCountByOrganizationId, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByOrganizationId, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-			OrgLaborImpl.class, orgLabor.getPrimaryKey(), orgLabor, false);
+		EntityCacheUtil.putResult(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED, OrgLaborImpl.class,
+			orgLabor.getPrimaryKey(), orgLabor, false);
 
 		orgLabor.resetOriginalValues();
 
@@ -852,6 +883,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	@Override
 	public OrgLabor findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchOrgLaborException {
+
 		OrgLabor orgLabor = fetchByPrimaryKey(primaryKey);
 
 		if (orgLabor == null) {
@@ -859,8 +891,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchOrgLaborException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchOrgLaborException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return orgLabor;
@@ -876,6 +908,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	@Override
 	public OrgLabor findByPrimaryKey(long orgLaborId)
 		throws NoSuchOrgLaborException {
+
 		return findByPrimaryKey((Serializable)orgLaborId);
 	}
 
@@ -929,8 +962,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the ordered range of org labors
 	 */
 	@Override
-	public List<OrgLabor> findAll(int start, int end,
-		OrderByComparator<OrgLabor> orderByComparator) {
+	public List<OrgLabor> findAll(
+		int start, int end, OrderByComparator<OrgLabor> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -948,28 +982,31 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @return the ordered range of org labors
 	 */
 	@Override
-	public List<OrgLabor> findAll(int start, int end,
-		OrderByComparator<OrgLabor> orderByComparator, boolean retrieveFromCache) {
+	public List<OrgLabor> findAll(
+		int start, int end, OrderByComparator<OrgLabor> orderByComparator,
+		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<OrgLabor> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<OrgLabor>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<OrgLabor>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -977,13 +1014,13 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_ORGLABOR);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1003,16 +1040,16 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<OrgLabor>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<OrgLabor>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<OrgLabor>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<OrgLabor>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1050,8 +1087,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1063,12 +1100,12 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -1104,41 +1141,45 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * Initializes the org labor persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByOrganizationId = new FinderPath(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
-				new String[] {
-					Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByOrganizationId", new String[] { Long.class.getName() },
-				OrgLaborModelImpl.ORGANIZATIONID_COLUMN_BITMASK |
-				OrgLaborModelImpl.TYPEID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborModelImpl.FINDER_CACHE_ENABLED, OrgLaborImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
+			new String[] {Long.class.getName()},
+			OrgLaborModelImpl.ORGANIZATIONID_COLUMN_BITMASK |
+			OrgLaborModelImpl.TYPEID_COLUMN_BITMASK);
 
-		_finderPathCountByOrganizationId = new FinderPath(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
-				OrgLaborModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"countByOrganizationId", new String[] { Long.class.getName() });
+		_finderPathCountByOrganizationId = new FinderPath(
+			OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
+			OrgLaborModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOrganizationId",
+			new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -1150,12 +1191,28 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	private static final String _SQL_SELECT_ORGLABOR = "SELECT orgLabor FROM OrgLabor orgLabor";
-	private static final String _SQL_SELECT_ORGLABOR_WHERE = "SELECT orgLabor FROM OrgLabor orgLabor WHERE ";
-	private static final String _SQL_COUNT_ORGLABOR = "SELECT COUNT(orgLabor) FROM OrgLabor orgLabor";
-	private static final String _SQL_COUNT_ORGLABOR_WHERE = "SELECT COUNT(orgLabor) FROM OrgLabor orgLabor WHERE ";
+
+	private static final String _SQL_SELECT_ORGLABOR =
+		"SELECT orgLabor FROM OrgLabor orgLabor";
+
+	private static final String _SQL_SELECT_ORGLABOR_WHERE =
+		"SELECT orgLabor FROM OrgLabor orgLabor WHERE ";
+
+	private static final String _SQL_COUNT_ORGLABOR =
+		"SELECT COUNT(orgLabor) FROM OrgLabor orgLabor";
+
+	private static final String _SQL_COUNT_ORGLABOR_WHERE =
+		"SELECT COUNT(orgLabor) FROM OrgLabor orgLabor WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "orgLabor.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OrgLabor exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgLabor exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(OrgLaborPersistenceImpl.class);
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No OrgLabor exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No OrgLabor exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrgLaborPersistenceImpl.class);
+
 }

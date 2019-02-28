@@ -28,6 +28,7 @@ import java.util.Set;
  * @generated
  */
 public class RoleFinderBaseImpl extends BasePersistenceImpl<Role> {
+
 	public RoleFinderBaseImpl() {
 		setModelClass(Role.class);
 	}
@@ -57,5 +58,8 @@ public class RoleFinderBaseImpl extends BasePersistenceImpl<Role> {
 
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
-	private static final Log _log = LogFactoryUtil.getLog(RoleFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RoleFinderBaseImpl.class);
+
 }

@@ -22,18 +22,22 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface LayoutFinder {
-	public java.util.List<com.liferay.portal.kernel.model.Layout> findByNoPermissions(
-		long roleId);
 
-	public java.util.List<com.liferay.portal.kernel.model.Layout> findByNullFriendlyURL();
+	public java.util.List<com.liferay.portal.kernel.model.Layout>
+		findByNoPermissions(long roleId);
 
-	public java.util.List<com.liferay.portal.kernel.model.Layout> findByScopeGroup(
-		long groupId);
+	public java.util.List<com.liferay.portal.kernel.model.Layout>
+		findByNullFriendlyURL();
 
-	public java.util.List<com.liferay.portal.kernel.model.Layout> findByScopeGroup(
-		long groupId, boolean privateLayout);
+	public java.util.List<com.liferay.portal.kernel.model.Layout>
+		findByScopeGroup(long groupId);
 
-	public java.util.List<com.liferay.portal.kernel.model.LayoutReference> findByC_P_P(
-		long companyId, String portletId, String preferencesKey,
-		String preferencesValue);
+	public java.util.List<com.liferay.portal.kernel.model.Layout>
+		findByScopeGroup(long groupId, boolean privateLayout);
+
+	public java.util.List<com.liferay.portal.kernel.model.LayoutReference>
+		findByC_P_P(
+			long companyId, String portletId, String preferencesKey,
+			String preferencesValue);
+
 }

@@ -17,7 +17,6 @@ package com.liferay.ratings.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import java.io.Serializable;
@@ -56,10 +54,13 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface RatingsEntryLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface RatingsEntryLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,20 +68,20 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the ratings entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was added
-	*/
+	 * Adds the ratings entry to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param ratingsEntry the ratings entry
+	 * @return the ratings entry that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RatingsEntry addRatingsEntry(RatingsEntry ratingsEntry);
 
 	/**
-	* Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
-	*
-	* @param entryId the primary key for the new ratings entry
-	* @return the new ratings entry
-	*/
+	 * Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
+	 *
+	 * @param entryId the primary key for the new ratings entry
+	 * @return the new ratings entry
+	 */
 	@Transactional(enabled = false)
 	public RatingsEntry createRatingsEntry(long entryId);
 
@@ -88,33 +89,33 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteEntry(RatingsEntry entry, long userId, String className,
-		long classPK) throws PortalException;
+	public void deleteEntry(
+			RatingsEntry entry, long userId, String className, long classPK)
+		throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	* Deletes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param entryId the primary key of the ratings entry
-	* @return the ratings entry that was removed
-	* @throws PortalException if a ratings entry with the primary key could not be found
-	*/
+	 * Deletes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param entryId the primary key of the ratings entry
+	 * @return the ratings entry that was removed
+	 * @throws PortalException if a ratings entry with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
-	public RatingsEntry deleteRatingsEntry(long entryId)
-		throws PortalException;
+	public RatingsEntry deleteRatingsEntry(long entryId) throws PortalException;
 
 	/**
-	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was removed
-	*/
+	 * Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param ratingsEntry the ratings entry
+	 * @return the ratings entry that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public RatingsEntry deleteRatingsEntry(RatingsEntry ratingsEntry);
 
@@ -122,66 +123,67 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RatingsEntry fetchEntry(long userId, String className, long classPK);
@@ -190,37 +192,37 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	public RatingsEntry fetchRatingsEntry(long entryId);
 
 	/**
-	* Returns the ratings entry with the matching UUID and company.
-	*
-	* @param uuid the ratings entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	*/
+	 * Returns the ratings entry with the matching UUID and company.
+	 *
+	 * @param uuid the ratings entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsEntry fetchRatingsEntryByUuidAndCompanyId(String uuid,
-		long companyId);
+	public RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* @deprecated As of Judson (7.1.x), with no direct replacement
-	*/
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(long userId, String className,
-		List<Long> classPKs);
+	public List<RatingsEntry> getEntries(
+		long userId, String className, List<Long> classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, RatingsEntry> getEntries(long userId, String className,
-		long[] classPKs);
+	public Map<Long, RatingsEntry> getEntries(
+		long userId, String className, long[] classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RatingsEntry> getEntries(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RatingsEntry> getEntries(String className, long classPK,
-		double score);
+	public List<RatingsEntry> getEntries(
+		String className, long classPK, double score);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(String className, long classPK, double score);
@@ -237,10 +239,10 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -249,59 +251,62 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns a range of all the ratings entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of ratings entries
-	* @param end the upper bound of the range of ratings entries (not inclusive)
-	* @return the range of ratings entries
-	*/
+	 * Returns a range of all the ratings entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of ratings entries
+	 * @param end the upper bound of the range of ratings entries (not inclusive)
+	 * @return the range of ratings entries
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RatingsEntry> getRatingsEntries(int start, int end);
 
 	/**
-	* Returns the number of ratings entries.
-	*
-	* @return the number of ratings entries
-	*/
+	 * Returns the number of ratings entries.
+	 *
+	 * @return the number of ratings entries
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRatingsEntriesCount();
 
 	/**
-	* Returns the ratings entry with the primary key.
-	*
-	* @param entryId the primary key of the ratings entry
-	* @return the ratings entry
-	* @throws PortalException if a ratings entry with the primary key could not be found
-	*/
+	 * Returns the ratings entry with the primary key.
+	 *
+	 * @param entryId the primary key of the ratings entry
+	 * @return the ratings entry
+	 * @throws PortalException if a ratings entry with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RatingsEntry getRatingsEntry(long entryId) throws PortalException;
 
 	/**
-	* Returns the ratings entry with the matching UUID and company.
-	*
-	* @param uuid the ratings entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching ratings entry
-	* @throws PortalException if a matching ratings entry could not be found
-	*/
+	 * Returns the ratings entry with the matching UUID and company.
+	 *
+	 * @param uuid the ratings entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ratings entry
+	 * @throws PortalException if a matching ratings entry could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsEntry getRatingsEntryByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException;
+	public RatingsEntry getRatingsEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
 
-	public RatingsEntry updateEntry(long userId, String className,
-		long classPK, double score, ServiceContext serviceContext)
+	public RatingsEntry updateEntry(
+			long userId, String className, long classPK, double score,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was updated
-	*/
+	 * Updates the ratings entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param ratingsEntry the ratings entry
+	 * @return the ratings entry that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RatingsEntry updateRatingsEntry(RatingsEntry ratingsEntry);
+
 }

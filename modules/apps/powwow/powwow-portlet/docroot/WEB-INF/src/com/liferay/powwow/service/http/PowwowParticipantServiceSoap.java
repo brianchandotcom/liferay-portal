@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import com.liferay.powwow.service.PowwowParticipantServiceUtil;
 
 import java.rmi.RemoteException;
@@ -64,14 +63,21 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PowwowParticipantServiceSoap {
-	public static com.liferay.powwow.model.PowwowParticipantSoap deletePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipantSoap powwowParticipant)
-		throws RemoteException {
-		try {
-			com.liferay.powwow.model.PowwowParticipant returnValue = PowwowParticipantServiceUtil.deletePowwowParticipant(com.liferay.powwow.model.impl.PowwowParticipantModelImpl.toModel(
-						powwowParticipant));
 
-			return com.liferay.powwow.model.PowwowParticipantSoap.toSoapModel(returnValue);
+	public static com.liferay.powwow.model.PowwowParticipantSoap
+			deletePowwowParticipant(
+				com.liferay.powwow.model.PowwowParticipantSoap
+					powwowParticipant)
+		throws RemoteException {
+
+		try {
+			com.liferay.powwow.model.PowwowParticipant returnValue =
+				PowwowParticipantServiceUtil.deletePowwowParticipant(
+					com.liferay.powwow.model.impl.PowwowParticipantModelImpl.
+						toModel(powwowParticipant));
+
+			return com.liferay.powwow.model.PowwowParticipantSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,13 +86,18 @@ public class PowwowParticipantServiceSoap {
 		}
 	}
 
-	public static com.liferay.powwow.model.PowwowParticipantSoap[] getPowwowParticipants(
-		long powwowMeetingId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.powwow.model.PowwowParticipant> returnValue =
-				PowwowParticipantServiceUtil.getPowwowParticipants(powwowMeetingId);
+	public static com.liferay.powwow.model.PowwowParticipantSoap[]
+			getPowwowParticipants(long powwowMeetingId)
+		throws RemoteException {
 
-			return com.liferay.powwow.model.PowwowParticipantSoap.toSoapModels(returnValue);
+		try {
+			java.util.List<com.liferay.powwow.model.PowwowParticipant>
+				returnValue =
+					PowwowParticipantServiceUtil.getPowwowParticipants(
+						powwowMeetingId);
+
+			return com.liferay.powwow.model.PowwowParticipantSoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -97,8 +108,11 @@ public class PowwowParticipantServiceSoap {
 
 	public static int getPowwowParticipantsCount(long powwowMeetingId)
 		throws RemoteException {
+
 		try {
-			int returnValue = PowwowParticipantServiceUtil.getPowwowParticipantsCount(powwowMeetingId);
+			int returnValue =
+				PowwowParticipantServiceUtil.getPowwowParticipantsCount(
+					powwowMeetingId);
 
 			return returnValue;
 		}
@@ -109,17 +123,23 @@ public class PowwowParticipantServiceSoap {
 		}
 	}
 
-	public static com.liferay.powwow.model.PowwowParticipantSoap updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, String name,
-		long participantUserId, String emailAddress, int type, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.powwow.model.PowwowParticipantSoap
+			updatePowwowParticipant(
+				long powwowParticipantId, long powwowMeetingId, String name,
+				long participantUserId, String emailAddress, int type,
+				int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-		try {
-			com.liferay.powwow.model.PowwowParticipant returnValue = PowwowParticipantServiceUtil.updatePowwowParticipant(powwowParticipantId,
-					powwowMeetingId, name, participantUserId, emailAddress,
-					type, status, serviceContext);
 
-			return com.liferay.powwow.model.PowwowParticipantSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.powwow.model.PowwowParticipant returnValue =
+				PowwowParticipantServiceUtil.updatePowwowParticipant(
+					powwowParticipantId, powwowMeetingId, name,
+					participantUserId, emailAddress, type, status,
+					serviceContext);
+
+			return com.liferay.powwow.model.PowwowParticipantSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -128,5 +148,7 @@ public class PowwowParticipantServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PowwowParticipantServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		PowwowParticipantServiceSoap.class);
+
 }

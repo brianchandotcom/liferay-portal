@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -55,28 +53,27 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class ReleaseModelImpl extends BaseModelImpl<Release>
-	implements ReleaseModel {
+public class ReleaseModelImpl
+	extends BaseModelImpl<Release> implements ReleaseModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a release model instance should use the <code>Release</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Release_";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "releaseId", Types.BIGINT },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "servletContextName", Types.VARCHAR },
-			{ "schemaVersion", Types.VARCHAR },
-			{ "buildNumber", Types.INTEGER },
-			{ "buildDate", Types.TIMESTAMP },
-			{ "verified", Types.BOOLEAN },
-			{ "state_", Types.INTEGER },
-			{ "testString", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"releaseId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"servletContextName", Types.VARCHAR}, {"schemaVersion", Types.VARCHAR},
+		{"buildNumber", Types.INTEGER}, {"buildDate", Types.TIMESTAMP},
+		{"verified", Types.BOOLEAN}, {"state_", Types.INTEGER},
+		{"testString", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -92,26 +89,45 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		TABLE_COLUMNS_MAP.put("testString", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0 not null,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,schemaVersion VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Release_ (mvccVersion LONG default 0 not null,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,schemaVersion VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Release_";
-	public static final String ORDER_BY_JPQL = " ORDER BY release_.releaseId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Release_.releaseId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY release_.releaseId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Release_.releaseId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Release"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Release"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Release"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Release"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Release"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Release"),
+		true);
+
 	public static final long SERVLETCONTEXTNAME_COLUMN_BITMASK = 1L;
+
 	public static final long RELEASEID_COLUMN_BITMASK = 2L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Release"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Release"));
 
 	public ReleaseModelImpl() {
 	}
@@ -150,14 +166,18 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Release, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Release, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Release, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Release, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Release, Object> attributeGetterFunction = entry.getValue();
+			Function<Release, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Release)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Release)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -168,61 +188,89 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Release, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Release, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Release, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Release, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Release)this, entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Release)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Release, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<Release, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Release, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Release, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Release, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Release, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Release, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Release, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Release, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Release, Object>>();
-		Map<String, BiConsumer<Release, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Release, ?>>();
-
+		Map<String, Function<Release, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Release, Object>>();
+		Map<String, BiConsumer<Release, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Release, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Release::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Release, Long>)Release::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Release, Long>)Release::setMvccVersion);
 		attributeGetterFunctions.put("releaseId", Release::getReleaseId);
-		attributeSetterBiConsumers.put("releaseId", (BiConsumer<Release, Long>)Release::setReleaseId);
+		attributeSetterBiConsumers.put(
+			"releaseId", (BiConsumer<Release, Long>)Release::setReleaseId);
 		attributeGetterFunctions.put("createDate", Release::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Release, Date>)Release::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Release, Date>)Release::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Release::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Release, Date>)Release::setModifiedDate);
-		attributeGetterFunctions.put("servletContextName", Release::getServletContextName);
-		attributeSetterBiConsumers.put("servletContextName", (BiConsumer<Release, String>)Release::setServletContextName);
-		attributeGetterFunctions.put("schemaVersion", Release::getSchemaVersion);
-		attributeSetterBiConsumers.put("schemaVersion", (BiConsumer<Release, String>)Release::setSchemaVersion);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Release, Date>)Release::setModifiedDate);
+		attributeGetterFunctions.put(
+			"servletContextName", Release::getServletContextName);
+		attributeSetterBiConsumers.put(
+			"servletContextName",
+			(BiConsumer<Release, String>)Release::setServletContextName);
+		attributeGetterFunctions.put(
+			"schemaVersion", Release::getSchemaVersion);
+		attributeSetterBiConsumers.put(
+			"schemaVersion",
+			(BiConsumer<Release, String>)Release::setSchemaVersion);
 		attributeGetterFunctions.put("buildNumber", Release::getBuildNumber);
-		attributeSetterBiConsumers.put("buildNumber", (BiConsumer<Release, Integer>)Release::setBuildNumber);
+		attributeSetterBiConsumers.put(
+			"buildNumber",
+			(BiConsumer<Release, Integer>)Release::setBuildNumber);
 		attributeGetterFunctions.put("buildDate", Release::getBuildDate);
-		attributeSetterBiConsumers.put("buildDate", (BiConsumer<Release, Date>)Release::setBuildDate);
+		attributeSetterBiConsumers.put(
+			"buildDate", (BiConsumer<Release, Date>)Release::setBuildDate);
 		attributeGetterFunctions.put("verified", Release::getVerified);
-		attributeSetterBiConsumers.put("verified", (BiConsumer<Release, Boolean>)Release::setVerified);
+		attributeSetterBiConsumers.put(
+			"verified", (BiConsumer<Release, Boolean>)Release::setVerified);
 		attributeGetterFunctions.put("state", Release::getState);
-		attributeSetterBiConsumers.put("state", (BiConsumer<Release, Integer>)Release::setState);
+		attributeSetterBiConsumers.put(
+			"state", (BiConsumer<Release, Integer>)Release::setState);
 		attributeGetterFunctions.put("testString", Release::getTestString);
-		attributeSetterBiConsumers.put("testString", (BiConsumer<Release, String>)Release::setTestString);
+		attributeSetterBiConsumers.put(
+			"testString", (BiConsumer<Release, String>)Release::setTestString);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -377,8 +425,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Release.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, Release.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -391,8 +439,9 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	@Override
 	public Release toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Release)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Release)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -477,7 +526,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 		releaseModelImpl._setModifiedDate = false;
 
-		releaseModelImpl._originalServletContextName = releaseModelImpl._servletContextName;
+		releaseModelImpl._originalServletContextName =
+			releaseModelImpl._servletContextName;
 
 		releaseModelImpl._columnBitmask = 0;
 	}
@@ -512,7 +562,9 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 		String servletContextName = releaseCacheModel.servletContextName;
 
-		if ((servletContextName != null) && (servletContextName.length() == 0)) {
+		if ((servletContextName != null) &&
+			(servletContextName.length() == 0)) {
+
 			releaseCacheModel.servletContextName = null;
 		}
 
@@ -552,16 +604,20 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Release, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Release, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Release, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Release, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Release, Object> attributeGetterFunction = entry.getValue();
+			Function<Release, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -580,18 +636,22 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Release, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Release, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Release, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Release, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Release, Object> attributeGetterFunction = entry.getValue();
+			Function<Release, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -605,10 +665,12 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Release.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Release.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Release.class, ModelWrapper.class
-		};
+		Release.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _releaseId;
 	private Date _createDate;
@@ -624,4 +686,5 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private String _testString;
 	private long _columnBitmask;
 	private Release _escapedModel;
+
 }

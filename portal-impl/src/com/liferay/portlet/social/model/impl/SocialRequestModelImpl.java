@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
-
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestModel;
 import com.liferay.social.kernel.model.SocialRequestSoap;
@@ -65,30 +62,28 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
-	implements SocialRequestModel {
+public class SocialRequestModelImpl
+	extends BaseModelImpl<SocialRequest> implements SocialRequestModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social request model instance should use the <code>SocialRequest</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SocialRequest";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
-			{ "requestId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "createDate", Types.BIGINT },
-			{ "modifiedDate", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "type_", Types.INTEGER },
-			{ "extraData", Types.VARCHAR },
-			{ "receiverUserId", Types.BIGINT },
-			{ "status", Types.INTEGER }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"uuid_", Types.VARCHAR}, {"requestId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"createDate", Types.BIGINT},
+		{"modifiedDate", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"extraData", Types.VARCHAR}, {"receiverUserId", Types.BIGINT},
+		{"status", Types.INTEGER}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
@@ -106,31 +101,56 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialRequest (uuid_ VARCHAR(75) null,requestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,status INTEGER)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SocialRequest (uuid_ VARCHAR(75) null,requestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,status INTEGER)";
+
 	public static final String TABLE_SQL_DROP = "drop table SocialRequest";
-	public static final String ORDER_BY_JPQL = " ORDER BY socialRequest.requestId DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY SocialRequest.requestId DESC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY socialRequest.requestId DESC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SocialRequest.requestId DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialRequest"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialRequest"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialRequest"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialRequest"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialRequest"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialRequest"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
+
 	public static final long RECEIVERUSERID_COLUMN_BITMASK = 16L;
+
 	public static final long STATUS_COLUMN_BITMASK = 32L;
+
 	public static final long TYPE_COLUMN_BITMASK = 64L;
+
 	public static final long USERID_COLUMN_BITMASK = 128L;
+
 	public static final long UUID_COLUMN_BITMASK = 256L;
+
 	public static final long REQUESTID_COLUMN_BITMASK = 512L;
 
 	/**
@@ -174,7 +194,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 			return null;
 		}
 
-		List<SocialRequest> models = new ArrayList<SocialRequest>(soapModels.length);
+		List<SocialRequest> models = new ArrayList<SocialRequest>(
+			soapModels.length);
 
 		for (SocialRequestSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -183,8 +204,9 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.social.kernel.model.SocialRequest"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.social.kernel.model.SocialRequest"));
 
 	public SocialRequestModelImpl() {
 	}
@@ -223,13 +245,18 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SocialRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialRequest, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialRequest, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialRequest, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SocialRequest)this));
 		}
 
@@ -241,67 +268,104 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SocialRequest, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SocialRequest, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SocialRequest, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SocialRequest, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SocialRequest)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SocialRequest)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SocialRequest, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SocialRequest, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SocialRequest, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SocialRequest, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialRequest, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialRequest, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SocialRequest, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialRequest, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SocialRequest, Object>>();
-		Map<String, BiConsumer<SocialRequest, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SocialRequest, ?>>();
-
+		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<SocialRequest, Object>>();
+		Map<String, BiConsumer<SocialRequest, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<SocialRequest, ?>>();
 
 		attributeGetterFunctions.put("uuid", SocialRequest::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<SocialRequest, String>)SocialRequest::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<SocialRequest, String>)SocialRequest::setUuid);
 		attributeGetterFunctions.put("requestId", SocialRequest::getRequestId);
-		attributeSetterBiConsumers.put("requestId", (BiConsumer<SocialRequest, Long>)SocialRequest::setRequestId);
+		attributeSetterBiConsumers.put(
+			"requestId",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setRequestId);
 		attributeGetterFunctions.put("groupId", SocialRequest::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<SocialRequest, Long>)SocialRequest::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setGroupId);
 		attributeGetterFunctions.put("companyId", SocialRequest::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialRequest, Long>)SocialRequest::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setCompanyId);
 		attributeGetterFunctions.put("userId", SocialRequest::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<SocialRequest, Long>)SocialRequest::setUserId);
-		attributeGetterFunctions.put("createDate", SocialRequest::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SocialRequest, Long>)SocialRequest::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", SocialRequest::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SocialRequest, Long>)SocialRequest::setModifiedDate);
-		attributeGetterFunctions.put("classNameId", SocialRequest::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SocialRequest, Long>)SocialRequest::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setUserId);
+		attributeGetterFunctions.put(
+			"createDate", SocialRequest::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", SocialRequest::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setModifiedDate);
+		attributeGetterFunctions.put(
+			"classNameId", SocialRequest::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setClassNameId);
 		attributeGetterFunctions.put("classPK", SocialRequest::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<SocialRequest, Long>)SocialRequest::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setClassPK);
 		attributeGetterFunctions.put("type", SocialRequest::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<SocialRequest, Integer>)SocialRequest::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<SocialRequest, Integer>)SocialRequest::setType);
 		attributeGetterFunctions.put("extraData", SocialRequest::getExtraData);
-		attributeSetterBiConsumers.put("extraData", (BiConsumer<SocialRequest, String>)SocialRequest::setExtraData);
-		attributeGetterFunctions.put("receiverUserId", SocialRequest::getReceiverUserId);
-		attributeSetterBiConsumers.put("receiverUserId", (BiConsumer<SocialRequest, Long>)SocialRequest::setReceiverUserId);
+		attributeSetterBiConsumers.put(
+			"extraData",
+			(BiConsumer<SocialRequest, String>)SocialRequest::setExtraData);
+		attributeGetterFunctions.put(
+			"receiverUserId", SocialRequest::getReceiverUserId);
+		attributeSetterBiConsumers.put(
+			"receiverUserId",
+			(BiConsumer<SocialRequest, Long>)SocialRequest::setReceiverUserId);
 		attributeGetterFunctions.put("status", SocialRequest::getStatus);
-		attributeSetterBiConsumers.put("status", (BiConsumer<SocialRequest, Integer>)SocialRequest::setStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<SocialRequest, Integer>)SocialRequest::setStatus);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -623,8 +687,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SocialRequest.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SocialRequest.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -637,8 +701,9 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	@Override
 	public SocialRequest toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialRequest)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SocialRequest)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -733,11 +798,13 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 		socialRequestModelImpl._originalUuid = socialRequestModelImpl._uuid;
 
-		socialRequestModelImpl._originalGroupId = socialRequestModelImpl._groupId;
+		socialRequestModelImpl._originalGroupId =
+			socialRequestModelImpl._groupId;
 
 		socialRequestModelImpl._setOriginalGroupId = false;
 
-		socialRequestModelImpl._originalCompanyId = socialRequestModelImpl._companyId;
+		socialRequestModelImpl._originalCompanyId =
+			socialRequestModelImpl._companyId;
 
 		socialRequestModelImpl._setOriginalCompanyId = false;
 
@@ -745,11 +812,13 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 		socialRequestModelImpl._setOriginalUserId = false;
 
-		socialRequestModelImpl._originalClassNameId = socialRequestModelImpl._classNameId;
+		socialRequestModelImpl._originalClassNameId =
+			socialRequestModelImpl._classNameId;
 
 		socialRequestModelImpl._setOriginalClassNameId = false;
 
-		socialRequestModelImpl._originalClassPK = socialRequestModelImpl._classPK;
+		socialRequestModelImpl._originalClassPK =
+			socialRequestModelImpl._classPK;
 
 		socialRequestModelImpl._setOriginalClassPK = false;
 
@@ -757,7 +826,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 		socialRequestModelImpl._setOriginalType = false;
 
-		socialRequestModelImpl._originalReceiverUserId = socialRequestModelImpl._receiverUserId;
+		socialRequestModelImpl._originalReceiverUserId =
+			socialRequestModelImpl._receiverUserId;
 
 		socialRequestModelImpl._setOriginalReceiverUserId = false;
 
@@ -770,7 +840,8 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public CacheModel<SocialRequest> toCacheModel() {
-		SocialRequestCacheModel socialRequestCacheModel = new SocialRequestCacheModel();
+		SocialRequestCacheModel socialRequestCacheModel =
+			new SocialRequestCacheModel();
 
 		socialRequestCacheModel.uuid = getUuid();
 
@@ -815,16 +886,20 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public String toString() {
-		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SocialRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialRequest, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialRequest, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialRequest, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -843,18 +918,22 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<SocialRequest, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SocialRequest, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialRequest, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialRequest, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialRequest, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -868,10 +947,12 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SocialRequest.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SocialRequest.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SocialRequest.class, ModelWrapper.class
-		};
+		SocialRequest.class, ModelWrapper.class
+	};
+
 	private String _uuid;
 	private String _originalUuid;
 	private long _requestId;
@@ -904,4 +985,5 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private SocialRequest _escapedModel;
+
 }

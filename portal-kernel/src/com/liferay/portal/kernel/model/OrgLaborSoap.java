@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class OrgLaborSoap implements Serializable {
+
 	public static OrgLaborSoap toSoapModel(OrgLabor model) {
 		OrgLaborSoap soapModel = new OrgLaborSoap();
 
@@ -83,7 +84,8 @@ public class OrgLaborSoap implements Serializable {
 	}
 
 	public static OrgLaborSoap[] toSoapModels(List<OrgLabor> models) {
-		List<OrgLaborSoap> soapModels = new ArrayList<OrgLaborSoap>(models.size());
+		List<OrgLaborSoap> soapModels = new ArrayList<OrgLaborSoap>(
+			models.size());
 
 		for (OrgLabor model : models) {
 			soapModels.add(toSoapModel(model));
@@ -274,4 +276,5 @@ public class OrgLaborSoap implements Serializable {
 	private int _friClose;
 	private int _satOpen;
 	private int _satClose;
+
 }

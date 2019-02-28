@@ -35,6 +35,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 public abstract class ExportImportConfigurationBaseImpl
 	extends ExportImportConfigurationModelImpl
 	implements ExportImportConfiguration {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -43,10 +44,13 @@ public abstract class ExportImportConfigurationBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			ExportImportConfigurationLocalServiceUtil.addExportImportConfiguration(this);
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(this);
 		}
 		else {
-			ExportImportConfigurationLocalServiceUtil.updateExportImportConfiguration(this);
+			ExportImportConfigurationLocalServiceUtil.
+				updateExportImportConfiguration(this);
 		}
 	}
+
 }

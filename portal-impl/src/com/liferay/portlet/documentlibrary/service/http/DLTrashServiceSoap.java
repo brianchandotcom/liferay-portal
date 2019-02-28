@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -53,23 +52,28 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class DLTrashServiceSoap {
+
 	/**
-	* Moves the file entry from a trashed folder to the new folder.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileEntrySoap moveFileEntryFromTrash(
-		long fileEntryId, long newFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	 * Moves the file entry from a trashed folder to the new folder.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 * @param newFolderId the primary key of the new folder
+	 * @param serviceContext the service context to be applied
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
+			moveFileEntryFromTrash(
+				long fileEntryId, long newFolderId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLTrashServiceUtil.moveFileEntryFromTrash(fileEntryId,
-					newFolderId, serviceContext);
 
-			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.repository.model.FileEntry returnValue =
+				DLTrashServiceUtil.moveFileEntryFromTrash(
+					fileEntryId, newFolderId, serviceContext);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -79,43 +83,21 @@ public class DLTrashServiceSoap {
 	}
 
 	/**
-	* Moves the file entry with the primary key to the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileEntrySoap moveFileEntryToTrash(
-		long fileEntryId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.repository.model.FileEntry returnValue = DLTrashServiceUtil.moveFileEntryToTrash(fileEntryId);
-
-			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Moves the folder with the primary key from the trash portlet to the new
-	* parent folder with the primary key.
-	*
-	* @param folderId the primary key of the folder
-	* @param parentFolderId the primary key of the new parent folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FolderSoap moveFolderFromTrash(
-		long folderId, long parentFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
+			moveFileEntryToTrash(long fileEntryId)
 		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.repository.model.Folder returnValue = DLTrashServiceUtil.moveFolderFromTrash(folderId,
-					parentFolderId, serviceContext);
 
-			return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.repository.model.FileEntry returnValue =
+				DLTrashServiceUtil.moveFileEntryToTrash(fileEntryId);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -125,17 +107,27 @@ public class DLTrashServiceSoap {
 	}
 
 	/**
-	* Moves the folder with the primary key to the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FolderSoap moveFolderToTrash(
-		long folderId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.repository.model.Folder returnValue = DLTrashServiceUtil.moveFolderToTrash(folderId);
+	 * Moves the folder with the primary key from the trash portlet to the new
+	 * parent folder with the primary key.
+	 *
+	 * @param folderId the primary key of the folder
+	 * @param parentFolderId the primary key of the new parent folder
+	 * @param serviceContext the service context to be applied
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.FolderSoap
+			moveFolderFromTrash(
+				long folderId, long parentFolderId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 
-			return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModel(returnValue);
+		try {
+			com.liferay.portal.kernel.repository.model.Folder returnValue =
+				DLTrashServiceUtil.moveFolderFromTrash(
+					folderId, parentFolderId, serviceContext);
+
+			return com.liferay.portal.kernel.repository.model.FolderSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -145,12 +137,37 @@ public class DLTrashServiceSoap {
 	}
 
 	/**
-	* Restores the file entry with the primary key from the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	*/
+	 * Moves the folder with the primary key to the trash portlet.
+	 *
+	 * @param folderId the primary key of the folder
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.FolderSoap
+			moveFolderToTrash(long folderId)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.repository.model.Folder returnValue =
+				DLTrashServiceUtil.moveFolderToTrash(folderId);
+
+			return com.liferay.portal.kernel.repository.model.FolderSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	 * Restores the file entry with the primary key from the trash portlet.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 */
 	public static void restoreFileEntryFromTrash(long fileEntryId)
 		throws RemoteException {
+
 		try {
 			DLTrashServiceUtil.restoreFileEntryFromTrash(fileEntryId);
 		}
@@ -162,12 +179,13 @@ public class DLTrashServiceSoap {
 	}
 
 	/**
-	* Restores the file shortcut with the primary key from the trash portlet.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	*/
+	 * Restores the file shortcut with the primary key from the trash portlet.
+	 *
+	 * @param fileShortcutId the primary key of the file shortcut
+	 */
 	public static void restoreFileShortcutFromTrash(long fileShortcutId)
 		throws RemoteException {
+
 		try {
 			DLTrashServiceUtil.restoreFileShortcutFromTrash(fileShortcutId);
 		}
@@ -179,12 +197,13 @@ public class DLTrashServiceSoap {
 	}
 
 	/**
-	* Restores the folder with the primary key from the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	*/
+	 * Restores the folder with the primary key from the trash portlet.
+	 *
+	 * @param folderId the primary key of the folder
+	 */
 	public static void restoreFolderFromTrash(long folderId)
 		throws RemoteException {
+
 		try {
 			DLTrashServiceUtil.restoreFolderFromTrash(folderId);
 		}
@@ -196,4 +215,5 @@ public class DLTrashServiceSoap {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLTrashServiceSoap.class);
+
 }

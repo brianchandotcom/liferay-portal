@@ -35,8 +35,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PowwowParticipantModel extends BaseModel<PowwowParticipant>,
-	GroupedModel, ShardedModel {
+public interface PowwowParticipantModel
+	extends BaseModel<PowwowParticipant>, GroupedModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -283,4 +284,5 @@ public interface PowwowParticipantModel extends BaseModel<PowwowParticipant>,
 	 * @param status the status of this powwow participant
 	 */
 	public void setStatus(int status);
+
 }

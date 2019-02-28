@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class SocialActivitySetSoap implements Serializable {
+
 	public static SocialActivitySetSoap toSoapModel(SocialActivitySet model) {
 		SocialActivitySetSoap soapModel = new SocialActivitySetSoap();
 
@@ -49,7 +50,9 @@ public class SocialActivitySetSoap implements Serializable {
 
 	public static SocialActivitySetSoap[] toSoapModels(
 		SocialActivitySet[] models) {
-		SocialActivitySetSoap[] soapModels = new SocialActivitySetSoap[models.length];
+
+		SocialActivitySetSoap[] soapModels =
+			new SocialActivitySetSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -60,10 +63,12 @@ public class SocialActivitySetSoap implements Serializable {
 
 	public static SocialActivitySetSoap[][] toSoapModels(
 		SocialActivitySet[][] models) {
+
 		SocialActivitySetSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SocialActivitySetSoap[models.length][models[0].length];
+			soapModels =
+				new SocialActivitySetSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SocialActivitySetSoap[0][0];
@@ -78,7 +83,9 @@ public class SocialActivitySetSoap implements Serializable {
 
 	public static SocialActivitySetSoap[] toSoapModels(
 		List<SocialActivitySet> models) {
-		List<SocialActivitySetSoap> soapModels = new ArrayList<SocialActivitySetSoap>(models.size());
+
+		List<SocialActivitySetSoap> soapModels =
+			new ArrayList<SocialActivitySetSoap>(models.size());
 
 		for (SocialActivitySet model : models) {
 			soapModels.add(toSoapModel(model));
@@ -197,4 +204,5 @@ public class SocialActivitySetSoap implements Serializable {
 	private int _type;
 	private String _extraData;
 	private int _activityCount;
+
 }

@@ -34,6 +34,7 @@ import com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil;
 @ProviderType
 public abstract class SocialActivityCounterBaseImpl
 	extends SocialActivityCounterModelImpl implements SocialActivityCounter {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,10 +43,13 @@ public abstract class SocialActivityCounterBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			SocialActivityCounterLocalServiceUtil.addSocialActivityCounter(this);
+			SocialActivityCounterLocalServiceUtil.addSocialActivityCounter(
+				this);
 		}
 		else {
-			SocialActivityCounterLocalServiceUtil.updateSocialActivityCounter(this);
+			SocialActivityCounterLocalServiceUtil.updateSocialActivityCounter(
+				this);
 		}
 	}
+
 }

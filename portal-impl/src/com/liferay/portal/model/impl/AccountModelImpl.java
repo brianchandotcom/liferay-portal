@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -63,34 +61,30 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class AccountModelImpl extends BaseModelImpl<Account>
-	implements AccountModel {
+public class AccountModelImpl
+	extends BaseModelImpl<Account> implements AccountModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a account model instance should use the <code>Account</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Account_";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "accountId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "parentAccountId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "legalName", Types.VARCHAR },
-			{ "legalId", Types.VARCHAR },
-			{ "legalType", Types.VARCHAR },
-			{ "sicCode", Types.VARCHAR },
-			{ "tickerSymbol", Types.VARCHAR },
-			{ "industry", Types.VARCHAR },
-			{ "type_", Types.VARCHAR },
-			{ "size_", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"accountId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"parentAccountId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"legalName", Types.VARCHAR},
+		{"legalId", Types.VARCHAR}, {"legalType", Types.VARCHAR},
+		{"sicCode", Types.VARCHAR}, {"tickerSymbol", Types.VARCHAR},
+		{"industry", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"size_", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -112,19 +106,33 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		TABLE_COLUMNS_MAP.put("size_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Account_ (mvccVersion LONG default 0 not null,accountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountId LONG,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Account_ (mvccVersion LONG default 0 not null,accountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountId LONG,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Account_";
-	public static final String ORDER_BY_JPQL = " ORDER BY account.accountId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Account_.accountId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY account.accountId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Account_.accountId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Account"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Account"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Account"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Account"),
+		true);
+
 	public static final boolean COLUMN_BITMASK_ENABLED = false;
 
 	/**
@@ -181,8 +189,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Account"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Account"));
 
 	public AccountModelImpl() {
 	}
@@ -221,14 +230,18 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Account, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Account, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Account, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Account, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Account, Object> attributeGetterFunction = entry.getValue();
+			Function<Account, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Account)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Account)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -239,73 +252,105 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Account, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Account, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Account, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Account, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Account)this, entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Account)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Account, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<Account, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Account, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Account, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Account, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Account, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Account, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Account, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Account, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Account, Object>>();
-		Map<String, BiConsumer<Account, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Account, ?>>();
-
+		Map<String, Function<Account, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Account, Object>>();
+		Map<String, BiConsumer<Account, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Account, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Account::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Account, Long>)Account::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Account, Long>)Account::setMvccVersion);
 		attributeGetterFunctions.put("accountId", Account::getAccountId);
-		attributeSetterBiConsumers.put("accountId", (BiConsumer<Account, Long>)Account::setAccountId);
+		attributeSetterBiConsumers.put(
+			"accountId", (BiConsumer<Account, Long>)Account::setAccountId);
 		attributeGetterFunctions.put("companyId", Account::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Account, Long>)Account::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Account, Long>)Account::setCompanyId);
 		attributeGetterFunctions.put("userId", Account::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Account, Long>)Account::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Account, Long>)Account::setUserId);
 		attributeGetterFunctions.put("userName", Account::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Account, String>)Account::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Account, String>)Account::setUserName);
 		attributeGetterFunctions.put("createDate", Account::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Account, Date>)Account::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Account, Date>)Account::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Account::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Account, Date>)Account::setModifiedDate);
-		attributeGetterFunctions.put("parentAccountId", Account::getParentAccountId);
-		attributeSetterBiConsumers.put("parentAccountId", (BiConsumer<Account, Long>)Account::setParentAccountId);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Account, Date>)Account::setModifiedDate);
+		attributeGetterFunctions.put(
+			"parentAccountId", Account::getParentAccountId);
+		attributeSetterBiConsumers.put(
+			"parentAccountId",
+			(BiConsumer<Account, Long>)Account::setParentAccountId);
 		attributeGetterFunctions.put("name", Account::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Account, String>)Account::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Account, String>)Account::setName);
 		attributeGetterFunctions.put("legalName", Account::getLegalName);
-		attributeSetterBiConsumers.put("legalName", (BiConsumer<Account, String>)Account::setLegalName);
+		attributeSetterBiConsumers.put(
+			"legalName", (BiConsumer<Account, String>)Account::setLegalName);
 		attributeGetterFunctions.put("legalId", Account::getLegalId);
-		attributeSetterBiConsumers.put("legalId", (BiConsumer<Account, String>)Account::setLegalId);
+		attributeSetterBiConsumers.put(
+			"legalId", (BiConsumer<Account, String>)Account::setLegalId);
 		attributeGetterFunctions.put("legalType", Account::getLegalType);
-		attributeSetterBiConsumers.put("legalType", (BiConsumer<Account, String>)Account::setLegalType);
+		attributeSetterBiConsumers.put(
+			"legalType", (BiConsumer<Account, String>)Account::setLegalType);
 		attributeGetterFunctions.put("sicCode", Account::getSicCode);
-		attributeSetterBiConsumers.put("sicCode", (BiConsumer<Account, String>)Account::setSicCode);
+		attributeSetterBiConsumers.put(
+			"sicCode", (BiConsumer<Account, String>)Account::setSicCode);
 		attributeGetterFunctions.put("tickerSymbol", Account::getTickerSymbol);
-		attributeSetterBiConsumers.put("tickerSymbol", (BiConsumer<Account, String>)Account::setTickerSymbol);
+		attributeSetterBiConsumers.put(
+			"tickerSymbol",
+			(BiConsumer<Account, String>)Account::setTickerSymbol);
 		attributeGetterFunctions.put("industry", Account::getIndustry);
-		attributeSetterBiConsumers.put("industry", (BiConsumer<Account, String>)Account::setIndustry);
+		attributeSetterBiConsumers.put(
+			"industry", (BiConsumer<Account, String>)Account::setIndustry);
 		attributeGetterFunctions.put("type", Account::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<Account, String>)Account::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<Account, String>)Account::setType);
 		attributeGetterFunctions.put("size", Account::getSize);
-		attributeSetterBiConsumers.put("size", (BiConsumer<Account, String>)Account::setSize);
+		attributeSetterBiConsumers.put(
+			"size", (BiConsumer<Account, String>)Account::setSize);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -569,8 +614,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Account.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Account.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -583,8 +628,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	@Override
 	public Account toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Account)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Account)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -793,16 +839,20 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Account, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Account, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Account, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Account, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Account, Object> attributeGetterFunction = entry.getValue();
+			Function<Account, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -821,18 +871,22 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Account, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Account, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Account, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Account, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Account, Object> attributeGetterFunction = entry.getValue();
+			Function<Account, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -846,10 +900,12 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Account.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Account.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Account.class, ModelWrapper.class
-		};
+		Account.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _accountId;
 	private long _companyId;
@@ -869,4 +925,5 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	private String _type;
 	private String _size;
 	private Account _escapedModel;
+
 }

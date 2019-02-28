@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
-	MVCCModel, ShardedModel {
+public interface PasswordTrackerModel
+	extends BaseModel<PasswordTracker>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -156,4 +157,5 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
 	 * @param password the password of this password tracker
 	 */
 	public void setPassword(String password);
+
 }

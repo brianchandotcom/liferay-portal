@@ -26,88 +26,107 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class LayoutFriendlyURLLocalServiceWrapper
 	implements LayoutFriendlyURLLocalService,
-		ServiceWrapper<LayoutFriendlyURLLocalService> {
+			   ServiceWrapper<LayoutFriendlyURLLocalService> {
+
 	public LayoutFriendlyURLLocalServiceWrapper(
 		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+
 		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
 	}
 
 	/**
-	* Adds the layout friendly url to the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURL the layout friendly url
-	* @return the layout friendly url that was added
-	*/
+	 * Adds the layout friendly url to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutFriendlyURL the layout friendly url
+	 * @return the layout friendly url that was added
+	 */
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL addLayoutFriendlyURL(
-		com.liferay.portal.kernel.model.LayoutFriendlyURL layoutFriendlyURL) {
-		return _layoutFriendlyURLLocalService.addLayoutFriendlyURL(layoutFriendlyURL);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		addLayoutFriendlyURL(
+			com.liferay.portal.kernel.model.LayoutFriendlyURL
+				layoutFriendlyURL) {
+
+		return _layoutFriendlyURLLocalService.addLayoutFriendlyURL(
+			layoutFriendlyURL);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL addLayoutFriendlyURL(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout, String friendlyURL, String languageId,
-		ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			addLayoutFriendlyURL(
+				long userId, long companyId, long groupId, long plid,
+				boolean privateLayout, String friendlyURL, String languageId,
+				ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.addLayoutFriendlyURL(userId,
-			companyId, groupId, plid, privateLayout, friendlyURL, languageId,
+
+		return _layoutFriendlyURLLocalService.addLayoutFriendlyURL(
+			userId, companyId, groupId, plid, privateLayout, friendlyURL,
+			languageId, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+			addLayoutFriendlyURLs(
+				long userId, long companyId, long groupId, long plid,
+				boolean privateLayout,
+				java.util.Map<java.util.Locale, String> friendlyURLMap,
+				ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutFriendlyURLLocalService.addLayoutFriendlyURLs(
+			userId, companyId, groupId, plid, privateLayout, friendlyURLMap,
 			serviceContext);
 	}
 
+	/**
+	 * Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
+	 *
+	 * @param layoutFriendlyURLId the primary key for the new layout friendly url
+	 * @return the new layout friendly url
+	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout,
-		java.util.Map<java.util.Locale, String> friendlyURLMap,
-		ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		createLayoutFriendlyURL(long layoutFriendlyURLId) {
+
+		return _layoutFriendlyURLLocalService.createLayoutFriendlyURL(
+			layoutFriendlyURLId);
+	}
+
+	/**
+	 * Deletes the layout friendly url from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutFriendlyURL the layout friendly url
+	 * @return the layout friendly url that was removed
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		deleteLayoutFriendlyURL(
+			com.liferay.portal.kernel.model.LayoutFriendlyURL
+				layoutFriendlyURL) {
+
+		return _layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+			layoutFriendlyURL);
+	}
+
+	/**
+	 * Deletes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutFriendlyURLId the primary key of the layout friendly url
+	 * @return the layout friendly url that was removed
+	 * @throws PortalException if a layout friendly url with the primary key could not be found
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			deleteLayoutFriendlyURL(long layoutFriendlyURLId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.addLayoutFriendlyURLs(userId,
-			companyId, groupId, plid, privateLayout, friendlyURLMap,
-			serviceContext);
-	}
 
-	/**
-	* Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
-	*
-	* @param layoutFriendlyURLId the primary key for the new layout friendly url
-	* @return the new layout friendly url
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL createLayoutFriendlyURL(
-		long layoutFriendlyURLId) {
-		return _layoutFriendlyURLLocalService.createLayoutFriendlyURL(layoutFriendlyURLId);
-	}
-
-	/**
-	* Deletes the layout friendly url from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURL the layout friendly url
-	* @return the layout friendly url that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
-		com.liferay.portal.kernel.model.LayoutFriendlyURL layoutFriendlyURL) {
-		return _layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(layoutFriendlyURL);
-	}
-
-	/**
-	* Deletes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURLId the primary key of the layout friendly url
-	* @return the layout friendly url that was removed
-	* @throws PortalException if a layout friendly url with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
-		long layoutFriendlyURLId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(layoutFriendlyURLId);
+		return _layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+			layoutFriendlyURLId);
 	}
 
 	@Override
 	public void deleteLayoutFriendlyURL(long plid, String languageId) {
-		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(plid, languageId);
+		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+			plid, languageId);
 	}
 
 	@Override
@@ -116,13 +135,15 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+			com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.deletePersistedModel(persistedModel);
+
+		return _layoutFriendlyURLLocalService.deletePersistedModel(
+			persistedModel);
 	}
 
 	@Override
@@ -131,195 +152,225 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return _layoutFriendlyURLLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-		return _layoutFriendlyURLLocalService.dynamicQuery(dynamicQuery, start,
-			end);
+
+		return _layoutFriendlyURLLocalService.dynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _layoutFriendlyURLLocalService.dynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+
+		return _layoutFriendlyURLLocalService.dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return _layoutFriendlyURLLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _layoutFriendlyURLLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+
+		return _layoutFriendlyURLLocalService.dynamicQueryCount(
+			dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchFirstLayoutFriendlyURL(
-		long groupId, boolean privateLayout, String friendlyURL) {
-		return _layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(groupId,
-			privateLayout, friendlyURL);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		fetchFirstLayoutFriendlyURL(
+			long groupId, boolean privateLayout, String friendlyURL) {
+
+		return _layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
+			groupId, privateLayout, friendlyURL);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long layoutFriendlyURLId) {
-		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(layoutFriendlyURLId);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		fetchLayoutFriendlyURL(long layoutFriendlyURLId) {
+
+		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+			layoutFriendlyURLId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long groupId, boolean privateLayout, String friendlyURL,
-		String languageId) {
-		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(groupId,
-			privateLayout, friendlyURL, languageId);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		fetchLayoutFriendlyURL(
+			long groupId, boolean privateLayout, String friendlyURL,
+			String languageId) {
+
+		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+			groupId, privateLayout, friendlyURL, languageId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long plid, String languageId) {
-		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(plid,
-			languageId);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		fetchLayoutFriendlyURL(long plid, String languageId) {
+
+		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+			plid, languageId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long plid, String languageId, boolean useDefault) {
-		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(plid,
-			languageId, useDefault);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		fetchLayoutFriendlyURL(
+			long plid, String languageId, boolean useDefault) {
+
+		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+			plid, languageId, useDefault);
 	}
 
 	/**
-	* Returns the layout friendly url matching the UUID and group.
-	*
-	* @param uuid the layout friendly url's UUID
-	* @param groupId the primary key of the group
-	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
-	*/
+	 * Returns the layout friendly url matching the UUID and group.
+	 *
+	 * @param uuid the layout friendly url's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
+	 */
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
-		String uuid, long groupId) {
-		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURLByUuidAndGroupId(uuid,
-			groupId);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		fetchLayoutFriendlyURLByUuidAndGroupId(String uuid, long groupId) {
+
+		return _layoutFriendlyURLLocalService.
+			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
 		return _layoutFriendlyURLLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _layoutFriendlyURLLocalService.getExportActionableDynamicQuery(portletDataContext);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _layoutFriendlyURLLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _layoutFriendlyURLLocalService.getIndexableActionableDynamicQuery();
-	}
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-	/**
-	* Returns the layout friendly url with the primary key.
-	*
-	* @param layoutFriendlyURLId the primary key of the layout friendly url
-	* @return the layout friendly url
-	* @throws PortalException if a layout friendly url with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long layoutFriendlyURLId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(layoutFriendlyURLId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long plid, String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(plid,
-			languageId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long plid, String languageId, boolean useDefault)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(plid,
-			languageId, useDefault);
+		return _layoutFriendlyURLLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the layout friendly url matching the UUID and group.
-	*
-	* @param uuid the layout friendly url's UUID
-	* @param groupId the primary key of the group
-	* @return the matching layout friendly url
-	* @throws PortalException if a matching layout friendly url could not be found
-	*/
+	 * Returns the layout friendly url with the primary key.
+	 *
+	 * @param layoutFriendlyURLId the primary key of the layout friendly url
+	 * @return the layout friendly url
+	 * @throws PortalException if a layout friendly url with the primary key could not be found
+	 */
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(
-		String uuid, long groupId)
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			getLayoutFriendlyURL(long layoutFriendlyURLId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLByUuidAndGroupId(uuid,
-			groupId);
+
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+			layoutFriendlyURLId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			getLayoutFriendlyURL(long plid, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+			plid, languageId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			getLayoutFriendlyURL(
+				long plid, String languageId, boolean useDefault)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+			plid, languageId, useDefault);
+	}
+
+	/**
+	 * Returns the layout friendly url matching the UUID and group.
+	 *
+	 * @param uuid the layout friendly url's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching layout friendly url
+	 * @throws PortalException if a matching layout friendly url could not be found
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			getLayoutFriendlyURLByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutFriendlyURLLocalService.
+			getLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -327,87 +378,98 @@ public class LayoutFriendlyURLLocalServiceWrapper
 		com.liferay.portal.kernel.model.Group siteGroup,
 		java.util.List<com.liferay.portal.kernel.model.Layout> layouts,
 		String languageId) {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(siteGroup,
-			layouts, languageId);
+
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+			siteGroup, layouts, languageId);
 	}
 
 	/**
-	* Returns a range of all the layout friendly urls.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of layout friendly urls
-	* @param end the upper bound of the range of layout friendly urls (not inclusive)
-	* @return the range of layout friendly urls
-	*/
+	 * Returns a range of all the layout friendly urls.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of layout friendly urls
+	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		int start, int end) {
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+		getLayoutFriendlyURLs(int start, int end) {
+
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		long plid) {
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+		getLayoutFriendlyURLs(long plid) {
+
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(plid);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		long plid, String friendlyURL, int start, int end) {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(plid,
-			friendlyURL, start, end);
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+		getLayoutFriendlyURLs(
+			long plid, String friendlyURL, int start, int end) {
+
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
+			plid, friendlyURL, start, end);
 	}
 
 	/**
-	* Returns all the layout friendly urls matching the UUID and company.
-	*
-	* @param uuid the UUID of the layout friendly urls
-	* @param companyId the primary key of the company
-	* @return the matching layout friendly urls, or an empty list if no matches were found
-	*/
+	 * Returns all the layout friendly urls matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout friendly urls
+	 * @param companyId the primary key of the company
+	 * @return the matching layout friendly urls, or an empty list if no matches were found
+	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLsByUuidAndCompanyId(uuid,
-			companyId);
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+		getLayoutFriendlyURLsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _layoutFriendlyURLLocalService.
+			getLayoutFriendlyURLsByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
-	* Returns a range of layout friendly urls matching the UUID and company.
-	*
-	* @param uuid the UUID of the layout friendly urls
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of layout friendly urls
-	* @param end the upper bound of the range of layout friendly urls (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching layout friendly urls, or an empty list if no matches were found
-	*/
+	 * Returns a range of layout friendly urls matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout friendly urls
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching layout friendly urls, or an empty list if no matches were found
+	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutFriendlyURL> orderByComparator) {
-		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLsByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+		getLayoutFriendlyURLsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+					orderByComparator) {
+
+		return _layoutFriendlyURLLocalService.
+			getLayoutFriendlyURLsByUuidAndCompanyId(
+				uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of layout friendly urls.
-	*
-	* @return the number of layout friendly urls
-	*/
+	 * Returns the number of layout friendly urls.
+	 *
+	 * @return the number of layout friendly urls
+	 */
 	@Override
 	public int getLayoutFriendlyURLsCount() {
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLsCount();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _layoutFriendlyURLLocalService.getOSGiServiceIdentifier();
@@ -415,43 +477,52 @@ public class LayoutFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+			java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _layoutFriendlyURLLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	* Updates the layout friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURL the layout friendly url
-	* @return the layout friendly url that was updated
-	*/
+	 * Updates the layout friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param layoutFriendlyURL the layout friendly url
+	 * @return the layout friendly url that was updated
+	 */
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
-		com.liferay.portal.kernel.model.LayoutFriendlyURL layoutFriendlyURL) {
-		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURL(layoutFriendlyURL);
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+		updateLayoutFriendlyURL(
+			com.liferay.portal.kernel.model.LayoutFriendlyURL
+				layoutFriendlyURL) {
+
+		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
+			layoutFriendlyURL);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout, String friendlyURL, String languageId,
-		ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.LayoutFriendlyURL
+			updateLayoutFriendlyURL(
+				long userId, long companyId, long groupId, long plid,
+				boolean privateLayout, String friendlyURL, String languageId,
+				ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURL(userId,
-			companyId, groupId, plid, privateLayout, friendlyURL, languageId,
-			serviceContext);
+
+		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
+			userId, companyId, groupId, plid, privateLayout, friendlyURL,
+			languageId, serviceContext);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> updateLayoutFriendlyURLs(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout,
-		java.util.Map<java.util.Locale, String> friendlyURLMap,
-		ServiceContext serviceContext)
+	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
+			updateLayoutFriendlyURLs(
+				long userId, long companyId, long groupId, long plid,
+				boolean privateLayout,
+				java.util.Map<java.util.Locale, String> friendlyURLMap,
+				ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(userId,
-			companyId, groupId, plid, privateLayout, friendlyURLMap,
+
+		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
+			userId, companyId, groupId, plid, privateLayout, friendlyURLMap,
 			serviceContext);
 	}
 
@@ -463,8 +534,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public void setWrappedService(
 		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+
 		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
 	}
 
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 @ProviderType
 public abstract class PortletPreferencesBaseImpl
 	extends PortletPreferencesModelImpl implements PortletPreferences {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class PortletPreferencesBaseImpl
 			PortletPreferencesLocalServiceUtil.updatePortletPreferences(this);
 		}
 	}
+
 }

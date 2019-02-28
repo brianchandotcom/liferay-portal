@@ -22,19 +22,31 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface DLFileEntryTypeFinder {
-	public int countByKeywords(long companyId, long[] groupIds,
-		String keywords, boolean includeBasicFileEntryType);
 
-	public int filterCountByKeywords(long companyId, long[] groupIds,
-		String keywords, boolean includeBasicFileEntryType);
-
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> filterFindByKeywords(
+	public int countByKeywords(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator);
+		boolean includeBasicFileEntryType);
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> findByKeywords(
+	public int filterCountByKeywords(
 		long companyId, long[] groupIds, String keywords,
-		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.document.library.kernel.model.DLFileEntryType> orderByComparator);
+		boolean includeBasicFileEntryType);
+
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryType>
+			filterFindByKeywords(
+				long companyId, long[] groupIds, String keywords,
+				boolean includeBasicFileEntryType, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFileEntryType>
+						orderByComparator);
+
+	public java.util.List
+		<com.liferay.document.library.kernel.model.DLFileEntryType>
+			findByKeywords(
+				long companyId, long[] groupIds, String keywords,
+				boolean includeBasicFileEntryType, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFileEntryType>
+						orderByComparator);
+
 }

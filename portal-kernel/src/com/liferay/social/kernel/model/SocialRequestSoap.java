@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class SocialRequestSoap implements Serializable {
+
 	public static SocialRequestSoap toSoapModel(SocialRequest model) {
 		SocialRequestSoap soapModel = new SocialRequestSoap();
 
@@ -77,7 +78,8 @@ public class SocialRequestSoap implements Serializable {
 	}
 
 	public static SocialRequestSoap[] toSoapModels(List<SocialRequest> models) {
-		List<SocialRequestSoap> soapModels = new ArrayList<SocialRequestSoap>(models.size());
+		List<SocialRequestSoap> soapModels = new ArrayList<SocialRequestSoap>(
+			models.size());
 
 		for (SocialRequest model : models) {
 			soapModels.add(toSoapModel(model));
@@ -214,4 +216,5 @@ public class SocialRequestSoap implements Serializable {
 	private String _extraData;
 	private long _receiverUserId;
 	private int _status;
+
 }

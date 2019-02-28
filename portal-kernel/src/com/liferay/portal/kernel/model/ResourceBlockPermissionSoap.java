@@ -31,12 +31,16 @@ import java.util.List;
 @Deprecated
 @ProviderType
 public class ResourceBlockPermissionSoap implements Serializable {
+
 	public static ResourceBlockPermissionSoap toSoapModel(
 		ResourceBlockPermission model) {
-		ResourceBlockPermissionSoap soapModel = new ResourceBlockPermissionSoap();
+
+		ResourceBlockPermissionSoap soapModel =
+			new ResourceBlockPermissionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setResourceBlockPermissionId(model.getResourceBlockPermissionId());
+		soapModel.setResourceBlockPermissionId(
+			model.getResourceBlockPermissionId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setResourceBlockId(model.getResourceBlockId());
 		soapModel.setRoleId(model.getRoleId());
@@ -47,7 +51,9 @@ public class ResourceBlockPermissionSoap implements Serializable {
 
 	public static ResourceBlockPermissionSoap[] toSoapModels(
 		ResourceBlockPermission[] models) {
-		ResourceBlockPermissionSoap[] soapModels = new ResourceBlockPermissionSoap[models.length];
+
+		ResourceBlockPermissionSoap[] soapModels =
+			new ResourceBlockPermissionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,10 +64,13 @@ public class ResourceBlockPermissionSoap implements Serializable {
 
 	public static ResourceBlockPermissionSoap[][] toSoapModels(
 		ResourceBlockPermission[][] models) {
+
 		ResourceBlockPermissionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new ResourceBlockPermissionSoap[models.length][models[0].length];
+			soapModels =
+				new ResourceBlockPermissionSoap
+					[models.length][models[0].length];
 		}
 		else {
 			soapModels = new ResourceBlockPermissionSoap[0][0];
@@ -76,13 +85,16 @@ public class ResourceBlockPermissionSoap implements Serializable {
 
 	public static ResourceBlockPermissionSoap[] toSoapModels(
 		List<ResourceBlockPermission> models) {
-		List<ResourceBlockPermissionSoap> soapModels = new ArrayList<ResourceBlockPermissionSoap>(models.size());
+
+		List<ResourceBlockPermissionSoap> soapModels =
+			new ArrayList<ResourceBlockPermissionSoap>(models.size());
 
 		for (ResourceBlockPermission model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new ResourceBlockPermissionSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new ResourceBlockPermissionSoap[soapModels.size()]);
 	}
 
 	public ResourceBlockPermissionSoap() {
@@ -150,4 +162,5 @@ public class ResourceBlockPermissionSoap implements Serializable {
 	private long _resourceBlockId;
 	private long _roleId;
 	private long _actionIds;
+
 }

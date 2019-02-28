@@ -35,13 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -51,14 +44,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class ClusterGroupPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -98,7 +100,8 @@ public class ClusterGroupPersistenceTest {
 
 		_persistence.remove(newClusterGroup);
 
-		ClusterGroup existingClusterGroup = _persistence.fetchByPrimaryKey(newClusterGroup.getPrimaryKey());
+		ClusterGroup existingClusterGroup = _persistence.fetchByPrimaryKey(
+			newClusterGroup.getPrimaryKey());
 
 		Assert.assertNull(existingClusterGroup);
 	}
@@ -124,17 +127,22 @@ public class ClusterGroupPersistenceTest {
 
 		_clusterGroups.add(_persistence.update(newClusterGroup));
 
-		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(newClusterGroup.getPrimaryKey());
+		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(
+			newClusterGroup.getPrimaryKey());
 
-		Assert.assertEquals(existingClusterGroup.getMvccVersion(),
+		Assert.assertEquals(
+			existingClusterGroup.getMvccVersion(),
 			newClusterGroup.getMvccVersion());
-		Assert.assertEquals(existingClusterGroup.getClusterGroupId(),
+		Assert.assertEquals(
+			existingClusterGroup.getClusterGroupId(),
 			newClusterGroup.getClusterGroupId());
-		Assert.assertEquals(existingClusterGroup.getName(),
-			newClusterGroup.getName());
-		Assert.assertEquals(existingClusterGroup.getClusterNodeIds(),
+		Assert.assertEquals(
+			existingClusterGroup.getName(), newClusterGroup.getName());
+		Assert.assertEquals(
+			existingClusterGroup.getClusterNodeIds(),
 			newClusterGroup.getClusterNodeIds());
-		Assert.assertEquals(existingClusterGroup.isWholeCluster(),
+		Assert.assertEquals(
+			existingClusterGroup.isWholeCluster(),
 			newClusterGroup.isWholeCluster());
 	}
 
@@ -142,7 +150,8 @@ public class ClusterGroupPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
-		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(newClusterGroup.getPrimaryKey());
+		ClusterGroup existingClusterGroup = _persistence.findByPrimaryKey(
+			newClusterGroup.getPrimaryKey());
 
 		Assert.assertEquals(existingClusterGroup, newClusterGroup);
 	}
@@ -156,21 +165,22 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<ClusterGroup> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("ClusterGroup",
-			"mvccVersion", true, "clusterGroupId", true, "name", true,
-			"clusterNodeIds", true, "wholeCluster", true);
+		return OrderByComparatorFactoryUtil.create(
+			"ClusterGroup", "mvccVersion", true, "clusterGroupId", true, "name",
+			true, "clusterNodeIds", true, "wholeCluster", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
-		ClusterGroup existingClusterGroup = _persistence.fetchByPrimaryKey(newClusterGroup.getPrimaryKey());
+		ClusterGroup existingClusterGroup = _persistence.fetchByPrimaryKey(
+			newClusterGroup.getPrimaryKey());
 
 		Assert.assertEquals(existingClusterGroup, newClusterGroup);
 	}
@@ -187,6 +197,7 @@ public class ClusterGroupPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		ClusterGroup newClusterGroup1 = addClusterGroup();
 		ClusterGroup newClusterGroup2 = addClusterGroup();
 
@@ -195,18 +206,22 @@ public class ClusterGroupPersistenceTest {
 		primaryKeys.add(newClusterGroup1.getPrimaryKey());
 		primaryKeys.add(newClusterGroup2.getPrimaryKey());
 
-		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClusterGroup> clusterGroups =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, clusterGroups.size());
-		Assert.assertEquals(newClusterGroup1,
+		Assert.assertEquals(
+			newClusterGroup1,
 			clusterGroups.get(newClusterGroup1.getPrimaryKey()));
-		Assert.assertEquals(newClusterGroup2,
+		Assert.assertEquals(
+			newClusterGroup2,
 			clusterGroups.get(newClusterGroup2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -216,7 +231,8 @@ public class ClusterGroupPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClusterGroup> clusterGroups =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(clusterGroups.isEmpty());
 	}
@@ -224,6 +240,7 @@ public class ClusterGroupPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		ClusterGroup newClusterGroup = addClusterGroup();
 
 		long pk = RandomTestUtil.nextLong();
@@ -233,36 +250,39 @@ public class ClusterGroupPersistenceTest {
 		primaryKeys.add(newClusterGroup.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClusterGroup> clusterGroups =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, clusterGroups.size());
-		Assert.assertEquals(newClusterGroup,
+		Assert.assertEquals(
+			newClusterGroup,
 			clusterGroups.get(newClusterGroup.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClusterGroup> clusterGroups =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(clusterGroups.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newClusterGroup.getPrimaryKey());
 
-		Map<Serializable, ClusterGroup> clusterGroups = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, ClusterGroup> clusterGroups =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, clusterGroups.size());
-		Assert.assertEquals(newClusterGroup,
+		Assert.assertEquals(
+			newClusterGroup,
 			clusterGroups.get(newClusterGroup.getPrimaryKey()));
 	}
 
@@ -270,15 +290,19 @@ public class ClusterGroupPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = ClusterGroupLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			ClusterGroupLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ClusterGroup>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ClusterGroup>() {
+
 				@Override
 				public void performAction(ClusterGroup clusterGroup) {
 					Assert.assertNotNull(clusterGroup);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -287,17 +311,18 @@ public class ClusterGroupPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClusterGroup.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId",
-				newClusterGroup.getClusterGroupId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"clusterGroupId", newClusterGroup.getClusterGroupId()));
 
-		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ClusterGroup> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -308,32 +333,34 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClusterGroup.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"clusterGroupId", RandomTestUtil.nextLong()));
 
-		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ClusterGroup> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		ClusterGroup newClusterGroup = addClusterGroup();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClusterGroup.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"clusterGroupId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("clusterGroupId"));
 
 		Object newClusterGroupId = newClusterGroup.getClusterGroupId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("clusterGroupId",
-				new Object[] { newClusterGroupId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"clusterGroupId", new Object[] {newClusterGroupId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -346,14 +373,15 @@ public class ClusterGroupPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ClusterGroup.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"clusterGroupId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("clusterGroupId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("clusterGroupId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"clusterGroupId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -381,4 +409,5 @@ public class ClusterGroupPersistenceTest {
 	private List<ClusterGroup> _clusterGroups = new ArrayList<ClusterGroup>();
 	private ClusterGroupPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

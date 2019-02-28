@@ -39,9 +39,12 @@ import java.io.InputStream;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface LayoutSetService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -49,54 +52,65 @@ public interface LayoutSetService extends BaseService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* Updates the state of the layout set prototype link.
-	*
-	* <p>
-	* <strong>Important:</strong> Setting
-	* <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
-	* <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
-	* set prototype's current uuid is <code>null</code> will result in an
-	* <code>IllegalStateException</code>.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout set is private to the group
-	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	link enabled
-	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	link with
-	*/
-	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		String layoutSetPrototypeUuid) throws PortalException;
-
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		byte[] bytes) throws PortalException;
-
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		File file) throws PortalException;
-
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		InputStream inputStream) throws PortalException;
-
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		InputStream inputStream, boolean cleanUpStream)
+	 * Updates the state of the layout set prototype link.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Setting
+	 * <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> and
+	 * <code>layoutSetPrototypeUuid</code> to <code>null</code> when the layout
+	 * set prototype's current uuid is <code>null</code> will result in an
+	 * <code>IllegalStateException</code>.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout set is private to the group
+	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	 link enabled
+	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	 link with
+	 */
+	public void updateLayoutSetPrototypeLinkEnabled(
+			long groupId, boolean privateLayout,
+			boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
 		throws PortalException;
 
-	public LayoutSet updateLookAndFeel(long groupId, boolean privateLayout,
-		String themeId, String colorSchemeId, String css)
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
 		throws PortalException;
 
-	public LayoutSet updateSettings(long groupId, boolean privateLayout,
-		String settings) throws PortalException;
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo, File file)
+		throws PortalException;
 
-	public LayoutSet updateVirtualHost(long groupId, boolean privateLayout,
-		String virtualHost) throws PortalException;
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo,
+			InputStream inputStream)
+		throws PortalException;
+
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo,
+			InputStream inputStream, boolean cleanUpStream)
+		throws PortalException;
+
+	public LayoutSet updateLookAndFeel(
+			long groupId, boolean privateLayout, String themeId,
+			String colorSchemeId, String css)
+		throws PortalException;
+
+	public LayoutSet updateSettings(
+			long groupId, boolean privateLayout, String settings)
+		throws PortalException;
+
+	public LayoutSet updateVirtualHost(
+			long groupId, boolean privateLayout, String virtualHost)
+		throws PortalException;
+
 }

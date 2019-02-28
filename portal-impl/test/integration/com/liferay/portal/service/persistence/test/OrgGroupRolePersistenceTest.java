@@ -30,13 +30,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -46,14 +39,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class OrgGroupRolePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -78,8 +80,9 @@ public class OrgGroupRolePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		OrgGroupRole orgGroupRole = _persistence.create(pk);
 
@@ -94,7 +97,8 @@ public class OrgGroupRolePersistenceTest {
 
 		_persistence.remove(newOrgGroupRole);
 
-		OrgGroupRole existingOrgGroupRole = _persistence.fetchByPrimaryKey(newOrgGroupRole.getPrimaryKey());
+		OrgGroupRole existingOrgGroupRole = _persistence.fetchByPrimaryKey(
+			newOrgGroupRole.getPrimaryKey());
 
 		Assert.assertNull(existingOrgGroupRole);
 	}
@@ -106,8 +110,9 @@ public class OrgGroupRolePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		OrgGroupRole newOrgGroupRole = _persistence.create(pk);
 
@@ -117,17 +122,21 @@ public class OrgGroupRolePersistenceTest {
 
 		_orgGroupRoles.add(_persistence.update(newOrgGroupRole));
 
-		OrgGroupRole existingOrgGroupRole = _persistence.findByPrimaryKey(newOrgGroupRole.getPrimaryKey());
+		OrgGroupRole existingOrgGroupRole = _persistence.findByPrimaryKey(
+			newOrgGroupRole.getPrimaryKey());
 
-		Assert.assertEquals(existingOrgGroupRole.getMvccVersion(),
+		Assert.assertEquals(
+			existingOrgGroupRole.getMvccVersion(),
 			newOrgGroupRole.getMvccVersion());
-		Assert.assertEquals(existingOrgGroupRole.getOrganizationId(),
+		Assert.assertEquals(
+			existingOrgGroupRole.getOrganizationId(),
 			newOrgGroupRole.getOrganizationId());
-		Assert.assertEquals(existingOrgGroupRole.getGroupId(),
-			newOrgGroupRole.getGroupId());
-		Assert.assertEquals(existingOrgGroupRole.getRoleId(),
-			newOrgGroupRole.getRoleId());
-		Assert.assertEquals(existingOrgGroupRole.getCompanyId(),
+		Assert.assertEquals(
+			existingOrgGroupRole.getGroupId(), newOrgGroupRole.getGroupId());
+		Assert.assertEquals(
+			existingOrgGroupRole.getRoleId(), newOrgGroupRole.getRoleId());
+		Assert.assertEquals(
+			existingOrgGroupRole.getCompanyId(),
 			newOrgGroupRole.getCompanyId());
 	}
 
@@ -149,15 +158,17 @@ public class OrgGroupRolePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
-		OrgGroupRole existingOrgGroupRole = _persistence.findByPrimaryKey(newOrgGroupRole.getPrimaryKey());
+		OrgGroupRole existingOrgGroupRole = _persistence.findByPrimaryKey(
+			newOrgGroupRole.getPrimaryKey());
 
 		Assert.assertEquals(existingOrgGroupRole, newOrgGroupRole);
 	}
 
 	@Test(expected = NoSuchOrgGroupRoleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.findByPrimaryKey(pk);
 	}
@@ -166,15 +177,17 @@ public class OrgGroupRolePersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
-		OrgGroupRole existingOrgGroupRole = _persistence.fetchByPrimaryKey(newOrgGroupRole.getPrimaryKey());
+		OrgGroupRole existingOrgGroupRole = _persistence.fetchByPrimaryKey(
+			newOrgGroupRole.getPrimaryKey());
 
 		Assert.assertEquals(existingOrgGroupRole, newOrgGroupRole);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		OrgGroupRole missingOrgGroupRole = _persistence.fetchByPrimaryKey(pk);
 
@@ -184,6 +197,7 @@ public class OrgGroupRolePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		OrgGroupRole newOrgGroupRole1 = addOrgGroupRole();
 		OrgGroupRole newOrgGroupRole2 = addOrgGroupRole();
 
@@ -192,30 +206,37 @@ public class OrgGroupRolePersistenceTest {
 		primaryKeys.add(newOrgGroupRole1.getPrimaryKey());
 		primaryKeys.add(newOrgGroupRole2.getPrimaryKey());
 
-		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgGroupRole> orgGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, orgGroupRoles.size());
-		Assert.assertEquals(newOrgGroupRole1,
+		Assert.assertEquals(
+			newOrgGroupRole1,
 			orgGroupRoles.get(newOrgGroupRole1.getPrimaryKey()));
-		Assert.assertEquals(newOrgGroupRole2,
+		Assert.assertEquals(
+			newOrgGroupRole2,
 			orgGroupRoles.get(newOrgGroupRole2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-		OrgGroupRolePK pk1 = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		OrgGroupRolePK pk2 = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk1 = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		OrgGroupRolePK pk2 = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgGroupRole> orgGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(orgGroupRoles.isEmpty());
 	}
@@ -223,65 +244,73 @@ public class OrgGroupRolePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
-		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newOrgGroupRole.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgGroupRole> orgGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, orgGroupRoles.size());
-		Assert.assertEquals(newOrgGroupRole,
+		Assert.assertEquals(
+			newOrgGroupRole,
 			orgGroupRoles.get(newOrgGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgGroupRole> orgGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(orgGroupRoles.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newOrgGroupRole.getPrimaryKey());
 
-		Map<Serializable, OrgGroupRole> orgGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgGroupRole> orgGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, orgGroupRoles.size());
-		Assert.assertEquals(newOrgGroupRole,
+		Assert.assertEquals(
+			newOrgGroupRole,
 			orgGroupRoles.get(newOrgGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgGroupRole.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.organizationId",
-				newOrgGroupRole.getOrganizationId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
-				newOrgGroupRole.getGroupId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
-				newOrgGroupRole.getRoleId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.organizationId", newOrgGroupRole.getOrganizationId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.groupId", newOrgGroupRole.getGroupId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.roleId", newOrgGroupRole.getRoleId()));
 
-		List<OrgGroupRole> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<OrgGroupRole> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -292,36 +321,39 @@ public class OrgGroupRolePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgGroupRole.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.organizationId",
-				RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
-				RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.organizationId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.groupId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("id.roleId", RandomTestUtil.nextLong()));
 
-		List<OrgGroupRole> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<OrgGroupRole> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgGroupRole.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"id.organizationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("id.organizationId"));
 
 		Object newOrganizationId = newOrgGroupRole.getOrganizationId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.organizationId",
-				new Object[] { newOrganizationId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"id.organizationId", new Object[] {newOrganizationId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -334,14 +366,15 @@ public class OrgGroupRolePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgGroupRole.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"id.organizationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("id.organizationId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.organizationId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"id.organizationId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -349,8 +382,9 @@ public class OrgGroupRolePersistenceTest {
 	}
 
 	protected OrgGroupRole addOrgGroupRole() throws Exception {
-		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		OrgGroupRolePK pk = new OrgGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		OrgGroupRole orgGroupRole = _persistence.create(pk);
 
@@ -366,4 +400,5 @@ public class OrgGroupRolePersistenceTest {
 	private List<OrgGroupRole> _orgGroupRoles = new ArrayList<OrgGroupRole>();
 	private OrgGroupRolePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

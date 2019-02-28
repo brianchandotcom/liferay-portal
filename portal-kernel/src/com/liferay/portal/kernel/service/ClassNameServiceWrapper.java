@@ -24,8 +24,9 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class ClassNameServiceWrapper implements ClassNameService,
-	ServiceWrapper<ClassNameService> {
+public class ClassNameServiceWrapper
+	implements ClassNameService, ServiceWrapper<ClassNameService> {
+
 	public ClassNameServiceWrapper(ClassNameService classNameService) {
 		_classNameService = classNameService;
 	}
@@ -33,20 +34,22 @@ public class ClassNameServiceWrapper implements ClassNameService,
 	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
 		long classNameId) {
+
 		return _classNameService.fetchByClassNameId(classNameId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchClassName(
 		String value) {
+
 		return _classNameService.fetchClassName(value);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _classNameService.getOSGiServiceIdentifier();
@@ -63,4 +66,5 @@ public class ClassNameServiceWrapper implements ClassNameService,
 	}
 
 	private ClassNameService _classNameService;
+
 }

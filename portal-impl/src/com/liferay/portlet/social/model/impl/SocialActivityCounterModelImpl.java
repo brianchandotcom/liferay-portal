@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
-
 import com.liferay.social.kernel.model.SocialActivityCounter;
 import com.liferay.social.kernel.model.SocialActivityCounterModel;
 
@@ -57,30 +54,29 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivityCounter>
+public class SocialActivityCounterModelImpl
+	extends BaseModelImpl<SocialActivityCounter>
 	implements SocialActivityCounterModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social activity counter model instance should use the <code>SocialActivityCounter</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SocialActivityCounter";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "activityCounterId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "ownerType", Types.INTEGER },
-			{ "currentValue", Types.INTEGER },
-			{ "totalValue", Types.INTEGER },
-			{ "graceValue", Types.INTEGER },
-			{ "startPeriod", Types.INTEGER },
-			{ "endPeriod", Types.INTEGER },
-			{ "active_", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"activityCounterId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"ownerType", Types.INTEGER}, {"currentValue", Types.INTEGER},
+		{"totalValue", Types.INTEGER}, {"graceValue", Types.INTEGER},
+		{"startPeriod", Types.INTEGER}, {"endPeriod", Types.INTEGER},
+		{"active_", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activityCounterId", Types.BIGINT);
@@ -98,32 +94,58 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
-	public static final String TABLE_SQL_DROP = "drop table SocialActivityCounter";
-	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityCounter.activityCounterId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityCounter.activityCounterId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table SocialActivityCounter";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY socialActivityCounter.activityCounterId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SocialActivityCounter.activityCounterId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityCounter"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityCounter"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityCounter"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityCounter"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityCounter"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityCounter"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long ENDPERIOD_COLUMN_BITMASK = 4L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
+
 	public static final long NAME_COLUMN_BITMASK = 16L;
+
 	public static final long OWNERTYPE_COLUMN_BITMASK = 32L;
+
 	public static final long STARTPERIOD_COLUMN_BITMASK = 64L;
+
 	public static final long ACTIVITYCOUNTERID_COLUMN_BITMASK = 128L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityCounter"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityCounter"));
 
 	public SocialActivityCounterModelImpl() {
 	}
@@ -162,14 +184,18 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SocialActivityCounter, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityCounter, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SocialActivityCounter, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityCounter, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityCounter, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityCounter, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SocialActivityCounter)this));
 		}
 
@@ -181,69 +207,132 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SocialActivityCounter, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SocialActivityCounter, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SocialActivityCounter, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SocialActivityCounter, Object>
+				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
+					attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SocialActivityCounter)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SocialActivityCounter)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SocialActivityCounter, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SocialActivityCounter, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SocialActivityCounter, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SocialActivityCounter, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialActivityCounter, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialActivityCounter, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<SocialActivityCounter, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SocialActivityCounter, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SocialActivityCounter, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SocialActivityCounter, Object>>();
-		Map<String, BiConsumer<SocialActivityCounter, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SocialActivityCounter, ?>>();
+		Map<String, Function<SocialActivityCounter, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<SocialActivityCounter, Object>>();
+		Map<String, BiConsumer<SocialActivityCounter, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap
+					<String, BiConsumer<SocialActivityCounter, ?>>();
 
-
-		attributeGetterFunctions.put("activityCounterId", SocialActivityCounter::getActivityCounterId);
-		attributeSetterBiConsumers.put("activityCounterId", (BiConsumer<SocialActivityCounter, Long>)SocialActivityCounter::setActivityCounterId);
-		attributeGetterFunctions.put("groupId", SocialActivityCounter::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<SocialActivityCounter, Long>)SocialActivityCounter::setGroupId);
-		attributeGetterFunctions.put("companyId", SocialActivityCounter::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialActivityCounter, Long>)SocialActivityCounter::setCompanyId);
-		attributeGetterFunctions.put("classNameId", SocialActivityCounter::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SocialActivityCounter, Long>)SocialActivityCounter::setClassNameId);
-		attributeGetterFunctions.put("classPK", SocialActivityCounter::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<SocialActivityCounter, Long>)SocialActivityCounter::setClassPK);
+		attributeGetterFunctions.put(
+			"activityCounterId", SocialActivityCounter::getActivityCounterId);
+		attributeSetterBiConsumers.put(
+			"activityCounterId",
+			(BiConsumer<SocialActivityCounter, Long>)
+				SocialActivityCounter::setActivityCounterId);
+		attributeGetterFunctions.put(
+			"groupId", SocialActivityCounter::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<SocialActivityCounter, Long>)
+				SocialActivityCounter::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", SocialActivityCounter::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SocialActivityCounter, Long>)
+				SocialActivityCounter::setCompanyId);
+		attributeGetterFunctions.put(
+			"classNameId", SocialActivityCounter::getClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<SocialActivityCounter, Long>)
+				SocialActivityCounter::setClassNameId);
+		attributeGetterFunctions.put(
+			"classPK", SocialActivityCounter::getClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK",
+			(BiConsumer<SocialActivityCounter, Long>)
+				SocialActivityCounter::setClassPK);
 		attributeGetterFunctions.put("name", SocialActivityCounter::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<SocialActivityCounter, String>)SocialActivityCounter::setName);
-		attributeGetterFunctions.put("ownerType", SocialActivityCounter::getOwnerType);
-		attributeSetterBiConsumers.put("ownerType", (BiConsumer<SocialActivityCounter, Integer>)SocialActivityCounter::setOwnerType);
-		attributeGetterFunctions.put("currentValue", SocialActivityCounter::getCurrentValue);
-		attributeSetterBiConsumers.put("currentValue", (BiConsumer<SocialActivityCounter, Integer>)SocialActivityCounter::setCurrentValue);
-		attributeGetterFunctions.put("totalValue", SocialActivityCounter::getTotalValue);
-		attributeSetterBiConsumers.put("totalValue", (BiConsumer<SocialActivityCounter, Integer>)SocialActivityCounter::setTotalValue);
-		attributeGetterFunctions.put("graceValue", SocialActivityCounter::getGraceValue);
-		attributeSetterBiConsumers.put("graceValue", (BiConsumer<SocialActivityCounter, Integer>)SocialActivityCounter::setGraceValue);
-		attributeGetterFunctions.put("startPeriod", SocialActivityCounter::getStartPeriod);
-		attributeSetterBiConsumers.put("startPeriod", (BiConsumer<SocialActivityCounter, Integer>)SocialActivityCounter::setStartPeriod);
-		attributeGetterFunctions.put("endPeriod", SocialActivityCounter::getEndPeriod);
-		attributeSetterBiConsumers.put("endPeriod", (BiConsumer<SocialActivityCounter, Integer>)SocialActivityCounter::setEndPeriod);
-		attributeGetterFunctions.put("active", SocialActivityCounter::getActive);
-		attributeSetterBiConsumers.put("active", (BiConsumer<SocialActivityCounter, Boolean>)SocialActivityCounter::setActive);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<SocialActivityCounter, String>)
+				SocialActivityCounter::setName);
+		attributeGetterFunctions.put(
+			"ownerType", SocialActivityCounter::getOwnerType);
+		attributeSetterBiConsumers.put(
+			"ownerType",
+			(BiConsumer<SocialActivityCounter, Integer>)
+				SocialActivityCounter::setOwnerType);
+		attributeGetterFunctions.put(
+			"currentValue", SocialActivityCounter::getCurrentValue);
+		attributeSetterBiConsumers.put(
+			"currentValue",
+			(BiConsumer<SocialActivityCounter, Integer>)
+				SocialActivityCounter::setCurrentValue);
+		attributeGetterFunctions.put(
+			"totalValue", SocialActivityCounter::getTotalValue);
+		attributeSetterBiConsumers.put(
+			"totalValue",
+			(BiConsumer<SocialActivityCounter, Integer>)
+				SocialActivityCounter::setTotalValue);
+		attributeGetterFunctions.put(
+			"graceValue", SocialActivityCounter::getGraceValue);
+		attributeSetterBiConsumers.put(
+			"graceValue",
+			(BiConsumer<SocialActivityCounter, Integer>)
+				SocialActivityCounter::setGraceValue);
+		attributeGetterFunctions.put(
+			"startPeriod", SocialActivityCounter::getStartPeriod);
+		attributeSetterBiConsumers.put(
+			"startPeriod",
+			(BiConsumer<SocialActivityCounter, Integer>)
+				SocialActivityCounter::setStartPeriod);
+		attributeGetterFunctions.put(
+			"endPeriod", SocialActivityCounter::getEndPeriod);
+		attributeSetterBiConsumers.put(
+			"endPeriod",
+			(BiConsumer<SocialActivityCounter, Integer>)
+				SocialActivityCounter::setEndPeriod);
+		attributeGetterFunctions.put(
+			"active", SocialActivityCounter::getActive);
+		attributeSetterBiConsumers.put(
+			"active",
+			(BiConsumer<SocialActivityCounter, Boolean>)
+				SocialActivityCounter::setActive);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -494,8 +583,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SocialActivityCounter.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SocialActivityCounter.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -508,8 +598,9 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	@Override
 	public SocialActivityCounter toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityCounter)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (SocialActivityCounter)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -517,7 +608,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public Object clone() {
-		SocialActivityCounterImpl socialActivityCounterImpl = new SocialActivityCounterImpl();
+		SocialActivityCounterImpl socialActivityCounterImpl =
+			new SocialActivityCounterImpl();
 
 		socialActivityCounterImpl.setActivityCounterId(getActivityCounterId());
 		socialActivityCounterImpl.setGroupId(getGroupId());
@@ -563,7 +655,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			return false;
 		}
 
-		SocialActivityCounter socialActivityCounter = (SocialActivityCounter)obj;
+		SocialActivityCounter socialActivityCounter =
+			(SocialActivityCounter)obj;
 
 		long primaryKey = socialActivityCounter.getPrimaryKey();
 
@@ -594,29 +687,36 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public void resetOriginalValues() {
 		SocialActivityCounterModelImpl socialActivityCounterModelImpl = this;
 
-		socialActivityCounterModelImpl._originalGroupId = socialActivityCounterModelImpl._groupId;
+		socialActivityCounterModelImpl._originalGroupId =
+			socialActivityCounterModelImpl._groupId;
 
 		socialActivityCounterModelImpl._setOriginalGroupId = false;
 
-		socialActivityCounterModelImpl._originalClassNameId = socialActivityCounterModelImpl._classNameId;
+		socialActivityCounterModelImpl._originalClassNameId =
+			socialActivityCounterModelImpl._classNameId;
 
 		socialActivityCounterModelImpl._setOriginalClassNameId = false;
 
-		socialActivityCounterModelImpl._originalClassPK = socialActivityCounterModelImpl._classPK;
+		socialActivityCounterModelImpl._originalClassPK =
+			socialActivityCounterModelImpl._classPK;
 
 		socialActivityCounterModelImpl._setOriginalClassPK = false;
 
-		socialActivityCounterModelImpl._originalName = socialActivityCounterModelImpl._name;
+		socialActivityCounterModelImpl._originalName =
+			socialActivityCounterModelImpl._name;
 
-		socialActivityCounterModelImpl._originalOwnerType = socialActivityCounterModelImpl._ownerType;
+		socialActivityCounterModelImpl._originalOwnerType =
+			socialActivityCounterModelImpl._ownerType;
 
 		socialActivityCounterModelImpl._setOriginalOwnerType = false;
 
-		socialActivityCounterModelImpl._originalStartPeriod = socialActivityCounterModelImpl._startPeriod;
+		socialActivityCounterModelImpl._originalStartPeriod =
+			socialActivityCounterModelImpl._startPeriod;
 
 		socialActivityCounterModelImpl._setOriginalStartPeriod = false;
 
-		socialActivityCounterModelImpl._originalEndPeriod = socialActivityCounterModelImpl._endPeriod;
+		socialActivityCounterModelImpl._originalEndPeriod =
+			socialActivityCounterModelImpl._endPeriod;
 
 		socialActivityCounterModelImpl._setOriginalEndPeriod = false;
 
@@ -625,9 +725,11 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public CacheModel<SocialActivityCounter> toCacheModel() {
-		SocialActivityCounterCacheModel socialActivityCounterCacheModel = new SocialActivityCounterCacheModel();
+		SocialActivityCounterCacheModel socialActivityCounterCacheModel =
+			new SocialActivityCounterCacheModel();
 
-		socialActivityCounterCacheModel.activityCounterId = getActivityCounterId();
+		socialActivityCounterCacheModel.activityCounterId =
+			getActivityCounterId();
 
 		socialActivityCounterCacheModel.groupId = getGroupId();
 
@@ -664,21 +766,25 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public String toString() {
-		Map<String, Function<SocialActivityCounter, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityCounter, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SocialActivityCounter, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityCounter, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityCounter, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityCounter, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeGetterFunction.apply((SocialActivityCounter)this));
+			sb.append(
+				attributeGetterFunction.apply((SocialActivityCounter)this));
 			sb.append(", ");
 		}
 
@@ -693,24 +799,28 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SocialActivityCounter, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityCounter, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SocialActivityCounter, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityCounter, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityCounter, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityCounter, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((SocialActivityCounter)this));
+			sb.append(
+				attributeGetterFunction.apply((SocialActivityCounter)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -719,10 +829,12 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SocialActivityCounter.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SocialActivityCounter.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SocialActivityCounter.class, ModelWrapper.class
-		};
+		SocialActivityCounter.class, ModelWrapper.class
+	};
+
 	private long _activityCounterId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -751,4 +863,5 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	private boolean _active;
 	private long _columnBitmask;
 	private SocialActivityCounter _escapedModel;
+
 }

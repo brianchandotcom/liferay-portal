@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class GroupSoap implements Serializable {
+
 	public static GroupSoap toSoapModel(Group model) {
 		GroupSoap soapModel = new GroupSoap();
 
@@ -51,7 +52,8 @@ public class GroupSoap implements Serializable {
 		soapModel.setMembershipRestriction(model.getMembershipRestriction());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setSite(model.isSite());
-		soapModel.setRemoteStagingGroupCount(model.getRemoteStagingGroupCount());
+		soapModel.setRemoteStagingGroupCount(
+			model.getRemoteStagingGroupCount());
 		soapModel.setInheritContent(model.isInheritContent());
 		soapModel.setActive(model.isActive());
 
@@ -320,4 +322,5 @@ public class GroupSoap implements Serializable {
 	private int _remoteStagingGroupCount;
 	private boolean _inheritContent;
 	private boolean _active;
+
 }

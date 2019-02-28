@@ -32,8 +32,9 @@ import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class SocialRelationBaseImpl extends SocialRelationModelImpl
-	implements SocialRelation {
+public abstract class SocialRelationBaseImpl
+	extends SocialRelationModelImpl implements SocialRelation {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class SocialRelationBaseImpl extends SocialRelationModelImpl
 			SocialRelationLocalServiceUtil.updateSocialRelation(this);
 		}
 	}
+
 }

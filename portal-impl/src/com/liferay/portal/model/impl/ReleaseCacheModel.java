@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Release;
@@ -37,8 +36,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
-	MVCCModel {
+public class ReleaseCacheModel
+	implements CacheModel<Release>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -52,7 +52,8 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 		ReleaseCacheModel releaseCacheModel = (ReleaseCacheModel)obj;
 
 		if ((releaseId == releaseCacheModel.releaseId) &&
-				(mvccVersion == releaseCacheModel.mvccVersion)) {
+			(mvccVersion == releaseCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -186,8 +187,7 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(releaseId);
@@ -234,4 +234,5 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 	public boolean verified;
 	public int state;
 	public String testString;
+
 }

@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AddressBaseImpl extends AddressModelImpl
-	implements Address {
+public abstract class AddressBaseImpl
+	extends AddressModelImpl implements Address {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class AddressBaseImpl extends AddressModelImpl
 			AddressLocalServiceUtil.updateAddress(this);
 		}
 	}
+
 }

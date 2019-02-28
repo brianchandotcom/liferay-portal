@@ -32,8 +32,9 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AssetVocabularyBaseImpl extends AssetVocabularyModelImpl
-	implements AssetVocabulary {
+public abstract class AssetVocabularyBaseImpl
+	extends AssetVocabularyModelImpl implements AssetVocabulary {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class AssetVocabularyBaseImpl extends AssetVocabularyModelImpl
 			AssetVocabularyLocalServiceUtil.updateAssetVocabulary(this);
 		}
 	}
+
 }

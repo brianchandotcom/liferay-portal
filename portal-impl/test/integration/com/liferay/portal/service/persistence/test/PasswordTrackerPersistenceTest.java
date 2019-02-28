@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class PasswordTrackerPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,8 @@ public class PasswordTrackerPersistenceTest {
 
 		_persistence.remove(newPasswordTracker);
 
-		PasswordTracker existingPasswordTracker = _persistence.fetchByPrimaryKey(newPasswordTracker.getPrimaryKey());
+		PasswordTracker existingPasswordTracker =
+			_persistence.fetchByPrimaryKey(newPasswordTracker.getPrimaryKey());
 
 		Assert.assertNull(existingPasswordTracker);
 	}
@@ -127,20 +130,26 @@ public class PasswordTrackerPersistenceTest {
 
 		_passwordTrackers.add(_persistence.update(newPasswordTracker));
 
-		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(newPasswordTracker.getPrimaryKey());
+		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(
+			newPasswordTracker.getPrimaryKey());
 
-		Assert.assertEquals(existingPasswordTracker.getMvccVersion(),
+		Assert.assertEquals(
+			existingPasswordTracker.getMvccVersion(),
 			newPasswordTracker.getMvccVersion());
-		Assert.assertEquals(existingPasswordTracker.getPasswordTrackerId(),
+		Assert.assertEquals(
+			existingPasswordTracker.getPasswordTrackerId(),
 			newPasswordTracker.getPasswordTrackerId());
-		Assert.assertEquals(existingPasswordTracker.getCompanyId(),
+		Assert.assertEquals(
+			existingPasswordTracker.getCompanyId(),
 			newPasswordTracker.getCompanyId());
-		Assert.assertEquals(existingPasswordTracker.getUserId(),
+		Assert.assertEquals(
+			existingPasswordTracker.getUserId(),
 			newPasswordTracker.getUserId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingPasswordTracker.getCreateDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingPasswordTracker.getCreateDate()),
 			Time.getShortTimestamp(newPasswordTracker.getCreateDate()));
-		Assert.assertEquals(existingPasswordTracker.getPassword(),
+		Assert.assertEquals(
+			existingPasswordTracker.getPassword(),
 			newPasswordTracker.getPassword());
 	}
 
@@ -155,7 +164,8 @@ public class PasswordTrackerPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
-		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(newPasswordTracker.getPrimaryKey());
+		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(
+			newPasswordTracker.getPrimaryKey());
 
 		Assert.assertEquals(existingPasswordTracker, newPasswordTracker);
 	}
@@ -169,21 +179,23 @@ public class PasswordTrackerPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<PasswordTracker> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("PasswordTracker",
-			"mvccVersion", true, "passwordTrackerId", true, "companyId", true,
-			"userId", true, "createDate", true, "password", true);
+		return OrderByComparatorFactoryUtil.create(
+			"PasswordTracker", "mvccVersion", true, "passwordTrackerId", true,
+			"companyId", true, "userId", true, "createDate", true, "password",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
-		PasswordTracker existingPasswordTracker = _persistence.fetchByPrimaryKey(newPasswordTracker.getPrimaryKey());
+		PasswordTracker existingPasswordTracker =
+			_persistence.fetchByPrimaryKey(newPasswordTracker.getPrimaryKey());
 
 		Assert.assertEquals(existingPasswordTracker, newPasswordTracker);
 	}
@@ -192,7 +204,8 @@ public class PasswordTrackerPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		PasswordTracker missingPasswordTracker = _persistence.fetchByPrimaryKey(pk);
+		PasswordTracker missingPasswordTracker = _persistence.fetchByPrimaryKey(
+			pk);
 
 		Assert.assertNull(missingPasswordTracker);
 	}
@@ -200,6 +213,7 @@ public class PasswordTrackerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		PasswordTracker newPasswordTracker1 = addPasswordTracker();
 		PasswordTracker newPasswordTracker2 = addPasswordTracker();
 
@@ -208,18 +222,22 @@ public class PasswordTrackerPersistenceTest {
 		primaryKeys.add(newPasswordTracker1.getPrimaryKey());
 		primaryKeys.add(newPasswordTracker2.getPrimaryKey());
 
-		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordTracker> passwordTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, passwordTrackers.size());
-		Assert.assertEquals(newPasswordTracker1,
+		Assert.assertEquals(
+			newPasswordTracker1,
 			passwordTrackers.get(newPasswordTracker1.getPrimaryKey()));
-		Assert.assertEquals(newPasswordTracker2,
+		Assert.assertEquals(
+			newPasswordTracker2,
 			passwordTrackers.get(newPasswordTracker2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -229,7 +247,8 @@ public class PasswordTrackerPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordTracker> passwordTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(passwordTrackers.isEmpty());
 	}
@@ -237,6 +256,7 @@ public class PasswordTrackerPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
 		long pk = RandomTestUtil.nextLong();
@@ -246,36 +266,39 @@ public class PasswordTrackerPersistenceTest {
 		primaryKeys.add(newPasswordTracker.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordTracker> passwordTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, passwordTrackers.size());
-		Assert.assertEquals(newPasswordTracker,
+		Assert.assertEquals(
+			newPasswordTracker,
 			passwordTrackers.get(newPasswordTracker.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordTracker> passwordTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(passwordTrackers.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newPasswordTracker.getPrimaryKey());
 
-		Map<Serializable, PasswordTracker> passwordTrackers = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PasswordTracker> passwordTrackers =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, passwordTrackers.size());
-		Assert.assertEquals(newPasswordTracker,
+		Assert.assertEquals(
+			newPasswordTracker,
 			passwordTrackers.get(newPasswordTracker.getPrimaryKey()));
 	}
 
@@ -283,15 +306,19 @@ public class PasswordTrackerPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = PasswordTrackerLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			PasswordTrackerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PasswordTracker>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<PasswordTracker>() {
+
 				@Override
 				public void performAction(PasswordTracker passwordTracker) {
 					Assert.assertNotNull(passwordTracker);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -300,17 +327,19 @@ public class PasswordTrackerPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordTrackerId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"passwordTrackerId",
 				newPasswordTracker.getPasswordTrackerId()));
 
-		List<PasswordTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordTracker> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -321,32 +350,34 @@ public class PasswordTrackerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordTrackerId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"passwordTrackerId", RandomTestUtil.nextLong()));
 
-		List<PasswordTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordTracker> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"passwordTrackerId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("passwordTrackerId"));
 
 		Object newPasswordTrackerId = newPasswordTracker.getPasswordTrackerId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordTrackerId",
-				new Object[] { newPasswordTrackerId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"passwordTrackerId", new Object[] {newPasswordTrackerId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -359,14 +390,15 @@ public class PasswordTrackerPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordTracker.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"passwordTrackerId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("passwordTrackerId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordTrackerId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"passwordTrackerId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -393,7 +425,9 @@ public class PasswordTrackerPersistenceTest {
 		return passwordTracker;
 	}
 
-	private List<PasswordTracker> _passwordTrackers = new ArrayList<PasswordTracker>();
+	private List<PasswordTracker> _passwordTrackers =
+		new ArrayList<PasswordTracker>();
 	private PasswordTrackerPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

@@ -35,30 +35,38 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface UserGroupGroupRoleService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupGroupRoleServiceUtil} to access the user group group role remote service. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds) throws PortalException;
+	public void addUserGroupGroupRoles(
+			long userGroupId, long groupId, long[] roleIds)
+		throws PortalException;
 
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId) throws PortalException;
+	public void addUserGroupGroupRoles(
+			long[] userGroupIds, long groupId, long roleId)
+		throws PortalException;
 
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds) throws PortalException;
+	public void deleteUserGroupGroupRoles(
+			long userGroupId, long groupId, long[] roleIds)
+		throws PortalException;
 
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId) throws PortalException;
+	public void deleteUserGroupGroupRoles(
+			long[] userGroupIds, long groupId, long roleId)
+		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
+
 }

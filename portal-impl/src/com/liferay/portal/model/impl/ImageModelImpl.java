@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -61,23 +59,23 @@ import java.util.function.Function;
 @JSON(strict = true)
 @ProviderType
 public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a image model instance should use the <code>Image</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Image";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "imageId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "type_", Types.VARCHAR },
-			{ "height", Types.INTEGER },
-			{ "width", Types.INTEGER },
-			{ "size_", Types.INTEGER }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"imageId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
+		{"type_", Types.VARCHAR}, {"height", Types.INTEGER},
+		{"width", Types.INTEGER}, {"size_", Types.INTEGER}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -90,23 +88,38 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		TABLE_COLUMNS_MAP.put("size_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Image (mvccVersion LONG default 0 not null,imageId LONG not null primary key,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Image (mvccVersion LONG default 0 not null,imageId LONG not null primary key,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+
 	public static final String TABLE_SQL_DROP = "drop table Image";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY Image.imageId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Image"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Image"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Image"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Image"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Image"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Image"),
+		true);
+
 	public static final long SIZE_COLUMN_BITMASK = 1L;
+
 	public static final long IMAGEID_COLUMN_BITMASK = 2L;
 
 	/**
@@ -154,8 +167,9 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Image"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Image"));
 
 	public ImageModelImpl() {
 	}
@@ -194,14 +208,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Image, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Image, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Image, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Image, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Image, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Image)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Image)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -212,12 +229,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Image, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Image, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Image, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Image, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((Image)this, entry.getValue());
@@ -229,38 +248,52 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Image, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Image, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Image, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Image, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Image, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Image, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Image, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Image, Object>>();
-		Map<String, BiConsumer<Image, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Image, ?>>();
-
+		Map<String, Function<Image, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Image, Object>>();
+		Map<String, BiConsumer<Image, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Image, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Image::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
 		attributeGetterFunctions.put("imageId", Image::getImageId);
-		attributeSetterBiConsumers.put("imageId", (BiConsumer<Image, Long>)Image::setImageId);
+		attributeSetterBiConsumers.put(
+			"imageId", (BiConsumer<Image, Long>)Image::setImageId);
 		attributeGetterFunctions.put("companyId", Image::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Image, Long>)Image::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Image, Long>)Image::setCompanyId);
 		attributeGetterFunctions.put("modifiedDate", Image::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Image, Date>)Image::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate", (BiConsumer<Image, Date>)Image::setModifiedDate);
 		attributeGetterFunctions.put("type", Image::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<Image, String>)Image::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<Image, String>)Image::setType);
 		attributeGetterFunctions.put("height", Image::getHeight);
-		attributeSetterBiConsumers.put("height", (BiConsumer<Image, Integer>)Image::setHeight);
+		attributeSetterBiConsumers.put(
+			"height", (BiConsumer<Image, Integer>)Image::setHeight);
 		attributeGetterFunctions.put("width", Image::getWidth);
-		attributeSetterBiConsumers.put("width", (BiConsumer<Image, Integer>)Image::setWidth);
+		attributeSetterBiConsumers.put(
+			"width", (BiConsumer<Image, Integer>)Image::setWidth);
 		attributeGetterFunctions.put("size", Image::getSize);
-		attributeSetterBiConsumers.put("size", (BiConsumer<Image, Integer>)Image::setSize);
+		attributeSetterBiConsumers.put(
+			"size", (BiConsumer<Image, Integer>)Image::setSize);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -376,8 +409,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Image.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Image.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -390,8 +423,9 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	@Override
 	public Image toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Image)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Image)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -522,14 +556,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toString() {
-		Map<String, Function<Image, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Image, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Image, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Image, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Image, Object> attributeGetterFunction = entry.getValue();
 
@@ -550,16 +587,19 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Image, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Image, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Image, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Image, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Image, Object> attributeGetterFunction = entry.getValue();
 
@@ -575,10 +615,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Image.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Image.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Image.class, ModelWrapper.class
-		};
+		Image.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _imageId;
 	private long _companyId;
@@ -591,4 +633,5 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private boolean _setOriginalSize;
 	private long _columnBitmask;
 	private Image _escapedModel;
+
 }

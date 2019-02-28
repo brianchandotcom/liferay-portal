@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
  */
 @ProviderType
 public abstract class ImageBaseImpl extends ImageModelImpl implements Image {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class ImageBaseImpl extends ImageModelImpl implements Image {
 			ImageLocalServiceUtil.updateImage(this);
 		}
 	}
+
 }

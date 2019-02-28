@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class UserTrackerBaseImpl extends UserTrackerModelImpl
-	implements UserTracker {
+public abstract class UserTrackerBaseImpl
+	extends UserTrackerModelImpl implements UserTracker {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class UserTrackerBaseImpl extends UserTrackerModelImpl
 			UserTrackerLocalServiceUtil.updateUserTracker(this);
 		}
 	}
+
 }

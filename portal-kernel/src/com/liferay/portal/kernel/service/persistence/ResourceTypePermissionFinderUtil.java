@@ -27,22 +27,29 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 @Deprecated
 @ProviderType
 public class ResourceTypePermissionFinderUtil {
-	public static java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> findByEitherScopeC_G_N(
-		long companyId, long groupId, String name) {
+
+	public static java.util.List
+		<com.liferay.portal.kernel.model.ResourceTypePermission>
+			findByEitherScopeC_G_N(long companyId, long groupId, String name) {
+
 		return getFinder().findByEitherScopeC_G_N(companyId, groupId, name);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> findByGroupScopeC_N_R(
-		long companyId, String name, long roleId) {
+	public static java.util.List
+		<com.liferay.portal.kernel.model.ResourceTypePermission>
+			findByGroupScopeC_N_R(long companyId, String name, long roleId) {
+
 		return getFinder().findByGroupScopeC_N_R(companyId, name, roleId);
 	}
 
 	public static ResourceTypePermissionFinder getFinder() {
 		if (_finder == null) {
-			_finder = (ResourceTypePermissionFinder)PortalBeanLocatorUtil.locate(ResourceTypePermissionFinder.class.getName());
+			_finder =
+				(ResourceTypePermissionFinder)PortalBeanLocatorUtil.locate(
+					ResourceTypePermissionFinder.class.getName());
 
-			ReferenceRegistry.registerReference(ResourceTypePermissionFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(
+				ResourceTypePermissionFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -51,9 +58,10 @@ public class ResourceTypePermissionFinderUtil {
 	public void setFinder(ResourceTypePermissionFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(ResourceTypePermissionFinderUtil.class,
-			"_finder");
+		ReferenceRegistry.registerReference(
+			ResourceTypePermissionFinderUtil.class, "_finder");
 	}
 
 	private static ResourceTypePermissionFinder _finder;
+
 }

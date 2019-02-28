@@ -17,9 +17,7 @@ package com.liferay.announcements.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -54,10 +52,13 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface AnnouncementsEntryLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface AnnouncementsEntryLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,33 +66,36 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the announcements entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsEntry the announcements entry
-	* @return the announcements entry that was added
-	*/
+	 * Adds the announcements entry to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param announcementsEntry the announcements entry
+	 * @return the announcements entry that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry addAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
-	public AnnouncementsEntry addEntry(long userId, long classNameId,
-		long classPK, String title, String content, String url, String type,
-		Date displayDate, Date expirationDate, int priority, boolean alert)
+	public AnnouncementsEntry addEntry(
+			long userId, long classNameId, long classPK, String title,
+			String content, String url, String type, Date displayDate,
+			Date expirationDate, int priority, boolean alert)
 		throws PortalException;
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
-	long, long, String, String, String, String, Date, Date, int,
-	boolean)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
+	 long, long, String, String, String, String, Date, Date, int,
+	 boolean)}
+	 */
 	@Deprecated
-	public AnnouncementsEntry addEntry(long userId, long classNameId,
-		long classPK, String title, String content, String url, String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, int priority,
-		boolean alert) throws PortalException;
+	public AnnouncementsEntry addEntry(
+			long userId, long classNameId, long classPK, String title,
+			String content, String url, String type, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean displayImmediately,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, int priority, boolean alert)
+		throws PortalException;
 
 	public void checkEntries() throws PortalException;
 
@@ -99,31 +103,31 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Creates a new announcements entry with the primary key. Does not add the announcements entry to the database.
-	*
-	* @param entryId the primary key for the new announcements entry
-	* @return the new announcements entry
-	*/
+	 * Creates a new announcements entry with the primary key. Does not add the announcements entry to the database.
+	 *
+	 * @param entryId the primary key for the new announcements entry
+	 * @return the new announcements entry
+	 */
 	@Transactional(enabled = false)
 	public AnnouncementsEntry createAnnouncementsEntry(long entryId);
 
 	/**
-	* Deletes the announcements entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsEntry the announcements entry
-	* @return the announcements entry that was removed
-	*/
+	 * Deletes the announcements entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param announcementsEntry the announcements entry
+	 * @return the announcements entry that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public AnnouncementsEntry deleteAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
 	/**
-	* Deletes the announcements entry with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param entryId the primary key of the announcements entry
-	* @return the announcements entry that was removed
-	* @throws PortalException if a announcements entry with the primary key could not be found
-	*/
+	 * Deletes the announcements entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param entryId the primary key of the announcements entry
+	 * @return the announcements entry that was removed
+	 * @throws PortalException if a announcements entry with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
 		throws PortalException;
@@ -139,8 +143,8 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public void deleteEntry(long entryId) throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -149,77 +153,78 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry fetchAnnouncementsEntry(long entryId);
 
 	/**
-	* Returns the announcements entry with the matching UUID and company.
-	*
-	* @param uuid the announcements entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	*/
+	 * Returns the announcements entry with the matching UUID and company.
+	 *
+	 * @param uuid the announcements entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
 		String uuid, long companyId);
@@ -228,58 +233,59 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns a range of all the announcements entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of announcements entries
-	* @param end the upper bound of the range of announcements entries (not inclusive)
-	* @return the range of announcements entries
-	*/
+	 * Returns a range of all the announcements entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @return the range of announcements entries
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getAnnouncementsEntries(int start, int end);
 
 	/**
-	* Returns the number of announcements entries.
-	*
-	* @return the number of announcements entries
-	*/
+	 * Returns the number of announcements entries.
+	 *
+	 * @return the number of announcements entries
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnnouncementsEntriesCount();
 
 	/**
-	* Returns the announcements entry with the primary key.
-	*
-	* @param entryId the primary key of the announcements entry
-	* @return the announcements entry
-	* @throws PortalException if a announcements entry with the primary key could not be found
-	*/
+	 * Returns the announcements entry with the primary key.
+	 *
+	 * @param entryId the primary key of the announcements entry
+	 * @return the announcements entry
+	 * @throws PortalException if a announcements entry with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry getAnnouncementsEntry(long entryId)
 		throws PortalException;
 
 	/**
-	* Returns the announcements entry with the matching UUID and company.
-	*
-	* @param uuid the announcements entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching announcements entry
-	* @throws PortalException if a matching announcements entry could not be found
-	*/
+	 * Returns the announcements entry with the matching UUID and company.
+	 *
+	 * @param uuid the announcements entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching announcements entry
+	 * @throws PortalException if a matching announcements entry could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
-		String uuid, long companyId) throws PortalException;
+			String uuid, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getEntries(long userId,
-		LinkedHashMap<Long, long[]> scopes, boolean alert, int flagValue,
-		int start, int end);
+	public List<AnnouncementsEntry> getEntries(
+		long userId, LinkedHashMap<Long, long[]> scopes, boolean alert,
+		int flagValue, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getEntries(long userId,
-		LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
+	public List<AnnouncementsEntry> getEntries(
+		long userId, LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -287,58 +293,64 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int end);
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #getEntries(long,
-	long, long, boolean, int, int)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #getEntries(long,
+	 long, long, boolean, int, int)}
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getEntries(long classNameId, long classPK,
-		boolean alert, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getEntries(long companyId,
+	public List<AnnouncementsEntry> getEntries(
 		long classNameId, long classPK, boolean alert, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getEntries(long userId, long classNameId,
-		long[] classPKs, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean alert,
-		int flagValue, int start, int end);
+	public List<AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long userId, LinkedHashMap<Long, long[]> scopes,
-		boolean alert, int flagValue);
+	public List<AnnouncementsEntry> getEntries(
+		long userId, long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long userId, LinkedHashMap<Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+	public int getEntriesCount(
+		long userId, LinkedHashMap<Long, long[]> scopes, boolean alert,
+		int flagValue);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(
+		long userId, LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#getEntriesCount(long, long, long, boolean)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #getEntriesCount(long, long, long, boolean)}
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long classNameId, long classPK, boolean alert);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long companyId, long classNameId, long classPK,
-		boolean alert);
+	public int getEntriesCount(
+		long companyId, long classNameId, long classPK, boolean alert);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long userId, long classNameId, long[] classPKs,
-		boolean alert, int flagValue);
+	public int getEntriesCount(
+		long userId, long classNameId, long[] classPKs, boolean alert,
+		int flagValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long userId, long classNameId, long[] classPKs,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+	public int getEntriesCount(
+		long userId, long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -352,10 +364,10 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -364,36 +376,39 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AnnouncementsEntry> getUserEntries(long userId, int start,
-		int end);
+	public List<AnnouncementsEntry> getUserEntries(
+		long userId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserEntriesCount(long userId);
 
 	/**
-	* Updates the announcements entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsEntry the announcements entry
-	* @return the announcements entry that was updated
-	*/
+	 * Updates the announcements entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param announcementsEntry the announcements entry
+	 * @return the announcements entry that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
-	String, String, String, String, Date, Date, int)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
+	 String, String, String, String, Date, Date, int)}
+	 */
 	@Deprecated
-	public AnnouncementsEntry updateEntry(long userId, long entryId,
-		String title, String content, String url, String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, int priority)
+	public AnnouncementsEntry updateEntry(
+			long userId, long entryId, String title, String content, String url,
+			String type, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean displayImmediately, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException;
 
-	public AnnouncementsEntry updateEntry(long entryId, String title,
-		String content, String url, String type, Date displayDate,
-		Date expirationDate, int priority) throws PortalException;
+	public AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
+			Date displayDate, Date expirationDate, int priority)
+		throws PortalException;
+
 }

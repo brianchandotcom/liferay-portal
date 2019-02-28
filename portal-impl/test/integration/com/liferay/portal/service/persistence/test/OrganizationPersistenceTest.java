@@ -37,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class OrganizationPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +103,8 @@ public class OrganizationPersistenceTest {
 
 		_persistence.remove(newOrganization);
 
-		Organization existingOrganization = _persistence.fetchByPrimaryKey(newOrganization.getPrimaryKey());
+		Organization existingOrganization = _persistence.fetchByPrimaryKey(
+			newOrganization.getPrimaryKey());
 
 		Assert.assertNull(existingOrganization);
 	}
@@ -155,48 +158,56 @@ public class OrganizationPersistenceTest {
 
 		_organizations.add(_persistence.update(newOrganization));
 
-		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
+		Organization existingOrganization = _persistence.findByPrimaryKey(
+			newOrganization.getPrimaryKey());
 
-		Assert.assertEquals(existingOrganization.getMvccVersion(),
+		Assert.assertEquals(
+			existingOrganization.getMvccVersion(),
 			newOrganization.getMvccVersion());
-		Assert.assertEquals(existingOrganization.getUuid(),
-			newOrganization.getUuid());
-		Assert.assertEquals(existingOrganization.getExternalReferenceCode(),
+		Assert.assertEquals(
+			existingOrganization.getUuid(), newOrganization.getUuid());
+		Assert.assertEquals(
+			existingOrganization.getExternalReferenceCode(),
 			newOrganization.getExternalReferenceCode());
-		Assert.assertEquals(existingOrganization.getOrganizationId(),
+		Assert.assertEquals(
+			existingOrganization.getOrganizationId(),
 			newOrganization.getOrganizationId());
-		Assert.assertEquals(existingOrganization.getCompanyId(),
+		Assert.assertEquals(
+			existingOrganization.getCompanyId(),
 			newOrganization.getCompanyId());
-		Assert.assertEquals(existingOrganization.getUserId(),
-			newOrganization.getUserId());
-		Assert.assertEquals(existingOrganization.getUserName(),
-			newOrganization.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingOrganization.getCreateDate()),
+		Assert.assertEquals(
+			existingOrganization.getUserId(), newOrganization.getUserId());
+		Assert.assertEquals(
+			existingOrganization.getUserName(), newOrganization.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingOrganization.getCreateDate()),
 			Time.getShortTimestamp(newOrganization.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingOrganization.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingOrganization.getModifiedDate()),
 			Time.getShortTimestamp(newOrganization.getModifiedDate()));
-		Assert.assertEquals(existingOrganization.getParentOrganizationId(),
+		Assert.assertEquals(
+			existingOrganization.getParentOrganizationId(),
 			newOrganization.getParentOrganizationId());
-		Assert.assertEquals(existingOrganization.getTreePath(),
-			newOrganization.getTreePath());
-		Assert.assertEquals(existingOrganization.getName(),
-			newOrganization.getName());
-		Assert.assertEquals(existingOrganization.getType(),
-			newOrganization.getType());
-		Assert.assertEquals(existingOrganization.isRecursable(),
+		Assert.assertEquals(
+			existingOrganization.getTreePath(), newOrganization.getTreePath());
+		Assert.assertEquals(
+			existingOrganization.getName(), newOrganization.getName());
+		Assert.assertEquals(
+			existingOrganization.getType(), newOrganization.getType());
+		Assert.assertEquals(
+			existingOrganization.isRecursable(),
 			newOrganization.isRecursable());
-		Assert.assertEquals(existingOrganization.getRegionId(),
-			newOrganization.getRegionId());
-		Assert.assertEquals(existingOrganization.getCountryId(),
+		Assert.assertEquals(
+			existingOrganization.getRegionId(), newOrganization.getRegionId());
+		Assert.assertEquals(
+			existingOrganization.getCountryId(),
 			newOrganization.getCountryId());
-		Assert.assertEquals(existingOrganization.getStatusId(),
-			newOrganization.getStatusId());
-		Assert.assertEquals(existingOrganization.getComments(),
-			newOrganization.getComments());
-		Assert.assertEquals(existingOrganization.getLogoId(),
-			newOrganization.getLogoId());
+		Assert.assertEquals(
+			existingOrganization.getStatusId(), newOrganization.getStatusId());
+		Assert.assertEquals(
+			existingOrganization.getComments(), newOrganization.getComments());
+		Assert.assertEquals(
+			existingOrganization.getLogoId(), newOrganization.getLogoId());
 	}
 
 	@Test
@@ -233,8 +244,8 @@ public class OrganizationPersistenceTest {
 
 	@Test
 	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByC_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_P(0L, 0L);
 	}
@@ -268,16 +279,17 @@ public class OrganizationPersistenceTest {
 
 	@Test
 	public void testCountByO_C_P() throws Exception {
-		_persistence.countByO_C_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByO_C_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByO_C_P(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByC_P_LikeN() throws Exception {
-		_persistence.countByC_P_LikeN(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "");
+		_persistence.countByC_P_LikeN(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
 
 		_persistence.countByC_P_LikeN(0L, 0L, "null");
 
@@ -297,7 +309,8 @@ public class OrganizationPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Organization newOrganization = addOrganization();
 
-		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
+		Organization existingOrganization = _persistence.findByPrimaryKey(
+			newOrganization.getPrimaryKey());
 
 		Assert.assertEquals(existingOrganization, newOrganization);
 	}
@@ -311,25 +324,27 @@ public class OrganizationPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<Organization> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Organization_",
-			"mvccVersion", true, "uuid", true, "externalReferenceCode", true,
-			"organizationId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"parentOrganizationId", true, "treePath", true, "name", true,
-			"type", true, "recursable", true, "regionId", true, "countryId",
-			true, "statusId", true, "comments", true, "logoId", true);
+		return OrderByComparatorFactoryUtil.create(
+			"Organization_", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "organizationId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "parentOrganizationId", true, "treePath",
+			true, "name", true, "type", true, "recursable", true, "regionId",
+			true, "countryId", true, "statusId", true, "comments", true,
+			"logoId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		Organization newOrganization = addOrganization();
 
-		Organization existingOrganization = _persistence.fetchByPrimaryKey(newOrganization.getPrimaryKey());
+		Organization existingOrganization = _persistence.fetchByPrimaryKey(
+			newOrganization.getPrimaryKey());
 
 		Assert.assertEquals(existingOrganization, newOrganization);
 	}
@@ -346,6 +361,7 @@ public class OrganizationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		Organization newOrganization1 = addOrganization();
 		Organization newOrganization2 = addOrganization();
 
@@ -354,18 +370,22 @@ public class OrganizationPersistenceTest {
 		primaryKeys.add(newOrganization1.getPrimaryKey());
 		primaryKeys.add(newOrganization2.getPrimaryKey());
 
-		Map<Serializable, Organization> organizations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Organization> organizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, organizations.size());
-		Assert.assertEquals(newOrganization1,
+		Assert.assertEquals(
+			newOrganization1,
 			organizations.get(newOrganization1.getPrimaryKey()));
-		Assert.assertEquals(newOrganization2,
+		Assert.assertEquals(
+			newOrganization2,
 			organizations.get(newOrganization2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -375,7 +395,8 @@ public class OrganizationPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, Organization> organizations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Organization> organizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(organizations.isEmpty());
 	}
@@ -383,6 +404,7 @@ public class OrganizationPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		Organization newOrganization = addOrganization();
 
 		long pk = RandomTestUtil.nextLong();
@@ -392,36 +414,39 @@ public class OrganizationPersistenceTest {
 		primaryKeys.add(newOrganization.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, Organization> organizations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Organization> organizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, organizations.size());
-		Assert.assertEquals(newOrganization,
+		Assert.assertEquals(
+			newOrganization,
 			organizations.get(newOrganization.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, Organization> organizations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Organization> organizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(organizations.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		Organization newOrganization = addOrganization();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newOrganization.getPrimaryKey());
 
-		Map<Serializable, Organization> organizations = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, Organization> organizations =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, organizations.size());
-		Assert.assertEquals(newOrganization,
+		Assert.assertEquals(
+			newOrganization,
 			organizations.get(newOrganization.getPrimaryKey()));
 	}
 
@@ -429,15 +454,19 @@ public class OrganizationPersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = OrganizationLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			OrganizationLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Organization>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Organization>() {
+
 				@Override
 				public void performAction(Organization organization) {
 					Assert.assertNotNull(organization);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -446,17 +475,18 @@ public class OrganizationPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		Organization newOrganization = addOrganization();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Organization.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("organizationId",
-				newOrganization.getOrganizationId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"organizationId", newOrganization.getOrganizationId()));
 
-		List<Organization> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Organization> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -467,32 +497,34 @@ public class OrganizationPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Organization.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("organizationId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"organizationId", RandomTestUtil.nextLong()));
 
-		List<Organization> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Organization> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		Organization newOrganization = addOrganization();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Organization.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"organizationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("organizationId"));
 
 		Object newOrganizationId = newOrganization.getOrganizationId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("organizationId",
-				new Object[] { newOrganizationId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"organizationId", new Object[] {newOrganizationId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -505,14 +537,15 @@ public class OrganizationPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Organization.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"organizationId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("organizationId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("organizationId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"organizationId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -525,22 +558,29 @@ public class OrganizationPersistenceTest {
 
 		_persistence.clearCache();
 
-		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
+		Organization existingOrganization = _persistence.findByPrimaryKey(
+			newOrganization.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingOrganization.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(existingOrganization,
-				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingOrganization.getName(),
-				ReflectionTestUtil.invoke(existingOrganization,
-					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingOrganization.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingOrganization, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingOrganization.getName(),
+				ReflectionTestUtil.invoke(
+					existingOrganization, "getOriginalName", new Class<?>[0])));
 
-		Assert.assertEquals(Long.valueOf(existingOrganization.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(existingOrganization,
-				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
+		Assert.assertEquals(
+			Long.valueOf(existingOrganization.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingOrganization, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
 				existingOrganization.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(existingOrganization,
-					"getOriginalExternalReferenceCode", new Class<?>[0])));
+				ReflectionTestUtil.invoke(
+					existingOrganization, "getOriginalExternalReferenceCode",
+					new Class<?>[0])));
 	}
 
 	protected Organization addOrganization() throws Exception {
@@ -592,4 +632,5 @@ public class OrganizationPersistenceTest {
 	private List<Organization> _organizations = new ArrayList<Organization>();
 	private OrganizationPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

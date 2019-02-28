@@ -26,30 +26,40 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see UserNotificationDeliveryModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portal.model.impl.UserNotificationDeliveryImpl")
+@ImplementationClassName(
+	"com.liferay.portal.model.impl.UserNotificationDeliveryImpl"
+)
 @ProviderType
-public interface UserNotificationDelivery extends UserNotificationDeliveryModel,
-	PersistedModel {
+public interface UserNotificationDelivery
+	extends UserNotificationDeliveryModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserNotificationDeliveryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<UserNotificationDelivery, Long> USER_NOTIFICATION_DELIVERY_ID_ACCESSOR =
-		new Accessor<UserNotificationDelivery, Long>() {
-			@Override
-			public Long get(UserNotificationDelivery userNotificationDelivery) {
-				return userNotificationDelivery.getUserNotificationDeliveryId();
-			}
+	public static final Accessor<UserNotificationDelivery, Long>
+		USER_NOTIFICATION_DELIVERY_ID_ACCESSOR =
+			new Accessor<UserNotificationDelivery, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(
+					UserNotificationDelivery userNotificationDelivery) {
 
-			@Override
-			public Class<UserNotificationDelivery> getTypeClass() {
-				return UserNotificationDelivery.class;
-			}
-		};
+					return userNotificationDelivery.
+						getUserNotificationDeliveryId();
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<UserNotificationDelivery> getTypeClass() {
+					return UserNotificationDelivery.class;
+				}
+
+			};
+
 }

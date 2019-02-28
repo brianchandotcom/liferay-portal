@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -45,17 +44,21 @@ import java.util.List;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface DLFolderService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFolderServiceUtil} to access the document library folder remote service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public DLFolder addFolder(long groupId, long repositoryId,
-		boolean mountPoint, long parentFolderId, String name,
-		String description, ServiceContext serviceContext)
+	public DLFolder addFolder(
+			long groupId, long repositoryId, boolean mountPoint,
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFolder(long folderId) throws PortalException;
@@ -67,17 +70,19 @@ public interface DLFolderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFileEntriesAndFileShortcuts(long groupId,
-		long folderId, int status, int start, int end)
+	public List<Object> getFileEntriesAndFileShortcuts(
+			long groupId, long folderId, int status, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
-		int status) throws PortalException;
+	public int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
-		int status, String[] mimeTypes) throws PortalException;
+	public int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status, String[] mimeTypes)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder getFolder(long folderId) throws PortalException;
@@ -91,57 +96,70 @@ public interface DLFolderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getFolders(long groupId, long parentFolderId,
-		int status, boolean includeMountfolders, int start, int end,
-		OrderByComparator<DLFolder> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getFolders(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator<DLFolder> obc)
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders, int start, int end,
+			OrderByComparator<DLFolder> obc)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(long groupId,
-		long folderId, int status, boolean includeMountFolders, int start,
-		int end, OrderByComparator<?> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(long groupId,
-		long folderId, int status, String[] mimeTypes,
-		boolean includeMountFolders, int start, int end,
-		OrderByComparator<?> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(long groupId,
-		long folderId, String[] mimeTypes, boolean includeMountFolders,
-		QueryDefinition<?> queryDefinition) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, int status, boolean includeMountFolders)
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int start, int end,
+			OrderByComparator<DLFolder> obc)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, int status, String[] mimeTypes,
-		boolean includeMountFolders) throws PortalException;
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator<?> obc)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, String[] mimeTypes, boolean includeMountFolders,
-		QueryDefinition<?> queryDefinition) throws PortalException;
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator<?> obc)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId, int status,
-		boolean includeMountfolders) throws PortalException;
+	public int getFoldersCount(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFolder> getMountFolders(long groupId, long parentFolderId,
-		int start, int end, OrderByComparator<DLFolder> obc)
+	public List<DLFolder> getMountFolders(
+			long groupId, long parentFolderId, int start, int end,
+			OrderByComparator<DLFolder> obc)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -149,28 +167,31 @@ public interface DLFolderService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	#getSubfolderIds(List, long, long, boolean)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
+	 #getSubfolderIds(List, long, long, boolean)}
+	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<Long> folderIds, long groupId,
-		long folderId) throws PortalException;
+	public void getSubfolderIds(
+			List<Long> folderIds, long groupId, long folderId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(List<Long> folderIds, long groupId,
-		long folderId, boolean recurse) throws PortalException;
+	public void getSubfolderIds(
+			List<Long> folderIds, long groupId, long folderId, boolean recurse)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getSubfolderIds(long groupId, long folderId,
-		boolean recurse) throws PortalException;
+	public List<Long> getSubfolderIds(
+			long groupId, long folderId, boolean recurse)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasFolderLock(long folderId) throws PortalException;
@@ -183,42 +204,51 @@ public interface DLFolderService extends BaseService {
 
 	public Lock lockFolder(long folderId) throws PortalException;
 
-	public Lock lockFolder(long folderId, String owner, boolean inheritable,
-		long expirationTime) throws PortalException;
+	public Lock lockFolder(
+			long folderId, String owner, boolean inheritable,
+			long expirationTime)
+		throws PortalException;
 
-	public DLFolder moveFolder(long folderId, long parentFolderId,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFolder moveFolder(
+			long folderId, long parentFolderId, ServiceContext serviceContext)
+		throws PortalException;
 
-	public Lock refreshFolderLock(String lockUuid, long companyId,
-		long expirationTime) throws PortalException;
+	public Lock refreshFolderLock(
+			String lockUuid, long companyId, long expirationTime)
+		throws PortalException;
 
-	public void unlockFolder(long groupId, long parentFolderId, String name,
-		String lockUuid) throws PortalException;
+	public void unlockFolder(
+			long groupId, long parentFolderId, String name, String lockUuid)
+		throws PortalException;
 
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException;
 
-	public DLFolder updateFolder(long folderId, long parentFolderId,
-		String name, String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, int restrictionType,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			int restrictionType, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
-	#updateFolder(long, String, String, long, List, int,
-	ServiceContext)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
+	 #updateFolder(long, String, String, long, List, int,
+	 ServiceContext)}
+	 */
 	@Deprecated
-	public DLFolder updateFolder(long folderId, String name,
-		String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFolder updateFolder(
+			long folderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+		throws PortalException;
 
-	public DLFolder updateFolder(long folderId, String name,
-		String description, long defaultFileEntryTypeId,
-		List<Long> fileEntryTypeIds, int restrictionType,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFolder updateFolder(
+			long folderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			int restrictionType, ServiceContext serviceContext)
+		throws PortalException;
 
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException;
+
 }

@@ -24,32 +24,36 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public class PhoneServiceWrapper implements PhoneService,
-	ServiceWrapper<PhoneService> {
+public class PhoneServiceWrapper
+	implements PhoneService, ServiceWrapper<PhoneService> {
+
 	public PhoneServiceWrapper(PhoneService phoneService) {
 		_phoneService = phoneService;
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone addPhone(String className,
-		long classPK, String number, String extension, long typeId,
-		boolean primary, ServiceContext serviceContext)
+	public com.liferay.portal.kernel.model.Phone addPhone(
+			String className, long classPK, String number, String extension,
+			long typeId, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneService.addPhone(className, classPK, number, extension,
-			typeId, primary, serviceContext);
+
+		return _phoneService.addPhone(
+			className, classPK, number, extension, typeId, primary,
+			serviceContext);
 	}
 
 	@Override
 	public void deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_phoneService.deletePhone(phoneId);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _phoneService.getOSGiServiceIdentifier();
@@ -58,22 +62,26 @@ public class PhoneServiceWrapper implements PhoneService,
 	@Override
 	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _phoneService.getPhone(phoneId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
-		String className, long classPK)
+			String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _phoneService.getPhones(className, classPK);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone updatePhone(long phoneId,
-		String number, String extension, long typeId, boolean primary)
+	public com.liferay.portal.kernel.model.Phone updatePhone(
+			long phoneId, String number, String extension, long typeId,
+			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneService.updatePhone(phoneId, number, extension, typeId,
-			primary);
+
+		return _phoneService.updatePhone(
+			phoneId, number, extension, typeId, primary);
 	}
 
 	@Override
@@ -87,4 +95,5 @@ public class PhoneServiceWrapper implements PhoneService,
 	}
 
 	private PhoneService _phoneService;
+
 }

@@ -22,20 +22,25 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface SocialActivityCounterFinder {
+
 	public int countU_ByG_N(long groupId, String[] names);
 
-	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_ByG_N_S_E_1(
-		long groupId, String name, int startPeriod, int endPeriod,
-		int periodLength);
+	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter>
+		findAC_ByG_N_S_E_1(
+			long groupId, String name, int startPeriod, int endPeriod,
+			int periodLength);
 
-	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_ByG_N_S_E_2(
-		long groupId, String counterName, int startPeriod, int endPeriod,
-		int periodLength);
+	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter>
+		findAC_ByG_N_S_E_2(
+			long groupId, String counterName, int startPeriod, int endPeriod,
+			int periodLength);
 
-	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_By_G_C_C_N_S_E(
-		long groupId, java.util.List<Long> userIds, String[] names, int start,
-		int end);
+	public java.util.List<com.liferay.social.kernel.model.SocialActivityCounter>
+		findAC_By_G_C_C_N_S_E(
+			long groupId, java.util.List<Long> userIds, String[] names,
+			int start, int end);
 
-	public java.util.List<Long> findU_ByG_N(long groupId, String[] names,
-		int start, int end);
+	public java.util.List<Long> findU_ByG_N(
+		long groupId, String[] names, int start, int end);
+
 }

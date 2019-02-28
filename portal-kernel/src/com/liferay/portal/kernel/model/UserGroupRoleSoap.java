@@ -31,6 +31,7 @@ import java.util.List;
  */
 @ProviderType
 public class UserGroupRoleSoap implements Serializable {
+
 	public static UserGroupRoleSoap toSoapModel(UserGroupRole model) {
 		UserGroupRoleSoap soapModel = new UserGroupRoleSoap();
 
@@ -71,7 +72,8 @@ public class UserGroupRoleSoap implements Serializable {
 	}
 
 	public static UserGroupRoleSoap[] toSoapModels(List<UserGroupRole> models) {
-		List<UserGroupRoleSoap> soapModels = new ArrayList<UserGroupRoleSoap>(models.size());
+		List<UserGroupRoleSoap> soapModels = new ArrayList<UserGroupRoleSoap>(
+			models.size());
 
 		for (UserGroupRole model : models) {
 			soapModels.add(toSoapModel(model));
@@ -138,4 +140,5 @@ public class UserGroupRoleSoap implements Serializable {
 	private long _groupId;
 	private long _roleId;
 	private long _companyId;
+
 }

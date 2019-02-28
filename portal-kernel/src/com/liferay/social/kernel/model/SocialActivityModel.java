@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.model.ShardedModel;
  * @generated
  */
 @ProviderType
-public interface SocialActivityModel extends AttachedModel,
-	BaseModel<SocialActivity>, ShardedModel {
+public interface SocialActivityModel
+	extends AttachedModel, BaseModel<SocialActivity>, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -293,4 +294,5 @@ public interface SocialActivityModel extends AttachedModel,
 	 * @param receiverUserUuid the receiver user uuid of this social activity
 	 */
 	public void setReceiverUserUuid(String receiverUserUuid);
+
 }

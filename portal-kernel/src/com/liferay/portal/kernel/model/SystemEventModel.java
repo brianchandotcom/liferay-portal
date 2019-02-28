@@ -32,8 +32,9 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
-	MVCCModel, ShardedModel {
+public interface SystemEventModel
+	extends AttachedModel, BaseModel<SystemEvent>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -298,4 +299,5 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
 	 * @param extraData the extra data of this system event
 	 */
 	public void setExtraData(String extraData);
+
 }

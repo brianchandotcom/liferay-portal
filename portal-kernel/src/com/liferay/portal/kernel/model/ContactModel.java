@@ -32,8 +32,10 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ContactModel extends AttachedModel, AuditedModel,
-	BaseModel<Contact>, MVCCModel, ShardedModel {
+public interface ContactModel
+	extends AttachedModel, AuditedModel, BaseModel<Contact>, MVCCModel,
+			ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -523,4 +525,5 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param hoursOfOperation the hours of operation of this contact
 	 */
 	public void setHoursOfOperation(String hoursOfOperation);
+
 }

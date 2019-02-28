@@ -33,13 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -49,14 +42,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class UserGroupRolePersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -81,8 +83,9 @@ public class UserGroupRolePersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		UserGroupRole userGroupRole = _persistence.create(pk);
 
@@ -97,7 +100,8 @@ public class UserGroupRolePersistenceTest {
 
 		_persistence.remove(newUserGroupRole);
 
-		UserGroupRole existingUserGroupRole = _persistence.fetchByPrimaryKey(newUserGroupRole.getPrimaryKey());
+		UserGroupRole existingUserGroupRole = _persistence.fetchByPrimaryKey(
+			newUserGroupRole.getPrimaryKey());
 
 		Assert.assertNull(existingUserGroupRole);
 	}
@@ -109,8 +113,9 @@ public class UserGroupRolePersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		UserGroupRole newUserGroupRole = _persistence.create(pk);
 
@@ -120,17 +125,20 @@ public class UserGroupRolePersistenceTest {
 
 		_userGroupRoles.add(_persistence.update(newUserGroupRole));
 
-		UserGroupRole existingUserGroupRole = _persistence.findByPrimaryKey(newUserGroupRole.getPrimaryKey());
+		UserGroupRole existingUserGroupRole = _persistence.findByPrimaryKey(
+			newUserGroupRole.getPrimaryKey());
 
-		Assert.assertEquals(existingUserGroupRole.getMvccVersion(),
+		Assert.assertEquals(
+			existingUserGroupRole.getMvccVersion(),
 			newUserGroupRole.getMvccVersion());
-		Assert.assertEquals(existingUserGroupRole.getUserId(),
-			newUserGroupRole.getUserId());
-		Assert.assertEquals(existingUserGroupRole.getGroupId(),
-			newUserGroupRole.getGroupId());
-		Assert.assertEquals(existingUserGroupRole.getRoleId(),
-			newUserGroupRole.getRoleId());
-		Assert.assertEquals(existingUserGroupRole.getCompanyId(),
+		Assert.assertEquals(
+			existingUserGroupRole.getUserId(), newUserGroupRole.getUserId());
+		Assert.assertEquals(
+			existingUserGroupRole.getGroupId(), newUserGroupRole.getGroupId());
+		Assert.assertEquals(
+			existingUserGroupRole.getRoleId(), newUserGroupRole.getRoleId());
+		Assert.assertEquals(
+			existingUserGroupRole.getCompanyId(),
 			newUserGroupRole.getCompanyId());
 	}
 
@@ -157,16 +165,16 @@ public class UserGroupRolePersistenceTest {
 
 	@Test
 	public void testCountByU_G() throws Exception {
-		_persistence.countByU_G(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByU_G(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByU_G(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_R() throws Exception {
-		_persistence.countByG_R(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_R(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_R(0L, 0L);
 	}
@@ -175,15 +183,17 @@ public class UserGroupRolePersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
-		UserGroupRole existingUserGroupRole = _persistence.findByPrimaryKey(newUserGroupRole.getPrimaryKey());
+		UserGroupRole existingUserGroupRole = _persistence.findByPrimaryKey(
+			newUserGroupRole.getPrimaryKey());
 
 		Assert.assertEquals(existingUserGroupRole, newUserGroupRole);
 	}
 
 	@Test(expected = NoSuchUserGroupRoleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.findByPrimaryKey(pk);
 	}
@@ -192,15 +202,17 @@ public class UserGroupRolePersistenceTest {
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
-		UserGroupRole existingUserGroupRole = _persistence.fetchByPrimaryKey(newUserGroupRole.getPrimaryKey());
+		UserGroupRole existingUserGroupRole = _persistence.fetchByPrimaryKey(
+			newUserGroupRole.getPrimaryKey());
 
 		Assert.assertEquals(existingUserGroupRole, newUserGroupRole);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		UserGroupRole missingUserGroupRole = _persistence.fetchByPrimaryKey(pk);
 
@@ -210,6 +222,7 @@ public class UserGroupRolePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		UserGroupRole newUserGroupRole1 = addUserGroupRole();
 		UserGroupRole newUserGroupRole2 = addUserGroupRole();
 
@@ -218,30 +231,37 @@ public class UserGroupRolePersistenceTest {
 		primaryKeys.add(newUserGroupRole1.getPrimaryKey());
 		primaryKeys.add(newUserGroupRole2.getPrimaryKey());
 
-		Map<Serializable, UserGroupRole> userGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserGroupRole> userGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, userGroupRoles.size());
-		Assert.assertEquals(newUserGroupRole1,
+		Assert.assertEquals(
+			newUserGroupRole1,
 			userGroupRoles.get(newUserGroupRole1.getPrimaryKey()));
-		Assert.assertEquals(newUserGroupRole2,
+		Assert.assertEquals(
+			newUserGroupRole2,
 			userGroupRoles.get(newUserGroupRole2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-		UserGroupRolePK pk1 = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		UserGroupRolePK pk2 = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk1 = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		UserGroupRolePK pk2 = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, UserGroupRole> userGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserGroupRole> userGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userGroupRoles.isEmpty());
 	}
@@ -249,46 +269,51 @@ public class UserGroupRolePersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
-		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUserGroupRole.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, UserGroupRole> userGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserGroupRole> userGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userGroupRoles.size());
-		Assert.assertEquals(newUserGroupRole,
+		Assert.assertEquals(
+			newUserGroupRole,
 			userGroupRoles.get(newUserGroupRole.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserGroupRole> userGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserGroupRole> userGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userGroupRoles.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUserGroupRole.getPrimaryKey());
 
-		Map<Serializable, UserGroupRole> userGroupRoles = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserGroupRole> userGroupRoles =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userGroupRoles.size());
-		Assert.assertEquals(newUserGroupRole,
+		Assert.assertEquals(
+			newUserGroupRole,
 			userGroupRoles.get(newUserGroupRole.getPrimaryKey()));
 	}
 
@@ -296,15 +321,19 @@ public class UserGroupRolePersistenceTest {
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = UserGroupRoleLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			UserGroupRoleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserGroupRole>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<UserGroupRole>() {
+
 				@Override
 				public void performAction(UserGroupRole userGroupRole) {
 					Assert.assertNotNull(userGroupRole);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -313,21 +342,24 @@ public class UserGroupRolePersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserGroupRole.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.userId",
-				newUserGroupRole.getUserId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
-				newUserGroupRole.getGroupId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
-				newUserGroupRole.getRoleId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.userId", newUserGroupRole.getUserId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.groupId", newUserGroupRole.getGroupId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.roleId", newUserGroupRole.getRoleId()));
 
-		List<UserGroupRole> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserGroupRole> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -338,35 +370,36 @@ public class UserGroupRolePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserGroupRole.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.userId",
-				RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
-				RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("id.userId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"id.groupId", RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("id.roleId", RandomTestUtil.nextLong()));
 
-		List<UserGroupRole> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserGroupRole> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserGroupRole.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.userId"));
 
 		Object newUserId = newUserGroupRole.getUserId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.userId",
-				new Object[] { newUserId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("id.userId", new Object[] {newUserId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -379,13 +412,14 @@ public class UserGroupRolePersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserGroupRole.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.userId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.userId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"id.userId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -393,8 +427,9 @@ public class UserGroupRolePersistenceTest {
 	}
 
 	protected UserGroupRole addUserGroupRole() throws Exception {
-		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		UserGroupRolePK pk = new UserGroupRolePK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		UserGroupRole userGroupRole = _persistence.create(pk);
 
@@ -407,7 +442,9 @@ public class UserGroupRolePersistenceTest {
 		return userGroupRole;
 	}
 
-	private List<UserGroupRole> _userGroupRoles = new ArrayList<UserGroupRole>();
+	private List<UserGroupRole> _userGroupRoles =
+		new ArrayList<UserGroupRole>();
 	private UserGroupRolePersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.service.persistence.OrgGroupRolePK;
  * @generated
  */
 @ProviderType
-public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>, MVCCModel,
-	ShardedModel {
+public interface OrgGroupRoleModel
+	extends BaseModel<OrgGroupRole>, MVCCModel, ShardedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -125,4 +126,5 @@ public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>, MVCCModel,
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
 }

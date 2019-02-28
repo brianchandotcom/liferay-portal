@@ -35,13 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -51,14 +44,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class UserNotificationEventPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -72,7 +74,8 @@ public class UserNotificationEventPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<UserNotificationEvent> iterator = _userNotificationEvents.iterator();
+		Iterator<UserNotificationEvent> iterator =
+			_userNotificationEvents.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -94,11 +97,14 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
 		_persistence.remove(newUserNotificationEvent);
 
-		UserNotificationEvent existingUserNotificationEvent = _persistence.fetchByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
+		UserNotificationEvent existingUserNotificationEvent =
+			_persistence.fetchByPrimaryKey(
+				newUserNotificationEvent.getPrimaryKey());
 
 		Assert.assertNull(existingUserNotificationEvent);
 	}
@@ -112,7 +118,8 @@ public class UserNotificationEventPersistenceTest {
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		UserNotificationEvent newUserNotificationEvent = _persistence.create(pk);
+		UserNotificationEvent newUserNotificationEvent = _persistence.create(
+			pk);
 
 		newUserNotificationEvent.setMvccVersion(RandomTestUtil.nextLong());
 
@@ -134,40 +141,56 @@ public class UserNotificationEventPersistenceTest {
 
 		newUserNotificationEvent.setPayload(RandomTestUtil.randomString());
 
-		newUserNotificationEvent.setActionRequired(RandomTestUtil.randomBoolean());
+		newUserNotificationEvent.setActionRequired(
+			RandomTestUtil.randomBoolean());
 
 		newUserNotificationEvent.setArchived(RandomTestUtil.randomBoolean());
 
-		_userNotificationEvents.add(_persistence.update(
-				newUserNotificationEvent));
+		_userNotificationEvents.add(
+			_persistence.update(newUserNotificationEvent));
 
-		UserNotificationEvent existingUserNotificationEvent = _persistence.findByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
+		UserNotificationEvent existingUserNotificationEvent =
+			_persistence.findByPrimaryKey(
+				newUserNotificationEvent.getPrimaryKey());
 
-		Assert.assertEquals(existingUserNotificationEvent.getMvccVersion(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getMvccVersion(),
 			newUserNotificationEvent.getMvccVersion());
-		Assert.assertEquals(existingUserNotificationEvent.getUuid(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getUuid(),
 			newUserNotificationEvent.getUuid());
-		Assert.assertEquals(existingUserNotificationEvent.getUserNotificationEventId(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getUserNotificationEventId(),
 			newUserNotificationEvent.getUserNotificationEventId());
-		Assert.assertEquals(existingUserNotificationEvent.getCompanyId(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getCompanyId(),
 			newUserNotificationEvent.getCompanyId());
-		Assert.assertEquals(existingUserNotificationEvent.getUserId(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getUserId(),
 			newUserNotificationEvent.getUserId());
-		Assert.assertEquals(existingUserNotificationEvent.getType(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getType(),
 			newUserNotificationEvent.getType());
-		Assert.assertEquals(existingUserNotificationEvent.getTimestamp(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getTimestamp(),
 			newUserNotificationEvent.getTimestamp());
-		Assert.assertEquals(existingUserNotificationEvent.getDeliveryType(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getDeliveryType(),
 			newUserNotificationEvent.getDeliveryType());
-		Assert.assertEquals(existingUserNotificationEvent.getDeliverBy(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getDeliverBy(),
 			newUserNotificationEvent.getDeliverBy());
-		Assert.assertEquals(existingUserNotificationEvent.isDelivered(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.isDelivered(),
 			newUserNotificationEvent.isDelivered());
-		Assert.assertEquals(existingUserNotificationEvent.getPayload(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.getPayload(),
 			newUserNotificationEvent.getPayload());
-		Assert.assertEquals(existingUserNotificationEvent.isActionRequired(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.isActionRequired(),
 			newUserNotificationEvent.isActionRequired());
-		Assert.assertEquals(existingUserNotificationEvent.isArchived(),
+		Assert.assertEquals(
+			existingUserNotificationEvent.isArchived(),
 			newUserNotificationEvent.isArchived());
 	}
 
@@ -207,102 +230,112 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testCountByU_DT() throws Exception {
-		_persistence.countByU_DT(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByU_DT(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByU_DT(0L, 0);
 	}
 
 	@Test
 	public void testCountByU_D() throws Exception {
-		_persistence.countByU_D(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByU_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByU_D(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_A() throws Exception {
-		_persistence.countByU_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByU_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByU_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_DT_D() throws Exception {
-		_persistence.countByU_DT_D(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+		_persistence.countByU_DT_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByU_DT_D(0L, 0, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_DT_A() throws Exception {
-		_persistence.countByU_DT_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+		_persistence.countByU_DT_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean());
 
 		_persistence.countByU_DT_A(0L, 0, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_D_A() throws Exception {
-		_persistence.countByU_D_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByU_D_A(0L, RandomTestUtil.randomBoolean(),
+		_persistence.countByU_D_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_D_A(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_A_A() throws Exception {
-		_persistence.countByU_A_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByU_A_A(0L, RandomTestUtil.randomBoolean(),
+		_persistence.countByU_A_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_A_A(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_T_DT_D() throws Exception {
-		_persistence.countByU_T_DT_D(RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByU_T_DT_D(0L, "null", 0,
+		_persistence.countByU_T_DT_D(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt(),
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByU_T_DT_D(0L, (String)null, 0,
-			RandomTestUtil.randomBoolean());
+		_persistence.countByU_T_DT_D(
+			0L, "null", 0, RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_T_DT_D(
+			0L, (String)null, 0, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_DT_D_A() throws Exception {
-		_persistence.countByU_DT_D_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByU_DT_D_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByU_DT_D_A(0L, 0, RandomTestUtil.randomBoolean(),
+		_persistence.countByU_DT_D_A(
+			0L, 0, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testCountByU_DT_A_A() throws Exception {
-		_persistence.countByU_DT_A_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean());
+		_persistence.countByU_DT_A_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByU_DT_A_A(0L, 0, RandomTestUtil.randomBoolean(),
+		_persistence.countByU_DT_A_A(
+			0L, 0, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
-		UserNotificationEvent existingUserNotificationEvent = _persistence.findByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
+		UserNotificationEvent existingUserNotificationEvent =
+			_persistence.findByPrimaryKey(
+				newUserNotificationEvent.getPrimaryKey());
 
-		Assert.assertEquals(existingUserNotificationEvent,
-			newUserNotificationEvent);
+		Assert.assertEquals(
+			existingUserNotificationEvent, newUserNotificationEvent);
 	}
 
 	@Test(expected = NoSuchUserNotificationEventException.class)
@@ -314,33 +347,37 @@ public class UserNotificationEventPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<UserNotificationEvent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("UserNotificationEvent",
-			"mvccVersion", true, "uuid", true, "userNotificationEventId", true,
-			"companyId", true, "userId", true, "type", true, "timestamp", true,
-			"deliveryType", true, "deliverBy", true, "delivered", true,
-			"actionRequired", true, "archived", true);
+		return OrderByComparatorFactoryUtil.create(
+			"UserNotificationEvent", "mvccVersion", true, "uuid", true,
+			"userNotificationEventId", true, "companyId", true, "userId", true,
+			"type", true, "timestamp", true, "deliveryType", true, "deliverBy",
+			true, "delivered", true, "actionRequired", true, "archived", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
-		UserNotificationEvent existingUserNotificationEvent = _persistence.fetchByPrimaryKey(newUserNotificationEvent.getPrimaryKey());
+		UserNotificationEvent existingUserNotificationEvent =
+			_persistence.fetchByPrimaryKey(
+				newUserNotificationEvent.getPrimaryKey());
 
-		Assert.assertEquals(existingUserNotificationEvent,
-			newUserNotificationEvent);
+		Assert.assertEquals(
+			existingUserNotificationEvent, newUserNotificationEvent);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		UserNotificationEvent missingUserNotificationEvent = _persistence.fetchByPrimaryKey(pk);
+		UserNotificationEvent missingUserNotificationEvent =
+			_persistence.fetchByPrimaryKey(pk);
 
 		Assert.assertNull(missingUserNotificationEvent);
 	}
@@ -348,21 +385,27 @@ public class UserNotificationEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		UserNotificationEvent newUserNotificationEvent1 = addUserNotificationEvent();
-		UserNotificationEvent newUserNotificationEvent2 = addUserNotificationEvent();
+
+		UserNotificationEvent newUserNotificationEvent1 =
+			addUserNotificationEvent();
+		UserNotificationEvent newUserNotificationEvent2 =
+			addUserNotificationEvent();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUserNotificationEvent1.getPrimaryKey());
 		primaryKeys.add(newUserNotificationEvent2.getPrimaryKey());
 
-		Map<Serializable, UserNotificationEvent> userNotificationEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserNotificationEvent> userNotificationEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, userNotificationEvents.size());
-		Assert.assertEquals(newUserNotificationEvent1,
+		Assert.assertEquals(
+			newUserNotificationEvent1,
 			userNotificationEvents.get(
 				newUserNotificationEvent1.getPrimaryKey()));
-		Assert.assertEquals(newUserNotificationEvent2,
+		Assert.assertEquals(
+			newUserNotificationEvent2,
 			userNotificationEvents.get(
 				newUserNotificationEvent2.getPrimaryKey()));
 	}
@@ -370,6 +413,7 @@ public class UserNotificationEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -379,7 +423,8 @@ public class UserNotificationEventPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, UserNotificationEvent> userNotificationEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserNotificationEvent> userNotificationEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userNotificationEvents.isEmpty());
 	}
@@ -387,7 +432,9 @@ public class UserNotificationEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
 		long pk = RandomTestUtil.nextLong();
 
@@ -396,53 +443,65 @@ public class UserNotificationEventPersistenceTest {
 		primaryKeys.add(newUserNotificationEvent.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, UserNotificationEvent> userNotificationEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserNotificationEvent> userNotificationEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userNotificationEvents.size());
-		Assert.assertEquals(newUserNotificationEvent,
-			userNotificationEvents.get(newUserNotificationEvent.getPrimaryKey()));
+		Assert.assertEquals(
+			newUserNotificationEvent,
+			userNotificationEvents.get(
+				newUserNotificationEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, UserNotificationEvent> userNotificationEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserNotificationEvent> userNotificationEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(userNotificationEvents.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newUserNotificationEvent.getPrimaryKey());
 
-		Map<Serializable, UserNotificationEvent> userNotificationEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, UserNotificationEvent> userNotificationEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, userNotificationEvents.size());
-		Assert.assertEquals(newUserNotificationEvent,
-			userNotificationEvents.get(newUserNotificationEvent.getPrimaryKey()));
+		Assert.assertEquals(
+			newUserNotificationEvent,
+			userNotificationEvents.get(
+				newUserNotificationEvent.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = UserNotificationEventLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			UserNotificationEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserNotificationEvent>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<UserNotificationEvent>() {
+
 				@Override
 				public void performAction(
 					UserNotificationEvent userNotificationEvent) {
+
 					Assert.assertNotNull(userNotificationEvent);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -451,54 +510,62 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserNotificationEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("userNotificationEventId",
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userNotificationEventId",
 				newUserNotificationEvent.getUserNotificationEventId()));
 
-		List<UserNotificationEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserNotificationEvent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
 		UserNotificationEvent existingUserNotificationEvent = result.get(0);
 
-		Assert.assertEquals(existingUserNotificationEvent,
-			newUserNotificationEvent);
+		Assert.assertEquals(
+			existingUserNotificationEvent, newUserNotificationEvent);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserNotificationEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("userNotificationEventId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userNotificationEventId", RandomTestUtil.nextLong()));
 
-		List<UserNotificationEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserNotificationEvent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
-		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		UserNotificationEvent newUserNotificationEvent =
+			addUserNotificationEvent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserNotificationEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"userNotificationEventId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("userNotificationEventId"));
 
-		Object newUserNotificationEventId = newUserNotificationEvent.getUserNotificationEventId();
+		Object newUserNotificationEventId =
+			newUserNotificationEvent.getUserNotificationEventId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("userNotificationEventId",
-				new Object[] { newUserNotificationEventId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"userNotificationEventId",
+				new Object[] {newUserNotificationEventId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -506,20 +573,22 @@ public class UserNotificationEventPersistenceTest {
 
 		Object existingUserNotificationEventId = result.get(0);
 
-		Assert.assertEquals(existingUserNotificationEventId,
-			newUserNotificationEventId);
+		Assert.assertEquals(
+			existingUserNotificationEventId, newUserNotificationEventId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserNotificationEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"userNotificationEventId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("userNotificationEventId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("userNotificationEventId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"userNotificationEventId",
+				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -528,6 +597,7 @@ public class UserNotificationEventPersistenceTest {
 
 	protected UserNotificationEvent addUserNotificationEvent()
 		throws Exception {
+
 		long pk = RandomTestUtil.nextLong();
 
 		UserNotificationEvent userNotificationEvent = _persistence.create(pk);
@@ -561,7 +631,9 @@ public class UserNotificationEventPersistenceTest {
 		return userNotificationEvent;
 	}
 
-	private List<UserNotificationEvent> _userNotificationEvents = new ArrayList<UserNotificationEvent>();
+	private List<UserNotificationEvent> _userNotificationEvents =
+		new ArrayList<UserNotificationEvent>();
 	private UserNotificationEventPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

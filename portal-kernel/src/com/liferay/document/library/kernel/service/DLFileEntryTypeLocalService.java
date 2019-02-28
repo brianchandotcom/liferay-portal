@@ -20,9 +20,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeExceptio
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
-
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -61,46 +59,51 @@ import java.util.Set;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface DLFileEntryTypeLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface DLFileEntryTypeLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the document library file entry type local service. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addDDMStructureLinks(long fileEntryTypeId,
-		Set<Long> ddmStructureIds);
+	public void addDDMStructureLinks(
+		long fileEntryTypeId, Set<Long> ddmStructureIds);
 
 	/**
-	* Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryType the document library file entry type
-	* @return the document library file entry type that was added
-	*/
+	 * Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlFileEntryType the document library file entry type
+	 * @return the document library file entry type that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType addDLFileEntryType(DLFileEntryType dlFileEntryType);
 
-	public void addDLFolderDLFileEntryType(long folderId,
-		DLFileEntryType dlFileEntryType);
+	public void addDLFolderDLFileEntryType(
+		long folderId, DLFileEntryType dlFileEntryType);
 
 	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
 
-	public void addDLFolderDLFileEntryTypes(long folderId,
-		List<DLFileEntryType> dlFileEntryTypes);
+	public void addDLFolderDLFileEntryTypes(
+		long folderId, List<DLFileEntryType> dlFileEntryTypes);
 
-	public void addDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds);
+	public void addDLFolderDLFileEntryTypes(
+		long folderId, long[] fileEntryTypeIds);
 
-	public DLFileEntryType addFileEntryType(long userId, long groupId,
-		String fileEntryTypeKey, Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap, long[] ddmStructureIds,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFileEntryType addFileEntryType(
+			long userId, long groupId, String fileEntryTypeKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
 
-	public DLFileEntryType addFileEntryType(long userId, long groupId,
-		String name, String description, long[] ddmStructureIds,
-		ServiceContext serviceContext) throws PortalException;
+	public DLFileEntryType addFileEntryType(
+			long userId, long groupId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
 		throws PortalException;
@@ -111,48 +114,51 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws NoSuchFileEntryTypeException;
 
 	/**
-	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
-	*
-	* @param fileEntryTypeId the primary key for the new document library file entry type
-	* @return the new document library file entry type
-	*/
+	 * Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
+	 *
+	 * @param fileEntryTypeId the primary key for the new document library file entry type
+	 * @return the new document library file entry type
+	 */
 	@Transactional(enabled = false)
 	public DLFileEntryType createDLFileEntryType(long fileEntryTypeId);
 
 	/**
-	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryType the document library file entry type
-	* @return the document library file entry type that was removed
-	*/
+	 * Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlFileEntryType the document library file entry type
+	 * @return the document library file entry type that was removed
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileEntryType deleteDLFileEntryType(
 		DLFileEntryType dlFileEntryType);
 
 	/**
-	* Deletes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param fileEntryTypeId the primary key of the document library file entry type
-	* @return the document library file entry type that was removed
-	* @throws PortalException if a document library file entry type with the primary key could not be found
-	*/
+	 * Deletes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param fileEntryTypeId the primary key of the document library file entry type
+	 * @return the document library file entry type that was removed
+	 * @throws PortalException if a document library file entry type with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
 		throws PortalException;
 
-	public void deleteDLFolderDLFileEntryType(long folderId,
-		DLFileEntryType dlFileEntryType);
+	public void deleteDLFolderDLFileEntryType(
+		long folderId, DLFileEntryType dlFileEntryType);
 
-	public void deleteDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId);
+	public void deleteDLFolderDLFileEntryType(
+		long folderId, long fileEntryTypeId);
 
-	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		List<DLFileEntryType> dlFileEntryTypes);
+	public void deleteDLFolderDLFileEntryTypes(
+		long folderId, List<DLFileEntryType> dlFileEntryTypes);
 
-	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds);
+	public void deleteDLFolderDLFileEntryTypes(
+		long folderId, long[] fileEntryTypeIds);
 
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException;
 
@@ -162,8 +168,8 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public void deleteFileEntryTypes(long groupId) throws PortalException;
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
@@ -172,87 +178,88 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchDLFileEntryType(long fileEntryTypeId);
 
 	/**
-	* Returns the document library file entry type matching the UUID and group.
-	*
-	* @param uuid the document library file entry type's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	*/
+	 * Returns the document library file entry type matching the UUID and group.
+	 *
+	 * @param uuid the document library file entry type's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(String uuid,
-		long groupId);
+	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchFileEntryType(long groupId,
-		String fileEntryTypeKey);
+	public DLFileEntryType fetchFileEntryType(
+		long groupId, String fileEntryTypeKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -262,77 +269,77 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws NoSuchFileEntryTypeException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultFileEntryTypeId(long folderId)
-		throws PortalException;
+	public long getDefaultFileEntryTypeId(long folderId) throws PortalException;
 
 	/**
-	* Returns the document library file entry type with the primary key.
-	*
-	* @param fileEntryTypeId the primary key of the document library file entry type
-	* @return the document library file entry type
-	* @throws PortalException if a document library file entry type with the primary key could not be found
-	*/
+	 * Returns the document library file entry type with the primary key.
+	 *
+	 * @param fileEntryTypeId the primary key of the document library file entry type
+	 * @return the document library file entry type
+	 * @throws PortalException if a document library file entry type with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType getDLFileEntryType(long fileEntryTypeId)
 		throws PortalException;
 
 	/**
-	* Returns the document library file entry type matching the UUID and group.
-	*
-	* @param uuid the document library file entry type's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file entry type
-	* @throws PortalException if a matching document library file entry type could not be found
-	*/
+	 * Returns the document library file entry type matching the UUID and group.
+	 *
+	 * @param uuid the document library file entry type's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library file entry type
+	 * @throws PortalException if a matching document library file entry type could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException;
+	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
 
 	/**
-	* Returns a range of all the document library file entry types.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library file entry types
-	* @param end the upper bound of the range of document library file entry types (not inclusive)
-	* @return the range of document library file entry types
-	*/
+	 * Returns a range of all the document library file entry types.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of document library file entry types
+	 * @param end the upper bound of the range of document library file entry types (not inclusive)
+	 * @return the range of document library file entry types
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFileEntryTypes(int start, int end);
 
 	/**
-	* Returns all the document library file entry types matching the UUID and company.
-	*
-	* @param uuid the UUID of the document library file entry types
-	* @param companyId the primary key of the company
-	* @return the matching document library file entry types, or an empty list if no matches were found
-	*/
+	 * Returns all the document library file entry types matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the document library file entry types
+	 * @param companyId the primary key of the company
+	 * @return the matching document library file entry types, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	/**
-	* Returns a range of document library file entry types matching the UUID and company.
-	*
-	* @param uuid the UUID of the document library file entry types
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of document library file entry types
-	* @param end the upper bound of the range of document library file entry types (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching document library file entry types, or an empty list if no matches were found
-	*/
+	 * Returns a range of document library file entry types matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the document library file entry types
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of document library file entry types
+	 * @param end the upper bound of the range of document library file entry types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching document library file entry types, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
-	* Returns the number of document library file entry types.
-	*
-	* @return the number of document library file entry types
-	*/
+	 * Returns the number of document library file entry types.
+	 *
+	 * @return the number of document library file entry types
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFileEntryTypesCount();
 
@@ -340,22 +347,23 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId,
-		int start, int end);
+	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(
+		long folderId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId,
-		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator);
+	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(
+		long folderId, int start, int end,
+		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFolderDLFileEntryTypesCount(long folderId);
 
 	/**
-	* Returns the folderIds of the document library folders associated with the document library file entry type.
-	*
-	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
-	* @return long[] the folderIds of document library folders associated with the document library file entry type
-	*/
+	 * Returns the folderIds of the document library folders associated with the document library file entry type.
+	 *
+	 * @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
+	 * @return long[] the folderIds of document library folders associated with the document library file entry type
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId);
 
@@ -368,8 +376,9 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getFileEntryType(long groupId,
-		String fileEntryTypeKey) throws PortalException;
+	public DLFileEntryType getFileEntryType(
+			long groupId, String fileEntryTypeKey)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
@@ -379,17 +388,18 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntryType> getFolderFileEntryTypes(long[] groupIds,
-		long folderId, boolean inherited) throws PortalException;
+	public List<DLFileEntryType> getFolderFileEntryTypes(
+			long[] groupIds, long folderId, boolean inherited)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -398,52 +408,59 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId);
+	public boolean hasDLFolderDLFileEntryType(
+		long folderId, long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFolderDLFileEntryTypes(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntryType> search(long companyId, long[] groupIds,
-		String keywords, boolean includeBasicFileEntryType, int start, int end,
+	public List<DLFileEntryType> search(
+		long companyId, long[] groupIds, String keywords,
+		boolean includeBasicFileEntryType, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds, String keywords,
+	public int searchCount(
+		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType);
 
-	public void setDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds);
+	public void setDLFolderDLFileEntryTypes(
+		long folderId, long[] fileEntryTypeIds);
 
 	public void unsetFolderFileEntryTypes(long folderId);
 
-	public void updateDDMStructureLinks(long fileEntryTypeId,
-		Set<Long> ddmStructureIds) throws PortalException;
+	public void updateDDMStructureLinks(
+			long fileEntryTypeId, Set<Long> ddmStructureIds)
+		throws PortalException;
 
 	/**
-	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryType the document library file entry type
-	* @return the document library file entry type that was updated
-	*/
+	 * Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param dlFileEntryType the document library file entry type
+	 * @return the document library file entry type that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType updateDLFileEntryType(
 		DLFileEntryType dlFileEntryType);
 
-	public DLFileEntry updateFileEntryFileEntryType(DLFileEntry dlFileEntry,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-		long[] ddmStructureIds, ServiceContext serviceContext)
+	public DLFileEntry updateFileEntryFileEntryType(
+			DLFileEntry dlFileEntry, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		String name, String description, long[] ddmStructureIds,
-		ServiceContext serviceContext) throws PortalException;
+	public void updateFileEntryType(
+			long userId, long fileEntryTypeId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, long[] ddmStructureIds,
+			ServiceContext serviceContext)
+		throws PortalException;
 
-	public void updateFolderFileEntryTypes(DLFolder dlFolder,
-		List<Long> fileEntryTypeIds, long defaultFileEntryTypeId,
-		ServiceContext serviceContext);
+	public void updateFileEntryType(
+			long userId, long fileEntryTypeId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void updateFolderFileEntryTypes(
+		DLFolder dlFolder, List<Long> fileEntryTypeIds,
+		long defaultFileEntryTypeId, ServiceContext serviceContext);
+
 }

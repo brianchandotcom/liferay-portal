@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class VirtualHostBaseImpl extends VirtualHostModelImpl
-	implements VirtualHost {
+public abstract class VirtualHostBaseImpl
+	extends VirtualHostModelImpl implements VirtualHost {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class VirtualHostBaseImpl extends VirtualHostModelImpl
 			VirtualHostLocalServiceUtil.updateVirtualHost(this);
 		}
 	}
+
 }

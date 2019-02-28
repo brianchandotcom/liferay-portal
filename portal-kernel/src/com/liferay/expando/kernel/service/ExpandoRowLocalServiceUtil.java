@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ExpandoRowLocalServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,89 +41,102 @@ public class ExpandoRowLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the expando row to the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoRow the expando row
-	* @return the expando row that was added
-	*/
+	 * Adds the expando row to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoRow the expando row
+	 * @return the expando row that was added
+	 */
 	public static com.liferay.expando.kernel.model.ExpandoRow addExpandoRow(
 		com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
+
 		return getService().addExpandoRow(expandoRow);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow addRow(
-		long tableId, long classPK)
+			long tableId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().addRow(tableId, classPK);
 	}
 
 	/**
-	* Creates a new expando row with the primary key. Does not add the expando row to the database.
-	*
-	* @param rowId the primary key for the new expando row
-	* @return the new expando row
-	*/
+	 * Creates a new expando row with the primary key. Does not add the expando row to the database.
+	 *
+	 * @param rowId the primary key for the new expando row
+	 * @return the new expando row
+	 */
 	public static com.liferay.expando.kernel.model.ExpandoRow createExpandoRow(
 		long rowId) {
+
 		return getService().createExpandoRow(rowId);
 	}
 
 	/**
-	* Deletes the expando row from the database. Also notifies the appropriate model listeners.
-	*
-	* @param expandoRow the expando row
-	* @return the expando row that was removed
-	*/
+	 * Deletes the expando row from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoRow the expando row
+	 * @return the expando row that was removed
+	 */
 	public static com.liferay.expando.kernel.model.ExpandoRow deleteExpandoRow(
 		com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
+
 		return getService().deleteExpandoRow(expandoRow);
 	}
 
 	/**
-	* Deletes the expando row with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param rowId the primary key of the expando row
-	* @return the expando row that was removed
-	* @throws PortalException if a expando row with the primary key could not be found
-	*/
+	 * Deletes the expando row with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param rowId the primary key of the expando row
+	 * @return the expando row that was removed
+	 * @throws PortalException if a expando row with the primary key could not be found
+	 */
 	public static com.liferay.expando.kernel.model.ExpandoRow deleteExpandoRow(
-		long rowId) throws com.liferay.portal.kernel.exception.PortalException {
+			long rowId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().deleteExpandoRow(rowId);
 	}
 
 	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			deletePersistedModel(
+				com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static void deleteRow(
 		com.liferay.expando.kernel.model.ExpandoRow row) {
+
 		getService().deleteRow(row);
 	}
 
 	public static void deleteRow(long rowId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteRow(rowId);
 	}
 
 	public static void deleteRow(long tableId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteRow(tableId, classPK);
 	}
 
-	public static void deleteRow(long companyId, long classNameId,
-		String tableName, long classPK)
+	public static void deleteRow(
+			long companyId, long classNameId, String tableName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteRow(companyId, classNameId, tableName, classPK);
 	}
 
-	public static void deleteRow(long companyId, String className,
-		String tableName, long classPK)
+	public static void deleteRow(
+			long companyId, String className, String tableName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteRow(companyId, className, tableName, classPK);
 	}
 
@@ -130,245 +144,289 @@ public class ExpandoRowLocalServiceUtil {
 		getService().deleteRows(classPK);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
+		dynamicQuery() {
+
 		return getService().dynamicQuery();
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
+
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+
+		return getService().dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
+
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow fetchExpandoRow(
 		long rowId) {
+
 		return getService().fetchExpandoRow(rowId);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow fetchRow(
 		long tableId, long classPK) {
+
 		return getService().fetchRow(tableId, classPK);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getDefaultTableRows(
-		long companyId, long classNameId, int start, int end) {
-		return getService()
-				   .getDefaultTableRows(companyId, classNameId, start, end);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
+		getDefaultTableRows(
+			long companyId, long classNameId, int start, int end) {
+
+		return getService().getDefaultTableRows(
+			companyId, classNameId, start, end);
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getDefaultTableRows(
-		long companyId, String className, int start, int end) {
-		return getService().getDefaultTableRows(companyId, className, start, end);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
+		getDefaultTableRows(
+			long companyId, String className, int start, int end) {
+
+		return getService().getDefaultTableRows(
+			companyId, className, start, end);
 	}
 
-	public static int getDefaultTableRowsCount(long companyId, long classNameId) {
+	public static int getDefaultTableRowsCount(
+		long companyId, long classNameId) {
+
 		return getService().getDefaultTableRowsCount(companyId, classNameId);
 	}
 
-	public static int getDefaultTableRowsCount(long companyId, String className) {
+	public static int getDefaultTableRowsCount(
+		long companyId, String className) {
+
 		return getService().getDefaultTableRowsCount(companyId, className);
 	}
 
 	/**
-	* Returns the expando row with the primary key.
-	*
-	* @param rowId the primary key of the expando row
-	* @return the expando row
-	* @throws PortalException if a expando row with the primary key could not be found
-	*/
+	 * Returns the expando row with the primary key.
+	 *
+	 * @param rowId the primary key of the expando row
+	 * @return the expando row
+	 * @throws PortalException if a expando row with the primary key could not be found
+	 */
 	public static com.liferay.expando.kernel.model.ExpandoRow getExpandoRow(
-		long rowId) throws com.liferay.portal.kernel.exception.PortalException {
+			long rowId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getExpandoRow(rowId);
 	}
 
 	/**
-	* Returns a range of all the expando rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of expando rows
-	* @param end the upper bound of the range of expando rows (not inclusive)
-	* @return the range of expando rows
-	*/
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getExpandoRows(
-		int start, int end) {
+	 * Returns a range of all the expando rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of expando rows
+	 * @param end the upper bound of the range of expando rows (not inclusive)
+	 * @return the range of expando rows
+	 */
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
+		getExpandoRows(int start, int end) {
+
 		return getService().getExpandoRows(start, end);
 	}
 
 	/**
-	* Returns the number of expando rows.
-	*
-	* @return the number of expando rows
-	*/
+	 * Returns the number of expando rows.
+	 *
+	 * @return the number of expando rows
+	 */
 	public static int getExpandoRowsCount() {
 		return getService().getExpandoRowsCount();
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+	public static
+		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+			getIndexableActionableDynamicQuery() {
+
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static com.liferay.portal.kernel.model.PersistedModel
+			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow getRow(long rowId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getRow(rowId);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow getRow(
-		long tableId, long classPK)
+			long tableId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().getRow(tableId, classPK);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow getRow(
 		long companyId, long classNameId, String tableName, long classPK) {
+
 		return getService().getRow(companyId, classNameId, tableName, classPK);
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoRow getRow(
 		long companyId, String className, String tableName, long classPK) {
+
 		return getService().getRow(companyId, className, tableName, classPK);
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
-		long tableId, int start, int end) {
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
+		getRows(long tableId, int start, int end) {
+
 		return getService().getRows(tableId, start, end);
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
-		long companyId, long classNameId, String tableName, int start, int end) {
-		return getService()
-				   .getRows(companyId, classNameId, tableName, start, end);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
+		getRows(
+			long companyId, long classNameId, String tableName, int start,
+			int end) {
+
+		return getService().getRows(
+			companyId, classNameId, tableName, start, end);
 	}
 
-	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
-		long companyId, String className, String tableName, int start, int end) {
-		return getService().getRows(companyId, className, tableName, start, end);
+	public static java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
+		getRows(
+			long companyId, String className, String tableName, int start,
+			int end) {
+
+		return getService().getRows(
+			companyId, className, tableName, start, end);
 	}
 
 	public static int getRowsCount(long tableId) {
 		return getService().getRowsCount(tableId);
 	}
 
-	public static int getRowsCount(long companyId, long classNameId,
-		String tableName) {
+	public static int getRowsCount(
+		long companyId, long classNameId, String tableName) {
+
 		return getService().getRowsCount(companyId, classNameId, tableName);
 	}
 
-	public static int getRowsCount(long companyId, String className,
-		String tableName) {
+	public static int getRowsCount(
+		long companyId, String className, String tableName) {
+
 		return getService().getRowsCount(companyId, className, tableName);
 	}
 
 	/**
-	* Updates the expando row in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoRow the expando row
-	* @return the expando row that was updated
-	*/
+	 * Updates the expando row in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param expandoRow the expando row
+	 * @return the expando row that was updated
+	 */
 	public static com.liferay.expando.kernel.model.ExpandoRow updateExpandoRow(
 		com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
+
 		return getService().updateExpandoRow(expandoRow);
 	}
 
 	public static ExpandoRowLocalService getService() {
 		if (_service == null) {
-			_service = (ExpandoRowLocalService)PortalBeanLocatorUtil.locate(ExpandoRowLocalService.class.getName());
+			_service = (ExpandoRowLocalService)PortalBeanLocatorUtil.locate(
+				ExpandoRowLocalService.class.getName());
 
-			ReferenceRegistry.registerReference(ExpandoRowLocalServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				ExpandoRowLocalServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static ExpandoRowLocalService _service;
+
 }

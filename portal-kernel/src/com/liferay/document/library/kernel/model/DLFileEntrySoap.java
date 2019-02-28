@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class DLFileEntrySoap implements Serializable {
+
 	public static DLFileEntrySoap toSoapModel(DLFileEntry model) {
 		DLFileEntrySoap soapModel = new DLFileEntrySoap();
 
@@ -95,7 +96,8 @@ public class DLFileEntrySoap implements Serializable {
 	}
 
 	public static DLFileEntrySoap[] toSoapModels(List<DLFileEntry> models) {
-		List<DLFileEntrySoap> soapModels = new ArrayList<DLFileEntrySoap>(models.size());
+		List<DLFileEntrySoap> soapModels = new ArrayList<DLFileEntrySoap>(
+			models.size());
 
 		for (DLFileEntry model : models) {
 			soapModels.add(toSoapModel(model));
@@ -389,4 +391,5 @@ public class DLFileEntrySoap implements Serializable {
 	private long _custom2ImageId;
 	private boolean _manualCheckInRequired;
 	private Date _lastPublishDate;
+
 }

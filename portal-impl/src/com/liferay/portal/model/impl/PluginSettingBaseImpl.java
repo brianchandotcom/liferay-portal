@@ -32,8 +32,9 @@ import com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class PluginSettingBaseImpl extends PluginSettingModelImpl
-	implements PluginSetting {
+public abstract class PluginSettingBaseImpl
+	extends PluginSettingModelImpl implements PluginSetting {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class PluginSettingBaseImpl extends PluginSettingModelImpl
 			PluginSettingLocalServiceUtil.updatePluginSetting(this);
 		}
 	}
+
 }

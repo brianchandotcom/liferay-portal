@@ -36,13 +36,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -52,14 +45,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class SystemEventPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -99,7 +101,8 @@ public class SystemEventPersistenceTest {
 
 		_persistence.remove(newSystemEvent);
 
-		SystemEvent existingSystemEvent = _persistence.fetchByPrimaryKey(newSystemEvent.getPrimaryKey());
+		SystemEvent existingSystemEvent = _persistence.fetchByPrimaryKey(
+			newSystemEvent.getPrimaryKey());
 
 		Assert.assertNull(existingSystemEvent);
 	}
@@ -145,39 +148,46 @@ public class SystemEventPersistenceTest {
 
 		_systemEvents.add(_persistence.update(newSystemEvent));
 
-		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(newSystemEvent.getPrimaryKey());
+		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(
+			newSystemEvent.getPrimaryKey());
 
-		Assert.assertEquals(existingSystemEvent.getMvccVersion(),
+		Assert.assertEquals(
+			existingSystemEvent.getMvccVersion(),
 			newSystemEvent.getMvccVersion());
-		Assert.assertEquals(existingSystemEvent.getSystemEventId(),
+		Assert.assertEquals(
+			existingSystemEvent.getSystemEventId(),
 			newSystemEvent.getSystemEventId());
-		Assert.assertEquals(existingSystemEvent.getGroupId(),
-			newSystemEvent.getGroupId());
-		Assert.assertEquals(existingSystemEvent.getCompanyId(),
-			newSystemEvent.getCompanyId());
-		Assert.assertEquals(existingSystemEvent.getUserId(),
-			newSystemEvent.getUserId());
-		Assert.assertEquals(existingSystemEvent.getUserName(),
-			newSystemEvent.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingSystemEvent.getCreateDate()),
+		Assert.assertEquals(
+			existingSystemEvent.getGroupId(), newSystemEvent.getGroupId());
+		Assert.assertEquals(
+			existingSystemEvent.getCompanyId(), newSystemEvent.getCompanyId());
+		Assert.assertEquals(
+			existingSystemEvent.getUserId(), newSystemEvent.getUserId());
+		Assert.assertEquals(
+			existingSystemEvent.getUserName(), newSystemEvent.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingSystemEvent.getCreateDate()),
 			Time.getShortTimestamp(newSystemEvent.getCreateDate()));
-		Assert.assertEquals(existingSystemEvent.getClassNameId(),
+		Assert.assertEquals(
+			existingSystemEvent.getClassNameId(),
 			newSystemEvent.getClassNameId());
-		Assert.assertEquals(existingSystemEvent.getClassPK(),
-			newSystemEvent.getClassPK());
-		Assert.assertEquals(existingSystemEvent.getClassUuid(),
-			newSystemEvent.getClassUuid());
-		Assert.assertEquals(existingSystemEvent.getReferrerClassNameId(),
+		Assert.assertEquals(
+			existingSystemEvent.getClassPK(), newSystemEvent.getClassPK());
+		Assert.assertEquals(
+			existingSystemEvent.getClassUuid(), newSystemEvent.getClassUuid());
+		Assert.assertEquals(
+			existingSystemEvent.getReferrerClassNameId(),
 			newSystemEvent.getReferrerClassNameId());
-		Assert.assertEquals(existingSystemEvent.getParentSystemEventId(),
+		Assert.assertEquals(
+			existingSystemEvent.getParentSystemEventId(),
 			newSystemEvent.getParentSystemEventId());
-		Assert.assertEquals(existingSystemEvent.getSystemEventSetKey(),
+		Assert.assertEquals(
+			existingSystemEvent.getSystemEventSetKey(),
 			newSystemEvent.getSystemEventSetKey());
-		Assert.assertEquals(existingSystemEvent.getType(),
-			newSystemEvent.getType());
-		Assert.assertEquals(existingSystemEvent.getExtraData(),
-			newSystemEvent.getExtraData());
+		Assert.assertEquals(
+			existingSystemEvent.getType(), newSystemEvent.getType());
+		Assert.assertEquals(
+			existingSystemEvent.getExtraData(), newSystemEvent.getExtraData());
 	}
 
 	@Test
@@ -189,25 +199,26 @@ public class SystemEventPersistenceTest {
 
 	@Test
 	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_S(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_C_C() throws Exception {
-		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		_persistence.countByG_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_C_C_T() throws Exception {
-		_persistence.countByG_C_C_T(RandomTestUtil.nextLong(),
+		_persistence.countByG_C_C_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_C_C_T(0L, 0L, 0L, 0);
 	}
@@ -216,7 +227,8 @@ public class SystemEventPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 
-		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(newSystemEvent.getPrimaryKey());
+		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(
+			newSystemEvent.getPrimaryKey());
 
 		Assert.assertEquals(existingSystemEvent, newSystemEvent);
 	}
@@ -230,24 +242,26 @@ public class SystemEventPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SystemEvent> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("SystemEvent",
-			"mvccVersion", true, "systemEventId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "classNameId", true, "classPK", true, "classUuid", true,
-			"referrerClassNameId", true, "parentSystemEventId", true,
-			"systemEventSetKey", true, "type", true);
+		return OrderByComparatorFactoryUtil.create(
+			"SystemEvent", "mvccVersion", true, "systemEventId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "classNameId", true, "classPK", true,
+			"classUuid", true, "referrerClassNameId", true,
+			"parentSystemEventId", true, "systemEventSetKey", true, "type",
+			true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 
-		SystemEvent existingSystemEvent = _persistence.fetchByPrimaryKey(newSystemEvent.getPrimaryKey());
+		SystemEvent existingSystemEvent = _persistence.fetchByPrimaryKey(
+			newSystemEvent.getPrimaryKey());
 
 		Assert.assertEquals(existingSystemEvent, newSystemEvent);
 	}
@@ -264,6 +278,7 @@ public class SystemEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		SystemEvent newSystemEvent1 = addSystemEvent();
 		SystemEvent newSystemEvent2 = addSystemEvent();
 
@@ -272,18 +287,20 @@ public class SystemEventPersistenceTest {
 		primaryKeys.add(newSystemEvent1.getPrimaryKey());
 		primaryKeys.add(newSystemEvent2.getPrimaryKey());
 
-		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SystemEvent> systemEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, systemEvents.size());
-		Assert.assertEquals(newSystemEvent1,
-			systemEvents.get(newSystemEvent1.getPrimaryKey()));
-		Assert.assertEquals(newSystemEvent2,
-			systemEvents.get(newSystemEvent2.getPrimaryKey()));
+		Assert.assertEquals(
+			newSystemEvent1, systemEvents.get(newSystemEvent1.getPrimaryKey()));
+		Assert.assertEquals(
+			newSystemEvent2, systemEvents.get(newSystemEvent2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -293,7 +310,8 @@ public class SystemEventPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SystemEvent> systemEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(systemEvents.isEmpty());
 	}
@@ -301,6 +319,7 @@ public class SystemEventPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		SystemEvent newSystemEvent = addSystemEvent();
 
 		long pk = RandomTestUtil.nextLong();
@@ -310,52 +329,57 @@ public class SystemEventPersistenceTest {
 		primaryKeys.add(newSystemEvent.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SystemEvent> systemEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, systemEvents.size());
-		Assert.assertEquals(newSystemEvent,
-			systemEvents.get(newSystemEvent.getPrimaryKey()));
+		Assert.assertEquals(
+			newSystemEvent, systemEvents.get(newSystemEvent.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SystemEvent> systemEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(systemEvents.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newSystemEvent.getPrimaryKey());
 
-		Map<Serializable, SystemEvent> systemEvents = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, SystemEvent> systemEvents =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, systemEvents.size());
-		Assert.assertEquals(newSystemEvent,
-			systemEvents.get(newSystemEvent.getPrimaryKey()));
+		Assert.assertEquals(
+			newSystemEvent, systemEvents.get(newSystemEvent.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = SystemEventLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			SystemEventLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SystemEvent>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<SystemEvent>() {
+
 				@Override
 				public void performAction(SystemEvent systemEvent) {
 					Assert.assertNotNull(systemEvent);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -364,17 +388,18 @@ public class SystemEventPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SystemEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("systemEventId",
-				newSystemEvent.getSystemEventId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"systemEventId", newSystemEvent.getSystemEventId()));
 
-		List<SystemEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SystemEvent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -385,32 +410,34 @@ public class SystemEventPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SystemEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("systemEventId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"systemEventId", RandomTestUtil.nextLong()));
 
-		List<SystemEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SystemEvent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		SystemEvent newSystemEvent = addSystemEvent();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SystemEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"systemEventId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("systemEventId"));
 
 		Object newSystemEventId = newSystemEvent.getSystemEventId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("systemEventId",
-				new Object[] { newSystemEventId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"systemEventId", new Object[] {newSystemEventId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -423,14 +450,15 @@ public class SystemEventPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SystemEvent.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"systemEventId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("systemEventId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("systemEventId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"systemEventId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -478,4 +506,5 @@ public class SystemEventPersistenceTest {
 	private List<SystemEvent> _systemEvents = new ArrayList<SystemEvent>();
 	private SystemEventPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

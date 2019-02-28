@@ -19,9 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.announcements.kernel.exception.NoSuchFlagException;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
 
@@ -61,18 +58,24 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<AnnouncementsFlag>
+public class AnnouncementsFlagPersistenceImpl
+	extends BasePersistenceImpl<AnnouncementsFlag>
 	implements AnnouncementsFlagPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>AnnouncementsFlagUtil</code> to access the announcements flag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = AnnouncementsFlagImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		AnnouncementsFlagImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -88,7 +91,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public List<AnnouncementsFlag> findByEntryId(long entryId) {
-		return findByEntryId(entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByEntryId(
+			entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -104,8 +108,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the range of matching announcements flags
 	 */
 	@Override
-	public List<AnnouncementsFlag> findByEntryId(long entryId, int start,
-		int end) {
+	public List<AnnouncementsFlag> findByEntryId(
+		long entryId, int start, int end) {
+
 		return findByEntryId(entryId, start, end, null);
 	}
 
@@ -123,8 +128,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the ordered range of matching announcements flags
 	 */
 	@Override
-	public List<AnnouncementsFlag> findByEntryId(long entryId, int start,
-		int end, OrderByComparator<AnnouncementsFlag> orderByComparator) {
+	public List<AnnouncementsFlag> findByEntryId(
+		long entryId, int start, int end,
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+
 		return findByEntryId(entryId, start, end, orderByComparator, true);
 	}
 
@@ -143,29 +150,32 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the ordered range of matching announcements flags
 	 */
 	@Override
-	public List<AnnouncementsFlag> findByEntryId(long entryId, int start,
-		int end, OrderByComparator<AnnouncementsFlag> orderByComparator,
+	public List<AnnouncementsFlag> findByEntryId(
+		long entryId, int start, int end,
+		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByEntryId;
-			finderArgs = new Object[] { entryId };
+			finderArgs = new Object[] {entryId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByEntryId;
-			finderArgs = new Object[] { entryId, start, end, orderByComparator };
+			finderArgs = new Object[] {entryId, start, end, orderByComparator};
 		}
 
 		List<AnnouncementsFlag> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsFlag announcementsFlag : list) {
@@ -182,8 +192,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -194,11 +204,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			query.append(_FINDER_COLUMN_ENTRYID_ENTRYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(AnnouncementsFlagModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -216,16 +225,16 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				qPos.add(entryId);
 
 				if (!pagination) {
-					list = (List<AnnouncementsFlag>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<AnnouncementsFlag>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -254,11 +263,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @throws NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
-	public AnnouncementsFlag findByEntryId_First(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator)
+	public AnnouncementsFlag findByEntryId_First(
+			long entryId,
+			OrderByComparator<AnnouncementsFlag> orderByComparator)
 		throws NoSuchFlagException {
-		AnnouncementsFlag announcementsFlag = fetchByEntryId_First(entryId,
-				orderByComparator);
+
+		AnnouncementsFlag announcementsFlag = fetchByEntryId_First(
+			entryId, orderByComparator);
 
 		if (announcementsFlag != null) {
 			return announcementsFlag;
@@ -284,10 +295,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the first matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	@Override
-	public AnnouncementsFlag fetchByEntryId_First(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
-		List<AnnouncementsFlag> list = findByEntryId(entryId, 0, 1,
-				orderByComparator);
+	public AnnouncementsFlag fetchByEntryId_First(
+		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator) {
+
+		List<AnnouncementsFlag> list = findByEntryId(
+			entryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -305,11 +317,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @throws NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
-	public AnnouncementsFlag findByEntryId_Last(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator)
+	public AnnouncementsFlag findByEntryId_Last(
+			long entryId,
+			OrderByComparator<AnnouncementsFlag> orderByComparator)
 		throws NoSuchFlagException {
-		AnnouncementsFlag announcementsFlag = fetchByEntryId_Last(entryId,
-				orderByComparator);
+
+		AnnouncementsFlag announcementsFlag = fetchByEntryId_Last(
+			entryId, orderByComparator);
 
 		if (announcementsFlag != null) {
 			return announcementsFlag;
@@ -335,16 +349,17 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	@Override
-	public AnnouncementsFlag fetchByEntryId_Last(long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+	public AnnouncementsFlag fetchByEntryId_Last(
+		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator) {
+
 		int count = countByEntryId(entryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<AnnouncementsFlag> list = findByEntryId(entryId, count - 1, count,
-				orderByComparator);
+		List<AnnouncementsFlag> list = findByEntryId(
+			entryId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -363,9 +378,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
-	public AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
-		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator)
+	public AnnouncementsFlag[] findByEntryId_PrevAndNext(
+			long flagId, long entryId,
+			OrderByComparator<AnnouncementsFlag> orderByComparator)
 		throws NoSuchFlagException {
+
 		AnnouncementsFlag announcementsFlag = findByPrimaryKey(flagId);
 
 		Session session = null;
@@ -375,13 +392,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 			AnnouncementsFlag[] array = new AnnouncementsFlagImpl[3];
 
-			array[0] = getByEntryId_PrevAndNext(session, announcementsFlag,
-					entryId, orderByComparator, true);
+			array[0] = getByEntryId_PrevAndNext(
+				session, announcementsFlag, entryId, orderByComparator, true);
 
 			array[1] = announcementsFlag;
 
-			array[2] = getByEntryId_PrevAndNext(session, announcementsFlag,
-					entryId, orderByComparator, false);
+			array[2] = getByEntryId_PrevAndNext(
+				session, announcementsFlag, entryId, orderByComparator, false);
 
 			return array;
 		}
@@ -393,14 +410,16 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		}
 	}
 
-	protected AnnouncementsFlag getByEntryId_PrevAndNext(Session session,
-		AnnouncementsFlag announcementsFlag, long entryId,
-		OrderByComparator<AnnouncementsFlag> orderByComparator, boolean previous) {
+	protected AnnouncementsFlag getByEntryId_PrevAndNext(
+		Session session, AnnouncementsFlag announcementsFlag, long entryId,
+		OrderByComparator<AnnouncementsFlag> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -412,7 +431,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		query.append(_FINDER_COLUMN_ENTRYID_ENTRYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -482,8 +502,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		qPos.add(entryId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					announcementsFlag)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						announcementsFlag)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -505,8 +527,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public void removeByEntryId(long entryId) {
-		for (AnnouncementsFlag announcementsFlag : findByEntryId(entryId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (AnnouncementsFlag announcementsFlag :
+				findByEntryId(
+					entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(announcementsFlag);
 		}
 	}
@@ -521,10 +545,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public int countByEntryId(long entryId) {
 		FinderPath finderPath = _finderPathCountByEntryId;
 
-		Object[] finderArgs = new Object[] { entryId };
+		Object[] finderArgs = new Object[] {entryId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -563,7 +587,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ENTRYID_ENTRYID_2 = "announcementsFlag.entryId = ?";
+	private static final String _FINDER_COLUMN_ENTRYID_ENTRYID_2 =
+		"announcementsFlag.entryId = ?";
+
 	private FinderPath _finderPathFetchByU_E_V;
 	private FinderPath _finderPathCountByU_E_V;
 
@@ -579,8 +605,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	@Override
 	public AnnouncementsFlag findByU_E_V(long userId, long entryId, int value)
 		throws NoSuchFlagException {
-		AnnouncementsFlag announcementsFlag = fetchByU_E_V(userId, entryId,
-				value);
+
+		AnnouncementsFlag announcementsFlag = fetchByU_E_V(
+			userId, entryId, value);
 
 		if (announcementsFlag == null) {
 			StringBundler msg = new StringBundler(8);
@@ -617,7 +644,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	@Override
-	public AnnouncementsFlag fetchByU_E_V(long userId, long entryId, int value) {
+	public AnnouncementsFlag fetchByU_E_V(
+		long userId, long entryId, int value) {
+
 		return fetchByU_E_V(userId, entryId, value, true);
 	}
 
@@ -631,23 +660,25 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	@Override
-	public AnnouncementsFlag fetchByU_E_V(long userId, long entryId, int value,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { userId, entryId, value };
+	public AnnouncementsFlag fetchByU_E_V(
+		long userId, long entryId, int value, boolean retrieveFromCache) {
+
+		Object[] finderArgs = new Object[] {userId, entryId, value};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByU_E_V,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByU_E_V, finderArgs, this);
 		}
 
 		if (result instanceof AnnouncementsFlag) {
 			AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)result;
 
 			if ((userId != announcementsFlag.getUserId()) ||
-					(entryId != announcementsFlag.getEntryId()) ||
-					(value != announcementsFlag.getValue())) {
+				(entryId != announcementsFlag.getEntryId()) ||
+				(value != announcementsFlag.getValue())) {
+
 				result = null;
 			}
 		}
@@ -683,8 +714,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				List<AnnouncementsFlag> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByU_E_V,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByU_E_V, finderArgs, list);
 				}
 				else {
 					AnnouncementsFlag announcementsFlag = list.get(0);
@@ -695,7 +726,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByU_E_V, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByU_E_V, finderArgs);
 
 				throw processException(e);
 			}
@@ -723,7 +755,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	@Override
 	public AnnouncementsFlag removeByU_E_V(long userId, long entryId, int value)
 		throws NoSuchFlagException {
-		AnnouncementsFlag announcementsFlag = findByU_E_V(userId, entryId, value);
+
+		AnnouncementsFlag announcementsFlag = findByU_E_V(
+			userId, entryId, value);
 
 		return remove(announcementsFlag);
 	}
@@ -740,10 +774,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public int countByU_E_V(long userId, long entryId, int value) {
 		FinderPath finderPath = _finderPathCountByU_E_V;
 
-		Object[] finderArgs = new Object[] { userId, entryId, value };
+		Object[] finderArgs = new Object[] {userId, entryId, value};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -790,9 +824,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_E_V_USERID_2 = "announcementsFlag.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_E_V_ENTRYID_2 = "announcementsFlag.entryId = ? AND ";
-	private static final String _FINDER_COLUMN_U_E_V_VALUE_2 = "announcementsFlag.value = ?";
+	private static final String _FINDER_COLUMN_U_E_V_USERID_2 =
+		"announcementsFlag.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_E_V_ENTRYID_2 =
+		"announcementsFlag.entryId = ? AND ";
+
+	private static final String _FINDER_COLUMN_U_E_V_VALUE_2 =
+		"announcementsFlag.value = ?";
 
 	public AnnouncementsFlagPersistenceImpl() {
 		setModelClass(AnnouncementsFlag.class);
@@ -809,15 +848,18 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public void cacheResult(AnnouncementsFlag announcementsFlag) {
-		EntityCacheUtil.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey(),
 			announcementsFlag);
 
-		FinderCacheUtil.putResult(_finderPathFetchByU_E_V,
+		FinderCacheUtil.putResult(
+			_finderPathFetchByU_E_V,
 			new Object[] {
 				announcementsFlag.getUserId(), announcementsFlag.getEntryId(),
 				announcementsFlag.getValue()
-			}, announcementsFlag);
+			},
+			announcementsFlag);
 
 		announcementsFlag.resetOriginalValues();
 	}
@@ -831,9 +873,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	public void cacheResult(List<AnnouncementsFlag> announcementsFlags) {
 		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
 			if (EntityCacheUtil.getResult(
-						AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsFlagImpl.class,
-						announcementsFlag.getPrimaryKey()) == null) {
+					AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+					AnnouncementsFlagImpl.class,
+					announcementsFlag.getPrimaryKey()) == null) {
+
 				cacheResult(announcementsFlag);
 			}
 			else {
@@ -867,14 +910,15 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public void clearCache(AnnouncementsFlag announcementsFlag) {
-		EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.removeResult(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((AnnouncementsFlagModelImpl)announcementsFlag,
-			true);
+		clearUniqueFindersCache(
+			(AnnouncementsFlagModelImpl)announcementsFlag, true);
 	}
 
 	@Override
@@ -883,49 +927,53 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
-			EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			EntityCacheUtil.removeResult(
+				AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
 
-			clearUniqueFindersCache((AnnouncementsFlagModelImpl)announcementsFlag,
-				true);
+			clearUniqueFindersCache(
+				(AnnouncementsFlagModelImpl)announcementsFlag, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl) {
-		Object[] args = new Object[] {
-				announcementsFlagModelImpl.getUserId(),
-				announcementsFlagModelImpl.getEntryId(),
-				announcementsFlagModelImpl.getValue()
-			};
 
-		FinderCacheUtil.putResult(_finderPathCountByU_E_V, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByU_E_V, args,
-			announcementsFlagModelImpl, false);
+		Object[] args = new Object[] {
+			announcementsFlagModelImpl.getUserId(),
+			announcementsFlagModelImpl.getEntryId(),
+			announcementsFlagModelImpl.getValue()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByU_E_V, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByU_E_V, args, announcementsFlagModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl,
 		boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					announcementsFlagModelImpl.getUserId(),
-					announcementsFlagModelImpl.getEntryId(),
-					announcementsFlagModelImpl.getValue()
-				};
+				announcementsFlagModelImpl.getUserId(),
+				announcementsFlagModelImpl.getEntryId(),
+				announcementsFlagModelImpl.getValue()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_E_V, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByU_E_V, args);
 		}
 
 		if ((announcementsFlagModelImpl.getColumnBitmask() &
-				_finderPathFetchByU_E_V.getColumnBitmask()) != 0) {
+			 _finderPathFetchByU_E_V.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					announcementsFlagModelImpl.getOriginalUserId(),
-					announcementsFlagModelImpl.getOriginalEntryId(),
-					announcementsFlagModelImpl.getOriginalValue()
-				};
+				announcementsFlagModelImpl.getOriginalUserId(),
+				announcementsFlagModelImpl.getOriginalEntryId(),
+				announcementsFlagModelImpl.getOriginalValue()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_E_V, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByU_E_V, args);
@@ -972,21 +1020,23 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	@Override
 	public AnnouncementsFlag remove(Serializable primaryKey)
 		throws NoSuchFlagException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)session.get(AnnouncementsFlagImpl.class,
-					primaryKey);
+			AnnouncementsFlag announcementsFlag =
+				(AnnouncementsFlag)session.get(
+					AnnouncementsFlagImpl.class, primaryKey);
 
 			if (announcementsFlag == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchFlagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchFlagException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(announcementsFlag);
@@ -1003,15 +1053,18 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	}
 
 	@Override
-	protected AnnouncementsFlag removeImpl(AnnouncementsFlag announcementsFlag) {
+	protected AnnouncementsFlag removeImpl(
+		AnnouncementsFlag announcementsFlag) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			if (!session.contains(announcementsFlag)) {
-				announcementsFlag = (AnnouncementsFlag)session.get(AnnouncementsFlagImpl.class,
-						announcementsFlag.getPrimaryKeyObj());
+				announcementsFlag = (AnnouncementsFlag)session.get(
+					AnnouncementsFlagImpl.class,
+					announcementsFlag.getPrimaryKeyObj());
 			}
 
 			if (announcementsFlag != null) {
@@ -1040,19 +1093,21 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(announcementsFlag.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(announcementsFlag);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					announcementsFlag);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in announcementsFlag proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom AnnouncementsFlag implementation " +
-				announcementsFlag.getClass());
+					announcementsFlag.getClass());
 		}
 
-		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
+		AnnouncementsFlagModelImpl announcementsFlagModelImpl =
+			(AnnouncementsFlagModelImpl)announcementsFlag;
 
 		Session session = null;
 
@@ -1065,7 +1120,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				announcementsFlag.setNew(false);
 			}
 			else {
-				announcementsFlag = (AnnouncementsFlag)session.merge(announcementsFlag);
+				announcementsFlag = (AnnouncementsFlag)session.merge(
+					announcementsFlag);
 			}
 		}
 		catch (Exception e) {
@@ -1078,41 +1134,46 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!AnnouncementsFlagModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { announcementsFlagModelImpl.getEntryId() };
+		else if (isNew) {
+			Object[] args = new Object[] {
+				announcementsFlagModelImpl.getEntryId()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByEntryId, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByEntryId,
-				args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByEntryId, args);
 
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
-
 		else {
 			if ((announcementsFlagModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByEntryId.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByEntryId.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						announcementsFlagModelImpl.getOriginalEntryId()
-					};
+					announcementsFlagModelImpl.getOriginalEntryId()
+				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByEntryId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByEntryId,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByEntryId, args);
 
-				args = new Object[] { announcementsFlagModelImpl.getEntryId() };
+				args = new Object[] {announcementsFlagModelImpl.getEntryId()};
 
 				FinderCacheUtil.removeResult(_finderPathCountByEntryId, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByEntryId,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByEntryId, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+		EntityCacheUtil.putResult(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey(),
 			announcementsFlag, false);
 
@@ -1134,6 +1195,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	@Override
 	public AnnouncementsFlag findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchFlagException {
+
 		AnnouncementsFlag announcementsFlag = fetchByPrimaryKey(primaryKey);
 
 		if (announcementsFlag == null) {
@@ -1141,8 +1203,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchFlagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchFlagException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return announcementsFlag;
@@ -1158,6 +1220,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	@Override
 	public AnnouncementsFlag findByPrimaryKey(long flagId)
 		throws NoSuchFlagException {
+
 		return findByPrimaryKey((Serializable)flagId);
 	}
 
@@ -1211,8 +1274,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the ordered range of announcements flags
 	 */
 	@Override
-	public List<AnnouncementsFlag> findAll(int start, int end,
+	public List<AnnouncementsFlag> findAll(
+		int start, int end,
 		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -1230,29 +1295,32 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @return the ordered range of announcements flags
 	 */
 	@Override
-	public List<AnnouncementsFlag> findAll(int start, int end,
+	public List<AnnouncementsFlag> findAll(
+		int start, int end,
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AnnouncementsFlag> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1260,13 +1328,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_ANNOUNCEMENTSFLAG);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1286,16 +1354,16 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<AnnouncementsFlag>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<AnnouncementsFlag>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<AnnouncementsFlag>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1333,8 +1401,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1346,12 +1414,12 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -1387,66 +1455,72 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Initializes the announcements flag persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsFlagImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsFlagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByEntryId = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class,
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
-				new String[] {
-					Long.class.getName(),
-					
-				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+		_finderPathWithPaginationFindByEntryId = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsFlagImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByEntryId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByEntryId = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
-				new String[] { Long.class.getName() },
-				AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
-				AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
-				AnnouncementsFlagModelImpl.CREATEDATE_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByEntryId = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsFlagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
+			new String[] {Long.class.getName()},
+			AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
+			AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
+			AnnouncementsFlagModelImpl.CREATEDATE_COLUMN_BITMASK);
 
-		_finderPathCountByEntryId = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
-				new String[] { Long.class.getName() });
+		_finderPathCountByEntryId = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
+			new String[] {Long.class.getName()});
 
-		_finderPathFetchByU_E_V = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
-				AnnouncementsFlagImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByU_E_V",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName()
-				},
-				AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
-				AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
-				AnnouncementsFlagModelImpl.VALUE_COLUMN_BITMASK);
+		_finderPathFetchByU_E_V = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsFlagImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByU_E_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
+			AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
+			AnnouncementsFlagModelImpl.VALUE_COLUMN_BITMASK);
 
-		_finderPathCountByU_E_V = new FinderPath(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-				AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_E_V",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName()
-				});
+		_finderPathCountByU_E_V = new FinderPath(
+			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_E_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
 	}
 
 	public void destroy() {
@@ -1458,12 +1532,28 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG = "SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag";
-	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE = "SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag WHERE ";
-	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG = "SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag";
-	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE = "SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag WHERE ";
+
+	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG =
+		"SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag";
+
+	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE =
+		"SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag WHERE ";
+
+	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG =
+		"SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag";
+
+	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE =
+		"SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsFlag.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsFlag exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsFlag exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No AnnouncementsFlag exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No AnnouncementsFlag exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnnouncementsFlagPersistenceImpl.class);
+
 }

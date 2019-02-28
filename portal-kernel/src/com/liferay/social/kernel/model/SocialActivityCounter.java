@@ -27,32 +27,39 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SocialActivityCounterModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.social.model.impl.SocialActivityCounterImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.social.model.impl.SocialActivityCounterImpl"
+)
 @ProviderType
-public interface SocialActivityCounter extends SocialActivityCounterModel,
-	PersistedModel {
+public interface SocialActivityCounter
+	extends SocialActivityCounterModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivityCounterImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SocialActivityCounter, Long> ACTIVITY_COUNTER_ID_ACCESSOR =
-		new Accessor<SocialActivityCounter, Long>() {
-			@Override
-			public Long get(SocialActivityCounter socialActivityCounter) {
-				return socialActivityCounter.getActivityCounterId();
-			}
+	public static final Accessor<SocialActivityCounter, Long>
+		ACTIVITY_COUNTER_ID_ACCESSOR =
+			new Accessor<SocialActivityCounter, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(SocialActivityCounter socialActivityCounter) {
+					return socialActivityCounter.getActivityCounterId();
+				}
 
-			@Override
-			public Class<SocialActivityCounter> getTypeClass() {
-				return SocialActivityCounter.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<SocialActivityCounter> getTypeClass() {
+					return SocialActivityCounter.class;
+				}
+
+			};
 
 	public boolean isActivePeriod(int periodLength);
+
 }

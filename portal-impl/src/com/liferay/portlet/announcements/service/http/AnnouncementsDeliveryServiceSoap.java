@@ -17,7 +17,6 @@ package com.liferay.portlet.announcements.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryServiceUtil;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -64,15 +63,20 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class AnnouncementsDeliveryServiceSoap {
-	public static com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap updateDelivery(
-		long userId, String type, boolean email, boolean sms)
-		throws RemoteException {
-		try {
-			com.liferay.announcements.kernel.model.AnnouncementsDelivery returnValue =
-				AnnouncementsDeliveryServiceUtil.updateDelivery(userId, type,
-					email, sms);
 
-			return com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap.toSoapModel(returnValue);
+	public static
+		com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap
+				updateDelivery(
+					long userId, String type, boolean email, boolean sms)
+			throws RemoteException {
+
+		try {
+			com.liferay.announcements.kernel.model.AnnouncementsDelivery
+				returnValue = AnnouncementsDeliveryServiceUtil.updateDelivery(
+					userId, type, email, sms);
+
+			return com.liferay.announcements.kernel.model.
+				AnnouncementsDeliverySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -82,19 +86,24 @@ public class AnnouncementsDeliveryServiceSoap {
 	}
 
 	/**
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#updateDelivery(long, String, boolean, boolean)}
-	*/
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 #updateDelivery(long, String, boolean, boolean)}
+	 */
 	@Deprecated
-	public static com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap updateDelivery(
-		long userId, String type, boolean email, boolean sms, boolean website)
-		throws RemoteException {
-		try {
-			com.liferay.announcements.kernel.model.AnnouncementsDelivery returnValue =
-				AnnouncementsDeliveryServiceUtil.updateDelivery(userId, type,
-					email, sms, website);
+	public static
+		com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap
+				updateDelivery(
+					long userId, String type, boolean email, boolean sms,
+					boolean website)
+			throws RemoteException {
 
-			return com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap.toSoapModel(returnValue);
+		try {
+			com.liferay.announcements.kernel.model.AnnouncementsDelivery
+				returnValue = AnnouncementsDeliveryServiceUtil.updateDelivery(
+					userId, type, email, sms, website);
+
+			return com.liferay.announcements.kernel.model.
+				AnnouncementsDeliverySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -103,5 +112,7 @@ public class AnnouncementsDeliveryServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AnnouncementsDeliveryServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		AnnouncementsDeliveryServiceSoap.class);
+
 }

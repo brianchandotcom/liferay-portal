@@ -44,6 +44,7 @@ import java.util.Set;
 @Deprecated
 @ProviderType
 public class ResourceBlockUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,6 +77,7 @@ public class ResourceBlockUtil {
 	 */
 	public static Map<Serializable, ResourceBlock> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -84,6 +86,7 @@ public class ResourceBlockUtil {
 	 */
 	public static List<ResourceBlock> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -92,6 +95,7 @@ public class ResourceBlockUtil {
 	 */
 	public static List<ResourceBlock> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -101,9 +105,9 @@ public class ResourceBlockUtil {
 	public static List<ResourceBlock> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -116,491 +120,529 @@ public class ResourceBlockUtil {
 	/**
 	 * @see BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
-	public static ResourceBlock update(ResourceBlock resourceBlock,
-		ServiceContext serviceContext) {
+	public static ResourceBlock update(
+		ResourceBlock resourceBlock, ServiceContext serviceContext) {
+
 		return getPersistence().update(resourceBlock, serviceContext);
 	}
 
 	/**
-	* Returns all the resource blocks where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @return the matching resource blocks
-	*/
+	 * Returns all the resource blocks where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching resource blocks
+	 */
 	public static List<ResourceBlock> findByC_N(long companyId, String name) {
 		return getPersistence().findByC_N(companyId, name);
 	}
 
 	/**
-	* Returns a range of all the resource blocks where companyId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @return the range of matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_N(long companyId, String name,
-		int start, int end) {
+	 * Returns a range of all the resource blocks where companyId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @return the range of matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_N(
+		long companyId, String name, int start, int end) {
+
 		return getPersistence().findByC_N(companyId, name, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_N(long companyId, String name,
-		int start, int end, OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .findByC_N(companyId, name, start, end, orderByComparator);
+	 * Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_N(
+		long companyId, String name, int start, int end,
+		OrderByComparator<ResourceBlock> orderByComparator) {
+
+		return getPersistence().findByC_N(
+			companyId, name, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_N(long companyId, String name,
-		int start, int end, OrderByComparator<ResourceBlock> orderByComparator,
+	 * Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_N(
+		long companyId, String name, int start, int end,
+		OrderByComparator<ResourceBlock> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_N(companyId, name, start, end, orderByComparator,
-			retrieveFromCache);
+
+		return getPersistence().findByC_N(
+			companyId, name, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource block
-	* @throws NoSuchResourceBlockException if a matching resource block could not be found
-	*/
-	public static ResourceBlock findByC_N_First(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_N_First(companyId, name, orderByComparator);
+	 * Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource block
+	 * @throws NoSuchResourceBlockException if a matching resource block could not be found
+	 */
+	public static ResourceBlock findByC_N_First(
+			long companyId, String name,
+			OrderByComparator<ResourceBlock> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_N_First(
+			companyId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
-	*/
-	public static ResourceBlock fetchByC_N_First(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_N_First(companyId, name, orderByComparator);
-	}
-
-	/**
-	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource block
-	* @throws NoSuchResourceBlockException if a matching resource block could not be found
-	*/
-	public static ResourceBlock findByC_N_Last(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_N_Last(companyId, name, orderByComparator);
-	}
-
-	/**
-	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
-	*/
-	public static ResourceBlock fetchByC_N_Last(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_N_Last(companyId, name, orderByComparator);
-	}
-
-	/**
-	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and name = &#63;.
-	*
-	* @param resourceBlockId the primary key of the current resource block
-	* @param companyId the company ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next resource block
-	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
-	*/
-	public static ResourceBlock[] findByC_N_PrevAndNext(long resourceBlockId,
+	 * Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
+	 */
+	public static ResourceBlock fetchByC_N_First(
 		long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_N_PrevAndNext(resourceBlockId, companyId, name,
-			orderByComparator);
+		OrderByComparator<ResourceBlock> orderByComparator) {
+
+		return getPersistence().fetchByC_N_First(
+			companyId, name, orderByComparator);
 	}
 
 	/**
-	* Removes all the resource blocks where companyId = &#63; and name = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	*/
+	 * Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource block
+	 * @throws NoSuchResourceBlockException if a matching resource block could not be found
+	 */
+	public static ResourceBlock findByC_N_Last(
+			long companyId, String name,
+			OrderByComparator<ResourceBlock> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_N_Last(
+			companyId, name, orderByComparator);
+	}
+
+	/**
+	 * Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
+	 */
+	public static ResourceBlock fetchByC_N_Last(
+		long companyId, String name,
+		OrderByComparator<ResourceBlock> orderByComparator) {
+
+		return getPersistence().fetchByC_N_Last(
+			companyId, name, orderByComparator);
+	}
+
+	/**
+	 * Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and name = &#63;.
+	 *
+	 * @param resourceBlockId the primary key of the current resource block
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource block
+	 * @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
+	 */
+	public static ResourceBlock[] findByC_N_PrevAndNext(
+			long resourceBlockId, long companyId, String name,
+			OrderByComparator<ResourceBlock> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_N_PrevAndNext(
+			resourceBlockId, companyId, name, orderByComparator);
+	}
+
+	/**
+	 * Removes all the resource blocks where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 */
 	public static void removeByC_N(long companyId, String name) {
 		getPersistence().removeByC_N(companyId, name);
 	}
 
 	/**
-	* Returns the number of resource blocks where companyId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @return the number of matching resource blocks
-	*/
+	 * Returns the number of resource blocks where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching resource blocks
+	 */
 	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
 	}
 
 	/**
-	* Returns all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @return the matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name) {
+	 * Returns all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_G_N(
+		long companyId, long groupId, String name) {
+
 		return getPersistence().findByC_G_N(companyId, groupId, name);
 	}
 
 	/**
-	* Returns a range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @return the range of matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name, int start, int end) {
-		return getPersistence().findByC_G_N(companyId, groupId, name, start, end);
+	 * Returns a range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @return the range of matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_G_N(
+		long companyId, long groupId, String name, int start, int end) {
+
+		return getPersistence().findByC_G_N(
+			companyId, groupId, name, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name, int start, int end,
+	 * Returns an ordered range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_G_N(
+		long companyId, long groupId, String name, int start, int end,
 		OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .findByC_G_N(companyId, groupId, name, start, end,
-			orderByComparator);
+
+		return getPersistence().findByC_G_N(
+			companyId, groupId, name, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching resource blocks
-	*/
-	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name, int start, int end,
+	 * Returns an ordered range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching resource blocks
+	 */
+	public static List<ResourceBlock> findByC_G_N(
+		long companyId, long groupId, String name, int start, int end,
 		OrderByComparator<ResourceBlock> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_G_N(companyId, groupId, name, start, end,
-			orderByComparator, retrieveFromCache);
+
+		return getPersistence().findByC_G_N(
+			companyId, groupId, name, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource block
-	* @throws NoSuchResourceBlockException if a matching resource block could not be found
-	*/
-	public static ResourceBlock findByC_G_N_First(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_G_N_First(companyId, groupId, name,
-			orderByComparator);
+	 * Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource block
+	 * @throws NoSuchResourceBlockException if a matching resource block could not be found
+	 */
+	public static ResourceBlock findByC_G_N_First(
+			long companyId, long groupId, String name,
+			OrderByComparator<ResourceBlock> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_G_N_First(
+			companyId, groupId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
-	*/
-	public static ResourceBlock fetchByC_G_N_First(long companyId,
-		long groupId, String name,
+	 * Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
+	 */
+	public static ResourceBlock fetchByC_G_N_First(
+		long companyId, long groupId, String name,
 		OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_G_N_First(companyId, groupId, name,
-			orderByComparator);
+
+		return getPersistence().fetchByC_G_N_First(
+			companyId, groupId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource block
-	* @throws NoSuchResourceBlockException if a matching resource block could not be found
-	*/
-	public static ResourceBlock findByC_G_N_Last(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_G_N_Last(companyId, groupId, name, orderByComparator);
+	 * Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource block
+	 * @throws NoSuchResourceBlockException if a matching resource block could not be found
+	 */
+	public static ResourceBlock findByC_G_N_Last(
+			long companyId, long groupId, String name,
+			OrderByComparator<ResourceBlock> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_G_N_Last(
+			companyId, groupId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
-	*/
-	public static ResourceBlock fetchByC_G_N_Last(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_G_N_Last(companyId, groupId, name,
-			orderByComparator);
+	 * Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
+	 */
+	public static ResourceBlock fetchByC_G_N_Last(
+		long companyId, long groupId, String name,
+		OrderByComparator<ResourceBlock> orderByComparator) {
+
+		return getPersistence().fetchByC_G_N_Last(
+			companyId, groupId, name, orderByComparator);
 	}
 
 	/**
-	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param resourceBlockId the primary key of the current resource block
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next resource block
-	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
-	*/
+	 * Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param resourceBlockId the primary key of the current resource block
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource block
+	 * @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
+	 */
 	public static ResourceBlock[] findByC_G_N_PrevAndNext(
-		long resourceBlockId, long companyId, long groupId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_G_N_PrevAndNext(resourceBlockId, companyId,
-			groupId, name, orderByComparator);
+			long resourceBlockId, long companyId, long groupId, String name,
+			OrderByComparator<ResourceBlock> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_G_N_PrevAndNext(
+			resourceBlockId, companyId, groupId, name, orderByComparator);
 	}
 
 	/**
-	* Removes all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	*/
-	public static void removeByC_G_N(long companyId, long groupId, String name) {
+	 * Removes all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 */
+	public static void removeByC_G_N(
+		long companyId, long groupId, String name) {
+
 		getPersistence().removeByC_G_N(companyId, groupId, name);
 	}
 
 	/**
-	* Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @return the number of matching resource blocks
-	*/
+	 * Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching resource blocks
+	 */
 	public static int countByC_G_N(long companyId, long groupId, String name) {
 		return getPersistence().countByC_G_N(companyId, groupId, name);
 	}
 
 	/**
-	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a <code>NoSuchResourceBlockException</code> if it could not be found.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param permissionsHash the permissions hash
-	* @return the matching resource block
-	* @throws NoSuchResourceBlockException if a matching resource block could not be found
-	*/
-	public static ResourceBlock findByC_G_N_P(long companyId, long groupId,
-		String name, String permissionsHash)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .findByC_G_N_P(companyId, groupId, name, permissionsHash);
+	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a <code>NoSuchResourceBlockException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param permissionsHash the permissions hash
+	 * @return the matching resource block
+	 * @throws NoSuchResourceBlockException if a matching resource block could not be found
+	 */
+	public static ResourceBlock findByC_G_N_P(
+			long companyId, long groupId, String name, String permissionsHash)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().findByC_G_N_P(
+			companyId, groupId, name, permissionsHash);
 	}
 
 	/**
-	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param permissionsHash the permissions hash
-	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
-	*/
-	public static ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
-		String name, String permissionsHash) {
-		return getPersistence()
-				   .fetchByC_G_N_P(companyId, groupId, name, permissionsHash);
+	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param permissionsHash the permissions hash
+	 * @return the matching resource block, or <code>null</code> if a matching resource block could not be found
+	 */
+	public static ResourceBlock fetchByC_G_N_P(
+		long companyId, long groupId, String name, String permissionsHash) {
+
+		return getPersistence().fetchByC_G_N_P(
+			companyId, groupId, name, permissionsHash);
 	}
 
 	/**
-	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param permissionsHash the permissions hash
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
-	*/
-	public static ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
-		String name, String permissionsHash, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByC_G_N_P(companyId, groupId, name, permissionsHash,
-			retrieveFromCache);
+	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param permissionsHash the permissions hash
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching resource block, or <code>null</code> if a matching resource block could not be found
+	 */
+	public static ResourceBlock fetchByC_G_N_P(
+		long companyId, long groupId, String name, String permissionsHash,
+		boolean retrieveFromCache) {
+
+		return getPersistence().fetchByC_G_N_P(
+			companyId, groupId, name, permissionsHash, retrieveFromCache);
 	}
 
 	/**
-	* Removes the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param permissionsHash the permissions hash
-	* @return the resource block that was removed
-	*/
-	public static ResourceBlock removeByC_G_N_P(long companyId, long groupId,
-		String name, String permissionsHash)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
-		return getPersistence()
-				   .removeByC_G_N_P(companyId, groupId, name, permissionsHash);
+	 * Removes the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param permissionsHash the permissions hash
+	 * @return the resource block that was removed
+	 */
+	public static ResourceBlock removeByC_G_N_P(
+			long companyId, long groupId, String name, String permissionsHash)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
+		return getPersistence().removeByC_G_N_P(
+			companyId, groupId, name, permissionsHash);
 	}
 
 	/**
-	* Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param permissionsHash the permissions hash
-	* @return the number of matching resource blocks
-	*/
-	public static int countByC_G_N_P(long companyId, long groupId, String name,
-		String permissionsHash) {
-		return getPersistence()
-				   .countByC_G_N_P(companyId, groupId, name, permissionsHash);
+	 * Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param permissionsHash the permissions hash
+	 * @return the number of matching resource blocks
+	 */
+	public static int countByC_G_N_P(
+		long companyId, long groupId, String name, String permissionsHash) {
+
+		return getPersistence().countByC_G_N_P(
+			companyId, groupId, name, permissionsHash);
 	}
 
 	/**
-	* Caches the resource block in the entity cache if it is enabled.
-	*
-	* @param resourceBlock the resource block
-	*/
+	 * Caches the resource block in the entity cache if it is enabled.
+	 *
+	 * @param resourceBlock the resource block
+	 */
 	public static void cacheResult(ResourceBlock resourceBlock) {
 		getPersistence().cacheResult(resourceBlock);
 	}
 
 	/**
-	* Caches the resource blocks in the entity cache if it is enabled.
-	*
-	* @param resourceBlocks the resource blocks
-	*/
+	 * Caches the resource blocks in the entity cache if it is enabled.
+	 *
+	 * @param resourceBlocks the resource blocks
+	 */
 	public static void cacheResult(List<ResourceBlock> resourceBlocks) {
 		getPersistence().cacheResult(resourceBlocks);
 	}
 
 	/**
-	* Creates a new resource block with the primary key. Does not add the resource block to the database.
-	*
-	* @param resourceBlockId the primary key for the new resource block
-	* @return the new resource block
-	*/
+	 * Creates a new resource block with the primary key. Does not add the resource block to the database.
+	 *
+	 * @param resourceBlockId the primary key for the new resource block
+	 * @return the new resource block
+	 */
 	public static ResourceBlock create(long resourceBlockId) {
 		return getPersistence().create(resourceBlockId);
 	}
 
 	/**
-	* Removes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @return the resource block that was removed
-	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
-	*/
+	 * Removes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param resourceBlockId the primary key of the resource block
+	 * @return the resource block that was removed
+	 * @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
+	 */
 	public static ResourceBlock remove(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
 		return getPersistence().remove(resourceBlockId);
 	}
 
@@ -609,114 +651,122 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the resource block with the primary key or throws a <code>NoSuchResourceBlockException</code> if it could not be found.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @return the resource block
-	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
-	*/
+	 * Returns the resource block with the primary key or throws a <code>NoSuchResourceBlockException</code> if it could not be found.
+	 *
+	 * @param resourceBlockId the primary key of the resource block
+	 * @return the resource block
+	 * @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
+	 */
 	public static ResourceBlock findByPrimaryKey(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceBlockException {
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceBlockException {
+
 		return getPersistence().findByPrimaryKey(resourceBlockId);
 	}
 
 	/**
-	* Returns the resource block with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @return the resource block, or <code>null</code> if a resource block with the primary key could not be found
-	*/
+	 * Returns the resource block with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceBlockId the primary key of the resource block
+	 * @return the resource block, or <code>null</code> if a resource block with the primary key could not be found
+	 */
 	public static ResourceBlock fetchByPrimaryKey(long resourceBlockId) {
 		return getPersistence().fetchByPrimaryKey(resourceBlockId);
 	}
 
 	/**
-	* Returns all the resource blocks.
-	*
-	* @return the resource blocks
-	*/
+	 * Returns all the resource blocks.
+	 *
+	 * @return the resource blocks
+	 */
 	public static List<ResourceBlock> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the resource blocks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @return the range of resource blocks
-	*/
+	 * Returns a range of all the resource blocks.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @return the range of resource blocks
+	 */
 	public static List<ResourceBlock> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the resource blocks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of resource blocks
-	*/
-	public static List<ResourceBlock> findAll(int start, int end,
+	 * Returns an ordered range of all the resource blocks.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of resource blocks
+	 */
+	public static List<ResourceBlock> findAll(
+		int start, int end,
 		OrderByComparator<ResourceBlock> orderByComparator) {
+
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the resource blocks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource blocks
-	* @param end the upper bound of the range of resource blocks (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of resource blocks
-	*/
-	public static List<ResourceBlock> findAll(int start, int end,
-		OrderByComparator<ResourceBlock> orderByComparator,
+	 * Returns an ordered range of all the resource blocks.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceBlockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource blocks
+	 * @param end the upper bound of the range of resource blocks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of resource blocks
+	 */
+	public static List<ResourceBlock> findAll(
+		int start, int end, OrderByComparator<ResourceBlock> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findAll(start, end, orderByComparator, retrieveFromCache);
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the resource blocks from the database.
-	*/
+	 * Removes all the resource blocks from the database.
+	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of resource blocks.
-	*
-	* @return the number of resource blocks
-	*/
+	 * Returns the number of resource blocks.
+	 *
+	 * @return the number of resource blocks
+	 */
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
 	public static ResourceBlockPersistence getPersistence() {
 		if (_persistence == null) {
-			_persistence = (ResourceBlockPersistence)PortalBeanLocatorUtil.locate(ResourceBlockPersistence.class.getName());
+			_persistence =
+				(ResourceBlockPersistence)PortalBeanLocatorUtil.locate(
+					ResourceBlockPersistence.class.getName());
 
-			ReferenceRegistry.registerReference(ResourceBlockUtil.class,
-				"_persistence");
+			ReferenceRegistry.registerReference(
+				ResourceBlockUtil.class, "_persistence");
 		}
 
 		return _persistence;
 	}
 
 	private static ResourceBlockPersistence _persistence;
+
 }

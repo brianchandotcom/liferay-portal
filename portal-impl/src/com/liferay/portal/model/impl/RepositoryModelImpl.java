@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -67,33 +64,29 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class RepositoryModelImpl extends BaseModelImpl<Repository>
-	implements RepositoryModel {
+public class RepositoryModelImpl
+	extends BaseModelImpl<Repository> implements RepositoryModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a repository model instance should use the <code>Repository</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Repository";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "repositoryId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "portletId", Types.VARCHAR },
-			{ "typeSettings", Types.CLOB },
-			{ "dlFolderId", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"repositoryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"portletId", Types.VARCHAR}, {"typeSettings", Types.CLOB},
+		{"dlFolderId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -114,27 +107,48 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Repository (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(200) null,description STRING null,portletId VARCHAR(200) null,typeSettings TEXT null,dlFolderId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Repository (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(200) null,description STRING null,portletId VARCHAR(200) null,typeSettings TEXT null,dlFolderId LONG,lastPublishDate DATE null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Repository";
-	public static final String ORDER_BY_JPQL = " ORDER BY repository.repositoryId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY Repository.repositoryId ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY repository.repositoryId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY Repository.repositoryId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Repository"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Repository"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Repository"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Repository"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Repository"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Repository"),
+		true);
+
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long PORTLETID_COLUMN_BITMASK = 8L;
+
 	public static final long UUID_COLUMN_BITMASK = 16L;
+
 	public static final long REPOSITORYID_COLUMN_BITMASK = 32L;
 
 	/**
@@ -190,8 +204,9 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Repository"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Repository"));
 
 	public RepositoryModelImpl() {
 	}
@@ -230,14 +245,18 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Repository, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Repository, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Repository, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Repository, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Repository, Object> attributeGetterFunction = entry.getValue();
+			Function<Repository, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Repository)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Repository)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -248,72 +267,114 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Repository, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Repository, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Repository, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Repository, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Repository)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Repository)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<Repository, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<Repository, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Repository, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Repository, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Repository, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Repository, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Repository, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Repository, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Repository, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Repository, Object>>();
-		Map<String, BiConsumer<Repository, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Repository, ?>>();
-
+		Map<String, Function<Repository, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Repository, Object>>();
+		Map<String, BiConsumer<Repository, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Repository, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Repository::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Repository, Long>)Repository::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<Repository, Long>)Repository::setMvccVersion);
 		attributeGetterFunctions.put("uuid", Repository::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<Repository, String>)Repository::setUuid);
-		attributeGetterFunctions.put("repositoryId", Repository::getRepositoryId);
-		attributeSetterBiConsumers.put("repositoryId", (BiConsumer<Repository, Long>)Repository::setRepositoryId);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Repository, String>)Repository::setUuid);
+		attributeGetterFunctions.put(
+			"repositoryId", Repository::getRepositoryId);
+		attributeSetterBiConsumers.put(
+			"repositoryId",
+			(BiConsumer<Repository, Long>)Repository::setRepositoryId);
 		attributeGetterFunctions.put("groupId", Repository::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<Repository, Long>)Repository::setGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<Repository, Long>)Repository::setGroupId);
 		attributeGetterFunctions.put("companyId", Repository::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Repository, Long>)Repository::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<Repository, Long>)Repository::setCompanyId);
 		attributeGetterFunctions.put("userId", Repository::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Repository, Long>)Repository::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Repository, Long>)Repository::setUserId);
 		attributeGetterFunctions.put("userName", Repository::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Repository, String>)Repository::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<Repository, String>)Repository::setUserName);
 		attributeGetterFunctions.put("createDate", Repository::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Repository, Date>)Repository::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Repository::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Repository, Date>)Repository::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<Repository, Date>)Repository::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", Repository::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Repository, Date>)Repository::setModifiedDate);
 		attributeGetterFunctions.put("classNameId", Repository::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Repository, Long>)Repository::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId",
+			(BiConsumer<Repository, Long>)Repository::setClassNameId);
 		attributeGetterFunctions.put("name", Repository::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Repository, String>)Repository::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Repository, String>)Repository::setName);
 		attributeGetterFunctions.put("description", Repository::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<Repository, String>)Repository::setDescription);
+		attributeSetterBiConsumers.put(
+			"description",
+			(BiConsumer<Repository, String>)Repository::setDescription);
 		attributeGetterFunctions.put("portletId", Repository::getPortletId);
-		attributeSetterBiConsumers.put("portletId", (BiConsumer<Repository, String>)Repository::setPortletId);
-		attributeGetterFunctions.put("typeSettings", Repository::getTypeSettings);
-		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<Repository, String>)Repository::setTypeSettings);
+		attributeSetterBiConsumers.put(
+			"portletId",
+			(BiConsumer<Repository, String>)Repository::setPortletId);
+		attributeGetterFunctions.put(
+			"typeSettings", Repository::getTypeSettings);
+		attributeSetterBiConsumers.put(
+			"typeSettings",
+			(BiConsumer<Repository, String>)Repository::setTypeSettings);
 		attributeGetterFunctions.put("dlFolderId", Repository::getDlFolderId);
-		attributeSetterBiConsumers.put("dlFolderId", (BiConsumer<Repository, Long>)Repository::setDlFolderId);
-		attributeGetterFunctions.put("lastPublishDate", Repository::getLastPublishDate);
-		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<Repository, Date>)Repository::setLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"dlFolderId",
+			(BiConsumer<Repository, Long>)Repository::setDlFolderId);
+		attributeGetterFunctions.put(
+			"lastPublishDate", Repository::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<Repository, Date>)Repository::setLastPublishDate);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -620,8 +681,9 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				Repository.class.getName()), getClassNameId());
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Repository.class.getName()),
+			getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -630,8 +692,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Repository.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Repository.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -644,8 +706,9 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	@Override
 	public Repository toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Repository)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Repository)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -850,16 +913,20 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Repository, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Repository, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Repository, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Repository, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Repository, Object> attributeGetterFunction = entry.getValue();
+			Function<Repository, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -878,18 +945,22 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Repository, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Repository, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Repository, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Repository, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<Repository, Object> attributeGetterFunction = entry.getValue();
+			Function<Repository, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -903,10 +974,12 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Repository.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Repository.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Repository.class, ModelWrapper.class
-		};
+		Repository.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -933,4 +1006,5 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private Repository _escapedModel;
+
 }

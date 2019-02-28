@@ -26,19 +26,24 @@ import com.liferay.portal.kernel.util.Accessor;
  * @author Brian Wing Shun Chan
  * @see AssetTagStatsModel
  * @deprecated As of Judson (7.1.x), replaced by {@link
-com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
+ com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */
 @Deprecated
-@ImplementationClassName("com.liferay.portlet.asset.model.impl.AssetTagStatsImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.asset.model.impl.AssetTagStatsImpl"
+)
 @ProviderType
 public interface AssetTagStats extends AssetTagStatsModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.asset.model.impl.AssetTagStatsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<AssetTagStats, Long> TAG_STATS_ID_ACCESSOR = new Accessor<AssetTagStats, Long>() {
+	public static final Accessor<AssetTagStats, Long> TAG_STATS_ID_ACCESSOR =
+		new Accessor<AssetTagStats, Long>() {
+
 			@Override
 			public Long get(AssetTagStats assetTagStats) {
 				return assetTagStats.getTagStatsId();
@@ -53,5 +58,7 @@ public interface AssetTagStats extends AssetTagStatsModel, PersistedModel {
 			public Class<AssetTagStats> getTypeClass() {
 				return AssetTagStats.class;
 			}
+
 		};
+
 }

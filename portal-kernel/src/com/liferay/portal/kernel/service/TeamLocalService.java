@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -50,10 +49,13 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface TeamLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface TeamLocalService
+	extends BaseLocalService, PersistedModelLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -61,23 +63,25 @@ public interface TeamLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
-	long, String, String, ServiceContext)}
-	*/
+	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
+	 long, String, String, ServiceContext)}
+	 */
 	@Deprecated
-	public Team addTeam(long userId, long groupId, String name,
-		String description) throws PortalException;
+	public Team addTeam(
+			long userId, long groupId, String name, String description)
+		throws PortalException;
 
-	public Team addTeam(long userId, long groupId, String name,
-		String description, ServiceContext serviceContext)
+	public Team addTeam(
+			long userId, long groupId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
-	* Adds the team to the database. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was added
-	*/
+	 * Adds the team to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param team the team
+	 * @return the team that was added
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Team addTeam(Team team);
 
@@ -102,38 +106,38 @@ public interface TeamLocalService extends BaseLocalService,
 	public void clearUserTeams(long userId);
 
 	/**
-	* Creates a new team with the primary key. Does not add the team to the database.
-	*
-	* @param teamId the primary key for the new team
-	* @return the new team
-	*/
+	 * Creates a new team with the primary key. Does not add the team to the database.
+	 *
+	 * @param teamId the primary key for the new team
+	 * @return the new team
+	 */
 	@Transactional(enabled = false)
 	public Team createTeam(long teamId);
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
-	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param teamId the primary key of the team
-	* @return the team that was removed
-	* @throws PortalException if a team with the primary key could not be found
-	*/
+	 * Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param teamId the primary key of the team
+	 * @return the team that was removed
+	 * @throws PortalException if a team with the primary key could not be found
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Team deleteTeam(long teamId) throws PortalException;
 
 	/**
-	* Deletes the team from the database. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was removed
-	* @throws PortalException
-	*/
+	 * Deletes the team from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param team the team
+	 * @return the team that was removed
+	 * @throws PortalException
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Team deleteTeam(Team team) throws PortalException;
 
@@ -159,66 +163,67 @@ public interface TeamLocalService extends BaseLocalService,
 	public DynamicQuery dynamicQuery();
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team fetchTeam(long teamId);
@@ -227,12 +232,12 @@ public interface TeamLocalService extends BaseLocalService,
 	public Team fetchTeam(long groupId, String name);
 
 	/**
-	* Returns the team matching the UUID and group.
-	*
-	* @param uuid the team's UUID
-	* @param groupId the primary key of the group
-	* @return the matching team, or <code>null</code> if a matching team could not be found
-	*/
+	 * Returns the team matching the UUID and group.
+	 *
+	 * @param uuid the team's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching team, or <code>null</code> if a matching team could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team fetchTeamByUuidAndGroupId(String uuid, long groupId);
 
@@ -253,10 +258,10 @@ public interface TeamLocalService extends BaseLocalService,
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	@Override
@@ -265,12 +270,12 @@ public interface TeamLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the team with the primary key.
-	*
-	* @param teamId the primary key of the team
-	* @return the team
-	* @throws PortalException if a team with the primary key could not be found
-	*/
+	 * Returns the team with the primary key.
+	 *
+	 * @param teamId the primary key of the team
+	 * @return the team
+	 * @throws PortalException if a team with the primary key could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team getTeam(long teamId) throws PortalException;
 
@@ -278,69 +283,70 @@ public interface TeamLocalService extends BaseLocalService,
 	public Team getTeam(long groupId, String name) throws PortalException;
 
 	/**
-	* Returns the team matching the UUID and group.
-	*
-	* @param uuid the team's UUID
-	* @param groupId the primary key of the group
-	* @return the matching team
-	* @throws PortalException if a matching team could not be found
-	*/
+	 * Returns the team matching the UUID and group.
+	 *
+	 * @param uuid the team's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching team
+	 * @throws PortalException if a matching team could not be found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Team getTeamByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
 	/**
-	* Returns a range of all the teams.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of teams
-	* @param end the upper bound of the range of teams (not inclusive)
-	* @return the range of teams
-	*/
+	 * Returns a range of all the teams.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @return the range of teams
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getTeams(int start, int end);
 
 	/**
-	* Returns all the teams matching the UUID and company.
-	*
-	* @param uuid the UUID of the teams
-	* @param companyId the primary key of the company
-	* @return the matching teams, or an empty list if no matches were found
-	*/
+	 * Returns all the teams matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the teams
+	 * @param companyId the primary key of the company
+	 * @return the matching teams, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Team> getTeamsByUuidAndCompanyId(String uuid, long companyId);
 
 	/**
-	* Returns a range of teams matching the UUID and company.
-	*
-	* @param uuid the UUID of the teams
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of teams
-	* @param end the upper bound of the range of teams (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching teams, or an empty list if no matches were found
-	*/
+	 * Returns a range of teams matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the teams
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of teams
+	 * @param end the upper bound of the range of teams (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching teams, or an empty list if no matches were found
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> getTeamsByUuidAndCompanyId(String uuid, long companyId,
-		int start, int end, OrderByComparator<Team> orderByComparator);
+	public List<Team> getTeamsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<Team> orderByComparator);
 
 	/**
-	* Returns the number of teams.
-	*
-	* @return the number of teams
-	*/
+	 * Returns the number of teams.
+	 *
+	 * @return the number of teams
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTeamsCount();
 
 	/**
-	* Returns the userGroupIds of the user groups associated with the team.
-	*
-	* @param teamId the teamId of the team
-	* @return long[] the userGroupIds of user groups associated with the team
-	*/
+	 * Returns the userGroupIds of the user groups associated with the team.
+	 *
+	 * @param teamId the teamId of the team
+	 * @return long[] the userGroupIds of user groups associated with the team
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getUserGroupPrimaryKeys(long teamId);
 
@@ -351,7 +357,8 @@ public interface TeamLocalService extends BaseLocalService,
 	public List<Team> getUserGroupTeams(long userGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> getUserGroupTeams(long userGroupId, int start, int end,
+	public List<Team> getUserGroupTeams(
+		long userGroupId, int start, int end,
 		OrderByComparator<Team> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -361,11 +368,11 @@ public interface TeamLocalService extends BaseLocalService,
 	public List<Team> getUserOrUserGroupTeams(long groupId, long userId);
 
 	/**
-	* Returns the userIds of the users associated with the team.
-	*
-	* @param teamId the teamId of the team
-	* @return long[] the userIds of users associated with the team
-	*/
+	 * Returns the userIds of the users associated with the team.
+	 *
+	 * @param teamId the teamId of the team
+	 * @return long[] the userIds of users associated with the team
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getUserPrimaryKeys(long teamId);
 
@@ -376,7 +383,8 @@ public interface TeamLocalService extends BaseLocalService,
 	public List<Team> getUserTeams(long userId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> getUserTeams(long userId, int start, int end,
+	public List<Team> getUserTeams(
+		long userId, int start, int end,
 		OrderByComparator<Team> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -398,12 +406,14 @@ public interface TeamLocalService extends BaseLocalService,
 	public boolean hasUserTeams(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Team> search(long groupId, String name, String description,
+	public List<Team> search(
+		long groupId, String name, String description,
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<Team> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, String name, String description,
+	public int searchCount(
+		long groupId, String name, String description,
 		LinkedHashMap<String, Object> params);
 
 	public void setUserGroupTeams(long userGroupId, long[] teamIds);
@@ -414,11 +424,12 @@ public interface TeamLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was updated
-	*/
+	 * Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param team the team
+	 * @return the team that was updated
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Team updateTeam(Team team);
+
 }

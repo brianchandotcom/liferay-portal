@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalServiceUtil;
 @ProviderType
 public abstract class RecentLayoutSetBranchBaseImpl
 	extends RecentLayoutSetBranchModelImpl implements RecentLayoutSetBranch {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -42,10 +43,13 @@ public abstract class RecentLayoutSetBranchBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			RecentLayoutSetBranchLocalServiceUtil.addRecentLayoutSetBranch(this);
+			RecentLayoutSetBranchLocalServiceUtil.addRecentLayoutSetBranch(
+				this);
 		}
 		else {
-			RecentLayoutSetBranchLocalServiceUtil.updateRecentLayoutSetBranch(this);
+			RecentLayoutSetBranchLocalServiceUtil.updateRecentLayoutSetBranch(
+				this);
 		}
 	}
+
 }

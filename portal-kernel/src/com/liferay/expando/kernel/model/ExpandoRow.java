@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see ExpandoRowModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.expando.model.impl.ExpandoRowImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.expando.model.impl.ExpandoRowImpl"
+)
 @ProviderType
 public interface ExpandoRow extends ExpandoRowModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoRowImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ExpandoRow, Long> ROW_ID_ACCESSOR = new Accessor<ExpandoRow, Long>() {
+	public static final Accessor<ExpandoRow, Long> ROW_ID_ACCESSOR =
+		new Accessor<ExpandoRow, Long>() {
+
 			@Override
 			public Long get(ExpandoRow expandoRow) {
 				return expandoRow.getRowId();
@@ -50,5 +55,7 @@ public interface ExpandoRow extends ExpandoRowModel, PersistedModel {
 			public Class<ExpandoRow> getTypeClass() {
 				return ExpandoRow.class;
 			}
+
 		};
+
 }

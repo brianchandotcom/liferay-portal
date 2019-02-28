@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
-
 import com.liferay.roles.uad.constants.RolesUADConstants;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -38,10 +36,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseRoleUADAnonymizer extends DynamicQueryUADAnonymizer<Role> {
+public abstract class BaseRoleUADAnonymizer
+	extends DynamicQueryUADAnonymizer<Role> {
+
 	@Override
 	public void autoAnonymize(Role role, long userId, User anonymousUser)
 		throws PortalException {
+
 		if (role.getUserId() == userId) {
 			role.setUserId(anonymousUser.getUserId());
 			role.setUserName(anonymousUser.getFullName());
@@ -72,4 +73,5 @@ public abstract class BaseRoleUADAnonymizer extends DynamicQueryUADAnonymizer<Ro
 
 	@Reference
 	protected RoleLocalService roleLocalService;
+
 }

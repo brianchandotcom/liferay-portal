@@ -31,12 +31,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.SubscriptionImpl")
 @ProviderType
 public interface Subscription extends SubscriptionModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.SubscriptionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Subscription, Long> SUBSCRIPTION_ID_ACCESSOR = new Accessor<Subscription, Long>() {
+	public static final Accessor<Subscription, Long> SUBSCRIPTION_ID_ACCESSOR =
+		new Accessor<Subscription, Long>() {
+
 			@Override
 			public Long get(Subscription subscription) {
 				return subscription.getSubscriptionId();
@@ -51,5 +54,7 @@ public interface Subscription extends SubscriptionModel, PersistedModel {
 			public Class<Subscription> getTypeClass() {
 				return Subscription.class;
 			}
+
 		};
+
 }

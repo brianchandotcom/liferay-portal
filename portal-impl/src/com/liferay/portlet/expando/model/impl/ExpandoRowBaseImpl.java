@@ -32,8 +32,9 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class ExpandoRowBaseImpl extends ExpandoRowModelImpl
-	implements ExpandoRow {
+public abstract class ExpandoRowBaseImpl
+	extends ExpandoRowModelImpl implements ExpandoRow {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class ExpandoRowBaseImpl extends ExpandoRowModelImpl
 			ExpandoRowLocalServiceUtil.updateExpandoRow(this);
 		}
 	}
+
 }

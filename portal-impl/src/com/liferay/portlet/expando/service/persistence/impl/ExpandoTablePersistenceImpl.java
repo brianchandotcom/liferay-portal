@@ -19,9 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.portlet.expando.model.impl.ExpandoTableImpl;
 import com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl;
 
@@ -62,18 +59,24 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTable>
+public class ExpandoTablePersistenceImpl
+	extends BasePersistenceImpl<ExpandoTable>
 	implements ExpandoTablePersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>ExpandoTableUtil</code> to access the expando table persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = ExpandoTableImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		ExpandoTableImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -90,8 +93,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public List<ExpandoTable> findByC_C(long companyId, long classNameId) {
-		return findByC_C(companyId, classNameId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_C(
+			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -108,8 +111,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the range of matching expando tables
 	 */
 	@Override
-	public List<ExpandoTable> findByC_C(long companyId, long classNameId,
-		int start, int end) {
+	public List<ExpandoTable> findByC_C(
+		long companyId, long classNameId, int start, int end) {
+
 		return findByC_C(companyId, classNameId, start, end, null);
 	}
 
@@ -128,10 +132,12 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the ordered range of matching expando tables
 	 */
 	@Override
-	public List<ExpandoTable> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator<ExpandoTable> orderByComparator) {
-		return findByC_C(companyId, classNameId, start, end, orderByComparator,
-			true);
+	public List<ExpandoTable> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		OrderByComparator<ExpandoTable> orderByComparator) {
+
+		return findByC_C(
+			companyId, classNameId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -150,38 +156,40 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the ordered range of matching expando tables
 	 */
 	@Override
-	public List<ExpandoTable> findByC_C(long companyId, long classNameId,
-		int start, int end, OrderByComparator<ExpandoTable> orderByComparator,
+	public List<ExpandoTable> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		OrderByComparator<ExpandoTable> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] { companyId, classNameId };
+			finderArgs = new Object[] {companyId, classNameId};
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
-					companyId, classNameId,
-					
-					start, end, orderByComparator
-				};
+				companyId, classNameId, start, end, orderByComparator
+			};
 		}
 
 		List<ExpandoTable> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ExpandoTable>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<ExpandoTable>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoTable expandoTable : list) {
 					if ((companyId != expandoTable.getCompanyId()) ||
-							(classNameId != expandoTable.getClassNameId())) {
+						(classNameId != expandoTable.getClassNameId())) {
+
 						list = null;
 
 						break;
@@ -194,8 +202,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -208,11 +216,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(ExpandoTableModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -232,16 +239,16 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				qPos.add(classNameId);
 
 				if (!pagination) {
-					list = (List<ExpandoTable>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<ExpandoTable>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<ExpandoTable>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<ExpandoTable>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -271,11 +278,13 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @throws NoSuchTableException if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable findByC_C_First(long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator)
+	public ExpandoTable findByC_C_First(
+			long companyId, long classNameId,
+			OrderByComparator<ExpandoTable> orderByComparator)
 		throws NoSuchTableException {
-		ExpandoTable expandoTable = fetchByC_C_First(companyId, classNameId,
-				orderByComparator);
+
+		ExpandoTable expandoTable = fetchByC_C_First(
+			companyId, classNameId, orderByComparator);
 
 		if (expandoTable != null) {
 			return expandoTable;
@@ -305,10 +314,12 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the first matching expando table, or <code>null</code> if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable fetchByC_C_First(long companyId, long classNameId,
+	public ExpandoTable fetchByC_C_First(
+		long companyId, long classNameId,
 		OrderByComparator<ExpandoTable> orderByComparator) {
-		List<ExpandoTable> list = findByC_C(companyId, classNameId, 0, 1,
-				orderByComparator);
+
+		List<ExpandoTable> list = findByC_C(
+			companyId, classNameId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -327,11 +338,13 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @throws NoSuchTableException if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator)
+	public ExpandoTable findByC_C_Last(
+			long companyId, long classNameId,
+			OrderByComparator<ExpandoTable> orderByComparator)
 		throws NoSuchTableException {
-		ExpandoTable expandoTable = fetchByC_C_Last(companyId, classNameId,
-				orderByComparator);
+
+		ExpandoTable expandoTable = fetchByC_C_Last(
+			companyId, classNameId, orderByComparator);
 
 		if (expandoTable != null) {
 			return expandoTable;
@@ -361,16 +374,18 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the last matching expando table, or <code>null</code> if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable fetchByC_C_Last(long companyId, long classNameId,
+	public ExpandoTable fetchByC_C_Last(
+		long companyId, long classNameId,
 		OrderByComparator<ExpandoTable> orderByComparator) {
+
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ExpandoTable> list = findByC_C(companyId, classNameId, count - 1,
-				count, orderByComparator);
+		List<ExpandoTable> list = findByC_C(
+			companyId, classNameId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -390,9 +405,11 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @throws NoSuchTableException if a expando table with the primary key could not be found
 	 */
 	@Override
-	public ExpandoTable[] findByC_C_PrevAndNext(long tableId, long companyId,
-		long classNameId, OrderByComparator<ExpandoTable> orderByComparator)
+	public ExpandoTable[] findByC_C_PrevAndNext(
+			long tableId, long companyId, long classNameId,
+			OrderByComparator<ExpandoTable> orderByComparator)
 		throws NoSuchTableException {
+
 		ExpandoTable expandoTable = findByPrimaryKey(tableId);
 
 		Session session = null;
@@ -402,13 +419,15 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 			ExpandoTable[] array = new ExpandoTableImpl[3];
 
-			array[0] = getByC_C_PrevAndNext(session, expandoTable, companyId,
-					classNameId, orderByComparator, true);
+			array[0] = getByC_C_PrevAndNext(
+				session, expandoTable, companyId, classNameId,
+				orderByComparator, true);
 
 			array[1] = expandoTable;
 
-			array[2] = getByC_C_PrevAndNext(session, expandoTable, companyId,
-					classNameId, orderByComparator, false);
+			array[2] = getByC_C_PrevAndNext(
+				session, expandoTable, companyId, classNameId,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -420,14 +439,16 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		}
 	}
 
-	protected ExpandoTable getByC_C_PrevAndNext(Session session,
-		ExpandoTable expandoTable, long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator, boolean previous) {
+	protected ExpandoTable getByC_C_PrevAndNext(
+		Session session, ExpandoTable expandoTable, long companyId,
+		long classNameId, OrderByComparator<ExpandoTable> orderByComparator,
+		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -441,7 +462,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -513,8 +535,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
-					expandoTable)) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(expandoTable)) {
+
 				qPos.add(orderByConditionValue);
 			}
 		}
@@ -537,8 +560,11 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long classNameId) {
-		for (ExpandoTable expandoTable : findByC_C(companyId, classNameId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (ExpandoTable expandoTable :
+				findByC_C(
+					companyId, classNameId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
 			remove(expandoTable);
 		}
 	}
@@ -554,10 +580,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	public int countByC_C(long companyId, long classNameId) {
 		FinderPath finderPath = _finderPathCountByC_C;
 
-		Object[] finderArgs = new Object[] { companyId, classNameId };
+		Object[] finderArgs = new Object[] {companyId, classNameId};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -600,8 +626,12 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 = "expandoTable.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "expandoTable.classNameId = ?";
+	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
+		"expandoTable.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
+		"expandoTable.classNameId = ?";
+
 	private FinderPath _finderPathFetchByC_C_N;
 	private FinderPath _finderPathCountByC_C_N;
 
@@ -615,8 +645,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @throws NoSuchTableException if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable findByC_C_N(long companyId, long classNameId,
-		String name) throws NoSuchTableException {
+	public ExpandoTable findByC_C_N(
+			long companyId, long classNameId, String name)
+		throws NoSuchTableException {
+
 		ExpandoTable expandoTable = fetchByC_C_N(companyId, classNameId, name);
 
 		if (expandoTable == null) {
@@ -654,8 +686,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable fetchByC_C_N(long companyId, long classNameId,
-		String name) {
+	public ExpandoTable fetchByC_C_N(
+		long companyId, long classNameId, String name) {
+
 		return fetchByC_C_N(companyId, classNameId, name, true);
 	}
 
@@ -669,25 +702,28 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	 */
 	@Override
-	public ExpandoTable fetchByC_C_N(long companyId, long classNameId,
-		String name, boolean retrieveFromCache) {
+	public ExpandoTable fetchByC_C_N(
+		long companyId, long classNameId, String name,
+		boolean retrieveFromCache) {
+
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] { companyId, classNameId, name };
+		Object[] finderArgs = new Object[] {companyId, classNameId, name};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(_finderPathFetchByC_C_N,
-					finderArgs, this);
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_C_N, finderArgs, this);
 		}
 
 		if (result instanceof ExpandoTable) {
 			ExpandoTable expandoTable = (ExpandoTable)result;
 
 			if ((companyId != expandoTable.getCompanyId()) ||
-					(classNameId != expandoTable.getClassNameId()) ||
-					!Objects.equals(name, expandoTable.getName())) {
+				(classNameId != expandoTable.getClassNameId()) ||
+				!Objects.equals(name, expandoTable.getName())) {
+
 				result = null;
 			}
 		}
@@ -734,8 +770,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				List<ExpandoTable> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(_finderPathFetchByC_C_N,
-						finderArgs, list);
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_C_N, finderArgs, list);
 				}
 				else {
 					ExpandoTable expandoTable = list.get(0);
@@ -746,7 +782,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_C_N, finderArgs);
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_C_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -772,8 +809,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the expando table that was removed
 	 */
 	@Override
-	public ExpandoTable removeByC_C_N(long companyId, long classNameId,
-		String name) throws NoSuchTableException {
+	public ExpandoTable removeByC_C_N(
+			long companyId, long classNameId, String name)
+		throws NoSuchTableException {
+
 		ExpandoTable expandoTable = findByC_C_N(companyId, classNameId, name);
 
 		return remove(expandoTable);
@@ -793,10 +832,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 		FinderPath finderPath = _finderPathCountByC_C_N;
 
-		Object[] finderArgs = new Object[] { companyId, classNameId, name };
+		Object[] finderArgs = new Object[] {companyId, classNameId, name};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -854,10 +893,17 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_N_COMPANYID_2 = "expandoTable.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_N_CLASSNAMEID_2 = "expandoTable.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_N_NAME_2 = "expandoTable.name = ?";
-	private static final String _FINDER_COLUMN_C_C_N_NAME_3 = "(expandoTable.name IS NULL OR expandoTable.name = '')";
+	private static final String _FINDER_COLUMN_C_C_N_COMPANYID_2 =
+		"expandoTable.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_N_CLASSNAMEID_2 =
+		"expandoTable.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_N_NAME_2 =
+		"expandoTable.name = ?";
+
+	private static final String _FINDER_COLUMN_C_C_N_NAME_3 =
+		"(expandoTable.name IS NULL OR expandoTable.name = '')";
 
 	public ExpandoTablePersistenceImpl() {
 		setModelClass(ExpandoTable.class);
@@ -874,14 +920,17 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public void cacheResult(ExpandoTable expandoTable) {
-		EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable);
+		EntityCacheUtil.putResult(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED, ExpandoTableImpl.class,
+			expandoTable.getPrimaryKey(), expandoTable);
 
-		FinderCacheUtil.putResult(_finderPathFetchByC_C_N,
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C_N,
 			new Object[] {
 				expandoTable.getCompanyId(), expandoTable.getClassNameId(),
 				expandoTable.getName()
-			}, expandoTable);
+			},
+			expandoTable);
 
 		expandoTable.resetOriginalValues();
 	}
@@ -895,8 +944,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	public void cacheResult(List<ExpandoTable> expandoTables) {
 		for (ExpandoTable expandoTable : expandoTables) {
 			if (EntityCacheUtil.getResult(
-						ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoTableImpl.class, expandoTable.getPrimaryKey()) == null) {
+					ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+					ExpandoTableImpl.class, expandoTable.getPrimaryKey()) ==
+						null) {
+
 				cacheResult(expandoTable);
 			}
 			else {
@@ -930,8 +981,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public void clearCache(ExpandoTable expandoTable) {
-		EntityCacheUtil.removeResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoTableImpl.class, expandoTable.getPrimaryKey());
+		EntityCacheUtil.removeResult(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED, ExpandoTableImpl.class,
+			expandoTable.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -945,7 +997,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (ExpandoTable expandoTable : expandoTables) {
-			EntityCacheUtil.removeResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			EntityCacheUtil.removeResult(
+				ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoTableImpl.class, expandoTable.getPrimaryKey());
 
 			clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable, true);
@@ -954,38 +1007,41 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	protected void cacheUniqueFindersCache(
 		ExpandoTableModelImpl expandoTableModelImpl) {
-		Object[] args = new Object[] {
-				expandoTableModelImpl.getCompanyId(),
-				expandoTableModelImpl.getClassNameId(),
-				expandoTableModelImpl.getName()
-			};
 
-		FinderCacheUtil.putResult(_finderPathCountByC_C_N, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(_finderPathFetchByC_C_N, args,
-			expandoTableModelImpl, false);
+		Object[] args = new Object[] {
+			expandoTableModelImpl.getCompanyId(),
+			expandoTableModelImpl.getClassNameId(),
+			expandoTableModelImpl.getName()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_C_N, args, Long.valueOf(1), false);
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_C_N, args, expandoTableModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		ExpandoTableModelImpl expandoTableModelImpl, boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					expandoTableModelImpl.getCompanyId(),
-					expandoTableModelImpl.getClassNameId(),
-					expandoTableModelImpl.getName()
-				};
+				expandoTableModelImpl.getCompanyId(),
+				expandoTableModelImpl.getClassNameId(),
+				expandoTableModelImpl.getName()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_C_N, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_C_N, args);
 		}
 
 		if ((expandoTableModelImpl.getColumnBitmask() &
-				_finderPathFetchByC_C_N.getColumnBitmask()) != 0) {
+			 _finderPathFetchByC_C_N.getColumnBitmask()) != 0) {
+
 			Object[] args = new Object[] {
-					expandoTableModelImpl.getOriginalCompanyId(),
-					expandoTableModelImpl.getOriginalClassNameId(),
-					expandoTableModelImpl.getOriginalName()
-				};
+				expandoTableModelImpl.getOriginalCompanyId(),
+				expandoTableModelImpl.getOriginalClassNameId(),
+				expandoTableModelImpl.getOriginalName()
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_C_N, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByC_C_N, args);
@@ -1032,21 +1088,22 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	@Override
 	public ExpandoTable remove(Serializable primaryKey)
 		throws NoSuchTableException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ExpandoTable expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
-					primaryKey);
+			ExpandoTable expandoTable = (ExpandoTable)session.get(
+				ExpandoTableImpl.class, primaryKey);
 
 			if (expandoTable == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchTableException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchTableException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(expandoTable);
@@ -1070,8 +1127,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			session = openSession();
 
 			if (!session.contains(expandoTable)) {
-				expandoTable = (ExpandoTable)session.get(ExpandoTableImpl.class,
-						expandoTable.getPrimaryKeyObj());
+				expandoTable = (ExpandoTable)session.get(
+					ExpandoTableImpl.class, expandoTable.getPrimaryKeyObj());
 			}
 
 			if (expandoTable != null) {
@@ -1100,19 +1157,21 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(expandoTable.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(expandoTable);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					expandoTable);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in expandoTable proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom ExpandoTable implementation " +
-				expandoTable.getClass());
+					expandoTable.getClass());
 		}
 
-		ExpandoTableModelImpl expandoTableModelImpl = (ExpandoTableModelImpl)expandoTable;
+		ExpandoTableModelImpl expandoTableModelImpl =
+			(ExpandoTableModelImpl)expandoTable;
 
 		Session session = null;
 
@@ -1138,50 +1197,52 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (!ExpandoTableModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			FinderCacheUtil.clearCache(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
+		else if (isNew) {
 			Object[] args = new Object[] {
+				expandoTableModelImpl.getCompanyId(),
+				expandoTableModelImpl.getClassNameId()
+			};
+
+			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindByC_C, args);
+
+			FinderCacheUtil.removeResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((expandoTableModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					expandoTableModelImpl.getOriginalCompanyId(),
+					expandoTableModelImpl.getOriginalClassNameId()
+				};
+
+				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
+
+				args = new Object[] {
 					expandoTableModelImpl.getCompanyId(),
 					expandoTableModelImpl.getClassNameId()
 				};
 
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
-				args);
-
-			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((expandoTableModelImpl.getColumnBitmask() &
-					_finderPathWithoutPaginationFindByC_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						expandoTableModelImpl.getOriginalCompanyId(),
-						expandoTableModelImpl.getOriginalClassNameId()
-					};
-
 				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
-					args);
-
-				args = new Object[] {
-						expandoTableModelImpl.getCompanyId(),
-						expandoTableModelImpl.getClassNameId()
-					};
-
-				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_C,
-					args);
+				FinderCacheUtil.removeResult(
+					_finderPathWithoutPaginationFindByC_C, args);
 			}
 		}
 
-		EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable,
-			false);
+		EntityCacheUtil.putResult(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED, ExpandoTableImpl.class,
+			expandoTable.getPrimaryKey(), expandoTable, false);
 
 		clearUniqueFindersCache(expandoTableModelImpl, false);
 		cacheUniqueFindersCache(expandoTableModelImpl);
@@ -1201,6 +1262,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	@Override
 	public ExpandoTable findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchTableException {
+
 		ExpandoTable expandoTable = fetchByPrimaryKey(primaryKey);
 
 		if (expandoTable == null) {
@@ -1208,8 +1270,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchTableException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchTableException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return expandoTable;
@@ -1225,6 +1287,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	@Override
 	public ExpandoTable findByPrimaryKey(long tableId)
 		throws NoSuchTableException {
+
 		return findByPrimaryKey((Serializable)tableId);
 	}
 
@@ -1278,8 +1341,9 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the ordered range of expando tables
 	 */
 	@Override
-	public List<ExpandoTable> findAll(int start, int end,
-		OrderByComparator<ExpandoTable> orderByComparator) {
+	public List<ExpandoTable> findAll(
+		int start, int end, OrderByComparator<ExpandoTable> orderByComparator) {
+
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -1297,29 +1361,31 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * @return the ordered range of expando tables
 	 */
 	@Override
-	public List<ExpandoTable> findAll(int start, int end,
-		OrderByComparator<ExpandoTable> orderByComparator,
+	public List<ExpandoTable> findAll(
+		int start, int end, OrderByComparator<ExpandoTable> orderByComparator,
 		boolean retrieveFromCache) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
 			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
 			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ExpandoTable> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<ExpandoTable>)FinderCacheUtil.getResult(finderPath,
-					finderArgs, this);
+			list = (List<ExpandoTable>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 		}
 
 		if (list == null) {
@@ -1327,13 +1393,13 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_EXPANDOTABLE);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -1353,16 +1419,16 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<ExpandoTable>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<ExpandoTable>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<ExpandoTable>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<ExpandoTable>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1400,8 +1466,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)FinderCacheUtil.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1413,12 +1479,12 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY, count);
+				FinderCacheUtil.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathCountAll,
-					FINDER_ARGS_EMPTY);
+				FinderCacheUtil.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -1454,65 +1520,67 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 * Initializes the expando table persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED,
-				ExpandoTableImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findAll", new String[0]);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, ExpandoTableImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED,
-				ExpandoTableImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-				new String[0]);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, ExpandoTableImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
 
-		_finderPathCountAll = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-				new String[0]);
+		_finderPathCountAll = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED,
-				ExpandoTableImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByC_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					
+		_finderPathWithPaginationFindByC_C = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, ExpandoTableImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				});
+				OrderByComparator.class.getName()
+			});
 
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED,
-				ExpandoTableImpl.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-				new String[] { Long.class.getName(), Long.class.getName() },
-				ExpandoTableModelImpl.COMPANYID_COLUMN_BITMASK |
-				ExpandoTableModelImpl.CLASSNAMEID_COLUMN_BITMASK);
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, ExpandoTableImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			ExpandoTableModelImpl.COMPANYID_COLUMN_BITMASK |
+			ExpandoTableModelImpl.CLASSNAMEID_COLUMN_BITMASK);
 
-		_finderPathCountByC_C = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-				new String[] { Long.class.getName(), Long.class.getName() });
+		_finderPathCountByC_C = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
-		_finderPathFetchByC_C_N = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED,
-				ExpandoTableImpl.class, FINDER_CLASS_NAME_ENTITY,
-				"fetchByC_C_N",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					String.class.getName()
-				},
-				ExpandoTableModelImpl.COMPANYID_COLUMN_BITMASK |
-				ExpandoTableModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-				ExpandoTableModelImpl.NAME_COLUMN_BITMASK);
+		_finderPathFetchByC_C_N = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, ExpandoTableImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			ExpandoTableModelImpl.COMPANYID_COLUMN_BITMASK |
+			ExpandoTableModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			ExpandoTableModelImpl.NAME_COLUMN_BITMASK);
 
-		_finderPathCountByC_C_N = new FinderPath(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-				ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_N",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					String.class.getName()
-				});
+		_finderPathCountByC_C_N = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
 	}
 
 	public void destroy() {
@@ -1524,12 +1592,28 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
-	private static final String _SQL_SELECT_EXPANDOTABLE = "SELECT expandoTable FROM ExpandoTable expandoTable";
-	private static final String _SQL_SELECT_EXPANDOTABLE_WHERE = "SELECT expandoTable FROM ExpandoTable expandoTable WHERE ";
-	private static final String _SQL_COUNT_EXPANDOTABLE = "SELECT COUNT(expandoTable) FROM ExpandoTable expandoTable";
-	private static final String _SQL_COUNT_EXPANDOTABLE_WHERE = "SELECT COUNT(expandoTable) FROM ExpandoTable expandoTable WHERE ";
+
+	private static final String _SQL_SELECT_EXPANDOTABLE =
+		"SELECT expandoTable FROM ExpandoTable expandoTable";
+
+	private static final String _SQL_SELECT_EXPANDOTABLE_WHERE =
+		"SELECT expandoTable FROM ExpandoTable expandoTable WHERE ";
+
+	private static final String _SQL_COUNT_EXPANDOTABLE =
+		"SELECT COUNT(expandoTable) FROM ExpandoTable expandoTable";
+
+	private static final String _SQL_COUNT_EXPANDOTABLE_WHERE =
+		"SELECT COUNT(expandoTable) FROM ExpandoTable expandoTable WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoTable.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ExpandoTable exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoTable exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(ExpandoTablePersistenceImpl.class);
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No ExpandoTable exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No ExpandoTable exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExpandoTablePersistenceImpl.class);
+
 }

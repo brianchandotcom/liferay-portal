@@ -27,15 +27,20 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see RatingsStatsModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.ratings.model.impl.RatingsStatsImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.ratings.model.impl.RatingsStatsImpl"
+)
 @ProviderType
 public interface RatingsStats extends RatingsStatsModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.ratings.model.impl.RatingsStatsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<RatingsStats, Long> STATS_ID_ACCESSOR = new Accessor<RatingsStats, Long>() {
+	public static final Accessor<RatingsStats, Long> STATS_ID_ACCESSOR =
+		new Accessor<RatingsStats, Long>() {
+
 			@Override
 			public Long get(RatingsStats ratingsStats) {
 				return ratingsStats.getStatsId();
@@ -50,5 +55,7 @@ public interface RatingsStats extends RatingsStatsModel, PersistedModel {
 			public Class<RatingsStats> getTypeClass() {
 				return RatingsStats.class;
 			}
+
 		};
+
 }

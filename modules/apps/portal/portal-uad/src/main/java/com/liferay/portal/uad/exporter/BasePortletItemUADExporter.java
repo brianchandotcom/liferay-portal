@@ -15,12 +15,10 @@
 package com.liferay.portal.uad.exporter;
 
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.uad.constants.PortalUADConstants;
-
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +35,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BasePortletItemUADExporter extends DynamicQueryUADExporter<PortletItem> {
+public abstract class BasePortletItemUADExporter
+	extends DynamicQueryUADExporter<PortletItem> {
+
 	@Override
 	public Class<PortletItem> getTypeClass() {
 		return PortletItem.class;
@@ -81,4 +81,5 @@ public abstract class BasePortletItemUADExporter extends DynamicQueryUADExporter
 
 	@Reference
 	protected PortletItemLocalService portletItemLocalService;
+
 }

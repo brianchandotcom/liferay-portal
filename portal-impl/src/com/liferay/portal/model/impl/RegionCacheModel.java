@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Region;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class RegionCacheModel implements CacheModel<Region>, Externalizable,
-	MVCCModel {
+public class RegionCacheModel
+	implements CacheModel<Region>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,7 +50,8 @@ public class RegionCacheModel implements CacheModel<Region>, Externalizable,
 		RegionCacheModel regionCacheModel = (RegionCacheModel)obj;
 
 		if ((regionId == regionCacheModel.regionId) &&
-				(mvccVersion == regionCacheModel.mvccVersion)) {
+			(mvccVersion == regionCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -138,8 +139,7 @@ public class RegionCacheModel implements CacheModel<Region>, Externalizable,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(regionId);
@@ -169,4 +169,5 @@ public class RegionCacheModel implements CacheModel<Region>, Externalizable,
 	public String regionCode;
 	public String name;
 	public boolean active;
+
 }

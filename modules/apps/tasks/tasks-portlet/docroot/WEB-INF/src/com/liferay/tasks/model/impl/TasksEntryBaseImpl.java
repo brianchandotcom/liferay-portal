@@ -32,8 +32,9 @@ import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class TasksEntryBaseImpl extends TasksEntryModelImpl
-	implements TasksEntry {
+public abstract class TasksEntryBaseImpl
+	extends TasksEntryModelImpl implements TasksEntry {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class TasksEntryBaseImpl extends TasksEntryModelImpl
 			TasksEntryLocalServiceUtil.updateTasksEntry(this);
 		}
 	}
+
 }

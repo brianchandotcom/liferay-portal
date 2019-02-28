@@ -32,8 +32,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class AssetEntryBaseImpl extends AssetEntryModelImpl
-	implements AssetEntry {
+public abstract class AssetEntryBaseImpl
+	extends AssetEntryModelImpl implements AssetEntry {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class AssetEntryBaseImpl extends AssetEntryModelImpl
 			AssetEntryLocalServiceUtil.updateAssetEntry(this);
 		}
 	}
+
 }

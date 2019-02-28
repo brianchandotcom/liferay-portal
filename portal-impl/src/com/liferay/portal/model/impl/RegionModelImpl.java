@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -59,23 +57,24 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class RegionModelImpl extends BaseModelImpl<Region>
-	implements RegionModel {
+public class RegionModelImpl
+	extends BaseModelImpl<Region> implements RegionModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a region model instance should use the <code>Region</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Region";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "regionId", Types.BIGINT },
-			{ "countryId", Types.BIGINT },
-			{ "regionCode", Types.VARCHAR },
-			{ "name", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"regionId", Types.BIGINT},
+		{"countryId", Types.BIGINT}, {"regionCode", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"active_", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -86,25 +85,42 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Region (mvccVersion LONG default 0 not null,regionId LONG not null primary key,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Region (mvccVersion LONG default 0 not null,regionId LONG not null primary key,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN)";
+
 	public static final String TABLE_SQL_DROP = "drop table Region";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY region.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY Region.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Region"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Region"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Region"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Region"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Region"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Region"),
+		true);
+
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
+
 	public static final long COUNTRYID_COLUMN_BITMASK = 2L;
+
 	public static final long REGIONCODE_COLUMN_BITMASK = 4L;
+
 	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
@@ -150,8 +166,9 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Region"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Region"));
 
 	public RegionModelImpl() {
 	}
@@ -190,14 +207,17 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Region, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Region, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Region, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Region, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Region, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Region)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Region)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -208,15 +228,18 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Region, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Region, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Region, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Region, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((Region)this, entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(Region)this, entry.getValue());
 			}
 		}
 	}
@@ -225,34 +248,46 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Region, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Region, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Region, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Region, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Region, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Region, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Region, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Region, Object>>();
-		Map<String, BiConsumer<Region, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Region, ?>>();
-
+		Map<String, Function<Region, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Region, Object>>();
+		Map<String, BiConsumer<Region, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Region, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Region::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Region, Long>)Region::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Region, Long>)Region::setMvccVersion);
 		attributeGetterFunctions.put("regionId", Region::getRegionId);
-		attributeSetterBiConsumers.put("regionId", (BiConsumer<Region, Long>)Region::setRegionId);
+		attributeSetterBiConsumers.put(
+			"regionId", (BiConsumer<Region, Long>)Region::setRegionId);
 		attributeGetterFunctions.put("countryId", Region::getCountryId);
-		attributeSetterBiConsumers.put("countryId", (BiConsumer<Region, Long>)Region::setCountryId);
+		attributeSetterBiConsumers.put(
+			"countryId", (BiConsumer<Region, Long>)Region::setCountryId);
 		attributeGetterFunctions.put("regionCode", Region::getRegionCode);
-		attributeSetterBiConsumers.put("regionCode", (BiConsumer<Region, String>)Region::setRegionCode);
+		attributeSetterBiConsumers.put(
+			"regionCode", (BiConsumer<Region, String>)Region::setRegionCode);
 		attributeGetterFunctions.put("name", Region::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Region, String>)Region::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Region, String>)Region::setName);
 		attributeGetterFunctions.put("active", Region::getActive);
-		attributeSetterBiConsumers.put("active", (BiConsumer<Region, Boolean>)Region::setActive);
+		attributeSetterBiConsumers.put(
+			"active", (BiConsumer<Region, Boolean>)Region::setActive);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -379,8 +414,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Region.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			0, Region.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -393,8 +428,9 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	@Override
 	public Region toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Region)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Region)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -516,14 +552,17 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public String toString() {
-		Map<String, Function<Region, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Region, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Region, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Region, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Region, Object> attributeGetterFunction = entry.getValue();
 
@@ -544,16 +583,19 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Region, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Region, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Region, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Region, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Region, Object> attributeGetterFunction = entry.getValue();
 
@@ -569,10 +611,12 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Region.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		Region.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Region.class, ModelWrapper.class
-		};
+		Region.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _regionId;
 	private long _countryId;
@@ -586,4 +630,5 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private Region _escapedModel;
+
 }

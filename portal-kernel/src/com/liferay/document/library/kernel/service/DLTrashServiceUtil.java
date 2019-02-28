@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class DLTrashServiceUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,141 +41,153 @@ public class DLTrashServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
-	* Moves the file entry from a trashed folder to the new folder.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long fileEntryId, long newFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	 * Moves the file entry from a trashed folder to the new folder.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 * @param newFolderId the primary key of the new folder
+	 * @param serviceContext the service context to be applied
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			moveFileEntryFromTrash(
+				long fileEntryId, long newFolderId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFileEntryFromTrash(fileEntryId, newFolderId,
-			serviceContext);
+
+		return getService().moveFileEntryFromTrash(
+			fileEntryId, newFolderId, serviceContext);
 	}
 
 	/**
-	* Moves the file entry with the primary key to the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long fileEntryId)
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			moveFileEntryToTrash(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().moveFileEntryToTrash(fileEntryId);
 	}
 
 	/**
-	* Moves the file shortcut from a trashed folder to the new folder.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the service context to be applied
-	* @return the file shortcut
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
-		long fileShortcutId, long newFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	 * Moves the file shortcut from a trashed folder to the new folder.
+	 *
+	 * @param fileShortcutId the primary key of the file shortcut
+	 * @param newFolderId the primary key of the new folder
+	 * @param serviceContext the service context to be applied
+	 * @return the file shortcut
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			moveFileShortcutFromTrash(
+				long fileShortcutId, long newFolderId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFileShortcutFromTrash(fileShortcutId, newFolderId,
-			serviceContext);
+
+		return getService().moveFileShortcutFromTrash(
+			fileShortcutId, newFolderId, serviceContext);
 	}
 
 	/**
-	* Moves the file shortcut with the primary key to the trash portlet.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	* @return the file shortcut
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long fileShortcutId)
+	 * Moves the file shortcut with the primary key to the trash portlet.
+	 *
+	 * @param fileShortcutId the primary key of the file shortcut
+	 * @return the file shortcut
+	 */
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			moveFileShortcutToTrash(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().moveFileShortcutToTrash(fileShortcutId);
 	}
 
 	/**
-	* Moves the folder with the primary key from the trash portlet to the new
-	* parent folder with the primary key.
-	*
-	* @param folderId the primary key of the folder
-	* @param parentFolderId the primary key of the new parent folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
-		long folderId, long parentFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	 * Moves the folder with the primary key from the trash portlet to the new
+	 * parent folder with the primary key.
+	 *
+	 * @param folderId the primary key of the folder
+	 * @param parentFolderId the primary key of the new parent folder
+	 * @param serviceContext the service context to be applied
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.Folder
+			moveFolderFromTrash(
+				long folderId, long parentFolderId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFolderFromTrash(folderId, parentFolderId, serviceContext);
+
+		return getService().moveFolderFromTrash(
+			folderId, parentFolderId, serviceContext);
 	}
 
 	/**
-	* Moves the folder with the primary key to the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long folderId)
+	 * Moves the folder with the primary key to the trash portlet.
+	 *
+	 * @param folderId the primary key of the folder
+	 * @return the file entry
+	 */
+	public static com.liferay.portal.kernel.repository.model.Folder
+			moveFolderToTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return getService().moveFolderToTrash(folderId);
 	}
 
 	/**
-	* Restores the file entry with the primary key from the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	*/
+	 * Restores the file entry with the primary key from the trash portlet.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 */
 	public static void restoreFileEntryFromTrash(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().restoreFileEntryFromTrash(fileEntryId);
 	}
 
 	/**
-	* Restores the file shortcut with the primary key from the trash portlet.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	*/
+	 * Restores the file shortcut with the primary key from the trash portlet.
+	 *
+	 * @param fileShortcutId the primary key of the file shortcut
+	 */
 	public static void restoreFileShortcutFromTrash(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().restoreFileShortcutFromTrash(fileShortcutId);
 	}
 
 	/**
-	* Restores the folder with the primary key from the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	*/
+	 * Restores the folder with the primary key from the trash portlet.
+	 *
+	 * @param folderId the primary key of the folder
+	 */
 	public static void restoreFolderFromTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().restoreFolderFromTrash(folderId);
 	}
 
 	public static DLTrashService getService() {
 		if (_service == null) {
-			_service = (DLTrashService)PortalBeanLocatorUtil.locate(DLTrashService.class.getName());
+			_service = (DLTrashService)PortalBeanLocatorUtil.locate(
+				DLTrashService.class.getName());
 
-			ReferenceRegistry.registerReference(DLTrashServiceUtil.class,
-				"_service");
+			ReferenceRegistry.registerReference(
+				DLTrashServiceUtil.class, "_service");
 		}
 
 		return _service;
 	}
 
 	private static DLTrashService _service;
+
 }

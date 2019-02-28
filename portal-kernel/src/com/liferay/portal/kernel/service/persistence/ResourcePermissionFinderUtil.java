@@ -25,38 +25,48 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class ResourcePermissionFinderUtil {
+
 	public static int countByR_S(long roleId, int[] scopes) {
 		return getFinder().countByR_S(roleId, scopes);
 	}
 
-	public static int countByC_N_S_P_R_A(long companyId, String name,
-		int scope, String primKey, long[] roleIds, long actionId) {
-		return getFinder()
-				   .countByC_N_S_P_R_A(companyId, name, scope, primKey,
-			roleIds, actionId);
+	public static int countByC_N_S_P_R_A(
+		long companyId, String name, int scope, String primKey, long[] roleIds,
+		long actionId) {
+
+		return getFinder().countByC_N_S_P_R_A(
+			companyId, name, scope, primKey, roleIds, actionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.kernel.model.ResourcePermission> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
+	public static java.util.Map
+		<java.io.Serializable,
+		 com.liferay.portal.kernel.model.ResourcePermission> fetchByPrimaryKeys(
+			java.util.Set<java.io.Serializable> primaryKeys) {
+
 		return getFinder().fetchByPrimaryKeys(primaryKeys);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.ResourcePermission> findByResource(
-		long companyId, long groupId, String name, String primKey) {
+	public static java.util.List
+		<com.liferay.portal.kernel.model.ResourcePermission> findByResource(
+			long companyId, long groupId, String name, String primKey) {
+
 		return getFinder().findByResource(companyId, groupId, name, primKey);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.ResourcePermission> findByR_S(
-		long roleId, int[] scopes, int start, int end) {
+	public static java.util.List
+		<com.liferay.portal.kernel.model.ResourcePermission> findByR_S(
+			long roleId, int[] scopes, int start, int end) {
+
 		return getFinder().findByR_S(roleId, scopes, start, end);
 	}
 
 	public static ResourcePermissionFinder getFinder() {
 		if (_finder == null) {
-			_finder = (ResourcePermissionFinder)PortalBeanLocatorUtil.locate(ResourcePermissionFinder.class.getName());
+			_finder = (ResourcePermissionFinder)PortalBeanLocatorUtil.locate(
+				ResourcePermissionFinder.class.getName());
 
-			ReferenceRegistry.registerReference(ResourcePermissionFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(
+				ResourcePermissionFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -65,9 +75,10 @@ public class ResourcePermissionFinderUtil {
 	public void setFinder(ResourcePermissionFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(ResourcePermissionFinderUtil.class,
-			"_finder");
+		ReferenceRegistry.registerReference(
+			ResourcePermissionFinderUtil.class, "_finder");
 	}
 
 	private static ResourcePermissionFinder _finder;
+
 }

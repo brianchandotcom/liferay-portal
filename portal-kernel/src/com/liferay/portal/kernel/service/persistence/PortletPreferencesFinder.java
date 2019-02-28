@@ -22,19 +22,26 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface PortletPreferencesFinder {
-	public long countByO_O_P(long ownerId, int ownerType, String portletId,
+
+	public long countByO_O_P(
+		long ownerId, int ownerType, String portletId,
 		boolean excludeDefaultPreferences);
 
-	public long countByO_O_P_P_P(long ownerId, int ownerType, long plid,
-		String portletId, boolean excludeDefaultPreferences);
+	public long countByO_O_P_P_P(
+		long ownerId, int ownerType, long plid, String portletId,
+		boolean excludeDefaultPreferences);
 
-	public java.util.Map<java.io.Serializable, com.liferay.portal.kernel.model.PortletPreferences> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
+	public java.util.Map
+		<java.io.Serializable,
+		 com.liferay.portal.kernel.model.PortletPreferences> fetchByPrimaryKeys(
+			java.util.Set<java.io.Serializable> primaryKeys);
 
-	public java.util.List<com.liferay.portal.kernel.model.PortletPreferences> findByPortletId(
-		String portletId);
+	public java.util.List<com.liferay.portal.kernel.model.PortletPreferences>
+		findByPortletId(String portletId);
 
-	public java.util.List<com.liferay.portal.kernel.model.PortletPreferences> findByC_G_O_O_P_P(
-		long companyId, long groupId, long ownerId, int ownerType,
-		String portletId, boolean privateLayout);
+	public java.util.List<com.liferay.portal.kernel.model.PortletPreferences>
+		findByC_G_O_O_P_P(
+			long companyId, long groupId, long ownerId, int ownerType,
+			String portletId, boolean privateLayout);
+
 }

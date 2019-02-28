@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-
 import com.liferay.tasks.service.TasksEntryServiceUtil;
 
 /**
@@ -54,20 +53,24 @@ import com.liferay.tasks.service.TasksEntryServiceUtil;
  */
 @ProviderType
 public class TasksEntryServiceHttp {
-	public static com.liferay.tasks.model.TasksEntry addTasksEntry(
-		HttpPrincipal httpPrincipal, String title, int priority,
-		long assigneeUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
-		int dueDateHour, int dueDateMinute, boolean neverDue,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(TasksEntryServiceUtil.class,
-					"addTasksEntry", _addTasksEntryParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, title,
-					priority, assigneeUserId, dueDateMonth, dueDateDay,
-					dueDateYear, dueDateHour, dueDateMinute, neverDue,
-					serviceContext);
+	public static com.liferay.tasks.model.TasksEntry addTasksEntry(
+			HttpPrincipal httpPrincipal, String title, int priority,
+			long assigneeUserId, int dueDateMonth, int dueDateDay,
+			int dueDateYear, int dueDateHour, int dueDateMinute,
+			boolean neverDue,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TasksEntryServiceUtil.class, "addTasksEntry",
+				_addTasksEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, title, priority, assigneeUserId, dueDateMonth,
+				dueDateDay, dueDateYear, dueDateHour, dueDateMinute, neverDue,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -75,11 +78,15 @@ public class TasksEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.tasks.model.TasksEntry)returnObj;
@@ -92,14 +99,16 @@ public class TasksEntryServiceHttp {
 	}
 
 	public static com.liferay.tasks.model.TasksEntry deleteTasksEntry(
-		HttpPrincipal httpPrincipal, long tasksEntryId)
+			HttpPrincipal httpPrincipal, long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(TasksEntryServiceUtil.class,
-					"deleteTasksEntry", _deleteTasksEntryParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					tasksEntryId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				TasksEntryServiceUtil.class, "deleteTasksEntry",
+				_deleteTasksEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, tasksEntryId);
 
 			Object returnObj = null;
 
@@ -107,11 +116,15 @@ public class TasksEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.tasks.model.TasksEntry)returnObj;
@@ -124,14 +137,16 @@ public class TasksEntryServiceHttp {
 	}
 
 	public static com.liferay.tasks.model.TasksEntry getTasksEntry(
-		HttpPrincipal httpPrincipal, long tasksEntryId)
+			HttpPrincipal httpPrincipal, long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(TasksEntryServiceUtil.class,
-					"getTasksEntry", _getTasksEntryParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					tasksEntryId);
+		try {
+			MethodKey methodKey = new MethodKey(
+				TasksEntryServiceUtil.class, "getTasksEntry",
+				_getTasksEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, tasksEntryId);
 
 			Object returnObj = null;
 
@@ -139,11 +154,15 @@ public class TasksEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.tasks.model.TasksEntry)returnObj;
@@ -156,20 +175,22 @@ public class TasksEntryServiceHttp {
 	}
 
 	public static com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		HttpPrincipal httpPrincipal, long tasksEntryId, String title,
-		int priority, long assigneeUserId, long resolverUserId,
-		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
-		int dueDateMinute, boolean neverDue, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			HttpPrincipal httpPrincipal, long tasksEntryId, String title,
+			int priority, long assigneeUserId, long resolverUserId,
+			int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
+			int dueDateMinute, boolean neverDue, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(TasksEntryServiceUtil.class,
-					"updateTasksEntry", _updateTasksEntryParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					tasksEntryId, title, priority, assigneeUserId,
-					resolverUserId, dueDateMonth, dueDateDay, dueDateYear,
-					dueDateHour, dueDateMinute, neverDue, status, serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				TasksEntryServiceUtil.class, "updateTasksEntry",
+				_updateTasksEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, tasksEntryId, title, priority, assigneeUserId,
+				resolverUserId, dueDateMonth, dueDateDay, dueDateYear,
+				dueDateHour, dueDateMinute, neverDue, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -177,11 +198,15 @@ public class TasksEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.tasks.model.TasksEntry)returnObj;
@@ -194,17 +219,19 @@ public class TasksEntryServiceHttp {
 	}
 
 	public static com.liferay.tasks.model.TasksEntry updateTasksEntryStatus(
-		HttpPrincipal httpPrincipal, long tasksEntryId, long resolverUserId,
-		int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			HttpPrincipal httpPrincipal, long tasksEntryId, long resolverUserId,
+			int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(TasksEntryServiceUtil.class,
-					"updateTasksEntryStatus",
-					_updateTasksEntryStatusParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					tasksEntryId, resolverUserId, status, serviceContext);
+		try {
+			MethodKey methodKey = new MethodKey(
+				TasksEntryServiceUtil.class, "updateTasksEntryStatus",
+				_updateTasksEntryStatusParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, tasksEntryId, resolverUserId, status,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -212,11 +239,15 @@ public class TasksEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
 			}
 
 			return (com.liferay.tasks.model.TasksEntry)returnObj;
@@ -228,25 +259,30 @@ public class TasksEntryServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TasksEntryServiceHttp.class);
-	private static final Class<?>[] _addTasksEntryParameterTypes0 = new Class[] {
-			String.class, int.class, long.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+	private static Log _log = LogFactoryUtil.getLog(
+		TasksEntryServiceHttp.class);
+
+	private static final Class<?>[] _addTasksEntryParameterTypes0 =
+		new Class[] {
+			String.class, int.class, long.class, int.class, int.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteTasksEntryParameterTypes1 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getTasksEntryParameterTypes2 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _updateTasksEntryParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deleteTasksEntryParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getTasksEntryParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateTasksEntryParameterTypes3 =
+		new Class[] {
 			long.class, String.class, int.class, long.class, long.class,
-			int.class, int.class, int.class, int.class, int.class, boolean.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, int.class, int.class, int.class, int.class,
+			boolean.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateTasksEntryStatusParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateTasksEntryStatusParameterTypes4 =
+		new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+
 }

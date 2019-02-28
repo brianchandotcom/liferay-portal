@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourceBlock;
@@ -37,8 +36,9 @@ import java.io.ObjectOutput;
  */
 @Deprecated
 @ProviderType
-public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
-	Externalizable, MVCCModel {
+public class ResourceBlockCacheModel
+	implements CacheModel<ResourceBlock>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,10 +49,12 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 			return false;
 		}
 
-		ResourceBlockCacheModel resourceBlockCacheModel = (ResourceBlockCacheModel)obj;
+		ResourceBlockCacheModel resourceBlockCacheModel =
+			(ResourceBlockCacheModel)obj;
 
 		if ((resourceBlockId == resourceBlockCacheModel.resourceBlockId) &&
-				(mvccVersion == resourceBlockCacheModel.mvccVersion)) {
+			(mvccVersion == resourceBlockCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -145,8 +147,7 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(resourceBlockId);
@@ -179,4 +180,5 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	public String name;
 	public String permissionsHash;
 	public long referenceCount;
+
 }

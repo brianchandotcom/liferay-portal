@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
  */
 @ProviderType
 public abstract class PhoneBaseImpl extends PhoneModelImpl implements Phone {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class PhoneBaseImpl extends PhoneModelImpl implements Phone {
 			PhoneLocalServiceUtil.updatePhone(this);
 		}
 	}
+
 }

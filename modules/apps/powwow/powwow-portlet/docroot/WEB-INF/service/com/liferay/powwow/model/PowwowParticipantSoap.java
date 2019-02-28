@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class PowwowParticipantSoap implements Serializable {
+
 	public static PowwowParticipantSoap toSoapModel(PowwowParticipant model) {
 		PowwowParticipantSoap soapModel = new PowwowParticipantSoap();
 
@@ -52,7 +53,9 @@ public class PowwowParticipantSoap implements Serializable {
 
 	public static PowwowParticipantSoap[] toSoapModels(
 		PowwowParticipant[] models) {
-		PowwowParticipantSoap[] soapModels = new PowwowParticipantSoap[models.length];
+
+		PowwowParticipantSoap[] soapModels =
+			new PowwowParticipantSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,10 +66,12 @@ public class PowwowParticipantSoap implements Serializable {
 
 	public static PowwowParticipantSoap[][] toSoapModels(
 		PowwowParticipant[][] models) {
+
 		PowwowParticipantSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new PowwowParticipantSoap[models.length][models[0].length];
+			soapModels =
+				new PowwowParticipantSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new PowwowParticipantSoap[0][0];
@@ -81,7 +86,9 @@ public class PowwowParticipantSoap implements Serializable {
 
 	public static PowwowParticipantSoap[] toSoapModels(
 		List<PowwowParticipant> models) {
-		List<PowwowParticipantSoap> soapModels = new ArrayList<PowwowParticipantSoap>(models.size());
+
+		List<PowwowParticipantSoap> soapModels =
+			new ArrayList<PowwowParticipantSoap>(models.size());
 
 		for (PowwowParticipant model : models) {
 			soapModels.add(toSoapModel(model));
@@ -218,4 +225,5 @@ public class PowwowParticipantSoap implements Serializable {
 	private String _emailAddress;
 	private int _type;
 	private int _status;
+
 }

@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.asset.kernel.service.AssetCategoryPropertyService;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyFinder;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -41,13 +40,14 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl
  * @deprecated As of Judson (7.1.x), replaced by {@link
-            com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
+ com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
  * @generated
  */
 @Deprecated
 public abstract class AssetCategoryPropertyServiceBaseImpl
-	extends BaseServiceImpl implements AssetCategoryPropertyService,
-		IdentifiableOSGiService {
+	extends BaseServiceImpl
+	implements AssetCategoryPropertyService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -59,7 +59,9 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 *
 	 * @return the asset category property local service
 	 */
-	public com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService getAssetCategoryPropertyLocalService() {
+	public com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService
+		getAssetCategoryPropertyLocalService() {
+
 		return assetCategoryPropertyLocalService;
 	}
 
@@ -69,8 +71,11 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 * @param assetCategoryPropertyLocalService the asset category property local service
 	 */
 	public void setAssetCategoryPropertyLocalService(
-		com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService assetCategoryPropertyLocalService) {
-		this.assetCategoryPropertyLocalService = assetCategoryPropertyLocalService;
+		com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService
+			assetCategoryPropertyLocalService) {
+
+		this.assetCategoryPropertyLocalService =
+			assetCategoryPropertyLocalService;
 	}
 
 	/**
@@ -89,6 +94,7 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 */
 	public void setAssetCategoryPropertyService(
 		AssetCategoryPropertyService assetCategoryPropertyService) {
+
 		this.assetCategoryPropertyService = assetCategoryPropertyService;
 	}
 
@@ -97,7 +103,9 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 *
 	 * @return the asset category property persistence
 	 */
-	public AssetCategoryPropertyPersistence getAssetCategoryPropertyPersistence() {
+	public AssetCategoryPropertyPersistence
+		getAssetCategoryPropertyPersistence() {
+
 		return assetCategoryPropertyPersistence;
 	}
 
@@ -108,7 +116,9 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 */
 	public void setAssetCategoryPropertyPersistence(
 		AssetCategoryPropertyPersistence assetCategoryPropertyPersistence) {
-		this.assetCategoryPropertyPersistence = assetCategoryPropertyPersistence;
+
+		this.assetCategoryPropertyPersistence =
+			assetCategoryPropertyPersistence;
 	}
 
 	/**
@@ -127,6 +137,7 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 */
 	public void setAssetCategoryPropertyFinder(
 		AssetCategoryPropertyFinder assetCategoryPropertyFinder) {
+
 		this.assetCategoryPropertyFinder = assetCategoryPropertyFinder;
 	}
 
@@ -135,7 +146,9 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -145,7 +158,9 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -180,15 +195,16 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = assetCategoryPropertyPersistence.getDataSource();
+			DataSource dataSource =
+				assetCategoryPropertyPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -197,14 +213,25 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService.class)
-	protected com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService assetCategoryPropertyLocalService;
+	@BeanReference(
+		type = com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService.class
+	)
+	protected com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService
+		assetCategoryPropertyLocalService;
+
 	@BeanReference(type = AssetCategoryPropertyService.class)
 	protected AssetCategoryPropertyService assetCategoryPropertyService;
+
 	@BeanReference(type = AssetCategoryPropertyPersistence.class)
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;
+
 	@BeanReference(type = AssetCategoryPropertyFinder.class)
 	protected AssetCategoryPropertyFinder assetCategoryPropertyFinder;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
 }

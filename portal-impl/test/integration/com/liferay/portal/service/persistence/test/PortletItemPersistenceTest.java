@@ -37,13 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -54,14 +47,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class PortletItemPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -101,7 +103,8 @@ public class PortletItemPersistenceTest {
 
 		_persistence.remove(newPortletItem);
 
-		PortletItem existingPortletItem = _persistence.fetchByPrimaryKey(newPortletItem.getPrimaryKey());
+		PortletItem existingPortletItem = _persistence.fetchByPrimaryKey(
+			newPortletItem.getPrimaryKey());
 
 		Assert.assertNull(existingPortletItem);
 	}
@@ -139,46 +142,50 @@ public class PortletItemPersistenceTest {
 
 		_portletItems.add(_persistence.update(newPortletItem));
 
-		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
+		PortletItem existingPortletItem = _persistence.findByPrimaryKey(
+			newPortletItem.getPrimaryKey());
 
-		Assert.assertEquals(existingPortletItem.getMvccVersion(),
+		Assert.assertEquals(
+			existingPortletItem.getMvccVersion(),
 			newPortletItem.getMvccVersion());
-		Assert.assertEquals(existingPortletItem.getPortletItemId(),
+		Assert.assertEquals(
+			existingPortletItem.getPortletItemId(),
 			newPortletItem.getPortletItemId());
-		Assert.assertEquals(existingPortletItem.getGroupId(),
-			newPortletItem.getGroupId());
-		Assert.assertEquals(existingPortletItem.getCompanyId(),
-			newPortletItem.getCompanyId());
-		Assert.assertEquals(existingPortletItem.getUserId(),
-			newPortletItem.getUserId());
-		Assert.assertEquals(existingPortletItem.getUserName(),
-			newPortletItem.getUserName());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingPortletItem.getCreateDate()),
+		Assert.assertEquals(
+			existingPortletItem.getGroupId(), newPortletItem.getGroupId());
+		Assert.assertEquals(
+			existingPortletItem.getCompanyId(), newPortletItem.getCompanyId());
+		Assert.assertEquals(
+			existingPortletItem.getUserId(), newPortletItem.getUserId());
+		Assert.assertEquals(
+			existingPortletItem.getUserName(), newPortletItem.getUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingPortletItem.getCreateDate()),
 			Time.getShortTimestamp(newPortletItem.getCreateDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingPortletItem.getModifiedDate()),
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingPortletItem.getModifiedDate()),
 			Time.getShortTimestamp(newPortletItem.getModifiedDate()));
-		Assert.assertEquals(existingPortletItem.getName(),
-			newPortletItem.getName());
-		Assert.assertEquals(existingPortletItem.getPortletId(),
-			newPortletItem.getPortletId());
-		Assert.assertEquals(existingPortletItem.getClassNameId(),
+		Assert.assertEquals(
+			existingPortletItem.getName(), newPortletItem.getName());
+		Assert.assertEquals(
+			existingPortletItem.getPortletId(), newPortletItem.getPortletId());
+		Assert.assertEquals(
+			existingPortletItem.getClassNameId(),
 			newPortletItem.getClassNameId());
 	}
 
 	@Test
 	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		_persistence.countByG_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByG_P_C() throws Exception {
-		_persistence.countByG_P_C(RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextLong());
+		_persistence.countByG_P_C(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
 
 		_persistence.countByG_P_C(0L, "null", 0L);
 
@@ -187,8 +194,8 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testCountByG_N_P_C() throws Exception {
-		_persistence.countByG_N_P_C(RandomTestUtil.nextLong(), "", "",
-			RandomTestUtil.nextLong());
+		_persistence.countByG_N_P_C(
+			RandomTestUtil.nextLong(), "", "", RandomTestUtil.nextLong());
 
 		_persistence.countByG_N_P_C(0L, "null", "null", 0L);
 
@@ -199,7 +206,8 @@ public class PortletItemPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PortletItem newPortletItem = addPortletItem();
 
-		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
+		PortletItem existingPortletItem = _persistence.findByPrimaryKey(
+			newPortletItem.getPrimaryKey());
 
 		Assert.assertEquals(existingPortletItem, newPortletItem);
 	}
@@ -213,23 +221,24 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<PortletItem> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("PortletItem",
-			"mvccVersion", true, "portletItemId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "portletId", true,
-			"classNameId", true);
+		return OrderByComparatorFactoryUtil.create(
+			"PortletItem", "mvccVersion", true, "portletItemId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"portletId", true, "classNameId", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		PortletItem newPortletItem = addPortletItem();
 
-		PortletItem existingPortletItem = _persistence.fetchByPrimaryKey(newPortletItem.getPrimaryKey());
+		PortletItem existingPortletItem = _persistence.fetchByPrimaryKey(
+			newPortletItem.getPrimaryKey());
 
 		Assert.assertEquals(existingPortletItem, newPortletItem);
 	}
@@ -246,6 +255,7 @@ public class PortletItemPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		PortletItem newPortletItem1 = addPortletItem();
 		PortletItem newPortletItem2 = addPortletItem();
 
@@ -254,18 +264,20 @@ public class PortletItemPersistenceTest {
 		primaryKeys.add(newPortletItem1.getPrimaryKey());
 		primaryKeys.add(newPortletItem2.getPrimaryKey());
 
-		Map<Serializable, PortletItem> portletItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortletItem> portletItems =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, portletItems.size());
-		Assert.assertEquals(newPortletItem1,
-			portletItems.get(newPortletItem1.getPrimaryKey()));
-		Assert.assertEquals(newPortletItem2,
-			portletItems.get(newPortletItem2.getPrimaryKey()));
+		Assert.assertEquals(
+			newPortletItem1, portletItems.get(newPortletItem1.getPrimaryKey()));
+		Assert.assertEquals(
+			newPortletItem2, portletItems.get(newPortletItem2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -275,7 +287,8 @@ public class PortletItemPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, PortletItem> portletItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortletItem> portletItems =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(portletItems.isEmpty());
 	}
@@ -283,6 +296,7 @@ public class PortletItemPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		PortletItem newPortletItem = addPortletItem();
 
 		long pk = RandomTestUtil.nextLong();
@@ -292,52 +306,57 @@ public class PortletItemPersistenceTest {
 		primaryKeys.add(newPortletItem.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, PortletItem> portletItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortletItem> portletItems =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, portletItems.size());
-		Assert.assertEquals(newPortletItem,
-			portletItems.get(newPortletItem.getPrimaryKey()));
+		Assert.assertEquals(
+			newPortletItem, portletItems.get(newPortletItem.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, PortletItem> portletItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortletItem> portletItems =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(portletItems.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		PortletItem newPortletItem = addPortletItem();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newPortletItem.getPrimaryKey());
 
-		Map<Serializable, PortletItem> portletItems = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, PortletItem> portletItems =
+			_persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, portletItems.size());
-		Assert.assertEquals(newPortletItem,
-			portletItems.get(newPortletItem.getPrimaryKey()));
+		Assert.assertEquals(
+			newPortletItem, portletItems.get(newPortletItem.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = PortletItemLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			PortletItemLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortletItem>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<PortletItem>() {
+
 				@Override
 				public void performAction(PortletItem portletItem) {
 					Assert.assertNotNull(portletItem);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -346,17 +365,18 @@ public class PortletItemPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		PortletItem newPortletItem = addPortletItem();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortletItem.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletItemId",
-				newPortletItem.getPortletItemId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"portletItemId", newPortletItem.getPortletItemId()));
 
-		List<PortletItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortletItem> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -367,32 +387,34 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortletItem.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletItemId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"portletItemId", RandomTestUtil.nextLong()));
 
-		List<PortletItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortletItem> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		PortletItem newPortletItem = addPortletItem();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortletItem.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"portletItemId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("portletItemId"));
 
 		Object newPortletItemId = newPortletItem.getPortletItemId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("portletItemId",
-				new Object[] { newPortletItemId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"portletItemId", new Object[] {newPortletItemId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -405,14 +427,15 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortletItem.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"portletItemId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("portletItemId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("portletItemId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"portletItemId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -425,20 +448,29 @@ public class PortletItemPersistenceTest {
 
 		_persistence.clearCache();
 
-		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
+		PortletItem existingPortletItem = _persistence.findByPrimaryKey(
+			newPortletItem.getPrimaryKey());
 
-		Assert.assertEquals(Long.valueOf(existingPortletItem.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingPortletItem,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingPortletItem.getName(),
-				ReflectionTestUtil.invoke(existingPortletItem,
-					"getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(Objects.equals(existingPortletItem.getPortletId(),
-				ReflectionTestUtil.invoke(existingPortletItem,
-					"getOriginalPortletId", new Class<?>[0])));
-		Assert.assertEquals(Long.valueOf(existingPortletItem.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingPortletItem,
-				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingPortletItem.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingPortletItem, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingPortletItem.getName(),
+				ReflectionTestUtil.invoke(
+					existingPortletItem, "getOriginalName", new Class<?>[0])));
+		Assert.assertTrue(
+			Objects.equals(
+				existingPortletItem.getPortletId(),
+				ReflectionTestUtil.invoke(
+					existingPortletItem, "getOriginalPortletId",
+					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingPortletItem.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingPortletItem, "getOriginalClassNameId",
+				new Class<?>[0]));
 	}
 
 	protected PortletItem addPortletItem() throws Exception {
@@ -474,4 +506,5 @@ public class PortletItemPersistenceTest {
 	private List<PortletItem> _portletItems = new ArrayList<PortletItem>();
 	private PortletItemPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

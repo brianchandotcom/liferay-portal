@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class RecentLayoutBranchWrapper extends BaseModelWrapper<RecentLayoutBranch>
+public class RecentLayoutBranchWrapper
+	extends BaseModelWrapper<RecentLayoutBranch>
 	implements RecentLayoutBranch, ModelWrapper<RecentLayoutBranch> {
+
 	public RecentLayoutBranchWrapper(RecentLayoutBranch recentLayoutBranch) {
 		super(recentLayoutBranch);
 	}
@@ -61,7 +63,8 @@ public class RecentLayoutBranchWrapper extends BaseModelWrapper<RecentLayoutBran
 			setMvccVersion(mvccVersion);
 		}
 
-		Long recentLayoutBranchId = (Long)attributes.get("recentLayoutBranchId");
+		Long recentLayoutBranchId = (Long)attributes.get(
+			"recentLayoutBranchId");
 
 		if (recentLayoutBranchId != null) {
 			setRecentLayoutBranchId(recentLayoutBranchId);
@@ -105,100 +108,100 @@ public class RecentLayoutBranchWrapper extends BaseModelWrapper<RecentLayoutBran
 	}
 
 	/**
-	* Returns the company ID of this recent layout branch.
-	*
-	* @return the company ID of this recent layout branch
-	*/
+	 * Returns the company ID of this recent layout branch.
+	 *
+	 * @return the company ID of this recent layout branch
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the group ID of this recent layout branch.
-	*
-	* @return the group ID of this recent layout branch
-	*/
+	 * Returns the group ID of this recent layout branch.
+	 *
+	 * @return the group ID of this recent layout branch
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the layout branch ID of this recent layout branch.
-	*
-	* @return the layout branch ID of this recent layout branch
-	*/
+	 * Returns the layout branch ID of this recent layout branch.
+	 *
+	 * @return the layout branch ID of this recent layout branch
+	 */
 	@Override
 	public long getLayoutBranchId() {
 		return model.getLayoutBranchId();
 	}
 
 	/**
-	* Returns the layout set branch ID of this recent layout branch.
-	*
-	* @return the layout set branch ID of this recent layout branch
-	*/
+	 * Returns the layout set branch ID of this recent layout branch.
+	 *
+	 * @return the layout set branch ID of this recent layout branch
+	 */
 	@Override
 	public long getLayoutSetBranchId() {
 		return model.getLayoutSetBranchId();
 	}
 
 	/**
-	* Returns the mvcc version of this recent layout branch.
-	*
-	* @return the mvcc version of this recent layout branch
-	*/
+	 * Returns the mvcc version of this recent layout branch.
+	 *
+	 * @return the mvcc version of this recent layout branch
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the plid of this recent layout branch.
-	*
-	* @return the plid of this recent layout branch
-	*/
+	 * Returns the plid of this recent layout branch.
+	 *
+	 * @return the plid of this recent layout branch
+	 */
 	@Override
 	public long getPlid() {
 		return model.getPlid();
 	}
 
 	/**
-	* Returns the primary key of this recent layout branch.
-	*
-	* @return the primary key of this recent layout branch
-	*/
+	 * Returns the primary key of this recent layout branch.
+	 *
+	 * @return the primary key of this recent layout branch
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the recent layout branch ID of this recent layout branch.
-	*
-	* @return the recent layout branch ID of this recent layout branch
-	*/
+	 * Returns the recent layout branch ID of this recent layout branch.
+	 *
+	 * @return the recent layout branch ID of this recent layout branch
+	 */
 	@Override
 	public long getRecentLayoutBranchId() {
 		return model.getRecentLayoutBranchId();
 	}
 
 	/**
-	* Returns the user ID of this recent layout branch.
-	*
-	* @return the user ID of this recent layout branch
-	*/
+	 * Returns the user ID of this recent layout branch.
+	 *
+	 * @return the user ID of this recent layout branch
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user uuid of this recent layout branch.
-	*
-	* @return the user uuid of this recent layout branch
-	*/
+	 * Returns the user uuid of this recent layout branch.
+	 *
+	 * @return the user uuid of this recent layout branch
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -210,100 +213,100 @@ public class RecentLayoutBranchWrapper extends BaseModelWrapper<RecentLayoutBran
 	}
 
 	/**
-	* Sets the company ID of this recent layout branch.
-	*
-	* @param companyId the company ID of this recent layout branch
-	*/
+	 * Sets the company ID of this recent layout branch.
+	 *
+	 * @param companyId the company ID of this recent layout branch
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the group ID of this recent layout branch.
-	*
-	* @param groupId the group ID of this recent layout branch
-	*/
+	 * Sets the group ID of this recent layout branch.
+	 *
+	 * @param groupId the group ID of this recent layout branch
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the layout branch ID of this recent layout branch.
-	*
-	* @param layoutBranchId the layout branch ID of this recent layout branch
-	*/
+	 * Sets the layout branch ID of this recent layout branch.
+	 *
+	 * @param layoutBranchId the layout branch ID of this recent layout branch
+	 */
 	@Override
 	public void setLayoutBranchId(long layoutBranchId) {
 		model.setLayoutBranchId(layoutBranchId);
 	}
 
 	/**
-	* Sets the layout set branch ID of this recent layout branch.
-	*
-	* @param layoutSetBranchId the layout set branch ID of this recent layout branch
-	*/
+	 * Sets the layout set branch ID of this recent layout branch.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID of this recent layout branch
+	 */
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
 		model.setLayoutSetBranchId(layoutSetBranchId);
 	}
 
 	/**
-	* Sets the mvcc version of this recent layout branch.
-	*
-	* @param mvccVersion the mvcc version of this recent layout branch
-	*/
+	 * Sets the mvcc version of this recent layout branch.
+	 *
+	 * @param mvccVersion the mvcc version of this recent layout branch
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the plid of this recent layout branch.
-	*
-	* @param plid the plid of this recent layout branch
-	*/
+	 * Sets the plid of this recent layout branch.
+	 *
+	 * @param plid the plid of this recent layout branch
+	 */
 	@Override
 	public void setPlid(long plid) {
 		model.setPlid(plid);
 	}
 
 	/**
-	* Sets the primary key of this recent layout branch.
-	*
-	* @param primaryKey the primary key of this recent layout branch
-	*/
+	 * Sets the primary key of this recent layout branch.
+	 *
+	 * @param primaryKey the primary key of this recent layout branch
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the recent layout branch ID of this recent layout branch.
-	*
-	* @param recentLayoutBranchId the recent layout branch ID of this recent layout branch
-	*/
+	 * Sets the recent layout branch ID of this recent layout branch.
+	 *
+	 * @param recentLayoutBranchId the recent layout branch ID of this recent layout branch
+	 */
 	@Override
 	public void setRecentLayoutBranchId(long recentLayoutBranchId) {
 		model.setRecentLayoutBranchId(recentLayoutBranchId);
 	}
 
 	/**
-	* Sets the user ID of this recent layout branch.
-	*
-	* @param userId the user ID of this recent layout branch
-	*/
+	 * Sets the user ID of this recent layout branch.
+	 *
+	 * @param userId the user ID of this recent layout branch
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user uuid of this recent layout branch.
-	*
-	* @param userUuid the user uuid of this recent layout branch
-	*/
+	 * Sets the user uuid of this recent layout branch.
+	 *
+	 * @param userUuid the user uuid of this recent layout branch
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -312,6 +315,8 @@ public class RecentLayoutBranchWrapper extends BaseModelWrapper<RecentLayoutBran
 	@Override
 	protected RecentLayoutBranchWrapper wrap(
 		RecentLayoutBranch recentLayoutBranch) {
+
 		return new RecentLayoutBranchWrapper(recentLayoutBranch);
 	}
+
 }

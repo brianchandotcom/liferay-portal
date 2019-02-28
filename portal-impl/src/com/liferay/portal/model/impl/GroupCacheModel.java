@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -35,8 +34,9 @@ import java.io.ObjectOutput;
  * @generated
  */
 @ProviderType
-public class GroupCacheModel implements CacheModel<Group>, Externalizable,
-	MVCCModel {
+public class GroupCacheModel
+	implements CacheModel<Group>, Externalizable, MVCCModel {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -50,7 +50,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 		GroupCacheModel groupCacheModel = (GroupCacheModel)obj;
 
 		if ((groupId == groupCacheModel.groupId) &&
-				(mvccVersion == groupCacheModel.mvccVersion)) {
+			(mvccVersion == groupCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -246,8 +247,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
 		if (uuid == null) {
@@ -350,4 +350,5 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable,
 	public int remoteStagingGroupCount;
 	public boolean inheritContent;
 	public boolean active;
+
 }

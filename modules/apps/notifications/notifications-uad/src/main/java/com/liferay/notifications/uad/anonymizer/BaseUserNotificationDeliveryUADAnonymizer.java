@@ -15,13 +15,11 @@
 package com.liferay.notifications.uad.anonymizer;
 
 import com.liferay.notifications.uad.constants.NotificationsUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
-
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
@@ -40,10 +38,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUserNotificationDeliveryUADAnonymizer
 	extends DynamicQueryUADAnonymizer<UserNotificationDelivery> {
+
 	@Override
 	public void autoAnonymize(
-		UserNotificationDelivery userNotificationDelivery, long userId,
-		User anonymousUser) throws PortalException {
+			UserNotificationDelivery userNotificationDelivery, long userId,
+			User anonymousUser)
+		throws PortalException {
+
 		if (userNotificationDelivery.getUserId() == userId) {
 			delete(userNotificationDelivery);
 		}
@@ -52,7 +53,9 @@ public abstract class BaseUserNotificationDeliveryUADAnonymizer
 	@Override
 	public void delete(UserNotificationDelivery userNotificationDelivery)
 		throws PortalException {
-		userNotificationDeliveryLocalService.deleteUserNotificationDelivery(userNotificationDelivery);
+
+		userNotificationDeliveryLocalService.deleteUserNotificationDelivery(
+			userNotificationDelivery);
 	}
 
 	@Override
@@ -67,9 +70,12 @@ public abstract class BaseUserNotificationDeliveryUADAnonymizer
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return NotificationsUADConstants.USER_ID_FIELD_NAMES_USER_NOTIFICATION_DELIVERY;
+		return NotificationsUADConstants.
+			USER_ID_FIELD_NAMES_USER_NOTIFICATION_DELIVERY;
 	}
 
 	@Reference
-	protected UserNotificationDeliveryLocalService userNotificationDeliveryLocalService;
+	protected UserNotificationDeliveryLocalService
+		userNotificationDeliveryLocalService;
+
 }

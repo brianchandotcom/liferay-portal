@@ -63,15 +63,20 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class MembershipRequestServiceSoap {
-	public static com.liferay.portal.kernel.model.MembershipRequestSoap addMembershipRequest(
-		long groupId, String comments,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.MembershipRequest returnValue = MembershipRequestServiceUtil.addMembershipRequest(groupId,
-					comments, serviceContext);
 
-			return com.liferay.portal.kernel.model.MembershipRequestSoap.toSoapModel(returnValue);
+	public static com.liferay.portal.kernel.model.MembershipRequestSoap
+			addMembershipRequest(
+				long groupId, String comments,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.MembershipRequest returnValue =
+				MembershipRequestServiceUtil.addMembershipRequest(
+					groupId, comments, serviceContext);
+
+			return com.liferay.portal.kernel.model.MembershipRequestSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -82,9 +87,10 @@ public class MembershipRequestServiceSoap {
 
 	public static void deleteMembershipRequests(long groupId, long statusId)
 		throws RemoteException {
+
 		try {
-			MembershipRequestServiceUtil.deleteMembershipRequests(groupId,
-				statusId);
+			MembershipRequestServiceUtil.deleteMembershipRequests(
+				groupId, statusId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,27 +99,17 @@ public class MembershipRequestServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.MembershipRequestSoap getMembershipRequest(
-		long membershipRequestId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.MembershipRequest returnValue = MembershipRequestServiceUtil.getMembershipRequest(membershipRequestId);
-
-			return com.liferay.portal.kernel.model.MembershipRequestSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void updateStatus(long membershipRequestId,
-		String reviewComments, long statusId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.kernel.model.MembershipRequestSoap
+			getMembershipRequest(long membershipRequestId)
 		throws RemoteException {
+
 		try {
-			MembershipRequestServiceUtil.updateStatus(membershipRequestId,
-				reviewComments, statusId, serviceContext);
+			com.liferay.portal.kernel.model.MembershipRequest returnValue =
+				MembershipRequestServiceUtil.getMembershipRequest(
+					membershipRequestId);
+
+			return com.liferay.portal.kernel.model.MembershipRequestSoap.
+				toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -122,5 +118,23 @@ public class MembershipRequestServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MembershipRequestServiceSoap.class);
+	public static void updateStatus(
+			long membershipRequestId, String reviewComments, long statusId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			MembershipRequestServiceUtil.updateStatus(
+				membershipRequestId, reviewComments, statusId, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		MembershipRequestServiceSoap.class);
+
 }

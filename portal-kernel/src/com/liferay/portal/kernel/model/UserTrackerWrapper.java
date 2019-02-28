@@ -32,8 +32,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
+public class UserTrackerWrapper
+	extends BaseModelWrapper<UserTracker>
 	implements UserTracker, ModelWrapper<UserTracker> {
+
 	public UserTrackerWrapper(UserTracker userTracker) {
 		super(userTracker);
 	}
@@ -123,10 +125,10 @@ public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
 	}
 
 	/**
-	* Returns the company ID of this user tracker.
-	*
-	* @return the company ID of this user tracker
-	*/
+	 * Returns the company ID of this user tracker.
+	 *
+	 * @return the company ID of this user tracker
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
@@ -148,20 +150,20 @@ public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
 	}
 
 	/**
-	* Returns the modified date of this user tracker.
-	*
-	* @return the modified date of this user tracker
-	*/
+	 * Returns the modified date of this user tracker.
+	 *
+	 * @return the modified date of this user tracker
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the mvcc version of this user tracker.
-	*
-	* @return the mvcc version of this user tracker
-	*/
+	 * Returns the mvcc version of this user tracker.
+	 *
+	 * @return the mvcc version of this user tracker
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
@@ -173,80 +175,80 @@ public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
 	}
 
 	/**
-	* Returns the primary key of this user tracker.
-	*
-	* @return the primary key of this user tracker
-	*/
+	 * Returns the primary key of this user tracker.
+	 *
+	 * @return the primary key of this user tracker
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the remote addr of this user tracker.
-	*
-	* @return the remote addr of this user tracker
-	*/
+	 * Returns the remote addr of this user tracker.
+	 *
+	 * @return the remote addr of this user tracker
+	 */
 	@Override
 	public String getRemoteAddr() {
 		return model.getRemoteAddr();
 	}
 
 	/**
-	* Returns the remote host of this user tracker.
-	*
-	* @return the remote host of this user tracker
-	*/
+	 * Returns the remote host of this user tracker.
+	 *
+	 * @return the remote host of this user tracker
+	 */
 	@Override
 	public String getRemoteHost() {
 		return model.getRemoteHost();
 	}
 
 	/**
-	* Returns the session ID of this user tracker.
-	*
-	* @return the session ID of this user tracker
-	*/
+	 * Returns the session ID of this user tracker.
+	 *
+	 * @return the session ID of this user tracker
+	 */
 	@Override
 	public String getSessionId() {
 		return model.getSessionId();
 	}
 
 	/**
-	* Returns the user agent of this user tracker.
-	*
-	* @return the user agent of this user tracker
-	*/
+	 * Returns the user agent of this user tracker.
+	 *
+	 * @return the user agent of this user tracker
+	 */
 	@Override
 	public String getUserAgent() {
 		return model.getUserAgent();
 	}
 
 	/**
-	* Returns the user ID of this user tracker.
-	*
-	* @return the user ID of this user tracker
-	*/
+	 * Returns the user ID of this user tracker.
+	 *
+	 * @return the user ID of this user tracker
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user tracker ID of this user tracker.
-	*
-	* @return the user tracker ID of this user tracker
-	*/
+	 * Returns the user tracker ID of this user tracker.
+	 *
+	 * @return the user tracker ID of this user tracker
+	 */
 	@Override
 	public long getUserTrackerId() {
 		return model.getUserTrackerId();
 	}
 
 	/**
-	* Returns the user uuid of this user tracker.
-	*
-	* @return the user uuid of this user tracker
-	*/
+	 * Returns the user uuid of this user tracker.
+	 *
+	 * @return the user uuid of this user tracker
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -258,110 +260,110 @@ public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
 	}
 
 	/**
-	* Sets the company ID of this user tracker.
-	*
-	* @param companyId the company ID of this user tracker
-	*/
+	 * Sets the company ID of this user tracker.
+	 *
+	 * @param companyId the company ID of this user tracker
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the modified date of this user tracker.
-	*
-	* @param modifiedDate the modified date of this user tracker
-	*/
+	 * Sets the modified date of this user tracker.
+	 *
+	 * @param modifiedDate the modified date of this user tracker
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the mvcc version of this user tracker.
-	*
-	* @param mvccVersion the mvcc version of this user tracker
-	*/
+	 * Sets the mvcc version of this user tracker.
+	 *
+	 * @param mvccVersion the mvcc version of this user tracker
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the primary key of this user tracker.
-	*
-	* @param primaryKey the primary key of this user tracker
-	*/
+	 * Sets the primary key of this user tracker.
+	 *
+	 * @param primaryKey the primary key of this user tracker
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the remote addr of this user tracker.
-	*
-	* @param remoteAddr the remote addr of this user tracker
-	*/
+	 * Sets the remote addr of this user tracker.
+	 *
+	 * @param remoteAddr the remote addr of this user tracker
+	 */
 	@Override
 	public void setRemoteAddr(String remoteAddr) {
 		model.setRemoteAddr(remoteAddr);
 	}
 
 	/**
-	* Sets the remote host of this user tracker.
-	*
-	* @param remoteHost the remote host of this user tracker
-	*/
+	 * Sets the remote host of this user tracker.
+	 *
+	 * @param remoteHost the remote host of this user tracker
+	 */
 	@Override
 	public void setRemoteHost(String remoteHost) {
 		model.setRemoteHost(remoteHost);
 	}
 
 	/**
-	* Sets the session ID of this user tracker.
-	*
-	* @param sessionId the session ID of this user tracker
-	*/
+	 * Sets the session ID of this user tracker.
+	 *
+	 * @param sessionId the session ID of this user tracker
+	 */
 	@Override
 	public void setSessionId(String sessionId) {
 		model.setSessionId(sessionId);
 	}
 
 	/**
-	* Sets the user agent of this user tracker.
-	*
-	* @param userAgent the user agent of this user tracker
-	*/
+	 * Sets the user agent of this user tracker.
+	 *
+	 * @param userAgent the user agent of this user tracker
+	 */
 	@Override
 	public void setUserAgent(String userAgent) {
 		model.setUserAgent(userAgent);
 	}
 
 	/**
-	* Sets the user ID of this user tracker.
-	*
-	* @param userId the user ID of this user tracker
-	*/
+	 * Sets the user ID of this user tracker.
+	 *
+	 * @param userId the user ID of this user tracker
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user tracker ID of this user tracker.
-	*
-	* @param userTrackerId the user tracker ID of this user tracker
-	*/
+	 * Sets the user tracker ID of this user tracker.
+	 *
+	 * @param userTrackerId the user tracker ID of this user tracker
+	 */
 	@Override
 	public void setUserTrackerId(long userTrackerId) {
 		model.setUserTrackerId(userTrackerId);
 	}
 
 	/**
-	* Sets the user uuid of this user tracker.
-	*
-	* @param userUuid the user uuid of this user tracker
-	*/
+	 * Sets the user uuid of this user tracker.
+	 *
+	 * @param userUuid the user uuid of this user tracker
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
@@ -371,4 +373,5 @@ public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
 	protected UserTrackerWrapper wrap(UserTracker userTracker) {
 		return new UserTrackerWrapper(userTracker);
 	}
+
 }

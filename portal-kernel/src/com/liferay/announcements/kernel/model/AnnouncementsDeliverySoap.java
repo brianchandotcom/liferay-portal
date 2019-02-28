@@ -29,8 +29,10 @@ import java.util.List;
  */
 @ProviderType
 public class AnnouncementsDeliverySoap implements Serializable {
+
 	public static AnnouncementsDeliverySoap toSoapModel(
 		AnnouncementsDelivery model) {
+
 		AnnouncementsDeliverySoap soapModel = new AnnouncementsDeliverySoap();
 
 		soapModel.setDeliveryId(model.getDeliveryId());
@@ -46,7 +48,9 @@ public class AnnouncementsDeliverySoap implements Serializable {
 
 	public static AnnouncementsDeliverySoap[] toSoapModels(
 		AnnouncementsDelivery[] models) {
-		AnnouncementsDeliverySoap[] soapModels = new AnnouncementsDeliverySoap[models.length];
+
+		AnnouncementsDeliverySoap[] soapModels =
+			new AnnouncementsDeliverySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -57,10 +61,12 @@ public class AnnouncementsDeliverySoap implements Serializable {
 
 	public static AnnouncementsDeliverySoap[][] toSoapModels(
 		AnnouncementsDelivery[][] models) {
+
 		AnnouncementsDeliverySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new AnnouncementsDeliverySoap[models.length][models[0].length];
+			soapModels =
+				new AnnouncementsDeliverySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new AnnouncementsDeliverySoap[0][0];
@@ -75,13 +81,16 @@ public class AnnouncementsDeliverySoap implements Serializable {
 
 	public static AnnouncementsDeliverySoap[] toSoapModels(
 		List<AnnouncementsDelivery> models) {
-		List<AnnouncementsDeliverySoap> soapModels = new ArrayList<AnnouncementsDeliverySoap>(models.size());
+
+		List<AnnouncementsDeliverySoap> soapModels =
+			new ArrayList<AnnouncementsDeliverySoap>(models.size());
 
 		for (AnnouncementsDelivery model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new AnnouncementsDeliverySoap[soapModels.size()]);
+		return soapModels.toArray(
+			new AnnouncementsDeliverySoap[soapModels.size()]);
 	}
 
 	public AnnouncementsDeliverySoap() {
@@ -170,4 +179,5 @@ public class AnnouncementsDeliverySoap implements Serializable {
 	private boolean _email;
 	private boolean _sms;
 	private boolean _website;
+
 }

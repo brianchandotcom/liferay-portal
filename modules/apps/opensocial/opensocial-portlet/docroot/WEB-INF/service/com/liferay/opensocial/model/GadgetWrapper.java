@@ -17,7 +17,6 @@ package com.liferay.opensocial.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -35,8 +34,9 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class GadgetWrapper extends BaseModelWrapper<Gadget> implements Gadget,
-	ModelWrapper<Gadget> {
+public class GadgetWrapper
+	extends BaseModelWrapper<Gadget> implements Gadget, ModelWrapper<Gadget> {
+
 	public GadgetWrapper(Gadget gadget) {
 		super(gadget);
 	}
@@ -103,7 +103,7 @@ public class GadgetWrapper extends BaseModelWrapper<Gadget> implements Gadget,
 		}
 
 		String portletCategoryNames = (String)attributes.get(
-				"portletCategoryNames");
+			"portletCategoryNames");
 
 		if (portletCategoryNames != null) {
 			setPortletCategoryNames(portletCategoryNames);
@@ -117,100 +117,100 @@ public class GadgetWrapper extends BaseModelWrapper<Gadget> implements Gadget,
 	}
 
 	/**
-	* Returns the company ID of this gadget.
-	*
-	* @return the company ID of this gadget
-	*/
+	 * Returns the company ID of this gadget.
+	 *
+	 * @return the company ID of this gadget
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this gadget.
-	*
-	* @return the create date of this gadget
-	*/
+	 * Returns the create date of this gadget.
+	 *
+	 * @return the create date of this gadget
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the gadget ID of this gadget.
-	*
-	* @return the gadget ID of this gadget
-	*/
+	 * Returns the gadget ID of this gadget.
+	 *
+	 * @return the gadget ID of this gadget
+	 */
 	@Override
 	public long getGadgetId() {
 		return model.getGadgetId();
 	}
 
 	/**
-	* Returns the last publish date of this gadget.
-	*
-	* @return the last publish date of this gadget
-	*/
+	 * Returns the last publish date of this gadget.
+	 *
+	 * @return the last publish date of this gadget
+	 */
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
 	}
 
 	/**
-	* Returns the modified date of this gadget.
-	*
-	* @return the modified date of this gadget
-	*/
+	 * Returns the modified date of this gadget.
+	 *
+	 * @return the modified date of this gadget
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this gadget.
-	*
-	* @return the name of this gadget
-	*/
+	 * Returns the name of this gadget.
+	 *
+	 * @return the name of this gadget
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the portlet category names of this gadget.
-	*
-	* @return the portlet category names of this gadget
-	*/
+	 * Returns the portlet category names of this gadget.
+	 *
+	 * @return the portlet category names of this gadget
+	 */
 	@Override
 	public String getPortletCategoryNames() {
 		return model.getPortletCategoryNames();
 	}
 
 	/**
-	* Returns the primary key of this gadget.
-	*
-	* @return the primary key of this gadget
-	*/
+	 * Returns the primary key of this gadget.
+	 *
+	 * @return the primary key of this gadget
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the url of this gadget.
-	*
-	* @return the url of this gadget
-	*/
+	 * Returns the url of this gadget.
+	 *
+	 * @return the url of this gadget
+	 */
 	@Override
 	public String getUrl() {
 		return model.getUrl();
 	}
 
 	/**
-	* Returns the uuid of this gadget.
-	*
-	* @return the uuid of this gadget
-	*/
+	 * Returns the uuid of this gadget.
+	 *
+	 * @return the uuid of this gadget
+	 */
 	@Override
 	public String getUuid() {
 		return model.getUuid();
@@ -222,100 +222,100 @@ public class GadgetWrapper extends BaseModelWrapper<Gadget> implements Gadget,
 	}
 
 	/**
-	* Sets the company ID of this gadget.
-	*
-	* @param companyId the company ID of this gadget
-	*/
+	 * Sets the company ID of this gadget.
+	 *
+	 * @param companyId the company ID of this gadget
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this gadget.
-	*
-	* @param createDate the create date of this gadget
-	*/
+	 * Sets the create date of this gadget.
+	 *
+	 * @param createDate the create date of this gadget
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the gadget ID of this gadget.
-	*
-	* @param gadgetId the gadget ID of this gadget
-	*/
+	 * Sets the gadget ID of this gadget.
+	 *
+	 * @param gadgetId the gadget ID of this gadget
+	 */
 	@Override
 	public void setGadgetId(long gadgetId) {
 		model.setGadgetId(gadgetId);
 	}
 
 	/**
-	* Sets the last publish date of this gadget.
-	*
-	* @param lastPublishDate the last publish date of this gadget
-	*/
+	 * Sets the last publish date of this gadget.
+	 *
+	 * @param lastPublishDate the last publish date of this gadget
+	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
-	* Sets the modified date of this gadget.
-	*
-	* @param modifiedDate the modified date of this gadget
-	*/
+	 * Sets the modified date of this gadget.
+	 *
+	 * @param modifiedDate the modified date of this gadget
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this gadget.
-	*
-	* @param name the name of this gadget
-	*/
+	 * Sets the name of this gadget.
+	 *
+	 * @param name the name of this gadget
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the portlet category names of this gadget.
-	*
-	* @param portletCategoryNames the portlet category names of this gadget
-	*/
+	 * Sets the portlet category names of this gadget.
+	 *
+	 * @param portletCategoryNames the portlet category names of this gadget
+	 */
 	@Override
 	public void setPortletCategoryNames(String portletCategoryNames) {
 		model.setPortletCategoryNames(portletCategoryNames);
 	}
 
 	/**
-	* Sets the primary key of this gadget.
-	*
-	* @param primaryKey the primary key of this gadget
-	*/
+	 * Sets the primary key of this gadget.
+	 *
+	 * @param primaryKey the primary key of this gadget
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the url of this gadget.
-	*
-	* @param url the url of this gadget
-	*/
+	 * Sets the url of this gadget.
+	 *
+	 * @param url the url of this gadget
+	 */
 	@Override
 	public void setUrl(String url) {
 		model.setUrl(url);
 	}
 
 	/**
-	* Sets the uuid of this gadget.
-	*
-	* @param uuid the uuid of this gadget
-	*/
+	 * Sets the uuid of this gadget.
+	 *
+	 * @param uuid the uuid of this gadget
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
@@ -330,4 +330,5 @@ public class GadgetWrapper extends BaseModelWrapper<Gadget> implements Gadget,
 	protected GadgetWrapper wrap(Gadget gadget) {
 		return new GadgetWrapper(gadget);
 	}
+
 }

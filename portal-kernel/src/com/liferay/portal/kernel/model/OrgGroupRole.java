@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.portal.model.impl.OrgGroupRoleImpl")
 @ProviderType
 public interface OrgGroupRole extends OrgGroupRoleModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.OrgGroupRoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OrgGroupRole, Long> ORGANIZATION_ID_ACCESSOR = new Accessor<OrgGroupRole, Long>() {
+	public static final Accessor<OrgGroupRole, Long> ORGANIZATION_ID_ACCESSOR =
+		new Accessor<OrgGroupRole, Long>() {
+
 			@Override
 			public Long get(OrgGroupRole orgGroupRole) {
 				return orgGroupRole.getOrganizationId();
@@ -49,9 +52,11 @@ public interface OrgGroupRole extends OrgGroupRoleModel {
 			public Class<OrgGroupRole> getTypeClass() {
 				return OrgGroupRole.class;
 			}
-		};
 
-	public static final Accessor<OrgGroupRole, Long> GROUP_ID_ACCESSOR = new Accessor<OrgGroupRole, Long>() {
+		};
+	public static final Accessor<OrgGroupRole, Long> GROUP_ID_ACCESSOR =
+		new Accessor<OrgGroupRole, Long>() {
+
 			@Override
 			public Long get(OrgGroupRole orgGroupRole) {
 				return orgGroupRole.getGroupId();
@@ -66,9 +71,11 @@ public interface OrgGroupRole extends OrgGroupRoleModel {
 			public Class<OrgGroupRole> getTypeClass() {
 				return OrgGroupRole.class;
 			}
-		};
 
-	public static final Accessor<OrgGroupRole, Long> ROLE_ID_ACCESSOR = new Accessor<OrgGroupRole, Long>() {
+		};
+	public static final Accessor<OrgGroupRole, Long> ROLE_ID_ACCESSOR =
+		new Accessor<OrgGroupRole, Long>() {
+
 			@Override
 			public Long get(OrgGroupRole orgGroupRole) {
 				return orgGroupRole.getRoleId();
@@ -83,10 +90,12 @@ public interface OrgGroupRole extends OrgGroupRoleModel {
 			public Class<OrgGroupRole> getTypeClass() {
 				return OrgGroupRole.class;
 			}
+
 		};
 
 	public boolean containsGroup(java.util.List<Group> groups);
 
 	public boolean containsOrganization(
 		java.util.List<Organization> organizations);
+
 }

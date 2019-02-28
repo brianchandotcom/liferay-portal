@@ -35,13 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -51,14 +44,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
 /**
  * @generated
  */
 public class OrgLaborPersistenceTest {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
-			PersistenceTestRule.INSTANCE,
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
@@ -98,7 +100,8 @@ public class OrgLaborPersistenceTest {
 
 		_persistence.remove(newOrgLabor);
 
-		OrgLabor existingOrgLabor = _persistence.fetchByPrimaryKey(newOrgLabor.getPrimaryKey());
+		OrgLabor existingOrgLabor = _persistence.fetchByPrimaryKey(
+			newOrgLabor.getPrimaryKey());
 
 		Assert.assertNull(existingOrgLabor);
 	}
@@ -152,46 +155,48 @@ public class OrgLaborPersistenceTest {
 
 		_orgLabors.add(_persistence.update(newOrgLabor));
 
-		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(newOrgLabor.getPrimaryKey());
+		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(
+			newOrgLabor.getPrimaryKey());
 
-		Assert.assertEquals(existingOrgLabor.getMvccVersion(),
-			newOrgLabor.getMvccVersion());
-		Assert.assertEquals(existingOrgLabor.getOrgLaborId(),
-			newOrgLabor.getOrgLaborId());
-		Assert.assertEquals(existingOrgLabor.getCompanyId(),
-			newOrgLabor.getCompanyId());
-		Assert.assertEquals(existingOrgLabor.getOrganizationId(),
+		Assert.assertEquals(
+			existingOrgLabor.getMvccVersion(), newOrgLabor.getMvccVersion());
+		Assert.assertEquals(
+			existingOrgLabor.getOrgLaborId(), newOrgLabor.getOrgLaborId());
+		Assert.assertEquals(
+			existingOrgLabor.getCompanyId(), newOrgLabor.getCompanyId());
+		Assert.assertEquals(
+			existingOrgLabor.getOrganizationId(),
 			newOrgLabor.getOrganizationId());
-		Assert.assertEquals(existingOrgLabor.getTypeId(),
-			newOrgLabor.getTypeId());
-		Assert.assertEquals(existingOrgLabor.getSunOpen(),
-			newOrgLabor.getSunOpen());
-		Assert.assertEquals(existingOrgLabor.getSunClose(),
-			newOrgLabor.getSunClose());
-		Assert.assertEquals(existingOrgLabor.getMonOpen(),
-			newOrgLabor.getMonOpen());
-		Assert.assertEquals(existingOrgLabor.getMonClose(),
-			newOrgLabor.getMonClose());
-		Assert.assertEquals(existingOrgLabor.getTueOpen(),
-			newOrgLabor.getTueOpen());
-		Assert.assertEquals(existingOrgLabor.getTueClose(),
-			newOrgLabor.getTueClose());
-		Assert.assertEquals(existingOrgLabor.getWedOpen(),
-			newOrgLabor.getWedOpen());
-		Assert.assertEquals(existingOrgLabor.getWedClose(),
-			newOrgLabor.getWedClose());
-		Assert.assertEquals(existingOrgLabor.getThuOpen(),
-			newOrgLabor.getThuOpen());
-		Assert.assertEquals(existingOrgLabor.getThuClose(),
-			newOrgLabor.getThuClose());
-		Assert.assertEquals(existingOrgLabor.getFriOpen(),
-			newOrgLabor.getFriOpen());
-		Assert.assertEquals(existingOrgLabor.getFriClose(),
-			newOrgLabor.getFriClose());
-		Assert.assertEquals(existingOrgLabor.getSatOpen(),
-			newOrgLabor.getSatOpen());
-		Assert.assertEquals(existingOrgLabor.getSatClose(),
-			newOrgLabor.getSatClose());
+		Assert.assertEquals(
+			existingOrgLabor.getTypeId(), newOrgLabor.getTypeId());
+		Assert.assertEquals(
+			existingOrgLabor.getSunOpen(), newOrgLabor.getSunOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getSunClose(), newOrgLabor.getSunClose());
+		Assert.assertEquals(
+			existingOrgLabor.getMonOpen(), newOrgLabor.getMonOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getMonClose(), newOrgLabor.getMonClose());
+		Assert.assertEquals(
+			existingOrgLabor.getTueOpen(), newOrgLabor.getTueOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getTueClose(), newOrgLabor.getTueClose());
+		Assert.assertEquals(
+			existingOrgLabor.getWedOpen(), newOrgLabor.getWedOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getWedClose(), newOrgLabor.getWedClose());
+		Assert.assertEquals(
+			existingOrgLabor.getThuOpen(), newOrgLabor.getThuOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getThuClose(), newOrgLabor.getThuClose());
+		Assert.assertEquals(
+			existingOrgLabor.getFriOpen(), newOrgLabor.getFriOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getFriClose(), newOrgLabor.getFriClose());
+		Assert.assertEquals(
+			existingOrgLabor.getSatOpen(), newOrgLabor.getSatOpen());
+		Assert.assertEquals(
+			existingOrgLabor.getSatClose(), newOrgLabor.getSatClose());
 	}
 
 	@Test
@@ -205,7 +210,8 @@ public class OrgLaborPersistenceTest {
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		OrgLabor newOrgLabor = addOrgLabor();
 
-		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(newOrgLabor.getPrimaryKey());
+		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(
+			newOrgLabor.getPrimaryKey());
 
 		Assert.assertEquals(existingOrgLabor, newOrgLabor);
 	}
@@ -219,25 +225,26 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<OrgLabor> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("OrgLabor", "mvccVersion",
-			true, "orgLaborId", true, "companyId", true, "organizationId",
-			true, "typeId", true, "sunOpen", true, "sunClose", true, "monOpen",
-			true, "monClose", true, "tueOpen", true, "tueClose", true,
-			"wedOpen", true, "wedClose", true, "thuOpen", true, "thuClose",
-			true, "friOpen", true, "friClose", true, "satOpen", true,
-			"satClose", true);
+		return OrderByComparatorFactoryUtil.create(
+			"OrgLabor", "mvccVersion", true, "orgLaborId", true, "companyId",
+			true, "organizationId", true, "typeId", true, "sunOpen", true,
+			"sunClose", true, "monOpen", true, "monClose", true, "tueOpen",
+			true, "tueClose", true, "wedOpen", true, "wedClose", true,
+			"thuOpen", true, "thuClose", true, "friOpen", true, "friClose",
+			true, "satOpen", true, "satClose", true);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
 		OrgLabor newOrgLabor = addOrgLabor();
 
-		OrgLabor existingOrgLabor = _persistence.fetchByPrimaryKey(newOrgLabor.getPrimaryKey());
+		OrgLabor existingOrgLabor = _persistence.fetchByPrimaryKey(
+			newOrgLabor.getPrimaryKey());
 
 		Assert.assertEquals(existingOrgLabor, newOrgLabor);
 	}
@@ -254,6 +261,7 @@ public class OrgLaborPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
+
 		OrgLabor newOrgLabor1 = addOrgLabor();
 		OrgLabor newOrgLabor2 = addOrgLabor();
 
@@ -262,18 +270,20 @@ public class OrgLaborPersistenceTest {
 		primaryKeys.add(newOrgLabor1.getPrimaryKey());
 		primaryKeys.add(newOrgLabor2.getPrimaryKey());
 
-		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(2, orgLabors.size());
-		Assert.assertEquals(newOrgLabor1,
-			orgLabors.get(newOrgLabor1.getPrimaryKey()));
-		Assert.assertEquals(newOrgLabor2,
-			orgLabors.get(newOrgLabor2.getPrimaryKey()));
+		Assert.assertEquals(
+			newOrgLabor1, orgLabors.get(newOrgLabor1.getPrimaryKey()));
+		Assert.assertEquals(
+			newOrgLabor2, orgLabors.get(newOrgLabor2.getPrimaryKey()));
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
+
 		long pk1 = RandomTestUtil.nextLong();
 
 		long pk2 = RandomTestUtil.nextLong();
@@ -283,7 +293,8 @@ public class OrgLaborPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(orgLabors.isEmpty());
 	}
@@ -291,6 +302,7 @@ public class OrgLaborPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
+
 		OrgLabor newOrgLabor = addOrgLabor();
 
 		long pk = RandomTestUtil.nextLong();
@@ -300,52 +312,57 @@ public class OrgLaborPersistenceTest {
 		primaryKeys.add(newOrgLabor.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, orgLabors.size());
-		Assert.assertEquals(newOrgLabor,
-			orgLabors.get(newOrgLabor.getPrimaryKey()));
+		Assert.assertEquals(
+			newOrgLabor, orgLabors.get(newOrgLabor.getPrimaryKey()));
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertTrue(orgLabors.isEmpty());
 	}
 
 	@Test
-	public void testFetchByPrimaryKeysWithOnePrimaryKey()
-		throws Exception {
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
 		OrgLabor newOrgLabor = addOrgLabor();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
 		primaryKeys.add(newOrgLabor.getPrimaryKey());
 
-		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, OrgLabor> orgLabors = _persistence.fetchByPrimaryKeys(
+			primaryKeys);
 
 		Assert.assertEquals(1, orgLabors.size());
-		Assert.assertEquals(newOrgLabor,
-			orgLabors.get(newOrgLabor.getPrimaryKey()));
+		Assert.assertEquals(
+			newOrgLabor, orgLabors.get(newOrgLabor.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = OrgLaborLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			OrgLaborLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<OrgLabor>() {
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<OrgLabor>() {
+
 				@Override
 				public void performAction(OrgLabor orgLabor) {
 					Assert.assertNotNull(orgLabor);
 
 					count.increment();
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();
@@ -354,15 +371,15 @@ public class OrgLaborPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByPrimaryKeyExisting()
-		throws Exception {
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		OrgLabor newOrgLabor = addOrgLabor();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgLabor.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
-				newOrgLabor.getOrgLaborId()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"orgLaborId", newOrgLabor.getOrgLaborId()));
 
 		List<OrgLabor> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -375,11 +392,12 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgLabor.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"orgLaborId", RandomTestUtil.nextLong()));
 
 		List<OrgLabor> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -387,19 +405,20 @@ public class OrgLaborPersistenceTest {
 	}
 
 	@Test
-	public void testDynamicQueryByProjectionExisting()
-		throws Exception {
+	public void testDynamicQueryByProjectionExisting() throws Exception {
 		OrgLabor newOrgLabor = addOrgLabor();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgLabor.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orgLaborId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("orgLaborId"));
 
 		Object newOrgLaborId = newOrgLabor.getOrgLaborId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("orgLaborId",
-				new Object[] { newOrgLaborId }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"orgLaborId", new Object[] {newOrgLaborId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -412,13 +431,15 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				_dynamicQueryClassLoader);
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OrgLabor.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orgLaborId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("orgLaborId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("orgLaborId",
-				new Object[] { RandomTestUtil.nextLong() }));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"orgLaborId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -474,4 +495,5 @@ public class OrgLaborPersistenceTest {
 	private List<OrgLabor> _orgLabors = new ArrayList<OrgLabor>();
 	private OrgLaborPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
+
 }

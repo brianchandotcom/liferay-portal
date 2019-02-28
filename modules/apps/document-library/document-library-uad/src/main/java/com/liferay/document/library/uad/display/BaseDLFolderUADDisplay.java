@@ -17,17 +17,15 @@ package com.liferay.document.library.uad.display;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
-
-import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the DLFolder UAD display.
@@ -41,16 +39,18 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class BaseDLFolderUADDisplay extends BaseModelUADDisplay<DLFolder> {
+public abstract class BaseDLFolderUADDisplay
+	extends BaseModelUADDisplay<DLFolder> {
+
 	@Override
 	public DLFolder get(Serializable primaryKey) throws PortalException {
-		return dlFolderLocalService.getDLFolder(Long.valueOf(
-				primaryKey.toString()));
+		return dlFolderLocalService.getDLFolder(
+			Long.valueOf(primaryKey.toString()));
 	}
 
 	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] { "name", "description" };
+		return new String[] {"name", "description"};
 	}
 
 	@Override
@@ -69,8 +69,9 @@ public abstract class BaseDLFolderUADDisplay extends BaseModelUADDisplay<DLFolde
 	}
 
 	@Override
-	protected List<DLFolder> doGetRange(DynamicQuery dynamicQuery, int start,
-		int end) {
+	protected List<DLFolder> doGetRange(
+		DynamicQuery dynamicQuery, int start, int end) {
+
 		return dlFolderLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -81,4 +82,5 @@ public abstract class BaseDLFolderUADDisplay extends BaseModelUADDisplay<DLFolde
 
 	@Reference
 	protected DLFolderLocalService dlFolderLocalService;
+
 }

@@ -44,6 +44,7 @@ import java.util.Set;
 @Deprecated
 @ProviderType
 public class ResourceTypePermissionUtil {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,7 +61,9 @@ public class ResourceTypePermissionUtil {
 	/**
 	 * @see BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static void clearCache(ResourceTypePermission resourceTypePermission) {
+	public static void clearCache(
+		ResourceTypePermission resourceTypePermission) {
+
 		getPersistence().clearCache(resourceTypePermission);
 	}
 
@@ -76,6 +79,7 @@ public class ResourceTypePermissionUtil {
 	 */
 	public static Map<Serializable, ResourceTypePermission> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
@@ -84,6 +88,7 @@ public class ResourceTypePermissionUtil {
 	 */
 	public static List<ResourceTypePermission> findWithDynamicQuery(
 		DynamicQuery dynamicQuery) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -92,6 +97,7 @@ public class ResourceTypePermissionUtil {
 	 */
 	public static List<ResourceTypePermission> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
+
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -101,9 +107,9 @@ public class ResourceTypePermissionUtil {
 	public static List<ResourceTypePermission> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+
+		return getPersistence().findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -111,6 +117,7 @@ public class ResourceTypePermissionUtil {
 	 */
 	public static ResourceTypePermission update(
 		ResourceTypePermission resourceTypePermission) {
+
 		return getPersistence().update(resourceTypePermission);
 	}
 
@@ -120,594 +127,645 @@ public class ResourceTypePermissionUtil {
 	public static ResourceTypePermission update(
 		ResourceTypePermission resourceTypePermission,
 		ServiceContext serviceContext) {
+
 		return getPersistence().update(resourceTypePermission, serviceContext);
 	}
 
 	/**
-	* Returns all the resource type permissions where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @return the matching resource type permissions
-	*/
+	 * Returns all the resource type permissions where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @return the matching resource type permissions
+	 */
 	public static List<ResourceTypePermission> findByRoleId(long roleId) {
 		return getPersistence().findByRoleId(roleId);
 	}
 
 	/**
-	* Returns a range of all the resource type permissions where roleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param roleId the role ID
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @return the range of matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByRoleId(long roleId,
-		int start, int end) {
+	 * Returns a range of all the resource type permissions where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @return the range of matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByRoleId(
+		long roleId, int start, int end) {
+
 		return getPersistence().findByRoleId(roleId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the resource type permissions where roleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param roleId the role ID
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByRoleId(long roleId,
-		int start, int end,
+	 * Returns an ordered range of all the resource type permissions where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByRoleId(
+		long roleId, int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
-		return getPersistence()
-				   .findByRoleId(roleId, start, end, orderByComparator);
+
+		return getPersistence().findByRoleId(
+			roleId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the resource type permissions where roleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param roleId the role ID
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByRoleId(long roleId,
-		int start, int end,
+	 * Returns an ordered range of all the resource type permissions where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByRoleId(
+		long roleId, int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByRoleId(roleId, start, end, orderByComparator,
-			retrieveFromCache);
+
+		return getPersistence().findByRoleId(
+			roleId, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first resource type permission in the ordered set where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource type permission
-	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission findByRoleId_First(long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
+	 * Returns the first resource type permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission findByRoleId_First(
+			long roleId,
+			OrderByComparator<ResourceTypePermission> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
 		return getPersistence().findByRoleId_First(roleId, orderByComparator);
 	}
 
 	/**
-	* Returns the first resource type permission in the ordered set where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission fetchByRoleId_First(long roleId,
+	 * Returns the first resource type permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission fetchByRoleId_First(
+		long roleId,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
+
 		return getPersistence().fetchByRoleId_First(roleId, orderByComparator);
 	}
 
 	/**
-	* Returns the last resource type permission in the ordered set where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource type permission
-	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission findByRoleId_Last(long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
+	 * Returns the last resource type permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission findByRoleId_Last(
+			long roleId,
+			OrderByComparator<ResourceTypePermission> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
 		return getPersistence().findByRoleId_Last(roleId, orderByComparator);
 	}
 
 	/**
-	* Returns the last resource type permission in the ordered set where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission fetchByRoleId_Last(long roleId,
+	 * Returns the last resource type permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission fetchByRoleId_Last(
+		long roleId,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
+
 		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
 	}
 
 	/**
-	* Returns the resource type permissions before and after the current resource type permission in the ordered set where roleId = &#63;.
-	*
-	* @param resourceTypePermissionId the primary key of the current resource type permission
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next resource type permission
-	* @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
-	*/
+	 * Returns the resource type permissions before and after the current resource type permission in the ordered set where roleId = &#63;.
+	 *
+	 * @param resourceTypePermissionId the primary key of the current resource type permission
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
+	 */
 	public static ResourceTypePermission[] findByRoleId_PrevAndNext(
-		long resourceTypePermissionId, long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
-		return getPersistence()
-				   .findByRoleId_PrevAndNext(resourceTypePermissionId, roleId,
-			orderByComparator);
+			long resourceTypePermissionId, long roleId,
+			OrderByComparator<ResourceTypePermission> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
+		return getPersistence().findByRoleId_PrevAndNext(
+			resourceTypePermissionId, roleId, orderByComparator);
 	}
 
 	/**
-	* Removes all the resource type permissions where roleId = &#63; from the database.
-	*
-	* @param roleId the role ID
-	*/
+	 * Removes all the resource type permissions where roleId = &#63; from the database.
+	 *
+	 * @param roleId the role ID
+	 */
 	public static void removeByRoleId(long roleId) {
 		getPersistence().removeByRoleId(roleId);
 	}
 
 	/**
-	* Returns the number of resource type permissions where roleId = &#63;.
-	*
-	* @param roleId the role ID
-	* @return the number of matching resource type permissions
-	*/
+	 * Returns the number of resource type permissions where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @return the number of matching resource type permissions
+	 */
 	public static int countByRoleId(long roleId) {
 		return getPersistence().countByRoleId(roleId);
 	}
 
 	/**
-	* Returns all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @return the matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByC_N_R(long companyId,
-		String name, long roleId) {
+	 * Returns all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @return the matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByC_N_R(
+		long companyId, String name, long roleId) {
+
 		return getPersistence().findByC_N_R(companyId, name, roleId);
 	}
 
 	/**
-	* Returns a range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @return the range of matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByC_N_R(long companyId,
-		String name, long roleId, int start, int end) {
-		return getPersistence().findByC_N_R(companyId, name, roleId, start, end);
+	 * Returns a range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @return the range of matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByC_N_R(
+		long companyId, String name, long roleId, int start, int end) {
+
+		return getPersistence().findByC_N_R(
+			companyId, name, roleId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByC_N_R(long companyId,
-		String name, long roleId, int start, int end,
+	 * Returns an ordered range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByC_N_R(
+		long companyId, String name, long roleId, int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
-		return getPersistence()
-				   .findByC_N_R(companyId, name, roleId, start, end,
-			orderByComparator);
+
+		return getPersistence().findByC_N_R(
+			companyId, name, roleId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching resource type permissions
-	*/
-	public static List<ResourceTypePermission> findByC_N_R(long companyId,
-		String name, long roleId, int start, int end,
+	 * Returns an ordered range of all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching resource type permissions
+	 */
+	public static List<ResourceTypePermission> findByC_N_R(
+		long companyId, String name, long roleId, int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_N_R(companyId, name, roleId, start, end,
-			orderByComparator, retrieveFromCache);
+
+		return getPersistence().findByC_N_R(
+			companyId, name, roleId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
-	* Returns the first resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource type permission
-	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission findByC_N_R_First(long companyId,
-		String name, long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
-		return getPersistence()
-				   .findByC_N_R_First(companyId, name, roleId, orderByComparator);
-	}
+	 * Returns the first resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission findByC_N_R_First(
+			long companyId, String name, long roleId,
+			OrderByComparator<ResourceTypePermission> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
 
-	/**
-	* Returns the first resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission fetchByC_N_R_First(long companyId,
-		String name, long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_N_R_First(companyId, name, roleId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource type permission
-	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission findByC_N_R_Last(long companyId,
-		String name, long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
-		return getPersistence()
-				   .findByC_N_R_Last(companyId, name, roleId, orderByComparator);
-	}
-
-	/**
-	* Returns the last resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission fetchByC_N_R_Last(long companyId,
-		String name, long roleId,
-		OrderByComparator<ResourceTypePermission> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_N_R_Last(companyId, name, roleId, orderByComparator);
-	}
-
-	/**
-	* Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param resourceTypePermissionId the primary key of the current resource type permission
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next resource type permission
-	* @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
-	*/
-	public static ResourceTypePermission[] findByC_N_R_PrevAndNext(
-		long resourceTypePermissionId, long companyId, String name,
-		long roleId, OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
-		return getPersistence()
-				   .findByC_N_R_PrevAndNext(resourceTypePermissionId,
+		return getPersistence().findByC_N_R_First(
 			companyId, name, roleId, orderByComparator);
 	}
 
 	/**
-	* Removes all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	*/
+	 * Returns the first resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission fetchByC_N_R_First(
+		long companyId, String name, long roleId,
+		OrderByComparator<ResourceTypePermission> orderByComparator) {
+
+		return getPersistence().fetchByC_N_R_First(
+			companyId, name, roleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission findByC_N_R_Last(
+			long companyId, String name, long roleId,
+			OrderByComparator<ResourceTypePermission> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
+		return getPersistence().findByC_N_R_Last(
+			companyId, name, roleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission fetchByC_N_R_Last(
+		long companyId, String name, long roleId,
+		OrderByComparator<ResourceTypePermission> orderByComparator) {
+
+		return getPersistence().fetchByC_N_R_Last(
+			companyId, name, roleId, orderByComparator);
+	}
+
+	/**
+	 * Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param resourceTypePermissionId the primary key of the current resource type permission
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
+	 */
+	public static ResourceTypePermission[] findByC_N_R_PrevAndNext(
+			long resourceTypePermissionId, long companyId, String name,
+			long roleId,
+			OrderByComparator<ResourceTypePermission> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
+		return getPersistence().findByC_N_R_PrevAndNext(
+			resourceTypePermissionId, companyId, name, roleId,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 */
 	public static void removeByC_N_R(long companyId, String name, long roleId) {
 		getPersistence().removeByC_N_R(companyId, name, roleId);
 	}
 
 	/**
-	* Returns the number of resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param name the name
-	* @param roleId the role ID
-	* @return the number of matching resource type permissions
-	*/
+	 * Returns the number of resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @return the number of matching resource type permissions
+	 */
 	public static int countByC_N_R(long companyId, String name, long roleId) {
 		return getPersistence().countByC_N_R(companyId, name, roleId);
 	}
 
 	/**
-	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or throws a <code>NoSuchResourceTypePermissionException</code> if it could not be found.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param roleId the role ID
-	* @return the matching resource type permission
-	* @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission findByC_G_N_R(long companyId,
-		long groupId, String name, long roleId)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
+	 * Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or throws a <code>NoSuchResourceTypePermissionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @return the matching resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission findByC_G_N_R(
+			long companyId, long groupId, String name, long roleId)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
 		return getPersistence().findByC_G_N_R(companyId, groupId, name, roleId);
 	}
 
 	/**
-	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param roleId the role ID
-	* @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission fetchByC_G_N_R(long companyId,
-		long groupId, String name, long roleId) {
-		return getPersistence().fetchByC_G_N_R(companyId, groupId, name, roleId);
+	 * Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission fetchByC_G_N_R(
+		long companyId, long groupId, String name, long roleId) {
+
+		return getPersistence().fetchByC_G_N_R(
+			companyId, groupId, name, roleId);
 	}
 
 	/**
-	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param roleId the role ID
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
-	*/
-	public static ResourceTypePermission fetchByC_G_N_R(long companyId,
-		long groupId, String name, long roleId, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByC_G_N_R(companyId, groupId, name, roleId,
-			retrieveFromCache);
+	 * Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching resource type permission, or <code>null</code> if a matching resource type permission could not be found
+	 */
+	public static ResourceTypePermission fetchByC_G_N_R(
+		long companyId, long groupId, String name, long roleId,
+		boolean retrieveFromCache) {
+
+		return getPersistence().fetchByC_G_N_R(
+			companyId, groupId, name, roleId, retrieveFromCache);
 	}
 
 	/**
-	* Removes the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param roleId the role ID
-	* @return the resource type permission that was removed
-	*/
-	public static ResourceTypePermission removeByC_G_N_R(long companyId,
-		long groupId, String name, long roleId)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
-		return getPersistence().removeByC_G_N_R(companyId, groupId, name, roleId);
+	 * Removes the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @return the resource type permission that was removed
+	 */
+	public static ResourceTypePermission removeByC_G_N_R(
+			long companyId, long groupId, String name, long roleId)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
+		return getPersistence().removeByC_G_N_R(
+			companyId, groupId, name, roleId);
 	}
 
 	/**
-	* Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param groupId the group ID
-	* @param name the name
-	* @param roleId the role ID
-	* @return the number of matching resource type permissions
-	*/
-	public static int countByC_G_N_R(long companyId, long groupId, String name,
-		long roleId) {
-		return getPersistence().countByC_G_N_R(companyId, groupId, name, roleId);
+	 * Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param roleId the role ID
+	 * @return the number of matching resource type permissions
+	 */
+	public static int countByC_G_N_R(
+		long companyId, long groupId, String name, long roleId) {
+
+		return getPersistence().countByC_G_N_R(
+			companyId, groupId, name, roleId);
 	}
 
 	/**
-	* Caches the resource type permission in the entity cache if it is enabled.
-	*
-	* @param resourceTypePermission the resource type permission
-	*/
+	 * Caches the resource type permission in the entity cache if it is enabled.
+	 *
+	 * @param resourceTypePermission the resource type permission
+	 */
 	public static void cacheResult(
 		ResourceTypePermission resourceTypePermission) {
+
 		getPersistence().cacheResult(resourceTypePermission);
 	}
 
 	/**
-	* Caches the resource type permissions in the entity cache if it is enabled.
-	*
-	* @param resourceTypePermissions the resource type permissions
-	*/
+	 * Caches the resource type permissions in the entity cache if it is enabled.
+	 *
+	 * @param resourceTypePermissions the resource type permissions
+	 */
 	public static void cacheResult(
 		List<ResourceTypePermission> resourceTypePermissions) {
+
 		getPersistence().cacheResult(resourceTypePermissions);
 	}
 
 	/**
-	* Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
-	*
-	* @param resourceTypePermissionId the primary key for the new resource type permission
-	* @return the new resource type permission
-	*/
+	 * Creates a new resource type permission with the primary key. Does not add the resource type permission to the database.
+	 *
+	 * @param resourceTypePermissionId the primary key for the new resource type permission
+	 * @return the new resource type permission
+	 */
 	public static ResourceTypePermission create(long resourceTypePermissionId) {
 		return getPersistence().create(resourceTypePermissionId);
 	}
 
 	/**
-	* Removes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
-	* @return the resource type permission that was removed
-	* @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
-	*/
+	 * Removes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @return the resource type permission that was removed
+	 * @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
+	 */
 	public static ResourceTypePermission remove(long resourceTypePermissionId)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
 		return getPersistence().remove(resourceTypePermissionId);
 	}
 
 	public static ResourceTypePermission updateImpl(
 		ResourceTypePermission resourceTypePermission) {
+
 		return getPersistence().updateImpl(resourceTypePermission);
 	}
 
 	/**
-	* Returns the resource type permission with the primary key or throws a <code>NoSuchResourceTypePermissionException</code> if it could not be found.
-	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
-	* @return the resource type permission
-	* @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
-	*/
+	 * Returns the resource type permission with the primary key or throws a <code>NoSuchResourceTypePermissionException</code> if it could not be found.
+	 *
+	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @return the resource type permission
+	 * @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
+	 */
 	public static ResourceTypePermission findByPrimaryKey(
-		long resourceTypePermissionId)
-		throws com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException {
+			long resourceTypePermissionId)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchResourceTypePermissionException {
+
 		return getPersistence().findByPrimaryKey(resourceTypePermissionId);
 	}
 
 	/**
-	* Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
-	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
-	* @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
-	*/
+	 * Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param resourceTypePermissionId the primary key of the resource type permission
+	 * @return the resource type permission, or <code>null</code> if a resource type permission with the primary key could not be found
+	 */
 	public static ResourceTypePermission fetchByPrimaryKey(
 		long resourceTypePermissionId) {
+
 		return getPersistence().fetchByPrimaryKey(resourceTypePermissionId);
 	}
 
 	/**
-	* Returns all the resource type permissions.
-	*
-	* @return the resource type permissions
-	*/
+	 * Returns all the resource type permissions.
+	 *
+	 * @return the resource type permissions
+	 */
 	public static List<ResourceTypePermission> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the resource type permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @return the range of resource type permissions
-	*/
+	 * Returns a range of all the resource type permissions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @return the range of resource type permissions
+	 */
 	public static List<ResourceTypePermission> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the resource type permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of resource type permissions
-	*/
-	public static List<ResourceTypePermission> findAll(int start, int end,
+	 * Returns an ordered range of all the resource type permissions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of resource type permissions
+	 */
+	public static List<ResourceTypePermission> findAll(
+		int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator) {
+
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the resource type permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of resource type permissions
-	*/
-	public static List<ResourceTypePermission> findAll(int start, int end,
+	 * Returns an ordered range of all the resource type permissions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceTypePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of resource type permissions
+	 * @param end the upper bound of the range of resource type permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of resource type permissions
+	 */
+	public static List<ResourceTypePermission> findAll(
+		int start, int end,
 		OrderByComparator<ResourceTypePermission> orderByComparator,
 		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findAll(start, end, orderByComparator, retrieveFromCache);
+
+		return getPersistence().findAll(
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the resource type permissions from the database.
-	*/
+	 * Removes all the resource type permissions from the database.
+	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of resource type permissions.
-	*
-	* @return the number of resource type permissions
-	*/
+	 * Returns the number of resource type permissions.
+	 *
+	 * @return the number of resource type permissions
+	 */
 	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
 	public static ResourceTypePermissionPersistence getPersistence() {
 		if (_persistence == null) {
-			_persistence = (ResourceTypePermissionPersistence)PortalBeanLocatorUtil.locate(ResourceTypePermissionPersistence.class.getName());
+			_persistence =
+				(ResourceTypePermissionPersistence)PortalBeanLocatorUtil.locate(
+					ResourceTypePermissionPersistence.class.getName());
 
-			ReferenceRegistry.registerReference(ResourceTypePermissionUtil.class,
-				"_persistence");
+			ReferenceRegistry.registerReference(
+				ResourceTypePermissionUtil.class, "_persistence");
 		}
 
 		return _persistence;
 	}
 
 	private static ResourceTypePermissionPersistence _persistence;
+
 }

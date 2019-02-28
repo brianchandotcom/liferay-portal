@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -62,8 +61,9 @@ import javax.sql.DataSource;
  */
 @ProviderType
 public abstract class AnnouncementsFlagLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements AnnouncementsFlagLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements AnnouncementsFlagLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -80,6 +80,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public AnnouncementsFlag addAnnouncementsFlag(
 		AnnouncementsFlag announcementsFlag) {
+
 		announcementsFlag.setNew(true);
 
 		return announcementsFlagPersistence.update(announcementsFlag);
@@ -108,6 +109,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public AnnouncementsFlag deleteAnnouncementsFlag(long flagId)
 		throws PortalException {
+
 		return announcementsFlagPersistence.remove(flagId);
 	}
 
@@ -121,6 +123,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public AnnouncementsFlag deleteAnnouncementsFlag(
 		AnnouncementsFlag announcementsFlag) {
+
 		return announcementsFlagPersistence.remove(announcementsFlag);
 	}
 
@@ -128,8 +131,8 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(AnnouncementsFlag.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			AnnouncementsFlag.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -156,10 +159,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return announcementsFlagPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return announcementsFlagPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -176,10 +180,12 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return announcementsFlagPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return announcementsFlagPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -201,10 +207,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return announcementsFlagPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return announcementsFlagPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -222,14 +229,17 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public AnnouncementsFlag getAnnouncementsFlag(long flagId)
 		throws PortalException {
+
 		return announcementsFlagPersistence.findByPrimaryKey(flagId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(announcementsFlagLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			announcementsFlagLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -239,10 +249,14 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(announcementsFlagLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			announcementsFlagLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -253,7 +267,9 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(announcementsFlagLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			announcementsFlagLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -266,12 +282,15 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return announcementsFlagLocalService.deleteAnnouncementsFlag((AnnouncementsFlag)persistedModel);
+
+		return announcementsFlagLocalService.deleteAnnouncementsFlag(
+			(AnnouncementsFlag)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return announcementsFlagPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -311,6 +330,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	@Override
 	public AnnouncementsFlag updateAnnouncementsFlag(
 		AnnouncementsFlag announcementsFlag) {
+
 		return announcementsFlagPersistence.update(announcementsFlag);
 	}
 
@@ -330,6 +350,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 */
 	public void setAnnouncementsFlagLocalService(
 		AnnouncementsFlagLocalService announcementsFlagLocalService) {
+
 		this.announcementsFlagLocalService = announcementsFlagLocalService;
 	}
 
@@ -349,6 +370,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 */
 	public void setAnnouncementsFlagPersistence(
 		AnnouncementsFlagPersistence announcementsFlagPersistence) {
+
 		this.announcementsFlagPersistence = announcementsFlagPersistence;
 	}
 
@@ -357,7 +379,9 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -367,12 +391,15 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.announcements.kernel.model.AnnouncementsFlag",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.announcements.kernel.model.AnnouncementsFlag",
 			announcementsFlagLocalService);
 	}
 
@@ -406,15 +433,16 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = announcementsFlagPersistence.getDataSource();
+			DataSource dataSource =
+				announcementsFlagPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -425,10 +453,18 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	@BeanReference(type = AnnouncementsFlagLocalService.class)
 	protected AnnouncementsFlagLocalService announcementsFlagLocalService;
+
 	@BeanReference(type = AnnouncementsFlagPersistence.class)
 	protected AnnouncementsFlagPersistence announcementsFlagPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

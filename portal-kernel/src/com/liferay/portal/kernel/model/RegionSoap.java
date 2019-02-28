@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class RegionSoap implements Serializable {
+
 	public static RegionSoap toSoapModel(Region model) {
 		RegionSoap soapModel = new RegionSoap();
 
@@ -148,4 +149,5 @@ public class RegionSoap implements Serializable {
 	private String _regionCode;
 	private String _name;
 	private boolean _active;
+
 }

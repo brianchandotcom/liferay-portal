@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -63,36 +61,31 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 @ProviderType
-public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
-	implements LayoutSetBranchModel {
+public class LayoutSetBranchModelImpl
+	extends BaseModelImpl<LayoutSetBranch> implements LayoutSetBranchModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a layout set branch model instance should use the <code>LayoutSetBranch</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "LayoutSetBranch";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "layoutSetBranchId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "privateLayout", Types.BOOLEAN },
-			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "master", Types.BOOLEAN },
-			{ "logoId", Types.BIGINT },
-			{ "themeId", Types.VARCHAR },
-			{ "colorSchemeId", Types.VARCHAR },
-			{ "css", Types.CLOB },
-			{ "settings_", Types.CLOB },
-			{ "layoutSetPrototypeUuid", Types.VARCHAR },
-			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"layoutSetBranchId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"privateLayout", Types.BOOLEAN}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"master", Types.BOOLEAN},
+		{"logoId", Types.BIGINT}, {"themeId", Types.VARCHAR},
+		{"colorSchemeId", Types.VARCHAR}, {"css", Types.CLOB},
+		{"settings_", Types.CLOB}, {"layoutSetPrototypeUuid", Types.VARCHAR},
+		{"layoutSetPrototypeLinkEnabled", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -116,25 +109,44 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeLinkEnabled", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (mvccVersion LONG default 0 not null,layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table LayoutSetBranch (mvccVersion LONG default 0 not null,layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
-	public static final String ORDER_BY_JPQL = " ORDER BY layoutSetBranch.name ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LayoutSetBranch.name ASC";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY layoutSetBranch.name ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY LayoutSetBranch.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.LayoutSetBranch"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.LayoutSetBranch"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.LayoutSetBranch"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.LayoutSetBranch"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.LayoutSetBranch"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.LayoutSetBranch"),
+		true);
+
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
+
 	public static final long MASTER_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8L;
 
 	/**
@@ -168,7 +180,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setCss(soapModel.getCss());
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
-		model.setLayoutSetPrototypeLinkEnabled(soapModel.isLayoutSetPrototypeLinkEnabled());
+		model.setLayoutSetPrototypeLinkEnabled(
+			soapModel.isLayoutSetPrototypeLinkEnabled());
 
 		return model;
 	}
@@ -181,11 +194,13 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	 */
 	public static List<LayoutSetBranch> toModels(
 		LayoutSetBranchSoap[] soapModels) {
+
 		if (soapModels == null) {
 			return null;
 		}
 
-		List<LayoutSetBranch> models = new ArrayList<LayoutSetBranch>(soapModels.length);
+		List<LayoutSetBranch> models = new ArrayList<LayoutSetBranch>(
+			soapModels.length);
 
 		for (LayoutSetBranchSoap soapModel : soapModels) {
 			models.add(toModel(soapModel));
@@ -194,8 +209,9 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.LayoutSetBranch"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.LayoutSetBranch"));
 
 	public LayoutSetBranchModelImpl() {
 	}
@@ -234,13 +250,18 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<LayoutSetBranch, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<LayoutSetBranch, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<LayoutSetBranch, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<LayoutSetBranch, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<LayoutSetBranch, Object> attributeGetterFunction = entry.getValue();
+			Function<LayoutSetBranch, Object> attributeGetterFunction =
+				entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((LayoutSetBranch)this));
 		}
 
@@ -252,79 +273,146 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<LayoutSetBranch, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<LayoutSetBranch, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<LayoutSetBranch, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<LayoutSetBranch, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((LayoutSetBranch)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(LayoutSetBranch)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<LayoutSetBranch, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<LayoutSetBranch, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<LayoutSetBranch, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<LayoutSetBranch, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<LayoutSetBranch, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<LayoutSetBranch, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<LayoutSetBranch, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LayoutSetBranch, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<LayoutSetBranch, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LayoutSetBranch, Object>>();
-		Map<String, BiConsumer<LayoutSetBranch, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LayoutSetBranch, ?>>();
+		Map<String, Function<LayoutSetBranch, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap<String, Function<LayoutSetBranch, Object>>();
+		Map<String, BiConsumer<LayoutSetBranch, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<LayoutSetBranch, ?>>();
 
-
-		attributeGetterFunctions.put("mvccVersion", LayoutSetBranch::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setMvccVersion);
-		attributeGetterFunctions.put("layoutSetBranchId", LayoutSetBranch::getLayoutSetBranchId);
-		attributeSetterBiConsumers.put("layoutSetBranchId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setLayoutSetBranchId);
+		attributeGetterFunctions.put(
+			"mvccVersion", LayoutSetBranch::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setMvccVersion);
+		attributeGetterFunctions.put(
+			"layoutSetBranchId", LayoutSetBranch::getLayoutSetBranchId);
+		attributeSetterBiConsumers.put(
+			"layoutSetBranchId",
+			(BiConsumer<LayoutSetBranch, Long>)
+				LayoutSetBranch::setLayoutSetBranchId);
 		attributeGetterFunctions.put("groupId", LayoutSetBranch::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setGroupId);
-		attributeGetterFunctions.put("companyId", LayoutSetBranch::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", LayoutSetBranch::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setCompanyId);
 		attributeGetterFunctions.put("userId", LayoutSetBranch::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setUserId);
 		attributeGetterFunctions.put("userName", LayoutSetBranch::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setUserName);
-		attributeGetterFunctions.put("createDate", LayoutSetBranch::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<LayoutSetBranch, Date>)LayoutSetBranch::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", LayoutSetBranch::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<LayoutSetBranch, Date>)LayoutSetBranch::setModifiedDate);
-		attributeGetterFunctions.put("privateLayout", LayoutSetBranch::getPrivateLayout);
-		attributeSetterBiConsumers.put("privateLayout", (BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setPrivateLayout);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setUserName);
+		attributeGetterFunctions.put(
+			"createDate", LayoutSetBranch::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<LayoutSetBranch, Date>)LayoutSetBranch::setCreateDate);
+		attributeGetterFunctions.put(
+			"modifiedDate", LayoutSetBranch::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<LayoutSetBranch, Date>)
+				LayoutSetBranch::setModifiedDate);
+		attributeGetterFunctions.put(
+			"privateLayout", LayoutSetBranch::getPrivateLayout);
+		attributeSetterBiConsumers.put(
+			"privateLayout",
+			(BiConsumer<LayoutSetBranch, Boolean>)
+				LayoutSetBranch::setPrivateLayout);
 		attributeGetterFunctions.put("name", LayoutSetBranch::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setName);
-		attributeGetterFunctions.put("description", LayoutSetBranch::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setDescription);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setName);
+		attributeGetterFunctions.put(
+			"description", LayoutSetBranch::getDescription);
+		attributeSetterBiConsumers.put(
+			"description",
+			(BiConsumer<LayoutSetBranch, String>)
+				LayoutSetBranch::setDescription);
 		attributeGetterFunctions.put("master", LayoutSetBranch::getMaster);
-		attributeSetterBiConsumers.put("master", (BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setMaster);
+		attributeSetterBiConsumers.put(
+			"master",
+			(BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setMaster);
 		attributeGetterFunctions.put("logoId", LayoutSetBranch::getLogoId);
-		attributeSetterBiConsumers.put("logoId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setLogoId);
+		attributeSetterBiConsumers.put(
+			"logoId",
+			(BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setLogoId);
 		attributeGetterFunctions.put("themeId", LayoutSetBranch::getThemeId);
-		attributeSetterBiConsumers.put("themeId", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setThemeId);
-		attributeGetterFunctions.put("colorSchemeId", LayoutSetBranch::getColorSchemeId);
-		attributeSetterBiConsumers.put("colorSchemeId", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setColorSchemeId);
+		attributeSetterBiConsumers.put(
+			"themeId",
+			(BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setThemeId);
+		attributeGetterFunctions.put(
+			"colorSchemeId", LayoutSetBranch::getColorSchemeId);
+		attributeSetterBiConsumers.put(
+			"colorSchemeId",
+			(BiConsumer<LayoutSetBranch, String>)
+				LayoutSetBranch::setColorSchemeId);
 		attributeGetterFunctions.put("css", LayoutSetBranch::getCss);
-		attributeSetterBiConsumers.put("css", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setCss);
+		attributeSetterBiConsumers.put(
+			"css",
+			(BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setCss);
 		attributeGetterFunctions.put("settings", LayoutSetBranch::getSettings);
-		attributeSetterBiConsumers.put("settings", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setSettings);
-		attributeGetterFunctions.put("layoutSetPrototypeUuid", LayoutSetBranch::getLayoutSetPrototypeUuid);
-		attributeSetterBiConsumers.put("layoutSetPrototypeUuid", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setLayoutSetPrototypeUuid);
-		attributeGetterFunctions.put("layoutSetPrototypeLinkEnabled", LayoutSetBranch::getLayoutSetPrototypeLinkEnabled);
-		attributeSetterBiConsumers.put("layoutSetPrototypeLinkEnabled", (BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setLayoutSetPrototypeLinkEnabled);
+		attributeSetterBiConsumers.put(
+			"settings",
+			(BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setSettings);
+		attributeGetterFunctions.put(
+			"layoutSetPrototypeUuid",
+			LayoutSetBranch::getLayoutSetPrototypeUuid);
+		attributeSetterBiConsumers.put(
+			"layoutSetPrototypeUuid",
+			(BiConsumer<LayoutSetBranch, String>)
+				LayoutSetBranch::setLayoutSetPrototypeUuid);
+		attributeGetterFunctions.put(
+			"layoutSetPrototypeLinkEnabled",
+			LayoutSetBranch::getLayoutSetPrototypeLinkEnabled);
+		attributeSetterBiConsumers.put(
+			"layoutSetPrototypeLinkEnabled",
+			(BiConsumer<LayoutSetBranch, Boolean>)
+				LayoutSetBranch::setLayoutSetPrototypeLinkEnabled);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -660,6 +748,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	@Override
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
+
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
@@ -669,8 +758,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			LayoutSetBranch.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), LayoutSetBranch.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -683,8 +772,9 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	@Override
 	public LayoutSetBranch toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (LayoutSetBranch)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (LayoutSetBranch)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -711,8 +801,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setColorSchemeId(getColorSchemeId());
 		layoutSetBranchImpl.setCss(getCss());
 		layoutSetBranchImpl.setSettings(getSettings());
-		layoutSetBranchImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
-		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(isLayoutSetPrototypeLinkEnabled());
+		layoutSetBranchImpl.setLayoutSetPrototypeUuid(
+			getLayoutSetPrototypeUuid());
+		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(
+			isLayoutSetPrototypeLinkEnabled());
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -773,19 +865,22 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	public void resetOriginalValues() {
 		LayoutSetBranchModelImpl layoutSetBranchModelImpl = this;
 
-		layoutSetBranchModelImpl._originalGroupId = layoutSetBranchModelImpl._groupId;
+		layoutSetBranchModelImpl._originalGroupId =
+			layoutSetBranchModelImpl._groupId;
 
 		layoutSetBranchModelImpl._setOriginalGroupId = false;
 
 		layoutSetBranchModelImpl._setModifiedDate = false;
 
-		layoutSetBranchModelImpl._originalPrivateLayout = layoutSetBranchModelImpl._privateLayout;
+		layoutSetBranchModelImpl._originalPrivateLayout =
+			layoutSetBranchModelImpl._privateLayout;
 
 		layoutSetBranchModelImpl._setOriginalPrivateLayout = false;
 
 		layoutSetBranchModelImpl._originalName = layoutSetBranchModelImpl._name;
 
-		layoutSetBranchModelImpl._originalMaster = layoutSetBranchModelImpl._master;
+		layoutSetBranchModelImpl._originalMaster =
+			layoutSetBranchModelImpl._master;
 
 		layoutSetBranchModelImpl._setOriginalMaster = false;
 
@@ -794,7 +889,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public CacheModel<LayoutSetBranch> toCacheModel() {
-		LayoutSetBranchCacheModel layoutSetBranchCacheModel = new LayoutSetBranchCacheModel();
+		LayoutSetBranchCacheModel layoutSetBranchCacheModel =
+			new LayoutSetBranchCacheModel();
 
 		layoutSetBranchCacheModel.mvccVersion = getMvccVersion();
 
@@ -886,32 +982,40 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			layoutSetBranchCacheModel.settings = null;
 		}
 
-		layoutSetBranchCacheModel.layoutSetPrototypeUuid = getLayoutSetPrototypeUuid();
+		layoutSetBranchCacheModel.layoutSetPrototypeUuid =
+			getLayoutSetPrototypeUuid();
 
-		String layoutSetPrototypeUuid = layoutSetBranchCacheModel.layoutSetPrototypeUuid;
+		String layoutSetPrototypeUuid =
+			layoutSetBranchCacheModel.layoutSetPrototypeUuid;
 
 		if ((layoutSetPrototypeUuid != null) &&
-				(layoutSetPrototypeUuid.length() == 0)) {
+			(layoutSetPrototypeUuid.length() == 0)) {
+
 			layoutSetBranchCacheModel.layoutSetPrototypeUuid = null;
 		}
 
-		layoutSetBranchCacheModel.layoutSetPrototypeLinkEnabled = isLayoutSetPrototypeLinkEnabled();
+		layoutSetBranchCacheModel.layoutSetPrototypeLinkEnabled =
+			isLayoutSetPrototypeLinkEnabled();
 
 		return layoutSetBranchCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		Map<String, Function<LayoutSetBranch, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<LayoutSetBranch, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<LayoutSetBranch, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<LayoutSetBranch, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<LayoutSetBranch, Object> attributeGetterFunction = entry.getValue();
+			Function<LayoutSetBranch, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
@@ -930,18 +1034,22 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<LayoutSetBranch, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<LayoutSetBranch, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<LayoutSetBranch, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<LayoutSetBranch, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<LayoutSetBranch, Object> attributeGetterFunction = entry.getValue();
+			Function<LayoutSetBranch, Object> attributeGetterFunction =
+				entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
@@ -955,10 +1063,12 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = LayoutSetBranch.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		LayoutSetBranch.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			LayoutSetBranch.class, ModelWrapper.class
-		};
+		LayoutSetBranch.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private long _layoutSetBranchId;
 	private long _groupId;
@@ -988,4 +1098,5 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private boolean _layoutSetPrototypeLinkEnabled;
 	private long _columnBitmask;
 	private LayoutSetBranch _escapedModel;
+
 }

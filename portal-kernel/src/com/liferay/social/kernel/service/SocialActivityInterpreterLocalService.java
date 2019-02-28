@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
@@ -43,9 +42,13 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface SocialActivityInterpreterLocalService extends BaseLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface SocialActivityInterpreterLocalService
+	extends BaseLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -53,57 +56,61 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	 */
 
 	/**
-	* Adds the activity interpreter to the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
+	 * Adds the activity interpreter to the list of available interpreters.
+	 *
+	 * @param activityInterpreter the activity interpreter
+	 */
 	public void addActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter);
 
 	/**
-	* Removes the activity interpreter from the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
+	 * Removes the activity interpreter from the list of available interpreters.
+	 *
+	 * @param activityInterpreter the activity interpreter
+	 */
 	public void deleteActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<String, List<SocialActivityInterpreter>> getActivityInterpreters();
+	public Map<String, List<SocialActivityInterpreter>>
+		getActivityInterpreters();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialActivityInterpreter> getActivityInterpreters(
 		String selector);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* Creates a human readable activity feed entry for the activity using an
-	* available compatible activity interpreter.
-	*
-	* <p>
-	* This method finds the appropriate interpreter for the activity by going
-	* through the available interpreters and asking them if they can handle the
-	* asset type of the activity.
-	* </p>
-	*
-	* @param selector the context in which the activity interpreter is used
-	* @param activity the activity to be translated to human readable form
-	* @param serviceContext the service context to be applied
-	* @return the activity feed that is a human readable form of the activity
-	record or <code>null</code> if a compatible interpreter is not
-	found
-	*/
-	public SocialActivityFeedEntry interpret(String selector,
-		SocialActivity activity, ServiceContext serviceContext);
+	 * Creates a human readable activity feed entry for the activity using an
+	 * available compatible activity interpreter.
+	 *
+	 * <p>
+	 * This method finds the appropriate interpreter for the activity by going
+	 * through the available interpreters and asking them if they can handle the
+	 * asset type of the activity.
+	 * </p>
+	 *
+	 * @param selector the context in which the activity interpreter is used
+	 * @param activity the activity to be translated to human readable form
+	 * @param serviceContext the service context to be applied
+	 * @return the activity feed that is a human readable form of the activity
+	 record or <code>null</code> if a compatible interpreter is not
+	 found
+	 */
+	public SocialActivityFeedEntry interpret(
+		String selector, SocialActivity activity,
+		ServiceContext serviceContext);
 
-	public SocialActivityFeedEntry interpret(String selector,
-		SocialActivitySet activitySet, ServiceContext serviceContext);
+	public SocialActivityFeedEntry interpret(
+		String selector, SocialActivitySet activitySet,
+		ServiceContext serviceContext);
 
 	public void updateActivitySet(long activityId) throws PortalException;
+
 }

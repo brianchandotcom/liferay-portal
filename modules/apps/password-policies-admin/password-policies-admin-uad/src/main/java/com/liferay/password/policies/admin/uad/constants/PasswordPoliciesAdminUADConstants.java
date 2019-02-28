@@ -19,5 +19,9 @@ package com.liferay.password.policies.admin.uad.constants;
  * @generated
  */
 public class PasswordPoliciesAdminUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_PASSWORD_POLICY = { "userId" };
+
+	public static final String[] USER_ID_FIELD_NAMES_PASSWORD_POLICY = {
+		"userId"
+	};
+
 }

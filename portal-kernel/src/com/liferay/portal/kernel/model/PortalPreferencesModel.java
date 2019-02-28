@@ -30,8 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface PortalPreferencesModel extends BaseModel<PortalPreferences>,
-	MVCCModel {
+public interface PortalPreferencesModel
+	extends BaseModel<PortalPreferences>, MVCCModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -124,4 +125,5 @@ public interface PortalPreferencesModel extends BaseModel<PortalPreferences>,
 	 * @param preferences the preferences of this portal preferences
 	 */
 	public void setPreferences(String preferences);
+
 }

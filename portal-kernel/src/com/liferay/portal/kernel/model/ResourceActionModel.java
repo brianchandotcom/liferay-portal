@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
  * @generated
  */
 @ProviderType
-public interface ResourceActionModel extends BaseModel<ResourceAction>, MVCCModel {
+public interface ResourceActionModel
+	extends BaseModel<ResourceAction>, MVCCModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -124,4 +126,5 @@ public interface ResourceActionModel extends BaseModel<ResourceAction>, MVCCMode
 	 * @param bitwiseValue the bitwise value of this resource action
 	 */
 	public void setBitwiseValue(long bitwiseValue);
+
 }

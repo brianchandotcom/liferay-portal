@@ -18,9 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-
 import com.liferay.social.kernel.model.SocialActivityAchievement;
 import com.liferay.social.kernel.model.SocialActivityAchievementModel;
 
@@ -58,24 +55,26 @@ import java.util.function.Function;
  * @generated
  */
 @ProviderType
-public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActivityAchievement>
+public class SocialActivityAchievementModelImpl
+	extends BaseModelImpl<SocialActivityAchievement>
 	implements SocialActivityAchievementModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a social activity achievement model instance should use the <code>SocialActivityAchievement</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "SocialActivityAchievement";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "activityAchievementId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "createDate", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "firstInGroup", Types.BOOLEAN }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"activityAchievementId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"createDate", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"firstInGroup", Types.BOOLEAN}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activityAchievementId", Types.BIGINT);
@@ -87,29 +86,52 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		TABLE_COLUMNS_MAP.put("firstInGroup", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityAchievement (activityAchievementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN)";
-	public static final String TABLE_SQL_DROP = "drop table SocialActivityAchievement";
-	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityAchievement.activityAchievementId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityAchievement.activityAchievementId ASC";
+	public static final String TABLE_SQL_CREATE =
+		"create table SocialActivityAchievement (activityAchievementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN)";
+
+	public static final String TABLE_SQL_DROP =
+		"drop table SocialActivityAchievement";
+
+	public static final String ORDER_BY_JPQL =
+		" ORDER BY socialActivityAchievement.activityAchievementId ASC";
+
+	public static final String ORDER_BY_SQL =
+		" ORDER BY SocialActivityAchievement.activityAchievementId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.social.kernel.model.SocialActivityAchievement"),
+		true);
+
 	public static final long FIRSTINGROUP_COLUMN_BITMASK = 1L;
+
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
+
 	public static final long NAME_COLUMN_BITMASK = 4L;
+
 	public static final long USERID_COLUMN_BITMASK = 8L;
+
 	public static final long ACTIVITYACHIEVEMENTID_COLUMN_BITMASK = 16L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityAchievement"));
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.social.kernel.model.SocialActivityAchievement"));
 
 	public SocialActivityAchievementModelImpl() {
 	}
@@ -148,14 +170,18 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityAchievement, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<SocialActivityAchievement, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityAchievement, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityAchievement, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityAchievement, Object>
+				attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
+			attributes.put(
+				attributeName,
 				attributeGetterFunction.apply((SocialActivityAchievement)this));
 		}
 
@@ -167,58 +193,100 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<SocialActivityAchievement, Object>> attributeSetterBiConsumers =
-			getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<SocialActivityAchievement, Object>>
+			attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<SocialActivityAchievement, Object> attributeSetterBiConsumer =
-				attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<SocialActivityAchievement, Object>
+				attributeSetterBiConsumer = attributeSetterBiConsumers.get(
+					attributeName);
 
 			if (attributeSetterBiConsumer != null) {
-				attributeSetterBiConsumer.accept((SocialActivityAchievement)this,
-					entry.getValue());
+				attributeSetterBiConsumer.accept(
+					(SocialActivityAchievement)this, entry.getValue());
 			}
 		}
 	}
 
-	public Map<String, Function<SocialActivityAchievement, Object>> getAttributeGetterFunctions() {
+	public Map<String, Function<SocialActivityAchievement, Object>>
+		getAttributeGetterFunctions() {
+
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<SocialActivityAchievement, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<SocialActivityAchievement, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<SocialActivityAchievement, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<SocialActivityAchievement, Object>> _attributeSetterBiConsumers;
+	private static final Map
+		<String, Function<SocialActivityAchievement, Object>>
+			_attributeGetterFunctions;
+	private static final Map
+		<String, BiConsumer<SocialActivityAchievement, Object>>
+			_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<SocialActivityAchievement, Object>>();
-		Map<String, BiConsumer<SocialActivityAchievement, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<SocialActivityAchievement, ?>>();
+		Map<String, Function<SocialActivityAchievement, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<SocialActivityAchievement, Object>>();
+		Map<String, BiConsumer<SocialActivityAchievement, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap
+					<String, BiConsumer<SocialActivityAchievement, ?>>();
 
+		attributeGetterFunctions.put(
+			"activityAchievementId",
+			SocialActivityAchievement::getActivityAchievementId);
+		attributeSetterBiConsumers.put(
+			"activityAchievementId",
+			(BiConsumer<SocialActivityAchievement, Long>)
+				SocialActivityAchievement::setActivityAchievementId);
+		attributeGetterFunctions.put(
+			"groupId", SocialActivityAchievement::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<SocialActivityAchievement, Long>)
+				SocialActivityAchievement::setGroupId);
+		attributeGetterFunctions.put(
+			"companyId", SocialActivityAchievement::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<SocialActivityAchievement, Long>)
+				SocialActivityAchievement::setCompanyId);
+		attributeGetterFunctions.put(
+			"userId", SocialActivityAchievement::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<SocialActivityAchievement, Long>)
+				SocialActivityAchievement::setUserId);
+		attributeGetterFunctions.put(
+			"createDate", SocialActivityAchievement::getCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<SocialActivityAchievement, Long>)
+				SocialActivityAchievement::setCreateDate);
+		attributeGetterFunctions.put(
+			"name", SocialActivityAchievement::getName);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<SocialActivityAchievement, String>)
+				SocialActivityAchievement::setName);
+		attributeGetterFunctions.put(
+			"firstInGroup", SocialActivityAchievement::getFirstInGroup);
+		attributeSetterBiConsumers.put(
+			"firstInGroup",
+			(BiConsumer<SocialActivityAchievement, Boolean>)
+				SocialActivityAchievement::setFirstInGroup);
 
-		attributeGetterFunctions.put("activityAchievementId", SocialActivityAchievement::getActivityAchievementId);
-		attributeSetterBiConsumers.put("activityAchievementId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setActivityAchievementId);
-		attributeGetterFunctions.put("groupId", SocialActivityAchievement::getGroupId);
-		attributeSetterBiConsumers.put("groupId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setGroupId);
-		attributeGetterFunctions.put("companyId", SocialActivityAchievement::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setCompanyId);
-		attributeGetterFunctions.put("userId", SocialActivityAchievement::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setUserId);
-		attributeGetterFunctions.put("createDate", SocialActivityAchievement::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setCreateDate);
-		attributeGetterFunctions.put("name", SocialActivityAchievement::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<SocialActivityAchievement, String>)SocialActivityAchievement::setName);
-		attributeGetterFunctions.put("firstInGroup", SocialActivityAchievement::getFirstInGroup);
-		attributeSetterBiConsumers.put("firstInGroup", (BiConsumer<SocialActivityAchievement, Boolean>)SocialActivityAchievement::setFirstInGroup);
-
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -369,8 +437,9 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			SocialActivityAchievement.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), SocialActivityAchievement.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -383,8 +452,10 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	@Override
 	public SocialActivityAchievement toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (SocialActivityAchievement)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel =
+				(SocialActivityAchievement)ProxyUtil.newProxyInstance(
+					_classLoader, _escapedModelInterfaces,
+					new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -392,9 +463,11 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public Object clone() {
-		SocialActivityAchievementImpl socialActivityAchievementImpl = new SocialActivityAchievementImpl();
+		SocialActivityAchievementImpl socialActivityAchievementImpl =
+			new SocialActivityAchievementImpl();
 
-		socialActivityAchievementImpl.setActivityAchievementId(getActivityAchievementId());
+		socialActivityAchievementImpl.setActivityAchievementId(
+			getActivityAchievementId());
 		socialActivityAchievementImpl.setGroupId(getGroupId());
 		socialActivityAchievementImpl.setCompanyId(getCompanyId());
 		socialActivityAchievementImpl.setUserId(getUserId());
@@ -432,7 +505,8 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 			return false;
 		}
 
-		SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)obj;
+		SocialActivityAchievement socialActivityAchievement =
+			(SocialActivityAchievement)obj;
 
 		long primaryKey = socialActivityAchievement.getPrimaryKey();
 
@@ -461,19 +535,24 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public void resetOriginalValues() {
-		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl = this;
+		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl =
+			this;
 
-		socialActivityAchievementModelImpl._originalGroupId = socialActivityAchievementModelImpl._groupId;
+		socialActivityAchievementModelImpl._originalGroupId =
+			socialActivityAchievementModelImpl._groupId;
 
 		socialActivityAchievementModelImpl._setOriginalGroupId = false;
 
-		socialActivityAchievementModelImpl._originalUserId = socialActivityAchievementModelImpl._userId;
+		socialActivityAchievementModelImpl._originalUserId =
+			socialActivityAchievementModelImpl._userId;
 
 		socialActivityAchievementModelImpl._setOriginalUserId = false;
 
-		socialActivityAchievementModelImpl._originalName = socialActivityAchievementModelImpl._name;
+		socialActivityAchievementModelImpl._originalName =
+			socialActivityAchievementModelImpl._name;
 
-		socialActivityAchievementModelImpl._originalFirstInGroup = socialActivityAchievementModelImpl._firstInGroup;
+		socialActivityAchievementModelImpl._originalFirstInGroup =
+			socialActivityAchievementModelImpl._firstInGroup;
 
 		socialActivityAchievementModelImpl._setOriginalFirstInGroup = false;
 
@@ -482,9 +561,12 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public CacheModel<SocialActivityAchievement> toCacheModel() {
-		SocialActivityAchievementCacheModel socialActivityAchievementCacheModel = new SocialActivityAchievementCacheModel();
+		SocialActivityAchievementCacheModel
+			socialActivityAchievementCacheModel =
+				new SocialActivityAchievementCacheModel();
 
-		socialActivityAchievementCacheModel.activityAchievementId = getActivityAchievementId();
+		socialActivityAchievementCacheModel.activityAchievementId =
+			getActivityAchievementId();
 
 		socialActivityAchievementCacheModel.groupId = getGroupId();
 
@@ -509,22 +591,25 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public String toString() {
-		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityAchievement, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<SocialActivityAchievement, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityAchievement, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityAchievement, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityAchievement, Object>
+				attributeGetterFunction = entry.getValue();
 
 			sb.append(attributeName);
 			sb.append("=");
-			sb.append(attributeGetterFunction.apply(
-					(SocialActivityAchievement)this));
+			sb.append(
+				attributeGetterFunction.apply((SocialActivityAchievement)this));
 			sb.append(", ");
 		}
 
@@ -539,25 +624,28 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<SocialActivityAchievement, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
+		Map<String, Function<SocialActivityAchievement, Object>>
+			attributeGetterFunctions = getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<SocialActivityAchievement, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<SocialActivityAchievement, Object>>
+				entry : attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
-			Function<SocialActivityAchievement, Object> attributeGetterFunction = entry.getValue();
+			Function<SocialActivityAchievement, Object>
+				attributeGetterFunction = entry.getValue();
 
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply(
-					(SocialActivityAchievement)this));
+			sb.append(
+				attributeGetterFunction.apply((SocialActivityAchievement)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -566,10 +654,12 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = SocialActivityAchievement.class.getClassLoader();
+	private static final ClassLoader _classLoader =
+		SocialActivityAchievement.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SocialActivityAchievement.class, ModelWrapper.class
-		};
+		SocialActivityAchievement.class, ModelWrapper.class
+	};
+
 	private long _activityAchievementId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -586,4 +676,5 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	private boolean _setOriginalFirstInGroup;
 	private long _columnBitmask;
 	private SocialActivityAchievement _escapedModel;
+
 }

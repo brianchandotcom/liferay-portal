@@ -26,8 +26,9 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public class UserGroupGroupRolePK implements Comparable<UserGroupGroupRolePK>,
-	Serializable {
+public class UserGroupGroupRolePK
+	implements Comparable<UserGroupGroupRolePK>, Serializable {
+
 	public long userGroupId;
 	public long groupId;
 	public long roleId;
@@ -131,7 +132,8 @@ public class UserGroupGroupRolePK implements Comparable<UserGroupGroupRolePK>,
 		UserGroupGroupRolePK pk = (UserGroupGroupRolePK)obj;
 
 		if ((userGroupId == pk.userGroupId) && (groupId == pk.groupId) &&
-				(roleId == pk.roleId)) {
+			(roleId == pk.roleId)) {
+
 			return true;
 		}
 		else {
@@ -170,4 +172,5 @@ public class UserGroupGroupRolePK implements Comparable<UserGroupGroupRolePK>,
 
 		return sb.toString();
 	}
+
 }

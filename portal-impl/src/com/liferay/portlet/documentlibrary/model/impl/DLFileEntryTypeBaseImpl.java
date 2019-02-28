@@ -32,8 +32,9 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
  * @generated
  */
 @ProviderType
-public abstract class DLFileEntryTypeBaseImpl extends DLFileEntryTypeModelImpl
-	implements DLFileEntryType {
+public abstract class DLFileEntryTypeBaseImpl
+	extends DLFileEntryTypeModelImpl implements DLFileEntryType {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -48,4 +49,5 @@ public abstract class DLFileEntryTypeBaseImpl extends DLFileEntryTypeModelImpl
 			DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(this);
 		}
 	}
+
 }

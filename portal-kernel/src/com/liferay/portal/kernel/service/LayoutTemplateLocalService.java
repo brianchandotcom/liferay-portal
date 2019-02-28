@@ -41,25 +41,28 @@ import javax.servlet.ServletContext;
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface LayoutTemplateLocalService extends BaseLocalService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutTemplateLocalServiceUtil} to access the layout template local service. Add custom service methods to <code>com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getContent(String layoutTemplateId, boolean standard,
-		String themeId);
+	public String getContent(
+		String layoutTemplateId, boolean standard, String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getLangType(String layoutTemplateId, boolean standard,
-		String themeId);
+	public String getLangType(
+		String layoutTemplateId, boolean standard, String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutTemplate getLayoutTemplate(String layoutTemplateId,
-		boolean standard, String themeId);
+	public LayoutTemplate getLayoutTemplate(
+		String layoutTemplateId, boolean standard, String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutTemplate> getLayoutTemplates();
@@ -68,26 +71,28 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	public List<LayoutTemplate> getLayoutTemplates(String themeId);
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public List<LayoutTemplate> init(ServletContext servletContext,
-		String[] xmls, PluginPackage pluginPackage);
-
-	public List<LayoutTemplate> init(String servletContextName,
+	public List<LayoutTemplate> init(
 		ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage);
 
-	public void readLayoutTemplate(String servletContextName,
-		ServletContext servletContext, Set<LayoutTemplate> layoutTemplates,
-		Element element, boolean standard, String themeId,
+	public List<LayoutTemplate> init(
+		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage);
 
-	public void uninstallLayoutTemplate(String layoutTemplateId,
-		boolean standard);
+	public void readLayoutTemplate(
+		String servletContextName, ServletContext servletContext,
+		Set<LayoutTemplate> layoutTemplates, Element element, boolean standard,
+		String themeId, PluginPackage pluginPackage);
+
+	public void uninstallLayoutTemplate(
+		String layoutTemplateId, boolean standard);
 
 	public void uninstallLayoutTemplates(String themeId);
+
 }

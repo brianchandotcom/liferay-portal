@@ -65,8 +65,9 @@ import javax.sql.DataSource;
 @Deprecated
 @ProviderType
 public abstract class ResourceBlockPermissionLocalServiceBaseImpl
-	extends BaseLocalServiceImpl implements ResourceBlockPermissionLocalService,
-		IdentifiableOSGiService {
+	extends BaseLocalServiceImpl
+	implements ResourceBlockPermissionLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -83,9 +84,11 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Override
 	public ResourceBlockPermission addResourceBlockPermission(
 		ResourceBlockPermission resourceBlockPermission) {
+
 		resourceBlockPermission.setNew(true);
 
-		return resourceBlockPermissionPersistence.update(resourceBlockPermission);
+		return resourceBlockPermissionPersistence.update(
+			resourceBlockPermission);
 	}
 
 	/**
@@ -98,7 +101,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Transactional(enabled = false)
 	public ResourceBlockPermission createResourceBlockPermission(
 		long resourceBlockPermissionId) {
-		return resourceBlockPermissionPersistence.create(resourceBlockPermissionId);
+
+		return resourceBlockPermissionPersistence.create(
+			resourceBlockPermissionId);
 	}
 
 	/**
@@ -111,8 +116,11 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ResourceBlockPermission deleteResourceBlockPermission(
-		long resourceBlockPermissionId) throws PortalException {
-		return resourceBlockPermissionPersistence.remove(resourceBlockPermissionId);
+			long resourceBlockPermissionId)
+		throws PortalException {
+
+		return resourceBlockPermissionPersistence.remove(
+			resourceBlockPermissionId);
 	}
 
 	/**
@@ -125,15 +133,17 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Override
 	public ResourceBlockPermission deleteResourceBlockPermission(
 		ResourceBlockPermission resourceBlockPermission) {
-		return resourceBlockPermissionPersistence.remove(resourceBlockPermission);
+
+		return resourceBlockPermissionPersistence.remove(
+			resourceBlockPermission);
 	}
 
 	@Override
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(ResourceBlockPermission.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			ResourceBlockPermission.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -144,7 +154,8 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return resourceBlockPermissionPersistence.findWithDynamicQuery(dynamicQuery);
+		return resourceBlockPermissionPersistence.findWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -160,10 +171,11 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return resourceBlockPermissionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return resourceBlockPermissionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
@@ -180,10 +192,12 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return resourceBlockPermissionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return resourceBlockPermissionPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -194,7 +208,8 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return resourceBlockPermissionPersistence.countWithDynamicQuery(dynamicQuery);
+		return resourceBlockPermissionPersistence.countWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	/**
@@ -205,16 +220,19 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return resourceBlockPermissionPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return resourceBlockPermissionPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
 	public ResourceBlockPermission fetchResourceBlockPermission(
 		long resourceBlockPermissionId) {
-		return resourceBlockPermissionPersistence.fetchByPrimaryKey(resourceBlockPermissionId);
+
+		return resourceBlockPermissionPersistence.fetchByPrimaryKey(
+			resourceBlockPermissionId);
 	}
 
 	/**
@@ -226,15 +244,20 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 */
 	@Override
 	public ResourceBlockPermission getResourceBlockPermission(
-		long resourceBlockPermissionId) throws PortalException {
-		return resourceBlockPermissionPersistence.findByPrimaryKey(resourceBlockPermissionId);
+			long resourceBlockPermissionId)
+		throws PortalException {
+
+		return resourceBlockPermissionPersistence.findByPrimaryKey(
+			resourceBlockPermissionId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(resourceBlockPermissionLocalService);
+		actionableDynamicQuery.setBaseLocalService(
+			resourceBlockPermissionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ResourceBlockPermission.class);
 
@@ -245,12 +268,17 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(resourceBlockPermissionLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			resourceBlockPermissionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
-		indexableActionableDynamicQuery.setModelClass(ResourceBlockPermission.class);
+		indexableActionableDynamicQuery.setModelClass(
+			ResourceBlockPermission.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
 			"resourceBlockPermissionId");
@@ -260,7 +288,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(resourceBlockPermissionLocalService);
+
+		actionableDynamicQuery.setBaseLocalService(
+			resourceBlockPermissionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ResourceBlockPermission.class);
 
@@ -274,13 +304,18 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return resourceBlockPermissionLocalService.deleteResourceBlockPermission((ResourceBlockPermission)persistedModel);
+
+		return resourceBlockPermissionLocalService.
+			deleteResourceBlockPermission(
+				(ResourceBlockPermission)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-		return resourceBlockPermissionPersistence.findByPrimaryKey(primaryKeyObj);
+
+		return resourceBlockPermissionPersistence.findByPrimaryKey(
+			primaryKeyObj);
 	}
 
 	/**
@@ -297,6 +332,7 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Override
 	public List<ResourceBlockPermission> getResourceBlockPermissions(
 		int start, int end) {
+
 		return resourceBlockPermissionPersistence.findAll(start, end);
 	}
 
@@ -320,7 +356,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	@Override
 	public ResourceBlockPermission updateResourceBlockPermission(
 		ResourceBlockPermission resourceBlockPermission) {
-		return resourceBlockPermissionPersistence.update(resourceBlockPermission);
+
+		return resourceBlockPermissionPersistence.update(
+			resourceBlockPermission);
 	}
 
 	/**
@@ -328,7 +366,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 *
 	 * @return the resource block permission local service
 	 */
-	public ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
+	public ResourceBlockPermissionLocalService
+		getResourceBlockPermissionLocalService() {
+
 		return resourceBlockPermissionLocalService;
 	}
 
@@ -338,8 +378,11 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 * @param resourceBlockPermissionLocalService the resource block permission local service
 	 */
 	public void setResourceBlockPermissionLocalService(
-		ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
-		this.resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
+		ResourceBlockPermissionLocalService
+			resourceBlockPermissionLocalService) {
+
+		this.resourceBlockPermissionLocalService =
+			resourceBlockPermissionLocalService;
 	}
 
 	/**
@@ -347,7 +390,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 *
 	 * @return the resource block permission persistence
 	 */
-	public ResourceBlockPermissionPersistence getResourceBlockPermissionPersistence() {
+	public ResourceBlockPermissionPersistence
+		getResourceBlockPermissionPersistence() {
+
 		return resourceBlockPermissionPersistence;
 	}
 
@@ -358,7 +403,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 */
 	public void setResourceBlockPermissionPersistence(
 		ResourceBlockPermissionPersistence resourceBlockPermissionPersistence) {
-		this.resourceBlockPermissionPersistence = resourceBlockPermissionPersistence;
+
+		this.resourceBlockPermissionPersistence =
+			resourceBlockPermissionPersistence;
 	}
 
 	/**
@@ -366,7 +413,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -376,7 +425,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -385,7 +436,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 *
 	 * @return the resource block local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceBlockLocalService getResourceBlockLocalService() {
+	public com.liferay.portal.kernel.service.ResourceBlockLocalService
+		getResourceBlockLocalService() {
+
 		return resourceBlockLocalService;
 	}
 
@@ -395,7 +448,9 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 * @param resourceBlockLocalService the resource block local service
 	 */
 	public void setResourceBlockLocalService(
-		com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService) {
+		com.liferay.portal.kernel.service.ResourceBlockLocalService
+			resourceBlockLocalService) {
+
 		this.resourceBlockLocalService = resourceBlockLocalService;
 	}
 
@@ -415,6 +470,7 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 */
 	public void setResourceBlockPersistence(
 		ResourceBlockPersistence resourceBlockPersistence) {
+
 		this.resourceBlockPersistence = resourceBlockPersistence;
 	}
 
@@ -432,12 +488,15 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 *
 	 * @param resourceBlockFinder the resource block finder
 	 */
-	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
+	public void setResourceBlockFinder(
+		ResourceBlockFinder resourceBlockFinder) {
+
 		this.resourceBlockFinder = resourceBlockFinder;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portal.kernel.model.ResourceBlockPermission",
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.kernel.model.ResourceBlockPermission",
 			resourceBlockPermissionLocalService);
 	}
 
@@ -471,15 +530,16 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = resourceBlockPermissionPersistence.getDataSource();
+			DataSource dataSource =
+				resourceBlockPermissionPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -489,17 +549,33 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = ResourceBlockPermissionLocalService.class)
-	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
+	protected ResourceBlockPermissionLocalService
+		resourceBlockPermissionLocalService;
+
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)
-	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService;
+	protected ResourceBlockPermissionPersistence
+		resourceBlockPermissionPersistence;
+
+	@BeanReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceBlockLocalService
+		resourceBlockLocalService;
+
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
+
 	@BeanReference(type = ResourceBlockFinder.class)
 	protected ResourceBlockFinder resourceBlockFinder;
+
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

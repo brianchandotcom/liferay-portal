@@ -35,8 +35,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
-	LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+public interface LayoutPrototypeModel
+	extends BaseModel<LayoutPrototype>, LocalizedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -380,8 +382,8 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescription(String description, Locale locale,
-		Locale defaultLocale);
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale);
 
 	public void setDescriptionCurrentLanguageId(String languageId);
 
@@ -398,8 +400,8 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	 * @param descriptionMap the locales and localized descriptions of this layout prototype
 	 * @param defaultLocale the default locale
 	 */
-	public void setDescriptionMap(Map<Locale, String> descriptionMap,
-		Locale defaultLocale);
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
 	 * Returns the settings of this layout prototype.
@@ -449,4 +451,5 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
+
 }

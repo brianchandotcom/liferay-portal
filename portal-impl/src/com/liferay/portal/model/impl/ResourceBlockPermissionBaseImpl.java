@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.service.ResourceBlockPermissionLocalServiceUtil
 @Deprecated
 @ProviderType
 public abstract class ResourceBlockPermissionBaseImpl
-	extends ResourceBlockPermissionModelImpl implements ResourceBlockPermission {
+	extends ResourceBlockPermissionModelImpl
+	implements ResourceBlockPermission {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -44,10 +46,13 @@ public abstract class ResourceBlockPermissionBaseImpl
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			ResourceBlockPermissionLocalServiceUtil.addResourceBlockPermission(this);
+			ResourceBlockPermissionLocalServiceUtil.addResourceBlockPermission(
+				this);
 		}
 		else {
-			ResourceBlockPermissionLocalServiceUtil.updateResourceBlockPermission(this);
+			ResourceBlockPermissionLocalServiceUtil.
+				updateResourceBlockPermission(this);
 		}
 	}
+
 }

@@ -28,79 +28,99 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class SocialActivityInterpreterLocalServiceWrapper
 	implements SocialActivityInterpreterLocalService,
-		ServiceWrapper<SocialActivityInterpreterLocalService> {
+			   ServiceWrapper<SocialActivityInterpreterLocalService> {
+
 	public SocialActivityInterpreterLocalServiceWrapper(
-		SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
-		_socialActivityInterpreterLocalService = socialActivityInterpreterLocalService;
+		SocialActivityInterpreterLocalService
+			socialActivityInterpreterLocalService) {
+
+		_socialActivityInterpreterLocalService =
+			socialActivityInterpreterLocalService;
 	}
 
 	/**
-	* Adds the activity interpreter to the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
+	 * Adds the activity interpreter to the list of available interpreters.
+	 *
+	 * @param activityInterpreter the activity interpreter
+	 */
 	@Override
 	public void addActivityInterpreter(
-		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
-		_socialActivityInterpreterLocalService.addActivityInterpreter(activityInterpreter);
+		com.liferay.social.kernel.model.SocialActivityInterpreter
+			activityInterpreter) {
+
+		_socialActivityInterpreterLocalService.addActivityInterpreter(
+			activityInterpreter);
 	}
 
 	/**
-	* Removes the activity interpreter from the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
+	 * Removes the activity interpreter from the list of available interpreters.
+	 *
+	 * @param activityInterpreter the activity interpreter
+	 */
 	@Override
 	public void deleteActivityInterpreter(
-		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
-		_socialActivityInterpreterLocalService.deleteActivityInterpreter(activityInterpreter);
+		com.liferay.social.kernel.model.SocialActivityInterpreter
+			activityInterpreter) {
+
+		_socialActivityInterpreterLocalService.deleteActivityInterpreter(
+			activityInterpreter);
 	}
 
 	@Override
-	public java.util.Map<String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
+	public java.util.Map
+		<String,
+		 java.util.List
+			 <com.liferay.social.kernel.model.SocialActivityInterpreter>>
+				getActivityInterpreters() {
+
 		return _socialActivityInterpreterLocalService.getActivityInterpreters();
 	}
 
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getActivityInterpreters(
-		String selector) {
-		return _socialActivityInterpreterLocalService.getActivityInterpreters(selector);
+	public java.util.List
+		<com.liferay.social.kernel.model.SocialActivityInterpreter>
+			getActivityInterpreters(String selector) {
+
+		return _socialActivityInterpreterLocalService.getActivityInterpreters(
+			selector);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return _socialActivityInterpreterLocalService.getOSGiServiceIdentifier();
+		return _socialActivityInterpreterLocalService.
+			getOSGiServiceIdentifier();
 	}
 
 	/**
-	* Creates a human readable activity feed entry for the activity using an
-	* available compatible activity interpreter.
-	*
-	* <p>
-	* This method finds the appropriate interpreter for the activity by going
-	* through the available interpreters and asking them if they can handle the
-	* asset type of the activity.
-	* </p>
-	*
-	* @param selector the context in which the activity interpreter is used
-	* @param activity the activity to be translated to human readable form
-	* @param serviceContext the service context to be applied
-	* @return the activity feed that is a human readable form of the activity
-	record or <code>null</code> if a compatible interpreter is not
-	found
-	*/
+	 * Creates a human readable activity feed entry for the activity using an
+	 * available compatible activity interpreter.
+	 *
+	 * <p>
+	 * This method finds the appropriate interpreter for the activity by going
+	 * through the available interpreters and asking them if they can handle the
+	 * asset type of the activity.
+	 * </p>
+	 *
+	 * @param selector the context in which the activity interpreter is used
+	 * @param activity the activity to be translated to human readable form
+	 * @param serviceContext the service context to be applied
+	 * @return the activity feed that is a human readable form of the activity
+	 record or <code>null</code> if a compatible interpreter is not
+	 found
+	 */
 	@Override
 	public com.liferay.social.kernel.model.SocialActivityFeedEntry interpret(
 		String selector,
 		com.liferay.social.kernel.model.SocialActivity activity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _socialActivityInterpreterLocalService.interpret(selector,
-			activity, serviceContext);
+
+		return _socialActivityInterpreterLocalService.interpret(
+			selector, activity, serviceContext);
 	}
 
 	@Override
@@ -108,13 +128,15 @@ public class SocialActivityInterpreterLocalServiceWrapper
 		String selector,
 		com.liferay.social.kernel.model.SocialActivitySet activitySet,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _socialActivityInterpreterLocalService.interpret(selector,
-			activitySet, serviceContext);
+
+		return _socialActivityInterpreterLocalService.interpret(
+			selector, activitySet, serviceContext);
 	}
 
 	@Override
 	public void updateActivitySet(long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_socialActivityInterpreterLocalService.updateActivitySet(activityId);
 	}
 
@@ -125,9 +147,14 @@ public class SocialActivityInterpreterLocalServiceWrapper
 
 	@Override
 	public void setWrappedService(
-		SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
-		_socialActivityInterpreterLocalService = socialActivityInterpreterLocalService;
+		SocialActivityInterpreterLocalService
+			socialActivityInterpreterLocalService) {
+
+		_socialActivityInterpreterLocalService =
+			socialActivityInterpreterLocalService;
 	}
 
-	private SocialActivityInterpreterLocalService _socialActivityInterpreterLocalService;
+	private SocialActivityInterpreterLocalService
+		_socialActivityInterpreterLocalService;
+
 }

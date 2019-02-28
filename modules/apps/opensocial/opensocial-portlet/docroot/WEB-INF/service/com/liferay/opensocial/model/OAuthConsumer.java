@@ -30,13 +30,15 @@ import com.liferay.portal.kernel.util.Accessor;
 @ImplementationClassName("com.liferay.opensocial.model.impl.OAuthConsumerImpl")
 @ProviderType
 public interface OAuthConsumer extends OAuthConsumerModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.opensocial.model.impl.OAuthConsumerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<OAuthConsumer, Long> O_AUTH_CONSUMER_ID_ACCESSOR =
-		new Accessor<OAuthConsumer, Long>() {
+	public static final Accessor<OAuthConsumer, Long>
+		O_AUTH_CONSUMER_ID_ACCESSOR = new Accessor<OAuthConsumer, Long>() {
+
 			@Override
 			public Long get(OAuthConsumer oAuthConsumer) {
 				return oAuthConsumer.getOAuthConsumerId();
@@ -51,9 +53,11 @@ public interface OAuthConsumer extends OAuthConsumerModel, PersistedModel {
 			public Class<OAuthConsumer> getTypeClass() {
 				return OAuthConsumer.class;
 			}
+
 		};
 
 	public String getKeyName();
 
 	public void setKeyName(String keyName);
+
 }

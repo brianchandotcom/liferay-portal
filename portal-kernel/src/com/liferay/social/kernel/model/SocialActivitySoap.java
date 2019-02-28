@@ -29,6 +29,7 @@ import java.util.List;
  */
 @ProviderType
 public class SocialActivitySoap implements Serializable {
+
 	public static SocialActivitySoap toSoapModel(SocialActivity model) {
 		SocialActivitySoap soapModel = new SocialActivitySoap();
 
@@ -60,11 +61,14 @@ public class SocialActivitySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SocialActivitySoap[][] toSoapModels(SocialActivity[][] models) {
+	public static SocialActivitySoap[][] toSoapModels(
+		SocialActivity[][] models) {
+
 		SocialActivitySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SocialActivitySoap[models.length][models[0].length];
+			soapModels =
+				new SocialActivitySoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new SocialActivitySoap[0][0];
@@ -77,8 +81,11 @@ public class SocialActivitySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SocialActivitySoap[] toSoapModels(List<SocialActivity> models) {
-		List<SocialActivitySoap> soapModels = new ArrayList<SocialActivitySoap>(models.size());
+	public static SocialActivitySoap[] toSoapModels(
+		List<SocialActivity> models) {
+
+		List<SocialActivitySoap> soapModels = new ArrayList<SocialActivitySoap>(
+			models.size());
 
 		for (SocialActivity model : models) {
 			soapModels.add(toSoapModel(model));
@@ -224,4 +231,5 @@ public class SocialActivitySoap implements Serializable {
 	private int _type;
 	private String _extraData;
 	private long _receiverUserId;
+
 }

@@ -28,6 +28,7 @@ import java.util.Set;
  * @generated
  */
 public class UserGroupFinderBaseImpl extends BasePersistenceImpl<UserGroup> {
+
 	public UserGroupFinderBaseImpl() {
 		setModelClass(UserGroup.class);
 	}
@@ -53,10 +54,14 @@ public class UserGroupFinderBaseImpl extends BasePersistenceImpl<UserGroup> {
 	 */
 	public void setUserGroupPersistence(
 		UserGroupPersistence userGroupPersistence) {
+
 		this.userGroupPersistence = userGroupPersistence;
 	}
 
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
-	private static final Log _log = LogFactoryUtil.getLog(UserGroupFinderBaseImpl.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserGroupFinderBaseImpl.class);
+
 }

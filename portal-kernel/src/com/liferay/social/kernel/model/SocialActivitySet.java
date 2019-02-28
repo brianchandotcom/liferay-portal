@@ -27,16 +27,21 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see SocialActivitySetModel
  * @generated
  */
-@ImplementationClassName("com.liferay.portlet.social.model.impl.SocialActivitySetImpl")
+@ImplementationClassName(
+	"com.liferay.portlet.social.model.impl.SocialActivitySetImpl"
+)
 @ProviderType
-public interface SocialActivitySet extends SocialActivitySetModel, PersistedModel {
+public interface SocialActivitySet
+	extends SocialActivitySetModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivitySetImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SocialActivitySet, Long> ACTIVITY_SET_ID_ACCESSOR =
-		new Accessor<SocialActivitySet, Long>() {
+	public static final Accessor<SocialActivitySet, Long>
+		ACTIVITY_SET_ID_ACCESSOR = new Accessor<SocialActivitySet, Long>() {
+
 			@Override
 			public Long get(SocialActivitySet socialActivitySet) {
 				return socialActivitySet.getActivitySetId();
@@ -51,5 +56,7 @@ public interface SocialActivitySet extends SocialActivitySetModel, PersistedMode
 			public Class<SocialActivitySet> getTypeClass() {
 				return SocialActivitySet.class;
 			}
+
 		};
+
 }

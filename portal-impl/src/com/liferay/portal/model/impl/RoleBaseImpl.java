@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
  */
 @ProviderType
 public abstract class RoleBaseImpl extends RoleModelImpl implements Role {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -47,4 +48,5 @@ public abstract class RoleBaseImpl extends RoleModelImpl implements Role {
 			RoleLocalServiceUtil.updateRole(this);
 		}
 	}
+
 }

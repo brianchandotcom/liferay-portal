@@ -18,11 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,30 +71,27 @@ import java.util.function.Function;
 @JSON(strict = true)
 @ProviderType
 public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a role model instance should use the <code>Role</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "Role_";
+
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "mvccVersion", Types.BIGINT },
-			{ "uuid_", Types.VARCHAR },
-			{ "roleId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
-			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "title", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "type_", Types.INTEGER },
-			{ "subtype", Types.VARCHAR }
-		};
-	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"roleId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"subtype", Types.VARCHAR}
+	};
+
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
+		new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
@@ -117,28 +111,48 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		TABLE_COLUMNS_MAP.put("subtype", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Role_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table Role_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
+
 	public static final String TABLE_SQL_DROP = "drop table Role_";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY role_.name ASC";
+
 	public static final String ORDER_BY_SQL = " ORDER BY Role_.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
+
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
+
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Role"),
-			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Role"),
-			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Role"),
-			true);
+
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Role"),
+		true);
+
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Role"),
+		true);
+
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
+		com.liferay.portal.util.PropsUtil.get(
+			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Role"),
+		true);
+
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
 	public static final long NAME_COLUMN_BITMASK = 8L;
+
 	public static final long SUBTYPE_COLUMN_BITMASK = 16L;
+
 	public static final long TYPE_COLUMN_BITMASK = 32L;
+
 	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
@@ -194,25 +208,40 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = "Groups_Roles";
+
 	public static final Object[][] MAPPING_TABLE_GROUPS_ROLES_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE = "create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_Roles"), true);
+		{"companyId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"roleId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
+		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Groups_Roles"),
+			true);
+
 	public static final String MAPPING_TABLE_USERS_ROLES_NAME = "Users_Roles";
+
 	public static final Object[][] MAPPING_TABLE_USERS_ROLES_COLUMNS = {
-			{ "companyId", Types.BIGINT },
-			{ "roleId", Types.BIGINT },
-			{ "userId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE = "create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
-	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Users_Roles"), true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
-				"lock.expiration.time.com.liferay.portal.kernel.model.Role"));
+		{"companyId", Types.BIGINT}, {"roleId", Types.BIGINT},
+		{"userId", Types.BIGINT}
+	};
+
+	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE =
+		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
+
+	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES =
+		GetterUtil.getBoolean(
+			com.liferay.portal.util.PropsUtil.get(
+				"value.object.finder.cache.enabled.Users_Roles"),
+			true);
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		com.liferay.portal.util.PropsUtil.get(
+			"lock.expiration.time.com.liferay.portal.kernel.model.Role"));
 
 	public RoleModelImpl() {
 	}
@@ -251,14 +280,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<Role, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Role, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		for (Map.Entry<String, Function<Role, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Role, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Role, Object> attributeGetterFunction = entry.getValue();
 
-			attributes.put(attributeName,
-				attributeGetterFunction.apply((Role)this));
+			attributes.put(
+				attributeName, attributeGetterFunction.apply((Role)this));
 		}
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -269,12 +301,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Map<String, BiConsumer<Role, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
+		Map<String, BiConsumer<Role, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
 		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 
-			BiConsumer<Role, Object> attributeSetterBiConsumer = attributeSetterBiConsumers.get(attributeName);
+			BiConsumer<Role, Object> attributeSetterBiConsumer =
+				attributeSetterBiConsumers.get(attributeName);
 
 			if (attributeSetterBiConsumer != null) {
 				attributeSetterBiConsumer.accept((Role)this, entry.getValue());
@@ -286,52 +320,73 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return _attributeGetterFunctions;
 	}
 
-	public Map<String, BiConsumer<Role, Object>> getAttributeSetterBiConsumers() {
+	public Map<String, BiConsumer<Role, Object>>
+		getAttributeSetterBiConsumers() {
+
 		return _attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Role, Object>> _attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Role, Object>> _attributeSetterBiConsumers;
+	private static final Map<String, Function<Role, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Role, Object>>
+		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<Role, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Role, Object>>();
-		Map<String, BiConsumer<Role, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Role, ?>>();
-
+		Map<String, Function<Role, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<Role, Object>>();
+		Map<String, BiConsumer<Role, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Role, ?>>();
 
 		attributeGetterFunctions.put("mvccVersion", Role::getMvccVersion);
-		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Role, Long>)Role::setMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion", (BiConsumer<Role, Long>)Role::setMvccVersion);
 		attributeGetterFunctions.put("uuid", Role::getUuid);
-		attributeSetterBiConsumers.put("uuid", (BiConsumer<Role, String>)Role::setUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Role, String>)Role::setUuid);
 		attributeGetterFunctions.put("roleId", Role::getRoleId);
-		attributeSetterBiConsumers.put("roleId", (BiConsumer<Role, Long>)Role::setRoleId);
+		attributeSetterBiConsumers.put(
+			"roleId", (BiConsumer<Role, Long>)Role::setRoleId);
 		attributeGetterFunctions.put("companyId", Role::getCompanyId);
-		attributeSetterBiConsumers.put("companyId", (BiConsumer<Role, Long>)Role::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Role, Long>)Role::setCompanyId);
 		attributeGetterFunctions.put("userId", Role::getUserId);
-		attributeSetterBiConsumers.put("userId", (BiConsumer<Role, Long>)Role::setUserId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Role, Long>)Role::setUserId);
 		attributeGetterFunctions.put("userName", Role::getUserName);
-		attributeSetterBiConsumers.put("userName", (BiConsumer<Role, String>)Role::setUserName);
+		attributeSetterBiConsumers.put(
+			"userName", (BiConsumer<Role, String>)Role::setUserName);
 		attributeGetterFunctions.put("createDate", Role::getCreateDate);
-		attributeSetterBiConsumers.put("createDate", (BiConsumer<Role, Date>)Role::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"createDate", (BiConsumer<Role, Date>)Role::setCreateDate);
 		attributeGetterFunctions.put("modifiedDate", Role::getModifiedDate);
-		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Role, Date>)Role::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate", (BiConsumer<Role, Date>)Role::setModifiedDate);
 		attributeGetterFunctions.put("classNameId", Role::getClassNameId);
-		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Role, Long>)Role::setClassNameId);
+		attributeSetterBiConsumers.put(
+			"classNameId", (BiConsumer<Role, Long>)Role::setClassNameId);
 		attributeGetterFunctions.put("classPK", Role::getClassPK);
-		attributeSetterBiConsumers.put("classPK", (BiConsumer<Role, Long>)Role::setClassPK);
+		attributeSetterBiConsumers.put(
+			"classPK", (BiConsumer<Role, Long>)Role::setClassPK);
 		attributeGetterFunctions.put("name", Role::getName);
-		attributeSetterBiConsumers.put("name", (BiConsumer<Role, String>)Role::setName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<Role, String>)Role::setName);
 		attributeGetterFunctions.put("title", Role::getTitle);
-		attributeSetterBiConsumers.put("title", (BiConsumer<Role, String>)Role::setTitle);
+		attributeSetterBiConsumers.put(
+			"title", (BiConsumer<Role, String>)Role::setTitle);
 		attributeGetterFunctions.put("description", Role::getDescription);
-		attributeSetterBiConsumers.put("description", (BiConsumer<Role, String>)Role::setDescription);
+		attributeSetterBiConsumers.put(
+			"description", (BiConsumer<Role, String>)Role::setDescription);
 		attributeGetterFunctions.put("type", Role::getType);
-		attributeSetterBiConsumers.put("type", (BiConsumer<Role, Integer>)Role::setType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<Role, Integer>)Role::setType);
 		attributeGetterFunctions.put("subtype", Role::getSubtype);
-		attributeSetterBiConsumers.put("subtype", (BiConsumer<Role, String>)Role::setSubtype);
+		attributeSetterBiConsumers.put(
+			"subtype", (BiConsumer<Role, String>)Role::setSubtype);
 
-
-		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
-		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -600,8 +655,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId,
-			useDefault);
+		return LocalizationUtil.getLocalization(
+			getTitle(), languageId, useDefault);
 	}
 
 	@Override
@@ -638,12 +693,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(title)) {
-			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
-					title, languageId, defaultLanguageId));
+			setTitle(
+				LocalizationUtil.updateLocalization(
+					getTitle(), "Title", title, languageId, defaultLanguageId));
 		}
 		else {
-			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
-					languageId));
+			setTitle(
+				LocalizationUtil.removeLocalization(
+					getTitle(), "Title", languageId));
 		}
 	}
 
@@ -658,13 +715,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	@Override
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
+	public void setTitleMap(
+		Map<Locale, String> titleMap, Locale defaultLocale) {
+
 		if (titleMap == null) {
 			return;
 		}
 
-		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
-				"Title", LocaleUtil.toLanguageId(defaultLocale)));
+		setTitle(
+			LocalizationUtil.updateLocalization(
+				titleMap, getTitle(), "Title",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -699,8 +760,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getDescription(), languageId,
-			useDefault);
+		return LocalizationUtil.getLocalization(
+			getDescription(), languageId, useDefault);
 	}
 
 	@Override
@@ -732,18 +793,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	@Override
-	public void setDescription(String description, Locale locale,
-		Locale defaultLocale) {
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale) {
+
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(description)) {
-			setDescription(LocalizationUtil.updateLocalization(
+			setDescription(
+				LocalizationUtil.updateLocalization(
 					getDescription(), "Description", description, languageId,
 					defaultLanguageId));
 		}
 		else {
-			setDescription(LocalizationUtil.removeLocalization(
+			setDescription(
+				LocalizationUtil.removeLocalization(
 					getDescription(), "Description", languageId));
 		}
 	}
@@ -759,14 +823,16 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	@Override
-	public void setDescriptionMap(Map<Locale, String> descriptionMap,
-		Locale defaultLocale) {
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale) {
+
 		if (descriptionMap == null) {
 			return;
 		}
 
-		setDescription(LocalizationUtil.updateLocalization(descriptionMap,
-				getDescription(), "Description",
+		setDescription(
+			LocalizationUtil.updateLocalization(
+				descriptionMap, getDescription(), "Description",
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
@@ -821,8 +887,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				Role.class.getName()), getClassNameId());
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Role.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -831,8 +897,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Role.class.getName(), getPrimaryKey());
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Role.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -868,7 +934,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			}
 		}
 
-		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
 	}
 
 	@Override
@@ -886,12 +953,15 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
 
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
 
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(Role.class.getName(),
-				getPrimaryKey(), defaultLocale, availableLocales);
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			Role.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -900,6 +970,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
+
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
@@ -916,19 +987,21 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		String description = getDescription(defaultLocale);
 
 		if (Validator.isNull(description)) {
-			setDescription(getDescription(modelDefaultLanguageId), defaultLocale);
+			setDescription(
+				getDescription(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setDescription(getDescription(defaultLocale), defaultLocale,
-				defaultLocale);
+			setDescription(
+				getDescription(defaultLocale), defaultLocale, defaultLocale);
 		}
 	}
 
 	@Override
 	public Role toEscapedModel() {
 		if (_escapedModel == null) {
-			_escapedModel = (Role)ProxyUtil.newProxyInstance(_classLoader,
-					_escapedModelInterfaces, new AutoEscapeBeanHandler(this));
+			_escapedModel = (Role)ProxyUtil.newProxyInstance(
+				_classLoader, _escapedModelInterfaces,
+				new AutoEscapeBeanHandler(this));
 		}
 
 		return _escapedModel;
@@ -1129,14 +1202,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public String toString() {
-		Map<String, Function<Role, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Role, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((4 * attributeGetterFunctions.size()) +
-				2);
+		StringBundler sb = new StringBundler(
+			4 * attributeGetterFunctions.size() + 2);
 
 		sb.append("{");
 
-		for (Map.Entry<String, Function<Role, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Role, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Role, Object> attributeGetterFunction = entry.getValue();
 
@@ -1157,16 +1233,19 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<Role, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<Role, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
-		StringBundler sb = new StringBundler((5 * attributeGetterFunctions.size()) +
-				4);
+		StringBundler sb = new StringBundler(
+			5 * attributeGetterFunctions.size() + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());
 		sb.append("</model-name>");
 
-		for (Map.Entry<String, Function<Role, Object>> entry : attributeGetterFunctions.entrySet()) {
+		for (Map.Entry<String, Function<Role, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
 			String attributeName = entry.getKey();
 			Function<Role, Object> attributeGetterFunction = entry.getValue();
 
@@ -1184,8 +1263,9 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	private static final ClassLoader _classLoader = Role.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Role.class, ModelWrapper.class
-		};
+		Role.class, ModelWrapper.class
+	};
+
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -1217,4 +1297,5 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private String _originalSubtype;
 	private long _columnBitmask;
 	private Role _escapedModel;
+
 }

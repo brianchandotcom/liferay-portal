@@ -31,8 +31,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class ListTypeWrapper extends BaseModelWrapper<ListType>
+public class ListTypeWrapper
+	extends BaseModelWrapper<ListType>
 	implements ListType, ModelWrapper<ListType> {
+
 	public ListTypeWrapper(ListType listType) {
 		super(listType);
 	}
@@ -77,50 +79,50 @@ public class ListTypeWrapper extends BaseModelWrapper<ListType>
 	}
 
 	/**
-	* Returns the list type ID of this list type.
-	*
-	* @return the list type ID of this list type
-	*/
+	 * Returns the list type ID of this list type.
+	 *
+	 * @return the list type ID of this list type
+	 */
 	@Override
 	public long getListTypeId() {
 		return model.getListTypeId();
 	}
 
 	/**
-	* Returns the mvcc version of this list type.
-	*
-	* @return the mvcc version of this list type
-	*/
+	 * Returns the mvcc version of this list type.
+	 *
+	 * @return the mvcc version of this list type
+	 */
 	@Override
 	public long getMvccVersion() {
 		return model.getMvccVersion();
 	}
 
 	/**
-	* Returns the name of this list type.
-	*
-	* @return the name of this list type
-	*/
+	 * Returns the name of this list type.
+	 *
+	 * @return the name of this list type
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the primary key of this list type.
-	*
-	* @return the primary key of this list type
-	*/
+	 * Returns the primary key of this list type.
+	 *
+	 * @return the primary key of this list type
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the type of this list type.
-	*
-	* @return the type of this list type
-	*/
+	 * Returns the type of this list type.
+	 *
+	 * @return the type of this list type
+	 */
 	@Override
 	public String getType() {
 		return model.getType();
@@ -132,50 +134,50 @@ public class ListTypeWrapper extends BaseModelWrapper<ListType>
 	}
 
 	/**
-	* Sets the list type ID of this list type.
-	*
-	* @param listTypeId the list type ID of this list type
-	*/
+	 * Sets the list type ID of this list type.
+	 *
+	 * @param listTypeId the list type ID of this list type
+	 */
 	@Override
 	public void setListTypeId(long listTypeId) {
 		model.setListTypeId(listTypeId);
 	}
 
 	/**
-	* Sets the mvcc version of this list type.
-	*
-	* @param mvccVersion the mvcc version of this list type
-	*/
+	 * Sets the mvcc version of this list type.
+	 *
+	 * @param mvccVersion the mvcc version of this list type
+	 */
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Sets the name of this list type.
-	*
-	* @param name the name of this list type
-	*/
+	 * Sets the name of this list type.
+	 *
+	 * @param name the name of this list type
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the primary key of this list type.
-	*
-	* @param primaryKey the primary key of this list type
-	*/
+	 * Sets the primary key of this list type.
+	 *
+	 * @param primaryKey the primary key of this list type
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the type of this list type.
-	*
-	* @param type the type of this list type
-	*/
+	 * Sets the type of this list type.
+	 *
+	 * @param type the type of this list type
+	 */
 	@Override
 	public void setType(String type) {
 		model.setType(type);
@@ -185,4 +187,5 @@ public class ListTypeWrapper extends BaseModelWrapper<ListType>
 	protected ListTypeWrapper wrap(ListType listType) {
 		return new ListTypeWrapper(listType);
 	}
+
 }

@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class PowwowServerSoap implements Serializable {
+
 	public static PowwowServerSoap toSoapModel(PowwowServer model) {
 		PowwowServerSoap soapModel = new PowwowServerSoap();
 
@@ -77,7 +78,8 @@ public class PowwowServerSoap implements Serializable {
 	}
 
 	public static PowwowServerSoap[] toSoapModels(List<PowwowServer> models) {
-		List<PowwowServerSoap> soapModels = new ArrayList<PowwowServerSoap>(models.size());
+		List<PowwowServerSoap> soapModels = new ArrayList<PowwowServerSoap>(
+			models.size());
 
 		for (PowwowServer model : models) {
 			soapModels.add(toSoapModel(model));
@@ -209,4 +211,5 @@ public class PowwowServerSoap implements Serializable {
 	private String _apiKey;
 	private String _secret;
 	private boolean _active;
+
 }

@@ -33,8 +33,10 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public class PowwowParticipantWrapper extends BaseModelWrapper<PowwowParticipant>
+public class PowwowParticipantWrapper
+	extends BaseModelWrapper<PowwowParticipant>
 	implements PowwowParticipant, ModelWrapper<PowwowParticipant> {
+
 	public PowwowParticipantWrapper(PowwowParticipant powwowParticipant) {
 		super(powwowParticipant);
 	}
@@ -142,160 +144,160 @@ public class PowwowParticipantWrapper extends BaseModelWrapper<PowwowParticipant
 	}
 
 	/**
-	* Returns the company ID of this powwow participant.
-	*
-	* @return the company ID of this powwow participant
-	*/
+	 * Returns the company ID of this powwow participant.
+	 *
+	 * @return the company ID of this powwow participant
+	 */
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this powwow participant.
-	*
-	* @return the create date of this powwow participant
-	*/
+	 * Returns the create date of this powwow participant.
+	 *
+	 * @return the create date of this powwow participant
+	 */
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
 	}
 
 	/**
-	* Returns the email address of this powwow participant.
-	*
-	* @return the email address of this powwow participant
-	*/
+	 * Returns the email address of this powwow participant.
+	 *
+	 * @return the email address of this powwow participant
+	 */
 	@Override
 	public String getEmailAddress() {
 		return model.getEmailAddress();
 	}
 
 	/**
-	* Returns the group ID of this powwow participant.
-	*
-	* @return the group ID of this powwow participant
-	*/
+	 * Returns the group ID of this powwow participant.
+	 *
+	 * @return the group ID of this powwow participant
+	 */
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this powwow participant.
-	*
-	* @return the modified date of this powwow participant
-	*/
+	 * Returns the modified date of this powwow participant.
+	 *
+	 * @return the modified date of this powwow participant
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this powwow participant.
-	*
-	* @return the name of this powwow participant
-	*/
+	 * Returns the name of this powwow participant.
+	 *
+	 * @return the name of this powwow participant
+	 */
 	@Override
 	public String getName() {
 		return model.getName();
 	}
 
 	/**
-	* Returns the participant user ID of this powwow participant.
-	*
-	* @return the participant user ID of this powwow participant
-	*/
+	 * Returns the participant user ID of this powwow participant.
+	 *
+	 * @return the participant user ID of this powwow participant
+	 */
 	@Override
 	public long getParticipantUserId() {
 		return model.getParticipantUserId();
 	}
 
 	/**
-	* Returns the participant user uuid of this powwow participant.
-	*
-	* @return the participant user uuid of this powwow participant
-	*/
+	 * Returns the participant user uuid of this powwow participant.
+	 *
+	 * @return the participant user uuid of this powwow participant
+	 */
 	@Override
 	public String getParticipantUserUuid() {
 		return model.getParticipantUserUuid();
 	}
 
 	/**
-	* Returns the powwow meeting ID of this powwow participant.
-	*
-	* @return the powwow meeting ID of this powwow participant
-	*/
+	 * Returns the powwow meeting ID of this powwow participant.
+	 *
+	 * @return the powwow meeting ID of this powwow participant
+	 */
 	@Override
 	public long getPowwowMeetingId() {
 		return model.getPowwowMeetingId();
 	}
 
 	/**
-	* Returns the powwow participant ID of this powwow participant.
-	*
-	* @return the powwow participant ID of this powwow participant
-	*/
+	 * Returns the powwow participant ID of this powwow participant.
+	 *
+	 * @return the powwow participant ID of this powwow participant
+	 */
 	@Override
 	public long getPowwowParticipantId() {
 		return model.getPowwowParticipantId();
 	}
 
 	/**
-	* Returns the primary key of this powwow participant.
-	*
-	* @return the primary key of this powwow participant
-	*/
+	 * Returns the primary key of this powwow participant.
+	 *
+	 * @return the primary key of this powwow participant
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
 	/**
-	* Returns the status of this powwow participant.
-	*
-	* @return the status of this powwow participant
-	*/
+	 * Returns the status of this powwow participant.
+	 *
+	 * @return the status of this powwow participant
+	 */
 	@Override
 	public int getStatus() {
 		return model.getStatus();
 	}
 
 	/**
-	* Returns the type of this powwow participant.
-	*
-	* @return the type of this powwow participant
-	*/
+	 * Returns the type of this powwow participant.
+	 *
+	 * @return the type of this powwow participant
+	 */
 	@Override
 	public int getType() {
 		return model.getType();
 	}
 
 	/**
-	* Returns the user ID of this powwow participant.
-	*
-	* @return the user ID of this powwow participant
-	*/
+	 * Returns the user ID of this powwow participant.
+	 *
+	 * @return the user ID of this powwow participant
+	 */
 	@Override
 	public long getUserId() {
 		return model.getUserId();
 	}
 
 	/**
-	* Returns the user name of this powwow participant.
-	*
-	* @return the user name of this powwow participant
-	*/
+	 * Returns the user name of this powwow participant.
+	 *
+	 * @return the user name of this powwow participant
+	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this powwow participant.
-	*
-	* @return the user uuid of this powwow participant
-	*/
+	 * Returns the user uuid of this powwow participant.
+	 *
+	 * @return the user uuid of this powwow participant
+	 */
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
@@ -307,167 +309,170 @@ public class PowwowParticipantWrapper extends BaseModelWrapper<PowwowParticipant
 	}
 
 	/**
-	* Sets the company ID of this powwow participant.
-	*
-	* @param companyId the company ID of this powwow participant
-	*/
+	 * Sets the company ID of this powwow participant.
+	 *
+	 * @param companyId the company ID of this powwow participant
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this powwow participant.
-	*
-	* @param createDate the create date of this powwow participant
-	*/
+	 * Sets the create date of this powwow participant.
+	 *
+	 * @param createDate the create date of this powwow participant
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the email address of this powwow participant.
-	*
-	* @param emailAddress the email address of this powwow participant
-	*/
+	 * Sets the email address of this powwow participant.
+	 *
+	 * @param emailAddress the email address of this powwow participant
+	 */
 	@Override
 	public void setEmailAddress(String emailAddress) {
 		model.setEmailAddress(emailAddress);
 	}
 
 	/**
-	* Sets the group ID of this powwow participant.
-	*
-	* @param groupId the group ID of this powwow participant
-	*/
+	 * Sets the group ID of this powwow participant.
+	 *
+	 * @param groupId the group ID of this powwow participant
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this powwow participant.
-	*
-	* @param modifiedDate the modified date of this powwow participant
-	*/
+	 * Sets the modified date of this powwow participant.
+	 *
+	 * @param modifiedDate the modified date of this powwow participant
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this powwow participant.
-	*
-	* @param name the name of this powwow participant
-	*/
+	 * Sets the name of this powwow participant.
+	 *
+	 * @param name the name of this powwow participant
+	 */
 	@Override
 	public void setName(String name) {
 		model.setName(name);
 	}
 
 	/**
-	* Sets the participant user ID of this powwow participant.
-	*
-	* @param participantUserId the participant user ID of this powwow participant
-	*/
+	 * Sets the participant user ID of this powwow participant.
+	 *
+	 * @param participantUserId the participant user ID of this powwow participant
+	 */
 	@Override
 	public void setParticipantUserId(long participantUserId) {
 		model.setParticipantUserId(participantUserId);
 	}
 
 	/**
-	* Sets the participant user uuid of this powwow participant.
-	*
-	* @param participantUserUuid the participant user uuid of this powwow participant
-	*/
+	 * Sets the participant user uuid of this powwow participant.
+	 *
+	 * @param participantUserUuid the participant user uuid of this powwow participant
+	 */
 	@Override
 	public void setParticipantUserUuid(String participantUserUuid) {
 		model.setParticipantUserUuid(participantUserUuid);
 	}
 
 	/**
-	* Sets the powwow meeting ID of this powwow participant.
-	*
-	* @param powwowMeetingId the powwow meeting ID of this powwow participant
-	*/
+	 * Sets the powwow meeting ID of this powwow participant.
+	 *
+	 * @param powwowMeetingId the powwow meeting ID of this powwow participant
+	 */
 	@Override
 	public void setPowwowMeetingId(long powwowMeetingId) {
 		model.setPowwowMeetingId(powwowMeetingId);
 	}
 
 	/**
-	* Sets the powwow participant ID of this powwow participant.
-	*
-	* @param powwowParticipantId the powwow participant ID of this powwow participant
-	*/
+	 * Sets the powwow participant ID of this powwow participant.
+	 *
+	 * @param powwowParticipantId the powwow participant ID of this powwow participant
+	 */
 	@Override
 	public void setPowwowParticipantId(long powwowParticipantId) {
 		model.setPowwowParticipantId(powwowParticipantId);
 	}
 
 	/**
-	* Sets the primary key of this powwow participant.
-	*
-	* @param primaryKey the primary key of this powwow participant
-	*/
+	 * Sets the primary key of this powwow participant.
+	 *
+	 * @param primaryKey the primary key of this powwow participant
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
-	* Sets the status of this powwow participant.
-	*
-	* @param status the status of this powwow participant
-	*/
+	 * Sets the status of this powwow participant.
+	 *
+	 * @param status the status of this powwow participant
+	 */
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
 	}
 
 	/**
-	* Sets the type of this powwow participant.
-	*
-	* @param type the type of this powwow participant
-	*/
+	 * Sets the type of this powwow participant.
+	 *
+	 * @param type the type of this powwow participant
+	 */
 	@Override
 	public void setType(int type) {
 		model.setType(type);
 	}
 
 	/**
-	* Sets the user ID of this powwow participant.
-	*
-	* @param userId the user ID of this powwow participant
-	*/
+	 * Sets the user ID of this powwow participant.
+	 *
+	 * @param userId the user ID of this powwow participant
+	 */
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this powwow participant.
-	*
-	* @param userName the user name of this powwow participant
-	*/
+	 * Sets the user name of this powwow participant.
+	 *
+	 * @param userName the user name of this powwow participant
+	 */
 	@Override
 	public void setUserName(String userName) {
 		model.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this powwow participant.
-	*
-	* @param userUuid the user uuid of this powwow participant
-	*/
+	 * Sets the user uuid of this powwow participant.
+	 *
+	 * @param userUuid the user uuid of this powwow participant
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	protected PowwowParticipantWrapper wrap(PowwowParticipant powwowParticipant) {
+	protected PowwowParticipantWrapper wrap(
+		PowwowParticipant powwowParticipant) {
+
 		return new PowwowParticipantWrapper(powwowParticipant);
 	}
+
 }

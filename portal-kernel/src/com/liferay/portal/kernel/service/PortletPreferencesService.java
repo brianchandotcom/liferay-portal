@@ -38,9 +38,12 @@ import com.liferay.portal.kernel.transaction.Transactional;
 @AccessControlled
 @JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface PortletPreferencesService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -50,25 +53,31 @@ public interface PortletPreferencesService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
 
-	public void restoreArchivedPreferences(long groupId, Layout layout,
-		String portletId, long portletItemId,
-		javax.portlet.PortletPreferences preferences) throws PortalException;
+	public void restoreArchivedPreferences(
+			long groupId, Layout layout, String portletId, long portletItemId,
+			javax.portlet.PortletPreferences preferences)
+		throws PortalException;
 
-	public void restoreArchivedPreferences(long groupId, Layout layout,
-		String portletId, PortletItem portletItem,
-		javax.portlet.PortletPreferences preferences) throws PortalException;
+	public void restoreArchivedPreferences(
+			long groupId, Layout layout, String portletId,
+			PortletItem portletItem,
+			javax.portlet.PortletPreferences preferences)
+		throws PortalException;
 
-	public void restoreArchivedPreferences(long groupId, String name,
-		Layout layout, String portletId,
-		javax.portlet.PortletPreferences preferences) throws PortalException;
+	public void restoreArchivedPreferences(
+			long groupId, String name, Layout layout, String portletId,
+			javax.portlet.PortletPreferences preferences)
+		throws PortalException;
 
-	public void updateArchivePreferences(long userId, long groupId,
-		String name, String portletId,
-		javax.portlet.PortletPreferences preferences) throws PortalException;
+	public void updateArchivePreferences(
+			long userId, long groupId, String name, String portletId,
+			javax.portlet.PortletPreferences preferences)
+		throws PortalException;
+
 }

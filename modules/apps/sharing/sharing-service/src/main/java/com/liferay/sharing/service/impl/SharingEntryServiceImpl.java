@@ -159,6 +159,19 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			getUserId(), classNameId, classPK, start, end);
 	}
 
+	@Override
+	public int getSharingEntriesCount(long classNameId, long classPK)
+		throws PortalException {
+
+		if (_isOwnerOrAdmin(classNameId, classPK)) {
+			return sharingEntryLocalService.getSharingEntriesCount(
+				classNameId, classPK);
+		}
+
+		return sharingEntryLocalService.getFromUserSharingEntriesCount(
+			getUserId(), classNameId, classPK);
+	}
+
 	/**
 	 * Updates the sharing entry in the database.
 	 *

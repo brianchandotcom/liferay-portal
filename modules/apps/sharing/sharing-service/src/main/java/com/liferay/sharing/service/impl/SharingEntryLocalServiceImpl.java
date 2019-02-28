@@ -448,6 +448,11 @@ public class SharingEntryLocalServiceImpl
 			toUserId, classNameId, classPK);
 	}
 
+	@Override
+	public int getSharingEntriesCount(long classNameId, long classPK) {
+		return sharingEntryPersistence.countByC_C(classNameId, classPK);
+	}
+
 	/**
 	 * Returns the sharing entries for the resource shared with the user. The
 	 * class name ID and class primary key identify the resource's type and

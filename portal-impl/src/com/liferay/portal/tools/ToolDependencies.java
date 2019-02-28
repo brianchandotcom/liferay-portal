@@ -490,40 +490,6 @@ public class ToolDependencies {
 			_portalCacheManager.clearAll();
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #getPortalCache(String)}
-		 */
-		@Deprecated
-		@Override
-		public PortalCache<? extends Serializable, ?> getCache(
-			String portalCacheName) {
-
-			return getPortalCache(portalCacheName);
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #getPortalCache(String, boolean)}
-		 */
-		@Deprecated
-		@Override
-		public PortalCache<? extends Serializable, ?> getCache(
-			String portalCacheName, boolean blocking) {
-
-			return getPortalCache(portalCacheName, blocking);
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #getPortalCacheManager()}
-		 */
-		@Deprecated
-		@Override
-		public PortalCacheManager<? extends Serializable, ?> getCacheManager() {
-			return getPortalCacheManager();
-		}
-
 		@Override
 		public PortalCache<? extends Serializable, ?> getPortalCache(
 			String portalCacheName) {
@@ -543,16 +509,6 @@ public class ToolDependencies {
 			getPortalCacheManager() {
 
 			return _portalCacheManager;
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #removePortalCache(String)}
-		 */
-		@Deprecated
-		@Override
-		public void removeCache(String portalCacheName) {
-			removePortalCache(portalCacheName);
 		}
 
 		@Override

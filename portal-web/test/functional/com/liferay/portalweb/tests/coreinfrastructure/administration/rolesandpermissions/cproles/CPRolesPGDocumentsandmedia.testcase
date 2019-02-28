@@ -171,7 +171,7 @@ definition {
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		MenuItem.viewNotPresent(menuItem = "Basic Document");
+		MenuItem.viewNotPresent(menuItem = "File Upload");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -245,7 +245,7 @@ definition {
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		MenuItem.viewNotPresent(menuItem = "Basic Document");
+		MenuItem.viewNotPresent(menuItem = "File Upload");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -298,7 +298,7 @@ definition {
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		MenuItem.viewNotPresent(menuItem = "Basic Document");
+		MenuItem.viewNotPresent(menuItem = "File Upload");
 	}
 
 	@priority = "5"

@@ -1,5 +1,5 @@
 definition {
-	var dmDocumentTypeName = "Basic Document";
+	var dmDocumentTypeName = "File Upload";
 
 	macro gotoAddDocumentType {
 		LexiconEntry.gotoAdd();

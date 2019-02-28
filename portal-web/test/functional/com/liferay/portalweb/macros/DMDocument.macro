@@ -1,6 +1,6 @@
 definition {
 	var assetType = "Document";
-	var dmDocumentTypeName = "Basic Document";
+	var dmDocumentTypeName = "File Upload";
 
 	macro addCategories {
 		Panel.expandPanel(panel = "Categorization");
@@ -330,7 +330,7 @@ definition {
 			MenuItem.click(menuItem = "${dmDocumentTypeName}");
 		}
 		else {
-			MenuItem.click(menuItem = "Basic Document");
+			MenuItem.click(menuItem = "File Upload");
 		}
 
 		DMDocument.editDocument(
@@ -2105,7 +2105,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Multiple Documents");
 
-		MenuItem.viewPresent(menuItem = "Basic Document");
+		MenuItem.viewPresent(menuItem = "File Upload");
 
 		MenuItem.viewPresent(menuItem = "Contract");
 

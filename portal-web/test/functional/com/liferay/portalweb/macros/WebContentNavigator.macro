@@ -114,8 +114,6 @@ definition {
 
 		MenuItem.click(menuItem = "${menuItem}");
 
-		IFrame.selectEditAssetFrame();
-
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}
 

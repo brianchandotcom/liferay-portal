@@ -47,10 +47,6 @@ formatSource {
 	mustRunAfter formatXML
 }
 
-formatXML {
-	exclude "**/jalopy.xml"
-}
-
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.service.builder/lib"
 }

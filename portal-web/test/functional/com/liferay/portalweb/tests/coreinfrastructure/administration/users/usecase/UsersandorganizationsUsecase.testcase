@@ -1182,7 +1182,7 @@ definition {
 
 		Page.viewSpecificPG(pageNameList = "Home,Wiki");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Message Boards",
 			key_portletTitleName = "Message Boards"

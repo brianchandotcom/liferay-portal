@@ -55,7 +55,7 @@ definition {
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World"
 		);

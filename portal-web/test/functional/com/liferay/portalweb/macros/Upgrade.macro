@@ -995,7 +995,7 @@ definition {
 			assetLinkBehavior = "Show Full Content"
 		);
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
 			value1 = "Asset Publisher",
 			key_portletName = "Asset Publisher"
@@ -1106,7 +1106,7 @@ definition {
 	macro viewNestedPortlets {
 		Navigator.gotoPage(pageName = "Nested Portlets");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
 			value1 = "Nested Applications",
 			key_portletName = "Nested Applications"
@@ -1283,7 +1283,7 @@ definition {
 			siteName = "Staging Site"
 		);
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
 			value1 = "Nested Applications",
 			key_portletName = "Nested Applications"

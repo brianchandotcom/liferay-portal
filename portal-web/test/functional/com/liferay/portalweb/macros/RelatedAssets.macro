@@ -63,7 +63,7 @@ definition {
 	macro viewDefaultPG {
 		var key_portletName = "Related Assets";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
 			value1 = "Related Assets"
 		);

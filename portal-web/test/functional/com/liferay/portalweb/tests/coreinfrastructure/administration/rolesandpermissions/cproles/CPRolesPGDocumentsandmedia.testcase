@@ -470,7 +470,7 @@ definition {
 
 		var dmFolderNameUpperCase = StringUtil.upperCase("DM Folder Name");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
 			value1 = "${dmFolderNameUpperCase}"
 		);
@@ -530,7 +530,7 @@ definition {
 
 		var dmFolderNameUpperCase = StringUtil.upperCase("DM Folder Name");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
 			value1 = "${dmFolderNameUpperCase}"
 		);

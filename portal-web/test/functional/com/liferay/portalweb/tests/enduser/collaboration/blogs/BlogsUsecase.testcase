@@ -1889,7 +1889,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "Blogs Aggregator"
 		);
@@ -1921,7 +1921,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "Blogs Aggregator"
 		);

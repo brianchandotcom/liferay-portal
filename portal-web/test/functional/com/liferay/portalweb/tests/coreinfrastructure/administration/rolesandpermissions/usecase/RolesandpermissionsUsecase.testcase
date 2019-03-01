@@ -1711,14 +1711,14 @@ definition {
 
 		var key_portletTitleName = "Message Boards";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Message Boards"
 		);
 
 		var key_portletTitleName = "Asset Publisher";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Asset Publisher"
 		);
@@ -1739,14 +1739,14 @@ definition {
 
 		var key_portletTitleName = "Message Boards";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Message Boards"
 		);
 
 		var key_portletTitleName = "Asset Publisher";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Asset Publisher"
 		);
@@ -1764,7 +1764,7 @@ definition {
 
 		var key_portletTitleName = "Message Boards";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Message Boards"
 		);
@@ -1784,14 +1784,14 @@ definition {
 
 		var key_portletTitleName = "Message Boards";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Message Boards"
 		);
 
 		var key_portletTitleName = "Asset Publisher";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#SPECIFIC_TITLE",
 			value1 = "Asset Publisher"
 		);
@@ -2054,7 +2054,7 @@ definition {
 		for (var portletTitleName : list "Blogs,Tag Cloud,Recent Bloggers") {
 			var key_portletTitleName = "${portletTitleName}";
 
-			AssertTextEquals.assertTextCaseInsensitive(
+			AssertTextEquals(
 				locator1 = "Portlet#SPECIFIC_TITLE",
 				value1 = "${portletTitleName}"
 			);
@@ -2213,7 +2213,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World"
 		);

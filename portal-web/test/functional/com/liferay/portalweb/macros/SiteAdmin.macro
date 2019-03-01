@@ -11,7 +11,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 			value1 = "${portletTitle}"
 		);

@@ -357,13 +357,13 @@ definition {
 		var key_portletName = "Web Content Display";
 
 		if ("${scopeSelectionDefault}" == "true") {
-			AssertTextEquals.assertTextCaseInsensitive(
+			AssertTextEquals(
 				locator1 = "Portlet#TITLE",
 				value1 = "Web Content Display"
 			);
 		}
 		else {
-			AssertTextEquals.assertTextCaseInsensitive(
+			AssertTextEquals(
 				locator1 = "Portlet#TITLE",
 				value1 = "Web Content Display (${scopeSelection})"
 			);

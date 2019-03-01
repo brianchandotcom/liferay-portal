@@ -350,7 +350,7 @@ definition {
 	macro viewNoPermissionCP {
 		var key_portletTitle = "Message Boards";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 			value1 = "Message Boards"
 		);

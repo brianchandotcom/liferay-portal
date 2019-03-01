@@ -542,7 +542,7 @@ definition {
 				var ruleInstance = "1";
 			}
 
-			AssertTextEquals.assertTextCaseInsensitive(
+			AssertTextEquals(
 				locator1 = "EditUserSegment#USER_SEGMENT_RULE_APPLIED",
 				value1 = "${usersegmentRuleName}"
 			);

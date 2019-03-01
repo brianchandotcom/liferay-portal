@@ -196,7 +196,7 @@ definition {
 	macro viewNoPermissionCP {
 		var key_portletTitle = "Blogs";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 			value1 = "Blogs"
 		);

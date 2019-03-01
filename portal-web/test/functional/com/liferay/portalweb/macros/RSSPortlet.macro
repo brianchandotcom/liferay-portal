@@ -210,7 +210,7 @@ definition {
 	macro waitForRSSLoad {
 		AssertVisible(locator1 = "Portlet#H2_HEADER");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "RSS Publisher"
 		);

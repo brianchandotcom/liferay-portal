@@ -226,7 +226,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",
 			value1 = "Hello World"
 		);

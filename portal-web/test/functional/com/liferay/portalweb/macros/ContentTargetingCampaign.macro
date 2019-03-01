@@ -503,7 +503,7 @@ definition {
 		for (var trackingAction : list "${viewTrackingActionsList}") {
 			var key_trackingAction = "${trackingAction}";
 
-			AssertTextEquals.assertTextCaseInsensitive(
+			AssertTextEquals(
 				locator1 = "EditCampaign#CAMPAIGN_TRACKING_ACTIONS_APPLIED",
 				value1 = "${trackingAction}"
 			);

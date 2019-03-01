@@ -185,7 +185,7 @@ definition {
 	}
 
 	macro viewViaDDLDisplayPG {
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "${ddlListName}"
 		);

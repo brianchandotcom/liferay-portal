@@ -173,7 +173,7 @@ definition {
 	macro viewDefaultPG {
 		var key_portletName = "Documents and Media";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
 			value1 = "Documents and Media"
 		);
@@ -187,7 +187,7 @@ definition {
 	macro viewNoPermissionCP {
 		var key_portletTitle = "Documents and Media";
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 			value1 = "Documents and Media"
 		);

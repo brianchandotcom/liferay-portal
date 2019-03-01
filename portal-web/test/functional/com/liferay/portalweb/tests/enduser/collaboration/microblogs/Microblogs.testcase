@@ -34,7 +34,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Microblogs Page");
 
-		AssertTextEquals.assertTextCaseInsensitive(
+		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "Microblogs"
 		);

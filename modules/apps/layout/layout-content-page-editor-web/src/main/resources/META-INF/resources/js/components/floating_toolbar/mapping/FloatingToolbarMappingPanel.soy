@@ -4,4 +4,63 @@
  * FloatingToolbarMappingPanel
  */
 {template .render}
+	<div class="floating-toolbar-mapping-panel">
+		<div class="form-group">
+			{call .sourceSelect}
+			{/call}
+		</div>
+		<div class="form-group">
+			{call .assetSelect}
+			{/call}
+		</div>
+		<div class="form-group">
+			{call .fieldSelect}
+			{/call}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Asset select
+ */
+{template .assetSelect}
+	<label for="floatingToolbarMappingPanelAssetSelect">
+		{msg desc=""}content{/msg}
+	</label>
+
+	<select
+		class="form-control form-control-sm"
+		id="floatingToolbarMappingPanelAssetSelect"
+	>
+	</select>
+{/template}
+
+/**
+ * Field select
+ */
+{template .fieldSelect}
+	<label for="floatingToolbarMappingPanelFieldSelect">
+		{msg desc=""}field{/msg}
+	</label>
+
+	<select
+		class="form-control form-control-sm"
+		id="floatingToolbarMappingPanelFieldSelect"
+	>
+	</select>
+{/template}
+
+/**
+ * Source select
+ */
+{template .sourceSelect}
+	<label for="floatingToolbarMappingPanelSourceSelect">
+		{msg desc=""}source{/msg}
+	</label>
+
+	<select
+		class="form-control form-control-sm"
+		id="floatingToolbarMappingPanelSourceSelect"
+	>
+	</select>
 {/template}

@@ -1,10 +1,5 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
-	compileOnly project(":apps:configuration-admin:configuration-admin-web")
 	compileOnly project(":apps:static:osgi:osgi-util")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

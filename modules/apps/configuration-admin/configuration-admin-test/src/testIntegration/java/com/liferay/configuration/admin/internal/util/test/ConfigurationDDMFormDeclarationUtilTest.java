@@ -16,9 +16,10 @@ package com.liferay.configuration.admin.internal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationDDMFormDeclarationUtil;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
+
+import java.lang.reflect.Method;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -59,6 +60,30 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 
 		_serviceRegistration = registerConfigurationDDMFormDeclaration(
 			configurationDDMFormDeclaration, _configuration.getPid());
+
+		Bundle bundle = null;
+
+		for (Bundle installedBundle : _bundleContext.getBundles()) {
+			if ("com.liferay.configuration.admin.web".equals(
+					installedBundle.getSymbolicName())) {
+
+				bundle = installedBundle;
+
+				break;
+			}
+		}
+
+		if (bundle == null) {
+			throw new IllegalStateException(
+				"com.liferay.configuration.admin.web bundle not found");
+		}
+
+		Class<?> clazz = bundle.loadClass(
+			"com.liferay.configuration.admin.web.internal.util." +
+				"ConfigurationDDMFormDeclarationUtil");
+
+		_method = clazz.getDeclaredMethod(
+			"getConfigurationDDMFormClass", String.class);
 	}
 
 	@After
@@ -69,11 +94,10 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 	}
 
 	@Test
-	public void testGetConfigurationFormClassFromPid() {
+	public void testGetConfigurationFormClassFromPid() throws Exception {
 		Assert.assertEquals(
 			TestConfigurationForm.class,
-			ConfigurationDDMFormDeclarationUtil.getConfigurationDDMFormClass(
-				_configuration.getPid()));
+			_method.invoke(null, _configuration.getPid()));
 	}
 
 	protected ServiceRegistration<ConfigurationDDMFormDeclaration>
@@ -93,6 +117,7 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
 	private Configuration _configuration;
+	private Method _method;
 	private ServiceRegistration _serviceRegistration;
 
 	private class TestConfigurationForm {

@@ -169,7 +169,7 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <%
-	List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(KBArticle.class.getName(), kbArticle.getClassPK());
+List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(KBArticle.class.getName(), kbArticle.getClassPK());
 
-	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 %>

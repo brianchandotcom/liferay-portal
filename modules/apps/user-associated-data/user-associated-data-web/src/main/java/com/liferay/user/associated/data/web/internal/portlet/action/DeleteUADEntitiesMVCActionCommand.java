@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -41,11 +44,16 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		for (String entityType : getEntityTypes(actionRequest)) {
-			UADAnonymizer uadAnonymizer = getUADAnonymizer(
-				actionRequest, entityType);
+		Map<String, List<Object>> entitiesMap = getEntitiesMap(actionRequest);
 
-			doMultipleAction(actionRequest, entityType, uadAnonymizer::delete);
+		for (Map.Entry<String, List<Object>> entry : entitiesMap.entrySet()) {
+			List<Object> entities = entry.getValue();
+			UADAnonymizer uadAnonymizer = getUADAnonymizer(
+				actionRequest, entry.getKey());
+
+			for (Object entity : entities) {
+				uadAnonymizer.delete(entity);
+			}
 		}
 
 		doReviewableRedirect(actionRequest, actionResponse);

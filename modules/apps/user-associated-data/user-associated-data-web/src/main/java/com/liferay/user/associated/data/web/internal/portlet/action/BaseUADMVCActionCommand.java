@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -25,12 +24,16 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 import com.liferay.user.associated.data.web.internal.util.UADReviewDataHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,19 +48,45 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void doMultipleAction(
-			ActionRequest actionRequest, String entityType,
-			UnsafeConsumer<Object, Exception> unsafeConsumer)
-		throws Exception {
+	protected void addEntities(
+		Map<String, List<Object>> entitiesMap, List<Object> entities,
+		String entityType) {
 
-		for (Object entity : getEntities(actionRequest, entityType)) {
-			unsafeConsumer.accept(entity);
+		if (entitiesMap.containsKey(entityType)) {
+			List<Object> entitiesList = entitiesMap.get(entityType);
+
+			entitiesList.addAll(entities);
+		}
+		else {
+			List<Object> entitiesList = new ArrayList<>();
+
+			entitiesList.addAll(entities);
+
+			entitiesMap.put(entityType, entitiesList);
+		}
+	}
+
+	protected void addEntity(
+		Map<String, List<Object>> entitiesMap, Object entity,
+		String entityType) {
+
+		if (entitiesMap.containsKey(entityType)) {
+			List<Object> entitiesList = entitiesMap.get(entityType);
+
+			entitiesList.add(entity);
+		}
+		else {
+			List<Object> entitiesList = new ArrayList<>();
+
+			entitiesList.add(entity);
+
+			entitiesMap.put(entityType, entitiesList);
 		}
 	}
 
 	protected void doNonreviewableRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	throws Exception {
 
 		String mvcRenderCommandName = null;
 
@@ -95,7 +124,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void doReviewableRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	throws Exception {
 
 		String mvcRenderCommandName = null;
 
@@ -132,48 +161,63 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, liferayPortletURL.toString());
 	}
 
-	protected List<Object> getEntities(
-			ActionRequest actionRequest, String entityType)
+	protected Map<String, List<Object>> getEntitiesMap(
+			ActionRequest actionRequest)
 		throws Exception {
 
-		List<Object> entities = new ArrayList<>();
+		String applicationKey = ParamUtil.getString(
+			actionRequest, "applicationKey");
 
-		String[] primaryKeys = ParamUtil.getStringValues(
-			actionRequest, "primaryKeys__" + entityType);
+		Map<String, List<Object>> entitiesMap = new LinkedHashMap<>();
 
-		String uadRegistryKey = ParamUtil.getString(
-			actionRequest, "uadRegistryKey__" + entityType);
+		UADHierarchyDisplay uadHierarchyDisplay =
+			uadRegistry.getUADHierarchyDisplay(applicationKey);
 
-		UADDisplay uadDisplay = uadRegistry.getUADDisplay(uadRegistryKey);
+		long selectedUserId = getSelectedUserId(actionRequest);
 
-		for (String primaryKey : primaryKeys) {
-			entities.add(uadDisplay.get(primaryKey));
-		}
+		List<String> entityTypes = getEntityTypes(actionRequest);
 
-		return entities;
-	}
+		for (String entityType : entityTypes) {
+			String uadRegistryKey = getUADRegistryKey(
+				actionRequest, entityType);
 
-	protected Object getEntity(ActionRequest actionRequest, String entityType)
-		throws Exception {
+			UADDisplay uadDisplay = uadRegistry.getUADDisplay(uadRegistryKey);
 
-		UADDisplay uadDisplay = getUADDisplay(actionRequest, entityType);
+			String[] primaryKeys = getPrimaryKeys(actionRequest, entityType);
 
-		String primaryKey = ParamUtil.getString(
-			actionRequest, "primaryKey__" + entityType);
+			for (String primaryKey : primaryKeys) {
+				Object entity = uadDisplay.get(primaryKey);
 
-		return uadDisplay.get(primaryKey);
-	}
+				if (uadHierarchyDisplay != null) {
+					if (uadHierarchyDisplay.isContainer(
+							uadDisplay.getTypeClass())) {
 
-	protected String getEntityType(ActionRequest actionRequest) {
-		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
+						for (String containerItemType : entityTypes) {
+							List<Object> containerItems =
+								uadHierarchyDisplay.getContainerItems(
+									uadDisplay.getTypeClass(),
+									uadDisplay.getPrimaryKey(entity),
+									getUADRegistryKey(
+										actionRequest, containerItemType),
+									selectedUserId);
 
-		for (String key : parameterMap.keySet()) {
-			if (key.startsWith("primaryKey__")) {
-				return key.replace("primaryKey__", "");
+							addEntities(
+								entitiesMap, containerItems, containerItemType);
+						}
+					}
+
+					if (uadDisplay.isUserOwned(entity, selectedUserId)) {
+						addEntity(entitiesMap, entity, entityType);
+					}
+				}
+				else {
+					addEntity(
+						entitiesMap, uadDisplay.get(primaryKey), entityType);
+				}
 			}
 		}
 
-		return null;
+		return entitiesMap;
 	}
 
 	protected List<String> getEntityTypes(ActionRequest actionRequest) {
@@ -182,12 +226,28 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
 
 		for (String key : parameterMap.keySet()) {
-			if (key.startsWith("primaryKeys__")) {
-				entityTypes.add(key.replace("primaryKeys__", ""));
+			if (key.startsWith("uadRegistryKey__")) {
+				entityTypes.add(key.replace("uadRegistryKey__", ""));
 			}
 		}
 
 		return entityTypes;
+	}
+
+	protected String[] getPrimaryKeys(
+		ActionRequest actionRequest, String entityType) {
+
+		String primaryKey = ParamUtil.getString(
+			actionRequest, "primaryKey__" + entityType);
+
+		if (Validator.isNotNull(primaryKey)) {
+			return new String[] {primaryKey};
+		}
+
+		String[] primaryKeys = ParamUtil.getStringValues(
+			actionRequest, "primaryKeys__" + entityType);
+
+		return primaryKeys;
 	}
 
 	protected User getSelectedUser(ActionRequest actionRequest)
@@ -202,32 +262,35 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		return selectedUserHelper.getSelectedUserId(actionRequest);
 	}
 
-	protected UADAnonymizer getUADAnonymizer(ActionRequest actionRequest) {
-		return uadRegistry.getUADAnonymizer(getUADRegistryKey(actionRequest));
-	}
-
 	protected UADAnonymizer getUADAnonymizer(
 		ActionRequest actionRequest, String entityType) {
 
 		return uadRegistry.getUADAnonymizer(
-			ParamUtil.getString(
-				actionRequest, "uadRegistryKey__" + entityType));
-	}
-
-	protected UADDisplay getUADDisplay(ActionRequest actionRequest) {
-		return uadRegistry.getUADDisplay(getUADRegistryKey(actionRequest));
+			getUADRegistryKey(actionRequest, entityType));
 	}
 
 	protected UADDisplay getUADDisplay(
 		ActionRequest actionRequest, String entityType) {
 
 		return uadRegistry.getUADDisplay(
-			ParamUtil.getString(
-				actionRequest, "uadRegistryKey__" + entityType));
+			getUADRegistryKey(actionRequest, entityType));
 	}
 
-	protected String getUADRegistryKey(ActionRequest actionRequest) {
-		return ParamUtil.getString(actionRequest, "uadRegistryKey");
+	protected List<UADDisplay> getUADDisplays(ActionRequest actionRequest) {
+		List<UADDisplay> uadDisplays = new ArrayList<>();
+
+		for (String entityType : getEntityTypes(actionRequest)) {
+			uadDisplays.add(getUADDisplay(actionRequest, entityType));
+		}
+
+		return uadDisplays;
+	}
+
+	protected String getUADRegistryKey(
+		ActionRequest actionRequest, String entityType) {
+
+		return ParamUtil.getString(
+			actionRequest, "uadRegistryKey__" + entityType);
 	}
 
 	@Reference

@@ -29,34 +29,30 @@
 		/>
 	</c:if>
 
-	<c:if test='<%= (uadEntity.getEditURL() != null) && actions.contains("edit") %>'>
+	<c:if test="<%= uadEntity.getEditURL() != null %>">
 		<liferay-ui:icon
 			message="edit"
 			url="<%= uadEntity.getEditURL() %>"
 		/>
 	</c:if>
 
-	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
+	<portlet:actionURL name="/anonymize_uad_entities" var="autoAnonymizeURL">
 		<portlet:param name='<%= "primaryKey__" + uadEntity.getTypeClass().getSimpleName() %>' value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
-	<c:if test='<%= actions.contains("anonymize") %>'>
-		<liferay-ui:icon
-			message="anonymize"
-			onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
-			url="javascript:;"
-		/>
-	</c:if>
+	<liferay-ui:icon
+		message="anonymize"
+		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+		url="javascript:;"
+	/>
 
-	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
+	<portlet:actionURL name="/delete_uad_entities" var="deleteURL">
 		<portlet:param name='<%= "primaryKey__" + uadEntity.getTypeClass().getSimpleName() %>' value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
-	<c:if test='<%= actions.contains("delete") %>'>
-		<liferay-ui:icon
-			message="delete"
-			onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
-			url="javascript:;"
-		/>
-	</c:if>
+	<liferay-ui:icon
+		message="delete"
+		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+		url="javascript:;"
+	/>
 </liferay-ui:icon-menu>

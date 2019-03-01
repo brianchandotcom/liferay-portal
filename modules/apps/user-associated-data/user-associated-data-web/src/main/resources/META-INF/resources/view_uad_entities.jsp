@@ -40,6 +40,7 @@ if (uadHierarchyDisplay != null) {
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
+	<aui:input name="applicationKey" type="hidden" value="<%= viewUADEntitiesDisplay.getApplicationKey() %>" />
 	<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUadRegistryKey() %>" />
 
 	<%
@@ -95,18 +96,11 @@ if (uadHierarchyDisplay != null) {
 						uadEntityHref = uadEntity.getEditURL();
 					}
 
-					Map<String, Object> rowData = new HashMap<String, Object>();
 					boolean showUserIcon = false;
 
 					if ((uadEntity.getViewURL() != null) && !uadEntity.isUserOwned()) {
-						rowData.put("actions", "view");
 						showUserIcon = true;
 					}
-					else {
-						rowData.put("actions", "anonymize,delete,edit,view");
-					}
-
-					row.setData(rowData);
 
 					for (KeyValuePair columnEntry : columnEntries) {
 						String columnEntryKey = columnEntry.getKey();
@@ -130,7 +124,7 @@ if (uadHierarchyDisplay != null) {
 							<c:if test='<%= columnEntryKey.equals("name") && showUserIcon %>'>
 								<liferay-ui:icon
 									cssClass="disabled"
-									image="../aui/user"
+									icon="user"
 									markupView="lexicon"
 									message="this-item-contains-entities-belonging-to-the-user-but-does-not-itself-belong-to-the-user"
 									toolTip="<%= true %>"

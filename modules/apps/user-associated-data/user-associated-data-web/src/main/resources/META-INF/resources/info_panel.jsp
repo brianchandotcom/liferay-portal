@@ -42,12 +42,6 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 			Map<String, Object> displayValues = uadDisplay.getFieldValues(uadEntity.getEntity(), uadDisplay.getDisplayFieldNames(), locale);
 
 			String identifierFieldName = uadDisplay.getDisplayFieldNames()[0];
-
-			String actions = "anonymize,delete,edit,view";
-
-			if (!uadEntity.isUserOwned()) {
-				actions = "view";
-			}
 			%>
 
 			<div class="sidebar-header">

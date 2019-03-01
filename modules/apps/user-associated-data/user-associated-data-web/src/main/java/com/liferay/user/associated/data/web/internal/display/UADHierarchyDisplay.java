@@ -56,11 +56,11 @@ public class UADHierarchyDisplay {
 
 		_uadHierarchyDeclaration = uadHierarchyDeclaration;
 
-		UADDisplay<?>[] containerUADDisplays =
+		_containerUADDisplays =
 			_uadHierarchyDeclaration.getContainerUADDisplays();
 
 		_uadDisplays = ArrayUtil.append(
-			containerUADDisplays,
+			_containerUADDisplays,
 			_uadHierarchyDeclaration.getNoncontainerUADDisplays());
 
 		for (UADDisplay uadDisplay : _uadDisplays) {
@@ -68,7 +68,7 @@ public class UADHierarchyDisplay {
 		}
 
 		Stream<UADDisplay> containerUADDisplayStream = Arrays.stream(
-			containerUADDisplays);
+			_containerUADDisplays);
 
 		_containerTypeClasses = containerUADDisplayStream.map(
 			UADDisplay::getTypeClass
@@ -180,8 +180,55 @@ public class UADHierarchyDisplay {
 			_uadHierarchyDeclaration.getExtraColumnNames());
 	}
 
+	public <T> List<Object> getContainerItems(
+		Class<?> parentContainerClass, Serializable parentContainerId,
+		String typeClassName, long userId) {
+
+		List<Object> containerItems = new ArrayList<>();
+
+		UADDisplay uadDisplay = _getUADDisplayByClassName(typeClassName);
+
+		List<Object> searchItems = uadDisplay.search(
+			userId, null, null, null, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		for (Object searchItem : searchItems) {
+			if (parentContainerId.equals(
+					uadDisplay.getParentContainerId(searchItem))) {
+
+				containerItems.add(searchItem);
+			}
+			else {
+				boolean containerItem = false;
+
+				for (UADDisplay containerUADDisplay :
+						getContainerUADDisplays()) {
+
+					Object topLevelContainer =
+						containerUADDisplay.getTopLevelContainer(
+							parentContainerClass, parentContainerId,
+							searchItem);
+
+					if (topLevelContainer != null) {
+						containerItem = true;
+					}
+				}
+
+				if (containerItem) {
+					containerItems.add(searchItem);
+				}
+			}
+		}
+
+		return containerItems;
+	}
+
 	public Class<?>[] getContainerTypeClasses() {
 		return _containerTypeClasses;
+	}
+
+	public UADDisplay<?>[] getContainerUADDisplays() {
+		return _containerUADDisplays;
 	}
 
 	public <T> String getEditURL(
@@ -296,6 +343,16 @@ public class UADHierarchyDisplay {
 		renderURL.setParameter("scope", scope);
 
 		return renderURL.toString();
+	}
+
+	public boolean isContainer(Class<?> typeClass) {
+		for (UADDisplay uadDisplay : getContainerUADDisplays()) {
+			if (uadDisplay.getTypeClass() == typeClass) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public <T> boolean isUserOwned(T object, long userId) {
@@ -436,6 +493,7 @@ public class UADHierarchyDisplay {
 	}
 
 	private final Class<?>[] _containerTypeClasses;
+	private final UADDisplay<?>[] _containerUADDisplays;
 	private final Class<?>[] _typeClasses;
 	private Map<Class<?>, UADDisplay<?>> _uadDisplayMap = new HashMap<>();
 	private final UADDisplay<?>[] _uadDisplays;

@@ -19,10 +19,6 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Map<String, Object> rowData = row.getData();
-
-String actions = (String)rowData.get("actions");
-
 UADEntity uadEntity = (UADEntity)row.getObject();
 %>
 

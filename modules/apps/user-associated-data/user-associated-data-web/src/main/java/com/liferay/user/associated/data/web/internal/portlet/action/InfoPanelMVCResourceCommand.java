@@ -100,7 +100,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			if (Validator.isNull(uadRegistryKey)) {
 				uadRegistryKey = ParamUtil.getString(
 					resourceRequest, "parentContainerClass");
-
 			}
 
 			if (Validator.isNull(uadRegistryKey)) {

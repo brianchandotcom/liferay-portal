@@ -20,6 +20,9 @@ import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -50,14 +53,17 @@ public class AnonymizeUADEntitiesMVCActionCommand
 		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser(
 			selectedUser.getCompanyId());
 
-		for (String entityType : getEntityTypes(actionRequest)) {
-			UADAnonymizer uadAnonymizer = getUADAnonymizer(
-				actionRequest, entityType);
+		Map<String, List<Object>> entitiesMap = getEntitiesMap(actionRequest);
 
-			doMultipleAction(
-				actionRequest, entityType,
-				entity -> uadAnonymizer.autoAnonymize(
-					entity, selectedUser.getUserId(), anonymousUser));
+		for (Map.Entry<String, List<Object>> entry : entitiesMap.entrySet()) {
+			List<Object> entities = entry.getValue();
+			UADAnonymizer uadAnonymizer = getUADAnonymizer(
+				actionRequest, entry.getKey());
+
+			for (Object entity : entities) {
+				uadAnonymizer.autoAnonymize(
+					entity, selectedUser.getUserId(), anonymousUser);
+			}
 		}
 
 		doReviewableRedirect(actionRequest, actionResponse);

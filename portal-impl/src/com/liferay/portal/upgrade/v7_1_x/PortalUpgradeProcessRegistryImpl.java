@@ -50,6 +50,8 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version("2.0.3"), new UpgradePortalPreferences());
+
+		upgradeProcesses.put(new Version("2.0.4"), new UpgradeUserGroup());
 	}
 
 }

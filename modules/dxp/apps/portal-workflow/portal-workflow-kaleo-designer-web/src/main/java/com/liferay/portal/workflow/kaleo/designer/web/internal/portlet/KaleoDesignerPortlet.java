@@ -331,6 +331,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		Stream<String> supportedScriptLanguagesStream =
 			supportedScriptLanguages.stream();
 
+		// Skip JavaParser, will be fixed soon
+
 		List<Object> sortedSupportedScriptLanguages =
 			supportedScriptLanguagesStream.sorted(
 			).collect(

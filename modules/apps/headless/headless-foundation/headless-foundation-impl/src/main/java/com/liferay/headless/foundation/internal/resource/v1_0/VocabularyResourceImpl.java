@@ -14,18 +14,33 @@
 
 package com.liferay.headless.foundation.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
+import com.liferay.headless.foundation.dto.v1_0.AssetType;
 import com.liferay.headless.foundation.dto.v1_0.Vocabulary;
 import com.liferay.headless.foundation.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.foundation.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.foundation.resource.v1_0.VocabularyResource;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ClassNameService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,12 +52,18 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -122,7 +143,7 @@ public class VocabularyResourceImpl
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					vocabulary.getDescription()),
-				null,
+				_toSettings(vocabulary.getAssetTypes(), contentSpaceId),
 				ServiceContextUtil.createServiceContext(
 					contentSpaceId, vocabulary.getViewableBy())));
 	}
@@ -147,7 +168,264 @@ public class VocabularyResourceImpl
 					new AbstractMap.SimpleEntry<>(
 						contextAcceptLanguage.getPreferredLocale(),
 						vocabulary.getDescription())),
-				null, new ServiceContext()));
+				_toSettings(
+					vocabulary.getAssetTypes(), assetVocabulary.getGroupId()),
+				new ServiceContext()));
+	}
+
+	private AssetType[] _toAssetTypes(
+			AssetVocabularySettingsHelper assetVocabularySettingsHelper,
+			long groupId)
+		throws PortalException {
+
+		long[] classNameIds = assetVocabularySettingsHelper.getClassNameIds();
+
+		if (ArrayUtil.isEmpty(classNameIds)) {
+			return new AssetType[0];
+		}
+
+		long[] requiredClassNameIds =
+			assetVocabularySettingsHelper.getRequiredClassNameIds();
+		long[] classTypePKs = assetVocabularySettingsHelper.getClassTypePKs();
+
+		List<AssetType> assetTypes = new ArrayList<>();
+
+		for (int i = 0; i < classNameIds.length; i++) {
+			long classNameId = classNameIds[i];
+			final long classTypePK = classTypePKs[i];
+
+			assetTypes.add(
+				new AssetType() {
+					{
+						subtype = _toSubtype(classNameId, classTypePK, groupId);
+						type = _toType(classNameId);
+						required = _toRequired(
+							classNameId, requiredClassNameIds);
+					}
+				});
+		}
+
+		return assetTypes.toArray(new AssetType[assetTypes.size()]);
+	}
+
+	private long _toClassNameId(AssetType.Type type) {
+		ClassName className = null;
+
+		if (Objects.equals(AssetType.Type.BLOG_POSTING, type)) {
+			className = _classNameService.fetchClassName(
+				"com.liferay.blogs.model.BlogsEntry");
+		}
+		else if (Objects.equals(AssetType.Type.DOCUMENT, type)) {
+			className = _classNameService.fetchClassName(
+				FileEntry.class.getName());
+		}
+		else if (Objects.equals(AssetType.Type.KNOWLEDGE_BASE_ARTICLE, type)) {
+			className = _classNameService.fetchClassName(
+				"com.liferay.knowledge.base.model.KBArticle");
+		}
+		else if (Objects.equals(AssetType.Type.ORGANIZATION, type)) {
+			className = _classNameService.fetchClassName(
+				Organization.class.getName());
+		}
+		else if (Objects.equals(AssetType.Type.STRUCTURED_CONTENT, type)) {
+			className = _classNameService.fetchClassName(
+				"com.liferay.journal.model.JournalArticle");
+		}
+		else if (Objects.equals(AssetType.Type.USER_ACCOUNT, type)) {
+			className = _classNameService.fetchClassName(User.class.getName());
+		}
+		else if (Objects.equals(AssetType.Type.WEB_PAGE, type)) {
+			className = _classNameService.fetchClassName(
+				Layout.class.getName());
+		}
+		else if (Objects.equals(AssetType.Type.WEB_SITE, type)) {
+			className = _classNameService.fetchClassName(Group.class.getName());
+		}
+		else if (Objects.equals(AssetType.Type.WIKI_PAGE, type)) {
+			className = _classNameService.fetchClassName(
+				"com.liferay.wiki.model.WikiPage");
+		}
+
+		if (className == null) {
+			throw new BadRequestException("Invalid AssetType " + type);
+		}
+
+		return className.getClassNameId();
+	}
+
+	private long _toClassTypePK(long classNameId, String subtype, long groupId)
+		throws PortalException {
+
+		if (Objects.equals("AllAssetSubtypes", subtype)) {
+			return AssetCategoryConstants.ALL_CLASS_TYPE_PK;
+		}
+
+		ClassName className = _classNameService.fetchByClassNameId(classNameId);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className.getClassName());
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+			new long[] {groupId, contextCompany.getGroupId()},
+			contextAcceptLanguage.getPreferredLocale());
+
+		if (ListUtil.isEmpty(classTypes)) {
+			return AssetCategoryConstants.ALL_CLASS_TYPE_PK;
+		}
+
+		for (ClassType classType : classTypes) {
+			if (Objects.equals(classType.getName(), subtype)) {
+				return classType.getClassTypeId();
+			}
+		}
+
+		throw new BadRequestException("Invalid subtype " + subtype);
+	}
+
+	private boolean _toRequired(long classNameId, long[] requiredClassNameIds) {
+		if (ArrayUtil.isEmpty(requiredClassNameIds)) {
+			return false;
+		}
+
+		for (long requiredClassNameId : requiredClassNameIds) {
+			if (requiredClassNameId == classNameId) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String _toSettings(AssetType[] assetTypes, long groupId)
+		throws PortalException {
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
+
+		if (ArrayUtil.isEmpty(assetTypes)) {
+			return assetVocabularySettingsHelper.toString();
+		}
+
+		long[] classNameIds = new long[assetTypes.length];
+		long[] classTypePKs = new long[assetTypes.length];
+		boolean[] requiredClassNameIds = new boolean[assetTypes.length];
+
+		for (int i = 0; i < assetTypes.length; i++) {
+			AssetType assetType = assetTypes[i];
+
+			long classNameId = _toClassNameId(assetType.getType());
+
+			classNameIds[i] = classNameId;
+
+			classTypePKs[i] = _toClassTypePK(
+				classNameId, assetType.getSubtype(), groupId);
+
+			requiredClassNameIds[i] = assetType.getRequired();
+		}
+
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			classNameIds, classTypePKs, requiredClassNameIds);
+
+		assetVocabularySettingsHelper.setMultiValued(true);
+
+		return assetVocabularySettingsHelper.toString();
+	}
+
+	private String _toSubtype(long classNameId, long classTypePK, long groupId)
+		throws PortalException {
+
+		if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
+			return "AllAssetSubtypes";
+		}
+
+		ClassName className = _classNameService.fetchByClassNameId(classNameId);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className.getClassName());
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
+			new long[] {groupId, contextCompany.getGroupId()},
+			contextAcceptLanguage.getPreferredLocale());
+
+		if (ListUtil.isEmpty(classTypes)) {
+			return "All";
+		}
+
+		for (ClassType classType : classTypes) {
+			if (classType.getClassTypeId() == classTypePK) {
+				return classType.getName();
+			}
+		}
+
+		throw new InternalServerErrorException();
+	}
+
+	private AssetType.Type _toType(long classNameId) {
+		if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) {
+			return AssetType.Type.ALL_ASSET_TYPES;
+		}
+
+		ClassName className = _classNameService.fetchByClassNameId(classNameId);
+
+		if (Objects.equals(
+				FileEntry.class.getName(), className.getClassName())) {
+
+			return AssetType.Type.DOCUMENT;
+		}
+		else if (Objects.equals(
+					Group.class.getName(), className.getClassName())) {
+
+			return AssetType.Type.WEB_SITE;
+		}
+		else if (Objects.equals(
+					Layout.class.getName(), className.getClassName())) {
+
+			return AssetType.Type.WEB_PAGE;
+		}
+		else if (Objects.equals(
+					Organization.class.getName(), className.getClassName())) {
+
+			return AssetType.Type.ORGANIZATION;
+		}
+		else if (Objects.equals(
+					User.class.getName(), className.getClassName())) {
+
+			return AssetType.Type.USER_ACCOUNT;
+		}
+		else if (Objects.equals(
+					"com.liferay.blogs.model.BlogsEntry",
+					className.getClassName())) {
+
+			return AssetType.Type.BLOG_POSTING;
+		}
+		else if (Objects.equals(
+					"com.liferay.knowledge.base.model.KBArticle",
+					className.getClassName())) {
+
+			return AssetType.Type.KNOWLEDGE_BASE_ARTICLE;
+		}
+		else if (Objects.equals(
+					"com.liferay.journal.model.JournalArticle",
+					className.getClassName())) {
+
+			return AssetType.Type.STRUCTURED_CONTENT;
+		}
+		else if (Objects.equals(
+					"com.liferay.wiki.model.WikiPage",
+					className.getClassName())) {
+
+			return AssetType.Type.WIKI_PAGE;
+		}
+
+		return null;
 	}
 
 	private Vocabulary _toVocabulary(AssetVocabulary assetVocabulary)
@@ -155,6 +433,10 @@ public class VocabularyResourceImpl
 
 		return new Vocabulary() {
 			{
+				assetTypes = _toAssetTypes(
+					new AssetVocabularySettingsHelper(
+						assetVocabulary.getSettings()),
+					assetVocabulary.getGroupId());
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					assetVocabulary.getAvailableLanguageIds());
 				contentSpace = assetVocabulary.getGroupId();
@@ -178,6 +460,9 @@ public class VocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private ClassNameService _classNameService;
 
 	@Context
 	private HttpServletResponse _contextHttpServletResponse;

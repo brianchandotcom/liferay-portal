@@ -184,12 +184,6 @@ AUI.add(
 
 						var namespace = instance.NS;
 
-						if (parameterName && parameterValue) {
-							var form = instance.get('form').node;
-
-							form.get(namespace + parameterName).val(parameterValue);
-						}
-
 						var dialogTitle = Lang.sub(
 							Liferay.Language.get('select-destination-folder-for-x-items'),
 							[selectedItems]
@@ -208,6 +202,12 @@ AUI.add(
 								uri: instance.get('selectFolderURL')
 							},
 							function(event) {
+								if (parameterName && parameterValue) {
+									var form = instance.get('form').node;
+
+									form.get(namespace + parameterName).val(parameterValue);
+								}
+
 								instance._processMoveAction(event.folderid);
 							}
 						);

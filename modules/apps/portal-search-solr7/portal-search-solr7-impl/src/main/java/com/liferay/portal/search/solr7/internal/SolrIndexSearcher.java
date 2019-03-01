@@ -246,6 +246,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		_solrConfiguration = ConfigurableUtil.createConfigurable(
 			SolrConfiguration.class, properties);
 
+		_defaultCollection = _solrConfiguration.defaultCollection();
 		_logExceptionsOnly = _solrConfiguration.logExceptionsOnly();
 	}
 
@@ -611,7 +612,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		SolrClient solrClient = _solrClientManager.getSolrClient();
 
-		return solrClient.query(solrQuery, SolrRequest.METHOD.POST);
+		return solrClient.query(
+			_defaultCollection, solrQuery, SolrRequest.METHOD.POST);
 	}
 
 	protected String getExcludeTagsString(
@@ -1026,6 +1028,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexSearcher.class);
 
+	private String _defaultCollection;
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private FilterTranslator<String> _filterTranslator;
 	private GroupByTranslator _groupByTranslator;

@@ -16,6 +16,7 @@ package com.liferay.portal.search.solr7.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.solr7.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr7.internal.document.SolrUpdateDocumentCommand;
 import com.liferay.portal.search.solr7.internal.util.LogUtil;
@@ -39,6 +41,7 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -47,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.solr7.configuration.SolrConfiguration",
 	immediate = true, property = "search.engine.impl=Solr",
 	service = SpellCheckIndexWriter.class
 )
@@ -75,8 +79,14 @@ public class SolrSpellCheckIndexWriter
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		setDocumentPrototype(new DocumentImpl());
+
+		_solrConfiguration = ConfigurableUtil.createConfigurable(
+			SolrConfiguration.class, properties);
+
+		_defaultCollection = _solrConfiguration.defaultCollection();
 	}
 
 	@Override
@@ -134,12 +144,12 @@ public class SolrSpellCheckIndexWriter
 
 		try {
 			UpdateResponse updateResponse = solrClient.deleteByQuery(
-				deleteQuery);
+				_defaultCollection, deleteQuery);
 
 			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {
 
-				solrClient.commit();
+				solrClient.commit(_defaultCollection);
 			}
 
 			LogUtil.logSolrResponseBase(_log, updateResponse);
@@ -168,7 +178,9 @@ public class SolrSpellCheckIndexWriter
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrSpellCheckIndexWriter.class);
 
+	private String _defaultCollection;
 	private SolrClientManager _solrClientManager;
+	private volatile SolrConfiguration _solrConfiguration;
 	private SolrUpdateDocumentCommand _solrUpdateDocumentCommand;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portal.search.solr7.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.solr7.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr7.internal.suggest.NGramQueryBuilder;
 
@@ -58,6 +60,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -69,6 +72,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.solr7.configuration.SolrConfiguration",
 	immediate = true,
 	property = {"distance.threshold=0.6f", "search.engine.impl=Solr"},
 	service = QuerySuggester.class
@@ -134,7 +138,8 @@ public class SolrQuerySuggester implements QuerySuggester {
 
 			solrQuery.setRows(max);
 
-			QueryResponse queryResponse = solrClient.query(solrQuery);
+			QueryResponse queryResponse = solrClient.query(
+				_defaultCollection, solrQuery);
 
 			SolrDocumentList solrDocumentList = queryResponse.getResults();
 
@@ -159,9 +164,15 @@ public class SolrQuerySuggester implements QuerySuggester {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_distanceThreshold = MapUtil.getDouble(
 			properties, "distance.threshold", 0.6D);
+
+		_solrConfiguration = ConfigurableUtil.createConfigurable(
+			SolrConfiguration.class, properties);
+
+		_defaultCollection = _solrConfiguration.defaultCollection();
 	}
 
 	protected List<Suggestion> doSuggest(SearchContext searchContext, int max)
@@ -353,7 +364,7 @@ public class SolrQuerySuggester implements QuerySuggester {
 			solrQuery.setRows(_MAX_QUERY_RESULTS);
 
 			QueryResponse queryResponse = solrClient.query(
-				solrQuery, SolrRequest.METHOD.POST);
+				_defaultCollection, solrQuery, SolrRequest.METHOD.POST);
 
 			SolrDocumentList solrDocumentList = queryResponse.getResults();
 
@@ -422,12 +433,14 @@ public class SolrQuerySuggester implements QuerySuggester {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrQuerySuggester.class);
 
+	private String _defaultCollection;
 	private final StringDistance _defaultStringDistance =
 		new LevensteinDistance();
 	private double _distanceThreshold;
 	private Localization _localization;
 	private NGramQueryBuilder _nGramQueryBuilder;
 	private SolrClientManager _solrClientManager;
+	private volatile SolrConfiguration _solrConfiguration;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

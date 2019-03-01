@@ -19,6 +19,8 @@ import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -26,6 +28,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.util.comparator.CTEntryCreateDateComparator;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -49,10 +52,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -196,28 +202,21 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		try {
+			ChangeTrackingThreadLocal.setModelUpdateInProgress(true);
+
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					Optional<CTCollection> ctCollectionOptional =
-						_createCTCollection(
-							userId, CTConstants.CT_COLLECTION_NAME_PRODUCTION,
-							StringPool.BLANK);
-
-					ctCollectionOptional.ifPresent(
-						ctCollection -> {
-							_productionCTCollection =
-								ctCollectionOptional.orElse(null);
-
-							checkoutCTCollection(
-								userId, ctCollection.getCtCollectionId());
-						});
+					_enableChangeTracking(userId);
 
 					return null;
 				});
 		}
 		catch (Throwable t) {
 			_log.error("Unable to enable change tracking", t);
+		}
+		finally {
+			ChangeTrackingThreadLocal.setModelUpdateInProgress(false);
 		}
 	}
 
@@ -502,6 +501,108 @@ public class CTEngineManagerImpl implements CTEngineManager {
 		}
 
 		return Optional.ofNullable(ctCollection);
+	}
+
+	private void _enableChangeTracking(long userId) throws CTException {
+		Optional<CTCollection> ctCollectionOptional = _createCTCollection(
+			userId, CTConstants.CT_COLLECTION_NAME_PRODUCTION,
+			StringPool.BLANK);
+
+		_productionCTCollection = ctCollectionOptional.orElseThrow(
+			() -> new CTException(
+				_getCompanyId(userId),
+				"Unable to create production change collection"));
+
+		_generateCTEntriesForExistingAssets(userId, _productionCTCollection);
+
+		checkoutCTCollection(
+			userId, _productionCTCollection.getCtCollectionId());
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _generateCTEntriesForCTConfiguration(
+		long userId, CTConfiguration ctConfiguration,
+		CTCollection ctCollection) {
+
+		Function<Long, List> resourceEntitiesByCompanyIdFunction =
+			ctConfiguration.getResourceEntitiesByCompanyIdFunction();
+
+		List<BaseModel> resourceEntitiesByCompanyId =
+			resourceEntitiesByCompanyIdFunction.apply(
+				ctCollection.getCompanyId());
+
+		Function<BaseModel, Serializable>
+			resourceEntityIdFromResourceEntityFunction =
+				ctConfiguration.getResourceEntityIdFromResourceEntityFunction();
+
+		for (BaseModel resourceEntity : resourceEntitiesByCompanyId) {
+			Serializable resourcePrimKey =
+				resourceEntityIdFromResourceEntityFunction.apply(
+					resourceEntity);
+
+			_generateCTEntriesForResourceEntity(
+				userId, ctConfiguration, ctCollection, resourceEntity,
+				resourcePrimKey);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _generateCTEntriesForExistingAssets(
+		long userId, CTCollection ctCollection) {
+
+		List<CTConfiguration<?, ?>> ctConfigurations =
+			_ctConfigurationRegistry.getAllCTConfigurations();
+
+		ctConfigurations.forEach(
+			ctConfiguration -> _generateCTEntriesForCTConfiguration(
+				userId, ctConfiguration, ctCollection));
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _generateCTEntriesForResourceEntity(
+		long userId, CTConfiguration ctConfiguration, CTCollection ctCollection,
+		BaseModel resourceEntity, Serializable resourcePrimKey) {
+
+		Function<BaseModel, List> versionEntitiesFromResourceEntityFunction =
+			ctConfiguration.getVersionEntitiesFromResourceEntityFunction();
+
+		List<BaseModel> versionEntities =
+			versionEntitiesFromResourceEntityFunction.apply(resourceEntity);
+
+		for (BaseModel versionEntityModel : versionEntities) {
+			Function<BaseModel, Serializable>
+				versionEntityIdFromVersionEntityFunction =
+					ctConfiguration.
+						getVersionEntityIdFromVersionEntityFunction();
+
+			Serializable versionEntityId =
+				versionEntityIdFromVersionEntityFunction.apply(
+					versionEntityModel);
+
+			try {
+				_ctEntryLocalService.addCTEntry(
+					userId,
+					_portal.getClassNameId(
+						ctConfiguration.getVersionEntityClass()),
+					GetterUtil.getLong(versionEntityId),
+					GetterUtil.getLong(resourcePrimKey),
+					CTConstants.CT_CHANGE_TYPE_ADDITION,
+					ctCollection.getCtCollectionId(), new ServiceContext());
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("Unable to add change tracking entry to ");
+					sb.append(ctConfiguration.getContentType());
+					sb.append(" {");
+					sb.append(versionEntityId);
+					sb.append("}");
+
+					_log.warn(sb.toString(), pe);
+				}
+			}
+		}
 	}
 
 	private long _getCompanyId(long userId) {

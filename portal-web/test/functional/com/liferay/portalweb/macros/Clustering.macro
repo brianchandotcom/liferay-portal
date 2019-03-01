@@ -1,4 +1,19 @@
 definition {
+	macro _viewLiveSession {
+		var key_navItem = "${navItem}";
+		var key_index = "${count}";
+
+		AssertElementPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
+
+		AssertElementPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
+	}
+
+	macro _viewNoLiveSession {
+		var key_index = "${count}";
+
+		AssertElementNotPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
+	}
+
 	@description = "Deploy the following jar into Liferay Portal server with port ${nodePort}: ${liferayDependencyJars}"
 	macro deployJarOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
@@ -168,6 +183,19 @@ definition {
 		}
 	}
 
+	macro viewLiveSessionCount {
+		Clustering._viewLiveSession(
+			count = "${count}",
+			navItem = "Live Sessions"
+		);
+
+		var countNotPresent = MathUtil.sum("1", "${count}");
+
+		Clustering._viewNoLiveSession(
+			count = "${countNotPresent}"
+		);
+	}
+
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
 	macro viewTextNotPresentOnSpecificNode {
 		if ("${nodePort}" == "8080") {
@@ -194,24 +222,5 @@ definition {
 				fail("Failed to find expected text: ${expectedText} on cluser node at ${nodePort}");
 			}
 		}
-	}
-
-	macro viewLiveSessions {
-		var key_navItem = "${navItem}";
-		var key_index = "${number}";
-
-		if (IsElementPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK")) {
-			AssertElementPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
-		}
-
-		var viewSessionId = selenium.getText("LexiconTable#TABLE_SESSION_ID");
-
-		AssertTextPresent(locator1 = "LexiconTable#TABLE_SESSION_ID", value1 = "${viewSessionId}");
-	}
-
-	macro viewNoLiveSessions {
-		var key_index = "${number}";
-
-		AssertElementNotPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
 	}
 }

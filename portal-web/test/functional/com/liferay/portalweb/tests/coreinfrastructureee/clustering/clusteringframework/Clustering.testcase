@@ -298,13 +298,8 @@ definition {
 			portlet = "Monitoring"
 		);
 
-		Clustering.viewLiveSessions(
-			number = "1",
-			navItem = "Live Sessions"
-		);
-
-		Clustering.viewNoLiveSessions(
-			number = "2"
+		Clustering.viewLiveSessionCount(
+			count = "1"
 		);
 
 		User.loginPG(
@@ -319,14 +314,8 @@ definition {
 			portlet = "Monitoring"
 		);
 
-		Clustering.viewLiveSessions(
-			number = "1",
-			navItem = "Live Sessions"
-		);
-
-		Clustering.viewLiveSessions(
-			number = "2",
-			navItem = "Live Sessions"
+		Clustering.viewLiveSessionCount(
+			count = "2"
 		);
 
 		User.loginPG(
@@ -341,41 +330,26 @@ definition {
 			portlet = "Monitoring"
 		);
 
-		Clustering.viewLiveSessions(
-			number = "1",
-			navItem = "Live Sessions"
+		Clustering.viewLiveSessionCount(
+			count = "3"
 		);
 
-		Clustering.viewLiveSessions(
-			number = "2",
-			navItem = "Live Sessions"
-		);
+		User.logoutPG();
 
-		User.logoutPG(
+		User.loginPG(
 			nodePort = "9080",
 			password = "test",
 			userEmailAddress = "test@liferay.com"
 		);
 
-		User.loginPG(
-			nodePort = "8080",
-			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
-
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Monitoring"
 		);
 
-		Clustering.viewLiveSessions(
-			number = "1",
-			navItem = "Live Sessions"
-		);
-
-		Clustering.viewNoLiveSessions(
-			number = "2"
+		Clustering.viewLiveSessionCount(
+			count = "3"
 		);
 	}
 

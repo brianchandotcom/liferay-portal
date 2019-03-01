@@ -163,6 +163,10 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		CTCollection ctCollection = ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
+		if (ctCollection == null) {
+			return false;
+		}
+
 		return ctCollection.isProduction();
 	}
 

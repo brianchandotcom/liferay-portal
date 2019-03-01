@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -101,9 +103,12 @@ public class EditAssetDisplayMenuProductNavigationControlMenuEntry
 
 		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 
-		if ((assetRenderer == null) ||
-			!assetRenderer.hasEditPermission(
-				themeDisplay.getPermissionChecker())) {
+		if (((assetRenderer == null) ||
+			 !assetRenderer.hasEditPermission(
+				 themeDisplay.getPermissionChecker())) &&
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE)) {
 
 			return false;
 		}

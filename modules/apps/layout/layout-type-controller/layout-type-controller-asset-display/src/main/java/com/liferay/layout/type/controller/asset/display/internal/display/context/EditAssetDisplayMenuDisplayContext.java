@@ -23,6 +23,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -66,16 +68,22 @@ public class EditAssetDisplayMenuDisplayContext {
 						});
 				}
 
-				String editLayoutURL = HttpUtil.setParameter(
-					_themeDisplay.getURLCurrent(), "p_l_mode", Constants.EDIT);
+				if (LayoutPermissionUtil.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getLayout(), ActionKeys.UPDATE)) {
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(editLayoutURL);
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_request, "edit-display-page-template"));
-					});
+					String editLayoutURL = HttpUtil.setParameter(
+						_themeDisplay.getURLCurrent(), "p_l_mode",
+						Constants.EDIT);
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setHref(editLayoutURL);
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_request, "edit-display-page-template"));
+						});
+				}
 			}
 		};
 	}
@@ -97,6 +105,12 @@ public class EditAssetDisplayMenuDisplayContext {
 			_assetEntry.getClassPK());
 
 		if (assetRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		if (!assetRenderer.hasEditPermission(
+				_themeDisplay.getPermissionChecker())) {
+
 			return StringPool.BLANK;
 		}
 

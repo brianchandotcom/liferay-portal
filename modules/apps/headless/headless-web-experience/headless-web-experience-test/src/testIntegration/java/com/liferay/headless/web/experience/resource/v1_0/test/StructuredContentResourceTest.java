@@ -109,7 +109,6 @@ public class StructuredContentResourceTest
 
 		assertResponseCode(
 			404, invokeGetStructuredContentResponse(structuredContent.getId()));
-
 	}
 
 	@Override

@@ -138,6 +138,14 @@ public class CTJournalFolderServiceWrapper extends JournalFolderServiceWrapper {
 		return objects.size();
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalFolderService(
+		JournalFolderService journalFolderService) {
+
+		// This is needed because of synchronisation
+
+	}
+
 	private boolean _isRetrievable(Object object) {
 		if (object == null) {
 			return true;

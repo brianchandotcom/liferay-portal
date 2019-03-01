@@ -73,21 +73,21 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h6 class="text-default">
+						<span class="text-default">
 							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-						</h6>
+						</span>
 
-						<h5>
+						<h2 class="h5">
 							<aui:a href="<%= rowURL.toString() %>"><%= HtmlUtil.escape(curCategory.getTitle(locale)) %></aui:a>
-						</h5>
+						</h2>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>
-						</h6>
+						</span>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<liferay-ui:message arguments="<%= subcategoriesCount %>" key="x-subcategories" />
-						</h6>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

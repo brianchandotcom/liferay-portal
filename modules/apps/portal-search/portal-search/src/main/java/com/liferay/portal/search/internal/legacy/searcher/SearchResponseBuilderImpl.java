@@ -21,6 +21,7 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.internal.hits.SearchHitsImpl;
 import com.liferay.portal.search.searcher.FacetContext;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -31,7 +32,6 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +99,7 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 	@Override
 	public SearchResponseBuilder searchHits(SearchHits searchHits) {
 		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_SEARCH_HITS, searchHits);
+			_SEARCH_CONTEXT_KEY_SEARCH_HITS, (SearchHitsImpl)searchHits);
 
 		return this;
 	}
@@ -109,7 +109,7 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		Map<String, StatsResponse> map) {
 
 		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_STATS_RESPONSE_MAP, new HashMap<>(map));
+			_SEARCH_CONTEXT_KEY_STATS_RESPONSE_MAP, new LinkedHashMap<>(map));
 
 		return this;
 	}

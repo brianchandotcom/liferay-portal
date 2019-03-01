@@ -21,13 +21,10 @@ UnicodeProperties properties = PropertiesParamUtil.getProperties(request, "setti
 
 String entityId = properties.getProperty(PortletPropsKeys.SAML_ENTITY_ID, (String)request.getAttribute(SamlWebKeys.SAML_ENTITY_ID));
 
-CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebKeys.SAML_CERTIFICATE_TOOL);
+CertificateBindsDisplayContext.CertificateBind certificateBind = certificateBindsDisplayContext.getCertificateBind();
 
-X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE);
-
-boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED));
-boolean keystoreException = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_EXCEPTION));
-boolean keystoreIncorrectPassword = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT));
+boolean keystoreException = certificateBind.getStatus() == CertificateBindsDisplayContext.CertificateBind.Status.SAML_KEYSTORE_EXCEPTION;
+boolean keystoreIncorrectPassword = certificateBind.getStatus() == CertificateBindsDisplayContext.CertificateBind.Status.SAML_KEYSTORE_PASSWORD_INCORRECT;
 String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
 %>
 
@@ -66,118 +63,35 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	<portlet:param name="tabs1" value="general" />
 </portlet:actionURL>
 
-<c:if test="<%= Validator.isNotNull(entityId) %>">
-	<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="replaceCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
-		<portlet:param name="cmd" value="replace" />
-	</portlet:renderURL>
+<c:choose>
+	<c:when test="<%= keystoreException %>">
+		<div class="portlet-msg-error">
+			<liferay-ui:message key="keystore-exception" />
+		</div>
+	</c:when>
+	<c:when test="<%= keystoreIncorrectPassword %>">
+		<div class="portlet-msg-error">
+			<liferay-ui:message key="keystore-password-incorrect" />
+		</div>
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(entityId) %>">
+		<aui:fieldset label="certificate-and-private-key">
+			<liferay-util:include page="/admin/certificate_info.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="entityId" value="<%= entityId %>" />
+				<liferay-util:param name="certificateUsage" value="<%= LocalEntityManager.CertificateUsage.SIGNING.name() %>" />
+			</liferay-util:include>
+		</aui:fieldset>
 
-	<aui:fieldset label="certificate-and-private-key">
-		<c:choose>
-			<c:when test="<%= x509Certificate != null %>">
-
-				<%
-				Date now = new Date();
-				%>
-
-				<c:if test="<%= now.after(x509Certificate.getNotAfter()) %>">
-					<div class="portlet-msg-alert"><liferay-ui:message arguments="<%= new Object[] {x509Certificate.getNotAfter()} %>" key="certificate-expired-on-x" /></div>
-				</c:if>
-
-				<dl class="property-list">
-					<dt>
-						<liferay-ui:message key="subject-dn" />
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(String.valueOf(certificateTool.getSubjectName(x509Certificate))) %>
-					</dd>
-					<dt>
-						<liferay-ui:message key="serial-number" />
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(certificateTool.getSerialNumber(x509Certificate)) %>
-
-						<div class="portlet-msg-info-label">
-							<liferay-ui:message arguments="<%= new Object[] {x509Certificate.getNotBefore(), x509Certificate.getNotAfter()} %>" key="valid-from-x-until-x" />
-						</div>
-					</dd>
-					<dt>
-						<liferay-ui:message key="certificate-fingerprints" />
-					</dt>
-					<dd class="property-list">
-						<dl>
-							<dt>
-								MD5
-							</dt>
-							<dd>
-								<%= HtmlUtil.escape(certificateTool.getFingerprint("MD5", x509Certificate)) %>
-							</dd>
-							<dt>
-								SHA1
-							</dt>
-							<dd>
-								<%= HtmlUtil.escape(certificateTool.getFingerprint("SHA1", x509Certificate)) %>
-							</dd>
-						</dl>
-					</dd>
-					<dt>
-						<liferay-ui:message key="signature-algorithm" />
-					</dt>
-					<dd>
-						<%= HtmlUtil.escape(x509Certificate.getSigAlgName()) %>
-					</dd>
-				</dl>
-
-				<portlet:resourceURL id="/admin/downloadCertificate" var="downloadCertificateURL" />
-
-				<aui:button-row>
-					<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
-					<aui:button href="<%= downloadCertificateURL %>" value="download-certificate" />
-				</aui:button-row>
-			</c:when>
-			<c:when test="<%= (x509Certificate == null) && Validator.isNull(samlProviderConfiguration.entityId()) %>">
-				<div class="portlet-msg-info">
-					<liferay-ui:message key="entity-id-must-be-set-before-private-key-and-certificate-can-be-generated" />
-				</div>
-			</c:when>
-			<c:when test="<%= certificateAuthNeeded %>">
-				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="authCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
-					<portlet:param name="cmd" value="auth" />
-				</portlet:renderURL>
-
-				<div class="portlet-msg-info">
-					<liferay-ui:message key="please-create-a-signing-credential-before-enabling" />
-					<liferay-ui:message key="certificate-needs-auth" />
-				</div>
-
-				<aui:button-row>
-					<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + authCertificateURL + "');" %>' value="auth-certificate" />
-					<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
-				</aui:button-row>
-			</c:when>
-			<c:when test="<%= keystoreException %>">
-				<div class="portlet-msg-error">
-					<liferay-ui:message key="keystore-exception" />
-				</div>
-			</c:when>
-			<c:when test="<%= keystoreIncorrectPassword %>">
-				<div class="portlet-msg-error">
-					<liferay-ui:message key="keystore-password-incorrect" />
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="portlet-msg-info">
-					<liferay-ui:message key="please-create-a-signing-credential-before-enabling" />
-				</div>
-
-				<aui:button-row>
-					<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="create-certificate" />
-				</aui:button-row>
-			</c:otherwise>
-		</c:choose>
-	</aui:fieldset>
-</c:if>
+		<c:if test='<%= samlRole.equals("sp") %>'>
+			<aui:fieldset label="encryption-certificate-and-private-key">
+				<liferay-util:include page="/admin/certificate_info.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="entityId" value="<%= entityId %>" />
+					<liferay-util:param name="certificateUsage" value="<%= LocalEntityManager.CertificateUsage.ENCRYPTION.name() %>" />
+				</liferay-util:include>
+			</aui:fieldset>
+		</c:if>
+	</c:when>
+</c:choose>
 
 <aui:script>
 	Liferay.provide(

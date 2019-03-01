@@ -15,8 +15,6 @@
 package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,10 +29,7 @@ import com.liferay.saml.runtime.certificate.CertificateTool;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
-
-import java.security.KeyStoreException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.X509Certificate;
+import com.liferay.saml.web.internal.display.context.CertificateBindsDisplayContext;
 
 import java.util.List;
 
@@ -104,80 +99,15 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 			return;
 		}
 
-		try {
-			X509Certificate x509Certificate =
-				_localEntityManager.getLocalEntityCertificate();
+		CertificateBindsDisplayContext boundCertificatesDisplayContext =
+			new CertificateBindsDisplayContext(_localEntityManager);
 
-			if (x509Certificate != null) {
-				renderRequest.setAttribute(
-					SamlWebKeys.SAML_X509_CERTIFICATE, x509Certificate);
-			}
+		renderRequest.setAttribute(
+			CertificateBindsDisplayContext.class.getName(),
+			boundCertificatesDisplayContext);
 
-			renderRequest.setAttribute(
-				SamlWebKeys.SAML_CERTIFICATE_TOOL, _certificateTool);
-		}
-		catch (Exception e) {
-			Throwable cause = _getCause(e, KeyStoreException.class);
-
-			if (cause != null) {
-				Throwable unrecoverableKeyException;
-
-				unrecoverableKeyException = _getCause(
-					cause, UnrecoverableKeyException.class);
-
-				if (unrecoverableKeyException != null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get local entity certificate because " +
-								"of incorrect keystore password",
-							cause);
-					}
-
-					renderRequest.setAttribute(
-						SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT,
-						Boolean.TRUE);
-				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get local entity certificate because " +
-								"of keystore loading issue",
-							cause);
-					}
-
-					renderRequest.setAttribute(
-						SamlWebKeys.SAML_KEYSTORE_EXCEPTION, Boolean.TRUE);
-				}
-			}
-			else {
-				cause = _getCause(e, UnrecoverableKeyException.class);
-
-				if (cause != null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get local entity certificate because " +
-								"of incorrect key credential password",
-							cause);
-					}
-
-					renderRequest.setAttribute(
-						SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED,
-						Boolean.TRUE);
-				}
-				else {
-					String message =
-						"Unable to get local entity certificate: " +
-							e.getMessage();
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(message, e);
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(message);
-					}
-				}
-			}
-		}
+		renderRequest.setAttribute(
+			SamlWebKeys.SAML_CERTIFICATE_TOOL, _certificateTool);
 	}
 
 	protected void renderViewIdentityProviderConnections(
@@ -240,27 +170,6 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 			SamlWebKeys.SAML_IDP_SP_CONNECTIONS_COUNT,
 			samlIdpSpConnectionsCount);
 	}
-
-	private Throwable _getCause(Throwable e, Class<?> exceptionType) {
-		if (e == null) {
-			return null;
-		}
-
-		Throwable cause = e.getCause();
-
-		while (cause != null) {
-			if (exceptionType.isInstance(cause)) {
-				return cause;
-			}
-
-			cause = cause.getCause();
-		}
-
-		return null;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultViewMVCRenderCommand.class);
 
 	@Reference
 	private CertificateTool _certificateTool;

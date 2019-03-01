@@ -53,6 +53,7 @@ page import="com.liferay.saml.runtime.exception.CertificateKeyPasswordException"
 page import="com.liferay.saml.runtime.metadata.LocalEntityManager" %><%@
 page import="com.liferay.saml.util.NameIdTypeValues" %><%@
 page import="com.liferay.saml.util.PortletPropsKeys" %><%@
+page import="com.liferay.saml.web.internal.display.context.CertificateBindsDisplayContext" %><%@
 page import="com.liferay.saml.web.internal.util.NameIdTypeValuesUtilHelper" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
@@ -70,6 +71,8 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
+CertificateBindsDisplayContext certificateBindsDisplayContext = (CertificateBindsDisplayContext)renderRequest.getAttribute(CertificateBindsDisplayContext.class.getName());
+
 String currentURL = PortalUtil.getCurrentURL(request);
 
 NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtilHelper.getNameIdTypeValues();

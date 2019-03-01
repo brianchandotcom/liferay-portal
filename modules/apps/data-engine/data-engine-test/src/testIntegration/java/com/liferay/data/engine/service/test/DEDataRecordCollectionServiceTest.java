@@ -39,6 +39,7 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSearchRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSearchResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -2740,12 +2741,12 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataRecordCollection deDataRecordCollection2 =
 			DEDataEngineTestUtil.insertDEDataRecordCollection(
-					_adminUser, _group, _deDataDefinitionService,
-					_deDataRecordCollectionService);
+				_adminUser, _group, _deDataDefinitionService,
+				_deDataRecordCollectionService);
 
 		DEDataRecord deDataRecord2 = DEDataEngineTestUtil.insertDEDataRecord(
-				_adminUser, _group, deDataRecordCollection2,
-				_deDataRecordCollectionService);
+			_adminUser, _group, deDataRecordCollection2,
+			_deDataRecordCollectionService);
 
 		List<DEDataRecord> deDataRecords1 = listDEDataRecords(
 			deDataRecordCollection1.getDEDataRecordCollectionId(), null, null);
@@ -4037,12 +4038,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 5,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 5,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4061,12 +4062,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 1,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 1,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4085,12 +4086,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 1,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 1,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4113,12 +4114,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 1,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 1,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4137,12 +4138,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 1,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 1,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4161,12 +4162,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 0,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 0,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4185,12 +4186,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 5,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 5,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4217,12 +4218,12 @@ public class DEDataRecordCollectionServiceTest {
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
 			() -> {
-			Assert.assertEquals(
-				deDataRecordCollections.toString(), 2,
-				deDataRecordCollections.size());
+				Assert.assertEquals(
+					deDataRecordCollections.toString(), 2,
+					deDataRecordCollections.size());
 
-			return null;
-		});
+				return null;
+			});
 	}
 
 	@Test
@@ -4235,15 +4236,14 @@ public class DEDataRecordCollectionServiceTest {
 				_deDataRecordCollectionService);
 		}
 
-		String longStringText =
-			"Lorem ipsum dolor sit amet, consectetur " +
-			"adipiscing elit, sed do eiusmod tempor incididunt ut labore " +
-			"et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud " +
-			"exercitation ullamco laboris nisi ut aliquip ex ea commodo " +
-			"consequat. Duis aute irure dolor in reprehenderit in voluptate " +
-			"velit esse cillum dolore eu fugiat nulla pariatur. Excepteur " +
-			"sint occaecat cupidatat non proident, sunt in culpa qui officia " +
-			"deserunt mollit anim id est laborum.";
+		String longStringText = StringBundler.concat(
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+			"eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut ",
+			"enim ad minim veniam, quis nostrud exercitation ullamco laboris ",
+			"nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ",
+			"in reprehenderit in voluptate velit esse cillum dolore eu fugiat ",
+			"nulla pariatur. Excepteur sint occaecat cupidatat non proident, ",
+			"sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
 		DEDataEngineTestUtil.insertDEDataRecordCollection(
 			_adminUser, _group, longStringText, "Name",
@@ -4435,8 +4435,8 @@ public class DEDataRecordCollectionServiceTest {
 			_deDataRecordCollectionService);
 
 		DEDataRecord deDataRecord2 = DEDataEngineTestUtil.insertDEDataRecord(
-				_adminUser, _group, _deDataDefinitionService,
-				_deDataRecordCollectionService);
+			_adminUser, _group, _deDataDefinitionService,
+			_deDataRecordCollectionService);
 
 		Map<String, Object> values = new HashMap() {
 			{
@@ -4489,13 +4489,13 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataRecordCollectionListRecordRequest
 			deDataRecordCollectionListRecordRequest =
-					DEDataRecordCollectionRequestBuilder.listRecordBuilder(
-						deDataRecordCollectionId
-					).endingAt(
-						GetterUtil.getInteger(end, QueryUtil.ALL_POS)
-					).startingAt(
-						GetterUtil.getInteger(start, QueryUtil.ALL_POS)
-					).build();
+				DEDataRecordCollectionRequestBuilder.listRecordBuilder(
+					deDataRecordCollectionId
+				).endingAt(
+					GetterUtil.getInteger(end, QueryUtil.ALL_POS)
+				).startingAt(
+					GetterUtil.getInteger(start, QueryUtil.ALL_POS)
+				).build();
 
 		DEDataRecordCollectionListRecordResponse
 			deDataRecordCollectionListRecordResponse =
@@ -4511,22 +4511,22 @@ public class DEDataRecordCollectionServiceTest {
 
 		DEDataRecordCollectionSearchRequest
 			deDataRecordCollectionSearchRequest =
-			DEDataRecordCollectionRequestBuilder.searchBuilder(
-			).havingKeywords(
-				keywords
-			).inCompany(
-				group.getCompanyId()
-			).inGroup(
-				group.getGroupId()
-			).build();
+				DEDataRecordCollectionRequestBuilder.searchBuilder(
+				).havingKeywords(
+					keywords
+				).inCompany(
+					group.getCompanyId()
+				).inGroup(
+					group.getGroupId()
+				).build();
 
 		DEDataRecordCollectionSearchResponse
 			deDataRecordCollectionSearchResponse =
-			_deDataRecordCollectionService.execute(
-				deDataRecordCollectionSearchRequest);
+				_deDataRecordCollectionService.execute(
+					deDataRecordCollectionSearchRequest);
 
-		return
-			deDataRecordCollectionSearchResponse.getDeDataRecordCollections();
+		return deDataRecordCollectionSearchResponse.
+			getDeDataRecordCollections();
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

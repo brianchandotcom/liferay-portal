@@ -38,8 +38,9 @@ public class DEDataRecordCollectionSearchExecutor {
 	}
 
 	public DEDataRecordCollectionSearchResponse execute(
-		DEDataRecordCollectionSearchRequest
-			deDataRecordCollectionSearchRequest) throws Exception {
+			DEDataRecordCollectionSearchRequest
+				deDataRecordCollectionSearchRequest)
+		throws Exception {
 
 		List<DEDataRecordCollection> deDataRecordCollections =
 			new ArrayList<>();

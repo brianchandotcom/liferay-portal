@@ -487,6 +487,11 @@ public abstract class BaseVocabularyResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("assetTypes")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("availableLanguages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);

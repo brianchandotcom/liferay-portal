@@ -30,7 +30,11 @@ import com.liferay.portal.url.builder.ModuleAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortletDependencyAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ResourceAbsolutePortalURLBuilder;
 
+import java.util.Dictionary;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Iván Zaera Avellón
@@ -63,6 +67,30 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 			@Override
 			public String build() {
 				return _build(_portal.getPathMain(), relativeURL);
+			}
+
+		};
+	}
+
+	@Override
+	public ModuleAbsolutePortalURLBuilder forModule(
+		Bundle bundle, String relativeURL) {
+
+		return new ModuleAbsolutePortalURLBuilder() {
+
+			@Override
+			public String build() {
+				Dictionary<String, String> headers = bundle.getHeaders(
+					StringPool.BLANK);
+
+				String webContextPath = headers.get("Web-ContextPath");
+
+				if (!webContextPath.endsWith(StringPool.SLASH)) {
+					webContextPath += StringPool.SLASH;
+				}
+
+				return _build(
+					_portal.getPathModule() + webContextPath, relativeURL);
 			}
 
 		};

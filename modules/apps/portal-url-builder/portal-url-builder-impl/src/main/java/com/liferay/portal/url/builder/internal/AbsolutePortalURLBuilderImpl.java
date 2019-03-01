@@ -180,7 +180,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 			@Override
 			public String build() {
-				return _build(StringPool.BLANK, relativeURL);
+				return _build(_portal.getPathContext(), relativeURL);
 			}
 
 		};

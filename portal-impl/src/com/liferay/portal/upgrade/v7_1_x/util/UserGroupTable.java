@@ -73,13 +73,13 @@ TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 TABLE_COLUMNS_MAP.put("addedByLDAPImport", Types.BOOLEAN);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table UserGroup (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserGroup (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(255) null,description STRING null,addedByLDAPImport BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_CB9015AF on UserGroup (companyId, externalReferenceCode[$COLUMN_LENGTH:75$])",
-		"create unique index IX_23EAD0D on UserGroup (companyId, name[$COLUMN_LENGTH:75$])",
+		"create unique index IX_23EAD0D on UserGroup (companyId, name[$COLUMN_LENGTH:255$])",
 		"create index IX_69771487 on UserGroup (companyId, parentUserGroupId)",
 		"create index IX_72394F8E on UserGroup (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};

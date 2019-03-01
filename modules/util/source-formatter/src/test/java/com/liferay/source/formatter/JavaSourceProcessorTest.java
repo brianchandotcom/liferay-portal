@@ -125,7 +125,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IfClauseIncorrectLineBreaks.testjava");
 	}
 
-	@Test
 	public void testIfClauseParentheses() throws Exception {
 		test(
 			"IfClauseParentheses.testjava",
@@ -183,7 +182,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			});
 	}
 
-	@Test
 	public void testIncorrectLineBreaks() throws Exception {
 		test(
 			"IncorrectLineBreaks1.testjava",
@@ -266,7 +264,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {24, 28});
 	}
 
-	@Test
 	public void testIncorrectTabs() throws Exception {
 		test(
 			"IncorrectTabs.testjava",

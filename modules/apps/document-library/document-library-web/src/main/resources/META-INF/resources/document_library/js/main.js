@@ -179,12 +179,20 @@ AUI.add(
 						}
 					},
 
-					showFolderDialog(itemsSelected) {
+					showFolderDialog(selectedItems, parameterName, parameterValue) {
 						var instance = this;
+
+						var namespace = instance.NS;
+
+						if (parameterName && parameterValue) {
+							var form = instance.get('form').node;
+
+							form.get(namespace + parameterName).val(parameterValue);
+						}
 
 						var dialogTitle = Lang.sub(
 							Liferay.Language.get('select-destination-folder-for-x-items'),
-							[itemsSelected]
+							[selectedItems]
 						);
 
 						Liferay.Util.selectEntity(
@@ -195,7 +203,7 @@ AUI.add(
 									modal: true,
 									width: 680
 								},
-								id: instance.NS + 'selectFolder',
+								id: namespace + 'selectFolder',
 								title: dialogTitle,
 								uri: instance.get('selectFolderURL')
 							},

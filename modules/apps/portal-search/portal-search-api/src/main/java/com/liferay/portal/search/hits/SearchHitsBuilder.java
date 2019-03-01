@@ -12,42 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.search.highlight;
+package com.liferay.portal.search.hits;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * @author Michael C. Han
+ * @author Wade Cao
  */
 @ProviderType
-public class HighlightField {
+public interface SearchHitsBuilder {
 
-	public HighlightField(String name) {
-		_name = name;
-	}
+	public SearchHitsBuilder addSearchHit(SearchHit searchHit);
 
-	public void addFragment(String fragment) {
-		_fragments.add(fragment);
-	}
+	public SearchHitsBuilder addSearchHits(Stream<SearchHit> searchHitStream);
 
-	public void addFragments(Stream<String> fragmentStream) {
-		fragmentStream.forEach(_fragments::add);
-	}
+	public SearchHits build();
 
-	public List<String> getFragments() {
-		return Collections.unmodifiableList(_fragments);
-	}
+	public SearchHitsBuilder maxScore(float maxScore);
 
-	public String getName() {
-		return _name;
-	}
+	public SearchHitsBuilder searchTime(long searchTime);
 
-	private final List<String> _fragments = new ArrayList<>();
-	private final String _name;
+	public SearchHitsBuilder totalHits(long totalHits);
 
 }

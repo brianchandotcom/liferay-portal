@@ -16,53 +16,21 @@ package com.liferay.portal.search.hits;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Michael C. Han
+ * @author André de Oliveira
  */
 @ProviderType
-public class SearchHits implements Serializable {
+public interface SearchHits {
 
-	public void addSearchHit(SearchHit searchHit) {
-		_searchHits.add(searchHit);
-	}
+	public float getMaxScore();
 
-	public float getMaxScore() {
-		return _maxScore;
-	}
+	public List<SearchHit> getSearchHits();
 
-	public List<SearchHit> getSearchHits() {
-		return Collections.unmodifiableList(_searchHits);
-	}
+	public long getSearchTime();
 
-	public long getSearchTime() {
-		return _searchTime;
-	}
-
-	public long getTotalHits() {
-		return _totalHits;
-	}
-
-	public void setMaxScore(float maxScore) {
-		_maxScore = maxScore;
-	}
-
-	public void setSearchTime(long searchTime) {
-		_searchTime = searchTime;
-	}
-
-	public void setTotalHits(long totalHits) {
-		_totalHits = totalHits;
-	}
-
-	private float _maxScore;
-	private final List<SearchHit> _searchHits = new ArrayList<>();
-	private long _searchTime;
-	private long _totalHits;
+	public long getTotalHits();
 
 }

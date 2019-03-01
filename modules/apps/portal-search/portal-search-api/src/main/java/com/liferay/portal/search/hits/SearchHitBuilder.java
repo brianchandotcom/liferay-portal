@@ -20,28 +20,35 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.highlight.HighlightField;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
- * @author Michael C. Han
- * @author André de Oliveira
+ * @author Wade Cao
  */
 @ProviderType
-public interface SearchHit {
+public interface SearchHitBuilder {
 
-	public Document getDocument();
+	public SearchHitBuilder addHighlightField(HighlightField highlightField);
 
-	public String getExplanation();
+	public SearchHitBuilder addHighlightFields(
+		Stream<HighlightField> highlightFieldStream);
 
-	public Map<String, HighlightField> getHighlightFieldsMap();
+	public SearchHitBuilder addSource(String name, Object value);
 
-	public String getId();
+	public SearchHitBuilder addSources(Map<String, Object> sourcesMap);
 
-	public String[] getMatchedQueries();
+	public SearchHit build();
 
-	public float getScore();
+	public SearchHitBuilder document(Document document);
 
-	public Map<String, Object> getSourcesMap();
+	public SearchHitBuilder explanation(String explanation);
 
-	public long getVersion();
+	public SearchHitBuilder id(String id);
+
+	public SearchHitBuilder matchedQueries(String... matchedQueries);
+
+	public SearchHitBuilder score(float score);
+
+	public SearchHitBuilder version(long version);
 
 }

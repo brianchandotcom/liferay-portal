@@ -16,32 +16,12 @@ package com.liferay.portal.search.hits;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.highlight.HighlightField;
-
-import java.util.Map;
-
 /**
- * @author Michael C. Han
- * @author André de Oliveira
+ * @author Wade Cao
  */
 @ProviderType
-public interface SearchHit {
+public interface SearchHitBuilderFactory {
 
-	public Document getDocument();
-
-	public String getExplanation();
-
-	public Map<String, HighlightField> getHighlightFieldsMap();
-
-	public String getId();
-
-	public String[] getMatchedQueries();
-
-	public float getScore();
-
-	public Map<String, Object> getSourcesMap();
-
-	public long getVersion();
+	public SearchHitBuilder getSearchHitBuilder();
 
 }

@@ -212,9 +212,13 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public String getEncodedLocalEntityCertificate() throws SamlException {
+	public String getEncodedLocalEntityCertificate(
+			CertificateUsage certificateUsage)
+		throws SamlException {
+
 		try {
-			X509Certificate x509Certificate = getLocalEntityCertificate();
+			X509Certificate x509Certificate = getLocalEntityCertificate(
+				certificateUsage);
 
 			if (x509Certificate == null) {
 				return null;
@@ -302,8 +306,21 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public X509Certificate getLocalEntityCertificate() throws SamlException {
-		X509Credential x509Credential = (X509Credential)getSigningCredential();
+	public X509Certificate getLocalEntityCertificate(
+			CertificateUsage certificateUsage)
+		throws SamlException {
+
+		X509Credential x509Credential;
+
+		if (certificateUsage == CertificateUsage.ENCRYPTION) {
+			x509Credential = (X509Credential)getEncryptionCredential();
+		}
+		else if (certificateUsage == CertificateUsage.SIGNING) {
+			x509Credential = (X509Credential)getSigningCredential();
+		}
+		else {
+			x509Credential = null;
+		}
 
 		X509Certificate x509Certificate = null;
 

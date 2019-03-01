@@ -68,6 +68,9 @@ public interface PortletPropsKeys {
 	public static final String SAML_KEYSTORE_CREDENTIAL_PASSWORD =
 		"saml.keystore.credential.password";
 
+	public static final String SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD =
+		"saml.keystore.encryption.credential.password";
+
 	public static final String SAML_KEYSTORE_MANAGER_IMPL =
 		"saml.keystore.manager.impl";
 

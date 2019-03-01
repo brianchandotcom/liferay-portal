@@ -44,6 +44,14 @@ public interface SamlProviderConfiguration {
 	public String keyStoreCredentialPassword();
 
 	@Meta.AD(
+		deflt = "liferay",
+		description = "saml-keystore-encryption-credential-password-description",
+		id = "saml.keystore.encryption.credential.password",
+		name = "saml-keystore-encryption-credential-password", required = false
+	)
+	public String keyStoreEncryptionCredentialPassword();
+
+	@Meta.AD(
 		description = "saml-sp-assertion-signature-required-description",
 		id = "saml.sp.assertion.signature.required",
 		name = "saml-sp-assertion-signature-required", required = false

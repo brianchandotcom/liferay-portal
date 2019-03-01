@@ -17,6 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.credential;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
+import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
@@ -66,9 +67,27 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 			SamlProviderConfiguration samlProviderConfiguration =
 				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
+			UsageType usageType = UsageType.UNSPECIFIED;
+
+			UsageCriterion usageCriterion = criteriaSet.get(
+				UsageCriterion.class);
+
+			if (usageCriterion != null) {
+				usageType = usageCriterion.getUsage();
+			}
+
 			if (entityId.equals(samlProviderConfiguration.entityId())) {
-				String keyStoreCredentialPassword =
-					samlProviderConfiguration.keyStoreCredentialPassword();
+				String keyStoreCredentialPassword;
+
+				if (usageType == UsageType.ENCRYPTION) {
+					keyStoreCredentialPassword =
+						samlProviderConfiguration.
+							keyStoreEncryptionCredentialPassword();
+				}
+				else {
+					keyStoreCredentialPassword =
+						samlProviderConfiguration.keyStoreCredentialPassword();
+				}
 
 				if (keyStoreCredentialPassword != null) {
 					keyStorePasswordProtection =
@@ -78,15 +97,6 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 			}
 
 			KeyStore keyStore = _keyStoreManager.getKeyStore();
-
-			UsageType usageType = UsageType.UNSPECIFIED;
-
-			UsageCriterion usageCriterion = criteriaSet.get(
-				UsageCriterion.class);
-
-			if (usageCriterion != null) {
-				usageType = usageCriterion.getUsage();
-			}
 
 			KeyStore.Entry entry = keyStore.getEntry(
 				getAlias(entityId, usageType), keyStorePasswordProtection);
@@ -151,7 +161,10 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 	}
 
 	protected String getAlias(String entityId, UsageType usageType) {
-		if (usageType.equals(UsageType.ENCRYPTION)) {
+		if (usageType.equals(UsageType.SIGNING)) {
+			return entityId;
+		}
+		else if (usageType.equals(UsageType.ENCRYPTION)) {
 			return entityId + "-encryption";
 		}
 

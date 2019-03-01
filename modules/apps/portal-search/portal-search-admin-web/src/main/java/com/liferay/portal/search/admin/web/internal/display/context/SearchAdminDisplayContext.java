@@ -19,23 +19,41 @@ package com.liferay.portal.search.admin.web.internal.display.context;
  */
 public class SearchAdminDisplayContext {
 
-	public String getStatusString() {
-		return _statusString;
+	public String getClientVersionString() {
+		return _clientVersionString;
+	}
+
+	public String getNodesString() {
+		return _nodesString;
+	}
+
+	public String getVendorString() {
+		return _vendorString;
 	}
 
 	public boolean isMissingSearchEngine() {
 		return _missingSearchEngine;
 	}
 
+	public void setClientVersionString(String clientVersionString) {
+		_clientVersionString = clientVersionString;
+	}
+
 	public void setMissingSearchEngine(boolean missingSearchEngine) {
 		_missingSearchEngine = missingSearchEngine;
 	}
 
-	public void setStatusString(String statusString) {
-		_statusString = statusString;
+	public void setNodesString(String nodesString) {
+		_nodesString = nodesString;
 	}
 
+	public void setVendorString(String vendorString) {
+		_vendorString = vendorString;
+	}
+
+	private String _clientVersionString;
 	private boolean _missingSearchEngine;
-	private String _statusString;
+	private String _nodesString;
+	private String _vendorString;
 
 }

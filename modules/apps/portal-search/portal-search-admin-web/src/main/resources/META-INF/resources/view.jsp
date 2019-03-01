@@ -72,7 +72,9 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 				<c:choose>
 					<c:when test="<%= !searchAdminDisplayContext.isMissingSearchEngine() %>">
 						<div class="alert alert-info">
-							<strong><liferay-ui:message key="search-engine" /></strong>: <%= searchAdminDisplayContext.getStatusString() %>
+							<liferay-ui:message key="search-engine-vendor" />: <strong><%= searchAdminDisplayContext.getVendorString() %></strong>,
+							<liferay-ui:message key="client-version" />: <strong><%= searchAdminDisplayContext.getClientVersionString() %></strong>,
+							<liferay-ui:message key="nodes" />: <strong><%= searchAdminDisplayContext.getNodesString() %></strong>
 						</div>
 					</c:when>
 					<c:otherwise>

@@ -26,8 +26,12 @@ public class SearchAdminDisplayBuilder {
 			new SearchAdminDisplayContext();
 
 		if (_searchEngineInformation != null) {
-			searchAdminDisplayContext.setStatusString(
-				_searchEngineInformation.getStatusString());
+			searchAdminDisplayContext.setClientVersionString(
+				_searchEngineInformation.getClientVersionString());
+			searchAdminDisplayContext.setNodesString(
+				_searchEngineInformation.getNodesString());
+			searchAdminDisplayContext.setVendorString(
+				_searchEngineInformation.getVendorString());
 		}
 		else {
 			searchAdminDisplayContext.setMissingSearchEngine(true);

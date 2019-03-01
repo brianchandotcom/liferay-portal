@@ -1,17 +1,4 @@
 definition {
-	macro _gotoAddPGViaWCD {
-		Portlet.clickPortletPlusIconPG(portletName = "Web Content Display");
-
-		Click(locator1 = "WCD#ADD_WEB_CONTENT");
-
-		var key_structureName = "Basic Web Content";
-
-		AssertClick(
-			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
-			value1 = "Basic Web Content"
-		);
-	}
-
 	macro addArticleCP {
 		WebContentNavigator.gotoAddCP();
 
@@ -66,7 +53,7 @@ definition {
 	}
 
 	macro addDraftPGViaWCD {
-		WebContent._gotoAddPGViaWCD();
+		WebContentNavigator.gotoAddPGViaWCD();
 
 		WebContent.addDraft(
 			webContentContent = "${webContentContent}",

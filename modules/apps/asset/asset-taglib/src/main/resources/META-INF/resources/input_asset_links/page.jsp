@@ -104,7 +104,7 @@
 
 <aui:input name="assetLinkEntryIds" type="hidden" />
 
-<aui:script use="aui-base,escape,liferay-search-container">
+<aui:script use="aui-base,escape,liferay-item-selector-dialog,liferay-search-container">
 	var assetSelectorHandle = A.getBody().delegate(
 		'click',
 		function(event) {

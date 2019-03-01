@@ -849,7 +849,7 @@ definition {
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		MenuItem.click(menuItem = "Google Docs");
+		MenuItem.click(menuItem = "Google Docs Shortcut");
 
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -1203,7 +1203,7 @@ definition {
 
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		MenuItem.click(menuItem = "Google Docs");
+		MenuItem.click(menuItem = "Google Docs Shortcut");
 
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),

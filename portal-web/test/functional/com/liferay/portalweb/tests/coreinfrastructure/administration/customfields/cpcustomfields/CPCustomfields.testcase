@@ -249,6 +249,7 @@ definition {
 		);
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test EditCustomFieldUserBoolean {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";

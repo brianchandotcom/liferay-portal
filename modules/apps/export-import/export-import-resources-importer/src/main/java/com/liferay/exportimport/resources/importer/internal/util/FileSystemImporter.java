@@ -247,9 +247,7 @@ public class FileSystemImporter extends BaseImporter {
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to import widget template " +
-						file.getName(),
-					pe);
+					"Unable to import widget template " + file.getName(), pe);
 			}
 
 			throw pe;

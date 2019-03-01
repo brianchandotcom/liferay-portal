@@ -265,14 +265,9 @@ definition {
 	macro addGoogleApp {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
-		if ("${dmGoogleApp}" == "Google Docs") {
-			Click(locator1 = "DocumentsAndMedia#GOOGLE_DOCS_MENU_ITEM");
-		}
-		else {
-			var key_menuItem = "${dmGoogleApp}";
+		var key_menuItem = "${dmGoogleApp}";
 
-			MenuItem.click(menuItem = "${dmGoogleApp}");
-		}
+		MenuItem.click(menuItem = "${dmGoogleApp}");
 	}
 
 	macro addMultiplePG {

@@ -14,14 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable.parser.impl;
 
-import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,57 +25,5 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "type=rich-text",
 	service = EditableElementParser.class
 )
-public class RichTextEditableElementParser implements EditableElementParser {
-
-	@Override
-	public String getFieldTemplate() {
-		return _TMPL_VALIDATE_TEXT_FIELD;
-	}
-
-	@Override
-	public String getValue(Element element) {
-		return element.html();
-	}
-
-	@Override
-	public void replace(Element element, String value) {
-		replace(element, value, null);
-	}
-
-	@Override
-	public void replace(
-		Element element, String value, JSONObject configJSONObject) {
-
-		Document document = Jsoup.parseBodyFragment(value);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		Element bodyElement = document.body();
-
-		if (configJSONObject == null) {
-			element.html(bodyElement.html());
-
-			return;
-		}
-
-		String textAlignment = configJSONObject.getString("textAlignment");
-		String textColor = configJSONObject.getString("textColor");
-		String textStyle = configJSONObject.getString("textStyle");
-
-		element.addClass("text-" + textAlignment);
-		element.addClass("text-palette-" + textColor);
-		element.addClass("text-" + textStyle);
-
-		element.html(bodyElement.html());
-	}
-
-	private static final String _TMPL_VALIDATE_TEXT_FIELD = StringUtil.read(
-		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable" +
-			"/text_field_template.tmpl");
-
+public class RichTextEditableElementParser extends TextEditableElementParser {
 }

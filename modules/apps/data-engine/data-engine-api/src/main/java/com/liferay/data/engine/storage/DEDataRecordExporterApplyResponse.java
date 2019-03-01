@@ -14,9 +14,6 @@
 
 package com.liferay.data.engine.storage;
 
-import com.liferay.data.engine.service.DEDataRecordCollectionExportRecordsResponse;
-import com.liferay.data.engine.service.DEDataRecordCollectionGetResponse.Builder;
-
 /**
  * Response class used as a return value for the export operation
  *

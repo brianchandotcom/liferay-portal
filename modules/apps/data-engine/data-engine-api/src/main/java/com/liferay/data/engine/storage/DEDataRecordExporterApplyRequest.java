@@ -14,10 +14,10 @@
 
 package com.liferay.data.engine.storage;
 
+import com.liferay.data.engine.model.DEDataRecord;
+
 import java.util.Collections;
 import java.util.List;
-
-import com.liferay.data.engine.model.DEDataRecord;
 
 /**
  * Request class used to export data records from a data storage

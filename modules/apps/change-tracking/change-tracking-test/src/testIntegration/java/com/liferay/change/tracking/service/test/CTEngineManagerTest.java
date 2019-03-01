@@ -25,12 +25,11 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.change.tracking.service.test.model.TestResourceModelClass;
+import com.liferay.change.tracking.service.test.model.TestVersionModelClass;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -50,10 +49,8 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.Serializable;
-
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.junit.After;
@@ -674,12 +671,13 @@ public class CTEngineManagerTest {
 		try {
 			boolean changeTrackingSupported =
 				_ctEngineManager.isChangeTrackingSupported(
-					TestPropsValues.getCompanyId(), TestVersionClass.class);
+					TestPropsValues.getCompanyId(),
+					TestVersionModelClass.class);
 
 			Assert.assertFalse(changeTrackingSupported);
 
 			testVersionClassName = _classNameLocalService.addClassName(
-				TestVersionClass.class.getName());
+				TestVersionModelClass.class.getName());
 
 			changeTrackingSupported =
 				_ctEngineManager.isChangeTrackingSupported(
@@ -693,13 +691,17 @@ public class CTEngineManagerTest {
 			).setContentTypeLanguageKey(
 				"test-object"
 			).setEntityClasses(
-				Object.class, TestVersionClass.class
+				TestResourceModelClass.class, TestVersionModelClass.class
+			).setResourceEntitiesByCompanyIdFunction(
+				id -> Collections.emptyList()
 			).setResourceEntityByResourceEntityIdFunction(
-				id -> new Object()
+				id -> new TestResourceModelClass()
 			).setEntityIdsFromResourceEntityFunctions(
 				testResource -> 0L, testResource -> 0L
+			).setVersionEntitiesFromResourceEntityFunction(
+				testResource -> Collections.emptyList()
 			).setVersionEntityByVersionEntityIdFunction(
-				id -> new TestVersionClass()
+				id -> new TestVersionModelClass()
 			).setVersionEntityDetails(
 				o -> RandomTestUtil.randomString(),
 				o -> RandomTestUtil.randomString(), o -> 1L
@@ -714,7 +716,8 @@ public class CTEngineManagerTest {
 
 			changeTrackingSupported =
 				_ctEngineManager.isChangeTrackingSupported(
-					TestPropsValues.getCompanyId(), TestVersionClass.class);
+					TestPropsValues.getCompanyId(),
+					TestVersionModelClass.class);
 
 			Assert.assertTrue(changeTrackingSupported);
 
@@ -768,9 +771,7 @@ public class CTEngineManagerTest {
 		List<CTEntry> productionCTEntries = _ctEngineManager.getCTEntries(
 			productionCTCollection.getCtCollectionId());
 
-		Assert.assertTrue(
-			"Production change tracking collection must be empty",
-			ListUtil.isEmpty(productionCTEntries));
+		int originalCTEntriesCount = productionCTEntries.size();
 
 		_ctEngineManager.publishCTCollection(
 			TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
@@ -779,9 +780,10 @@ public class CTEngineManagerTest {
 			productionCTCollection.getCtCollectionId());
 
 		Assert.assertEquals(
-			"Production change tracking collection must have one entry", 1,
-			productionCTEntries.size());
-		Assert.assertEquals(ctEntry, productionCTEntries.get(0));
+			"Production change tracking collection must one more entry",
+			originalCTEntriesCount + 1, productionCTEntries.size());
+		Assert.assertTrue(
+			"CTEntry must be published", productionCTEntries.contains(ctEntry));
 	}
 
 	@Test
@@ -818,8 +820,8 @@ public class CTEngineManagerTest {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private CTConfigurationBuilder<Object, TestVersionClass>
-		_ctConfigurationBuilder;
+	private CTConfigurationBuilder
+		<TestResourceModelClass, TestVersionModelClass> _ctConfigurationBuilder;
 
 	@Inject
 	private CTConfigurationRegistrar _ctConfigurationRegistrar;
@@ -834,121 +836,5 @@ public class CTEngineManagerTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	private class TestVersionClass implements BaseModel<TestVersionClass> {
-
-		@Override
-		public Object clone() {
-			return null;
-		}
-
-		@Override
-		public int compareTo(TestVersionClass testVersionClass) {
-			return 0;
-		}
-
-		@Override
-		public ExpandoBridge getExpandoBridge() {
-			return null;
-		}
-
-		@Override
-		public Map<String, Object> getModelAttributes() {
-			return null;
-		}
-
-		@Override
-		public Class<?> getModelClass() {
-			return null;
-		}
-
-		@Override
-		public String getModelClassName() {
-			return null;
-		}
-
-		@Override
-		public Serializable getPrimaryKeyObj() {
-			return null;
-		}
-
-		@Override
-		public boolean isCachedModel() {
-			return false;
-		}
-
-		@Override
-		public boolean isEntityCacheEnabled() {
-			return false;
-		}
-
-		@Override
-		public boolean isEscapedModel() {
-			return false;
-		}
-
-		@Override
-		public boolean isFinderCacheEnabled() {
-			return false;
-		}
-
-		@Override
-		public boolean isNew() {
-			return false;
-		}
-
-		@Override
-		public void resetOriginalValues() {
-		}
-
-		@Override
-		public void setCachedModel(boolean cachedModel) {
-		}
-
-		@Override
-		public void setExpandoBridgeAttributes(BaseModel baseModel) {
-		}
-
-		@Override
-		public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		}
-
-		@Override
-		public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		}
-
-		@Override
-		public void setModelAttributes(Map attributes) {
-		}
-
-		@Override
-		public void setNew(boolean n) {
-		}
-
-		@Override
-		public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		}
-
-		@Override
-		public CacheModel<TestVersionClass> toCacheModel() {
-			return null;
-		}
-
-		@Override
-		public TestVersionClass toEscapedModel() {
-			return null;
-		}
-
-		@Override
-		public TestVersionClass toUnescapedModel() {
-			return null;
-		}
-
-		@Override
-		public String toXmlString() {
-			return null;
-		}
-
-	}
 
 }

@@ -42,6 +42,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -83,11 +84,15 @@ public class CTManagerTest {
 			"test-object"
 		).setEntityClasses(
 			Object.class, Object.class
+		).setResourceEntitiesByCompanyIdFunction(
+			id -> Collections.emptyList()
 		).setResourceEntityByResourceEntityIdFunction(
 			id -> new Object()
 		).setEntityIdsFromResourceEntityFunctions(
 			testResource -> _TEST_RESOURCE_CLASS_ENTITY_ID,
 			testResource -> _TEST_VERSION_CLASS_ENTITY_ID
+		).setVersionEntitiesFromResourceEntityFunction(
+			testResource -> Collections.emptyList()
 		).setVersionEntityByVersionEntityIdFunction(
 			id -> new Object()
 		).setVersionEntityDetails(

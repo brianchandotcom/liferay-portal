@@ -127,8 +127,8 @@ public class ExpressionVisitorImplTest {
 		EntityField entityField = entityFieldsMap.get("title");
 
 		BooleanFilter booleanFilter =
-			(BooleanFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(BooleanFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.EQ, entityField, null);
 
 		Assert.assertTrue(booleanFilter.hasClauses());
@@ -311,8 +311,8 @@ public class ExpressionVisitorImplTest {
 		String value = "title1";
 
 		BooleanFilter booleanFilter =
-			(BooleanFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(BooleanFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.NE, entityField, value);
 
 		Assert.assertTrue(booleanFilter.hasClauses());

@@ -92,7 +92,8 @@ public class DTOOpenAPIParser {
 		if (StringUtil.equals(type, "array") && (items != null) &&
 			StringUtil.equalsIgnoreCase(items.getType(), "object")) {
 
-			return StringUtil.upperCaseFirstLetter(propertySchemaName) + "[]";
+			return OpenAPIParserUtil.getArrayClassName(
+				StringUtil.upperCaseFirstLetter(propertySchemaName));
 		}
 
 		if (StringUtil.equalsIgnoreCase(type, "object")) {

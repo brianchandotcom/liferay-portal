@@ -56,6 +56,50 @@ public class OpenAPIParserUtil {
 		return sb.toString();
 	}
 
+	public static String getArrayClassName(String name) {
+		if (name.equals(boolean.class.getName())) {
+			return "[Z";
+		}
+		else if (name.equals(double.class.getName())) {
+			return "[D";
+		}
+		else if (name.equals(float.class.getName())) {
+			return "[F";
+		}
+		else if (name.equals(int.class.getName())) {
+			return "[I";
+		}
+		else if (name.equals(long.class.getName())) {
+			return "[J";
+		}
+		else {
+			return "[L" + name + ";";
+		}
+	}
+
+	public static String getElementClassName(String name) {
+		if (name.equals("[Z")) {
+			return boolean.class.getName();
+		}
+		else if (name.equals("[D")) {
+			return double.class.getName();
+		}
+		else if (name.equals("[F")) {
+			return float.class.getName();
+		}
+		else if (name.equals("[I")) {
+			return int.class.getName();
+		}
+		else if (name.equals("[J")) {
+			return long.class.getName();
+		}
+		else if (name.startsWith("[L") && name.endsWith(";")) {
+			return name.substring(2, name.length() - 1);
+		}
+
+		return name;
+	}
+
 	public static String getHTTPMethod(Operation operation) {
 		Class<? extends Operation> clazz = operation.getClass();
 
@@ -96,7 +140,7 @@ public class OpenAPIParserUtil {
 					getReferenceName(items.getReference()));
 			}
 
-			return javaDataType + "[]";
+			return getArrayClassName(javaDataType);
 		}
 
 		if (type != null) {
@@ -236,9 +280,8 @@ public class OpenAPIParserUtil {
 
 		String simpleClassName = javaMethodParameter.getParameterType();
 
-		if (simpleClassName.endsWith("[]")) {
-			simpleClassName = simpleClassName.substring(
-				0, simpleClassName.length() - 2);
+		if (simpleClassName.startsWith("[")) {
+			simpleClassName = getElementClassName(simpleClassName);
 		}
 
 		if (simpleClassName.endsWith(">")) {

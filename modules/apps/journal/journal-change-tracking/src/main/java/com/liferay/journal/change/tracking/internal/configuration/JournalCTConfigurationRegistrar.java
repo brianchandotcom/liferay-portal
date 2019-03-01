@@ -21,7 +21,12 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -43,11 +48,17 @@ public class JournalCTConfigurationRegistrar {
 				"journal"
 			).setEntityClasses(
 				JournalArticleResource.class, JournalArticle.class
+			).setResourceEntitiesByCompanyIdFunction(
+				this::_fetchJournalArticleResources
 			).setResourceEntityByResourceEntityIdFunction(
 				_journalArticleResourceLocalService::fetchJournalArticleResource
 			).setEntityIdsFromResourceEntityFunctions(
 				JournalArticleResource::getResourcePrimKey,
 				JournalArticleResource::getLatestArticlePK
+			).setVersionEntitiesFromResourceEntityFunction(
+				journalArticleResource ->
+					_journalArticleLocalService.getArticlesByResourcePrimKey(
+						journalArticleResource.getResourcePrimKey())
 			).setVersionEntityByVersionEntityIdFunction(
 				_journalArticleLocalService::fetchJournalArticle
 			).setVersionEntityDetails(
@@ -62,6 +73,19 @@ public class JournalCTConfigurationRegistrar {
 				},
 				JournalArticle::getStatus
 			).build());
+	}
+
+	private List<JournalArticleResource> _fetchJournalArticleResources(
+		long companyId) {
+
+		DynamicQuery dynamicQuery =
+			_journalArticleResourceLocalService.dynamicQuery();
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		return _journalArticleResourceLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

@@ -22,6 +22,9 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionModel;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +33,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -51,10 +56,16 @@ public class DDMTemplateCTConfigurationRegistrar {
 				"dynamic-data-mapping"
 			).setEntityClasses(
 				DDMTemplate.class, DDMTemplateVersion.class
+			).setResourceEntitiesByCompanyIdFunction(
+				this::_fetchDDMTemplates
 			).setResourceEntityByResourceEntityIdFunction(
 				_ddmTemplateLocalService::fetchTemplate
 			).setEntityIdsFromResourceEntityFunctions(
 				DDMTemplate::getTemplateId, this::_fetchLatestTemplateVersionId
+			).setVersionEntitiesFromResourceEntityFunction(
+				ddmTemplate ->
+					_ddmTemplateVersionLocalService.getTemplateVersions(
+						ddmTemplate.getTemplateId())
 			).setVersionEntityByVersionEntityIdFunction(
 				_ddmTemplateVersionLocalService::fetchDDMTemplateVersion
 			).setVersionEntityDetails(
@@ -69,6 +80,16 @@ public class DDMTemplateCTConfigurationRegistrar {
 				new Integer[] {WorkflowConstants.STATUS_APPROVED},
 				ddmTemplateVersion -> WorkflowConstants.STATUS_APPROVED
 			).build());
+	}
+
+	private List<DDMTemplate> _fetchDDMTemplates(long companyId) {
+		DynamicQuery dynamicQuery = _ddmTemplateLocalService.dynamicQuery();
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		return _ddmTemplateLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	private Serializable _fetchLatestTemplateVersionId(

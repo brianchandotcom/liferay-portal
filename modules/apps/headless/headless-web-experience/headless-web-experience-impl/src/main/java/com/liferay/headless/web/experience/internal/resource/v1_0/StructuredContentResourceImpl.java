@@ -147,8 +147,8 @@ public class StructuredContentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return getContentStructureStructuredContentsPage(
-			contentSpaceId, filter, pagination, sorts);
+		return _getStructuredContentPage(
+			contentSpaceId, null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -157,33 +157,8 @@ public class StructuredContentResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			booleanQuery -> {
-				if (contentStructureId != null) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
-
-					booleanFilter.add(
-						new TermFilter(
-							Field.CLASS_TYPE_ID, contentStructureId.toString()),
-						BooleanClauseOccur.MUST);
-				}
-			},
-			filter, JournalArticle.class, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ARTICLE_ID, Field.SCOPE_GROUP_ID),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-				searchContext.setAttribute("head", Boolean.TRUE);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			document -> _toStructuredContent(
-				_journalArticleService.getLatestArticle(
-					GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
-					document.get(Field.ARTICLE_ID),
-					WorkflowConstants.STATUS_APPROVED)),
-			sorts);
+		return _getStructuredContentPage(
+			null, contentStructureId, filter, pagination, sorts);
 	}
 
 	@Override
@@ -417,6 +392,44 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
+	}
+
+	private Page<StructuredContent> _getStructuredContentPage(
+			Long contentSpaceId, Long contentStructureId, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQuery -> {
+				if (contentStructureId != null) {
+					BooleanFilter booleanFilter =
+						booleanQuery.getPreBooleanFilter();
+
+					booleanFilter.add(
+						new TermFilter(
+							Field.CLASS_TYPE_ID, contentStructureId.toString()),
+						BooleanClauseOccur.MUST);
+				}
+			},
+			filter, JournalArticle.class, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ARTICLE_ID, Field.SCOPE_GROUP_ID),
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+				searchContext.setAttribute("head", Boolean.TRUE);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (contentSpaceId != null) {
+					searchContext.setGroupIds(new long[] {contentSpaceId});
+				}
+			},
+			document -> _toStructuredContent(
+				_journalArticleService.getLatestArticle(
+					GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
+					document.get(Field.ARTICLE_ID),
+					WorkflowConstants.STATUS_APPROVED)),
+			sorts);
 	}
 
 	private ContentField _toContentField(

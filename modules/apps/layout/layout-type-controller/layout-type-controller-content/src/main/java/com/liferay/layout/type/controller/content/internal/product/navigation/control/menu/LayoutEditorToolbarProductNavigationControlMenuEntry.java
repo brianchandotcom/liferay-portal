@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.asset.display.internal.control.menu;
+package com.liferay.layout.type.controller.content.internal.product.navigation.control.menu;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -25,12 +23,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -45,27 +42,17 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
-		"product.navigation.control.menu.entry.order:Integer=200"
+		"product.navigation.control.menu.entry.order:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class EditAssetDisplayMenuProductNavigationControlMenuEntry
+public class LayoutEditorToolbarProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/page_template/edit_menu.jsp";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public String getURL(HttpServletRequest request) {
-		return null;
+		return "/layout_editor_toolbar/entry.jsp";
 	}
 
 	@Override
@@ -75,50 +62,28 @@ public class EditAssetDisplayMenuProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		String layoutMode = ParamUtil.getString(
-			request, "p_l_mode", Constants.VIEW);
-
-		if (layoutMode.equals(Constants.EDIT)) {
-			return false;
-		}
-
-		Group group = layout.getGroup();
-
-		if (group.hasStagingGroup() && !group.isStagingGroup() &&
-			PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) {
+		if (!Objects.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY) &&
+			!Objects.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
 
 			return false;
 		}
 
-		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
+		String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
 
-		if (assetEntry == null) {
+		if (!Objects.equals(mode, Constants.EDIT)) {
 			return false;
 		}
 
-		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
-
-		if (((assetRenderer == null) ||
-			 !assetRenderer.hasEditPermission(
-				 themeDisplay.getPermissionChecker())) &&
-			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE)) {
-
-			return false;
-		}
-
-		return true;
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.asset.display)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

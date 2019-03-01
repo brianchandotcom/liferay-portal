@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.layout.admin.constants.LayoutAdminPortletKeys" %><%@
-page import="com.liferay.layout.admin.web.internal.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %><%@
+page import="com.liferay.layout.admin.web.internal.product.navigation.control.menu.CustomizationSettingsProductNavigationControlMenuEntry" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@

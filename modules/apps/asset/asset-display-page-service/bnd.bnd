@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.asset.display.page.service
 Bundle-Version: 2.1.0
 Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
+-dsannotations-options: inherit

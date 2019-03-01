@@ -1983,8 +1983,6 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "File Upload");
 
-		MenuItem.viewPresent(menuItem = "Online Training");
-
 		MenuItem.viewPresent(menuItem = "Sales Presentation");
 
 		SelectFrameTop();

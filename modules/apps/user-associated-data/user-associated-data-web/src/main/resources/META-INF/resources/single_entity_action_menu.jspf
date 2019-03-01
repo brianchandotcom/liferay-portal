@@ -40,9 +40,17 @@
 		<portlet:param name='<%= "primaryKey__" + uadEntity.getTypeClass().getSimpleName() %>' value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
+	<%
+	String anonymizeSingleMessage = "are-you-sure-you-want-to-anonymize-this-entity";
+
+	if (!uadEntity.isUserOwned()) {
+		anonymizeSingleMessage = "you-are-anonymizing-all-inner-items-of-the-current-user";
+	}
+	%>
+
 	<liferay-ui:icon
 		message="anonymize"
-		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, anonymizeSingleMessage) + "')" %>'
 		url="javascript:;"
 	/>
 
@@ -50,9 +58,17 @@
 		<portlet:param name='<%= "primaryKey__" + uadEntity.getTypeClass().getSimpleName() %>' value="<%= String.valueOf(uadEntity.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
+	<%
+	String deleteSingleMessage = "are-you-sure-you-want-to-delete-this-entity";
+
+	if (!uadEntity.isUserOwned()) {
+		deleteSingleMessage = "you-are-deleting-all-inner-items-of-the-current-user";
+	}
+	%>
+
 	<liferay-ui:icon
 		message="delete"
-		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+		onClick='<%= liferayPortletResponse.getNamespace() + "confirmAction('viewUADEntitiesFm', '" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, deleteSingleMessage) + "')" %>'
 		url="javascript:;"
 	/>
 </liferay-ui:icon-menu>

@@ -152,17 +152,34 @@ if (uadHierarchyDisplay != null) {
 </aui:form>
 
 <aui:script>
+
+	<%
+	String anonymizeMultipleMessage = "are-you-sure-you-want-to-anonymize-the-selected-items";
+
+	if (viewUADEntitiesDisplay.isHierarchy()) {
+		anonymizeMultipleMessage = "you-are-anonymizing-all-selected-items-of-the-current-user";
+	}
+	%>
+
 	function <portlet:namespace/>doAnonymizeMultiple() {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/anonymize_uad_entities" />',
-			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected-items" />'
+			'<liferay-ui:message key="<%= anonymizeMultipleMessage %>" />'
 		);
 	}
+
+	<%
+	String deleteMultipleMessage = "are-you-sure-you-want-to-delete-the-selected-items";
+
+	if (viewUADEntitiesDisplay.isHierarchy()) {
+		deleteMultipleMessage = "you-are-deleting-all-selected-items-of-the-current-user";
+	}
+	%>
 
 	function <portlet:namespace/>doDeleteMultiple() {
 		<portlet:namespace />doMultiple(
 			'<portlet:actionURL name="/delete_uad_entities" />',
-			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-items" />'
+			'<liferay-ui:message key="<%= deleteMultipleMessage %>" />'
 		);
 	}
 

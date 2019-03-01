@@ -1482,11 +1482,10 @@ public class CTJournalArticleLocalServiceWrapper
 					ddmStructure.getStructureId());
 
 			ddmStructureVersionCTEntryOptional.ifPresent(
-				ddmStructureVersionCTEntry ->
-					_ctManager.addRelatedCTEntry(
-						PrincipalThreadLocal.getUserId(),
-						journalArticleCTEntryOptional.get(),
-						ddmStructureVersionCTEntry, force));
+				ddmStructureVersionCTEntry -> _ctManager.addRelatedCTEntry(
+					PrincipalThreadLocal.getUserId(),
+					journalArticleCTEntryOptional.get(),
+					ddmStructureVersionCTEntry, force));
 		}
 
 		DDMTemplate ddmTemplate = journalArticle.getDDMTemplate();
@@ -1498,11 +1497,10 @@ public class CTJournalArticleLocalServiceWrapper
 					ddmTemplate.getTemplateId());
 
 			ddmTemplateVersionCTEntryOptional.ifPresent(
-				ddmTemplateVersionCTEntry ->
-					_ctManager.addRelatedCTEntry(
-						PrincipalThreadLocal.getUserId(),
-						journalArticleCTEntryOptional.get(),
-						ddmTemplateVersionCTEntry, force));
+				ddmTemplateVersionCTEntry -> _ctManager.addRelatedCTEntry(
+					PrincipalThreadLocal.getUserId(),
+					journalArticleCTEntryOptional.get(),
+					ddmTemplateVersionCTEntry, force));
 		}
 	}
 

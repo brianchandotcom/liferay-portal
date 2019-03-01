@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GOOGLE_DOCS_MENU_ITEM</td>
-	<td>//li[11]/a[contains(.,'Google Docs')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG</td>
 	<td>//span//span[contains(.,'${key_tagName}')]</td>
 	<td></td>

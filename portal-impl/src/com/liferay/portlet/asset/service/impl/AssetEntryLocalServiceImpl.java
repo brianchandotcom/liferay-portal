@@ -480,6 +480,24 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
+		long companyId, long[] groupIds, long userId, long[] classNameIds,
+		long classTypeId, String keywords, boolean showNonindexable,
+		int[] statuses, int start, int end, Sort sort) {
+
+		try {
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupIds, userId, classTypeId, keywords, null, null,
+				showNonindexable, statuses, false, start, end, sort);
+
+			return doSearch(classNameIds, searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public Hits search(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, boolean showNonindexable, int status,
 		int start, int end) {
@@ -603,6 +621,25 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			companyId, groupIds, userId, className, 0, userName, title,
 			description, assetCategoryIds, assetTagNames, status, andSearch,
 			start, end);
+	}
+
+	@Override
+	public long searchCount(
+		long companyId, long[] groupIds, long userId, long[] classNameIds,
+		long classTypeId, String keywords, boolean showNonindexable,
+		int[] statuses) {
+
+		try {
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupIds, userId, classTypeId, keywords, null, null,
+				showNonindexable, statuses, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			return doSearchCount(classNameIds, searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	@Override
@@ -1201,13 +1238,21 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			long companyId, String className, SearchContext searchContext)
 		throws Exception {
 
+		long[] classNameIds = getClassNameIds(companyId, className);
+
+		return doSearch(classNameIds, searchContext);
+	}
+
+	protected Hits doSearch(long[] classNameIds, SearchContext searchContext)
+		throws Exception {
+
 		Indexer<?> indexer = AssetSearcher.getInstance();
 
 		AssetSearcher assetSearcher = (AssetSearcher)indexer;
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		assetEntryQuery.setClassNameIds(getClassNameIds(companyId, className));
+		assetEntryQuery.setClassNameIds(classNameIds);
 
 		_setAssetCategoryIds(
 			searchContext.getAssetCategoryIds(), searchContext.isAndSearch(),
@@ -1230,13 +1275,22 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			long companyId, String className, SearchContext searchContext)
 		throws Exception {
 
+		long[] classNameIds = getClassNameIds(companyId, className);
+
+		return doSearchCount(classNameIds, searchContext);
+	}
+
+	protected long doSearchCount(
+			long[] classNameIds, SearchContext searchContext)
+		throws Exception {
+
 		Indexer<?> indexer = AssetSearcher.getInstance();
 
 		AssetSearcher assetSearcher = (AssetSearcher)indexer;
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		assetEntryQuery.setClassNameIds(getClassNameIds(companyId, className));
+		assetEntryQuery.setClassNameIds(classNameIds);
 
 		_setAssetCategoryIds(
 			searchContext.getAssetCategoryIds(), searchContext.isAndSearch(),

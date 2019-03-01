@@ -250,6 +250,20 @@ public class MetadataManagerImpl
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException {
 
+		Credential encryptionCredential = null;
+
+		try {
+			encryptionCredential = getEncryptionCredential();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Could not retrieve encrytion credential: " +
+						e.getMessage(),
+					e);
+			}
+		}
+
 		try {
 			String portalURL = _portal.getPortalURL(request, isSSLRequired());
 
@@ -257,13 +271,13 @@ public class MetadataManagerImpl
 				return MetadataGeneratorUtil.buildIdpEntityDescriptor(
 					portalURL, getLocalEntityId(), isWantAuthnRequestSigned(),
 					isSignMetadata(), getSigningCredential(),
-					getEncryptionCredential());
+					encryptionCredential);
 			}
 			else if (_samlProviderConfigurationHelper.isRoleSp()) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
 					portalURL, getLocalEntityId(), isSignAuthnRequest(),
 					isSignMetadata(), isWantAssertionsSigned(),
-					getSigningCredential(), getEncryptionCredential());
+					getSigningCredential(), encryptionCredential);
 			}
 
 			return null;

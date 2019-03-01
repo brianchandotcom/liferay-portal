@@ -328,13 +328,6 @@ definition {
 		);
 
 		DMFolder.configureWorkflowCP(
-			dmDocumentTypeName = "Marketing Banner",
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Specific Restrictions"
-		);
-
-		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder Name",
 			workflowDefinition = "No Workflow",
 			workflowRestriction = "Default Workflow"

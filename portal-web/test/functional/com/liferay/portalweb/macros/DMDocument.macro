@@ -62,51 +62,6 @@ definition {
 		}
 	}
 
-	macro addDMMarketingBannerCP {
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Marketing Banner");
-
-		UploadCommonFile(locator1 = "TextInput#FILE", value1 = "${dmDocumentFile}");
-
-		PortletEntry.inputTitle(title = "${dmDocumentTitle}");
-
-		PortletEntry.inputDescription(description = "${dmDocumentDescription}");
-
-		Select(
-			locator1 = "DocumentsAndMediaEditMarketingBanner#MARKETING_SELECT",
-			value1 = "${marketingSelect}"
-		);
-
-		Select(
-			locator1 = "DocumentsAndMediaEditMarketingBanner#CAMPAIGN_THEME_SELECT",
-			value1 = "${campaignTheme}"
-		);
-
-		Select(
-			locator1 = "DocumentsAndMediaEditMarketingBanner#BUSINESS_GOAL_SELECT",
-			value1 = "${businessGoal}"
-		);
-
-		Click(
-			locator1 = "DocumentsAndMediaEditMarketingBanner#NEEDS_LEGAL_REVIEW_${legalReview}_RADIO"
-		);
-
-		Type(
-			locator1 = "DocumentsAndMediaEditMarketingBanner#BANNER_NAME_FIELD",
-			value1 = "${bannerName}"
-		);
-
-		Type(
-			locator1 = "DocumentsAndMediaEditMarketingBanner#BANNER_DESCRIPTION_FIELD",
-			value1 = "${bannerDescription}"
-		);
-
-		PortletEntry.publish();
-	}
-
 	macro addDMShortcutCP {
 		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "Shortcut");
 
@@ -2027,8 +1982,6 @@ definition {
 		MenuItem.viewPresent(menuItem = "Multiple Files Upload");
 
 		MenuItem.viewPresent(menuItem = "File Upload");
-
-		MenuItem.viewPresent(menuItem = "Marketing Banner");
 
 		MenuItem.viewPresent(menuItem = "Online Training");
 

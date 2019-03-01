@@ -1244,67 +1244,6 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title");
 	}
 
-	@priority = "3"
-	test StagingRemoteDocumentSubtypeViaAP {
-		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property test.name.skip.portal.instance = "Staging#StagingRemoteDocumentSubtypeViaAP";
-
-		Staging.remoteStagingSetUp(siteName = "Site Name");
-
-		ProductMenu.gotoSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
-
-		DMDocument.addDMMarketingBannerCP(
-			bannerDescription = "Banner Description",
-			bannerName = "Banner Name",
-			businessGoal = "Customer Service",
-			campaignTheme = "Making a Difference",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			legalReview = "YES",
-			marketingSelect = "Company Philosophy"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		AssetPublisherPortlet.configureAssetTypePG(
-			assetSubtype = "Marketing Banner",
-			selectedAsset = "Document"
-		);
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Remote Site");
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "DM Document Description",
-			assetTitle = "DM Document Title"
-		);
-
-		DMDocument.viewDMMarketingBannerPG(
-			assetTitle = "DM Document Title",
-			bannerDescription = "Banner Description",
-			bannerName = "Banner Name",
-			campaignTheme = "Making a Difference",
-			legalReview = "Yes",
-			marketingSelect = "Company Philosophy"
-		);
-	}
-
 	@description = "This is a use case for LPS-72478."
 	@priority = "5"
 	test StagingRemoteLivePolls {

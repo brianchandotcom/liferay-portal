@@ -1069,14 +1069,6 @@ definition {
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		AssetPublisherPortlet.viewFilterAndFieldsPG(
-			assetSubtype = "Marketing Banner",
-			assetSubtypeFields = "Select,Campaign Theme,Business Goal,Needs Legal Review,Banner Name",
-			selectedAsset = "Document"
-		);
-
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-		AssetPublisherPortlet.viewFilterAndFieldsPG(
 			assetSubtype = "Online Training",
 			assetSubtypeFields = "Product,Version,Topics,Level,Lesson Title,Author",
 			selectedAsset = "Document"

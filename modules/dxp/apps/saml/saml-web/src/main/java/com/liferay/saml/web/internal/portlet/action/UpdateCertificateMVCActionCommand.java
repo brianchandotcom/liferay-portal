@@ -83,6 +83,14 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "/admin/updateCertificate");
 	}
 
+	protected void deleteCertificate(ActionRequest actionRequest)
+		throws Exception {
+
+		_localEntityManager.deleteLocalEntityCertificate(
+			CertificateUsage.valueOf(
+				ParamUtil.getString(actionRequest, "certificateUsage")));
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -95,6 +103,9 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("replace")) {
 			replaceCertificate(actionRequest);
+		}
+		else if (cmd.equals("delete")) {
+			deleteCertificate(actionRequest);
 		}
 	}
 

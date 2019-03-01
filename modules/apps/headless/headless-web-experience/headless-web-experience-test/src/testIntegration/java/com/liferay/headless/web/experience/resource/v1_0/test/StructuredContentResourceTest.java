@@ -43,13 +43,11 @@ import java.util.Objects;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class StructuredContentResourceTest
 	extends BaseStructuredContentResourceTestCase {
@@ -169,15 +167,11 @@ public class StructuredContentResourceTest
 	@Override
 	protected StructuredContent
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
-				Long contentStructureId, StructuredContent structuredContent)
+				Long contentSpaceId, StructuredContent structuredContent)
 		throws Exception {
 
-		// TODO This is wrong, but that is because the implementation of
-		// StructuredContentResourceImpl#getContentSpaceStructuredContentsPage
-		// is wrong
-
 		return invokePostContentSpaceStructuredContent(
-			contentStructureId, structuredContent);
+			contentSpaceId, structuredContent);
 	}
 
 	@Override
@@ -185,11 +179,7 @@ public class StructuredContentResourceTest
 			testGetContentStructureStructuredContentsPage_getContentStructureId()
 		throws Exception {
 
-		// TODO This is wrong, but that is because the implementation of
-		// StructuredContentResourceImpl#getContentSpaceStructuredContentsPage
-		// is wrong
-
-		return testGroup.getGroupId();
+		return _ddmStructure.getStructureId();
 	}
 
 	@Override

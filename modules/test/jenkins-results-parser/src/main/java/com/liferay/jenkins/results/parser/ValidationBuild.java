@@ -355,6 +355,8 @@ public class ValidationBuild extends BaseBuild {
 		return testSummaryElement;
 	}
 
+	// Skip JavaParser
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new RebaseFailureMessageGenerator(),

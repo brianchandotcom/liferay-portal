@@ -1503,6 +1503,8 @@ public class TopLevelBuild extends BaseBuild {
 	private static final long _DOWNSTREAM_BUILDS_LISTING_INTERVAL =
 		1000 * 60 * 5;
 
+	// Skip JavaParser
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new CompileFailureMessageGenerator(),

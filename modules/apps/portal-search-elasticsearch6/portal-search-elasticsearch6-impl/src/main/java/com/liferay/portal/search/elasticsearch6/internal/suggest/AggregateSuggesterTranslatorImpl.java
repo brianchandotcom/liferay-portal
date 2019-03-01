@@ -53,6 +53,8 @@ public class AggregateSuggesterTranslatorImpl
 			for (Map.Entry<String, SuggestionBuilder<?>> suggestionBuilder :
 					suggestionBuilders.entrySet()) {
 
+				// Skip JavaParser, will fix
+
 				suggestionBuilder.getValue(
 				).text(
 					null

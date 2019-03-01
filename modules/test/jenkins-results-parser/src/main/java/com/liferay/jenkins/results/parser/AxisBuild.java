@@ -488,6 +488,8 @@ public class AxisBuild extends BaseBuild {
 
 	protected String axisVariable;
 
+	// Skip JavaParser
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new ModulesCompilationFailureMessageGenerator(),

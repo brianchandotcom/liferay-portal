@@ -7202,12 +7202,9 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
 cluster.link.autodetect.address=
 
 cluster.link.enabled=true
-
-dl.store.impl=com.liferay.portal.store.db.DBStore
 
 web.server.display.node=true</echo>
 			</then>

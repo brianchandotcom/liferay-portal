@@ -152,6 +152,8 @@ public class LayoutIndexerIndexedFieldsTest {
 
 		Map<String, String> map = new HashMap<>();
 
+		map.put(Field.CLASS_NAME_ID, String.valueOf(layout.getClassNameId()));
+		map.put(Field.CLASS_PK, String.valueOf(layout.getClassPK()));
 		map.put(Field.COMPANY_ID, String.valueOf(layout.getCompanyId()));
 		map.put(Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		map.put(Field.ENTRY_CLASS_NAME, Layout.class.getName());

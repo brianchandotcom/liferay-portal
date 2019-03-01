@@ -14,12 +14,15 @@
 
 package com.liferay.change.tracking.configuration;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * @author Máté Thurzó
  */
 public interface CTConfigurationRegistry {
+
+	public List<CTConfiguration<?, ?>> getAllCTConfigurations();
 
 	public Optional<CTConfiguration<?, ?>>
 		getCTConfigurationOptionalByResourceClass(Class<?> clazz);

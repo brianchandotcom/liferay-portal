@@ -216,14 +216,17 @@ public class GraphQLOpenAPIParser {
 
 		sb.append("@GraphQLName(\"");
 
-		String parameterType = javaMethodParameter.getParameterType();
+		String name = javaMethodParameter.getParameterType();
 
-		if (parameterType.lastIndexOf('.') != -1) {
-			parameterType = parameterType.substring(
-				parameterType.lastIndexOf(".") + 1);
+		if (name.startsWith("[")) {
+			name = OpenAPIParserUtil.getElementClassName(name) + "[]";
 		}
 
-		sb.append(parameterType);
+		if (name.lastIndexOf('.') != -1) {
+			name = name.substring(name.lastIndexOf(".") + 1);
+		}
+
+		sb.append(name);
 
 		sb.append("\")");
 

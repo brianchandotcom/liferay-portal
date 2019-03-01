@@ -25,16 +25,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ${schemaName} {
 
 	<#list freeMarkerTool.getDTOJavaMethodParameters(configYAML, openAPIYAML, schema) as javaMethodParameter>
-		public ${javaMethodParameter.parameterType} get${javaMethodParameter.parameterName?cap_first}() {
+		<#assign javaDataType = javaMethodParameter.parameterType />
+
+		<#if stringUtil.equals(javaDataType, "[Z")>
+			<#assign javaDataType = "boolean[]" />
+		<#elseif stringUtil.equals(javaDataType, "[D")>
+			<#assign javaDataType = "double[]" />
+		<#elseif stringUtil.equals(javaDataType, "[F")>
+			<#assign javaDataType = "float[]" />
+		<#elseif stringUtil.equals(javaDataType, "[I")>
+			<#assign javaDataType = "int[]" />
+		<#elseif stringUtil.equals(javaDataType, "[J")>
+			<#assign javaDataType = "long[]" />
+		<#elseif javaDataType?starts_with("[L")>
+			<#assign javaDataType = javaDataType[2..(javaDataType?length - 2)] + "[]" />
+		</#if>
+
+		public ${javaDataType} get${javaMethodParameter.parameterName?cap_first}() {
 			return ${javaMethodParameter.parameterName};
 		}
 
-		public void set${javaMethodParameter.parameterName?cap_first}(${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}) {
+		public void set${javaMethodParameter.parameterName?cap_first}(${javaDataType} ${javaMethodParameter.parameterName}) {
 			this.${javaMethodParameter.parameterName} = ${javaMethodParameter.parameterName};
 		}
 
 		@JsonIgnore
-		public void set${javaMethodParameter.parameterName?cap_first}(UnsafeSupplier<${javaMethodParameter.parameterType}, Exception> ${javaMethodParameter.parameterName}UnsafeSupplier) {
+		public void set${javaMethodParameter.parameterName?cap_first}(UnsafeSupplier<${javaDataType}, Exception> ${javaMethodParameter.parameterName}UnsafeSupplier) {
 			try {
 				${javaMethodParameter.parameterName} = ${javaMethodParameter.parameterName}UnsafeSupplier.get();
 			}
@@ -45,7 +61,7 @@ public class ${schemaName} {
 
 		@GraphQLField
 		@JsonProperty
-		protected ${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName};
+		protected ${javaDataType} ${javaMethodParameter.parameterName};
 	</#list>
 
 	public String toString() {
@@ -60,7 +76,7 @@ public class ${schemaName} {
 
 			sb.append("\"${javaMethodParameter.parameterName}\": ");
 
-			<#if stringUtil.equals(javaMethodParameter.parameterType, "Date") || stringUtil.equals(javaMethodParameter.parameterType, "String") || javaMethodParameter.parameterType?contains("[]")>
+			<#if javaMethodParameter.parameterType?ends_with("Date") || javaMethodParameter.parameterType?ends_with("String") || javaMethodParameter.parameterType?starts_with("[")>
 				sb.append("\"");
 				sb.append(${javaMethodParameter.parameterName});
 				sb.append("\"");

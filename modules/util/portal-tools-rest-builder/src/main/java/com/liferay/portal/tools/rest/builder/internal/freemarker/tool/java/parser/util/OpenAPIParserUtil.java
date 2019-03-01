@@ -232,7 +232,15 @@ public class OpenAPIParserUtil {
 			sb.append(' ');
 		}
 
-		sb.append(javaMethodParameter.getParameterType());
+		String parameterType = javaMethodParameter.getParameterType();
+
+		if (parameterType.startsWith("[")) {
+			sb.append(getElementClassName(parameterType) + "[]");
+		}
+		else {
+			sb.append(parameterType);
+		}
+
 		sb.append(' ');
 		sb.append(javaMethodParameter.getParameterName());
 

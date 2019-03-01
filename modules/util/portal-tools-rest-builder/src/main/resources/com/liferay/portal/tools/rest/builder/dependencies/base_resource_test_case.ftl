@@ -411,7 +411,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 			</#if>
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?matches(schemaName)>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
@@ -516,7 +516,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), Boolean.class);
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), new TypeReference<Page<${schemaName}>>() {});
-			<#elseif stringUtil.equals(javaMethodSignature.returnType, "String")>
+			<#elseif javaMethodSignature.returnType?ends_with("String")>
 				return HttpUtil.URLtoString(options);
 			<#else>
 				return _outputObjectMapper.readValue(HttpUtil.URLtoString(options), ${javaMethodSignature.returnType}.class);

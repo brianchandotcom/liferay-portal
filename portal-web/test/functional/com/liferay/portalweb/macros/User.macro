@@ -697,7 +697,7 @@ definition {
 
 		UserNavigator.gotoRoles();
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_SELECT_LINK",
 			value1 = "Select"
 		);
@@ -1359,7 +1359,7 @@ definition {
 
 		var key_siteName = "${siteName}";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#SITES_SELECT_LINK",
 			value1 = "SELECT"
 		);

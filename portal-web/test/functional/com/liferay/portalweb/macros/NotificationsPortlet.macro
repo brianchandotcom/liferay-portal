@@ -4,7 +4,7 @@ definition {
 		var key_panel = "${contentType}";
 
 		if (IsElementPresent(locator1 = "Panel#PANEL_COLLAPSED")) {
-			AssertClick.assertTextClickCaseInsensitive(
+			AssertClick(
 				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 				value1 = "${contentType}"
 			);
@@ -87,7 +87,7 @@ definition {
 
 		var key_contentType = "Bookmarks";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Bookmarks"
 		);
@@ -114,7 +114,7 @@ definition {
 
 		var key_contentType = "Comments";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Comments"
 		);
@@ -141,7 +141,7 @@ definition {
 
 		var key_contentType = "Documents and Media";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Documents and Media"
 		);
@@ -170,7 +170,7 @@ definition {
 
 		var key_contentType = "Mentions";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Mentions"
 		);
@@ -192,7 +192,7 @@ definition {
 
 		var key_contentType = "Message Boards";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Message Boards"
 		);
@@ -221,7 +221,7 @@ definition {
 
 		var key_contentType = "Web Content";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Web Content"
 		);
@@ -270,7 +270,7 @@ definition {
 
 		var key_contentType = "Wiki";
 
-		AssertClick.assertTextClickCaseInsensitive(
+		AssertClick(
 			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
 			value1 = "Wiki"
 		);

@@ -1061,7 +1061,7 @@ definition {
 			var key_tagName = "${tagName}";
 			var tagName = StringUtil.upperCase("${tagName}");
 
-			AssertClick.assertTextClickCaseInsensitive(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
+			AssertClick(locator1 = "BlogsEntry#TAG", value1 = "${tagName}");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "BlogsEntry#TAG_FILTER_TITLE",

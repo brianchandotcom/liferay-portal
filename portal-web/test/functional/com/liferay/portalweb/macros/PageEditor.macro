@@ -72,7 +72,7 @@ definition {
 		);
 
 		if (IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED", key_collectionName = "${collectionName}")) {
-			AssertClick.assertTextClickCaseInsensitive(
+			AssertClick(
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED",
 				value1 = "${collectionName}",
 				key_collectionName = "${collectionName}"

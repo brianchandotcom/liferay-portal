@@ -73,8 +73,8 @@ public class IfClauseWhitespace {
 		}
 
 		while ((testString != null) &&
-			   (StringUtil.count("hello", "world") !=
-				   StringUtil.count("hello", "w"))) {
+			   (StringUtil.count("hello", "world") != StringUtil.count(
+				   "hello", "w"))) {
 
 			testString = testString + "test";
 		}

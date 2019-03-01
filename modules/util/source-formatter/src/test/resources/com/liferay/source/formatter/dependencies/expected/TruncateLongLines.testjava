@@ -119,8 +119,8 @@ public class TruncateLongLines
 
 		if (StringUtil.isLowerCase(testString1) ||
 			(Validator.isNotNull(testString1) &&
-			 (StringUtil.toLowerCase(testString1) !=
-				 StringUtil.toLowerCase(testString2)))) {
+			 (StringUtil.toLowerCase(testString1) != StringUtil.toLowerCase(
+				 testString2)))) {
 
 			return;
 		}

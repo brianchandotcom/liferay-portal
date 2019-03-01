@@ -14,21 +14,17 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryService;
@@ -40,7 +36,6 @@ import com.liferay.sharing.web.internal.util.SharingUtil;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -101,19 +96,19 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
-				_getSharingEntryUserObjectValuePairs(
-					_sharingEntryService.getSharingEntries(
-						classNameId, classPK));
-
 			JSONArray collaboratorsJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
-			for (ObjectValuePair<SharingEntry, User> sharingEntryToUserOVP :
-					sharingEntryToUserOVPs) {
+			for (SharingEntry sharingEntry :
+					_sharingEntryService.getSharingEntries(
+						classNameId, classPK)) {
 
-				SharingEntry sharingEntry = sharingEntryToUserOVP.getKey();
-				User sharingEntryToUser = sharingEntryToUserOVP.getValue();
+				User sharingEntryToUser = _userLocalService.fetchUser(
+					sharingEntry.getToUserId());
+
+				if (sharingEntryToUser == null) {
+					continue;
+				}
 
 				JSONObject collaboratorJSONObject =
 					JSONFactoryUtil.createJSONObject();
@@ -231,41 +226,12 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		return sharingEntryPermissionDisplaySelectOptionsJSONArray;
 	}
 
-	private List<ObjectValuePair<SharingEntry, User>>
-		_getSharingEntryUserObjectValuePairs(
-			List<SharingEntry> fromUserSharingEntries) {
-
-		List<ObjectValuePair<SharingEntry, User>> sharingEntryToUserOVPs =
-			new ArrayList<>();
-
-		for (SharingEntry sharingEntry : fromUserSharingEntries) {
-			User toUser = _userLocalService.fetchUser(
-				sharingEntry.getToUserId());
-
-			if (toUser != null) {
-				sharingEntryToUserOVPs.add(
-					new ObjectValuePair<>(sharingEntry, toUser));
-			}
-		}
-
-		return sharingEntryToUserOVPs;
-	}
-
 	private String _getSpritemap(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SharingEntryService _sharingEntryService;

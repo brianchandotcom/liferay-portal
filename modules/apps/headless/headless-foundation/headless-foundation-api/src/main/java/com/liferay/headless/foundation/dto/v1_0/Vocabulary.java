@@ -38,6 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Vocabulary")
 public class Vocabulary {
 
+	public AssetType[] getAssetTypes() {
+		return assetTypes;
+	}
+
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -72,6 +76,22 @@ public class Vocabulary {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setAssetTypes(AssetType[] assetTypes) {
+		this.assetTypes = assetTypes;
+	}
+
+	@JsonIgnore
+	public void setAssetTypes(
+		UnsafeSupplier<AssetType[], Exception> assetTypesUnsafeSupplier) {
+
+		try {
+			assetTypes = assetTypesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
@@ -215,11 +235,14 @@ public class Vocabulary {
 	}
 
 	public String toString() {
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("{");
 
-		sb.append("availableLanguages=");
+		sb.append("assetTypes=");
+
+		sb.append(assetTypes);
+		sb.append(", availableLanguages=");
 
 		sb.append(availableLanguages);
 		sb.append(", contentSpace=");
@@ -251,6 +274,10 @@ public class Vocabulary {
 
 		return sb.toString();
 	}
+
+	@GraphQLField
+	@JsonProperty
+	protected AssetType[] assetTypes;
 
 	@GraphQLField
 	@JsonProperty

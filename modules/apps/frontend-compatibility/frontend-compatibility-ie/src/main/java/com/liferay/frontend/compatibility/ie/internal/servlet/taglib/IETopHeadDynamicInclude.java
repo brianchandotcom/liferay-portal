@@ -28,7 +28,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -55,8 +58,8 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 					"<script data-senna-track=\"permanent\" src=\"");
 
 				printWriter.print(
-					absolutePortalURLBuilder.forResource(
-						"/o/frontend-compatibility-ie/" + fileName
+					absolutePortalURLBuilder.forModule(
+						_bundleContext.getBundle(), fileName
 					).build());
 
 				printWriter.println("\" type=\"text/javascript\"></script>");
@@ -70,10 +73,19 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
+	@Activate
+	@Modified
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	private static final String[] _FILE_NAMES = {
-		"array.fill.js", "array.find.js", "array.from.js", "array.includes.js",
-		"fetch.js", "formdata.js", "object.assign.js", "object.entries.js",
-		"object.values.js", "string.endswith.js", "url.search.params.js"
+		"/array.fill.js", "/array.find.js", "/array.from.js", "/fetch.js",
+		"/formdata.js", "/object.assign.js", "/object.entries.js",
+		"/array.fill.js", "/array.find.js", "/array.from.js",
+		"/array.includes.js", "/fetch.js", "/formdata.js", "/object.assign.js",
+		"/object.entries.js", "/object.values.js", "/string.endswith.js",
+		"/url.search.params.js"
 	};
 
 	@Reference
@@ -81,6 +93,8 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private BrowserSniffer _browserSniffer;
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private Portal _portal;

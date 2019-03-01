@@ -1066,14 +1066,6 @@ definition {
 			assetTitle = "Web Content5 Title"
 		);
 
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-		AssetPublisherPortlet.viewFilterAndFieldsPG(
-			assetSubtype = "Sales Presentation",
-			assetSubtypeFields = "Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name",
-			selectedAsset = "Document"
-		);
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

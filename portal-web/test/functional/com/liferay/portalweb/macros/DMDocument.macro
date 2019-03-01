@@ -1983,8 +1983,6 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "File Upload");
 
-		MenuItem.viewPresent(menuItem = "Sales Presentation");
-
 		SelectFrameTop();
 
 		var key_dmDocumentTitle = "Document_1.jpeg";

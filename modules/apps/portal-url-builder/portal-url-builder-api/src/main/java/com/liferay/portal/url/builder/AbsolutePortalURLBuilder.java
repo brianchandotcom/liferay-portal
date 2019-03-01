@@ -16,6 +16,8 @@ package com.liferay.portal.url.builder;
 
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 
+import org.osgi.framework.Bundle;
+
 /**
  * Provides a builder for constructing absolute URLs pointing to portal
  * resources.
@@ -47,9 +49,23 @@ public interface AbsolutePortalURLBuilder {
 	 * Returns URLs for module resources. Module resources live in {@link
 	 * com.liferay.portal.kernel.util.Portal#getPathModule()}.
 	 *
+	 * @param bundle the bundle that contains the resource
+	 * @param  relativeURL the resource's relative URL
+	 * @return
+	 * @review
+	 */
+	public ModuleAbsolutePortalURLBuilder forModule(
+		Bundle bundle, String relativeURL);
+
+	/**
+	 * Returns URLs for module resources. Module resources live in {@link
+	 * com.liferay.portal.kernel.util.Portal#getPathModule()}.
+	 *
 	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns module resource URLs
+	 * @deprecated As of Mueller (7.2.x), use {@link AbsolutePortalURLBuilder#forModule(Bundle, String)}
 	 */
+	@Deprecated
 	public ModuleAbsolutePortalURLBuilder forModule(String relativeURL);
 
 	/**

@@ -291,6 +291,32 @@ String navigation = ParamUtil.getString(request, "navigation");
 			Liferay.on('changeScope', changeScopeHandles);
 		</aui:script>
 
+		<aui:script require="document-library-web@4.0.0/document_library/categorization/EditTags.es as EditTags">
+			var namespace = '<portlet:namespace />';
+
+			var classNameId = '<%= ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName()) %>';
+			var pathModule = '<%= PortalUtil.getPathModule() %>';
+			var scopeGroupId = '<%= scopeGroupId %>';
+
+			var urlTags = pathModule + '/bulk/asset/tags/' + scopeGroupId + '/' + classNameId + '/common';
+			var urlUpdateTags = pathModule + '/bulk/asset/tags/' + classNameId;
+
+			Liferay.component(
+				'<portlet:namespace />EditTagsComponent',
+				new EditTags.default(
+					{
+						folderId: '<%= folderId %>',
+						portletNamespace: namespace,
+						repositoryId: <%= repositoryId %>,
+						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+						urlTags: urlTags,
+						urlUpdateTags: urlUpdateTags
+					},
+					'#' + namespace + 'documentLibraryModal'
+				)
+			);
+		</aui:script>
+
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />
 	</c:otherwise>
 </c:choose>

@@ -890,6 +890,83 @@ definition {
 		Page.viewNoPG(pageName = "Page 3");
 	}
 
+	@description = "This is a use case for LPS-91017."
+	@priority = "4"
+	test StagingPublishWCWithWebContentField {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description",
+			structureName = "Structure Name"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent"
+		);
+
+		WebContentStructures.saveCP(structureName = "Structure Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Structure Name",
+			templateDescription = "Template Description",
+			templateFieldNames = "Web Content",
+			templateName = "Template Name"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "WebContent",
+			webContentSelectWCFile = "WC WebContent Title",
+			webContentTitle = "WC WebContent 1 Title"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent 1 Title");
+
+		Staging.publishToLiveNowViaPortletCP();
+
+		ProductMenu.gotoLiveSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewTitle(onLive = "true", webContentTitle = "WC WebContent Title");
+
+		WebContent.viewTitle(onLive = "true", webContentTitle = "WC WebContent 1 Title");
+	}
+
 	@priority = "4"
 	test StagingWithPublishTemplateSmoke {
 		Navigator.gotoStagedSitePage(

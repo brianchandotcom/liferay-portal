@@ -83,10 +83,16 @@ public interface AbsolutePortalURLBuilder {
 
 	/**
 	 * Returns URLs for arbitrary resources. Arbitrary resources live in the
-	 * portal's root path.
+	 * portal's root path (that can be "/" or "/something" if the portal has not
+	 * been installed as the ROOT webapp).
+	 *
+	 * WARNING: Do not use this method unless none of the others serve your
+	 * purpose. Otherwise you may end up hard coding configurable paths.
 	 *
 	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns arbitrary resource URLs
+	 * @see Portal#getPathContext()
+	 * @review
 	 */
 	public ResourceAbsolutePortalURLBuilder forResource(String relativeURL);
 

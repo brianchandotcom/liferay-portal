@@ -204,6 +204,14 @@
 			<contains>SQLSTATE=42710</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-88431">
+			<contains></contains>
+			<matches>.*Unable to find class loader for com.liferay.portal.cluster.multiple_.* class loader com.liferay.portal.cluster.multiple_.*</matches>
+		</ignore-error>
+		<ignore-error description="LPS-88431">
+			<contains></contains>
+			<matches>.*Unable to find class loader for com.liferay.portal.scheduler.quartz_.* class loader com.liferay.portal.scheduler.quartz_.*</matches>
+		</ignore-error>
 		<ignore-error description="LPS-88522 - temporarily ignore until fixed">
 			<contains>already has the column lastPublishDate</contains>
 			<matches></matches>

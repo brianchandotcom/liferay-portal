@@ -247,7 +247,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					editableValueJSONObject, locale, segmentsIds);
 			}
 
-			editableElementParser.replace(element, value);
+			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
+				"config");
+
+			editableElementParser.replace(element, value, configJSONObject);
 		}
 
 		if (Objects.equals(
@@ -255,9 +258,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
 
 			for (Element element : document.select("lfr-editable")) {
-				Document elementDocument = _getDocument(element.html());
-
-				element.replaceWith(elementDocument.body());
+				element.removeAttr("type");
+				element.removeAttr("id");
+				element.tagName("div");
 			}
 		}
 

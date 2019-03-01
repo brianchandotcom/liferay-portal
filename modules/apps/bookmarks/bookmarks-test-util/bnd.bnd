@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Bookmarks Test Utilities
+Bundle-SymbolicName: com.liferay.bookmarks.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.bookmarks.test.util

@@ -125,6 +125,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -356,6 +358,17 @@ public class SiteAdminPortlet extends MVCPortlet {
 		if (SitesUtil.getMergeFailCount(layoutSetPrototype) > 0) {
 			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
 		}
+	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		resourceRequest.setAttribute(
+			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
+
+		super.serveResource(resourceRequest, resourceResponse);
 	}
 
 	@Override

@@ -365,10 +365,10 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	}
 
 	<portlet:namespace />updateRedirectURIs = function(required) {
-		var redirectURIsLabel = document.getElementById('<portlet:namespace />redirectURIs').parentNode.firstElementChild;
+		var redirectURIsNode = document.getElementById('<portlet:namespace />redirectURIs');
 
-		if (redirectURIsLabel) {
-			var lexiconIconParent = redirectURIsLabel.firstElementChild;
+		if (redirectURIsNode) {
+			var lexiconIconParent = redirectURIsNode.parentNode.firstElementChild.firstElementChild;
 
 			if (lexiconIconParent) {
 				if (required) {

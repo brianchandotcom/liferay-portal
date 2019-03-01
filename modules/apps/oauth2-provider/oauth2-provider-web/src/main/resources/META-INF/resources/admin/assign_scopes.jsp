@@ -142,7 +142,7 @@ if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() > 0) {
 					var globalAccordion = document.getElementById('<portlet:namespace />globalAccordion');
 					var modalBody = document.getElementById('<portlet:namespace />modalBody');
 
-					if (modalBody) {
+					if (globalAccordion && modalBody) {
 						dom.append(modalBody, globalAccordion);
 					}
 
@@ -201,6 +201,7 @@ if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() > 0) {
 
 						for (var i = 0; i < scopeAliases.length; i++) {
 							var scopeAliasChecked = document.querySelectorAll('input[value="' + scopeAliases[i] + '"]:checked');
+
 							logicalOR = logicalOR || scopeAliasChecked.length > 0;
 
 							if (logicalOR) {

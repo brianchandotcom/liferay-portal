@@ -16,6 +16,7 @@ package com.liferay.fragment.entry.processor.editable.parser.impl;
 
 import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import org.jsoup.Jsoup;
@@ -45,6 +46,13 @@ public class TextEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {
+		replace(element, value, null);
+	}
+
+	@Override
+	public void replace(
+		Element element, String value, JSONObject configJSONObject) {
+
 		Document document = Jsoup.parseBodyFragment(value);
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
@@ -54,6 +62,20 @@ public class TextEditableElementParser implements EditableElementParser {
 		document.outputSettings(outputSettings);
 
 		Element bodyElement = document.body();
+
+		if (configJSONObject == null) {
+			element.html(bodyElement.html());
+
+			return;
+		}
+
+		String textAlignment = configJSONObject.getString("textAlignment");
+		String textColor = configJSONObject.getString("textColor");
+		String textStyle = configJSONObject.getString("textStyle");
+
+		element.addClass("text-" + textAlignment);
+		element.addClass("text-palette-" + textColor);
+		element.addClass("text-" + textStyle);
 
 		element.html(bodyElement.html());
 	}

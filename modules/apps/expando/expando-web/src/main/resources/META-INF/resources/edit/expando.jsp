@@ -52,10 +52,15 @@ int propertyIndexType = GetterUtil.getInteger(properties.get(ExpandoColumnConsta
 boolean propertySecret = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_SECRET));
 int propertyHeight = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.PROPERTY_HEIGHT));
 int propertyWidth = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.PROPERTY_WIDTH));
+
 String propertyDisplayType = ParamUtil.getString(request, "displayType", ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_FIELD);
 
 if (column != null) {
-	propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), ExpandoColumnConstants.getDefaultDisplayTypeProperty(type, properties));
+	propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE));
+
+	if (Validator.isNull(propertyDisplayType)) {
+		propertyDisplayType = ExpandoColumnConstants.getDefaultDisplayTypeProperty(type, properties);
+	}
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

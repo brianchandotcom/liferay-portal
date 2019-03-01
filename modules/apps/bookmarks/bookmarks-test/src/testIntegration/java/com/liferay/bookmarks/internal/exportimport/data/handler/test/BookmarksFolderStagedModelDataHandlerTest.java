@@ -17,7 +17,7 @@ package com.liferay.bookmarks.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.bookmarks.test.util.BookmarksTestUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;

@@ -1,14 +1,9 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
-	compileOnly project(":apps:bookmarks:bookmarks-test")
-
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:bookmarks:bookmarks-api")
+	testIntegrationCompile project(":apps:bookmarks:bookmarks-test-util")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")

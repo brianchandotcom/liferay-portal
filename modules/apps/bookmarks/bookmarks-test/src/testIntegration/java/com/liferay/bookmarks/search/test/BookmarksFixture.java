@@ -18,7 +18,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.bookmarks.test.util.BookmarksTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

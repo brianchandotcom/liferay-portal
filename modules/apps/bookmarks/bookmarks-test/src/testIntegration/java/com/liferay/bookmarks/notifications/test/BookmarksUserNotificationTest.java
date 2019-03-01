@@ -19,7 +19,7 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.bookmarks.test.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

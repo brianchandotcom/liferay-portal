@@ -17,7 +17,7 @@ package com.liferay.bookmarks.service.permission.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.bookmarks.test.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

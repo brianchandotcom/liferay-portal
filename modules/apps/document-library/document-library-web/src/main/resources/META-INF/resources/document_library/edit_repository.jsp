@@ -183,32 +183,42 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var settingsSupported = $('#<portlet:namespace />settingsSupported');
-	var settingsParameters = $('#<portlet:namespace />settingsParameters');
+<aui:script require="metal-dom/src/dom as dom">
+	var settingsParametersContainer = document.getElementById('<portlet:namespace />settingsParameters');
+	var settingsSupported = document.getElementById('<portlet:namespace />settingsSupported');
 
-	var showConfiguration = function(select) {
-		settingsSupported.append(settingsParameters.find('.settings-parameters'));
+	function showConfiguration(select) {
+		if (settingsParametersContainer && settingsSupported) {
+			var settingsParametersElement = settingsParametersContainer.querySelector('.settings-parameters');
 
-		var className = select.val();
+			if (settingsParametersElement) {
+				dom.append(settingsSupported, settingsParametersElement);
+			}
 
-		var repositoryClassDefinitionId = className.replace(/\W/g, '-');
+			var className = select.value;
 
-		var repositoryParameters = $('#<portlet:namespace />repository-' + repositoryClassDefinitionId + '-configuration');
+			var repositoryClassDefinitionId = className.replace(/\W/g, '-');
 
-		settingsParameters.append(repositoryParameters);
+			var repositoryParameters = document.getElementById('<portlet:namespace />repository-' + repositoryClassDefinitionId + '-configuration');
+
+			if (repositoryParameters) {
+				dom.append(settingsParametersContainer, repositoryParameters);
+			}
+		}
 	};
 
-	var selectRepositoryTypes = $('#<portlet:namespace />repositoryTypes');
+	var repositoryTypesSelect = document.getElementById('<portlet:namespace />repositoryTypes');
 
-	selectRepositoryTypes.on(
-		'change',
-		function(event) {
-			showConfiguration(selectRepositoryTypes);
-		}
-	);
+	if (repositoryTypesSelect) {
+		repositoryTypesSelect.addEventListener(
+			'change',
+			function(event) {
+				showConfiguration(repositoryTypesSelect);
+			}
+		);
 
-	showConfiguration(selectRepositoryTypes);
+		showConfiguration(repositoryTypesSelect);
+	}
 </aui:script>
 
 <%

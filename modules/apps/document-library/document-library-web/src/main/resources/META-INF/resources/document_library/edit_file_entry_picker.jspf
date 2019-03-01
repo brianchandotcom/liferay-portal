@@ -41,39 +41,63 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 			var onFilePick = function(fields) {
 				var documentIconURL = fields['<%= dlFilePicker.getIconFieldName() %>'];
 
-				$('#<portlet:namespace />pickButtonIcon').attr('src', documentIconURL);
+				var pickButtonIcon = document.getElementById('<portlet:namespace />pickButtonIcon');
+
+				if (pickButtonIcon) {
+					pickButtonIcon.setAttribute('src', documentIconURL);
+				}
 
 				var documentTitle = fields['<%= dlFilePicker.getTitleFieldName() %>'];
 
-				$('#<portlet:namespace />pickButtonTitle').html(documentTitle);
+				var pickButtonTitleElement = document.getElementById('<portlet:namespace />pickButtonTitle');
 
-				$('#<portlet:namespace />title').val(documentTitle);
+				if (pickButtonTitleElement) {
+					pickButtonTitleElement.innerHTML = documentTitle;
+				}
+
+				var titleElement = document.getElementById('<portlet:namespace />title');
+
+				if (titleElement) {
+					titleElement.value = documentTitle;
+				}
 
 				var documentDescription = fields['<%= dlFilePicker.getDescriptionFieldName() %>'];
 
-				$('#<portlet:namespace />description').val(documentDescription);
+				var documentDescriptionElement = document.getElementById('<portlet:namespace />documentDescription');
 
-				$('#<portlet:namespace />fm .lfr-ddm-container .field-wrapper').each(
-					function(index, item) {
-						item = $(item);
+				if (documentDescriptionElement) {
+					documentDescriptionElement.value = documentDescription;
+				}
 
-						var fieldName = item.data('fieldname');
-						var input = item.find('input');
+				var ddmFieldWrappers = document.querySelectorAll('#<portlet:namespace />fm .lfr-ddm-container .field-wrapper');
 
-						input.val(fields[fieldName]);
+				Array.prototype.forEach.call(
+					ddmFieldWrappers,
+					function(ddmFieldWrapper) {
+						var fieldName = ddmFieldWrapper.dataset.fieldname;
+
+						var input = ddmFieldWrapper.querySelector('input');
+
+						if (input) {
+							input.value = fields[fieldName];
+						}
 					}
 				);
 			};
 
 			<%= dlFilePicker.getJavaScript() %>
 
-			var filePicker = new <%= dlFilePicker.getJavaScriptModuleName() %>(
-				function() {
-					Liferay.Util.toggleDisabled($('.customized-file-button'), false);
-				}
-			);
+			var customizedFileButton = document.getElementById('<portlet:namespace />file');
 
-			$('.customized-file-button').on('click', filePicker['<%= dlFilePicker.getOnClickCallback() %>'].bind(filePicker));
+			if (customizedFileButton) {
+				var filePicker = new <%= dlFilePicker.getJavaScriptModuleName() %>(
+					function() {
+						Liferay.Util.toggleDisabled(customizedFileButton, false);
+					}
+				);
+
+				customizedFileButton.addEventListener( 'click', filePicker['<%= dlFilePicker.getOnClickCallback() %>'].bind(filePicker));
+			}
 		</aui:script>
 	</c:otherwise>
 </c:choose>

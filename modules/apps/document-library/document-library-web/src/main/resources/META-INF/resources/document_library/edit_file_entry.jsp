@@ -291,41 +291,45 @@ if (portletTitleBasedNavigation) {
 
 							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 
-							<aui:script>
-								AUI.$('#<portlet:namespace />selectFolderButton').on(
-									'click',
-									function(event) {
-										Liferay.Util.selectEntity(
-											{
-												dialog: {
-													constrain: true,
-													destroyOnHide: true,
-													modal: true,
-													width: 680
+							<script>
+								var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
+
+								if (selectFolderButton) {
+									selectFolderButton.addEventListener(
+										'click',
+										function(event) {
+											Liferay.Util.selectEntity(
+												{
+													dialog: {
+														constrain: true,
+														destroyOnHide: true,
+														modal: true,
+														width: 680
+													},
+													id: '<portlet:namespace />selectFolder',
+													title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+													<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+														<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
+													</liferay-portlet:renderURL>
+
+													uri: '<%= selectFolderURL.toString() %>'
 												},
-												id: '<portlet:namespace />selectFolder',
-												title: '<liferay-ui:message arguments="folder" key="select-x" />',
+												function(event) {
+													var folderData = {
+														idString: 'folderId',
+														idValue: event.folderid,
+														nameString: 'folderName',
+														nameValue: event.foldername
+													};
 
-												<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-													<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
-												</liferay-portlet:renderURL>
-
-												uri: '<%= selectFolderURL.toString() %>'
-											},
-											function(event) {
-												var folderData = {
-													idString: 'folderId',
-													idValue: event.folderid,
-													nameString: 'folderName',
-													nameValue: event.foldername
-												};
-
-												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-											}
-										);
-									}
-								);
-							</aui:script>
+													Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+												}
+											);
+										}
+									);
+								}
+							</script>
 						</c:if>
 					</div>
 
@@ -431,7 +435,7 @@ if (portletTitleBasedNavigation) {
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
 						<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
 
-						<div id="<portlet:namespace />versionDetails" style="<%= updateVersionDetails ? StringPool.BLANK : "display: none" %>">
+						<div class="<%= updateVersionDetails ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />versionDetails">
 							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR %>" label="major-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MAJOR %>" />
 
 							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MINOR %>" label="minor-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
@@ -540,23 +544,38 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<aui:script>
+<script>
+	var form = document.<portlet:namespace />fm;
+
 	function <portlet:namespace />changeFileEntryType() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
-
-		submitForm(form);
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.PREVIEW %>'
+				}
+			}
+		);
 	}
 
 	function <portlet:namespace />cancelCheckOut() {
-		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CANCEL_CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.CANCEL_CHECKOUT %>'
+				}
+			}
+		);
 	}
 
 	function <portlet:namespace />checkIn() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE_AND_CHECKIN %>');
+		Liferay.Util.setFormValues(
+			form,
+			{
+				'<%= Constants.CMD %>': '<%= Constants.UPDATE_AND_CHECKIN %>'
+			}
+		)
 
 		if (<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>) {
 			<portlet:namespace />showVersionDetailsDialog(form);
@@ -567,27 +586,37 @@ if (portletTitleBasedNavigation) {
 	}
 
 	function <portlet:namespace />checkOut() {
-		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
+		Liferay.Util.postForm(
+			form,
+			{
+				data: {
+					'<%= Constants.CMD %>': '<%= Constants.CHECKOUT %>'
+				}
+			}
+		);
 	}
 
 	function <portlet:namespace />saveFileEntry(draft) {
-		var $ = AUI.$;
+		var fileElement = Liferay.Util.getFormElement(form, 'file');
 
-		var form = $(document.<portlet:namespace />fm);
-
-		var fileValue = form.fm('file').val();
-
-		if (fileValue) {
+		if (fileElement && fileElement.value) {
 			<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 		}
 
-		form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
+		var data = {
+			'<%= Constants.CMD %>': '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>'
+		};
 
 		if (draft) {
-			form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+			data.workflowAction = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 		}
 
-		submitForm(form);
+		Liferay.Util.postForm(
+			form,
+			{
+				data: data
+			}
+		);
 	}
 
 	Liferay.provide(
@@ -600,17 +629,26 @@ if (portletTitleBasedNavigation) {
 				{
 					label: '<liferay-ui:message key="save" />',
 					callback: function(event) {
-						var $ = AUI.$;
+						var data = {};
 
-						var versionIncreaseNode = $('input:radio[name="<portlet:namespace />versionDetailsVersionIncrease"]:checked');
+						var versionIncreaseNode = document.querySelector('input[name="<portlet:namespace />versionDetailsVersionIncrease"]:checked');
 
-						form.fm('versionIncrease').val(versionIncreaseNode.val());
+						if (versionIncreaseNode) {
+							data.versionIncrease = versionIncreaseNode.value;
+						}
 
-						var changeLogNode = $('#<portlet:namespace />versionDetailsChangeLog');
+						var changeLogElement = document.getElementById('<portlet:namespace />versionDetailsChangeLog');
 
-						form.fm('changeLog').val(changeLogNode.val());
+						if (changeLogElement) {
+							data.changeLog = changeLogElement.value;
+						}
 
-						submitForm(form);
+						Liferay.Util.postForm(
+							form,
+							{
+								data: data
+							}
+						);
 					}
 				},
 				'<liferay-ui:message key="cancel" />'
@@ -620,32 +658,35 @@ if (portletTitleBasedNavigation) {
 	);
 
 	function <portlet:namespace />updateTitle() {
-		var title = $('#<portlet:namespace />title').val();
+		var titleElement = document.getElementById('<portlet:namespace />title');
 
-		if (!title) {
-			var filePath = $('#<portlet:namespace />file').val();
+		if (titleElement && !titleElement.value) {
+			var fileElement = document.getElementById('<portlet:namespace />file');
 
-			var fileName = filePath.replace(/^.*[\\\/]/, '');
-
-			$('#<portlet:namespace />title').val(fileName);
+			if (fileElement && fileElement.value) {
+				titleElement.value = fileElement.value.replace(/^.*[\\\/]/, '');
+			}
 		}
 
-		<portlet:namespace />validateTitle();
-	}
+		var formComponent = Liferay.Form.get('<portlet:namespace />fm');
 
-	function <portlet:namespace />validateTitle() {
-		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
+		formComponent.formValidator.validateField('<portlet:namespace />title');
 	}
-</aui:script>
+</script>
 
 <c:if test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
-	<aui:script use="aui-base">
-		$('#<portlet:namespace />updateVersionDetails').on(
-			'click',
-			function(event) {
-				$('#<portlet:namespace />versionDetails').toggle();
-			}
-		);
+	<aui:script require="metal-dom/src/dom as dom">
+		var updateVersionDetailsElement = document.getElementById('<portlet:namespace />updateVersionDetails');
+		var versionDetailsElement = document.getElementById('<portlet:namespace />versionDetails');
+
+		if (updateVersionDetailsElement && versionDetailsElement) {
+			updateVersionDetailsElement.addEventListener(
+				'click',
+				function(event) {
+					dom.toggleClasses(versionDetailsElement, 'hide');
+				}
+			);
+		}
 	</aui:script>
 </c:if>
 

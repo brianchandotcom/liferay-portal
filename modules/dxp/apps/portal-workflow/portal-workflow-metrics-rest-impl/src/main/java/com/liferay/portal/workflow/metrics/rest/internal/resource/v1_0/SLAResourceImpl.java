@@ -50,8 +50,9 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 	@Override
 	public SLA getProcessSla(Long processId, Long slaId) throws Exception {
-		return _toSLA(_workflowMetricsSLADefinitionLocalService.
-			getWorkflowMetricsSLADefinition(slaId));
+		return _toSLA(
+			_workflowMetricsSLADefinitionLocalService.
+				getWorkflowMetricsSLADefinition(slaId));
 	}
 
 	@Override
@@ -72,11 +73,12 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 	@Override
 	public SLA postProcessSlas(Long processId, SLA sla) throws Exception {
-		return _toSLA(_workflowMetricsSLADefinitionLocalService.
-			addWorkflowMetricsSLADefinition(
-				sla.getName(), sla.getDescription(), sla.getDuration(),
-				processId, sla.getStartNodeNames(), sla.getPauseNodeNames(),
-				sla.getStopNodeNames(), _createServiceContext()));
+		return _toSLA(
+			_workflowMetricsSLADefinitionLocalService.
+				addWorkflowMetricsSLADefinition(
+					sla.getName(), sla.getDescription(), sla.getDuration(),
+					processId, sla.getStartNodeNames(), sla.getPauseNodeNames(),
+					sla.getStopNodeNames(), _createServiceContext()));
 	}
 
 	@Override

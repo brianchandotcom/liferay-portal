@@ -1085,7 +1085,6 @@ public class SharepointWSRepository
 							ExtRepositoryObjectType.OBJECT,
 							SharepointConnection.ObjectTypeFilter.ALL);
 					}
-
 				};
 
 	private ConnectionCache<SharepointConnection> _connectionCache;

@@ -314,7 +314,6 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			}
 
 			ps2.executeBatch();
-
 		}
 	}
 

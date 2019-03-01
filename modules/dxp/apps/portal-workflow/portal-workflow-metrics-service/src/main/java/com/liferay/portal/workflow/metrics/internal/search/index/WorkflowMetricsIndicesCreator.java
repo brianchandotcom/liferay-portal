@@ -65,9 +65,7 @@ public class WorkflowMetricsIndicesCreator {
 			createIndexRequest.setSource(
 				JSONUtil.put(
 					"mappings",
-					JSONUtil.put(
-						indexType, jsonObject.getJSONObject(indexType)
-					)
+					JSONUtil.put(indexType, jsonObject.getJSONObject(indexType))
 				).toString());
 
 			_searchEngineAdapter.execute(createIndexRequest);

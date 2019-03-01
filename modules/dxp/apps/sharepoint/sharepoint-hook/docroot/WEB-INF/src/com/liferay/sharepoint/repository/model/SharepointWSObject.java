@@ -128,7 +128,6 @@ public abstract class SharepointWSObject
 						ExtRepositoryPermission.VIEW,
 						SharepointObject.Permission.VIEW_LIST_ITEMS);
 				}
-
 			};
 
 	private static final Set<ExtRepositoryPermission>

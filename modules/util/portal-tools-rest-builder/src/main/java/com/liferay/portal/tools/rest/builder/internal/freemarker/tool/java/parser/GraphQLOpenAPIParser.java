@@ -121,11 +121,10 @@ public class GraphQLOpenAPIParser {
 
 			if (Objects.equals(parameterType, Pagination.class.getName())) {
 				javaMethodParameters.add(
-					new JavaMethodParameter(
-						"pageSize", Integer.class.getName()));
+					new JavaMethodParameter("pageSize", int.class.getName()));
 
 				javaMethodParameters.add(
-					new JavaMethodParameter("page", Integer.class.getName()));
+					new JavaMethodParameter("page", int.class.getName()));
 			}
 			else {
 				javaMethodParameters.add(javaMethodParameter);

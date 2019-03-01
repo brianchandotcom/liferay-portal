@@ -35,31 +35,22 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				<aui:input disabled="<%= true %>" label="" name="ddmTemplateName" value='<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "none") %>' wrapperCssClass="input-group-item mb-0" />
 
 				<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-					<liferay-ui:icon
-						cssClass="btn btn-default btn-sm input-group-item input-group-item-shrink pt-2"
+					<clay:button
+						elementClasses="ml-1 mr-1"
 						icon="pencil"
-						id="editDDMTemplate"
-						markupView="lexicon"
-						url="javascript:;"
+						id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
+						size="sm"
+						style="secondary"
 					/>
 				</c:if>
 
 				<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
-					<portlet:renderURL var="previewArticleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
-						<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-						<portlet:param name="articleId" value="<%= String.valueOf(article.getArticleId()) %>" />
-						<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						cssClass="btn btn-default btn-sm input-group-item input-group-item-shrink pt-2"
+					<clay:button
+						elementClasses="ml-1 mr-1"
 						icon="view"
-						id="previewWithTemplate"
-						markupView="lexicon"
-						message="preview"
-						url="<%= previewArticleURL %>"
-						useDialog="<%= true %>"
+						id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
+						size="sm"
+						style="secondary"
 					/>
 				</c:if>
 			</div>
@@ -72,6 +63,30 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 </c:if>
 
 <aui:script>
+	<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
+		var previewWithTemplate = document.getElementById('<portlet:namespace />previewWithTemplate');
+
+		if (previewWithTemplate) {
+			previewWithTemplate.addEventListener(
+				'click',
+				function(event) {
+					Liferay.Util.openWindow(
+						{
+							dialog: {
+								destroyOnHide: true
+							},
+							dialogIframe: {
+								bodyCssClass: 'dialog-with-footer'
+							},
+							title: '<liferay-ui:message key="preview" />',
+							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/preview_article_content.jsp" /><portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" /><portlet:param name="articleId" value="<%= String.valueOf(article.getArticleId()) %>" /><portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" /></portlet:renderURL>'
+						}
+					);
+				}
+			);
+		}
+	</c:if>
+
 	var selectDDMTemplateButton = document.getElementById('<portlet:namespace />selectDDMTemplate');
 
 	if (selectDDMTemplateButton) {

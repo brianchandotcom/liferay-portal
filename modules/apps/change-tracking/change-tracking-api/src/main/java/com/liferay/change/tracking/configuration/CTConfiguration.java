@@ -16,15 +16,18 @@ package com.liferay.change.tracking.configuration;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.BaseModel;
+
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.function.Function;
 
 /**
  * @author Máté Thurzó
  */
 @ProviderType
-public interface CTConfiguration<T, U> {
+public interface CTConfiguration<T extends BaseModel, U extends BaseModel> {
 
 	/**
 	 * Returns the content type human readable text for this configuration. It
@@ -46,6 +49,15 @@ public interface CTConfiguration<T, U> {
 	 * @review
 	 */
 	public String getContentTypeLanguageKey();
+
+	/**
+	 * Returns the function from the configuration that retrieves the list of
+	 * resources entities from a given company.
+	 *
+	 * @return The function from the configuration that retrieves the list of
+	 *         resources entities from a given company.
+	 */
+	public Function<Long, List<T>> getResourceEntitiesByCompanyIdFunction();
 
 	/**
 	 * Returns the function from the configuration that retrieves the resource
@@ -82,6 +94,15 @@ public interface CTConfiguration<T, U> {
 	 */
 	public Function<U, Serializable>
 		getResourceEntityIdFromVersionEntityFunction();
+
+	/**
+	 * Returns the function from the configuration that retrieves the list of
+	 * version entities for a given resource entity.
+	 *
+	 * @return The function from the configuration that retrieves the list of
+	 *         version entities for a given resource entity.
+	 */
+	public Function<T, List<U>> getVersionEntitiesFromResourceEntityFunction();
 
 	/**
 	 * Returns an array of the allowed workflow statuses for the version entity

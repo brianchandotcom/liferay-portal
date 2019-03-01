@@ -17,20 +17,22 @@ package com.liferay.change.tracking.internal.configuration;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.change.tracking.internal.configuration.builder.CTConfigurationBuilderImpl;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.function.Function;
 
 /**
  * @author Máté Thurzó
  */
 @ProviderType
-public class CTConfigurationImpl<T, U>
+public class CTConfigurationImpl<T extends BaseModel, U extends BaseModel>
 	implements CTConfigurationBuilderImpl.CTConfigurationExtended<T, U> {
 
 	public CTConfigurationImpl() {
-		_resouceEntityInformation = new EntityInformation<>();
+		_resourceEntityInformation = new EntityInformation<>();
 		_versionEntityInformation = new EntityInformation<>();
 	}
 
@@ -45,20 +47,25 @@ public class CTConfigurationImpl<T, U>
 	}
 
 	@Override
+	public Function<Long, List<T>> getResourceEntitiesByCompanyIdFunction() {
+		return _resourceEntitiesByCompanyIdFunction;
+	}
+
+	@Override
 	public Function<Long, T> getResourceEntityByResourceEntityIdFunction() {
-		return _resouceEntityInformation.getEntityFunction();
+		return _resourceEntityInformation.getEntityFunction();
 	}
 
 	@Override
 	public Class<T> getResourceEntityClass() {
-		return _resouceEntityInformation.getEntityClass();
+		return _resourceEntityInformation.getEntityClass();
 	}
 
 	@Override
 	public Function<T, Serializable>
 		getResourceEntityIdFromResourceEntityFunction() {
 
-		return _resouceEntityInformation.getResourceIdFunction();
+		return _resourceEntityInformation.getResourceIdFunction();
 	}
 
 	@Override
@@ -66,6 +73,11 @@ public class CTConfigurationImpl<T, U>
 		getResourceEntityIdFromVersionEntityFunction() {
 
 		return _versionEntityInformation.getResourceIdFunction();
+	}
+
+	@Override
+	public Function<T, List<U>> getVersionEntitiesFromResourceEntityFunction() {
+		return _versionEntitiesFromResourceEntityFunction;
 	}
 
 	@Override
@@ -87,7 +99,7 @@ public class CTConfigurationImpl<T, U>
 	public Function<T, Serializable>
 		getVersionEntityIdFromResourceEntityFunction() {
 
-		return _resouceEntityInformation.getVersionIdFunction();
+		return _resourceEntityInformation.getVersionIdFunction();
 	}
 
 	@Override
@@ -128,23 +140,31 @@ public class CTConfigurationImpl<T, U>
 	}
 
 	@Override
+	public void setResourceEntitiesByCompanyIdFunction(
+		Function<Long, List<T>> resourceEntitiesByCompanyIdFunction) {
+
+		_resourceEntitiesByCompanyIdFunction =
+			resourceEntitiesByCompanyIdFunction;
+	}
+
+	@Override
 	public void setResourceEntityByResourceEntityIdFunction(
 		Function<Long, T> resourceEntityByResourceEntityIdFunction) {
 
-		_resouceEntityInformation.setEntityFunction(
+		_resourceEntityInformation.setEntityFunction(
 			resourceEntityByResourceEntityIdFunction);
 	}
 
 	@Override
 	public void setResourceEntityClass(Class<T> resourceEntityClass) {
-		_resouceEntityInformation.setEntityClass(resourceEntityClass);
+		_resourceEntityInformation.setEntityClass(resourceEntityClass);
 	}
 
 	@Override
 	public void setResourceEntityIdFromResourceEntityFunction(
 		Function<T, Serializable> resourceEntityIdFromResourceEntityFunction) {
 
-		_resouceEntityInformation.setResourceEntityIdFunction(
+		_resourceEntityInformation.setResourceEntityIdFunction(
 			resourceEntityIdFromResourceEntityFunction);
 	}
 
@@ -154,6 +174,14 @@ public class CTConfigurationImpl<T, U>
 
 		_versionEntityInformation.setResourceEntityIdFunction(
 			resourceEntityIdFromVersionEntityFunction);
+	}
+
+	@Override
+	public void setVersionEntitiesFromResourceEntityFunction(
+		Function<T, List<U>> versionEntitiesFromResourceEntityFunction) {
+
+		_versionEntitiesFromResourceEntityFunction =
+			versionEntitiesFromResourceEntityFunction;
 	}
 
 	@Override
@@ -178,7 +206,7 @@ public class CTConfigurationImpl<T, U>
 	public void setVersionEntityIdFromResourceEntityFunction(
 		Function<T, Serializable> versionEntityIdFromResourceEntityFunction) {
 
-		_resouceEntityInformation.setVersionEntityIdFunction(
+		_resourceEntityInformation.setVersionEntityIdFunction(
 			versionEntityIdFromResourceEntityFunction);
 	}
 
@@ -224,7 +252,9 @@ public class CTConfigurationImpl<T, U>
 
 	private String _contentType;
 	private String _contentTypeLanguageKey;
-	private final EntityInformation<T> _resouceEntityInformation;
+	private Function<Long, List<T>> _resourceEntitiesByCompanyIdFunction;
+	private final EntityInformation<T> _resourceEntityInformation;
+	private Function<T, List<U>> _versionEntitiesFromResourceEntityFunction;
 	private final EntityInformation<U> _versionEntityInformation;
 
 	private static class EntityInformation<T> {

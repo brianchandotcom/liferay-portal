@@ -188,20 +188,20 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 								%>
 
 								<c:if test="<%= lastPostDate != null %>">
-									<h5 class="text-default">
+									<span class="text-default">
 										<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true)} %>" key="last-post-x-ago" />
-									</h5>
+									</span>
 								</c:if>
 
-								<h4>
+								<h2 class="h5">
 									<aui:a href="<%= rowURL.toString() %>">
 										<%= HtmlUtil.escape(node.getName()) %>
 									</aui:a>
-								</h4>
+								</h2>
 
-								<h5 class="text-default">
+								<span class="text-default">
 									<liferay-ui:message arguments="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>" key="x-pages" />
-								</h5>
+								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp

@@ -211,7 +211,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 								%>
 
-								<h5 class="text-default">
+								<span class="text-default">
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(curPage.getUserName()) %>">
 											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curPage.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
@@ -220,17 +220,17 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 											<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
 										</c:otherwise>
 									</c:choose>
-								</h5>
+								</span>
 
-								<h4>
+								<h2 class="h5">
 									<aui:a href="<%= rowURL.toString() %>">
 										<%= curPage.getTitle() %>
 									</aui:a>
-								</h4>
+								</h2>
 
-								<h5 class="text-default">
+								<span class="text-default">
 									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
-								</h5>
+								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp

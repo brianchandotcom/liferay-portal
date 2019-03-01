@@ -117,21 +117,6 @@ public class AssetDisplayPageEntryModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.display.page.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.asset.display.page.model.AssetDisplayPageEntry"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.display.page.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.asset.display.page.model.AssetDisplayPageEntry"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.asset.display.page.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.asset.display.page.model.AssetDisplayPageEntry"),
-		true);
-
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
@@ -146,9 +131,13 @@ public class AssetDisplayPageEntryModelImpl
 
 	public static final long ASSETDISPLAYPAGEENTRYID_COLUMN_BITMASK = 64L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.asset.display.page.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.asset.display.page.model.AssetDisplayPageEntry"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public AssetDisplayPageEntryModelImpl() {
 	}
@@ -697,12 +686,12 @@ public class AssetDisplayPageEntryModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -876,6 +865,8 @@ public class AssetDisplayPageEntryModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		AssetDisplayPageEntry.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private String _uuid;
 	private String _originalUuid;

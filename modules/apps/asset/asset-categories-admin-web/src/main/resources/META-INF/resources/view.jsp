@@ -71,19 +71,19 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h6 class="text-default">
+						<span class="text-default">
 							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - vocabulary.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-						</h6>
+						</span>
 
-						<h5>
+						<h2 class="h5">
 							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></aui:a>
-						</h5>
+						</h2>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>
-						</h6>
+						</span>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<strong><liferay-ui:message key="number-of-categories" /></strong>:
 
 							<c:choose>
@@ -94,11 +94,11 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 									<%= vocabulary.getCategoriesCount() %>
 								</c:otherwise>
 							</c:choose>
-						</h6>
+						</span>
 
-						<h6 class="text-default">
+						<span class="text-default">
 							<strong><liferay-ui:message key="asset-type" /></strong>: <%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>
-						</h6>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

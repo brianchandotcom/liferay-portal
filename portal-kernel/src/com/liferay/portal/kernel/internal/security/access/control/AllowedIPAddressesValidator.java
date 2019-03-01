@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.internal.security.access.control;
 
 /**
-* @author Carlos Sierra
-* @author Mariano Álvaro Sáiz
-*/
+ * @author Carlos Sierra
+ * @author Mariano Álvaro Sáiz
+ */
 public interface AllowedIPAddressesValidator {
 
 	public boolean isAllowedIPAddress(String ipAddress);

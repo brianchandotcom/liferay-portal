@@ -1090,14 +1090,6 @@ definition {
 			selectedAsset = "Document"
 		);
 
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-		AssetPublisherPortlet.viewFilterAndFieldsPG(
-			assetSubtype = "Contract",
-			assetSubtypeFields = "Effective Date,Expiration Date,Contract Type,Status,Legal Reviewer,Signing Authority,Deal Name",
-			selectedAsset = "Document"
-		);
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

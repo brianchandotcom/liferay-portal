@@ -11,80 +11,6 @@ definition {
 		);
 	}
 
-	macro addContractCP {
-		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "Contract");
-
-		if (isSet(dmContractFile)) {
-			UploadCommonFile(locator1 = "TextInput#FILE", value1 = "${dmContractFile}");
-		}
-
-		PortletEntry.inputTitle(title = "${dmContractTitle}");
-
-		if (isSet(dmContractDescription)) {
-			PortletEntry.inputDescription(description = "${dmContractDescription}");
-		}
-
-		if (isSet(effectiveDate)) {
-			Type.clickAtType(
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${effectiveDate}",
-				key_fieldLabel = "Effective Date"
-			);
-		}
-
-		if (isSet(expirationDate)) {
-			Type.clickAtType(
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${expirationDate}",
-				key_fieldLabel = "Expiration Date"
-			);
-		}
-
-		if (isSet(contractType)) {
-			Select(
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${contractType}",
-				key_fieldLabel = "Contract Type"
-			);
-		}
-
-		if (isSet(status)) {
-			Select(
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${status}",
-				key_fieldLabel = "Status"
-			);
-		}
-
-		if (isSet(dmContractLegalReviewer)) {
-			Type(
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmContractLegalReviewer}",
-				key_fieldLabel = "Legal Reviewer"
-			);
-		}
-
-		if (isSet(dmContractSigningAuthority)) {
-			Type(
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmContractSigningAuthority}",
-				key_fieldLabel = "Signing Authority"
-			);
-		}
-
-		if (isSet(dmContractDealName)) {
-			Type(
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmContractDealName}",
-				key_fieldLabel = "Deal Name"
-			);
-		}
-
-		AssertClick(locator1 = "Button#PUBLISH", value1 = "Publish");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro addCP {
 		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "${dmDocumentTypeName}");
 
@@ -2101,8 +2027,6 @@ definition {
 		MenuItem.viewPresent(menuItem = "Multiple Files Upload");
 
 		MenuItem.viewPresent(menuItem = "File Upload");
-
-		MenuItem.viewPresent(menuItem = "Contract");
 
 		MenuItem.viewPresent(menuItem = "Marketing Banner");
 

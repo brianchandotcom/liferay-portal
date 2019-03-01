@@ -1458,46 +1458,6 @@ definition {
 		DMDocumentType.viewNoAvailableActionsViaDocumentTypesPG();
 	}
 
-	@description = "This is a use case for LPS-53009"
-	@priority = "5"
-	test ViewDateFieldRequiredInContract {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldRequiredEdit = "Effective Date",
-			dmDocumentTypeName = "Contract"
-		);
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldRequiredEdit = "Expiration Date",
-			dmDocumentTypeName = "Contract"
-		);
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
-
-		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "Contract");
-
-		AssertElementPresent(
-			locator1 = "Icon#ASTERISK_DATE_FIELD",
-			key_fieldFieldLabel = "Effective Date"
-		);
-
-		AssertElementPresent(
-			locator1 = "Icon#ASTERISK_DATE_FIELD",
-			key_fieldFieldLabel = "Expiration Date"
-		);
-	}
-
 	@priority = "5"
 	test ViewDocumentWithGlobalScope {
 		property testray.component.names = "Training";

@@ -26,46 +26,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-42515"
-	@priority = "4"
-	test AddContract {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
-
-		DMDocument.addContractCP(
-			contractType = "NDA",
-			dmContractDealName = "DM Contract Deal Name",
-			dmContractDescription = "DM Contract Description",
-			dmContractFile = "Document_1.pdf",
-			dmContractLegalReviewer = "DM Contract Legal Reviewer",
-			dmContractSigningAuthority = "DM Contract Signing Authority",
-			dmContractTitle = "DM Contract Title",
-			effectiveDate = "06/01/2017",
-			expirationDate = "06/15/2017",
-			status = "Draft"
-		);
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Contract Title");
-
-		DMDocument.viewDocumentTypePG(
-			dateValue = "6/1/17",
-			documentType = "Contract",
-			selectOption = "NDA",
-			textContent = "DM Contract Legal Reviewer"
-		);
-
-		DMDocument.viewDocumentTypePG(
-			dateValue = "6/15/17",
-			selectOption = "Draft",
-			textContent = "DM Contract Signing Authority"
-		);
-
-		DMDocument.viewDocumentTypePG(textContent = "DM Contract Deal Name");
-	}
-
 	@description = "This is a use case for LPS-82073."
 	@priority = "5"
 	test AddShortcutToSiteDocument {

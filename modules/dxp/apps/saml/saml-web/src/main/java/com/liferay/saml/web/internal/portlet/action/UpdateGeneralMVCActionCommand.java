@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
@@ -92,9 +91,6 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.setRenderParameter("mvcRenderCommandName", "/admin");
 		actionResponse.setRenderParameter("tabs1", "general");
 	}
-
-	@Reference(name = "KeyStoreManager", target = "(default=true)")
-	private KeyStoreManager _keyStoreManager;
 
 	@Reference
 	private LocalEntityManager _localEntityManager;

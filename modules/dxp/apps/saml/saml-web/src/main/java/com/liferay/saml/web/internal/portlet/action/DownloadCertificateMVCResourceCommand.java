@@ -15,10 +15,12 @@
 package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
@@ -48,25 +50,28 @@ public class DownloadCertificateMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		LocalEntityManager.CertificateUsage certificateUsage =
+			LocalEntityManager.CertificateUsage.valueOf(
+				ParamUtil.getString(resourceRequest, "certificateUsage"));
+
 		String encodedCertificate =
-			_localEntityManager.getEncodedLocalEntityCertificate();
+			_localEntityManager.getEncodedLocalEntityCertificate(
+				certificateUsage);
 
 		if (Validator.isNull(encodedCertificate)) {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("-----BEGIN CERTIFICATE-----\r\n");
-		sb.append(encodedCertificate);
-		sb.append("\r\n-----END CERTIFICATE-----");
-
-		String content = sb.toString();
+		String content = StringBundler.concat(
+			"-----BEGIN CERTIFICATE-----\r\n", encodedCertificate,
+			"\r\n-----END CERTIFICATE-----");
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse,
-			_localEntityManager.getLocalEntityId() + ".pem", content.getBytes(),
-			ContentTypes.TEXT_PLAIN);
+			StringBundler.concat(
+				_localEntityManager.getLocalEntityId(), StringPool.DASH,
+				certificateUsage.name(), ".pem"),
+			content.getBytes(), ContentTypes.TEXT_PLAIN);
 	}
 
 	@Reference

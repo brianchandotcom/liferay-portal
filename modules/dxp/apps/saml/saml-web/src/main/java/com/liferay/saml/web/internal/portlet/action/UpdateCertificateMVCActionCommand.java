@@ -25,15 +25,14 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.runtime.certificate.CertificateEntityId;
 import com.liferay.saml.runtime.certificate.CertificateTool;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.credential.KeyStoreManager;
 import com.liferay.saml.runtime.exception.CertificateKeyPasswordException;
+import com.liferay.saml.runtime.exception.UnsupportedBindingException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
+import com.liferay.saml.runtime.metadata.LocalEntityManager.CertificateUsage;
 import com.liferay.saml.util.PortletPropsKeys;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 
 import java.security.KeyPair;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
 import java.util.Calendar;
@@ -62,14 +61,22 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		CertificateUsage certificateUsage = CertificateUsage.valueOf(
+			ParamUtil.getString(actionRequest, "certificateUsage"));
+
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		_samlProviderConfigurationHelper.updateProperties(properties);
+		String certificateKeyPassword = getKeystoreCredentialPassword(
+			certificateUsage, properties);
+
+		if (Validator.isNotNull(certificateKeyPassword)) {
+			_samlProviderConfigurationHelper.updateProperties(properties);
+		}
 
 		try {
 			X509Certificate x509Certificate =
-				_localEntityManager.getLocalEntityCertificate();
+				_localEntityManager.getLocalEntityCertificate(certificateUsage);
 
 			actionRequest.setAttribute(
 				SamlWebKeys.SAML_X509_CERTIFICATE, x509Certificate);
@@ -109,14 +116,35 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected String getKeystoreCredentialPassword(
+			CertificateUsage certificateUsage, UnicodeProperties properties)
+		throws UnsupportedBindingException {
+
+		if (certificateUsage == CertificateUsage.SIGNING) {
+			return properties.getProperty(
+				PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD);
+		}
+		else if (certificateUsage == CertificateUsage.ENCRYPTION) {
+			return properties.getProperty(
+				PortletPropsKeys.SAML_KEYSTORE_ENCRYPTION_CREDENTIAL_PASSWORD);
+		}
+		else {
+			throw new UnsupportedBindingException(
+				"Unsupported certificate usage: " + certificateUsage.name());
+		}
+	}
+
 	protected void replaceCertificate(ActionRequest actionRequest)
 		throws Exception {
 
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		String certificateKeyPassword = properties.getProperty(
-			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD);
+		CertificateUsage certificateUsage = CertificateUsage.valueOf(
+			ParamUtil.getString(actionRequest, "certificateUsage"));
+
+		String certificateKeyPassword = getKeystoreCredentialPassword(
+			certificateUsage, properties);
 
 		if (Validator.isNull(certificateKeyPassword)) {
 			throw new CertificateKeyPasswordException();
@@ -173,17 +201,9 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			startDate.getTime(), endDate.getTime(),
 			_SHA1_PREFIX + keyAlgorithm);
 
-		KeyStore.PrivateKeyEntry privateKeyEntry = new KeyStore.PrivateKeyEntry(
-			keyPair.getPrivate(), new Certificate[] {x509Certificate});
-
-		KeyStore keyStore = _keyStoreManager.getKeyStore();
-
-		keyStore.setEntry(
-			_localEntityManager.getLocalEntityId(), privateKeyEntry,
-			new KeyStore.PasswordProtection(
-				certificateKeyPassword.toCharArray()));
-
-		_keyStoreManager.saveKeyStore(keyStore);
+		_localEntityManager.storeLocalEntityCertificate(
+			keyPair.getPrivate(), certificateKeyPassword, x509Certificate,
+			certificateUsage);
 
 		_samlProviderConfigurationHelper.updateProperties(properties);
 
@@ -195,9 +215,6 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CertificateTool _certificateTool;
-
-	@Reference(name = "KeyStoreManager", target = "(default=true)")
-	private KeyStoreManager _keyStoreManager;
 
 	@Reference
 	private LocalEntityManager _localEntityManager;

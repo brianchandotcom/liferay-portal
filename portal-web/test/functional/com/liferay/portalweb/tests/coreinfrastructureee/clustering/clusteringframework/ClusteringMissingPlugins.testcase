@@ -28,7 +28,7 @@ definition {
 
 	@priority = "3"
 	test CacheBootstrapLoader {
-		property custom.properties = "ehcache.bootstrap.cache.loader.enabled=false${line.separator}ehcache.bootstrap.cache.loader.properties.test.cache=bootstrapAsynchronously=false";
+		property custom.properties = "ehcache.bootstrap.cache.loader.enabled=true${line.separator}ehcache.bootstrap.cache.loader.properties.test.cache=bootstrapAsynchronously=false";
 		property test.name.skip.portal.instance = "ClusteringMissingPlugins#CacheBootstrapLoader";
 
 		Clustering.viewClusterStatusInConsole();
@@ -96,7 +96,7 @@ definition {
 
 	@priority = "4"
 	test CacheReplicationbyCopy {
-		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true";
+		property custom.properties = "ehcache.bootstrap.cache.loader.enabled=false${line.separator}ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true";
 		property test.name.skip.portal.instance = "ClusteringMissingPlugins#CacheReplicationbyCopy";
 
 		Clustering.viewClusterStatusInConsole();

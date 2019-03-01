@@ -18,8 +18,6 @@ class EditTags extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this._getCommonTags();
-
 		this._bulkStatusComponent =	Liferay.component(this.portletNamespace + 'BulkStatus');
 	}
 
@@ -27,7 +25,7 @@ class EditTags extends Component {
 	 * Close the modal.
 	 */
 	close() {
-		this.refs.modal.visible = false;
+		this.showModal = false;
 	}
 
 	/**
@@ -42,7 +40,7 @@ class EditTags extends Component {
 	 * commont tags.
 	 */
 	open() {
-		this.refs.modal.visible = true;
+		this.showModal = true;
 		this._getCommonTags();
 	}
 
@@ -239,7 +237,7 @@ EditTags.STATE = {
 	 * @review
 	 * @type {List<String>}
 	 */
-	fileEntries: Config.array().required(),
+	fileEntries: Config.array(),
 
 	/**
 	 * Folder Id
@@ -309,6 +307,17 @@ EditTags.STATE = {
 	 * @type {Boolean}
 	 */
 	selectAll: Config.bool(),
+
+	/**
+	 * Flag that indicate if the modal must
+	 * be shown.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {Boolean}
+	 */
+	showModal: Config.bool().value(false).internal(),
 
 	/**
 	 * Path to images.

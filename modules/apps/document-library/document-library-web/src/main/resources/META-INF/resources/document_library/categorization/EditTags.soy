@@ -5,46 +5,49 @@
 	{@param groupIds: list<?>}
 	{@param loading: bool}
 	{@param portletNamespace: string}
+	{@param showModal: bool}
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSaveBtnClick: any}
 
-	{call liferay.frontend.Modal.render}
-		{param body kind="html"}
-			{if $loading}
-				{call .loading /}
-			{else}
-				{call .tags}
-					{param commonTags: $commonTags /}
-					{param groupIds: $groupIds /}
-					{param description: $description /}
-					{param multiple: $multiple /}
-					{param portletNamespace: $portletNamespace /}
-					{param spritemap: $spritemap /}
-					{param _handleRadioChange: $_handleRadioChange /}
-				{/call}
-			{/if}
-		{/param}
+	{if $showModal}
+		{call liferay.frontend.Modal.render}
+			{param body kind="html"}
+				{if $loading}
+					{call .loading /}
+				{else}
+					{call .tags}
+						{param commonTags: $commonTags /}
+						{param groupIds: $groupIds /}
+						{param description: $description /}
+						{param multiple: $multiple /}
+						{param portletNamespace: $portletNamespace /}
+						{param spritemap: $spritemap /}
+						{param _handleRadioChange: $_handleRadioChange /}
+					{/call}
+				{/if}
+			{/param}
 
-		{param dialogClasses: 'edit-tags modal-dialog-sm' /}
+			{param dialogClasses: 'edit-tags modal-dialog-sm' /}
 
-		{param header kind="html"}
-			{msg desc=""}edit-tags{/msg}
-		{/param}
+			{param header kind="html"}
+				{msg desc=""}edit-tags{/msg}
+			{/param}
 
-		{param footer kind="html"}
-			<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
-			<button class="btn btn-primary" data-onclick="{$_handleSaveBtnClick}" type="button">{msg desc=""}save{/msg}</button>
-		{/param}
+			{param footer kind="html"}
+				<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
+				<button class="btn btn-primary" data-onclick="{$_handleSaveBtnClick}" type="button">{msg desc=""}save{/msg}</button>
+			{/param}
 
-		{param ref: 'modal' /}
+			{param ref: 'modal' /}
 
-		{param spritemap: $spritemap /}
+			{param spritemap: $spritemap /}
 
-		{param visible: true /}
-	{/call}
+			{param visible: true /}
+		{/call}
+	{/if}
 {/template}
 
 {template .loading}

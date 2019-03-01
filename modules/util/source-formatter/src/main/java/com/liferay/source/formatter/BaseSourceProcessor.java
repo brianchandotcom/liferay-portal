@@ -301,8 +301,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		return format(file, fileName, absolutePath, content, content);
+	}
+
+	protected File format(
+			File file, String fileName, String absolutePath, String content,
+			String originalContent)
+		throws Exception {
+
 		Set<String> modifiedContents = new HashSet<>();
+
 		Set<String> modifiedMessages = new TreeSet<>();
+
+		if ((this instanceof JavaSourceProcessor) &&
+			!content.equals(originalContent)) {
+
+			modifiedMessages.add(file.toString() + " (JavaParser)");
+
+			if (_sourceFormatterArgs.isShowDebugInformation()) {
+				DebugUtil.printContentModifications(
+					"JavaParser", fileName, originalContent, content);
+			}
+		}
 
 		String newContent = format(
 			file, fileName, absolutePath, content, content,
@@ -310,7 +330,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			0);
 
 		return processFormattedFile(
-			file, fileName, content, newContent, modifiedMessages);
+			file, fileName, originalContent, newContent, modifiedMessages);
 	}
 
 	protected String format(

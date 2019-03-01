@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 
@@ -66,7 +67,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		file = super.format(file, fileName, absolutePath, content);
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		file = format(
+			file, fileName, absolutePath,
+			JavaParser.parse(
+				file, content, sourceFormatterArgs.getMaxLineLength(), false),
+			content);
 
 		_processCheckstyle(file);
 

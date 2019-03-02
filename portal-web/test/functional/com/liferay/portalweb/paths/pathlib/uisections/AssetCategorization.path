@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>TAGS_FIELD</td>
-	<td>//div[contains(@class,'tag-group')]/input[@class='form-control-inset']</td>
+	<td>//div[contains(@id,'assetTagsSelector')]//input[@class='form-control-inset']</td>
 	<td></td>
 </tr>
 <tr>

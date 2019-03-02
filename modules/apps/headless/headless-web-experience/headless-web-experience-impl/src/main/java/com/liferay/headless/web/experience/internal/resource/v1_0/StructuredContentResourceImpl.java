@@ -399,12 +399,6 @@ public class StructuredContentResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (sorts == null) {
-			sorts = new Sort[] {
-				new Sort(Field.CLASS_PK, Sort.LONG_TYPE, false)
-			};
-		}
-
 		return SearchUtil.search(
 			booleanQuery -> {
 				if (contentStructureId != null) {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -54,13 +55,11 @@ public class SearchUtil {
 			Sort[] sorts)
 		throws Exception {
 
-		// TODO
-
-		/*if (sorts == null) {
-			throw new IllegalArgumentException(
-				"A sort array is required to ensure search results are " +
-					"predictable");
-		}*/
+		if (sorts == null) {
+			sorts = new Sort[] {
+				new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false)
+			};
+		}
 
 		List<T> items = new ArrayList<>();
 

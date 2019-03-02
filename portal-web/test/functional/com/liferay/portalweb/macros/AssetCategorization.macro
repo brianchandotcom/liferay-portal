@@ -16,13 +16,16 @@ definition {
 	}
 
 	macro addCategory {
-		AssertClick(
-			locator1 = "AssetCategorization#CATEGORY_SELECT",
-			value1 = "Select",
+		Type.sendKeys(
+			locator1 = "AssetCategorization#CATEGORIES_FIELD",
+			value1 = "${categoryName}",
 			key_vocabularyName = "${vocabularyName}"
 		);
 
-		AssetCategorization.selectCategory(categoryName = "${categoryName}");
+		Click(
+			locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC",
+			key_categoryName = "${categoryName}"
+		);
 
 		AssertTextEquals(
 			locator1 = "AssetCategorization#CATEGORY",
@@ -41,21 +44,12 @@ definition {
 	}
 
 	macro addMultipleCategories {
-		AssertClick(
-			locator1 = "AssetCategorization#CATEGORY_SELECT",
-			value1 = "Select",
-			key_vocabularyName = "${vocabularyName}"
-		);
-
-		AssetCategorization.gotoSelectCategory();
-
 		for (var categoryName : list "${categoryNameList}") {
-			Portlet.selectTreeNode(nodeName = "${categoryName}");
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}"
+			);
 		}
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertClick(locator1 = "Button#ADD", value1 = "Add");
 	}
 
 	macro addTag {

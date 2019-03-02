@@ -16,6 +16,13 @@ package com.liferay.asset.entry.rel.service.impl;
 
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.base.AssetEntryAssetCategoryRelLocalServiceBaseImpl;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 
 import java.util.List;
 
@@ -65,11 +72,27 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 			assetEntryAssetCategoryRelPersistence.remove(
 				assetEntryAssetCategoryRel);
 		}
+
+		_reindex(assetEntryLocalService.fetchEntry(assetEntryId));
 	}
 
 	@Override
 	public void deleteAssetEntryAssetCategoryRelByAssetCategoryId(
 		long assetCategoryId) {
+
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			assetEntryAssetCategoryRelPersistence.findByAssetCategoryId(
+				assetCategoryId);
+
+		assetEntryAssetCategoryRels.forEach(
+			assetEntryAssetCategoryRel -> {
+				assetEntryAssetCategoryRelPersistence.remove(
+					assetEntryAssetCategoryRel);
+
+				_reindex(
+					assetEntryLocalService.fetchEntry(
+						assetEntryAssetCategoryRel.getAssetEntryId()));
+			});
 
 		assetEntryAssetCategoryRelPersistence.removeByAssetCategoryId(
 			assetCategoryId);
@@ -81,6 +104,8 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 		assetEntryAssetCategoryRelPersistence.removeByAssetEntryId(
 			assetEntryId);
+
+		_reindex(assetEntryLocalService.fetchEntry(assetEntryId));
 	}
 
 	@Override
@@ -112,5 +137,30 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 		return assetEntryAssetCategoryRelPersistence.countByAssetEntryId(
 			assetEntryId);
 	}
+
+	private void _reindex(AssetEntry assetEntry) {
+		if (assetEntry == null) {
+			return;
+		}
+
+		try {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				assetEntry.getClassName());
+
+			if (indexer == null) {
+				return;
+			}
+
+			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
+			indexer.reindex(assetRenderer.getAssetObject());
+		}
+		catch (SearchException se) {
+			_log.error("Unable to reindex asset entry", se);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntryAssetCategoryRelLocalServiceImpl.class);
 
 }

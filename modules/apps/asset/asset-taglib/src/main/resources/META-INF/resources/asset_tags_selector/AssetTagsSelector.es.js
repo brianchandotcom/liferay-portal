@@ -6,10 +6,10 @@ import Soy from 'metal-soy';
 import templates from './AssetTagsSelector.soy';
 
 /**
- * AssetTagSelector is a component wrapping the existing Clay's MultiSelect component
+ * AssetTagsSelector is a component wrapping the existing Clay's MultiSelect component
  * that offers the user a tag selection input
  */
-class AssetTagSelector extends Component {
+class AssetTagsSelector extends Component {
 
 	/**
 	 * @inheritDoc
@@ -139,13 +139,13 @@ class AssetTagSelector extends Component {
 	}
 }
 
-AssetTagSelector.STATE = {
+AssetTagsSelector.STATE = {
 
 	/**
 	 * Function to be called every time that change the input value
 	 * @default _handleQuery
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?func}
 	 */
@@ -155,7 +155,7 @@ AssetTagSelector.STATE = {
 	 * A function to call when a tag is added
 	 * @default undefined
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -166,7 +166,7 @@ AssetTagSelector.STATE = {
 	 * Event name which fires when user selects a display page using item selector
 	 * @default undefined
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -177,7 +177,7 @@ AssetTagSelector.STATE = {
 	 * List of groupIds where tags should be located
 	 * @default undefined
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -188,7 +188,7 @@ AssetTagSelector.STATE = {
 	 * The URL of a portlet to display the tags
 	 * @default undefined
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -199,7 +199,7 @@ AssetTagSelector.STATE = {
 	 * A function to call when a tag is removed
 	 * @default undefined
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -210,7 +210,7 @@ AssetTagSelector.STATE = {
 	 * A comma separated version of the list of selected items
 	 * @default undefined
 	 * @instance
-	 * @memberof AssetTagSelector
+	 * @memberof AssetTagsSelector
 	 * @review
 	 * @type {?string}
 	 */
@@ -218,7 +218,7 @@ AssetTagSelector.STATE = {
 	tagNames: Config.string()
 };
 
-Soy.register(AssetTagSelector, templates);
+Soy.register(AssetTagsSelector, templates);
 
-export {AssetTagSelector};
-export default AssetTagSelector;
+export {AssetTagsSelector};
+export default AssetTagsSelector;

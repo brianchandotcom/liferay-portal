@@ -701,8 +701,8 @@ definition {
 
 		var siteLARFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Public_Pages-*.lar");
 
-		SikuliUploadTempFile(
-			locator1 = "OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG",
+		UploadTempFile.uploadTempFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
 			value1 = "${siteLARFileName}"
 		);
 

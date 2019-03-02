@@ -1,0 +1,15 @@
+{
+	"asset-taglib": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/asset-taglib/$1"
+		},
+		"file-globs": "**/*.es.js,**/*.soy.js",
+		"input": "classes/META-INF/resources",
+		"output": "classes/META-INF/resources/bridge/asset-taglib",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "asset-taglib/$1"
+		}
+	}
+}

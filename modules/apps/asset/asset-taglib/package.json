@@ -11,7 +11,7 @@
 	},
 	"name": "asset-taglib",
 	"scripts": {
-		"build": "liferay-npm-scripts build --bundler --soy",
+		"build": "liferay-npm-scripts build --bridge --bundler --soy",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

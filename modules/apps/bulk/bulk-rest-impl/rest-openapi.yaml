@@ -126,7 +126,7 @@ info:
   version: v1.0
 openapi: "3.0.1"
 paths:
-  "/categories/{classNameId}":
+  "/categories/{category-class-name-id}":
     post:
       parameters:
         - in: path
@@ -148,7 +148,7 @@ paths:
                 $ref: "#/components/schemas/BulkActionResponseModel"
           description: ""
       tags: ["BulkActionResponseModel"]
-  "/categories/{groupId}/{classNameId}/common":
+  "/categories/{category-group-id}/{class-name-id}/common":
     post:
       parameters:
         - in: path
@@ -193,7 +193,7 @@ paths:
                 $ref: "#/components/schemas/BulkStatusModel"
           description: ""
       tags: ["BulkStatusModel"]
-  "/tags/{classNameId}":
+  "/tags/{tag-class-name-id}":
     post:
       parameters:
         - in: path
@@ -215,7 +215,7 @@ paths:
                 $ref: "#/components/schemas/BulkActionResponseModel"
           description: ""
       tags: ["BulkActionResponseModel"]
-  "/tags/{groupId}/{classNameId}/common":
+  "/tags/{tag-group-id}/{class-name-id}/common":
     post:
       parameters:
         - in: path

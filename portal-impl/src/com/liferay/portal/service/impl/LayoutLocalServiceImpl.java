@@ -100,6 +100,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 
@@ -372,6 +373,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		updateAsset(
 			userId, layout, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames());
+
+		// Draft layout
+
+		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY)) {
+
+			addLayout(
+				userId, groupId, privateLayout, parentLayoutId,
+				classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid(), nameMap, titleMap, descriptionMap,
+				keywordsMap, robotsMap, type, typeSettings, true, true,
+				Collections.emptyMap(), serviceContext);
+		}
 
 		return layoutLocalService.getLayout(layout.getPlid());
 	}

@@ -35,8 +35,7 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkStatusModel getClassNameId(
-			@GraphQLName("classNameId") Long classNameId)
+	public BulkStatusModel getStatus(@GraphQLName("param") Long param)
 		throws Exception {
 
 		BulkStatusModelResource bulkStatusModelResource =
@@ -46,7 +45,7 @@ public class Query {
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 
-		return bulkStatusModelResource.getClassNameId(classNameId);
+		return bulkStatusModelResource.getStatus(param);
 	}
 
 	private static BulkStatusModelResource _createBulkStatusModelResource() {

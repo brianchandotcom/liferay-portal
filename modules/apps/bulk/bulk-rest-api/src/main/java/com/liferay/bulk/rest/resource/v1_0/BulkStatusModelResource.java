@@ -30,7 +30,7 @@ import javax.annotation.Generated;
 @Generated("")
 public interface BulkStatusModelResource {
 
-	public BulkStatusModel getClassNameId(Long classNameId) throws Exception;
+	public BulkStatusModel getStatus(Long param) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

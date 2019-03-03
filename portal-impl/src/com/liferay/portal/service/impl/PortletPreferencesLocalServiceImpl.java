@@ -175,6 +175,10 @@ public class PortletPreferencesLocalServiceImpl
 	public PortletPreferences fetchPortletPreferences(
 		long ownerId, int ownerType, long plid, String portletId) {
 
+		if (!_doesLayoutPortletExist(plid, portletId)) {
+			return null;
+		}
+
 		return portletPreferencesPersistence.fetchByO_O_P_P(
 			ownerId, ownerType, _swapPlidForPortletPreferences(plid),
 			portletId);
@@ -365,8 +369,14 @@ public class PortletPreferencesLocalServiceImpl
 	public long getPortletPreferencesCount(
 		int ownerType, long plid, String portletId) {
 
+		if (!_doesLayoutPortletExist(plid, portletId)) {
+			return 0;
+		}
+
+		plid = _swapPlidForPortletPreferences(plid);
+
 		return portletPreferencesPersistence.countByO_P_P(
-			ownerType, _swapPlidForPortletPreferences(plid), portletId);
+			ownerType, plid, portletId);
 	}
 
 	@Override
@@ -546,6 +556,12 @@ public class PortletPreferencesLocalServiceImpl
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {
 
+		if (!_doesLayoutPortletExist(plid, companyId, portletId)) {
+			return PortletPreferencesFactoryUtil.strictFromXML(
+				companyId, ownerId, ownerType, plid, portletId,
+				PortletConstants.DEFAULT_PREFERENCES);
+		}
+
 		plid = _swapPlidForPreferences(plid);
 
 		PortletPreferences portletPreferences =
@@ -629,6 +645,37 @@ public class PortletPreferencesLocalServiceImpl
 		portletPreferencesPersistence.update(portletPreferences);
 
 		return portletPreferences;
+	}
+
+	private boolean _doesLayoutPortletExist(
+		long plid, long companyId, String portletId) {
+
+		if (plid != PortletKeys.PREFS_PLID_SHARED) {
+			if (portletLocalService.fetchPortletById(companyId, portletId) !=
+					null) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _doesLayoutPortletExist(long plid, String portletId) {
+		if (plid != PortletKeys.PREFS_PLID_SHARED) {
+			Layout layout = layoutPersistence.fetchByPrimaryKey(plid);
+
+			if (layout == null) {
+				return false;
+			}
+
+			return _doesLayoutPortletExist(
+				plid, layout.getCompanyId(), portletId);
+		}
+
+		return true;
 	}
 
 	private LayoutRevision _getLayoutRevision(long plid) {

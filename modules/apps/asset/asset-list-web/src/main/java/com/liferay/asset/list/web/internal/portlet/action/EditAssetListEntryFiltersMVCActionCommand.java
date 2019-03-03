@@ -122,8 +122,8 @@ public class EditAssetListEntryFiltersMVCActionCommand
 		String[] values = null;
 
 		if (name.equals("assetTags")) {
-			values = StringUtil.split(
-				ParamUtil.getString(actionRequest, "queryTagNames" + index));
+			values = ParamUtil.getStringValues(
+				actionRequest, "queryTagNames" + index);
 		}
 		else {
 			values = StringUtil.split(

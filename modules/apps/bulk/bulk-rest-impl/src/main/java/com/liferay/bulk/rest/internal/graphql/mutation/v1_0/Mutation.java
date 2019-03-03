@@ -38,8 +38,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkActionResponseModel postClassNameId(
-			@GraphQLName("classNameId") Long classNameId,
+	public BulkActionResponseModel postCategoryClassName(
+			@GraphQLName("category-class-name-id") Long categoryClassNameId,
 			@GraphQLName("BulkAssetEntryUpdateCategoriesActionModel")
 				BulkAssetEntryUpdateCategoriesActionModel
 					bulkAssetEntryUpdateCategoriesActionModel)
@@ -48,14 +48,33 @@ public class Mutation {
 		BulkActionResponseModelResource bulkActionResponseModelResource =
 			_createBulkActionResponseModelResource();
 
-		return bulkActionResponseModelResource.postClassNameId(
-			classNameId, bulkAssetEntryUpdateCategoriesActionModel);
+		return bulkActionResponseModelResource.postCategoryClassName(
+			categoryClassNameId, bulkAssetEntryUpdateCategoriesActionModel);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkActionResponseModel postClassNameId(
-			@GraphQLName("classNameId") Long classNameId,
+	public BulkAssetEntryCommonCategoriesModel
+			postCategoryGroupCategoryClassName(
+				@GraphQLName("category-group-id") Long categoryGroupId,
+				@GraphQLName("category-class-name-id") Long categoryClassNameId,
+				@GraphQLName("BulkAssetEntryActionModel")
+					BulkAssetEntryActionModel bulkAssetEntryActionModel)
+		throws Exception {
+
+		BulkActionResponseModelResource bulkActionResponseModelResource =
+			_createBulkActionResponseModelResource();
+
+		return bulkActionResponseModelResource.
+			postCategoryGroupCategoryClassName(
+				categoryGroupId, categoryClassNameId,
+				bulkAssetEntryActionModel);
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public BulkActionResponseModel postTagClassName(
+			@GraphQLName("tag-class-name-id") Long tagClassNameId,
 			@GraphQLName("BulkAssetEntryUpdateTagsActionModel")
 				BulkAssetEntryUpdateTagsActionModel
 					bulkAssetEntryUpdateTagsActionModel)
@@ -64,15 +83,15 @@ public class Mutation {
 		BulkActionResponseModelResource bulkActionResponseModelResource =
 			_createBulkActionResponseModelResource();
 
-		return bulkActionResponseModelResource.postClassNameId(
-			classNameId, bulkAssetEntryUpdateTagsActionModel);
+		return bulkActionResponseModelResource.postTagClassName(
+			tagClassNameId, bulkAssetEntryUpdateTagsActionModel);
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public BulkAssetEntryCommonCategoriesModel postGroupIdClassNameId(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("classNameId") Long classNameId,
+	public BulkAssetEntryCommonTagsModel postTagGroupTagClassName(
+			@GraphQLName("tag-group-id") Long tagGroupId,
+			@GraphQLName("tag-class-name-id") Long tagClassNameId,
 			@GraphQLName("BulkAssetEntryActionModel") BulkAssetEntryActionModel
 				bulkAssetEntryActionModel)
 		throws Exception {
@@ -80,24 +99,8 @@ public class Mutation {
 		BulkActionResponseModelResource bulkActionResponseModelResource =
 			_createBulkActionResponseModelResource();
 
-		return bulkActionResponseModelResource.postGroupIdClassNameId(
-			groupId, classNameId, bulkAssetEntryActionModel);
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public BulkAssetEntryCommonTagsModel postGroupIdClassNameId(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("classNameId") Long classNameId,
-			@GraphQLName("BulkAssetEntryActionModel") BulkAssetEntryActionModel
-				bulkAssetEntryActionModel)
-		throws Exception {
-
-		BulkActionResponseModelResource bulkActionResponseModelResource =
-			_createBulkActionResponseModelResource();
-
-		return bulkActionResponseModelResource.postGroupIdClassNameId(
-			groupId, classNameId, bulkAssetEntryActionModel);
+		return bulkActionResponseModelResource.postTagGroupTagClassName(
+			tagGroupId, tagClassNameId, bulkAssetEntryActionModel);
 	}
 
 	private static BulkActionResponseModelResource

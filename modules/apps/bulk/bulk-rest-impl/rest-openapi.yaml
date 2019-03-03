@@ -130,7 +130,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: classNameId
+          name: category-class-name-id
           required: true
           schema:
             format: int64
@@ -148,17 +148,17 @@ paths:
                 $ref: "#/components/schemas/BulkActionResponseModel"
           description: ""
       tags: ["BulkActionResponseModel"]
-  "/categories/{category-group-id}/{class-name-id}/common":
+  "/categories/{category-group-id}/{category-class-name-id}/common":
     post:
       parameters:
         - in: path
-          name: groupId
+          name: category-group-id
           required: true
           schema:
             format: int64
             type: integer
         - in: path
-          name: classNameId
+          name: category-class-name-id
           required: true
           schema:
             format: int64
@@ -179,8 +179,8 @@ paths:
   /status:
     get:
       parameters:
-        - in: path
-          name: classNameId
+        - in: query
+          name: param
           required: true
           schema:
             format: int64
@@ -197,7 +197,7 @@ paths:
     post:
       parameters:
         - in: path
-          name: classNameId
+          name: tag-class-name-id
           required: true
           schema:
             format: int64
@@ -215,17 +215,17 @@ paths:
                 $ref: "#/components/schemas/BulkActionResponseModel"
           description: ""
       tags: ["BulkActionResponseModel"]
-  "/tags/{tag-group-id}/{class-name-id}/common":
+  "/tags/{tag-group-id}/{tag-class-name-id}/common":
     post:
       parameters:
         - in: path
-          name: groupId
+          name: tag-group-id
           required: true
           schema:
             format: int64
             type: integer
         - in: path
-          name: classNameId
+          name: tag-class-name-id
           required: true
           schema:
             format: int64

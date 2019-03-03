@@ -15,7 +15,6 @@
 package com.liferay.layout.internal.search;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.internal.search.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -107,7 +107,7 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 
 		String[] types = GetterUtil.getStringValues(
 			searchContext.getAttribute(Field.TYPE),
-			new String[] {LayoutConstants.LAYOUT_TYPE_CONTENT});
+			new String[] {LayoutConstants.TYPE_CONTENT});
 
 		if (ArrayUtil.isNotEmpty(types)) {
 			TermsFilter typeTermsFilter = new TermsFilter(Field.TYPE);

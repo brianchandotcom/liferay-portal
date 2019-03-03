@@ -29,7 +29,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY) %>">
+<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
 	<aui:input label="html-title" name="title" placeholder="title" />
 
 	<h4><liferay-ui:message key="meta-tags" /></h4>

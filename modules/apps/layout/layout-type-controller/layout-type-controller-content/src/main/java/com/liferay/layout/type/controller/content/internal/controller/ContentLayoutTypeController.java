@@ -16,7 +16,6 @@ package com.liferay.layout.type.controller.content.internal.controller;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -24,6 +23,7 @@ import com.liferay.layout.type.controller.content.internal.constants.ContentLayo
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -48,8 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juergen Kappler
  */
 @Component(
-	immediate = true,
-	property = "layout.type=" + LayoutConstants.LAYOUT_TYPE_CONTENT,
+	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_CONTENT,
 	service = LayoutTypeController.class
 )
 public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {

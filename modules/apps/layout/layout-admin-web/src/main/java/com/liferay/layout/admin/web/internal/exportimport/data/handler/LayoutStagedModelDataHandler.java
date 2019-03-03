@@ -38,7 +38,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.web.internal.exportimport.data.handler.util.LayoutPageTemplateStructureDataHandlerUtil;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -58,6 +57,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -313,7 +313,7 @@ public class LayoutStagedModelDataHandler
 		else if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_PORTLET) ||
 				 Objects.equals(
-					 layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
+					 layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
 			exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
@@ -727,8 +727,7 @@ public class LayoutStagedModelDataHandler
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
-			Objects.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
 			importLayoutPortlets(
 				portletDataContext, importedLayout, layoutElement);

@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
@@ -30,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -743,10 +743,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 					LocaleUtil.getSiteDefault(), classTypeId));
 		}
 
-		String layoutType = LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY;
+		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
 
 		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-			layoutType = LayoutConstants.LAYOUT_TYPE_CONTENT;
+			layoutType = LayoutConstants.TYPE_CONTENT;
 		}
 
 		serviceContext.setAttribute(

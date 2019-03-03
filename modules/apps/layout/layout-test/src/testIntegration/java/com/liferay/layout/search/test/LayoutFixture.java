@@ -14,11 +14,11 @@
 
 package com.liferay.layout.search.test;
 
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -57,8 +57,8 @@ public class LayoutFixture {
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null,
-			RandomTestUtil.randomString(), LayoutConstants.LAYOUT_TYPE_CONTENT,
-			false, friendlyURL, serviceContext);
+			RandomTestUtil.randomString(), LayoutConstants.TYPE_CONTENT, false,
+			friendlyURL, serviceContext);
 
 		_layouts.add(layout);
 

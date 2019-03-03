@@ -14,12 +14,12 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v2_1_0;
 
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateEntryTable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -125,10 +125,10 @@ public class UpgradeLayout extends UpgradeProcess {
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(), name);
 
-		String layoutType = LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY;
+		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
 
 		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-			layoutType = LayoutConstants.LAYOUT_TYPE_CONTENT;
+			layoutType = LayoutConstants.TYPE_CONTENT;
 		}
 
 		serviceContext.setAttribute(

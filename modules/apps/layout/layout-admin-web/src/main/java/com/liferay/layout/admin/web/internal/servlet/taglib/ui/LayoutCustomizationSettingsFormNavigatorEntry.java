@@ -14,11 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -59,9 +59,8 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 		}
 
 		if (Objects.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY) ||
-			Objects.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
 			return false;
 		}

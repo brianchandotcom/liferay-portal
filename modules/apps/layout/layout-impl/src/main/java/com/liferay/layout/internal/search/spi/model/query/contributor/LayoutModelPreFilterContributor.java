@@ -14,7 +14,7 @@
 
 package com.liferay.layout.internal.search.spi.model.query.contributor;
 
-import com.liferay.layout.constants.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -47,7 +47,7 @@ public class LayoutModelPreFilterContributor
 
 		String[] types = GetterUtil.getStringValues(
 			searchContext.getAttribute(Field.TYPE),
-			new String[] {LayoutConstants.LAYOUT_TYPE_CONTENT});
+			new String[] {LayoutConstants.TYPE_CONTENT});
 
 		if (ArrayUtil.isNotEmpty(types)) {
 			TermsFilter typeTermsFilter = new TermsFilter(Field.TYPE);

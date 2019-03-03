@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -132,7 +132,7 @@ public class AddContentLayoutMVCActionCommand
 				layout = _layoutService.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
-					new HashMap<>(), LayoutConstants.LAYOUT_TYPE_CONTENT,
+					new HashMap<>(), LayoutConstants.TYPE_CONTENT,
 					typeSettingsProperties.toString(), false, new HashMap<>(),
 					serviceContext);
 			}
@@ -141,7 +141,7 @@ public class AddContentLayoutMVCActionCommand
 				actionRequest, actionResponse, layout);
 
 			if (Objects.equals(
-					layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
+					layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
 				redirectURL = getContentRedirectURL(themeDisplay, layout);
 			}

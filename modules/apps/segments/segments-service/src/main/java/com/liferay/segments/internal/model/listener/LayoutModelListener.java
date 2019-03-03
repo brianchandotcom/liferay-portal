@@ -14,10 +14,10 @@
 
 package com.liferay.segments.internal.model.listener;
 
-import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -51,9 +51,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private boolean _isContentLayout(Layout layout) {
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
-
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 			return true;
 		}
 

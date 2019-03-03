@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.bnd;
 
+import aQute.bnd.build.Classpath;
 import aQute.bnd.build.Project;
 import aQute.bnd.build.ProjectBuilder;
 import aQute.bnd.build.Workspace;
@@ -22,12 +23,18 @@ import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.activator.ArquillianBundleActivator;
 import com.liferay.arquillian.extension.junit.bridge.statement.DeploymentStatement;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 
 import java.io.File;
 
+import java.lang.reflect.Method;
+
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,7 +43,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,12 +52,24 @@ import java.util.Set;
  */
 public class BndBundleUtil {
 
-	public static Path createBundle() {
-		try (Workspace workspace = new Workspace(_buildDir);
-			Project project = new Project(workspace, _buildDir);
+	public static Path createBundle() throws Exception {
+		ClassLoader classLoader = new URLClassLoader(_getClassPathURLs(), null);
 
+		Class<?> clazz = classLoader.loadClass(BndBundleUtil.class.getName());
+
+		Method method = clazz.getDeclaredMethod("_createBundle");
+
+		method.setAccessible(true);
+
+		return (Path)method.invoke(null);
+	}
+
+	private static Path _createBundle() throws Exception {
+		File buildDir = new File(System.getProperty("user.dir"));
+
+		try (Workspace workspace = new Workspace(buildDir);
+			Project project = new Project(workspace, buildDir);
 			ProjectBuilder projectBuilder = _createProjectBuilder(project);
-
 			Jar jar = projectBuilder.build();
 			Analyzer analyzer = new Analyzer()) {
 
@@ -65,9 +84,6 @@ public class BndBundleUtil {
 
 			return path;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private static ProjectBuilder _createProjectBuilder(Project project)
@@ -77,7 +93,7 @@ public class BndBundleUtil {
 			"Bundle-Activator",
 			ArquillianBundleActivator.class.getCanonicalName());
 
-		Set<String> importPackages = new HashSet<>();
+		Set<String> importPackages = new LinkedHashSet<>();
 
 		importPackages.add("!aQute.bnd.build");
 		importPackages.add("!aQute.bnd.osgi");
@@ -93,7 +109,7 @@ public class BndBundleUtil {
 			"Import-Package",
 			StringUtil.merge(importPackages, StringPool.COMMA));
 
-		Set<String> includeResources = new HashSet<>();
+		Set<String> includeResources = new LinkedHashSet<>();
 
 		includeResources.add("arquillian.remote.marker;literal=''");
 		includeResources.add("test-classes/integration");
@@ -107,7 +123,7 @@ public class BndBundleUtil {
 
 		File file = new File(url.toURI());
 
-		includeResources.add("@" + file.getName() + "!/*");
+		includeResources.add("@" + file.getName());
 
 		String includeResourceString = project.getProperty("-includeresource");
 
@@ -127,7 +143,7 @@ public class BndBundleUtil {
 	}
 
 	private static List<File> _getClassPathFiles() {
-		List<File> files = new ArrayList<>();
+		List<File> classPathFiles = new ArrayList<>();
 
 		List<String> fileNames = StringUtil.split(
 			System.getProperty("java.class.path"), File.pathSeparatorChar);
@@ -141,14 +157,43 @@ public class BndBundleUtil {
 				fileName.regionMatches(true, length - 4, ".zip", 0, 4) ||
 				fileName.regionMatches(true, length - 4, ".jar", 0, 4)) {
 
-				files.add(file);
+				classPathFiles.add(file);
 			}
 		}
 
-		return files;
+		String resource = Classpath.class.getName();
+
+		resource = resource.replace(CharPool.PERIOD, CharPool.SLASH);
+
+		resource = "/".concat(resource);
+
+		resource = resource.concat(".class");
+
+		URL bndURL = BndBundleUtil.class.getResource(resource);
+
+		String path = bndURL.getPath();
+
+		int start = path.indexOf(CharPool.SLASH);
+
+		int end = path.indexOf(CharPool.EXCLAMATION);
+
+		classPathFiles.add(0, new File(path.substring(start, end)));
+
+		return classPathFiles;
 	}
 
-	private static final File _buildDir = new File(
-		System.getProperty("user.dir"));
+	private static URL[] _getClassPathURLs() throws MalformedURLException {
+		List<File> classPathFiles = _getClassPathFiles();
+
+		List<URL> urls = new ArrayList<>();
+
+		for (File file : classPathFiles) {
+			URI uri = file.toURI();
+
+			urls.add(uri.toURL());
+		}
+
+		return urls.toArray(new URL[classPathFiles.size()]);
+	}
 
 }
